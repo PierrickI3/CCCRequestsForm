@@ -12,12 +12,23 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.1/css/tempusdominus-bootstrap-4.min.css" />
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <!-- Editable CSS -->
+    <link type="text/css" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jsgrid/1.5.3/jsgrid.min.css" />
+    <link type="text/css" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jsgrid/1.5.3/jsgrid-theme.min.css" /> <!-- Custom CSS -->
+    <style>
+        /* .jsgrid-cell {
+            overflow: hidden;
+        } */
+        .jsgrid-cell {
+            word-wrap: break-word;
+        }
+    </style>
 </head>
 
 <body>
 
     <div class="col-12 admin">
-
+        <div id="basicgrid"></div>
     </div>
 
     <noscript>You need to enable JavaScript to run this app.</noscript>
@@ -33,6 +44,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.1/js/tempusdominus-bootstrap-4.min.js"></script>
     <!-- Genesys Cloud -->
     <script src="https://sdk-cdn.mypurecloud.com/javascript/61.0.0/purecloud-platform-client-v2.min.js"></script>
+    <!-- Editable -->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jsgrid/1.5.3/jsgrid.min.js"></script>
     <!-- Our Scripts -->
     <script src="js/gc.js"></script>
     <script src="js/requests.js"></script>
@@ -58,15 +71,24 @@
             "4bfbc98d-35d6-4a85-85f9-4e661c1a32c0"
         ]
 
-        $(function () {
-            $("#datetimepicker1").datetimepicker({
-                format: 'L'
-            });
-            $("#datetimepicker2").datetimepicker({
-                defaultDate: new Date(),
-                format: 'L'
-            });
-        });
+        var requests = {
+            loadData: function (filter) {
+                return $.grep(this.requests, function (request) {
+                    return (!filter.requesterName || request.requesterName.indexOf(filter.requesterName) > -1)
+                        && (!filter.product || request.product.indexOf(filter.product) > -1)
+                        && (!filter.partnerCustomerName || request.partnerCustomerName.indexOf(filter.partnerCustomerName) > -1)
+                        && (!filter.partnerCustomerName || request.partnerCustomerName.indexOf(filter.partnerCustomerName) > -1)
+                        && (!filter.partnerCustomerName || request.partnerCustomerName.indexOf(filter.partnerCustomerName) > -1)
+                        && (!filter.partnerCustomerName || request.partnerCustomerName.indexOf(filter.partnerCustomerName) > -1)
+                        && (!filter.requesterEmail || request.requesterEmail.indexOf(filter.requesterEmail) > -1);
+                });
+            },
+            updateItem: function (updatingRequest) { },
+            deleteItem: function (deletingRequest) {
+                var requestIndex = $.inArray(deletingRequest, this.requests);
+                this.requests.splice(requestIndex, 1);
+            }
+        }
 
         init();
         async function init() {
@@ -79,16 +101,172 @@
                 $(".admin").hide();
             }
 
-            let requests;
             try {
-                requests = await getRequests()
-                console.log(requests);
-
-
+                requests.requests = await getRequests()
+                console.log(requests.requests);
+                window.requests = requests;
+                showRequests();
             } catch (error) {
                 console.error(error);
             }
         }
+
+        function showRequests() {
+            console.log('Showing requests...');
+            try {
+
+                jsGrid.setDefaults({ tableClass: "jsgrid-table table table-striped table-hover" });
+                jsGrid.setDefaults("text", {
+                    _createTextBox: function () {
+                        return $("<input>").attr("type", "text").attr("class", "form-control input-sm")
+                    }
+                });
+                jsGrid.setDefaults("number", {
+                    _createTextBox: function () {
+                        return $("<input>").attr("type", "number").attr("class", "form-control input-sm")
+                    }
+                });
+                jsGrid.setDefaults("textarea", {
+                    _createTextBox: function () {
+                        return $("<input>").attr("type", "textarea").attr("class", "form-control")
+                    }
+                });
+                jsGrid.setDefaults("control", {
+                    _createGridButton: function (cls, tooltip, clickHandler) {
+                        var grid = this._grid;
+                        return $("<button>").addClass(this.buttonClass).addClass(cls).attr({
+                            type: "button",
+                            title: tooltip
+                        }).on("click", function (e) {
+                            clickHandler(grid, e)
+                        })
+                    }
+                });
+                jsGrid.setDefaults("select", {
+                    _createSelect: function () {
+                        var $result = $("<select>").attr("class", "form-control input-sm"),
+                            valueField = this.valueField,
+                            textField = this.textField,
+                            selectedIndex = this.selectedIndex;
+                        return $.each(this.items, function (index, item) {
+                            var value = valueField ? item[valueField] : index,
+                                text = textField ? item[textField] : item,
+                                $option = $("<option>").attr("value", value).text(text).appendTo($result);
+                            $option.prop("selected", selectedIndex === index)
+                        }), $result
+                    }
+                });
+
+                $("#basicgrid").jsGrid({
+                    height: "100vh",
+                    width: "100%",
+                    filtering: true,
+                    editing: true,
+                    sorting: true,
+                    paging: true,
+                    autoload: true,
+                    pageSize: 25,
+                    pageButtonCount: 5,
+                    loadIndication: true,
+                    loadIndicationDelay: 500,
+                    loadMessage: "Loading...",
+                    loadShading: true,
+                    deleteConfirm: "Do you really want to delete this request?",
+                    controller: requests,
+                    noDataContent: "No Requests",
+                    fields: [{
+                        name: "region",
+                        title: "Region",
+                        type: "text",
+                        width: "auto"
+                    }, {
+                        name: "subRegion",
+                        title: "Sub-Region",
+                        type: "text",
+                        width: "auto"
+                    }, {
+                        name: "product",
+                        title: "Product",
+                        type: "text",
+                        width: "auto"
+                    }, {
+                        name: "requestType",
+                        title: "Request Type",
+                        type: "text",
+                        width: "auto"
+                    }, {
+                        name: "requesterName",
+                        title: "Requester Name",
+                        type: "text",
+                        width: "auto"
+                    }, {
+                        name: "requesterEmail",
+                        title: "Requester Email",
+                        type: "text",
+                        width: "auto"
+                    }, {
+                        name: "requesterPhoneNumber",
+                        title: "Requester Phone #",
+                        type: "text",
+                        width: "auto"
+                    }, {
+                        name: "needCompletedBy",
+                        title: "Need Completed By",
+                        type: "text",
+                        itemTemplate: function (value, item) {
+                            return `${moment(value).fromNow()} (${moment(value).calendar()})`;
+                        },
+                        width: "auto"
+                    }, {
+                        name: "description",
+                        title: "Description",
+                        type: "text",
+                        width: "auto"
+                    }, {
+                        name: "partnerCustomerName",
+                        title: "Partner or Customer Name",
+                        type: "text",
+                        width: "auto"
+                    }, {
+                        name: "salesforceAccountOpportunity",
+                        title: "SF Account or Opportunity",
+                        type: "text",
+                        itemTemplate: function (value, item) {
+                            return `<a href="${value}" target="_blank">${value}</a>`;
+                        },
+                        width: "auto"
+                    }, {
+                        name: "fileAttachments",
+                        title: "File Attachments",
+                        type: "text",
+                        width: "auto"
+                    }, {
+                        name: "createdAt",
+                        title: "Created",
+                        type: "text",
+                        itemTemplate: function (value, item) {
+                            return moment(value).fromNow();
+                        },
+                        width: "auto"
+                    }, {
+                        name: "updatedAt",
+                        title: "Last Updated",
+                        type: "text",
+                        itemTemplate: function (value, item) {
+                            return moment(value).fromNow();
+                        },
+                        width: "auto"
+                    }, {
+                        type: "control",
+                        editButton: true
+                    }]
+                });
+            } catch (error) {
+                console.error(error);
+            }
+        }
+
+
 
     </script>
 
