@@ -25,19 +25,41 @@
                     </select>
                 </div>
                 <div class="form-group col-md-4">
-                    <label for="subregion">Sub-Region</label>
-                    <select id="subregion" class="form-control">
+                    <label for="subRegion">Sub-Region</label>
+                    <select id="subRegion" class="form-control">
                         <option value="" disabled selected>Select a Sub-Region</option>
                     </select>
                 </div>
-                <div class="form-group col-md-6">
-                    <label for="inputPassword4">Password</label>
-                    <input type="password" class="form-control" id="inputPassword4" placeholder="Password">
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-4">
+                    <label for="product">Product</label>
+                    <select id="product" class="form-control">
+                        <option value="" disabled selected>Select a Product</option>
+                        <option value="Genesys Cloud">Genesys Cloud</option>
+                        <option value="Genesys Engage">Genesys Engage</option>
+                        <option value="Genesys Engage Cloud">Genesys Engage Cloud</option>
+                        <option value="PureConnect">PureConnect</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-3">
+                    <label for="requesterName">Requester Name</label>
+                    <input type="text" class="form-control" id="requesterName" placeholder="Your Name">
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="requesterEmail">Requester Email</label>
+                    <input type="text" class="form-control" id="requesterEmail" placeholder="Your Email Address">
+                </div>
+                <div class="form-group col-md-3">
+                    <label for="requesterPhoneNumber">Requester Phone #</label>
+                    <input type="text" class="form-control" id="requesterPhoneNumber" placeholder="Your Phone Number">
                 </div>
             </div>
             <div class="form-group">
-                <label for="inputAddress">Address</label>
-                <input type="text" class="form-control" id="inputAddress" placeholder="1234 Main St">
+                <label for="inputPassword4">Password</label>
+                <input type="password" class="form-control" id="inputPassword4" placeholder="Password">
             </div>
             <div class="form-group">
                 <label for="inputAddress2">Address 2</label>
@@ -91,6 +113,9 @@
             var userInfo = await getMe();
             console.log(userInfo);
             $('#me').text(JSON.stringify(userInfo));
+            $("#requesterName").val(userInfo.name);
+            $("#requesterEmail").val(userInfo.mail);
+            $("#requesterPhoneNumber").val(userInfo.phone);
         }
 
         let regions = {
@@ -109,11 +134,11 @@
         }
 
         $("#region").on("change", () => {
-            $("#subregion").empty();
+            $("#subRegion").empty();
             console.log($("#region").val());
             for (let subregion of regions[$("#region").val()]) {
                 console.log('Sub-region:', subregion);
-                $("<option/>", { value: subregion }).text(subregion).appendTo("#subregion");
+                $("<option/>", { value: subregion }).text(subregion).appendTo("#subRegion");
             }
         });
 
