@@ -47,6 +47,25 @@
                         <option value="PureConnect">PureConnect</option>
                     </select>
                 </div>
+                <div class="form-group col-md-4">
+                    <label for="requestType">Request Type</label>
+                    <select id="requestType" class="form-control">
+                        <option value="" disabled selected>Select a Request Type</option>
+                        <option value="Additional Privacy Support">Additional Privacy Support</option>
+                        <option value="Additional Security Support">Additional Security Support</option>
+                        <option value="Associate SC & AE Enablement">Associate SC & AE Enablement</option>
+                        <option value="Cloud Migrations">Cloud Migrations</option>
+                        <option value="Critical Situation Management">Critical Situation Management</option>
+                        <option value="End to End Partner Enablement">End to End Partner Enablement</option>
+                        <option value="Innovation (Custom Demos, Integrations, Beta Testing)">Innovation (Custom Demos, Integrations, Beta Testing)</option>
+                        <option value="Must Win/Strategic Opportunity Support">Must Win/Strategic Opportunity Support</option>
+                        <option value="Partner Enablement">Partner Enablement (Summits/Events/Webinars)</option>
+                        <option value="POCs & Pilots for Strategic Opportunities">POCs & Pilots for Strategic Opportunities</option>
+                        <option value="Technical Design/Architecture Review">Technical Design/Architecture Review</option>
+                        <option value="Test Drive">Test Drive</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
             </div>
             <div class="form-row">
                 <div class="form-group col-md-3">
@@ -63,7 +82,7 @@
                 </div>
             </div>
             <div class="form-row">
-                <div class="form-group col-md-2">
+                <div class="form-group col-md-3">
                     <label for="datetimepicker1">Need Completed By</label>
                     <div class="input-group date" id="datetimepicker1" data-target-input="nearest">
                         <input type="text" class="form-control datetimepicker-input" data-target="#datetimepicker1" />
@@ -142,9 +161,7 @@
             $("#requesterName").val(userInfo.name);
             $("#requesterEmail").val(userInfo.mail);
             $("#requesterPhoneNumber").val(userInfo.phone);
-            $("#datetimepicker1").datetimepicker();
         }
-
 
         let regions = {
             APAC: [
