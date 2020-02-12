@@ -267,10 +267,11 @@
             $("#requesterEmail").val(userInfo.mail);
             $("#requesterPhoneNumber").val(userInfo.phone);
 
+            /* Don't disable controls at the moment
             if (userInfo.name) document.getElementById("requesterName").disabled = true;
             if (userInfo.mail) document.getElementById("requesterEmail").disabled = true;
             if (userInfo.phone) document.getElementById("requesterPhoneNumber").disabled = true;
-
+            */
 
             // Show Admin fields?
             if (userInfo.groups.some(g => adminGroups.includes(g))) {
