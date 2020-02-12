@@ -17,14 +17,13 @@ let userInfo = {
 };
 
 function getMe() {
-    console.log('Try to login');
     return new Promise(async (resolve, reject) => {
         try {
             // Authenticate
 
             client.loginImplicitGrant("42f3a603-79ca-4212-a4b5-7847846ce47e", redirectUri)
                 .then(() => {
-                    console.log('Logged-In');
+                    console.log('Logged In');
                     let apiInstance = new platformClient.UsersApi();
                     let opts = {
                         'expand': ["groups"]
@@ -32,7 +31,7 @@ function getMe() {
 
                     apiInstance.getUsersMe(opts)
                         .then((data) => {
-                            console.log(`getUsersMe success! data: ${JSON.stringify(data, null, 2)}`);
+                            //console.log(`getUsersMe success! data: ${JSON.stringify(data, null, 2)}`);
 
                             //Read UserData
                             userInfo.name = data.name;
