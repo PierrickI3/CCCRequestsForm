@@ -7,16 +7,18 @@
     <title>CCC Request Form</title>
     <link rel="shortcut icon" href="/favicon.ico">
     <!-- Bootstrap -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <!-- Bootstrap Date/Time Picker -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.1/css/tempusdominus-bootstrap-4.min.css" />
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.1/css/tempusdominus-bootstrap-4.min.css" />
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 
 <body>
+    <div class="container">
 
-    <div class="col-6">
         <a href="requests.html" class="admin btn btn-primary">Review Requests</a>
         <form>
             <div class="form-row">
@@ -58,18 +60,22 @@
                         <option value="Cloud Migrations">Cloud Migrations</option>
                         <option value="Critical Situation Management">Critical Situation Management</option>
                         <option value="End to End Partner Enablement">End to End Partner Enablement</option>
-                        <option value="Innovation (Custom Demos, Integrations, Beta Testing)">Innovation (Custom Demos, Integrations, Beta Testing)</option>
-                        <option value="Must Win/Strategic Opportunity Support">Must Win/Strategic Opportunity Support</option>
+                        <option value="Innovation (Custom Demos, Integrations, Beta Testing)">Innovation (Custom Demos,
+                            Integrations, Beta Testing)</option>
+                        <option value="Must Win/Strategic Opportunity Support">Must Win/Strategic Opportunity Support
+                        </option>
                         <option value="Partner Enablement">Partner Enablement (Summits/Events/Webinars)</option>
-                        <option value="POCs & Pilots for Strategic Opportunities">POCs & Pilots for Strategic Opportunities</option>
-                        <option value="Technical Design/Architecture Review">Technical Design/Architecture Review</option>
+                        <option value="POCs & Pilots for Strategic Opportunities">POCs & Pilots for Strategic
+                            Opportunities</option>
+                        <option value="Technical Design/Architecture Review">Technical Design/Architecture Review
+                        </option>
                         <option value="Test Drive">Test Drive</option>
                         <option value="Other">Other</option>
                     </select>
                 </div>
             </div>
             <div class="form-row">
-                <div class="form-group col-md-3">
+                <div class="form-group col-md-4">
                     <label for="requesterName">Requester Name</label>
                     <input type="text" class="form-control" id="requesterName" placeholder="Your Name">
                 </div>
@@ -77,13 +83,13 @@
                     <label for="requesterEmail">Requester Email</label>
                     <input type="text" class="form-control" id="requesterEmail" placeholder="Your Email Address">
                 </div>
-                <div class="form-group col-md-3">
-                    <label for="requesterPhoneNumber">Requester Phone #</label>
-                    <input type="text" class="form-control" id="requesterPhoneNumber" placeholder="Your Phone Number">
-                </div>
             </div>
             <div class="form-row">
-                <div class="form-group col-md-3">
+                <div class="form-group col-md-4>
+                    <label for=" requesterPhoneNumber">Requester Phone #</label>
+                    <input type="text" class="form-control" id="requesterPhoneNumber" placeholder="Your Phone Number">
+                </div>
+                <div class="form-group col-md-4">
                     <label for="datetimepicker1">Need Completed By</label>
                     <div class="input-group date" id="datetimepicker1" data-target-input="nearest">
                         <input type="text" class="form-control datetimepicker-input" data-target="#datetimepicker1" />
@@ -94,23 +100,27 @@
                 </div>
             </div>
             <div class="form-row">
-                <div class="form-group col-md-12">
+                <div class="form-group col-md-8">
                     <label for="description">Description</label>
                     <textarea class="form-control" id="description" placeholder="Describe your request"></textarea>
                 </div>
             </div>
             <div class="form-row">
-                <div class="form-group col-md-3">
-                    <label for="partnerCustomerName">Partner and/or Customer Name</label>
-                    <input type="text" class="form-control" id="partnerCustomerName" placeholder="Partner and/or Customer Name">
-                </div>
                 <div class="form-group col-md-8">
-                    <label for="salesforceAccountOpportunity">Salesforce Opportunity</label>
-                    <input type="text" class="form-control" id="salesforceAccountOpportunity" placeholder="Link to Salesforce opportunity or account">
+                    <label for="partnerCustomerName">Partner and/or Customer Name</label>
+                    <input type="text" class="form-control" id="partnerCustomerName"
+                        placeholder="Partner and/or Customer Name">
                 </div>
             </div>
             <div class="form-row">
-                <div class="form-group col-md-4">
+                <div class="form-group col-md-8">
+                    <label for="salesforceAccountOpportunity">Salesforce Account / Opportunity URL</label>
+                    <input type="text" class="form-control" id="salesforceAccountOpportunity"
+                        placeholder="Link to Salesforce opportunity or account">
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-8">
                     <label for="fileAttachments">File Attachments</label>
                     <div class="custom-file">
                         <input type="file" class="custom-file-input" id="fileAttachments">
@@ -167,14 +177,18 @@
     <noscript>You need to enable JavaScript to run this app.</noscript>
     <!-- Bootstrap core JavaScript-->
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
     <!-- Core plugin JavaScript-->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"></script>
     <!-- Moment.js -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js" integrity="sha256-4iQZ6BVL4qNKlQ27TExEhBN1HFPvAvAMbFavKKosSWQ=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"
+        integrity="sha256-4iQZ6BVL4qNKlQ27TExEhBN1HFPvAvAMbFavKKosSWQ=" crossorigin="anonymous"></script>
     <!-- Bootstrap Date/Time Picker -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.1/js/tempusdominus-bootstrap-4.min.js"></script>
+    <script
+        src="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.1/js/tempusdominus-bootstrap-4.min.js"></script>
     <!-- Genesys Cloud -->
     <script src="https://sdk-cdn.mypurecloud.com/javascript/61.0.0/purecloud-platform-client-v2.min.js"></script>
     <!-- Our Scripts -->
