@@ -17,118 +17,138 @@
 </head>
 
 <body>
-    <div class="container">
 
-        <a href="requests.html" class="admin btn btn-primary">Review Requests</a>
-        <form>
-            <div class="form-row">
-                <div class="form-group col-md-4">
-                    <label for="region">Region</label>
-                    <select id="region" class="form-control">
-                        <option value="" disabled selected>Select a Region</option>
-                        <option value="APAC">APAC</option>
-                        <option value="EMEA">EMEA</option>
-                        <option value="LATAM">LATAM</option>
-                        <option value="NA">North America</option>
-                    </select>
-                </div>
-                <div class="form-group col-md-4">
-                    <label for="subRegion">Sub-Region</label>
-                    <select id="subRegion" class="form-control">
-                        <option value="" disabled selected>Select a Sub-Region</option>
-                    </select>
-                </div>
-            </div>
-            <div class="form-row">
-                <div class="form-group col-md-4">
-                    <label for="product">Product</label>
-                    <select id="product" class="form-control">
-                        <option value="" disabled selected>Select a Product</option>
-                        <option value="Genesys Cloud">Genesys Cloud</option>
-                        <option value="Genesys Engage">Genesys Engage</option>
-                        <option value="Genesys Engage Cloud">Genesys Engage Cloud</option>
-                        <option value="PureConnect">PureConnect</option>
-                    </select>
-                </div>
-                <div class="form-group col-md-4">
-                    <label for="requestType">Request Type</label>
-                    <select id="requestType" class="form-control">
-                        <option value="" disabled selected>Select a Request Type</option>
-                        <option value="Additional Privacy Support">Additional Privacy Support</option>
-                        <option value="Additional Security Support">Additional Security Support</option>
-                        <option value="Associate SC & AE Enablement">Associate SC & AE Enablement</option>
-                        <option value="Cloud Migrations">Cloud Migrations</option>
-                        <option value="Critical Situation Management">Critical Situation Management</option>
-                        <option value="End to End Partner Enablement">End to End Partner Enablement</option>
-                        <option value="Innovation (Custom Demos, Integrations, Beta Testing)">Innovation (Custom Demos,
-                            Integrations, Beta Testing)</option>
-                        <option value="Must Win/Strategic Opportunity Support">Must Win/Strategic Opportunity Support
-                        </option>
-                        <option value="Partner Enablement">Partner Enablement (Summits/Events/Webinars)</option>
-                        <option value="POCs & Pilots for Strategic Opportunities">POCs & Pilots for Strategic
-                            Opportunities</option>
-                        <option value="Technical Design/Architecture Review">Technical Design/Architecture Review
-                        </option>
-                        <option value="Test Drive">Test Drive</option>
-                        <option value="Other">Other</option>
-                    </select>
-                </div>
-            </div>
-            <div class="form-row">
-                <div class="form-group col-md-4">
-                    <label for="requesterName">Requester Name</label>
-                    <input type="text" class="form-control" id="requesterName" placeholder="Your Name">
-                </div>
-                <div class="form-group col-md-4">
-                    <label for="requesterEmail">Requester Email</label>
-                    <input type="text" class="form-control" id="requesterEmail" placeholder="Your Email Address">
-                </div>
-            </div>
-            <div class="form-row">
-                <div class="form-group col-md-4>
-                    <label for=" requesterPhoneNumber">Requester Phone #</label>
-                    <input type="text" class="form-control" id="requesterPhoneNumber" placeholder="Your Phone Number">
-                </div>
-                <div class="form-group col-md-4">
-                    <label for="datetimepicker1">Need Completed By</label>
-                    <div class="input-group date" id="datetimepicker1" data-target-input="nearest">
-                        <input type="text" class="form-control datetimepicker-input" data-target="#datetimepicker1" />
-                        <div class="input-group-append" data-target="#datetimepicker1" data-toggle="datetimepicker">
-                            <div class="input-group-text"><em class="fa fa-calendar"></em></div>
+    <div class="container-fluid">
+
+        <nav class="navbar navbar-light bg-light">
+            <a class="navbar-brand" href="#">
+                <img src="images/genesys.png" width="30" height="30" class="d-inline-block align-top" alt="">
+                Cloud Competency Center Request Form
+            </a>
+            <a href="requests.html" class="admin btn btn-primary">Review Requests</a>
+        </nav>
+        <br>
+
+        <div class="form-row">
+            <div class="form-group col-sm-8">
+
+                <form>
+                    <div class="form-row">
+                        <div class="form-group col-md-5">
+                            <label for="region">Region</label>
+                            <select id="region" class="form-control">
+                                <option value="" disabled selected>Select a Region</option>
+                                <option value="APAC">APAC</option>
+                                <option value="EMEA">EMEA</option>
+                                <option value="LATAM">LATAM</option>
+                                <option value="NA">North America</option>
+                            </select>
+                        </div>
+                        <div class="form-group col-md-5">
+                            <label for="subRegion">Sub-Region</label>
+                            <select id="subRegion" class="form-control">
+                                <option value="" disabled selected>Select a Sub-Region</option>
+                            </select>
                         </div>
                     </div>
-                </div>
-            </div>
-            <div class="form-row">
-                <div class="form-group col-md-8">
-                    <label for="description">Description</label>
-                    <textarea class="form-control" id="description" placeholder="Describe your request"></textarea>
-                </div>
-            </div>
-            <div class="form-row">
-                <div class="form-group col-md-8">
-                    <label for="partnerCustomerName">Partner and/or Customer Name</label>
-                    <input type="text" class="form-control" id="partnerCustomerName"
-                        placeholder="Partner and/or Customer Name">
-                </div>
-            </div>
-            <div class="form-row">
-                <div class="form-group col-md-8">
-                    <label for="salesforceAccountOpportunity">Salesforce Account / Opportunity URL</label>
-                    <input type="text" class="form-control" id="salesforceAccountOpportunity"
-                        placeholder="Link to Salesforce opportunity or account">
-                </div>
-            </div>
-            <div class="form-row">
-                <div class="form-group col-md-8">
-                    <label for="fileAttachments">File Attachments</label>
-                    <div class="custom-file">
-                        <input type="file" class="custom-file-input" id="fileAttachments">
-                        <label class="custom-file-label" for="fileAttachments">Choose file</label>
+                    <div class="form-row">
+                        <div class="form-group col-md-5">
+                            <label for="product">Product</label>
+                            <select id="product" class="form-control">
+                                <option value="" disabled selected>Select a Product</option>
+                                <option value="Genesys Cloud">Genesys Cloud</option>
+                                <option value="Genesys Engage">Genesys Engage</option>
+                                <option value="Genesys Engage Cloud">Genesys Engage Cloud</option>
+                                <option value="PureConnect">PureConnect</option>
+                            </select>
+                        </div>
+                        <div class="form-group col-md-5">
+                            <label for="requestType">Request Type</label>
+                            <select id="requestType" class="form-control">
+                                <option value="" disabled selected>Select a Request Type</option>
+                                <option value="Additional Privacy Support">Additional Privacy Support</option>
+                                <option value="Additional Security Support">Additional Security Support</option>
+                                <option value="Associate SC & AE Enablement">Associate SC & AE Enablement</option>
+                                <option value="Cloud Migrations">Cloud Migrations</option>
+                                <option value="Critical Situation Management">Critical Situation Management</option>
+                                <option value="End to End Partner Enablement">End to End Partner Enablement</option>
+                                <option value="Innovation (Custom Demos, Integrations, Beta Testing)">Innovation (Custom
+                                    Demos,
+                                    Integrations, Beta Testing)</option>
+                                <option value="Must Win/Strategic Opportunity Support">Must Win/Strategic Opportunity
+                                    Support
+                                </option>
+                                <option value="Partner Enablement">Partner Enablement (Summits/Events/Webinars)</option>
+                                <option value="POCs & Pilots for Strategic Opportunities">POCs & Pilots for Strategic
+                                    Opportunities</option>
+                                <option value="Technical Design/Architecture Review">Technical Design/Architecture
+                                    Review
+                                </option>
+                                <option value="Test Drive">Test Drive</option>
+                                <option value="Other">Other</option>
+                            </select>
+                        </div>
                     </div>
-                </div>
-            </div>
-            <!-- <div class="admin">
+                    <div class="form-row">
+                        <div class="form-group col-md-5">
+                            <label for="requesterName">Requester Name</label>
+                            <input type="text" class="form-control" id="requesterName" placeholder="Your Name">
+                        </div>
+                        <div class="form-group col-md-5">
+                            <label for="requesterEmail">Requester Email</label>
+                            <input type="text" class="form-control" id="requesterEmail"
+                                placeholder="Your Email Address">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-5">
+                            <label for="requesterPhoneNumber">Requester Phone #</label>
+                            <input type="text" class="form-control" id="requesterPhoneNumber"
+                                placeholder="Your Phone Number">
+                        </div>
+                        <div class="form-group col-md-5">
+                            <label for="datetimepicker1">Need Completed By</label>
+                            <div class="input-group date" id="datetimepicker1" data-target-input="nearest">
+                                <input type="text" class="form-control datetimepicker-input"
+                                    data-target="#datetimepicker1" />
+                                <div class="input-group-append" data-target="#datetimepicker1"
+                                    data-toggle="datetimepicker">
+                                    <div class="input-group-text"><em class="fa fa-calendar"></em></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-10">
+                            <label for="description">Description</label>
+                            <textarea class="form-control" id="description"
+                                placeholder="Describe your request"></textarea>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-10">
+                            <label for="partnerCustomerName">Partner and/or Customer Name</label>
+                            <input type="text" class="form-control" id="partnerCustomerName"
+                                placeholder="Partner and/or Customer Name">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-10">
+                            <label for="salesforceAccountOpportunity">Salesforce Account / Opportunity URL</label>
+                            <input type="text" class="form-control" id="salesforceAccountOpportunity"
+                                placeholder="Link to Salesforce opportunity or account">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-10">
+                            <label for="fileAttachments">File Attachments</label>
+                            <div class="custom-file">
+                                <input type="file" class="custom-file-input" id="fileAttachments">
+                                <label class="custom-file-label" for="fileAttachments">Choose file</label>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- <div class="admin">
                 <div class="form-row">
                     <div class="form-group col-md-2">
                         <label for="priority">Priority</label>
@@ -170,9 +190,21 @@
                     </div>
                 </div>
             </div> -->
-            <button type="submit" id="submit" class="btn btn-primary">Submit</button>
-        </form>
+
+                </form>
+
+                <br>
+                <button type="submit" id="submit" class="btn btn-primary">Submit</button>
+
+
+            </div>
+            <div class="form-group col-sm-4">
+                
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+            </div>
+        </div>
     </div>
+
 
     <noscript>You need to enable JavaScript to run this app.</noscript>
     <!-- Bootstrap core JavaScript-->
@@ -235,6 +267,11 @@
             $("#requesterEmail").val(userInfo.mail);
             $("#requesterPhoneNumber").val(userInfo.phone);
 
+            if (userInfo.name) document.getElementById("requesterName").disabled = true;
+            if (userInfo.mail) document.getElementById("requesterEmail").disabled = true;
+            if (userInfo.phone) document.getElementById("requesterPhoneNumber").disabled = true;
+
+
             // Show Admin fields?
             if (userInfo.groups.some(g => adminGroups.includes(g))) {
                 $(".admin").show();
@@ -249,6 +286,14 @@
                 $("<option/>", { value: subregion }).text(subregion).appendTo("#subRegion");
             }
         });
+
+        $('#fileAttachments').on('change', function () {
+            //get the file name
+            var fileName = $(this).val();
+            var cleanFileName = fileName.replace('C:\\fakepath\\', " ");
+            $(this).next('.custom-file-label').html(cleanFileName);
+        })
+
 
         $("#submit").on("click", async (e) => {
             e.preventDefault();
