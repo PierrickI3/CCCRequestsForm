@@ -52,9 +52,8 @@ function getMe() {
                                 userInfo.groups.push(aItem.id)
                             })
 
+                            console.log('User Info:', userInfo)
                             resolve(userInfo);
-
-
                         })
                         .catch((err) => {
                             console.log('There was a failure calling getUsersMe');

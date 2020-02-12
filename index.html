@@ -17,6 +17,7 @@
 <body>
 
     <div class="col-6">
+        <input type="button" class="admin btn btn-primary" value="Review Requests">
         <form>
             <div class="form-row">
                 <div class="form-group col-md-4">
@@ -92,40 +93,74 @@
                     </div>
                 </div>
             </div>
-            <!-- <div class="form-group">
-                <label for="inputPassword4">Password</label>
-                <input type="password" class="form-control" id="inputPassword4" placeholder="Password">
-            </div>
-            <div class="form-group">
-                <label for="inputAddress2">Address 2</label>
-                <input type="text" class="form-control" id="inputAddress2" placeholder="Apartment, studio, or floor">
+            <div class="form-row">
+                <div class="form-group col-md-12">
+                    <label for="description">Description</label>
+                    <textarea class="form-control" id="description" placeholder="Describe your request"></textarea>
+                </div>
             </div>
             <div class="form-row">
-                <div class="form-group col-md-6">
-                    <label for="inputCity">City</label>
-                    <input type="text" class="form-control" id="inputCity">
+                <div class="form-group col-md-3">
+                    <label for="partnerCustomerName">Partner and/or Customer Name</label>
+                    <input type="text" class="form-control" id="partnerCustomerName" placeholder="Partner and/or Customer Name">
                 </div>
-                <div class="form-group col-md-4">
-                    <label for="inputState">State</label>
-                    <select id="inputState" class="form-control">
-                        <option selected>Choose...</option>
-                        <option>...</option>
-                    </select>
-                </div>
-                <div class="form-group col-md-2">
-                    <label for="inputZip">Zip</label>
-                    <input type="text" class="form-control" id="inputZip">
+                <div class="form-group col-md-8">
+                    <label for="salesforceAccountOpportunity">Salesforce Opportunity</label>
+                    <input type="text" class="form-control" id="salesforceAccountOpportunity" placeholder="Link to Salesforce opportunity or account">
                 </div>
             </div>
-            <div class="form-group">
-                <div class="form-check">
-                    <input class="form-check-input" type="checkbox" id="gridCheck">
-                    <label class="form-check-label" for="gridCheck">
-                        Check me out
-                    </label>
+            <div class="form-row">
+                <div class="form-group col-md-4">
+                    <label for="fileAttachments">File Attachments</label>
+                    <div class="custom-file">
+                        <input type="file" class="custom-file-input" id="fileAttachments">
+                        <label class="custom-file-label" for="fileAttachments">Choose file</label>
+                    </div>
+                </div>
+            </div>
+            <!-- <div class="admin">
+                <div class="form-row">
+                    <div class="form-group col-md-2">
+                        <label for="priority">Priority</label>
+                        <select id="priority" class="form-control">
+                            <option value="" disabled selected>Select a Priority</option>
+                            <option value="Low">Low</option>
+                            <option value="Medium">Medium</option>
+                            <option value="High">Hig</option>
+                        </select>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label for="acceptedRejected">Accepted/Rejected</label>
+                        <select id="acceptedRejected" class="form-control">
+                            <option value="" disabled selected>Accepted or Rejected?</option>
+                            <option value="Accepted">Accepted</option>
+                            <option value="Rejected">Rejected</option>
+                        </select>
+                    </div>
+                    <div class="form-group col-md-3">
+                        <label for="datetimepicker2">Accepted/Rejected Date</label>
+                        <div class="input-group date" id="datetimepicker2" data-target-input="nearest">
+                            <input type="text" class="form-control datetimepicker-input" data-target="#datetimepicker2" />
+                            <div class="input-group-append" data-target="#datetimepicker2" data-toggle="datetimepicker">
+                                <div class="input-group-text"><em class="fa fa-calendar"></em></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-3">
+                        <label for="status">Status</label>
+                        <select id="status" class="form-control">
+                            <option value="" disabled selected>Select a Status</option>
+                            <option value="Accepted">Open</option>
+                            <option value="On Hold">On Hold</option>
+                            <option value="Waiting on Additional Information">Waiting on Additional Information</option>
+                            <option value="Closed">Closed</option>
+                        </select>
+                    </div>
                 </div>
             </div> -->
-            <button type="submit" class="btn btn-primary">Submit</button>
+            <button type="submit" id="submit" class="btn btn-primary">Submit</button>
         </form>
     </div>
 
@@ -144,24 +179,9 @@
     <script src="https://sdk-cdn.mypurecloud.com/javascript/61.0.0/purecloud-platform-client-v2.min.js"></script>
     <!-- Our Scripts -->
     <script src="js/gc.js"></script>
+    <script src="js/requests.js"></script>
 
     <script>
-
-        $(function () {
-            $("#datetimepicker1").datetimepicker({
-                format: 'L'
-            });
-        });
-
-        init();
-        async function init() {
-            var userInfo = await getMe();
-
-            // Populate user info
-            $("#requesterName").val(userInfo.name);
-            $("#requesterEmail").val(userInfo.mail);
-            $("#requesterPhoneNumber").val(userInfo.phone);
-        }
 
         let regions = {
             APAC: [
@@ -178,10 +198,67 @@
             ]
         }
 
+        let adminGroups = [
+            "4bfbc98d-35d6-4a85-85f9-4e661c1a32c0"
+        ]
+
+        $(function () {
+            $("#datetimepicker1").datetimepicker({
+                format: 'L'
+            });
+            $("#datetimepicker2").datetimepicker({
+                defaultDate: new Date(),
+                format: 'L'
+            });
+        });
+
+        init();
+        async function init() {
+            var userInfo = await getMe();
+
+            // Populate user info
+            $("#requesterName").val(userInfo.name);
+            $("#requesterEmail").val(userInfo.mail);
+            $("#requesterPhoneNumber").val(userInfo.phone);
+
+            // Show Admin fields?
+            if (userInfo.groups.some(g => adminGroups.includes(g))) {
+                $(".admin").show();
+            } else {
+                $(".admin").hide();
+            }
+        }
+
         $("#region").on("change", () => {
             $("#subRegion").empty();
             for (let subregion of regions[$("#region").val()]) {
                 $("<option/>", { value: subregion }).text(subregion).appendTo("#subRegion");
+            }
+        });
+
+        $("#submit").on("click", async (e) => {
+            e.preventDefault();
+
+            let region = $("#region").val();
+            let subRegion = $("#subRegion").val();
+            let product = $("#product").val();
+            let requestType = $("#requestType").val();
+            let requesterName = $("#requesterName").val();
+            let requesterEmail = $("#requesterEmail").val();
+            let requesterPhoneNumber = $("#requesterPhoneNumber").val();
+            let needCompletedBy = new Date($("#datetimepicker1").data("datetimepicker").date());
+            let description = $("#description").val();
+            let partnerCustomerName = $("#partnerCustomerName").val();
+            let salesforceAccountOpportunity = $("#salesforceAccountOpportunity").val();
+            let fileAttachments = $("#fileAttachments").val();
+
+            console.log(`Region: ${region}, subRegion: ${subRegion}, Product: ${product}, Request Type: ${requestType}, Requester Name: ${requesterName}, Requester Email: ${requesterEmail}, Requester Phone Number: ${requesterPhoneNumber}, Need Completed By: ${needCompletedBy}, Description: ${description}, Partner or Customer Name: ${partnerCustomerName}, Salesforce Opportunity: ${salesforceAccountOpportunity}, File Attachments: ${fileAttachments}`);
+
+            try {
+                await postRequests(region, subRegion, product, requestType, requesterName, requesterEmail, requesterPhoneNumber, needCompletedBy, description, partnerCustomerName, salesforceAccountOpportunity, fileAttachments);
+                console.log('Success!');
+            } catch (error) {
+                console.error(error);
             }
         });
 
