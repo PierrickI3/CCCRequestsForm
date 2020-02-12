@@ -1,1 +1,97 @@
-<!-- View/Edit Requests -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no">
+    <title>CCC Request Form</title>
+    <link rel="shortcut icon" href="/favicon.ico">
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <!-- Bootstrap Date/Time Picker -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.1/css/tempusdominus-bootstrap-4.min.css" />
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+
+<body>
+
+    <div class="col-12 admin">
+
+    </div>
+
+    <noscript>You need to enable JavaScript to run this app.</noscript>
+    <!-- Bootstrap core JavaScript-->
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
+    <!-- Core plugin JavaScript-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"></script>
+    <!-- Moment.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js" integrity="sha256-4iQZ6BVL4qNKlQ27TExEhBN1HFPvAvAMbFavKKosSWQ=" crossorigin="anonymous"></script>
+    <!-- Bootstrap Date/Time Picker -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.1/js/tempusdominus-bootstrap-4.min.js"></script>
+    <!-- Genesys Cloud -->
+    <script src="https://sdk-cdn.mypurecloud.com/javascript/61.0.0/purecloud-platform-client-v2.min.js"></script>
+    <!-- Our Scripts -->
+    <script src="js/gc.js"></script>
+    <script src="js/requests.js"></script>
+
+    <script>
+
+        let regions = {
+            APAC: [
+                "Asia", "Australia", "New Zeland"
+            ],
+            EMEA: [
+                "Central", "North", "South"
+            ],
+            LATAM: [
+                "Andean", "Brazil", "Mexico", "Southern-Cone"
+            ],
+            NA: [
+                "Central", "Eastern", "Western"
+            ]
+        }
+
+        let adminGroups = [
+            "4bfbc98d-35d6-4a85-85f9-4e661c1a32c0"
+        ]
+
+        $(function () {
+            $("#datetimepicker1").datetimepicker({
+                format: 'L'
+            });
+            $("#datetimepicker2").datetimepicker({
+                defaultDate: new Date(),
+                format: 'L'
+            });
+        });
+
+        init();
+        async function init() {
+            var userInfo = await getMe();
+
+            // Show Admin fields?
+            if (userInfo.groups.some(g => adminGroups.includes(g))) {
+                $(".admin").show();
+            } else {
+                $(".admin").hide();
+            }
+
+            let requests;
+            try {
+                requests = await getRequests()
+                console.log(requests);
+
+
+            } catch (error) {
+                console.error(error);
+            }
+        }
+
+    </script>
+
+</body>
+
+</html>

@@ -42,3 +42,30 @@ async function postRequests(region, subRegion, product, requestType, requesterNa
       console.log("postRequests completed");
     });
 }
+
+async function getRequests() {
+
+  return await $.ajax({
+    url: `${apiBasePath}/requests`,
+    method: "GET",
+    contentType: 'application/json',
+    dataType: "json"
+  })
+    .done((data, textStatus, jqXHR) => {
+      try {
+        if (jqXHR.status === 200) {
+            console.log(jqXHR);
+            return data;
+        } else {
+            showMessage("Unexpected error: " + textStatus, true);
+            reject(textStatus);
+        }
+      } catch (error) {
+        console.error(error);
+        reject(error);
+      }
+    })
+    .always(() => {
+      console.log("getRequests completed");
+    });
+}
