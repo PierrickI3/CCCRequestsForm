@@ -1,8 +1,10 @@
 // **** Token Implicit Grant (Browser) - UserLogin ****
 //let redirectUri = 'https://szlaskidaniel.github.io/purecloud-place-call/index.html';
-redirectUri = 'http://localhost:444/index.html';
+const redirectUri = 'http://localhost:444/index.html';
 const platformClient = require('platformClient');
 const client = platformClient.ApiClient.instance;
+
+
 
 client.setEnvironment("mypurecloud.ie");
 client.setPersistSettings(true);
@@ -19,7 +21,7 @@ function getMe() {
     return new Promise(async (resolve, reject) => {
         try {
             // Authenticate
-            
+
             client.loginImplicitGrant("42f3a603-79ca-4212-a4b5-7847846ce47e", redirectUri)
                 .then(() => {
                     console.log('Logged-In');
@@ -52,7 +54,7 @@ function getMe() {
                             data.groups.forEach(function (aItem) {
                                 userInfo.groups.push(aItem.id)
                             })
-                            
+
                             resolve(userInfo);
 
 
