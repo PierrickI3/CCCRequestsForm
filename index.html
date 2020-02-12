@@ -30,14 +30,16 @@
 
 
     <script>
-        /*
-        async function getMe(e) {
-            e.preventDefault();
-            await getMe();
+
+        init();
+        async function init() {
+            var userInfo = await getMe();
+            console.log(userInfo);
+            $('#me').text(JSON.stringify(userInfo));
         }
-*/
 
     </script>
+    <label id="me">Me</label>
 
 </body>
 
