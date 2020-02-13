@@ -43,10 +43,10 @@ async function postRequests(region, subRegion, product, requestType, requesterNa
     });
 }
 
-async function getRequests() {
+async function getRequests(region = "") {
 
   return await $.ajax({
-    url: `${apiBasePath}/requests`,
+    url: `${apiBasePath}/requests?region=${region}`,
     method: "GET",
     contentType: 'application/json',
     dataType: "json"
