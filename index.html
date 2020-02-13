@@ -264,7 +264,7 @@
             let requesterName = $("#requesterName").val();
             let requesterEmail = $("#requesterEmail").val();
             let requesterPhoneNumber = $("#requesterPhoneNumber").val();
-            let needCompletedBy = new Date($("#datetimepicker1").data("datetimepicker").date());
+            let needCompletedBy = moment.utc($("#datetimepicker1").data("datetimepicker").date()).format("YYYY-MM-DDT00:00:00.000") + "Z";
             let description = $("#description").val();
             let partnerCustomerName = $("#partnerCustomerName").val();
             let salesforceAccountOpportunity = $("#salesforceAccountOpportunity").val();
@@ -277,6 +277,7 @@
                 showMessage("Request submitted. Thanks!");
             } catch (error) {
                 console.error(error);
+                showMessage(error, true);
             }
         });
 
