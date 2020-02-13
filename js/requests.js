@@ -68,3 +68,31 @@ async function getRequests(region = "") {
       console.log("getRequests completed");
     });
 }
+
+async function deleteRequest(requestId) {
+
+  console.log('Deleting request:', requestId);
+  return await $.ajax({
+    url: `${apiBasePath}/requests/${requestId}`,
+    method: "DELETE",
+    contentType: 'application/json',
+    dataType: "json"
+  })
+    .done((data, textStatus, jqXHR) => {
+      try {
+        if (jqXHR.status === 204) {
+            console.log(jqXHR);
+            return data;
+        } else {
+            showMessage("Unexpected error: " + textStatus, true);
+            reject(textStatus);
+        }
+      } catch (error) {
+        console.error(error);
+        reject(error);
+      }
+    })
+    .always(() => {
+      console.log("deleteRequest completed");
+    });
+}
