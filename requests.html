@@ -319,18 +319,20 @@
                     loadIndicationDelay: 500,
                     loadMessage: "Loading...",
                     loadShading: true,
-                    deleteConfirm: "Do you really want to delete this request?",
                     rowClick: function (args) {
                         showModal(args.item);
                     },
                     deleteItem: async function (deletingRequest) {
-                        console.log('Deleting:', deletingRequest);
-                        try {
-                            await deleteRequest(deletingRequest.id);
-                            init();
-                        } catch (error) {
-                            console.error(error);
-                            showMessage(error, true);
+                        let r = confirm('Do you really want to delete this request?');
+                        if (r) {
+                            console.log('Deleting:', deletingRequest);
+                            try {
+                                await deleteRequest(deletingRequest.id);
+                                init();
+                            } catch (error) {
+                                console.error(error);
+                                showMessage(error, true);
+                            }
                         }
                     },
                     controller: requests,
