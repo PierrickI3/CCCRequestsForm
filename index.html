@@ -12,6 +12,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.1/css/tempusdominus-bootstrap-4.min.css" />
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <!--Toaster Popup message CSS -->
+    <link href="https://raw.githubusercontent.com/kamranahmedse/jquery-toast-plugin/master/dist/jquery.toast.min.css" rel="stylesheet">
 </head>
 
 <body>
@@ -30,11 +32,11 @@
         <div class="form-row">
             <div class="form-group col-sm-8">
 
-                <form>
+                <form id="modal-form">
                     <div class="form-row">
                         <div class="form-group col-md-5">
                             <label for="region">Region</label>
-                            <select id="region" class="form-control">
+                            <select id="region" class="form-control" required>
                                 <option value="" disabled selected>Select a Region</option>
                                 <option value="APAC">APAC</option>
                                 <option value="EMEA">EMEA</option>
@@ -157,6 +159,11 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.1/js/tempusdominus-bootstrap-4.min.js"></script>
     <!-- Genesys Cloud -->
     <script src="https://sdk-cdn.mypurecloud.com/javascript/61.0.0/purecloud-platform-client-v2.min.js"></script>
+    <!-- JQuery Validate -->
+    <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.1/dist/jquery.validate.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.1/dist/additional-methods.min.js"></script>
+    <!-- jQuery Toast -->
+    <script src="https://raw.githubusercontent.com/kamranahmedse/jquery-toast-plugin/master/dist/jquery.toast.min.js"></script>
     <!-- Our Scripts -->
     <script src="js/gc.js"></script>
     <script src="js/requests.js"></script>
@@ -237,8 +244,17 @@
             }
         });
 
+        $("#modal-form").validate({
+            errorClass: "text-danger",
+            successClass: "test-success"
+        });
+
         $("#submit").on("click", async (e) => {
             e.preventDefault();
+            if (!$("#modal-form").valid()) {
+                showMessage("Missing or invalid fields", true);
+                return;
+            }
 
             let region = $("#region").val();
             let subRegion = $("#subRegion").val();
@@ -261,6 +277,18 @@
                 console.error(error);
             }
         });
+
+        function showMessage(heading, message) {
+            $.toast({
+                heading: heading
+                , text: message
+                , position: 'top-right'
+                , loaderBg: '#ff6849'
+                , icon: 'info'
+                , hideAfter: 3500
+                , stack: 6
+            })
+        }
 
     </script>
 
