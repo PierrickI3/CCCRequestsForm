@@ -160,17 +160,32 @@
                             <div class="form-row">
                                 <div class="form-group col-md-5">
                                     <label for="priority">Priority</label>
-                                    <input type="text" class="form-control" id="priority" name="priority" placeholder="Set the priority" required>
+                                    <select id="priority" name="priority" class="form-control" required>
+                                        <option value="" disabled selected>Select a Priority</option>
+                                        <option value="Low">Low</option>
+                                        <option value="Medium">Medium</option>
+                                        <option value="High">High</option>
+                                    </select>
                                 </div>
                                 <div class="form-group col-md-5">
                                     <label for="acceptedRejected">Accepted/Rejected</label>
-                                    <input type="text" class="form-control" id="acceptedRejected" name="acceptedRejected" placeholder="Accepted or Rejected" required>
+                                    <select id="acceptedRejected" name="acceptedRejected" class="form-control" required>
+                                        <option value="" disabled selected>Accepted/Rejected?</option>
+                                        <option value="Accepted">Accepted</option>
+                                        <option value="Rejected">Rejected</option>
+                                    </select>
                                 </div>
                             </div>
                             <div class="form-row">
                                 <div class="form-group col-md-5">
                                     <label for="status">Status</label>
-                                    <input type="text" class="form-control" id="status" name="status" placeholder="Set the status" required>
+                                    <select id="status" name="status" class="form-control" required>
+                                        <option value="" disabled selected>Select a Status</option>
+                                        <option value="Open">Open</option>
+                                        <option value="On Hold">On Hold</option>
+                                        <option value="Waiting On Additional Information">Waiting On Additional Information</option>
+                                        <option value="Closed">Closed</option>
+                                    </select>
                                 </div>
                                 <div class="form-group col-md-5">
                                     <label for="programManager">Program Manager</label>
