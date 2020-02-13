@@ -14,7 +14,7 @@
     <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <!-- Editable CSS -->
     <link type="text/css" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jsgrid/1.5.3/jsgrid.min.css" />
-    <link type="text/css" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jsgrid/1.5.3/jsgrid-theme.min.css" /> <!-- Custom CSS -->
+    <link type="text/css" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jsgrid/1.5.3/jsgrid-theme.min.css" /> Custom CSS
     <!-- jQuery Toast -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/jquery-toast-plugin/1.3.2/jquery.toast.min.css" rel="stylesheet">
     <!-- Custom CSS -->
@@ -52,6 +52,12 @@
                     <div class="form-group">
 
                         <form id="modal-form">
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label for="id">Id</label>
+                                    <input type="text" class="form-control" id="id" name="id" disabled>
+                                </div>
+                            </div>
                             <div class="form-row">
                                 <div class="form-group col-md-5">
                                     <label for="region">Region</label>
@@ -245,6 +251,7 @@
         }
 
         function initModal() {
+            $("#editModal #id").val("");
             $("#editModal #region").val("");
             $("#editModal #region").change();
             $("#editModal #subRegion").val("");
@@ -340,9 +347,12 @@
                     fields: [
                         {
                             name: "id",
-                            title: "id",
+                            title: "Id",
                             type: "text",
-                            width: "auto"
+                            width: "auto",
+                            itemTemplate: function (value, item) {
+                                return `<small>${value}</small>`;
+                            }
                         }, {
                             name: "region",
                             title: "Region",
@@ -369,27 +379,12 @@
                             type: "text",
                             width: "auto"
                         }, {
-                            name: "requesterEmail",
-                            title: "Requester Email",
-                            type: "text",
-                            width: "auto"
-                        }, {
-                            name: "requesterPhoneNumber",
-                            title: "Requester Phone #",
-                            type: "text",
-                            width: "auto"
-                        }, {
                             name: "needCompletedBy",
                             title: "Need Completed By",
                             type: "text",
                             itemTemplate: function (value, item) {
-                                return `${moment(value).fromNow()} (${moment(value).calendar()})`;
+                                return `${moment.utc(value).fromNow()} (${moment.utc(value).calendar()})`;
                             },
-                            width: "auto"
-                        }, {
-                            name: "description",
-                            title: "Description",
-                            type: "text",
                             width: "auto"
                         }, {
                             name: "partnerCustomerName",
@@ -409,17 +404,19 @@
                             title: "Created",
                             type: "text",
                             itemTemplate: function (value, item) {
-                                return moment(value).fromNow();
+                                return `<small>${moment(value).fromNow()}</small>`;
                             },
-                            width: "auto"
+                            width: "auto",
+                            filtering: false
                         }, {
                             name: "updatedAt",
                             title: "Last Updated",
                             type: "text",
                             itemTemplate: function (value, item) {
-                                return moment(value).fromNow();
+                                return `<small>${moment(value).fromNow()}</small>`;
                             },
-                            width: "auto"
+                            width: "auto",
+                            filtering: false
                         }, {
                             type: "control",
                             editButton: false
@@ -432,6 +429,7 @@
 
         function showModal(request) {
             console.log("Showing modal for:", request);
+            $("#editModal #id").val(request.id);
             $("#editModal #region").val(request.region);
             $("#editModal #region").change();
             $("#editModal #subRegion").val(request.subRegion);
@@ -440,6 +438,7 @@
             $("#editModal #requesterName").val(request.requesterName);
             $("#editModal #requesterEmail").val(request.requesterEmail);
             $("#editModal #requesterPhoneNumber").val(request.requesterPhoneNumber);
+            console.log('Set date to:', request.needCompletedBy);
             $("#editModal #datetimepicker1").datetimepicker({
                 date: new Date(request.needCompletedBy),
                 format: 'L'
@@ -480,7 +479,30 @@
                 return;
             }
 
-            //TODO Save request (PATCH /requests/{id})
+            let id = $("#editModal #id").val();
+            let region = $("#editModal #region").val();
+            let subRegion = $("#editModal #subRegion").val();
+            let product = $("#editModal #product").val();
+            let requestType = $("#editModal #requestType").val();
+            let requesterName = $("#editModal #requesterName").val();
+            let requesterEmail = $("#editModal #requesterEmail").val();
+            let requesterPhoneNumber = $("#editModal #requesterPhoneNumber").val();
+            let needCompletedBy = moment($("#datetimepicker1").data("datetimepicker").date()).format("YYYY-MM-DDTHH:mm:ss.SSS") + "Z";
+            let description = $("#editModal #description").val();
+            let partnerCustomerName = $("#editModal #partnerCustomerName").val();
+            let salesforceAccountOpportunity = $("#editModal #salesforceAccountOpportunity").val();
+
+            console.log(`Region: ${region}, subRegion: ${subRegion}, Product: ${product}, Request Type: ${requestType}, Requester Name: ${requesterName}, Requester Email: ${requesterEmail}, Requester Phone Number: ${requesterPhoneNumber}, Need Completed By: ${needCompletedBy}, Description: ${description}, Partner or Customer Name: ${partnerCustomerName}, Salesforce Opportunity: ${salesforceAccountOpportunity}`);
+
+            try {
+                await putRequest(id, region, subRegion, product, requestType, requesterName, requesterEmail, requesterPhoneNumber, needCompletedBy, description, partnerCustomerName, salesforceAccountOpportunity);
+                console.log('Success!');
+                showMessage("Request updated. Thanks!");
+                $("#editModal").modal("hide");
+            } catch (error) {
+                console.error(error);
+                showMessage(error, true);
+            }
         });
 
         function getUrlParameter(sParam) {
