@@ -274,6 +274,7 @@
             try {
                 await postRequests(region, subRegion, product, requestType, requesterName, requesterEmail, requesterPhoneNumber, needCompletedBy, description, partnerCustomerName, salesforceAccountOpportunity);
                 console.log('Success!');
+                sendNotification(`> :loudspeaker: New CCC Request for **${product}** received from [@${userInfo.name}](#/person/${userInfo.id}) (${requestType}) `, region);
                 showMessage("Request submitted. Thanks!");
             } catch (error) {
                 console.error(error);
