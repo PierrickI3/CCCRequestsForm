@@ -214,6 +214,7 @@
             loadData: function (filter) {
                 return $.grep(this.requests, function (request) {
                     return (!filter.requesterName || request.requesterName.indexOf(filter.requesterName) > -1)
+                        && (!filter.id || request.id.indexOf(filter.id) > -1)
                         && (!filter.product || request.product.indexOf(filter.product) > -1)
                         && (!filter.partnerCustomerName || request.partnerCustomerName.indexOf(filter.partnerCustomerName) > -1)
                         && (!filter.partnerCustomerName || request.partnerCustomerName.indexOf(filter.partnerCustomerName) > -1)
@@ -322,93 +323,105 @@
                     rowClick: function (args) {
                         showModal(args.item);
                     },
-                    deleteItem: function (deletingRequest) {
+                    deleteItem: async function (deletingRequest) {
                         console.log('Deleting:', deletingRequest);
-                        //deleteRequest(deletingRequest.id);
+                        try {
+                            await deleteRequest(deletingRequest.id);
+                            init();
+                        } catch (error) {
+                            console.error(error);
+                            showMessage(error, true);
+                        }
                     },
                     controller: requests,
                     noDataContent: "No Requests",
-                    fields: [{
-                        name: "region",
-                        title: "Region",
-                        type: "text",
-                        width: "auto"
-                    }, {
-                        name: "subRegion",
-                        title: "Sub-Region",
-                        type: "text",
-                        width: "auto"
-                    }, {
-                        name: "product",
-                        title: "Product",
-                        type: "text",
-                        width: "auto"
-                    }, {
-                        name: "requestType",
-                        title: "Request Type",
-                        type: "text",
-                        width: "auto"
-                    }, {
-                        name: "requesterName",
-                        title: "Requester Name",
-                        type: "text",
-                        width: "auto"
-                    }, {
-                        name: "requesterEmail",
-                        title: "Requester Email",
-                        type: "text",
-                        width: "auto"
-                    }, {
-                        name: "requesterPhoneNumber",
-                        title: "Requester Phone #",
-                        type: "text",
-                        width: "auto"
-                    }, {
-                        name: "needCompletedBy",
-                        title: "Need Completed By",
-                        type: "text",
-                        itemTemplate: function (value, item) {
-                            return `${moment(value).fromNow()} (${moment(value).calendar()})`;
-                        },
-                        width: "auto"
-                    }, {
-                        name: "description",
-                        title: "Description",
-                        type: "text",
-                        width: "auto"
-                    }, {
-                        name: "partnerCustomerName",
-                        title: "Partner or Customer Name",
-                        type: "text",
-                        width: "auto"
-                    }, {
-                        name: "salesforceAccountOpportunity",
-                        title: "SF Account or Opportunity",
-                        type: "text",
-                        itemTemplate: function (value, item) {
-                            return `<a href="${value}" target="_blank">${value}</a>`;
-                        },
-                        width: "auto"
-                    }, {
-                        name: "createdAt",
-                        title: "Created",
-                        type: "text",
-                        itemTemplate: function (value, item) {
-                            return moment(value).fromNow();
-                        },
-                        width: "auto"
-                    }, {
-                        name: "updatedAt",
-                        title: "Last Updated",
-                        type: "text",
-                        itemTemplate: function (value, item) {
-                            return moment(value).fromNow();
-                        },
-                        width: "auto"
-                    }, {
-                        type: "control",
-                        editButton: false
-                    }]
+                    fields: [
+                        {
+                            name: "id",
+                            title: "id",
+                            type: "text",
+                            width: "auto"
+                        }, {
+                            name: "region",
+                            title: "Region",
+                            type: "text",
+                            width: "auto"
+                        }, {
+                            name: "subRegion",
+                            title: "Sub-Region",
+                            type: "text",
+                            width: "auto"
+                        }, {
+                            name: "product",
+                            title: "Product",
+                            type: "text",
+                            width: "auto"
+                        }, {
+                            name: "requestType",
+                            title: "Request Type",
+                            type: "text",
+                            width: "auto"
+                        }, {
+                            name: "requesterName",
+                            title: "Requester Name",
+                            type: "text",
+                            width: "auto"
+                        }, {
+                            name: "requesterEmail",
+                            title: "Requester Email",
+                            type: "text",
+                            width: "auto"
+                        }, {
+                            name: "requesterPhoneNumber",
+                            title: "Requester Phone #",
+                            type: "text",
+                            width: "auto"
+                        }, {
+                            name: "needCompletedBy",
+                            title: "Need Completed By",
+                            type: "text",
+                            itemTemplate: function (value, item) {
+                                return `${moment(value).fromNow()} (${moment(value).calendar()})`;
+                            },
+                            width: "auto"
+                        }, {
+                            name: "description",
+                            title: "Description",
+                            type: "text",
+                            width: "auto"
+                        }, {
+                            name: "partnerCustomerName",
+                            title: "Partner or Customer Name",
+                            type: "text",
+                            width: "auto"
+                        }, {
+                            name: "salesforceAccountOpportunity",
+                            title: "SF Account or Opportunity",
+                            type: "text",
+                            itemTemplate: function (value, item) {
+                                return `<a href="${value}" target="_blank">${value}</a>`;
+                            },
+                            width: "auto"
+                        }, {
+                            name: "createdAt",
+                            title: "Created",
+                            type: "text",
+                            itemTemplate: function (value, item) {
+                                return moment(value).fromNow();
+                            },
+                            width: "auto"
+                        }, {
+                            name: "updatedAt",
+                            title: "Last Updated",
+                            type: "text",
+                            itemTemplate: function (value, item) {
+                                return moment(value).fromNow();
+                            },
+                            width: "auto"
+                        }, {
+                            type: "control",
+                            editButton: false
+                        }]
                 });
             } catch (error) {
                 console.error(error);
@@ -451,6 +464,11 @@
             $("#basicgrid").empty();
             init();
             initModal();
+        });
+
+        $("#editModal #modal-form").validate({
+            errorClass: "text-danger",
+            successClass: "test-success"
         });
 
         $("#editModal #submit").on("click", async (e) => {
