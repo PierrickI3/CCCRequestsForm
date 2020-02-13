@@ -8,11 +8,15 @@ client.setEnvironment("mypurecloud.ie");
 client.setPersistSettings(true);
 
 let userInfo = {
+    id: undefined,
     name: undefined,
     mail: undefined,
     phone: undefined,
     groups: []
 };
+
+
+
 
 function getMe() {
     return new Promise(async (resolve, reject) => {
@@ -34,6 +38,7 @@ function getMe() {
                             //Read UserData
                             userInfo.name = data.name;
                             userInfo.mail = data.username;
+                            userInfo.id = data.id;
 
                             data.primaryContactInfo.forEach(function (aItem) {
                                 switch (aItem.mediaType.toLowerCase()) {
@@ -52,7 +57,7 @@ function getMe() {
                                 userInfo.groups.push(aItem.id)
                             })
 
-                            console.log('User Info:', userInfo)
+                            console.log('User Info:', userInfo);                                                    
                             resolve(userInfo);
                         })
                         .catch((err) => {
@@ -69,3 +74,27 @@ function getMe() {
     });
 }
 
+function sendNotification(_message, _target) {
+
+    let data =
+    {
+        "message": _message,
+        "metadata": `newRequest | ${_target}`
+    }
+
+    $.ajax({
+        url: `https://apps.mypurecloud.ie:443/webhooks/api/v1/webhook/91ebde78-7dfe-4279-b5af-b8fe187b0973`,
+        type: "POST",
+        data: data,
+        dataType: "json",
+        success: function (response) {
+            var resp = JSON.parse(response)
+            console.log(resp.status);
+        },
+        error: function (xhr, status) {
+            console.log(status);
+        }
+    });
+
+
+}
