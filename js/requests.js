@@ -42,6 +42,49 @@ async function postRequests(region, subRegion, product, requestType, requesterNa
     });
 }
 
+async function putRequest(id, region, subRegion, product, requestType, requesterName, requesterEmail, requesterPhoneNumber, needCompletedBy, description, partnerCustomerName, salesforceAccountOpportunity) {
+
+  var data = {
+    id: id,
+    region: region,
+    subRegion: subRegion,
+    product: product,
+    requestType: requestType,
+    requesterName: requesterName,
+    requesterEmail: requesterEmail,
+    requesterPhoneNumber: requesterPhoneNumber,
+    needCompletedBy: needCompletedBy,
+    description: description,
+    partnerCustomerName: partnerCustomerName,
+    salesforceAccountOpportunity: salesforceAccountOpportunity
+  };
+
+  return await $.ajax({
+    url: `${apiBasePath}/requests/${id}`,
+    method: "PUT",
+    contentType: 'application/json',
+    dataType: "json",
+    data: JSON.stringify(data)
+  })
+    .done((data, textStatus, jqXHR) => {
+      try {
+        if (jqXHR.status === 200) {
+            console.log(jqXHR);
+            return data;
+        } else {
+            showMessage("Unexpected error: " + textStatus, true);
+            reject(textStatus);
+        }
+      } catch (error) {
+        console.error(error);
+        reject(error);
+      }
+    })
+    .always(() => {
+      console.log("putRequest completed");
+    });
+}
+
 async function getRequests(region = "") {
 
   return await $.ajax({
