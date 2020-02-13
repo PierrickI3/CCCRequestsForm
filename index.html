@@ -130,15 +130,6 @@
                             <input type="text" class="form-control" id="salesforceAccountOpportunity" placeholder="Link to Salesforce opportunity or account">
                         </div>
                     </div>
-                    <div class="form-row">
-                        <div class="form-group col-md-10">
-                            <label for="fileAttachments">File Attachments</label>
-                            <div class="custom-file">
-                                <input type="file" class="custom-file-input" id="fileAttachments">
-                                <label class="custom-file-label" for="fileAttachments">Choose file</label>
-                            </div>
-                        </div>
-                    </div>
                 </form>
 
                 <br>
@@ -246,13 +237,6 @@
             }
         });
 
-        $('#fileAttachments').on('change', function () {
-            //get the file name
-            var fileName = $(this).val();
-            var cleanFileName = fileName.replace('C:\\fakepath\\', " ");
-            $(this).next('.custom-file-label').html(cleanFileName);
-        })
-
         $("#submit").on("click", async (e) => {
             e.preventDefault();
 
@@ -267,12 +251,11 @@
             let description = $("#description").val();
             let partnerCustomerName = $("#partnerCustomerName").val();
             let salesforceAccountOpportunity = $("#salesforceAccountOpportunity").val();
-            let fileAttachments = $("#fileAttachments").val();
 
-            console.log(`Region: ${region}, subRegion: ${subRegion}, Product: ${product}, Request Type: ${requestType}, Requester Name: ${requesterName}, Requester Email: ${requesterEmail}, Requester Phone Number: ${requesterPhoneNumber}, Need Completed By: ${needCompletedBy}, Description: ${description}, Partner or Customer Name: ${partnerCustomerName}, Salesforce Opportunity: ${salesforceAccountOpportunity}, File Attachments: ${fileAttachments}`);
+            console.log(`Region: ${region}, subRegion: ${subRegion}, Product: ${product}, Request Type: ${requestType}, Requester Name: ${requesterName}, Requester Email: ${requesterEmail}, Requester Phone Number: ${requesterPhoneNumber}, Need Completed By: ${needCompletedBy}, Description: ${description}, Partner or Customer Name: ${partnerCustomerName}, Salesforce Opportunity: ${salesforceAccountOpportunity}`);
 
             try {
-                await postRequests(region, subRegion, product, requestType, requesterName, requesterEmail, requesterPhoneNumber, needCompletedBy, description, partnerCustomerName, salesforceAccountOpportunity, fileAttachments);
+                await postRequests(region, subRegion, product, requestType, requesterName, requesterEmail, requesterPhoneNumber, needCompletedBy, description, partnerCustomerName, salesforceAccountOpportunity);
                 console.log('Success!');
             } catch (error) {
                 console.error(error);

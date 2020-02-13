@@ -1,6 +1,6 @@
 const apiBasePath = "https://drbojb15ma.execute-api.eu-central-1.amazonaws.com/dev";
 
-async function postRequests(region, subRegion, product, requestType, requesterName, requesterEmail, requesterPhoneNumber, needCompletedBy, description, partnerCustomerName, salesforceAccountOpportunity, fileAttachments) {
+async function postRequests(region, subRegion, product, requestType, requesterName, requesterEmail, requesterPhoneNumber, needCompletedBy, description, partnerCustomerName, salesforceAccountOpportunity) {
 
   var data = {
     region: region,
@@ -13,8 +13,7 @@ async function postRequests(region, subRegion, product, requestType, requesterNa
     needCompletedBy: needCompletedBy,
     description: description,
     partnerCustomerName: partnerCustomerName,
-    salesforceAccountOpportunity: salesforceAccountOpportunity,
-    fileAttachments: fileAttachments
+    salesforceAccountOpportunity: salesforceAccountOpportunity
   };
 
   return await $.ajax({

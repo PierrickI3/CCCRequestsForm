@@ -151,15 +151,6 @@
                                     <input type="text" class="form-control" id="salesforceAccountOpportunity" placeholder="Link to Salesforce opportunity or account">
                                 </div>
                             </div>
-                            <div class="form-row">
-                                <div class="form-group col-md-10">
-                                    <label for="fileAttachments">File Attachments</label>
-                                    <div class="custom-file">
-                                        <input type="file" class="custom-file-input" id="fileAttachments">
-                                        <label class="custom-file-label" for="fileAttachments">Choose file</label>
-                                    </div>
-                                </div>
-                            </div>
                         </form>
 
                     </div>
@@ -259,7 +250,6 @@
             $("#editModal #description").val("");
             $("#editModal #partnerCustomerName").val("");
             $("#editModal #salesforceAccountOpportunity").val("");
-            //TODO File attachments
         }
 
         function loadRequests() {
@@ -390,11 +380,6 @@
                         },
                         width: "auto"
                     }, {
-                        name: "fileAttachments",
-                        title: "File Attachments",
-                        type: "text",
-                        width: "auto"
-                    }, {
                         name: "createdAt",
                         title: "Created",
                         type: "text",
@@ -437,7 +422,6 @@
             $("#editModal #description").val(request.description);
             $("#editModal #partnerCustomerName").val(request.partnerCustomerName);
             $("#editModal #salesforceAccountOpportunity").val(request.salesforceAccountOpportunity);
-            //TODO File attachments
 
             $("#editModal").modal("show");
         }
