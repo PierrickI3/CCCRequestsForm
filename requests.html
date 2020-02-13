@@ -444,7 +444,7 @@
 
         $("#editModal #region").on("change", () => {
             $("#editModal #subRegion").empty();
-            if (!$("#editModal #subRegion").val()) return;
+            if (!$("#editModal #region").val()) return;
             for (let subregion of regions[$("#editModal #region").val()]) {
                 $("<option/>", { value: subregion }).text(subregion).appendTo("#editModal #subRegion");
             }
