@@ -14,7 +14,7 @@
     <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <!-- Editable CSS -->
     <link type="text/css" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jsgrid/1.5.3/jsgrid.min.css" />
-    <link type="text/css" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jsgrid/1.5.3/jsgrid-theme.min.css" /> Custom CSS
+    <link type="text/css" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jsgrid/1.5.3/jsgrid-theme.min.css" />
     <!-- jQuery Toast -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/jquery-toast-plugin/1.3.2/jquery.toast.min.css" rel="stylesheet">
     <!-- Custom CSS -->
@@ -127,7 +127,7 @@
                             <div class="form-row">
                                 <div class="form-group col-md-5">
                                     <label for="requesterPhoneNumber">Requester Phone #</label>
-                                    <input type="text" class="form-control" id="requesterPhoneNumber" name="requesterPhoneNumber" placeholder="Your Phone Number" required>
+                                    <input type="text" class="form-control" id="requesterPhoneNumber" name="requesterPhoneNumber" placeholder="Your Phone Number">
                                 </div>
                                 <div class="form-group col-md-5">
                                     <label for="datetimepicker1">Need Completed By</label>
@@ -155,6 +155,32 @@
                                 <div class="form-group col-md-10">
                                     <label for="salesforceAccountOpportunity">Salesforce Account / Opportunity URL</label>
                                     <input type="text" class="form-control" id="salesforceAccountOpportunity" name="salesforceAccountOpportunity" placeholder="Link to Salesforce opportunity or account" required>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-md-5">
+                                    <label for="priority">Priority</label>
+                                    <input type="text" class="form-control" id="priority" name="priority" placeholder="Set the priority" required>
+                                </div>
+                                <div class="form-group col-md-5">
+                                    <label for="acceptedRejected">Accepted/Rejected</label>
+                                    <input type="text" class="form-control" id="acceptedRejected" name="acceptedRejected" placeholder="Accepted or Rejected" required>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-md-5">
+                                    <label for="status">Status</label>
+                                    <input type="text" class="form-control" id="status" name="status" placeholder="Set the status" required>
+                                </div>
+                                <div class="form-group col-md-5">
+                                    <label for="programManager">Program Manager</label>
+                                    <input type="text" class="form-control" id="programManager" name="programManager" placeholder="Program Manager" required>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-md-5">
+                                    <label for="time">Time</label>
+                                    <input type="text" class="form-control" id="time" name="time" placeholder="Set the time" required>
                                 </div>
                             </div>
                         </form>
@@ -260,10 +286,16 @@
             $("#editModal #requesterName").val("");
             $("#editModal #requesterEmail").val("");
             $("#editModal #requesterPhoneNumber").val("");
+            console.warn('Clearing date...');
             $("#editModal #datetimepicker1").datetimepicker("clear");
             $("#editModal #description").val("");
             $("#editModal #partnerCustomerName").val("");
             $("#editModal #salesforceAccountOpportunity").val("");
+            $("#editModal #priority").val("");
+            $("#editModal #acceptedRejected").val("");
+            $("#editModal #status").val("");
+            $("#editModal #programManager").val("");
+            $("#editModal #time").val("");
         }
 
         function loadRequests() {
@@ -443,9 +475,15 @@
                 date: new Date(request.needCompletedBy),
                 format: 'L'
             });
+            console.log("date: ", $("#editModal #datetimepicker1").datetimepicker("date"));
             $("#editModal #description").val(request.description);
             $("#editModal #partnerCustomerName").val(request.partnerCustomerName);
             $("#editModal #salesforceAccountOpportunity").val(request.salesforceAccountOpportunity);
+            $("#editModal #priority").val(request.priority);
+            $("#editModal #acceptedRejected").val(request.acceptedRejected);
+            $("#editModal #status").val(request.status);
+            $("#editModal #programManager").val(request.programManager);
+            $("#editModal #time").val(request.time);
 
             $("#editModal").modal("show");
         }
@@ -491,11 +529,17 @@
             let description = $("#editModal #description").val();
             let partnerCustomerName = $("#editModal #partnerCustomerName").val();
             let salesforceAccountOpportunity = $("#editModal #salesforceAccountOpportunity").val();
+            let priority = $("#editModal #priority").val();
+            let acceptedRejected = $("#editModal #acceptedRejected").val();
+            let status = $("#editModal #status").val();
+            let programManager = $("#editModal #programManager").val();
+            let time = $("#editModal #time").val();
 
             console.log(`Region: ${region}, subRegion: ${subRegion}, Product: ${product}, Request Type: ${requestType}, Requester Name: ${requesterName}, Requester Email: ${requesterEmail}, Requester Phone Number: ${requesterPhoneNumber}, Need Completed By: ${needCompletedBy}, Description: ${description}, Partner or Customer Name: ${partnerCustomerName}, Salesforce Opportunity: ${salesforceAccountOpportunity}`);
+            console.log(`Priority: ${priority}, Accepted/Rejected: ${acceptedRejected}, Status: ${status}, Program Manager: ${programManager}, Time: ${time}`);
 
             try {
-                await putRequest(id, region, subRegion, product, requestType, requesterName, requesterEmail, requesterPhoneNumber, needCompletedBy, description, partnerCustomerName, salesforceAccountOpportunity);
+                await putRequest(id, region, subRegion, product, requestType, requesterName, requesterEmail, requesterPhoneNumber, needCompletedBy, description, partnerCustomerName, salesforceAccountOpportunity, priority, acceptedRejected, status, programManager, time);
                 console.log('Success!');
                 showMessage("Request updated. Thanks!");
                 $("#editModal").modal("hide");

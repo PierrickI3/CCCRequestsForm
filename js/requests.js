@@ -9,12 +9,16 @@ async function postRequests(region, subRegion, product, requestType, requesterNa
     requestType: requestType,
     requesterName: requesterName,
     requesterEmail: requesterEmail,
-    requesterPhoneNumber: requesterPhoneNumber,
     needCompletedBy: needCompletedBy,
     description: description,
     partnerCustomerName: partnerCustomerName,
     salesforceAccountOpportunity: salesforceAccountOpportunity
   };
+
+    // Optional fields
+  if (requesterPhoneNumber.length > 0) {
+    data.requesterPhoneNumber = requesterPhoneNumber
+  }
 
   return await $.ajax({
     url: `${apiBasePath}/requests`,
@@ -42,7 +46,7 @@ async function postRequests(region, subRegion, product, requestType, requesterNa
     });
 }
 
-async function putRequest(id, region, subRegion, product, requestType, requesterName, requesterEmail, requesterPhoneNumber, needCompletedBy, description, partnerCustomerName, salesforceAccountOpportunity) {
+async function putRequest(id, region, subRegion, product, requestType, requesterName, requesterEmail, requesterPhoneNumber, needCompletedBy, description, partnerCustomerName, salesforceAccountOpportunity, priority, acceptedRejected, status, programManager, time) {
 
   var data = {
     id: id,
@@ -52,12 +56,21 @@ async function putRequest(id, region, subRegion, product, requestType, requester
     requestType: requestType,
     requesterName: requesterName,
     requesterEmail: requesterEmail,
-    requesterPhoneNumber: requesterPhoneNumber,
     needCompletedBy: needCompletedBy,
     description: description,
     partnerCustomerName: partnerCustomerName,
-    salesforceAccountOpportunity: salesforceAccountOpportunity
+    salesforceAccountOpportunity: salesforceAccountOpportunity,
+    priority: priority,
+    acceptedRejected: acceptedRejected,
+    status: status,
+    programManager: programManager,
+    time: time
   };
+
+  // Optional fields
+  if (requesterPhoneNumber.length > 0) {
+    data.requesterPhoneNumber = requesterPhoneNumber
+  }
 
   return await $.ajax({
     url: `${apiBasePath}/requests/${id}`,
