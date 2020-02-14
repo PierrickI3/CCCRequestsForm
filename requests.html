@@ -323,6 +323,8 @@
             $("#editModal #programManager").val("");
             $("#editModal #time").val("");
             $("#editModal #txtAcceptedRejectedNotes").val("");
+
+            validator.resetForm();
         }
 
         function refreshGrid() {
@@ -581,7 +583,7 @@
             initModal();
         });
 
-        $("#editModal #modal-form").validate({
+        let validator = $("#editModal #modal-form").validate({
             errorClass: "text-danger",
             successClass: "test-success"
         });
