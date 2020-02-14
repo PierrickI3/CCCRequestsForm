@@ -26,12 +26,21 @@
 </head>
 
 <body>
-    <nav class="navbar navbar-light bg-light">
-        <a class="navbar-brand" href="#">
-            <img src="images/genesys.png" width="30" height="30" class="d-inline-block align-top" alt="">
-            Cloud Competency Center Request Form
-        </a>
-        <a href="./index.html" class="admin btn btn-primary">Submit a new Request</a>
+    <nav class="navbar navbar-light bg-light navbar-fixed-top">
+        <ul class="nav navbar-nav">
+            <a class="navbar-brand" href="#">
+                <img src="images/genesys.png" width="30" height="30" class="d-inline-block align-top" alt="">
+                Cloud Competency Center Request Form
+            </a>
+        </ul>
+        <ul>
+            <ul class="nav navbar-nav" style="float: right">
+                <li><a href="./index.html" class="admin btn btn-primary ml-2">Submit a new Request</a></li>
+            </ul>
+            <ul class="nav navbar-nav" style="float: right">
+                <li><button id="refresh" class="admin btn btn-secondary"><em class="fa fa-refresh"></em></button></li>
+            </ul>
+        </ul>
     </nav>
 
     <div class="col-12 admin">
@@ -282,15 +291,7 @@
         init();
         async function init() {
             var userInfo = await getMe();
-
-            try {
-                requests.requests = await getRequests(region)
-                console.log(requests.requests);
-                window.requests = requests;
-                loadRequests();
-            } catch (error) {
-                console.error(error);
-            }
+            showRequests();
         }
 
         function initModal() {
@@ -314,7 +315,25 @@
             $("#editModal #time").val("");
         }
 
-        function loadRequests() {
+        async function loadRequests() {
+            try {
+                requests.requests = await getRequests(region)
+                console.log('Requests:', requests.requests);
+            } catch (error) {
+                console.error(error);
+            }
+        }
+
+        function refreshGrid() {
+            $("#basicgrid").jsGrid("loadData")
+        }
+
+        $("#refresh").on("click", (e) => {
+            e.preventDefault();
+            refreshGrid();
+        });
+
+        function showRequests() {
             console.log('Showing requests...');
             try {
 
@@ -374,6 +393,7 @@
                     loadIndicationDelay: 500,
                     loadMessage: "Loading...",
                     loadShading: true,
+                    autoload: true,
                     rowClick: function (args) {
                         showModal(args.item);
                     },
@@ -383,14 +403,18 @@
                             console.log('Deleting:', deletingRequest);
                             try {
                                 await deleteRequest(deletingRequest.id);
-                                init();
+                                refreshGrid();
                             } catch (error) {
                                 console.error(error);
                                 showMessage(error, true);
                             }
                         }
                     },
-                    controller: requests,
+                    controller: {
+                        loadData: function () {
+                            return getRequests(region);
+                        }
+                    },
                     noDataContent: "No Requests",
                     fields: [
                         {
@@ -510,8 +534,7 @@
         });
 
         $('#editModal').on('hidden.bs.modal', async () => {
-            $("#basicgrid").empty();
-            init();
+            refreshGrid();
             initModal();
         });
 
