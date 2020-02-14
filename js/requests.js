@@ -56,12 +56,15 @@ async function putRequest(id, region, subRegion, product, requestType, requester
     partnerCustomerName: partnerCustomerName,
     salesforceAccountOpportunity: salesforceAccountOpportunity,
     priority: priority,
-    acceptedRejected: acceptedRejected,
     status: status,
     programManager: programManager,
     time: time,
     acceptedRejectedNotes: acceptedRejectedNotes
   };
+
+  if (acceptedRejected.length > 0) {
+    data.acceptedRejected = acceptedRejected;
+  }
 
   return await $.ajax({
     url: `${apiBasePath}/requests/${id}`,
