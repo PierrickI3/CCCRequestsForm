@@ -279,18 +279,18 @@
         console.log('Region:', region);
 
         var requests = {
-            loadData: function (filter) {
-                return $.grep(this.requests, function (request) {
-                    return (!filter.requesterName || request.requesterName.indexOf(filter.requesterName) > -1)
-                        && (!filter.id || request.id.indexOf(filter.id) > -1)
-                        && (!filter.product || request.product.indexOf(filter.product) > -1)
-                        && (!filter.partnerCustomerName || request.partnerCustomerName.indexOf(filter.partnerCustomerName) > -1)
-                        && (!filter.partnerCustomerName || request.partnerCustomerName.indexOf(filter.partnerCustomerName) > -1)
-                        && (!filter.partnerCustomerName || request.partnerCustomerName.indexOf(filter.partnerCustomerName) > -1)
-                        && (!filter.partnerCustomerName || request.partnerCustomerName.indexOf(filter.partnerCustomerName) > -1)
-                        && (!filter.requesterEmail || request.requesterEmail.indexOf(filter.requesterEmail) > -1);
-                });
-            },
+            // loadData: function (filter) {
+            //     return $.grep(this.requests, function (request) {
+            //         return (!filter.requesterName || request.requesterName.indexOf(filter.requesterName) > -1)
+            //             && (!filter.id || request.id.indexOf(filter.id) > -1)
+            //             && (!filter.product || request.product.indexOf(filter.product) > -1)
+            //             && (!filter.partnerCustomerName || request.partnerCustomerName.indexOf(filter.partnerCustomerName) > -1)
+            //             && (!filter.partnerCustomerName || request.partnerCustomerName.indexOf(filter.partnerCustomerName) > -1)
+            //             && (!filter.partnerCustomerName || request.partnerCustomerName.indexOf(filter.partnerCustomerName) > -1)
+            //             && (!filter.partnerCustomerName || request.partnerCustomerName.indexOf(filter.partnerCustomerName) > -1)
+            //             && (!filter.requesterEmail || request.requesterEmail.indexOf(filter.requesterEmail) > -1);
+            //     });
+            // },
             updateItem: function (updatingRequest) { },
             deleteItem: function (deletingRequest) {
                 var requestIndex = $.inArray(deletingRequest, this.requests);
@@ -333,16 +333,6 @@
             $("#editModal #programManager").val("");
             $("#editModal #time").val("");
             $("#editModal #txtAcceptedRejectedNotes").val("");
-
-        }
-
-        async function loadRequests() {
-            try {
-                requests.requests = await getRequests(region)
-                console.log('Requests:', requests.requests);
-            } catch (error) {
-                console.error(error);
-            }
         }
 
         function refreshGrid() {
@@ -432,8 +422,28 @@
                         }
                     },
                     controller: {
-                        loadData: function () {
-                            return getRequests(region);
+                        loadData: async function (filter) {
+                            let hasFilter = false;
+                            for (var field in filter) {
+                                if (filter[field]) {
+                                    hasFilter = true;
+                                }
+                            }
+
+                            if (hasFilter) {
+                                return $.grep(requests.requests, function (request) {
+                                    return (!filter.id || request.id.toLowerCase().indexOf(filter.id.toLowerCase()) > -1)
+                                        && (!filter.region || request.region.toLowerCase().indexOf(filter.region.toLowerCase()) > -1)
+                                        && (!filter.subRegion || request.subRegion.toLowerCase().indexOf(filter.subRegion.toLowerCase()) > -1)
+                                        && (!filter.product || request.product.toLowerCase().indexOf(filter.product.toLowerCase()) > -1)
+                                        && (!filter.requestType || request.requestType.toLowerCase().indexOf(filter.requestType.toLowerCase()) > -1)
+                                        && (!filter.requesterName || request.requesterName.toLowerCase().indexOf(filter.requesterName.toLowerCase()) > -1)
+                                        && (!filter.partnerCustomerName || request.partnerCustomerName.toLowerCase().indexOf(filter.partnerCustomerName.toLowerCase()) > -1)
+                                });
+                            } else {
+                                requests.requests = await getRequests(region);
+                                return requests.requests;
+                            }
                         }
                     },
                     noDataContent: "No Requests",
@@ -478,7 +488,8 @@
                             itemTemplate: function (value, item) {
                                 return `${moment.utc(value).fromNow()} (${moment.utc(value).calendar()})`;
                             },
-                            width: "auto"
+                            width: "auto",
+                            filtering: false
                         }, {
                             name: "partnerCustomerName",
                             title: "Partner/Customer",
@@ -491,7 +502,8 @@
                             itemTemplate: function (value, item) {
                                 return `<a href="${value}" target="_blank">Click Here</a>`;
                             },
-                            width: "auto"
+                            width: "auto",
+                            filtering: false
                         }, {
                             name: "createdAt",
                             title: "Created",
@@ -585,8 +597,6 @@
             $("#editModal #bAcceptedRequest").val("Rejected");
             $("#editModal #submit").click();
         });
-
-
 
         $("#editModal #submit").on("click", async (e) => {
             e.preventDefault();
