@@ -142,6 +142,10 @@
                                 </div>
                             </div>
                             <div class="form-row">
+                                <div class="form-group col-md-5">
+                                    <label for="requesterPhoneNumber">Requester Phone #</label>
+                                    <input type="text" class="form-control" id="requesterPhoneNumber" name="requesterPhoneNumber" placeholder="Your Phone Number" required>
+                                </div>
                                 <div class="form-group col-md-3">
                                     <label for="datepicker">Need Completed By</label>
                                     <div class="input-group date">
@@ -269,18 +273,6 @@
         $("#region").text(region);
 
         var requests = {
-            // loadData: function (filter) {
-            //     return $.grep(this.requests, function (request) {
-            //         return (!filter.requesterName || request.requesterName.indexOf(filter.requesterName) > -1)
-            //             && (!filter.id || request.id.indexOf(filter.id) > -1)
-            //             && (!filter.product || request.product.indexOf(filter.product) > -1)
-            //             && (!filter.partnerCustomerName || request.partnerCustomerName.indexOf(filter.partnerCustomerName) > -1)
-            //             && (!filter.partnerCustomerName || request.partnerCustomerName.indexOf(filter.partnerCustomerName) > -1)
-            //             && (!filter.partnerCustomerName || request.partnerCustomerName.indexOf(filter.partnerCustomerName) > -1)
-            //             && (!filter.partnerCustomerName || request.partnerCustomerName.indexOf(filter.partnerCustomerName) > -1)
-            //             && (!filter.requesterEmail || request.requesterEmail.indexOf(filter.requesterEmail) > -1);
-            //     });
-            // },
             updateItem: function (updatingRequest) { },
             deleteItem: function (deletingRequest) {
                 var requestIndex = $.inArray(deletingRequest, this.requests);
@@ -312,7 +304,7 @@
             $("#editModal #requestType").val("");
             $("#editModal #requesterName").val("");
             $("#editModal #requesterEmail").val("");
-            console.log('Clearing date...');
+            $("#editModal #requesterPhoneNumber").val("");
             $("#editModal #datepicker").datepicker('update', '');
             $("#editModal #description").val("");
             $("#editModal #partnerCustomerName").val("");
@@ -324,7 +316,7 @@
             $("#editModal #time").val("");
             $("#editModal #txtAcceptedRejectedNotes").val("");
 
-            validator.resetForm();
+            validator.resetForm(); // Reset validation errors
         }
 
         function refreshGrid() {
@@ -556,6 +548,7 @@
             $("#editModal #requestType").val(request.requestType);
             $("#editModal #requesterName").val(request.requesterName);
             $("#editModal #requesterEmail").val(request.requesterEmail);
+            $("#editModal #requesterPhoneNumber").val(request.requesterPhoneNumber);
             $("#editModal #datepicker").datepicker('update', new Date(request.needCompletedBy));
             $("#editModal #description").val(request.description);
             $("#editModal #partnerCustomerName").val(request.partnerCustomerName);
@@ -615,6 +608,7 @@
             let requestType = $("#editModal #requestType").val();
             let requesterName = $("#editModal #requesterName").val();
             let requesterEmail = $("#editModal #requesterEmail").val();
+            let requesterPhoneNumber = $("#editModal #requesterPhoneNumber").val();
             let needCompletedBy = moment($("#datepicker").datepicker('getDate')).format("YYYY-MM-DDT00:00:00.000") + "Z";
             let description = $("#editModal #description").val();
             let partnerCustomerName = $("#editModal #partnerCustomerName").val();
@@ -628,11 +622,11 @@
 
             if (acceptedRejectedNotes === "") acceptedRejectedNotes = "N/A";
 
-            console.log(`Region: ${region}, subRegion: ${subRegion}, Product: ${product}, Request Type: ${requestType}, Requester Name: ${requesterName}, Requester Email: ${requesterEmail}, Need Completed By: ${needCompletedBy}, Description: ${description}, Partner or Customer Name: ${partnerCustomerName}, Salesforce Opportunity: ${salesforceAccountOpportunity}`);
+            console.log(`Region: ${region}, subRegion: ${subRegion}, Product: ${product}, Request Type: ${requestType}, Requester Name: ${requesterName}, Requester Email: ${requesterEmail}, Requester Phone Number: ${requesterPhoneNumber}, Need Completed By: ${needCompletedBy}, Description: ${description}, Partner or Customer Name: ${partnerCustomerName}, Salesforce Opportunity: ${salesforceAccountOpportunity}`);
             console.log(`Priority: ${priority}, Accepted/Rejected: ${acceptedRejected}, Status: ${status}, Program Manager: ${programManager}, Time: ${time}, AcceptedRejectedNotes: ${acceptedRejectedNotes}`);
 
             try {
-                await putRequest(id, region, subRegion, product, requestType, requesterName, requesterEmail, needCompletedBy, description, partnerCustomerName, salesforceAccountOpportunity, priority, acceptedRejected, status, programManager, time, acceptedRejectedNotes);
+                await putRequest(id, region, subRegion, product, requestType, requesterName, requesterEmail, requesterPhoneNumber, needCompletedBy, description, partnerCustomerName, salesforceAccountOpportunity, priority, acceptedRejected, status, programManager, time, acceptedRejectedNotes);
                 console.log('Success!');
                 showMessage("Request updated. Thanks!");
                 $("#editModal").modal("hide");

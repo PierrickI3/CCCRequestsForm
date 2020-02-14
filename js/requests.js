@@ -1,6 +1,6 @@
 const apiBasePath = "https://drbojb15ma.execute-api.eu-central-1.amazonaws.com/dev";
 
-async function postRequests(region, subRegion, product, requestType, requesterName, requesterEmail, needCompletedBy, description, partnerCustomerName, salesforceAccountOpportunity) {
+async function postRequests(region, subRegion, product, requestType, requesterName, requesterEmail, requesterPhoneNumber, needCompletedBy, description, partnerCustomerName, salesforceAccountOpportunity) {
 
   var data = {
     region: region,
@@ -9,11 +9,22 @@ async function postRequests(region, subRegion, product, requestType, requesterNa
     requestType: requestType,
     requesterName: requesterName,
     requesterEmail: requesterEmail,
+    requesterPhoneNumber: requesterPhoneNumber,
     needCompletedBy: needCompletedBy,
-    description: description,
-    partnerCustomerName: partnerCustomerName,
-    salesforceAccountOpportunity: salesforceAccountOpportunity
+    description: description
   };
+
+  //#region Optional fields
+
+  if (partnerCustomerName.length > 0) {
+    data.partnerCustomerName = partnerCustomerName
+  }
+
+  if (salesforceAccountOpportunity.length > 0) {
+    data.salesforceAccountOpportunity = salesforceAccountOpportunity
+  }
+  
+  //#endregion
 
   return await $.ajax({
     url: `${apiBasePath}/requests`,
@@ -41,7 +52,7 @@ async function postRequests(region, subRegion, product, requestType, requesterNa
     });
 }
 
-async function putRequest(id, region, subRegion, product, requestType, requesterName, requesterEmail, needCompletedBy, description, partnerCustomerName, salesforceAccountOpportunity, priority, acceptedRejected, status, programManager, time, acceptedRejectedNotes) {
+async function putRequest(id, region, subRegion, product, requestType, requesterName, requesterEmail, requesterPhoneNumber, needCompletedBy, description, partnerCustomerName, salesforceAccountOpportunity, priority, acceptedRejected, status, programManager, time, acceptedRejectedNotes) {
 
   var data = {
     id: id,
@@ -51,20 +62,34 @@ async function putRequest(id, region, subRegion, product, requestType, requester
     requestType: requestType,
     requesterName: requesterName,
     requesterEmail: requesterEmail,
+    requesterPhoneNumber: requesterPhoneNumber,
     needCompletedBy: needCompletedBy,
     description: description,
-    partnerCustomerName: partnerCustomerName,
-    salesforceAccountOpportunity: salesforceAccountOpportunity,
     priority: priority,
     status: status,
     programManager: programManager,
-    time: time,
     acceptedRejectedNotes: acceptedRejectedNotes
   };
+
+  //#region Optional fields
 
   if (acceptedRejected.length > 0) {
     data.acceptedRejected = acceptedRejected;
   }
+
+  if (time.length > 0) {
+    data.time = time;
+  }
+
+  if (partnerCustomerName.length > 0) {
+    data.partnerCustomerName = partnerCustomerName
+  }
+
+  if (salesforceAccountOpportunity.length > 0) {
+    data.salesforceAccountOpportunity = salesforceAccountOpportunity
+  }
+  
+  //#endregion
 
   return await $.ajax({
     url: `${apiBasePath}/requests/${id}`,
