@@ -154,10 +154,6 @@
                     <ul><i>Enter the region you are located in.</i></ul>
                     <li>Sub-region</li>
                     <ul><i>Enter the sub-region you are located in.</i></ul>
-                    <li>Requester Phone #</li>
-                    <ul><i>Your phone number will be automatically populated from your Genesys Cloud profile. If you
-                            would like us to contact you on another number, please enter it and be sure to include your
-                            country code, for example +447557123456.</i></ul>
                     <li>Need Completed By</li>
                     <ul><i>Enter a date you require the work completed. Please note, this is not a guarantee and will be
                             discussed with the Competence Centre Program Manager when they contact you.</i></ul>
@@ -292,9 +288,14 @@
             for (let subregion of regions[$("#region").val()]) {
                 $("<option/>", { value: subregion }).text(subregion).appendTo("#subRegion");
             }
+            updateRequestTypeBasedOnRegion();
         });
 
         $("#product").on("change", () => {
+            updateRequestTypeBasedOnRegion();
+        });
+
+        function updateRequestTypeBasedOnRegion() {
             if ($("#region").val() === "EMEA" && ($("#product").val() == "Genesys Engage" || $("#product").val() == "Genesys Engage Cloud")) {
                 $("#requestType").empty();
                 for (let aRequest of requestsType[$("#region").val()]) {
@@ -306,9 +307,7 @@
                     $("<option/>", { value: aRequest }).text(aRequest).appendTo("#requestType");
                 }
             }
-
-        });
-
+        }
 
         $("#modal-form").validate({
             errorClass: "text-danger",
