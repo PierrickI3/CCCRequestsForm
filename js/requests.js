@@ -41,7 +41,7 @@ async function postRequests(region, subRegion, product, requestType, requesterNa
     });
 }
 
-async function putRequest(id, region, subRegion, product, requestType, requesterName, requesterEmail, needCompletedBy, description, partnerCustomerName, salesforceAccountOpportunity, priority, acceptedRejected, status, programManager, time) {
+async function putRequest(id, region, subRegion, product, requestType, requesterName, requesterEmail, needCompletedBy, description, partnerCustomerName, salesforceAccountOpportunity, priority, acceptedRejected, status, programManager, time, acceptedRejectedNotes) {
 
   var data = {
     id: id,
@@ -59,7 +59,8 @@ async function putRequest(id, region, subRegion, product, requestType, requester
     acceptedRejected: acceptedRejected,
     status: status,
     programManager: programManager,
-    time: time
+    time: time,
+    acceptedRejectedNotes: acceptedRejectedNotes
   };
 
   return await $.ajax({

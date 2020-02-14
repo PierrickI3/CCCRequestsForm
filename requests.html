@@ -7,14 +7,17 @@
     <title>CCC Request Form</title>
     <link rel="shortcut icon" href="/favicon.ico">
     <!-- Bootstrap -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <!-- Bootstrap Date/Time Picker -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.1/css/tempusdominus-bootstrap-4.min.css" />
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.1/css/tempusdominus-bootstrap-4.min.css" />
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <!-- Editable CSS -->
     <link type="text/css" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jsgrid/1.5.3/jsgrid.min.css" />
-    <link type="text/css" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jsgrid/1.5.3/jsgrid-theme.min.css" />
+    <link type="text/css" rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/jsgrid/1.5.3/jsgrid-theme.min.css" />
     <!-- jQuery Toast -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/jquery-toast-plugin/1.3.2/jquery.toast.min.css" rel="stylesheet">
     <!-- Custom CSS -->
@@ -42,7 +45,7 @@
     <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
-                <div class="modal-header">
+                <div class="modal-header" id="modal-header">
                     <h5 id="title" class="modal-title">Request</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
@@ -93,20 +96,28 @@
                                         <option value="" disabled selected>Select a Request Type</option>
                                         <option value="Additional Privacy Support">Additional Privacy Support</option>
                                         <option value="Additional Security Support">Additional Security Support</option>
-                                        <option value="Associate SC & AE Enablement">Associate SC & AE Enablement</option>
+                                        <option value="Associate SC & AE Enablement">Associate SC & AE Enablement
+                                        </option>
                                         <option value="Cloud Migrations">Cloud Migrations</option>
-                                        <option value="Critical Situation Management">Critical Situation Management</option>
-                                        <option value="End to End Partner Enablement">End to End Partner Enablement</option>
-                                        <option value="Innovation (Custom Demos, Integrations, Beta Testing)">Innovation (Custom
+                                        <option value="Critical Situation Management">Critical Situation Management
+                                        </option>
+                                        <option value="End to End Partner Enablement">End to End Partner Enablement
+                                        </option>
+                                        <option value="Innovation (Custom Demos, Integrations, Beta Testing)">Innovation
+                                            (Custom
                                             Demos,
                                             Integrations, Beta Testing)</option>
-                                        <option value="Must Win/Strategic Opportunity Support">Must Win/Strategic Opportunity
+                                        <option value="Must Win/Strategic Opportunity Support">Must Win/Strategic
+                                            Opportunity
                                             Support
                                         </option>
-                                        <option value="Partner Enablement">Partner Enablement (Summits/Events/Webinars)</option>
-                                        <option value="POCs & Pilots for Strategic Opportunities">POCs & Pilots for Strategic
+                                        <option value="Partner Enablement">Partner Enablement (Summits/Events/Webinars)
+                                        </option>
+                                        <option value="POCs & Pilots for Strategic Opportunities">POCs & Pilots for
+                                            Strategic
                                             Opportunities</option>
-                                        <option value="Technical Design/Architecture Review">Technical Design/Architecture
+                                        <option value="Technical Design/Architecture Review">Technical
+                                            Design/Architecture
                                             Review
                                         </option>
                                         <option value="Test Drive">Test Drive</option>
@@ -117,40 +128,49 @@
                             <div class="form-row">
                                 <div class="form-group col-md-5">
                                     <label for="requesterName">Requester Name</label>
-                                    <input type="text" class="form-control" id="requesterName" name="requesterName" placeholder="Your Name" required>
+                                    <input type="text" class="form-control" id="requesterName" name="requesterName"
+                                        placeholder="Your Name" required>
                                 </div>
                                 <div class="form-group col-md-5">
                                     <label for="requesterEmail">Requester Email</label>
-                                    <input type="text" class="form-control" id="requesterEmail" name="requesterEmail" placeholder="Your Email Address" required>
+                                    <input type="text" class="form-control" id="requesterEmail" name="requesterEmail"
+                                        placeholder="Your Email Address" required>
                                 </div>
                             </div>
                             <div class="form-row">
                                 <div class="form-group col-md-5">
                                     <label for="datetimepicker1">Need Completed By</label>
                                     <div class="input-group date" id="datetimepicker1" data-target-input="nearest">
-                                        <div class="input-group-append" data-target="#datetimepicker1" data-toggle="datetimepicker">
+                                        <div class="input-group-append" data-target="#datetimepicker1"
+                                            data-toggle="datetimepicker">
                                             <div class="input-group-text"><em class="fa fa-calendar"></em></div>
                                         </div>
-                                        <input type="text" class="form-control datetimepicker-input" data-target="#datetimepicker1" required />
+                                        <input type="text" class="form-control datetimepicker-input"
+                                            data-target="#datetimepicker1" required />
                                     </div>
                                 </div>
                             </div>
                             <div class="form-row">
                                 <div class="form-group col-md-10">
                                     <label for="description">Description</label>
-                                    <textarea class="form-control" id="description" name="description" placeholder="Describe your request" required></textarea>
+                                    <textarea class="form-control" id="description" name="description"
+                                        placeholder="Describe your request" required></textarea>
                                 </div>
                             </div>
                             <div class="form-row">
                                 <div class="form-group col-md-10">
                                     <label for="partnerCustomerName">Partner and/or Customer Name</label>
-                                    <input type="text" class="form-control" id="partnerCustomerName" name="partnerCustomerName" placeholder="Partner and/or Customer Name" required>
+                                    <input type="text" class="form-control" id="partnerCustomerName"
+                                        name="partnerCustomerName" placeholder="Partner and/or Customer Name" required>
                                 </div>
                             </div>
                             <div class="form-row">
                                 <div class="form-group col-md-10">
-                                    <label for="salesforceAccountOpportunity">Salesforce Account / Opportunity URL</label>
-                                    <input type="text" class="form-control" id="salesforceAccountOpportunity" name="salesforceAccountOpportunity" placeholder="Link to Salesforce opportunity or account" required>
+                                    <label for="salesforceAccountOpportunity">Salesforce Account / Opportunity
+                                        URL</label>
+                                    <input type="text" class="form-control" id="salesforceAccountOpportunity"
+                                        name="salesforceAccountOpportunity"
+                                        placeholder="Link to Salesforce opportunity or account" required>
                                 </div>
                             </div>
                             <div class="form-row">
@@ -169,39 +189,55 @@
                                         <option value="" disabled selected>Select a Status</option>
                                         <option value="Open">Open</option>
                                         <option value="On Hold">On Hold</option>
-                                        <option value="Waiting On Additional Information">Waiting On Additional Information</option>
+                                        <option value="Waiting On Additional Information">Waiting On Additional
+                                            Information</option>
                                         <option value="Closed">Closed</option>
                                     </select>
                                 </div>
                                 <div class="form-group col-md-4">
                                     <label for="programManager">Program Manager</label>
-                                    <input type="text" class="form-control" id="programManager" name="programManager" placeholder="Program Manager" required>
+                                    <input type="text" class="form-control" id="programManager" name="programManager"
+                                        placeholder="Program Manager" required>
                                 </div>
                             </div>
                             <div class="form-row">
-                                <div class="form-group col-md-5">
-                                    <label for="acceptedRejected">Accepted/Rejected</label>
-                                    <select id="acceptedRejected" name="acceptedRejected" class="form-control" required>
-                                        <option value="" disabled selected>Accepted/Rejected?</option>
-                                        <option value="Accepted">Accepted</option>
-                                        <option value="Rejected">Rejected</option>
-                                    </select>
+                                <label id="bAcceptedRequest" hidden></label>
+                                <div class="form-group col-md-8">
+                                    <label id="lblAcceptedRejectedNotes" for="description">Accepted / Rejected
+                                        Notes</label>
+                                    <textarea class="form-control" id="txtAcceptedRejectedNotes" name="description"
+                                        placeholder="Notes" required></textarea>
                                 </div>
-                            </div>
-                            <div class="form-row">
-                                <div class="form-group col-md-5">
+                                <div class="form-group col-md-2">
                                     <label for="time">Time</label>
-                                    <input type="text" class="form-control" id="time" name="time" placeholder="Set the time" required>
+                                    <input type="number" class="form-control" id="time" name="time" placeholder="Hours"
+                                        required>
+
                                 </div>
                             </div>
                         </form>
 
-                    </div>
+                        <div class="modal-footer">
+                            <div class="container-fluid">
+                                <div class="form-row">
+                                    <div class="form-group col-sm-5 push-left">
 
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button id="submit" type="submit" class="btn btn-primary">Save</button>
-                    </div>
+                                        <button type="button" id="btnRejectRequest"
+                                            class="btn btn-danger">Reject</button>
+                                        <button type="button" id="btnAcceptRequest"
+                                            class="btn btn-success">Accept</button>
+
+                                    </div>
+                                    <div class="form-group col-sm-5">
+                                        <button type="button" class="btn btn-secondary"
+                                            data-dismiss="modal">Close</button>
+                                        <button id="submit" type="submit" class="btn btn-primary">Save</button>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </div>
                 </form>>
             </div>
         </div>
@@ -211,14 +247,18 @@
     <noscript>You need to enable JavaScript to run this app.</noscript>
     <!-- Bootstrap core JavaScript-->
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
     <!-- Core plugin JavaScript-->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"></script>
     <!-- Moment.js -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js" integrity="sha256-4iQZ6BVL4qNKlQ27TExEhBN1HFPvAvAMbFavKKosSWQ=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"
+        integrity="sha256-4iQZ6BVL4qNKlQ27TExEhBN1HFPvAvAMbFavKKosSWQ=" crossorigin="anonymous"></script>
     <!-- Bootstrap Date/Time Picker -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.1/js/tempusdominus-bootstrap-4.min.js"></script>
+    <script
+        src="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.1/js/tempusdominus-bootstrap-4.min.js"></script>
     <!-- Genesys Cloud -->
     <script src="https://sdk-cdn.mypurecloud.com/javascript/61.0.0/purecloud-platform-client-v2.min.js"></script>
     <!-- Editable -->
@@ -302,10 +342,12 @@
             $("#editModal #partnerCustomerName").val("");
             $("#editModal #salesforceAccountOpportunity").val("");
             $("#editModal #priority").val("");
-            $("#editModal #acceptedRejected").val("");
+            $("#editModal #bAcceptedRequest").val("");
             $("#editModal #status").val("");
             $("#editModal #programManager").val("");
             $("#editModal #time").val("");
+            $("#editModal #txtAcceptedRejectedNotes").val("");
+
         }
 
         function loadRequests() {
@@ -471,6 +513,17 @@
 
         function showModal(request) {
             console.log("Showing modal for:", request);
+            if (request.acceptedRejected == "Accepted")
+                $("#modal-header").css('background', 'lightgreen')
+            else if (request.acceptedRejected == "Rejected")
+                $("#modal-header").css('background', 'red')
+
+
+            if (request.acceptedRejected)
+                $("#editModal #title").text(`Request (${request.acceptedRejected})`)
+            else
+                $("#editModal #title").text(`Request (not handled)`);
+
             $("#editModal #id").val(request.id);
             $("#editModal #region").val(request.region);
             $("#editModal #region").change();
@@ -489,11 +542,11 @@
             $("#editModal #partnerCustomerName").val(request.partnerCustomerName);
             $("#editModal #salesforceAccountOpportunity").val(request.salesforceAccountOpportunity);
             $("#editModal #priority").val(request.priority);
-            $("#editModal #acceptedRejected").val(request.acceptedRejected);
+            $("#editModal #bAcceptedRequest").val(request.acceptedRejected);
             $("#editModal #status").val(request.status);
             $("#editModal #programManager").val(request.programManager);
             $("#editModal #time").val(request.time);
-
+            $("#editModal #txtAcceptedRejectedNotes").val(request.acceptedRejectedNotes);
             $("#editModal").modal("show");
         }
 
@@ -519,6 +572,19 @@
             successClass: "test-success"
         });
 
+        $("#btnAcceptRequest").on("click", async (e) => {
+            $("#editModal #bAcceptedRequest").val("Accepted");
+            $("#editModal #submit").click();
+
+        });
+
+        $("#btnRejectRequest").on("click", async (e) => {
+            $("#editModal #bAcceptedRequest").val("Rejected");
+            $("#editModal #submit").click();
+        });
+
+
+
         $("#editModal #submit").on("click", async (e) => {
             e.preventDefault();
             if (!$("#modal-form").valid()) {
@@ -538,16 +604,17 @@
             let partnerCustomerName = $("#editModal #partnerCustomerName").val();
             let salesforceAccountOpportunity = $("#editModal #salesforceAccountOpportunity").val();
             let priority = $("#editModal #priority").val();
-            let acceptedRejected = $("#editModal #acceptedRejected").val();
+            let acceptedRejected = $("#editModal #bAcceptedRequest").val();
+            let acceptedRejectedNotes = $("#editModal #txtAcceptedRejectedNotes").val();
             let status = $("#editModal #status").val();
             let programManager = $("#editModal #programManager").val();
             let time = $("#editModal #time").val();
 
             console.log(`Region: ${region}, subRegion: ${subRegion}, Product: ${product}, Request Type: ${requestType}, Requester Name: ${requesterName}, Requester Email: ${requesterEmail}, Need Completed By: ${needCompletedBy}, Description: ${description}, Partner or Customer Name: ${partnerCustomerName}, Salesforce Opportunity: ${salesforceAccountOpportunity}`);
-            console.log(`Priority: ${priority}, Accepted/Rejected: ${acceptedRejected}, Status: ${status}, Program Manager: ${programManager}, Time: ${time}`);
+            console.log(`Priority: ${priority}, Accepted/Rejected: ${acceptedRejected}, Status: ${status}, Program Manager: ${programManager}, Time: ${time}, AcceptedRejectedNotes: ${acceptedRejectedNotes}`);
 
             try {
-                await putRequest(id, region, subRegion, product, requestType, requesterName, requesterEmail, needCompletedBy, description, partnerCustomerName, salesforceAccountOpportunity, priority, acceptedRejected, status, programManager, time);
+                await putRequest(id, region, subRegion, product, requestType, requesterName, requesterEmail, needCompletedBy, description, partnerCustomerName, salesforceAccountOpportunity, priority, acceptedRejected, status, programManager, time, acceptedRejectedNotes);
                 console.log('Success!');
                 showMessage("Request updated. Thanks!");
                 $("#editModal").modal("hide");
