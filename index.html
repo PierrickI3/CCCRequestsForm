@@ -98,10 +98,6 @@
                         </div>
                     </div>
                     <div class="form-row">
-                        <div class="form-group col-md-5">
-                            <label for="requesterPhoneNumber">Requester Phone #</label>
-                            <input type="text" class="form-control" id="requesterPhoneNumber" name="requesterPhoneNumber" placeholder="Your Phone Number">
-                        </div>
                         <div class="form-group col-md-3">
                             <label for="datetimepicker1">Need Completed By</label>
                             <div class="input-group date" id="datetimepicker1" data-target-input="nearest">
@@ -220,7 +216,6 @@
             // Populate user info
             $("#requesterName").val(userInfo.name);
             $("#requesterEmail").val(userInfo.mail);
-            $("#requesterPhoneNumber").val(userInfo.phone);
 
             // Show Admin fields?
             if (userInfo.groups.some(g => adminGroups["EMEA"].includes(g))) {
@@ -265,16 +260,15 @@
             let requestType = $("#requestType").val();
             let requesterName = $("#requesterName").val();
             let requesterEmail = $("#requesterEmail").val();
-            let requesterPhoneNumber = $("#requesterPhoneNumber").val();
             let needCompletedBy = moment.utc($("#datetimepicker1").data("datetimepicker").date()).format("YYYY-MM-DDT00:00:00.000") + "Z";
             let description = $("#description").val();
             let partnerCustomerName = $("#partnerCustomerName").val();
             let salesforceAccountOpportunity = $("#salesforceAccountOpportunity").val();
 
-            console.log(`Region: ${region}, subRegion: ${subRegion}, Product: ${product}, Request Type: ${requestType}, Requester Name: ${requesterName}, Requester Email: ${requesterEmail}, Requester Phone Number: ${requesterPhoneNumber}, Need Completed By: ${needCompletedBy}, Description: ${description}, Partner or Customer Name: ${partnerCustomerName}, Salesforce Opportunity: ${salesforceAccountOpportunity}`);
+            console.log(`Region: ${region}, subRegion: ${subRegion}, Product: ${product}, Request Type: ${requestType}, Requester Name: ${requesterName}, Requester Email: ${requesterEmail}, Need Completed By: ${needCompletedBy}, Description: ${description}, Partner or Customer Name: ${partnerCustomerName}, Salesforce Opportunity: ${salesforceAccountOpportunity}`);
 
             try {
-                await postRequests(region, subRegion, product, requestType, requesterName, requesterEmail, requesterPhoneNumber, needCompletedBy, description, partnerCustomerName, salesforceAccountOpportunity);
+                await postRequests(region, subRegion, product, requestType, requesterName, requesterEmail, needCompletedBy, description, partnerCustomerName, salesforceAccountOpportunity);
                 console.log('Success!');
                 showMessage("Request submitted. Thanks!");
                 sendNotification(`> :loudspeaker: New CCC Request for **${product}** received from [@${userInfo.name}](#/person/${userInfo.id}) (${requestType}) `, region);

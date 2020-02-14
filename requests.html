@@ -126,10 +126,6 @@
                             </div>
                             <div class="form-row">
                                 <div class="form-group col-md-5">
-                                    <label for="requesterPhoneNumber">Requester Phone #</label>
-                                    <input type="text" class="form-control" id="requesterPhoneNumber" name="requesterPhoneNumber" placeholder="Your Phone Number">
-                                </div>
-                                <div class="form-group col-md-5">
                                     <label for="datetimepicker1">Need Completed By</label>
                                     <div class="input-group date" id="datetimepicker1" data-target-input="nearest">
                                         <div class="input-group-append" data-target="#datetimepicker1" data-toggle="datetimepicker">
@@ -300,8 +296,7 @@
             $("#editModal #requestType").val("");
             $("#editModal #requesterName").val("");
             $("#editModal #requesterEmail").val("");
-            $("#editModal #requesterPhoneNumber").val("");
-            console.warn('Clearing date...');
+            console.log('Clearing date...');
             $("#editModal #datetimepicker1").datetimepicker("clear");
             $("#editModal #description").val("");
             $("#editModal #partnerCustomerName").val("");
@@ -484,7 +479,6 @@
             $("#editModal #requestType").val(request.requestType);
             $("#editModal #requesterName").val(request.requesterName);
             $("#editModal #requesterEmail").val(request.requesterEmail);
-            $("#editModal #requesterPhoneNumber").val(request.requesterPhoneNumber);
             console.log('Set date to:', request.needCompletedBy);
             $("#editModal #datetimepicker1").datetimepicker({
                 date: new Date(request.needCompletedBy),
@@ -539,7 +533,6 @@
             let requestType = $("#editModal #requestType").val();
             let requesterName = $("#editModal #requesterName").val();
             let requesterEmail = $("#editModal #requesterEmail").val();
-            let requesterPhoneNumber = $("#editModal #requesterPhoneNumber").val();
             let needCompletedBy = moment($("#datetimepicker1").data("datetimepicker").date()).format("YYYY-MM-DDTHH:mm:ss.SSS") + "Z";
             let description = $("#editModal #description").val();
             let partnerCustomerName = $("#editModal #partnerCustomerName").val();
@@ -550,11 +543,11 @@
             let programManager = $("#editModal #programManager").val();
             let time = $("#editModal #time").val();
 
-            console.log(`Region: ${region}, subRegion: ${subRegion}, Product: ${product}, Request Type: ${requestType}, Requester Name: ${requesterName}, Requester Email: ${requesterEmail}, Requester Phone Number: ${requesterPhoneNumber}, Need Completed By: ${needCompletedBy}, Description: ${description}, Partner or Customer Name: ${partnerCustomerName}, Salesforce Opportunity: ${salesforceAccountOpportunity}`);
+            console.log(`Region: ${region}, subRegion: ${subRegion}, Product: ${product}, Request Type: ${requestType}, Requester Name: ${requesterName}, Requester Email: ${requesterEmail}, Need Completed By: ${needCompletedBy}, Description: ${description}, Partner or Customer Name: ${partnerCustomerName}, Salesforce Opportunity: ${salesforceAccountOpportunity}`);
             console.log(`Priority: ${priority}, Accepted/Rejected: ${acceptedRejected}, Status: ${status}, Program Manager: ${programManager}, Time: ${time}`);
 
             try {
-                await putRequest(id, region, subRegion, product, requestType, requesterName, requesterEmail, requesterPhoneNumber, needCompletedBy, description, partnerCustomerName, salesforceAccountOpportunity, priority, acceptedRejected, status, programManager, time);
+                await putRequest(id, region, subRegion, product, requestType, requesterName, requesterEmail, needCompletedBy, description, partnerCustomerName, salesforceAccountOpportunity, priority, acceptedRejected, status, programManager, time);
                 console.log('Success!');
                 showMessage("Request updated. Thanks!");
                 $("#editModal").modal("hide");
