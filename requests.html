@@ -7,11 +7,9 @@
     <title>CCC Request Form</title>
     <link rel="shortcut icon" href="/favicon.ico">
     <!-- Bootstrap -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
-        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-    <!-- Bootstrap Date/Time Picker -->
-    <link rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.1/css/tempusdominus-bootstrap-4.min.css" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <!-- Bootstrap DatePicker -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker3.min.css" integrity="sha256-FAOaXTpl90/K8cXmSdsskbQN3nKYulhCpPbcFzGTWKI=" crossorigin="anonymous" />
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <!-- Editable CSS -->
@@ -29,12 +27,21 @@
 </head>
 
 <body>
-    <nav class="navbar navbar-light bg-light">
-        <a class="navbar-brand" href="#">
-            <img src="images/genesys.png" width="30" height="30" class="d-inline-block align-top" alt="">
-            Cloud Competency Center Request Form
-        </a>
-        <a href="./index.html" class="admin btn btn-primary">Submit a new Request</a>
+    <nav class="navbar navbar-light bg-light navbar-fixed-top">
+        <ul class="nav navbar-nav">
+            <a class="navbar-brand" href="#">
+                <img src="images/genesys.png" width="30" height="30" class="d-inline-block align-top" alt="">
+                Cloud Competency Center Request Form
+            </a>
+        </ul>
+        <ul>
+            <ul class="nav navbar-nav" style="float: right">
+                <li><a href="./index.html" class="admin btn btn-primary ml-2">Submit a new Request</a></li>
+            </ul>
+            <ul class="nav navbar-nav" style="float: right">
+                <li><button id="refresh" class="admin btn btn-secondary"><em class="fa fa-refresh"></em></button></li>
+            </ul>
+        </ul>
     </nav>
 
     <div class="col-12 admin">
@@ -138,15 +145,10 @@
                                 </div>
                             </div>
                             <div class="form-row">
-                                <div class="form-group col-md-5">
-                                    <label for="datetimepicker1">Need Completed By</label>
-                                    <div class="input-group date" id="datetimepicker1" data-target-input="nearest">
-                                        <div class="input-group-append" data-target="#datetimepicker1"
-                                            data-toggle="datetimepicker">
-                                            <div class="input-group-text"><em class="fa fa-calendar"></em></div>
-                                        </div>
-                                        <input type="text" class="form-control datetimepicker-input"
-                                            data-target="#datetimepicker1" required />
+                                <div class="form-group col-md-3">
+                                    <label for="datepicker">Need Completed By</label>
+                                    <div class="input-group date">
+                                        <input type="text" id="datepicker" class="form-control" required />
                                     </div>
                                 </div>
                             </div>
@@ -254,11 +256,9 @@
     <!-- Core plugin JavaScript-->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"></script>
     <!-- Moment.js -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"
-        integrity="sha256-4iQZ6BVL4qNKlQ27TExEhBN1HFPvAvAMbFavKKosSWQ=" crossorigin="anonymous"></script>
-    <!-- Bootstrap Date/Time Picker -->
-    <script
-        src="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.1/js/tempusdominus-bootstrap-4.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js" integrity="sha256-4iQZ6BVL4qNKlQ27TExEhBN1HFPvAvAMbFavKKosSWQ=" crossorigin="anonymous"></script>
+    <!-- Bootstrap DatePicker -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js" integrity="sha256-bqVeqGdJ7h/lYPq6xrPv/YGzMEb6dNxlfiTUHSgRCp8=" crossorigin="anonymous"></script>
     <!-- Genesys Cloud -->
     <script src="https://sdk-cdn.mypurecloud.com/javascript/61.0.0/purecloud-platform-client-v2.min.js"></script>
     <!-- Editable -->
@@ -313,18 +313,19 @@
             }
         }
 
+        $(function () {
+            $("#datepicker").datepicker({
+                daysOfWeekDisabled: "0,6",
+                todayHighlight: true,
+                autoclose: true,
+                startDate: new Date()
+            });
+        });
+
         init();
         async function init() {
             var userInfo = await getMe();
-
-            try {
-                requests.requests = await getRequests(region)
-                console.log(requests.requests);
-                window.requests = requests;
-                loadRequests();
-            } catch (error) {
-                console.error(error);
-            }
+            showRequests();
         }
 
         function initModal() {
@@ -337,7 +338,7 @@
             $("#editModal #requesterName").val("");
             $("#editModal #requesterEmail").val("");
             console.log('Clearing date...');
-            $("#editModal #datetimepicker1").datetimepicker("clear");
+            $("#editModal #datepicker").datepicker('update', '');
             $("#editModal #description").val("");
             $("#editModal #partnerCustomerName").val("");
             $("#editModal #salesforceAccountOpportunity").val("");
@@ -350,7 +351,25 @@
 
         }
 
-        function loadRequests() {
+        async function loadRequests() {
+            try {
+                requests.requests = await getRequests(region)
+                console.log('Requests:', requests.requests);
+            } catch (error) {
+                console.error(error);
+            }
+        }
+
+        function refreshGrid() {
+            $("#basicgrid").jsGrid("loadData")
+        }
+
+        $("#refresh").on("click", (e) => {
+            e.preventDefault();
+            refreshGrid();
+        });
+
+        function showRequests() {
             console.log('Showing requests...');
             try {
 
@@ -410,6 +429,7 @@
                     loadIndicationDelay: 500,
                     loadMessage: "Loading...",
                     loadShading: true,
+                    autoload: true,
                     rowClick: function (args) {
                         showModal(args.item);
                     },
@@ -419,14 +439,18 @@
                             console.log('Deleting:', deletingRequest);
                             try {
                                 await deleteRequest(deletingRequest.id);
-                                init();
+                                refreshGrid();
                             } catch (error) {
                                 console.error(error);
                                 showMessage(error, true);
                             }
                         }
                     },
-                    controller: requests,
+                    controller: {
+                        loadData: function () {
+                            return getRequests(region);
+                        }
+                    },
                     noDataContent: "No Requests",
                     fields: [
                         {
@@ -532,12 +556,7 @@
             $("#editModal #requestType").val(request.requestType);
             $("#editModal #requesterName").val(request.requesterName);
             $("#editModal #requesterEmail").val(request.requesterEmail);
-            console.log('Set date to:', request.needCompletedBy);
-            $("#editModal #datetimepicker1").datetimepicker({
-                date: new Date(request.needCompletedBy),
-                format: 'L'
-            });
-            console.log("date: ", $("#editModal #datetimepicker1").datetimepicker("date"));
+            $("#editModal #datepicker").datepicker('update', new Date(request.needCompletedBy));
             $("#editModal #description").val(request.description);
             $("#editModal #partnerCustomerName").val(request.partnerCustomerName);
             $("#editModal #salesforceAccountOpportunity").val(request.salesforceAccountOpportunity);
@@ -562,8 +581,7 @@
         });
 
         $('#editModal').on('hidden.bs.modal', async () => {
-            $("#basicgrid").empty();
-            init();
+            refreshGrid();
             initModal();
         });
 
@@ -599,7 +617,7 @@
             let requestType = $("#editModal #requestType").val();
             let requesterName = $("#editModal #requesterName").val();
             let requesterEmail = $("#editModal #requesterEmail").val();
-            let needCompletedBy = moment($("#datetimepicker1").data("datetimepicker").date()).format("YYYY-MM-DDTHH:mm:ss.SSS") + "Z";
+            let needCompletedBy = moment($("#datepicker").datepicker('getDate')).format("YYYY-MM-DDT00:00:00.000") + "Z";
             let description = $("#editModal #description").val();
             let partnerCustomerName = $("#editModal #partnerCustomerName").val();
             let salesforceAccountOpportunity = $("#editModal #salesforceAccountOpportunity").val();
