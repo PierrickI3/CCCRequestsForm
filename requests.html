@@ -199,7 +199,7 @@
                                 <div class="form-group col-md-8">
                                     <label id="lblAcceptedRejectedNotes" for="description">Accepted / Rejected
                                         Notes</label>
-                                    <textarea class="form-control" id="txtAcceptedRejectedNotes" name="description" placeholder="Notes" required></textarea>
+                                    <textarea class="form-control" id="txtAcceptedRejectedNotes" name="description" placeholder="Notes" required> </textarea>
                                 </div>
                                 <div class="form-group col-md-2">
                                     <label for="time">Time</label>
@@ -210,24 +210,14 @@
                         </form>
 
                         <div class="modal-footer">
-                            <div class="container-fluid">
-                                <div class="form-row">
-                                    <div class="form-group col-sm-5 push-left">
 
-                                        <button type="button" id="btnRejectRequest" class="btn btn-danger">Reject</button>
-                                        <button type="button" id="btnAcceptRequest" class="btn btn-success">Accept</button>
-
-                                    </div>
-                                    <div class="form-group col-sm-5">
-                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                        <button id="submit" type="submit" class="btn btn-primary">Save</button>
-                                    </div>
-                                </div>
-
-                            </div>
+                            <button type="button" id="btnRejectRequest" class="btn btn-danger pull-left">Save and Reject</button>
+                            <button type="button" id="btnAcceptRequest" class="btn btn-success pull-left">Save and Accept</button>
+                            <button id="submit" type="submit" class="btn btn-primary pull-left">Save</button>
+                            <button type="button" class="btn btn-secondary pull-right" data-dismiss="modal">Close</button>
 
                         </div>
-                </form>>
+                </form>
             </div>
         </div>
     </div>
@@ -534,10 +524,19 @@
 
         function showModal(request) {
             console.log("Showing modal for:", request);
-            if (request.acceptedRejected == "Accepted")
-                $("#modal-header").css('background', 'lightgreen')
-            else if (request.acceptedRejected == "Rejected")
-                $("#modal-header").css('background', 'red')
+            if (request.acceptedRejected == "Accepted") {
+                $("#modal-header").css('background', 'lightgreen');
+                $("#btnAcceptRequest").prop('disabled', true);
+                $("#btnRejectRequest").prop('disabled', false);
+            }
+            else if (request.acceptedRejected == "Rejected") {
+                $("#modal-header").css('background', 'red');
+                $("#btnAcceptRequest").prop('disabled', false);
+                $("#btnRejectRequest").prop('disabled', true);
+            } else {
+                $("#btnAcceptRequest").prop('disabled', false);
+                $("#btnRejectRequest").prop('disabled', false);
+            }
 
 
             if (request.acceptedRejected)
@@ -622,6 +621,8 @@
             let status = $("#editModal #status").val();
             let programManager = $("#editModal #programManager").val();
             let time = $("#editModal #time").val();
+
+            if (acceptedRejectedNotes === "") acceptedRejectedNotes = "N/A";
 
             console.log(`Region: ${region}, subRegion: ${subRegion}, Product: ${product}, Request Type: ${requestType}, Requester Name: ${requesterName}, Requester Email: ${requesterEmail}, Need Completed By: ${needCompletedBy}, Description: ${description}, Partner or Customer Name: ${partnerCustomerName}, Salesforce Opportunity: ${salesforceAccountOpportunity}`);
             console.log(`Priority: ${priority}, Accepted/Rejected: ${acceptedRejected}, Status: ${status}, Program Manager: ${programManager}, Time: ${time}, AcceptedRejectedNotes: ${acceptedRejectedNotes}`);
