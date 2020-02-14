@@ -407,7 +407,7 @@
                                 refreshGrid();
                             } catch (error) {
                                 console.error(error);
-                                showMessage(error, true);
+                                showMessage(error.hasOwnProperty('responseJSON') ? error.responseJSON.message : error, true);
                             }
                         }
                     },
@@ -634,7 +634,7 @@
                 $("#editModal").modal("hide");
             } catch (error) {
                 console.error(error);
-                showMessage(error, true);
+                showMessage(error.hasOwnProperty('responseJSON') ? error.responseJSON.message : error, true);
             }
         });
 
