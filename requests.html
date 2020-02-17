@@ -441,8 +441,8 @@
                         if (r) {
                             console.log('Deleting:', deletingRequest);
                             try {
-                                //await deleteRequest(deletingRequest.id);
-                                await putRequest(deletingRequest.id, deletingRequest.region, deletingRequest.subRegion, deletingRequest.product, deletingRequest.requestType, deletingRequest.requesterName, deletingRequest.requesterEmail, deletingRequest.requesterPhoneNumber, deletingRequest.needCompletedBy, deletingRequest.description, deletingRequest.partnerCustomerName, deletingRequest.salesforceAccountOpportunity, deletingRequest.priority, deletingRequest.acceptedRejected, deletingRequest.status, deletingRequest.programManager, deletingRequest.time, deletingRequest.acceptedRejectedNotes, true);
+                                await deleteRequest(deletingRequest.id);
+                                //await putRequest(deletingRequest.id, deletingRequest.region, deletingRequest.subRegion, deletingRequest.product, deletingRequest.requestType, deletingRequest.requesterName, deletingRequest.requesterEmail, deletingRequest.requesterPhoneNumber, deletingRequest.needCompletedBy, deletingRequest.description, deletingRequest.partnerCustomerName, deletingRequest.salesforceAccountOpportunity, deletingRequest.priority, deletingRequest.acceptedRejected, deletingRequest.status, deletingRequest.programManager, deletingRequest.time, deletingRequest.acceptedRejectedNotes, true);
                                 refreshGrid();
                             } catch (error) {
                                 console.error(error);
@@ -526,7 +526,7 @@
                             name: "partnerCustomerName",
                             title: "Partner/Customer",
                             type: "text",
-                            width: "auto"
+                            width: "160"
                         }, {
                             name: "salesforceAccountOpportunity",
                             title: "Salesforce Link",
