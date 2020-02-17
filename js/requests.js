@@ -24,7 +24,7 @@ async function postRequests(region, subRegion, product, requestType, requesterNa
   if (salesforceAccountOpportunity.length > 0) {
     data.salesforceAccountOpportunity = salesforceAccountOpportunity
   }
-  
+
   //#endregion
 
   return await $.ajax({
@@ -37,11 +37,11 @@ async function postRequests(region, subRegion, product, requestType, requesterNa
     .done((data, textStatus, jqXHR) => {
       try {
         if (jqXHR.status === 201) {
-            console.log(jqXHR);
-            return data;
+          console.log(jqXHR);
+          return data;
         } else {
-            showMessage("Unexpected error: " + textStatus, true);
-            reject(textStatus);
+          showMessage("Unexpected error: " + textStatus, true);
+          reject(textStatus);
         }
       } catch (error) {
         console.error(error);
@@ -56,6 +56,7 @@ async function postRequests(region, subRegion, product, requestType, requesterNa
 async function putRequest(id, region, subRegion, product, requestType, requesterName, requesterEmail, requesterPhoneNumber, needCompletedBy, description, partnerCustomerName, salesforceAccountOpportunity, priority, acceptedRejected, status, programManager, time, acceptedRejectedNotes, isDeleted) {
 
   if (!isDeleted) isDeleted = false;
+  if (!acceptedRejected) acceptedRejected = "not handled";
 
   var data = {
     id: id,
@@ -71,6 +72,7 @@ async function putRequest(id, region, subRegion, product, requestType, requester
     priority: priority,
     status: status,
     programManager: programManager,
+    acceptedRejected: acceptedRejected,
     acceptedRejectedNotes: acceptedRejectedNotes,
     isDeleted: isDeleted
   };
@@ -92,7 +94,7 @@ async function putRequest(id, region, subRegion, product, requestType, requester
   if (salesforceAccountOpportunity.length > 0) {
     data.salesforceAccountOpportunity = salesforceAccountOpportunity
   }
-  
+
   //#endregion
 
   return await $.ajax({
@@ -105,11 +107,11 @@ async function putRequest(id, region, subRegion, product, requestType, requester
     .done((data, textStatus, jqXHR) => {
       try {
         if (jqXHR.status === 200) {
-            console.log(jqXHR);
-            return data;
+          console.log(jqXHR);
+          return data;
         } else {
-            showMessage("Unexpected error: " + textStatus, true);
-            reject(textStatus);
+          showMessage("Unexpected error: " + textStatus, true);
+          reject(textStatus);
         }
       } catch (error) {
         console.error(error);
@@ -132,11 +134,11 @@ async function getRequests(region = "") {
     .done((data, textStatus, jqXHR) => {
       try {
         if (jqXHR.status === 200) {
-            console.log(jqXHR);
-            return data;
+          console.log(jqXHR);
+          return data;
         } else {
-            showMessage("Unexpected error: " + textStatus, true);
-            reject(textStatus);
+          showMessage("Unexpected error: " + textStatus, true);
+          reject(textStatus);
         }
       } catch (error) {
         console.error(error);
@@ -151,20 +153,26 @@ async function getRequests(region = "") {
 async function deleteRequest(requestId) {
 
   console.log('Deleting request:', requestId);
+
+  let data = {
+    "isDeleted": true
+  }
+
   return await $.ajax({
     url: `${apiBasePath}/requests/${requestId}`,
-    method: "DELETE",
+    method: "PATCH",
     contentType: 'application/json',
-    dataType: "json"
+    dataType: "json",
+    data: JSON.stringify(data)
   })
     .done((data, textStatus, jqXHR) => {
       try {
-        if (jqXHR.status === 204) {
-            console.log(jqXHR);
-            return data;
+        if (jqXHR.status === 200) {
+          console.log(jqXHR);
+          return data;
         } else {
-            showMessage("Unexpected error: " + textStatus, true);
-            reject(textStatus);
+          showMessage("Unexpected error: " + textStatus, true);
+          reject(textStatus);
         }
       } catch (error) {
         console.error(error);
