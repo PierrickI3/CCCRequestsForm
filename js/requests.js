@@ -11,7 +11,8 @@ async function postRequests(region, subRegion, product, requestType, requesterNa
     requesterEmail: requesterEmail,
     requesterPhoneNumber: requesterPhoneNumber,
     needCompletedBy: needCompletedBy,
-    description: description
+    description: description,
+    isDeleted: false
   };
 
   //#region Optional fields
@@ -52,7 +53,9 @@ async function postRequests(region, subRegion, product, requestType, requesterNa
     });
 }
 
-async function putRequest(id, region, subRegion, product, requestType, requesterName, requesterEmail, requesterPhoneNumber, needCompletedBy, description, partnerCustomerName, salesforceAccountOpportunity, priority, acceptedRejected, status, programManager, time, acceptedRejectedNotes) {
+async function putRequest(id, region, subRegion, product, requestType, requesterName, requesterEmail, requesterPhoneNumber, needCompletedBy, description, partnerCustomerName, salesforceAccountOpportunity, priority, acceptedRejected, status, programManager, time, acceptedRejectedNotes, isDeleted) {
+
+  if (!isDeleted) isDeleted = false;
 
   var data = {
     id: id,
@@ -68,7 +71,8 @@ async function putRequest(id, region, subRegion, product, requestType, requester
     priority: priority,
     status: status,
     programManager: programManager,
-    acceptedRejectedNotes: acceptedRejectedNotes
+    acceptedRejectedNotes: acceptedRejectedNotes,
+    isDeleted: isDeleted
   };
 
   //#region Optional fields

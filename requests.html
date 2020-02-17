@@ -397,7 +397,8 @@
                         if (r) {
                             console.log('Deleting:', deletingRequest);
                             try {
-                                await deleteRequest(deletingRequest.id);
+                                //await deleteRequest(deletingRequest.id);
+                                await putRequest(deletingRequest.id, deletingRequest.region, deletingRequest.subRegion, deletingRequest.product, deletingRequest.requestType, deletingRequest.requesterName, deletingRequest.requesterEmail, deletingRequest.requesterPhoneNumber, deletingRequest.needCompletedBy, deletingRequest.description, deletingRequest.partnerCustomerName, deletingRequest.salesforceAccountOpportunity, deletingRequest.priority, deletingRequest.acceptedRejected, deletingRequest.status, deletingRequest.programManager, deletingRequest.time, deletingRequest.acceptedRejectedNotes, true);
                                 refreshGrid();
                             } catch (error) {
                                 console.error(error);
@@ -425,6 +426,7 @@
                                         && (!filter.partnerCustomerName || request.partnerCustomerName.toLowerCase().indexOf(filter.partnerCustomerName.toLowerCase()) > -1)
                                 });
                             } else {
+                                
                                 requests.requests = await getRequests(region);
                                 return requests.requests;
                             }
@@ -520,6 +522,7 @@
 
         function showModal(request) {
             console.log("Showing modal for:", request);
+
             if (request.acceptedRejected == "Accepted") {
                 $("#modal-header").css('background', 'lightgreen');
                 $("#btnAcceptRequest").prop('disabled', true);
@@ -530,6 +533,7 @@
                 $("#btnAcceptRequest").prop('disabled', false);
                 $("#btnRejectRequest").prop('disabled', true);
             } else {
+                $("#modal-header").css('background', 'white');
                 $("#btnAcceptRequest").prop('disabled', false);
                 $("#btnRejectRequest").prop('disabled', false);
             }
@@ -560,6 +564,7 @@
             $("#editModal #time").val(request.time);
             $("#editModal #txtAcceptedRejectedNotes").val(request.acceptedRejectedNotes);
             $("#editModal").modal("show");
+
         }
 
         $("#editModal #region").on("change", () => {
