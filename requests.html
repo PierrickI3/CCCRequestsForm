@@ -218,6 +218,16 @@
                                         placeholder="Program Manager" required>
                                 </div>
                             </div>
+
+                            <div class="form-row">
+                                <label id="bAcceptedRequest" hidden></label>
+                                <div class="form-group col-md-10">
+                                    <label for="time">Additional Team Member(s) Assigned</label>
+                                    <input type="text" class="form-control" id="teamMembers" name="teamMembers" placeholder="Additional Team Member(s)">
+
+                                </div>
+                            </div>
+
                             <div class="form-row">
                                 <label id="bAcceptedRequest" hidden></label>
                                 <div class="form-group col-md-8">
@@ -234,9 +244,8 @@
                                 </div>
                             </div>
                             <div class="form-row">
-                                <div class="form-group col-md-6">                                    
-                                   <!-- <input type="text" class="form-control" id="id" name="id" disabled> -->
-                                    <footer id="id" name="id" class="blockquote-footer">b82e6ee0-5191-11ea-a9f9-4b763d1b4839</footer>
+                                <div class="form-group col-md-6">                                                                       
+                                    <footer id="id" name="id" class="blockquote-footer"></footer>
                                 </div>
                             </div>
 
@@ -622,6 +631,8 @@
             $("#editModal #programManager").val(request.programManager);
             $("#editModal #time").val(request.time);
             $("#editModal #txtAcceptedRejectedNotes").val(request.acceptedRejectedNotes);
+            $("#editModal #teamMembers").val(request.teamMembers);
+            
             $("#editModal").modal("show");
 
         }
@@ -702,14 +713,13 @@
             let status = $("#editModal #status").val();
             let programManager = $("#editModal #programManager").val();
             let time = $("#editModal #time").val();
-
-            if (acceptedRejectedNotes === "") acceptedRejectedNotes = "N/A";
-
+            let teamMembers = $("#editModal #teamMembers").val();
+            
             console.log(`Region: ${region}, subRegion: ${subRegion}, Product: ${product}, Request Type: ${requestType}, Requester Name: ${requesterName}, Requester Email: ${requesterEmail}, Requester Phone Number: ${requesterPhoneNumber}, Need Completed By: ${needCompletedBy}, Description: ${description}, Partner or Customer Name: ${partnerCustomerName}, Salesforce Opportunity: ${salesforceAccountOpportunity}`);
-            console.log(`Priority: ${priority}, Accepted/Rejected: ${acceptedRejected}, Status: ${status}, Program Manager: ${programManager}, Time: ${time}, AcceptedRejectedNotes: ${acceptedRejectedNotes}`);
+            console.log(`Priority: ${priority}, Accepted/Rejected: ${acceptedRejected}, Status: ${status}, Program Manager: ${programManager}, Time: ${time}, AcceptedRejectedNotes: ${acceptedRejectedNotes}, teamMembers: ${teamMembers}` );
 
             try {
-                await putRequest(id, region, subRegion, product, requestType, requesterName, requesterEmail, requesterPhoneNumber, needCompletedBy, description, partnerCustomerName, salesforceAccountOpportunity, priority, acceptedRejected, status, programManager, time, acceptedRejectedNotes);
+                await putRequest(id, region, subRegion, product, requestType, requesterName, requesterEmail, requesterPhoneNumber, needCompletedBy, description, partnerCustomerName, salesforceAccountOpportunity, priority, acceptedRejected, status, programManager, time, acceptedRejectedNotes, teamMembers);
                 console.log('Success!');
                 showMessage("Request updated. Thanks!");
                 $("#editModal").modal("hide");

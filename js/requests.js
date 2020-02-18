@@ -53,7 +53,8 @@ async function postRequests(region, subRegion, product, requestType, requesterNa
     });
 }
 
-async function putRequest(id, region, subRegion, product, requestType, requesterName, requesterEmail, requesterPhoneNumber, needCompletedBy, description, partnerCustomerName, salesforceAccountOpportunity, priority, acceptedRejected, status, programManager, time, acceptedRejectedNotes, isDeleted) {
+async function putRequest(id, region, subRegion, product, requestType, requesterName, requesterEmail, requesterPhoneNumber, needCompletedBy, description, partnerCustomerName, salesforceAccountOpportunity, priority, acceptedRejected, status, programManager, time, acceptedRejectedNotes, teamMembers, isDeleted) {
+
 
   if (!isDeleted) isDeleted = false;
   if (!acceptedRejected) acceptedRejected = "not handled";
@@ -73,11 +74,19 @@ async function putRequest(id, region, subRegion, product, requestType, requester
     status: status,
     programManager: programManager,
     acceptedRejected: acceptedRejected,
-    acceptedRejectedNotes: acceptedRejectedNotes,
     isDeleted: isDeleted
   };
 
   //#region Optional fields
+
+  if (teamMembers.length > 0) {
+    data.teamMembers = teamMembers;
+  }
+
+  if (acceptedRejectedNotes.length > 0) {
+    data.acceptedRejectedNotes = acceptedRejectedNotes;
+  }
+
 
   if (acceptedRejected.length > 0) {
     data.acceptedRejected = acceptedRejected;
