@@ -65,12 +65,14 @@
                     <div class="form-group">
 
                         <form id="modal-form">
-                            <div class="form-row">
-                                <div class="form-group col-md-6">
-                                    <label for="id">Id</label>
-                                    <input type="text" class="form-control" id="id" name="id" disabled>
+                           
+                            <div class="form-row">                               
+                                <div class="form-group col-md-5">
+                                    <label>Created Date</label>
+                                    <input disabled type="text" class="form-control" id="createdDate" name="createdDate"/>
                                 </div>
                             </div>
+
                             <div class="form-row">
                                 <div class="form-group col-md-5">
                                     <label for="region">Region</label>
@@ -175,13 +177,19 @@
                                 </div>
                             </div>
                             <div class="form-row">
-                                <div class="form-group col-md-10">
+                                <div class="form-group col-md-8">
                                     <label for="salesforceAccountOpportunity">Salesforce Account / Opportunity
                                         URL</label>
                                     <input type="text" class="form-control" id="salesforceAccountOpportunity"
                                         name="salesforceAccountOpportunity"
                                         placeholder="Link to Salesforce opportunity or account" required>
+                                       
                                 </div>
+                                <div class="form-group col-md-2">
+                                    <label for="salesforceAccountOpportunity" style="color: white;">Open in new tab</label>
+                                    <button type="button" class="btn btn-primary pull-right" onclick="navigateToSFLink();" >navigate</button>
+                                </div>                               
+
                             </div>
                             <div class="form-row">
                                 <div class="form-group col-md-3">
@@ -225,6 +233,13 @@
 
                                 </div>
                             </div>
+                            <div class="form-row">
+                                <div class="form-group col-md-6">                                    
+                                   <!-- <input type="text" class="form-control" id="id" name="id" disabled> -->
+                                    <footer id="id" name="id" class="blockquote-footer">b82e6ee0-5191-11ea-a9f9-4b763d1b4839</footer>
+                                </div>
+                            </div>
+
                         </form>
 
                         <div class="modal-footer">
@@ -272,6 +287,8 @@
     <script src="js/gc.js"></script>
     <script src="js/requests.js"></script>
     <script src="js/tools.js"></script>
+    <!-- Dictionary -->
+    <script src="js/dictionary.js"></script>
 
     <style>
         .task-accepted td:first-child {
@@ -287,20 +304,6 @@
 
     <script>
 
-        let regions = {
-            APAC: [
-                "Asia", "Australia", "New Zeland"
-            ],
-            EMEA: [
-                "Central", "North", "South"
-            ],
-            LATAM: [
-                "Andean", "Brazil", "Mexico", "Southern-Cone"
-            ],
-            NA: [
-                "Central", "Eastern", "Western"
-            ]
-        }
 
         let region = getUrlParameter("region");
         $("#region").text(region);
@@ -329,7 +332,8 @@
         }
 
         function initModal() {
-            $("#editModal #id").val("");
+            $("#editModal #id").text("");
+            $("#editModal #createdDate").val("");
             $("#editModal #region").val("");
             $("#editModal #region").change();
             $("#editModal #subRegion").val("");
@@ -360,6 +364,10 @@
             e.preventDefault();
             refreshGrid();
         });
+
+        function navigateToSFLink() {
+            $(window.open(`${$("#editModal #salesforceAccountOpportunity").val()}`,'_blank'));
+        }
 
         function showRequests() {
             console.log('Showing requests...');
@@ -449,7 +457,7 @@
                                 showMessage(error.hasOwnProperty('responseJSON') ? error.responseJSON.message : error, true);
                             }
                         }
-                    },               
+                    },
                     controller: {
                         loadData: async function (filter) {
                             let hasFilter = false;
@@ -571,6 +579,7 @@
 
         function showModal(request) {
             console.log("Showing modal for:", request);
+            updateRequestTypeBasedOnRegionAndProduct();
 
             if (request.acceptedRejected == "Accepted") {
                 $("#modal-header").css('background', 'lightgreen');
@@ -593,7 +602,8 @@
             else
                 $("#editModal #title").text(`Request (not handled)`);
 
-            $("#editModal #id").val(request.id);
+            $("#editModal #id").text(request.id);
+            $("#editModal #createdDate").val(moment(request.createdAt).format('LLLL'));
             $("#editModal #region").val(request.region);
             $("#editModal #region").change();
             $("#editModal #subRegion").val(request.subRegion);
@@ -622,7 +632,26 @@
             for (let subregion of regions[$("#editModal #region").val()]) {
                 $("<option/>", { value: subregion }).text(subregion).appendTo("#editModal #subRegion");
             }
+            updateRequestTypeBasedOnRegionAndProduct();
         });
+
+        $("#editModal #product").on("change", () => {
+            updateRequestTypeBasedOnRegionAndProduct();
+        });
+
+        function updateRequestTypeBasedOnRegionAndProduct() {
+
+            if (!$("#editModal #product").val() || !$("#editModal #region").val()) return
+
+            $("#editModal #requestType").empty();
+            $("<option selected disabled />", { value: "Select a Request Type" }).text("Select a Request Type").appendTo("#editModal #requestType");
+
+            for (let aRequest of requestsType[$("#editModal #region").val()][$("#editModal #product").val()]) {
+                $("<option/>", { value: aRequest }).text(aRequest).appendTo("#editModal #requestType");
+            }
+
+        }
+
 
         $('#editModal').on('shown.bs.modal', (e) => {
         });
@@ -655,7 +684,7 @@
                 return;
             }
 
-            let id = $("#editModal #id").val();
+            let id = $("#editModal #id").text();
             let region = $("#editModal #region").val();
             let subRegion = $("#editModal #subRegion").val();
             let product = $("#editModal #product").val();
@@ -710,3 +739,6 @@
 </body>
 
 </html>
+<!--
+TODO: Additional Team Member(s) Assigned 
+-->
