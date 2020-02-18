@@ -31,7 +31,7 @@
     <div class="container-fluid">
         <br>
         <div class="form-row">
-            <div class="form-group col-sm-8">
+            <div class="form-group col-sm-7">
 
                 <form id="modal-form">
                     <div class="form-row">
@@ -66,7 +66,7 @@
                         <div class="form-group col-md-5">
                             <label for="requestType">Request Type</label>
                             <select id="requestType" name="requestType" class="form-control" required>
-                                <option value="" disabled selected>Select a Request Type</option>                                
+                                <option value="" disabled selected>Select a Request Type</option>
                             </select>
                         </div>
                     </div>
@@ -88,11 +88,11 @@
                             <input type="text" class="form-control" id="requesterPhoneNumber"
                                 name="requesterPhoneNumber" placeholder="Your Phone Number" required>
                         </div>
-                        <div class="form-group col-md-3">
+                        <div class="form-group col-md-5">
                             <label for="datepicker">Need Completed By</label>
-                            <div class="input-group date">
-                                <input type="text" id="datepicker" class="form-control" required />
-                            </div>
+                            <!--  <div class="input-group date"> -->
+                            <input type="text" id="datepicker" class="form-control" required />
+                            <!-- </div> -->
                         </div>
                     </div>
                     <div class="form-row">
@@ -123,7 +123,7 @@
                 <button type="submit" id="submit" class="btn btn-primary">Submit</button>
 
             </div>
-            <div class="form-group col-sm-4">
+            <div class="form-group col-sm-5">
                 <center>
                     <H3>Welcome to the Competence Centre Request Form.</H3>
                 </center>
@@ -131,7 +131,8 @@
                     This form can be used to request assistance on a variety of topics across different product types.
                 </p>
                 <p>
-                    Fill out the form as required.  Some fields are automatically completed using your Genesys Cloud details.  Press Submit once all the required fields have been completed.</p>
+                    Fill out the form as required. Some fields are automatically completed using your Genesys Cloud
+                    details. Press Submit once all the required fields have been completed.</p>
                 <ol>
                     <li>Region</li>
                     <ul><i>Enter the region you are located in.</i></ul>
@@ -140,17 +141,23 @@
                     <li>Product</li>
                     <ul><i>Select the product name</i></ul>
                     <li>Request Type</li>
-                    <ul><i>Enter the request type you require.  Please note that not all request types are available in every region.</i></ul>
-                   <li>Requester Phone #</li>
-                    <ul><i>Enter the phone number where you can be contacted.  Be sure to include your country code, for example +447557123456.</i></ul>
+                    <ul><i>Enter the request type you require. Please note that not all request types are available in
+                            every region.</i></ul>
+                    <li>Requester Phone #</li>
+                    <ul><i>Enter the phone number where you can be contacted. Be sure to include your country code, for
+                            example +447557123456.</i></ul>
                     <li>Need Completed By</li>
-                    <ul><i>Enter a date you require the work completed.  Please note, this is not a guarantee and will be discussed with the Competence Centre Program Manager when they contact you.</i></ul>
+                    <ul><i>Enter a date you require the work completed. Please note, this is not a guarantee and will be
+                            discussed with the Competence Centre Program Manager when they contact you.</i></ul>
                     <li>Description</li>
-                    <ul><i>Enter a brief summary of the work required.  Your Competence Centre Program Manager will contact you to discuss the request further.</i></ul>
+                    <ul><i>Enter a brief summary of the work required. Your Competence Centre Program Manager will
+                            contact you to discuss the request further.</i></ul>
                     <li>Partner and/or Customer Name</li>
                     <ul><i>If applicable, enter the Partner and/or Customer name the request is related to.</i></ul>
                     <li>SFDC URL (Account or Opportunity)</li>
-                    <ul><i>If applicable, provide the link to the account or opportunity in Salesforce.  This will provide the Competence Centre Program Manager with more background and will help with your resource allocation.</i></ul>
+                    <ul><i>If applicable, provide the link to the account or opportunity in Salesforce. This will
+                            provide the Competence Centre Program Manager with more background and will help with your
+                            resource allocation.</i></ul>
                 </ol>
 
             </div>
@@ -247,7 +254,7 @@
             for (let aRequest of requestsType[$("#region").val()][$("#product").val()]) {
                 $("<option/>", { value: aRequest }).text(aRequest).appendTo("#requestType");
             }
-           
+
         }
 
         $("#modal-form").validate({
@@ -284,8 +291,32 @@
             } catch (error) {
                 console.error(error);
                 showMessage(error, true);
+            } finally {
+                cleanForm();
             }
+
         });
+
+        function cleanForm() {
+
+            // Populate user info
+            $("#requesterName").val(userInfo.name);
+            $("#requesterEmail").val(userInfo.mail);
+            $("#requesterPhoneNumber").val(userInfo.phone);
+
+            $("#requestType").empty();
+            $("<option selected disabled />", { value: "Select a Request Type" }).text("Select a Request Type").appendTo("#requestType");
+
+            $("#subRegion").empty();
+            $("<option selected disabled />", { value: "Select a Sub-Region" }).text("Select a Sub-Region").appendTo("#subRegion");
+
+            $("#region").val('');
+            $("#product").val('');
+            $("#datepicker").val('');
+            $("#description").val('');
+            $("#partnerCustomerName").val('');
+            $("#salesforceAccountOpportunity").val('');
+        }
 
     </script>
 
