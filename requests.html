@@ -549,7 +549,7 @@
                             title: "Created",
                             type: "text",
                             itemTemplate: function (value, item) {
-                                return `<small>${moment(value).fromNow()}</small>`;
+                                return `${moment(value).fromNow()}`;
                             },
                             width: "auto",
                             filtering: false
@@ -558,7 +558,7 @@
                             title: "Last Updated",
                             type: "text",
                             itemTemplate: function (value, item) {
-                                return `<small>${moment(value).fromNow()}</small>`;
+                                return `${moment(value).fromNow()}`;
                             },
                             width: "auto",
                             filtering: false
