@@ -134,8 +134,19 @@ async function putRequest(id, region, subRegion, product, requestType, requester
 
 async function getRequests(region = "") {
 
+  let onlyClosed = "";
+  let onlyDeleted = "";
+
+  if ($('#btnOnlyClosed')[0].classList.contains('btn-success'))
+    onlyClosed = "&onlyClosed=true";
+
+  if ($('#btnOnlyDeleted')[0].classList.contains('btn-success'))
+    onlyDeleted = "&onlyDeleted=true";
+
+
+
   return await $.ajax({
-    url: `${apiBasePath}/requests?region=${region}`,
+    url: `${apiBasePath}/requests?region=${region}${onlyClosed}${onlyDeleted}`,
     method: "GET",
     contentType: 'application/json',
     dataType: "json"
@@ -190,5 +201,33 @@ async function deleteRequest(requestId) {
     })
     .always(() => {
       console.log("deleteRequest completed");
+    });
+}
+
+
+async function getDashboard() {
+
+  return await $.ajax({
+    url: `${apiBasePath}/dashboard`,
+    method: "GET",
+    contentType: 'application/json',
+    dataType: "json"
+  })
+    .done((data, textStatus, jqXHR) => {
+      try {
+        if (jqXHR.status === 200) {
+          console.log(jqXHR);
+          return data;
+        } else {
+          showMessage("Unexpected error: " + textStatus, true);
+          reject(textStatus);
+        }
+      } catch (error) {
+        console.error(error);
+        reject(error);
+      }
+    })
+    .always(() => {
+      console.log("getRequests completed");
     });
 }

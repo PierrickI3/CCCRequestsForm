@@ -38,11 +38,25 @@
             </a>
         </ul>
         <ul>
-            <ul class="nav navbar-nav" style="float: right">
+            <ul class="nav navbar-nav mr-2" style="float: left;">
+                <li>
+                    <button class="btn btn-secondary" id="btnOnlyClosed"> only Closed </button>
+                </li>
+
+            </ul>
+            <ul class="nav navbar-nav mr-2" style="float: left;">
+                <li>
+                    <button class="btn btn-secondary" id="btnOnlyDeleted"> only Deleted </button>
+                </li>
+
+            </ul>
+            <ul class="nav navbar-nav" style="float: right;">
                 <li><a href="./index.html" class="admin btn btn-primary ml-2">Submit a new Request</a></li>
             </ul>
-            <ul class="nav navbar-nav" style="float: right">
+
+            <ul class="nav navbar-nav" style="float: right;">
                 <li><button id="refresh" class="admin btn btn-secondary"><em class="fa fa-refresh"></em></button></li>
+
             </ul>
         </ul>
     </nav>
@@ -65,11 +79,12 @@
                     <div class="form-group">
 
                         <form id="modal-form">
-                           
-                            <div class="form-row">                               
+
+                            <div class="form-row">
                                 <div class="form-group col-md-5">
                                     <label>Created Date</label>
-                                    <input disabled type="text" class="form-control" id="createdDate" name="createdDate"/>
+                                    <input disabled type="text" class="form-control" id="createdDate"
+                                        name="createdDate" />
                                 </div>
                             </div>
 
@@ -183,12 +198,14 @@
                                     <input type="text" class="form-control" id="salesforceAccountOpportunity"
                                         name="salesforceAccountOpportunity"
                                         placeholder="Link to Salesforce opportunity or account" required>
-                                       
+
                                 </div>
                                 <div class="form-group col-md-2">
-                                    <label for="salesforceAccountOpportunity" style="color: white;">Open in new tab</label>
-                                    <button type="button" class="btn btn-primary pull-right" onclick="navigateToSFLink();" >navigate</button>
-                                </div>                               
+                                    <label for="salesforceAccountOpportunity" style="color: white;">Open in new
+                                        tab</label>
+                                    <button type="button" class="btn btn-primary pull-right"
+                                        onclick="navigateToSFLink();">navigate</button>
+                                </div>
 
                             </div>
                             <div class="form-row">
@@ -223,7 +240,8 @@
                                 <label id="bAcceptedRequest" hidden></label>
                                 <div class="form-group col-md-10">
                                     <label for="time">Additional Team Member(s) Assigned</label>
-                                    <input type="text" class="form-control" id="teamMembers" name="teamMembers" placeholder="Additional Team Member(s)">
+                                    <input type="text" class="form-control" id="teamMembers" name="teamMembers"
+                                        placeholder="Additional Team Member(s)">
 
                                 </div>
                             </div>
@@ -244,7 +262,7 @@
                                 </div>
                             </div>
                             <div class="form-row">
-                                <div class="form-group col-md-6">                                                                       
+                                <div class="form-group col-md-6">
                                     <footer id="id" name="id" class="blockquote-footer"></footer>
                                 </div>
                             </div>
@@ -375,7 +393,7 @@
         });
 
         function navigateToSFLink() {
-            $(window.open(`${$("#editModal #salesforceAccountOpportunity").val()}`,'_blank'));
+            $(window.open(`${$("#editModal #salesforceAccountOpportunity").val()}`, '_blank'));
         }
 
         function showRequests() {
@@ -578,7 +596,6 @@
 
                 });
 
-                //$("#basicgrid").jsGrid("option", "filtering", false); 
                 $(document.getElementsByClassName('jsgrid-search-mode-button')[0].click());
 
             } catch (error) {
@@ -632,7 +649,7 @@
             $("#editModal #time").val(request.time);
             $("#editModal #txtAcceptedRejectedNotes").val(request.acceptedRejectedNotes);
             $("#editModal #teamMembers").val(request.teamMembers);
-            
+
             $("#editModal").modal("show");
 
         }
@@ -677,6 +694,29 @@
             successClass: "test-success"
         });
 
+
+
+        $("#btnOnlyClosed").on("click", async (e) => {
+            if ($('#btnOnlyClosed')[0].classList.contains('btn-success'))
+                $('#btnOnlyClosed')[0].classList.remove('btn-success');
+            else
+                $('#btnOnlyClosed')[0].classList.add('btn-success');
+
+            refreshGrid();
+        });
+
+        $("#btnOnlyDeleted").on("click", async (e) => {
+            if ($('#btnOnlyDeleted')[0].classList.contains('btn-success'))
+                $('#btnOnlyDeleted')[0].classList.remove('btn-success');
+            else
+                $('#btnOnlyDeleted')[0].classList.add('btn-success');
+
+            refreshGrid();
+        });
+
+
+
+
         $("#btnAcceptRequest").on("click", async (e) => {
             $("#editModal #bAcceptedRequest").val("Accepted");
             $("#editModal #submit").click();
@@ -714,9 +754,9 @@
             let programManager = $("#editModal #programManager").val();
             let time = $("#editModal #time").val();
             let teamMembers = $("#editModal #teamMembers").val();
-            
+
             console.log(`Region: ${region}, subRegion: ${subRegion}, Product: ${product}, Request Type: ${requestType}, Requester Name: ${requesterName}, Requester Email: ${requesterEmail}, Requester Phone Number: ${requesterPhoneNumber}, Need Completed By: ${needCompletedBy}, Description: ${description}, Partner or Customer Name: ${partnerCustomerName}, Salesforce Opportunity: ${salesforceAccountOpportunity}`);
-            console.log(`Priority: ${priority}, Accepted/Rejected: ${acceptedRejected}, Status: ${status}, Program Manager: ${programManager}, Time: ${time}, AcceptedRejectedNotes: ${acceptedRejectedNotes}, teamMembers: ${teamMembers}` );
+            console.log(`Priority: ${priority}, Accepted/Rejected: ${acceptedRejected}, Status: ${status}, Program Manager: ${programManager}, Time: ${time}, AcceptedRejectedNotes: ${acceptedRejectedNotes}, teamMembers: ${teamMembers}`);
 
             try {
                 await putRequest(id, region, subRegion, product, requestType, requesterName, requesterEmail, requesterPhoneNumber, needCompletedBy, description, partnerCustomerName, salesforceAccountOpportunity, priority, acceptedRejected, status, programManager, time, acceptedRejectedNotes, teamMembers);

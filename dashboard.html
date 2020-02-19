@@ -3,58 +3,233 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no">
     <title>Document</title>
+    <link rel="shortcut icon" href="/favicon.ico">
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/alasql@0.5"></script>
     <script src="js/requests.js"></script>
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
 </head>
 
 <body>
-    Hello
 
-    <div class="chart-container" style="position: relative; height:40vh; width:80vw">
-        <canvas id="myChart"></canvas>
+    <nav class="navbar navbar-light bg-light">
+        <a class="navbar-brand" href="#">
+            <img src="images/genesys.png" width="30" height="30" class="d-inline-block align-top" alt="">
+            Cloud Competency Center Dashboard
+        </a>
+        <a href="index.html" id="reviewRequestsButton" class="admin btn btn-primary">Review Requests</a>
+    </nav>
+
+
+    <div class="container-fluid">
+        <br>
+        <div class="form-row">
+            <div class="form-group col-sm-12">
+                <div class="form-row">
+                    <div class="form-group col-md-4">
+                        <select id="region" name="region" class="form-control" required>
+                            <option value="" selected>All regions</option>
+                            <option value="APAC">APAC</option>
+                            <option value="EMEA">EMEA</option>
+                            <option value="LATAM">LATAM</option>
+                            <option value="NA">North America</option>
+                        </select>
+                    </div>
+
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-5">
+                        <div class="chart-container" style="width:40vw" id="chart_region_container">
+                            <canvas id="chart_region"></canvas>
+                        </div>
+
+                    </div>
+                    <div class="form-group col-md-6">
+                        <div class="chart-container" style="width:50vw" id="chart_requestType_container">
+                            <canvas id="chart_requestType"></canvas>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <div class="chart-container" style="width:40vw" id="chart_product_container">
+                            <canvas id="chart_product"></canvas>
+                        </div>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <div class="chart-container" style="width:40vw" id="chart_status_container">
+                            <canvas id="chart_status"></canvas>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
     </div>
+
+
+
 
     <script>
 
-        init();
-        async function init() {
-            let data = await getRequests('EMEA');
+        function prepareDataForSQL(_sql, _data) {
+            console.log(`prepareDataForSQL: ${_sql}`);
+            let res = alasql(_sql, [_data]);
 
-            var res = alasql('COLUMN OF SELECT count(*) as number, product FROM ? GROUP BY product', [data]);
-            console.log(res);
+            let labels = [];
+            let values = [];
+            res.forEach(element => {
+                labels.push(element.label);
+                values.push(element.val);
+            });
 
             let myData = {
+                labels: labels,
                 datasets: [{
-                    data: res
-                }],
-                labels: [
-                    alasql('COLUMN OF SELECT distinct product FROM ? ', [data])
-                ],
-                backgroundColor: [
-                    'rgba(255, 99, 132, 0.2)',
-                    'rgba(54, 162, 235, 0.2)'
-
-                ],
-                borderColor: [
-                    'rgba(255, 99, 132, 1)',
-                    'rgba(54, 162, 235, 1)',
-                    'rgba(255, 206, 86, 1)',
-                    'rgba(75, 192, 192, 1)',
-                    'rgba(153, 102, 255, 1)',
-                    'rgba(255, 159, 64, 1)'
-                ],
-                borderWidth: 1
+                    data: values,
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 206, 86, 1)',
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(153, 102, 255, 1)',
+                        'rgba(255, 100, 64, 1)',
+                        'rgba(200, 109, 164, 1)',
+                        'rgba(255, 50, 99, 1)',
+                        'rgba(100, 30, 164, 1)',
+                        'rgba(200, 159, 255, 1)',
+                        'rgba(220, 209, 10, 1)'
+                    ]
+                }]
             };
+            console.log(myData);
+            return myData
+        }
 
-            var ctx = document.getElementById('myChart').getContext('2d');
+        init();
+
+        $("#region").on("change", () => {
+            init();
+        });
+
+
+        async function init() {
+
+
+            let data = await getDashboard();
+            let sql = "";
+            if ($('#region').val() != "")
+                sql = `SELECT count(*) as val, region as label FROM ? WHERE region = '${$('#region').val()}' GROUP BY region`;
+            else
+                sql = `SELECT count(*) as val, region as label FROM ? GROUP BY region`;
+
+            //#region ByRegion
+            $('#chart_region').remove();
+            $('#chart_region_container').append('<canvas id="chart_region"><canvas>');
+
+            var ctx = document.getElementById('chart_region')
             var myDoughnutChart = new Chart(ctx, {
                 type: 'doughnut',
-                data: myData
+                data: prepareDataForSQL(sql, data),
+                options: {
+                    title: {
+                        display: true,
+                        text: 'Regions'
+                    }
+                }
+
             });
+            //#endregion
+
+            //#region ByStatus for Active
+
+            if ($('#region').val() != "")
+                sql = `SELECT count(*) as val, status as label FROM ? WHERE (isDeleted = false AND region = '${$('#region').val()}' ) GROUP BY status`;
+            else
+                sql = `SELECT count(*) as val, status as label FROM ? WHERE isDeleted = false GROUP BY status`;
+
+            $('#chart_status').remove();
+            $('#chart_status_container').append('<canvas id="chart_status"><canvas>');
+            ctx = document.getElementById('chart_status')
+            myDoughnutChart = new Chart(ctx, {
+                type: 'pie',
+                data: prepareDataForSQL(sql, data),
+                options: {
+                    title: {
+                        display: true,
+                        text: 'By status for active requests'
+                    }
+                }
+
+            });
+            //#endregion
+
+            //#region ByProduct
+
+            sql = "";
+            if ($('#region').val() != "")
+                sql = `SELECT count(*) as val, product as label FROM ? WHERE region = '${$('#region').val()}' GROUP BY product`;
+            else
+                sql = `SELECT count(*) as val, product as label FROM ? GROUP BY product`;
+
+            $('#chart_product').remove(); // this is my <canvas> element
+            $('#chart_product_container').append('<canvas id="chart_product"><canvas>');
+            ctx = document.getElementById('chart_product')
+            myDoughnutChart = new Chart(ctx, {
+                type: 'pie',
+                options: {
+                    title: {
+                        display: true,
+                        text: 'By product'
+                    }
+                },
+                data: prepareDataForSQL(sql, data)
+
+            });
+            //#endregion
+
+
+            //#region By Request Type
+            $('#chart_requestType').remove(); // this is my <canvas> element
+            $('#chart_requestType_container').append('<canvas id="chart_requestType"><canvas>');
+
+            if ($('#region').val() != "")
+                sql = `SELECT count(*) as val, requestType as label FROM ? WHERE region = '${$('#region').val()}' GROUP BY requestType`;
+            else
+                sql = `SELECT count(*) as val, requestType as label FROM ? GROUP BY requestType`;
+
+
+            ctx = document.getElementById('chart_requestType')
+            myDoughnutChart = new Chart(ctx, {
+                type: 'bar',
+                barPercentage: 0.5,
+                barThickness: 6,
+                maxBarThickness: 8,
+                minBarLength: 2,
+                data: prepareDataForSQL(sql, data),
+                options: {
+                    title: {
+                        display: true,
+                        text: 'By request type'
+                    }
+                }
+
+            });
+            //#endregion
+
+
+
 
         }
 
