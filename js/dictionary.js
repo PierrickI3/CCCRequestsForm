@@ -1,17 +1,24 @@
 
 let adminGroups = {
-    "EMEA": [
+    EMEA: [
         "4bfbc98d-35d6-4a85-85f9-4e661c1a32c0"
     ],
-    "NA": [
+    NA: [
         "1234"
     ],
-    "LATAM": [
-        "4bfbc98d-35d6-4a85-85f9-4e661c1a32c0"
+    LATAM: [
+        "4bfb"
     ],
-    "APAC": [
+    APAC: [
         "1234"
     ]
+};
+
+let mailDistribution = {
+    EMEA: "daniel.szlaski@genesys.com", //EMEACloudCC@genesys.com
+    NA: "1234",
+    LATAM: "4bfb",
+    APAC:"1234"
 };
 
 let regions = {
@@ -30,7 +37,7 @@ let regions = {
 }
 
 let requestsType = {
-    // "Genesys Cloud": ["Cloud Migrations", "Innovation (Custom Demos, Integrations, Beta Testing)", "Must Win/Strategic Opportunity Support", "POCs & Pilots for Strategic Opportunities", "Technical Design/Architecture Review", "Other"],
+
     EMEA: {
         "Genesys Cloud": ["Additional Privacy Support", "Additional Security Support", "Associate SC & AE Enablement", "Cloud Migrations", "Critical Situation Management", "End to End Partner Enablement", "Innovation (Custom Demos, Integrations, Beta Testing)", "Must Win/Strategic Opportunity Support", "Partner Enablement (Summits/ Events/ Webinars)", "POC & Pilots for Strategic Opportunities", "Technical Design/ Architecture Review", "Test Drive", "Other"],
         "Genesys Engage": ["Cloud Migrations", "Innovation (Custom Demos, Integrations, Beta Testing)", "Must Win/Strategic Opportunity Support", "POC & Pilots for Strategic Opportunities", "Technical Design/ Architecture Review", "Other"],

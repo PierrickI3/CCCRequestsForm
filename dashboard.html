@@ -9,6 +9,7 @@
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/alasql@0.5"></script>
+    <script src="https://chartjs-plugin-datalabels.netlify.com/chartjs-plugin-datalabels.js"></script>
     <script src="js/requests.js"></script>
 
     <!-- Bootstrap -->
@@ -26,7 +27,7 @@
             <img src="images/genesys.png" width="30" height="30" class="d-inline-block align-top" alt="">
             Cloud Competency Center Dashboard
         </a>
-        <a href="index.html" id="reviewRequestsButton" class="admin btn btn-primary">Review Requests</a>
+        <a href="./requests.html" id="reviewRequestsButton" class="admin btn btn-primary">Review Requests</a>
     </nav>
 
 
@@ -36,12 +37,32 @@
             <div class="form-group col-sm-12">
                 <div class="form-row">
                     <div class="form-group col-md-4">
-                        <select id="region" name="region" class="form-control" required>
+                        <label for="region">Region</label>
+                        <select id="region" name="region" class="form-control">
                             <option value="" selected>All regions</option>
                             <option value="APAC">APAC</option>
                             <option value="EMEA">EMEA</option>
                             <option value="LATAM">LATAM</option>
                             <option value="NA">North America</option>
+                        </select>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label for="product">Product</label>
+                        <select id="product" name="region" class="form-control">
+                            <option value="" selected>All products</option>
+                            <option value="Genesys Cloud">Genesys Cloud</option>
+                            <option value="Genesys Engage">Genesys Engage</option>
+                            <option value="Genesys Engage Cloud">Genesys Engage Cloud</option>
+                            <option value="PureConnect">PureConnect</option>
+                        </select>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label for="market">Market Segment</label>
+                        <select id="market" name="market" class="form-control">
+                            <option value="" selected>All</option>
+                            <option value="Mid-Market">Mid-market</option>
+                            <option value="Commercial">Commercial</option>
+                            <option value="Enterprise">Enterprise</option>
                         </select>
                     </div>
 
@@ -79,9 +100,13 @@
     </div>
 
 
-
-
     <script>
+
+        let region = getUrlParameter("region");
+        $("#region").val(region);
+
+        // SetLink for review Requests
+        document.getElementById("reviewRequestsButton").setAttribute("href", `./requests.html?region=${region}`);
 
         function prepareDataForSQL(_sql, _data) {
             console.log(`prepareDataForSQL: ${_sql}`);
@@ -113,7 +138,7 @@
                     ]
                 }]
             };
-            console.log(myData);
+
             return myData
         }
 
@@ -122,19 +147,71 @@
         $("#region").on("change", () => {
             init();
         });
+        $("#product").on("change", () => {
+            init();
+        });
+        $("#market").on("change", () => {
+            init();
+        });
+
+
+        function buildFilter(_sql, _isWHERE) {
+            var filter = "";
+            var bAND = false;
+            var bEmpty = true;
+
+            if (!_isWHERE)
+                filter = "WHERE ("
+
+
+            if ($('#region').val() != "" || $('#product').val() != "") {
+                if ($('#region').val() != "") {
+                    filter = filter + ` region = '${$('#region').val()}' `
+                    bAND = true;
+                    bEmpty = false;
+                }
+
+                if ($('#product').val() != "") {
+                    if (bAND) filter = filter + " AND ";
+                    filter = filter + `product = '${$('#product').val()}' `;
+                    bEmpty = false;
+                }
+
+                if ($('#market').val() != "") {
+                    if (bAND) filter = filter + " AND ";
+                    filter = filter + `market = '${$('#market').val()}' `;
+                    bEmpty = false;
+                }
+
+            }
+            if (!_isWHERE) filter = filter + ")";
+            if (bEmpty) {
+                _sql = _sql.replace('##', "");
+            } else
+                _sql = _sql.replace('##', filter);
+
+            console.log(_sql);
+            return _sql
+        }
+
+
 
 
         async function init() {
 
 
             let data = await getDashboard();
+
+            //#region ByRegion
+            /*
             let sql = "";
             if ($('#region').val() != "")
                 sql = `SELECT count(*) as val, region as label FROM ? WHERE region = '${$('#region').val()}' GROUP BY region`;
             else
                 sql = `SELECT count(*) as val, region as label FROM ? GROUP BY region`;
+            */
+            let sql = buildFilter(`SELECT count(*) as val, region as label FROM ? ## GROUP BY region`);
 
-            //#region ByRegion
             $('#chart_region').remove();
             $('#chart_region_container').append('<canvas id="chart_region"><canvas>');
 
@@ -152,12 +229,67 @@
             });
             //#endregion
 
-            //#region ByStatus for Active
+            //#region By Request Type
+            sql = buildFilter('SELECT count(*) as val, requestType as label FROM ? ## GROUP BY requestType');
 
-            if ($('#region').val() != "")
-                sql = `SELECT count(*) as val, status as label FROM ? WHERE (isDeleted = false AND region = '${$('#region').val()}' ) GROUP BY status`;
-            else
-                sql = `SELECT count(*) as val, status as label FROM ? WHERE isDeleted = false GROUP BY status`;
+            $('#chart_requestType').remove(); // this is my <canvas> element
+            $('#chart_requestType_container').append('<canvas id="chart_requestType"><canvas>');
+            ctx = document.getElementById('chart_requestType')
+            myDoughnutChart = new Chart(ctx, {
+                type: 'bar',
+                barPercentage: 0.5,
+                barThickness: 6,
+                maxBarThickness: 8,
+                minBarLength: 2,
+                data: prepareDataForSQL(sql, data),
+                options: {
+                    title: {
+                        display: true,
+                        text: 'By request type'
+                    }, plugins: {
+                        datalabels: {
+                            color: 'white',
+                            align: 'center',
+                            clamp: true
+
+                        }
+                    }
+                }
+
+            });
+            //#endregion
+
+            //#region ByProduct
+            sql = buildFilter('SELECT count(*) as val, product as label FROM ? ## GROUP BY product');
+
+            $('#chart_product').remove(); // this is my <canvas> element
+            $('#chart_product_container').append('<canvas id="chart_product"><canvas>');
+            ctx = document.getElementById('chart_product').getContext('2d');
+            myDoughnutChart = new Chart(ctx, {
+                type: 'pie',
+                options: {
+                    title: {
+                        display: true,
+                        text: 'By product'
+                    },
+                    plugins: {
+                        datalabels: {
+                            color: 'white',
+                            font: {
+                                size: 15
+                            }
+                        }
+                    }
+                },
+                data: prepareDataForSQL(sql, data),
+
+
+            });
+            //#endregion
+
+
+            //#region ByStatus for Active
+            sql = buildFilter("SELECT count(*) as val, status as label FROM ? WHERE (isDeleted = false AND status <> 'Closed' AND ##) GROUP BY status", true)
 
             $('#chart_status').remove();
             $('#chart_status_container').append('<canvas id="chart_status"><canvas>');
@@ -175,58 +307,8 @@
             });
             //#endregion
 
-            //#region ByProduct
-
-            sql = "";
-            if ($('#region').val() != "")
-                sql = `SELECT count(*) as val, product as label FROM ? WHERE region = '${$('#region').val()}' GROUP BY product`;
-            else
-                sql = `SELECT count(*) as val, product as label FROM ? GROUP BY product`;
-
-            $('#chart_product').remove(); // this is my <canvas> element
-            $('#chart_product_container').append('<canvas id="chart_product"><canvas>');
-            ctx = document.getElementById('chart_product')
-            myDoughnutChart = new Chart(ctx, {
-                type: 'pie',
-                options: {
-                    title: {
-                        display: true,
-                        text: 'By product'
-                    }
-                },
-                data: prepareDataForSQL(sql, data)
-
-            });
-            //#endregion
 
 
-            //#region By Request Type
-            $('#chart_requestType').remove(); // this is my <canvas> element
-            $('#chart_requestType_container').append('<canvas id="chart_requestType"><canvas>');
-
-            if ($('#region').val() != "")
-                sql = `SELECT count(*) as val, requestType as label FROM ? WHERE region = '${$('#region').val()}' GROUP BY requestType`;
-            else
-                sql = `SELECT count(*) as val, requestType as label FROM ? GROUP BY requestType`;
-
-
-            ctx = document.getElementById('chart_requestType')
-            myDoughnutChart = new Chart(ctx, {
-                type: 'bar',
-                barPercentage: 0.5,
-                barThickness: 6,
-                maxBarThickness: 8,
-                minBarLength: 2,
-                data: prepareDataForSQL(sql, data),
-                options: {
-                    title: {
-                        display: true,
-                        text: 'By request type'
-                    }
-                }
-
-            });
-            //#endregion
 
 
 
@@ -234,6 +316,20 @@
         }
 
 
+        function getUrlParameter(sParam) {
+            var sPageURL = window.location.search.substring(1),
+                sURLVariables = sPageURL.split('&'),
+                sParameterName,
+                i;
+
+            for (i = 0; i < sURLVariables.length; i++) {
+                sParameterName = sURLVariables[i].split('=');
+
+                if (sParameterName[0] === sParam) {
+                    return sParameterName[1] === undefined ? true : decodeURIComponent(sParameterName[1]);
+                }
+            }
+        };
 
     </script>
 

@@ -54,6 +54,15 @@
                     </div>
                     <div class="form-row">
                         <div class="form-group col-md-5">
+                            <label for="segment">Market Segment</label>
+                            <select id="segment" name="segment" class="form-control" required>
+                                <option value="" disabled selected>Select segment</option>
+                                <option value="Mid-market ">Mid-market</option>
+                                <option value="Commercial">Commercial</option>
+                                <option value="Enterprise">Enterprise</option>                                
+                            </select>
+                        </div>
+                        <div class="form-group col-md-5">
                             <label for="product">Product</label>
                             <select id="product" name="product" class="form-control" required>
                                 <option value="" disabled selected>Select a Product</option>
@@ -63,13 +72,29 @@
                                 <option value="PureConnect">PureConnect</option>
                             </select>
                         </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group col-md-5">
+                            <label for="requestCategory">Request Category</label>
+                            <select id="requestCategory" name="requestType" class="form-control" required>
+                                <option value="" disabled selected>Select a Request Category</option>
+                                <option value="RequestCategory" >RequestCategory</option>
+                            </select>
+                        </div>
                         <div class="form-group col-md-5">
                             <label for="requestType">Request Type</label>
                             <select id="requestType" name="requestType" class="form-control" required>
-                                <option value="" disabled selected>Select a Request Type</option>
+                                <option value="" disabled selected>Select a Product</option>
+                                <option value="Genesys Cloud">Genesys Cloud</option>
+                                <option value="Genesys Engage">Genesys Engage</option>
+                                <option value="Genesys Engage Cloud">Genesys Engage Cloud</option>
+                                <option value="PureConnect">PureConnect</option>
                             </select>
                         </div>
                     </div>
+
+                    
                     <div class="form-row">
                         <div class="form-group col-md-5">
                             <label for="requesterName">Requester Name</label>

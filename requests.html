@@ -53,6 +53,9 @@
             <ul class="nav navbar-nav" style="float: right;">
                 <li><a href="./index.html" class="admin btn btn-primary ml-2">Submit a new Request</a></li>
             </ul>
+            <ul class="nav navbar-nav" style="float: right;">
+                <li><a href="./dashboard.html" id="dashboardLink" class="admin btn btn-info ml-2">Dashboard</a></li>
+            </ul>
 
             <ul class="nav navbar-nav" style="float: right;">
                 <li><button id="refresh" class="admin btn btn-secondary"><em class="fa fa-refresh"></em></button></li>
@@ -334,6 +337,9 @@
 
         let region = getUrlParameter("region");
         $("#region").text(region);
+
+        // SetLink for Dashboard
+        document.getElementById("dashboardLink").setAttribute("href", `./dashboard.html?region=${$("#region").text()}`);
 
         var requests = {
             updateItem: function (updatingRequest) { },

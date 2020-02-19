@@ -12,7 +12,9 @@ async function postRequests(region, subRegion, product, requestType, requesterNa
     requesterPhoneNumber: requesterPhoneNumber,
     needCompletedBy: needCompletedBy,
     description: description,
-    isDeleted: false
+    status: "Open",
+    isDeleted: false,
+    mailDistribution: mailDistribution[$("#region").val()]
   };
 
   //#region Optional fields
@@ -74,7 +76,8 @@ async function putRequest(id, region, subRegion, product, requestType, requester
     status: status,
     programManager: programManager,
     acceptedRejected: acceptedRejected,
-    isDeleted: isDeleted
+    isDeleted: isDeleted,
+    mailDistribution: mailDistribution[$("#editModal #region").val()]
   };
 
   //#region Optional fields
