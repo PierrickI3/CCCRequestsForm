@@ -1,7 +1,4 @@
-Change anything on Closed -> move to not Deleted.
-
-New Request is with "undefined" status -> should it be "OPEN" ? (reports)
-
+Should we allow to change original region during review?
 
 
 target lunch - 3rd March (Tue)

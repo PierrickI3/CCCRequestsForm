@@ -109,7 +109,17 @@
                                     </select>
                                 </div>
                             </div>
+
                             <div class="form-row">
+                                <div class="form-group col-md-5">
+                                    <label for="segment">Market Segment</label>
+                                    <select id="segment" name="segment" class="form-control" required>
+                                        <option value="" disabled selected>Select segment</option>
+                                        <option value="Mid-market ">Mid-market</option>
+                                        <option value="Commercial">Commercial</option>
+                                        <option value="Enterprise">Enterprise</option>
+                                    </select>
+                                </div>
                                 <div class="form-group col-md-5">
                                     <label for="product">Product</label>
                                     <select id="product" name="product" class="form-control" required>
@@ -120,41 +130,33 @@
                                         <option value="PureConnect">PureConnect</option>
                                     </select>
                                 </div>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group col-md-5">
+                                    <label for="requestCategory">Request Category</label>
+                                    <select id="requestCategory" name="requestCategory" class="form-control" required>
+                                        <option value="" disabled selected>Select a Request Category</option>
+                                        <option value="Demo & Trial Support">Demo & Trial Support</option>
+                                        <option value="Opportunity Support">Opportunity Support</option>
+                                        <option value="Security Support">Security Support</option>
+                                        <option value="Privacy Support">Privacy Support</option>
+                                        <option value="Strategic Business Consulting">Strategic Business Consulting
+                                        </option>
+                                        <option value="Specialist Engagement">Specialist Engagement</option>
+                                        <option value="Enablement">Enablement</option>
+                                        <option value="Critical Situation Support">Critical Situation Support</option>
+                                        <option value="Other Request">Other Request</option>
+                                    </select>
+                                </div>
                                 <div class="form-group col-md-5">
                                     <label for="requestType">Request Type</label>
                                     <select id="requestType" name="requestType" class="form-control" required>
                                         <option value="" disabled selected>Select a Request Type</option>
-                                        <option value="Additional Privacy Support">Additional Privacy Support</option>
-                                        <option value="Additional Security Support">Additional Security Support</option>
-                                        <option value="Associate SC & AE Enablement">Associate SC & AE Enablement
-                                        </option>
-                                        <option value="Cloud Migrations">Cloud Migrations</option>
-                                        <option value="Critical Situation Management">Critical Situation Management
-                                        </option>
-                                        <option value="End to End Partner Enablement">End to End Partner Enablement
-                                        </option>
-                                        <option value="Innovation (Custom Demos, Integrations, Beta Testing)">Innovation
-                                            (Custom
-                                            Demos,
-                                            Integrations, Beta Testing)</option>
-                                        <option value="Must Win/Strategic Opportunity Support">Must Win/Strategic
-                                            Opportunity
-                                            Support
-                                        </option>
-                                        <option value="Partner Enablement">Partner Enablement (Summits/Events/Webinars)
-                                        </option>
-                                        <option value="POCs & Pilots for Strategic Opportunities">POCs & Pilots for
-                                            Strategic
-                                            Opportunities</option>
-                                        <option value="Technical Design/Architecture Review">Technical
-                                            Design/Architecture
-                                            Review
-                                        </option>
-                                        <option value="Test Drive">Test Drive</option>
-                                        <option value="Other">Other</option>
                                     </select>
                                 </div>
                             </div>
+
                             <div class="form-row">
                                 <div class="form-group col-md-5">
                                     <label for="requesterName">Requester Name</label>
@@ -259,8 +261,7 @@
                                 </div>
                                 <div class="form-group col-md-2">
                                     <label for="time">Time</label>
-                                    <input type="number" class="form-control" id="time" name="time" placeholder="Hours"
-                                        required>
+                                    <input type="number" class="form-control" id="time" name="time" placeholder="Hours">
 
                                 </div>
                             </div>
@@ -545,8 +546,8 @@
                             type: "text",
                             width: "auto"
                         }, {
-                            name: "requestType",
-                            title: "Request Type",
+                            name: "requestCategory",
+                            title: "Request Category",
                             type: "text",
                             width: "auto"
                         }, {
@@ -611,7 +612,7 @@
 
         function showModal(request) {
             console.log("Showing modal for:", request);
-            updateRequestTypeBasedOnRegionAndProduct();
+            
 
             if (request.acceptedRejected == "Accepted") {
                 $("#modal-header").css('background', 'lightgreen');
@@ -639,8 +640,13 @@
             $("#editModal #region").val(request.region);
             $("#editModal #region").change();
             $("#editModal #subRegion").val(request.subRegion);
+            $("#editModal #segment").val(request.segment);
             $("#editModal #product").val(request.product);
+            $("#editModal #requestCategory").val(request.requestCategory);
+            
+            updateRequestTypeBasedOnRegionAndProduct();
             $("#editModal #requestType").val(request.requestType);
+            
             $("#editModal #requesterName").val(request.requesterName);
             $("#editModal #requesterEmail").val(request.requesterEmail);
             $("#editModal #requesterPhoneNumber").val(request.requesterPhoneNumber);
@@ -656,8 +662,11 @@
             $("#editModal #txtAcceptedRejectedNotes").val(request.acceptedRejectedNotes);
             $("#editModal #teamMembers").val(request.teamMembers);
 
-            $("#editModal").modal("show");
 
+            
+
+            $("#editModal").modal("show");
+            
         }
 
         $("#editModal #region").on("change", () => {
@@ -666,15 +675,21 @@
             for (let subregion of regions[$("#editModal #region").val()]) {
                 $("<option/>", { value: subregion }).text(subregion).appendTo("#editModal #subRegion");
             }
-            updateRequestTypeBasedOnRegionAndProduct();
+            //updateRequestTypeBasedOnRegionAndProduct();
         });
-
+        /*
         $("#editModal #product").on("change", () => {
             updateRequestTypeBasedOnRegionAndProduct();
         });
+        */
+
+        $("#editModal #requestCategory").on("change", () => {
+            updateRequestTypeBasedOnRegionAndProduct();
+        });
+
 
         function updateRequestTypeBasedOnRegionAndProduct() {
-
+            /*
             if (!$("#editModal #product").val() || !$("#editModal #region").val()) return
 
             $("#editModal #requestType").empty();
@@ -682,6 +697,25 @@
 
             for (let aRequest of requestsType[$("#editModal #region").val()][$("#editModal #product").val()]) {
                 $("<option/>", { value: aRequest }).text(aRequest).appendTo("#editModal #requestType");
+            }
+            */
+            $("#editModal #requestType").empty();
+            $("<option selected disabled />", { value: "" }).text("Select request Type").appendTo("#editModal #requestType");
+            console.log(requestsType);
+            for (let aRequest of requestsType[$("#editModal #requestCategory").val()]) {
+                $("<option/>", { value: aRequest }).text(aRequest).appendTo("#editModal #requestType");
+            }
+
+            if ($("#requestType")[0].length == 1) {
+                // No SubCategory
+                $("#requestType")[0].disabled = true;
+                $('#requestType').removeAttr('required');
+
+
+            } else {
+                $("#requestType")[0].disabled = false;
+                $('#requestType').attr("required", "");
+
             }
 
         }
@@ -745,6 +779,8 @@
             let region = $("#editModal #region").val();
             let subRegion = $("#editModal #subRegion").val();
             let product = $("#editModal #product").val();
+            let segment = $("#editModal #segment").val();
+            let requestCategory = $("#editModal #requestCategory").val();
             let requestType = $("#editModal #requestType").val();
             let requesterName = $("#editModal #requesterName").val();
             let requesterEmail = $("#editModal #requesterEmail").val();
@@ -765,7 +801,7 @@
             console.log(`Priority: ${priority}, Accepted/Rejected: ${acceptedRejected}, Status: ${status}, Program Manager: ${programManager}, Time: ${time}, AcceptedRejectedNotes: ${acceptedRejectedNotes}, teamMembers: ${teamMembers}`);
 
             try {
-                await putRequest(id, region, subRegion, product, requestType, requesterName, requesterEmail, requesterPhoneNumber, needCompletedBy, description, partnerCustomerName, salesforceAccountOpportunity, priority, acceptedRejected, status, programManager, time, acceptedRejectedNotes, teamMembers);
+                await putRequest(id, region, subRegion, segment, product, requestCategory, requestType, requesterName, requesterEmail, requesterPhoneNumber, needCompletedBy, description, partnerCustomerName, salesforceAccountOpportunity, priority, acceptedRejected, status, programManager, time, acceptedRejectedNotes, teamMembers);
                 console.log('Success!');
                 showMessage("Request updated. Thanks!");
                 $("#editModal").modal("hide");

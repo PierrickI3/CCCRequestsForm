@@ -35,7 +35,7 @@ let regions = {
         "East Enterptise", "East Commercial", "East MM", "Central Enterprise", "Central Commercial", "Central MM", "West Enterprise", "West Commercial", "West MM", "Canada", "Government", "Velocity", "Channels"
     ]
 }
-
+/*
 let requestsType = {
 
     EMEA: {
@@ -66,4 +66,17 @@ let requestsType = {
         "PureConnect": ["API Support", "AppFoundry Support", "Business Consulting", "Cloud Migrations", "Data Privacy & Security", "Demo Advanced", "EWM (Work Item Routing)", "POC/Pilot", "PureBridge (Don't forget your DSR)", "RFP Advanced", "Service Automation (Self-Service, IVR BOT's)", "Outbound", "WEM/WFM", "Tech Design/Arch Review", "Other"]
 
     }
+}
+*/
+
+let requestsType = {
+    "Demo & Trial Support": ["Test Drive (Trial)", "POCs, Pilots for Strategic Opps", "Innovation (Integration, Tailored Demos, Vision Clips)"],
+    "Opportunity Support": ["Technical Design / Architecture Review", "MultiCloud", "RFP", "Other Commercial Support"],
+    "Security Support": [],
+    "Privacy Support": [],
+    "Strategic Business Consulting": [],
+    "Specialist Engagement": ["PureBridge", "Cloud Migration", "Self-Service Automation", "Digital AI", "WEM", "API (Platform/AppFoundry)", "Must Win Opportunity Engagement", "Other"],
+    "Enablement": ["Partner Summits, Events, Webinars", "Partner End-to-End Enablement", "Partner Technical Enablement", "Internal SC/AE Enablement"],
+    "Critical Situation Support": [],
+    "Other Request": []
 }

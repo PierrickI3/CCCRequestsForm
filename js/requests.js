@@ -1,12 +1,13 @@
 const apiBasePath = "https://drbojb15ma.execute-api.eu-central-1.amazonaws.com/dev";
 
-async function postRequests(region, subRegion, product, requestType, requesterName, requesterEmail, requesterPhoneNumber, needCompletedBy, description, partnerCustomerName, salesforceAccountOpportunity) {
+async function postRequests(region, subRegion, segment, product, requestCategory, requestType, requesterName, requesterEmail, requesterPhoneNumber, needCompletedBy, description, partnerCustomerName, salesforceAccountOpportunity) {
 
   var data = {
     region: region,
     subRegion: subRegion,
+    segment: segment,
     product: product,
-    requestType: requestType,
+    requestCategory: requestCategory,
     requesterName: requesterName,
     requesterEmail: requesterEmail,
     requesterPhoneNumber: requesterPhoneNumber,
@@ -21,6 +22,10 @@ async function postRequests(region, subRegion, product, requestType, requesterNa
 
   if (partnerCustomerName.length > 0) {
     data.partnerCustomerName = partnerCustomerName
+  }
+
+  if (requestType && requestType.length > 0) {
+    data.requestType = requestType
   }
 
   if (salesforceAccountOpportunity.length > 0) {
@@ -55,7 +60,7 @@ async function postRequests(region, subRegion, product, requestType, requesterNa
     });
 }
 
-async function putRequest(id, region, subRegion, product, requestType, requesterName, requesterEmail, requesterPhoneNumber, needCompletedBy, description, partnerCustomerName, salesforceAccountOpportunity, priority, acceptedRejected, status, programManager, time, acceptedRejectedNotes, teamMembers, isDeleted) {
+async function putRequest(id, region, subRegion, segment, product, requestCategory, requestType, requesterName, requesterEmail, requesterPhoneNumber, needCompletedBy, description, partnerCustomerName, salesforceAccountOpportunity, priority, acceptedRejected, status, programManager, time, acceptedRejectedNotes, teamMembers, isDeleted) {
 
 
   if (!isDeleted) isDeleted = false;
@@ -65,8 +70,9 @@ async function putRequest(id, region, subRegion, product, requestType, requester
     id: id,
     region: region,
     subRegion: subRegion,
+    segment: segment,
     product: product,
-    requestType: requestType,
+    requestCategory: requestCategory,
     requesterName: requesterName,
     requesterEmail: requesterEmail,
     requesterPhoneNumber: requesterPhoneNumber,
@@ -82,28 +88,31 @@ async function putRequest(id, region, subRegion, product, requestType, requester
 
   //#region Optional fields
 
-  if (teamMembers.length > 0) {
+  if (requestType && requestType.length > 0) {
+    data.requestType = requestType
+  }
+
+  if (teamMembers && teamMembers.length > 0) {
     data.teamMembers = teamMembers;
   }
 
-  if (acceptedRejectedNotes.length > 0) {
+  if (acceptedRejectedNotes && acceptedRejectedNotes.length > 0) {
     data.acceptedRejectedNotes = acceptedRejectedNotes;
   }
-
-
-  if (acceptedRejected.length > 0) {
+/*
+  if (acceptedRejected && acceptedRejected.length > 0) {
     data.acceptedRejected = acceptedRejected;
   }
-
-  if (time.length > 0) {
+*/
+  if (time && time.length > 0) {
     data.time = time;
   }
 
-  if (partnerCustomerName.length > 0) {
+  if (partnerCustomerName && partnerCustomerName.length > 0) {
     data.partnerCustomerName = partnerCustomerName
   }
 
-  if (salesforceAccountOpportunity.length > 0) {
+  if (salesforceAccountOpportunity && salesforceAccountOpportunity.length > 0) {
     data.salesforceAccountOpportunity = salesforceAccountOpportunity
   }
 

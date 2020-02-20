@@ -74,12 +74,12 @@ function getMe() {
     });
 }
 
-function sendNotification(_message, _target) {
+function sendNotification(_message, _region) {
 
     let data =
     {
         "message": _message,
-        "metadata": `newRequest | ${_target}`
+        "metadata": `newRequest | ${_region}`
     }
 
     $.ajax({

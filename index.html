@@ -59,7 +59,7 @@
                                 <option value="" disabled selected>Select segment</option>
                                 <option value="Mid-market ">Mid-market</option>
                                 <option value="Commercial">Commercial</option>
-                                <option value="Enterprise">Enterprise</option>                                
+                                <option value="Enterprise">Enterprise</option>
                             </select>
                         </div>
                         <div class="form-group col-md-5">
@@ -77,24 +77,28 @@
                     <div class="form-row">
                         <div class="form-group col-md-5">
                             <label for="requestCategory">Request Category</label>
-                            <select id="requestCategory" name="requestType" class="form-control" required>
+                            <select id="requestCategory" name="requestCategory" class="form-control" required>
                                 <option value="" disabled selected>Select a Request Category</option>
-                                <option value="RequestCategory" >RequestCategory</option>
+                                <option value="Demo & Trial Support">Demo & Trial Support</option>
+                                <option value="Opportunity Support">Opportunity Support</option>
+                                <option value="Security Support">Security Support</option>
+                                <option value="Privacy Support">Privacy Support</option>
+                                <option value="Strategic Business Consulting">Strategic Business Consulting</option>
+                                <option value="Specialist Engagement">Specialist Engagement</option>
+                                <option value="Enablement">Enablement</option>
+                                <option value="Critical Situation Support">Critical Situation Support</option>
+                                <option value="Other Request">Other Request</option>
                             </select>
                         </div>
                         <div class="form-group col-md-5">
                             <label for="requestType">Request Type</label>
                             <select id="requestType" name="requestType" class="form-control" required>
-                                <option value="" disabled selected>Select a Product</option>
-                                <option value="Genesys Cloud">Genesys Cloud</option>
-                                <option value="Genesys Engage">Genesys Engage</option>
-                                <option value="Genesys Engage Cloud">Genesys Engage Cloud</option>
-                                <option value="PureConnect">PureConnect</option>
+                                <option value="" disabled selected>Select a Request Type</option>
                             </select>
                         </div>
                     </div>
 
-                    
+
                     <div class="form-row">
                         <div class="form-group col-md-5">
                             <label for="requesterName">Requester Name</label>
@@ -262,15 +266,17 @@
             for (let subregion of regions[$("#region").val()]) {
                 $("<option/>", { value: subregion }).text(subregion).appendTo("#subRegion");
             }
+            //updateRequestTypeBasedOnRegionAndProduct();
+        });
+
+
+        $("#requestCategory").on("change", () => {
             updateRequestTypeBasedOnRegionAndProduct();
         });
 
-        $("#product").on("change", () => {
-            updateRequestTypeBasedOnRegionAndProduct();
-        });
 
         function updateRequestTypeBasedOnRegionAndProduct() {
-
+            /* Keep Previous version 
             if (!$("#product").val() || !$("#region").val()) return
 
             $("#requestType").empty();
@@ -279,8 +285,30 @@
             for (let aRequest of requestsType[$("#region").val()][$("#product").val()]) {
                 $("<option/>", { value: aRequest }).text(aRequest).appendTo("#requestType");
             }
+            */
+            $("#requestType").empty();
+            $("<option selected disabled />", { value: "" }).text("Select request Type").appendTo("#requestType");
+
+            for (let aRequest of requestsType[$("#requestCategory").val()]) {
+                $("<option/>", { value: aRequest }).text(aRequest).appendTo("#requestType");
+            }
+
+            if ($("#requestType")[0].length == 1) {
+                // No SubCategory
+                $("#requestType")[0].disabled = true;
+                $('#requestType').removeAttr('required');
+
+
+            } else {
+                $("#requestType")[0].disabled = false;
+                $('#requestType').attr("required", "");
+
+            }
+
 
         }
+
+
 
         $("#modal-form").validate({
             errorClass: "text-danger",
@@ -294,9 +322,12 @@
                 return;
             }
 
+
             let region = $("#region").val();
             let subRegion = $("#subRegion").val();
+            let segment = $("#segment").val();
             let product = $("#product").val();
+            let requestCategory = $("#requestCategory").val();
             let requestType = $("#requestType").val();
             let requesterName = $("#requesterName").val();
             let requesterEmail = $("#requesterEmail").val();
@@ -309,10 +340,16 @@
             console.log(`Region: ${region}, subRegion: ${subRegion}, Product: ${product}, Request Type: ${requestType}, Requester Name: ${requesterName}, Requester Email: ${requesterEmail}, Requester Phone Number: ${requesterPhoneNumber}, Need Completed By: ${needCompletedBy}, Description: ${description}, Partner or Customer Name: ${partnerCustomerName}, Salesforce Opportunity: ${salesforceAccountOpportunity}`);
 
             try {
-                await postRequests(region, subRegion, product, requestType, requesterName, requesterEmail, requesterPhoneNumber, needCompletedBy, description, partnerCustomerName, salesforceAccountOpportunity);
+                await postRequests(region, subRegion, segment, product, requestCategory, requestType, requesterName, requesterEmail, requesterPhoneNumber, needCompletedBy, description, partnerCustomerName, salesforceAccountOpportunity);
                 console.log('Success!');
                 showMessage("Request submitted. Thanks!");
-                sendNotification(`> :loudspeaker: New CCC Request for **${product}** received from [@${userInfo.name}](#/person/${userInfo.id}) (${requestType}) `, region);
+                let notificationDetails = "";
+                if (requestType)
+                    notificationDetails = `${requestCategory} / ${requestType}`
+                else
+                    notificationDetails = `${requestCategory}`;
+
+                sendNotification(`> :loudspeaker: New CCC Request for **${product}** received from [@${userInfo.name}](#/person/${userInfo.id}) (${notificationDetails}) `, region);
             } catch (error) {
                 console.error(error);
                 showMessage(error, true);
@@ -328,13 +365,14 @@
             $("#requesterName").val(userInfo.name);
             $("#requesterEmail").val(userInfo.mail);
             $("#requesterPhoneNumber").val(userInfo.phone);
-
+            $("#requestCategory").empty();
+            $("<option selected disabled />", { value: "" }).text("Select a Request Category").appendTo("#requestCategory");
             $("#requestType").empty();
-            $("<option selected disabled />", { value: "Select a Request Type" }).text("Select a Request Type").appendTo("#requestType");
-
+            $("#requestType")[0].disabled = false;
+            $("<option selected disabled />", { value: "" }).text("Select a Request Type").appendTo("#requestType");
             $("#subRegion").empty();
             $("<option selected disabled />", { value: "Select a Sub-Region" }).text("Select a Sub-Region").appendTo("#subRegion");
-
+            $("#segment").val('');
             $("#region").val('');
             $("#product").val('');
             $("#datepicker").val('');

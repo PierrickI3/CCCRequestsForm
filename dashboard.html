@@ -57,43 +57,59 @@
                         </select>
                     </div>
                     <div class="form-group col-md-4">
-                        <label for="market">Market Segment</label>
-                        <select id="market" name="market" class="form-control">
+                        <label for="segment">Market Segment</label>
+                        <select id="segment" name="segment" class="form-control">
                             <option value="" selected>All</option>
                             <option value="Mid-Market">Mid-market</option>
                             <option value="Commercial">Commercial</option>
                             <option value="Enterprise">Enterprise</option>
                         </select>
                     </div>
-
                 </div>
                 <div class="form-row">
-                    <div class="form-group col-md-5">
-                        <div class="chart-container" style="width:40vw" id="chart_region_container">
+                    <div class="form-group col-md-4">
+                        <div class="chart-container" style="width:40vw" id="chart_region_container" name="requests">
                             <canvas id="chart_region"></canvas>
                         </div>
-
                     </div>
-                    <div class="form-group col-md-6">
-                        <div class="chart-container" style="width:50vw" id="chart_requestType_container">
-                            <canvas id="chart_requestType"></canvas>
-                        </div>
-                    </div>
-
-                </div>
-                <div class="form-row">
-                    <div class="form-group col-md-6">
-                        <div class="chart-container" style="width:40vw" id="chart_product_container">
+                   
+                    <div class="form-group col-md-4">
+                        <div class="chart-container" style="width:40vw" id="chart_product_container" name="product">
                             <canvas id="chart_product"></canvas>
                         </div>
                     </div>
+                    <div class="form-group col-md-4">
+                        <div class="chart-container" style="width:40vw" id="chart_segment_container" name="segment">
+                            <canvas id="chart_segment"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-row">
                     <div class="form-group col-md-6">
-                        <div class="chart-container" style="width:40vw" id="chart_status_container">
+                        <div class="chart-container" style="width:40vw" id="chart_status_container" name="status">
                             <canvas id="chart_status"></canvas>
                         </div>
                     </div>
-
+                    <div class="form-group col-md-6">
+                        <div class="chart-container" style="width:40vw" id="chart_requestCategory_container" name="requestCategory">
+                            <canvas id="chart_requestCategory"></canvas>
+                        </div>
+                    </div>              
                 </div>
+
+                <div class="form-row">
+                    <div class="form-group col-md-12">
+                        <div class="chart-container" style="width:90vw" id="chart_requestType_container" name="requestType">
+                            <canvas id="chart_requestType"></canvas>
+                        </div>
+                    </div>
+                   
+                   
+                </div>
+
+              
+               
 
             </div>
         </div>
@@ -134,7 +150,13 @@
                         'rgba(255, 50, 99, 1)',
                         'rgba(100, 30, 164, 1)',
                         'rgba(200, 159, 255, 1)',
-                        'rgba(220, 209, 10, 1)'
+                        'rgba(50, 100, 200, 1)',
+                        'rgba(70, 150, 76, 1)',
+                        'rgba(20, 255, 150, 1)',
+                        'rgba(250, 50, 40, 1)',
+                        'rgba(175, 55, 55, 1)',
+                        'rgba(240, 140, 40, 1)',
+                        'rgba(66, 66, 166, 1)'
                     ]
                 }]
             };
@@ -150,7 +172,7 @@
         $("#product").on("change", () => {
             init();
         });
-        $("#market").on("change", () => {
+        $("#segment").on("change", () => {
             init();
         });
 
@@ -162,9 +184,11 @@
 
             if (!_isWHERE)
                 filter = "WHERE ("
+                else 
+                filter = " AND "
 
 
-            if ($('#region').val() != "" || $('#product').val() != "") {
+            if ($('#region').val() != "" || $('#product').val() != "" || $('#segment').val() != "") {
                 if ($('#region').val() != "") {
                     filter = filter + ` region = '${$('#region').val()}' `
                     bAND = true;
@@ -175,11 +199,12 @@
                     if (bAND) filter = filter + " AND ";
                     filter = filter + `product = '${$('#product').val()}' `;
                     bEmpty = false;
+                    bAND = true;
                 }
 
-                if ($('#market').val() != "") {
+                if ($('#segment').val() != "") {
                     if (bAND) filter = filter + " AND ";
-                    filter = filter + `market = '${$('#market').val()}' `;
+                    filter = filter + `segment = '${$('#segment').val()}' `;
                     bEmpty = false;
                 }
 
@@ -194,61 +219,24 @@
             return _sql
         }
 
+        function makeChart(_sql, _isWHERE, _chartName, _chartType, _chartTitle, _data) {
 
+            let sql = buildFilter(_sql, _isWHERE);
 
+            $(`#chart_${_chartName}`).remove();
+            $(`#chart_${_chartName}_container`).append(`<canvas id="chart_${_chartName}"><canvas>`);
 
-        async function init() {
-
-
-            let data = await getDashboard();
-
-            //#region ByRegion
-            /*
-            let sql = "";
-            if ($('#region').val() != "")
-                sql = `SELECT count(*) as val, region as label FROM ? WHERE region = '${$('#region').val()}' GROUP BY region`;
-            else
-                sql = `SELECT count(*) as val, region as label FROM ? GROUP BY region`;
-            */
-            let sql = buildFilter(`SELECT count(*) as val, region as label FROM ? ## GROUP BY region`);
-
-            $('#chart_region').remove();
-            $('#chart_region_container').append('<canvas id="chart_region"><canvas>');
-
-            var ctx = document.getElementById('chart_region')
+            var ctx = document.getElementById(`chart_${_chartName}`)
             var myDoughnutChart = new Chart(ctx, {
-                type: 'doughnut',
-                data: prepareDataForSQL(sql, data),
+                type: _chartType,
+                data: prepareDataForSQL(sql, _data),
                 options: {
                     title: {
                         display: true,
-                        text: 'Regions'
-                    }
-                }
-
-            });
-            //#endregion
-
-            //#region By Request Type
-            sql = buildFilter('SELECT count(*) as val, requestType as label FROM ? ## GROUP BY requestType');
-
-            $('#chart_requestType').remove(); // this is my <canvas> element
-            $('#chart_requestType_container').append('<canvas id="chart_requestType"><canvas>');
-            ctx = document.getElementById('chart_requestType')
-            myDoughnutChart = new Chart(ctx, {
-                type: 'bar',
-                barPercentage: 0.5,
-                barThickness: 6,
-                maxBarThickness: 8,
-                minBarLength: 2,
-                data: prepareDataForSQL(sql, data),
-                options: {
-                    title: {
-                        display: true,
-                        text: 'By request type'
+                        text: _chartTitle
                     }, plugins: {
                         datalabels: {
-                            color: 'white',
+                            color: 'black',
                             align: 'center',
                             clamp: true
 
@@ -257,61 +245,27 @@
                 }
 
             });
-            //#endregion
 
-            //#region ByProduct
-            sql = buildFilter('SELECT count(*) as val, product as label FROM ? ## GROUP BY product');
-
-            $('#chart_product').remove(); // this is my <canvas> element
-            $('#chart_product_container').append('<canvas id="chart_product"><canvas>');
-            ctx = document.getElementById('chart_product').getContext('2d');
-            myDoughnutChart = new Chart(ctx, {
-                type: 'pie',
-                options: {
-                    title: {
-                        display: true,
-                        text: 'By product'
-                    },
-                    plugins: {
-                        datalabels: {
-                            color: 'white',
-                            font: {
-                                size: 15
-                            }
-                        }
-                    }
-                },
-                data: prepareDataForSQL(sql, data),
+        }
 
 
-            });
-            //#endregion
+        async function init() {
 
 
-            //#region ByStatus for Active
-            sql = buildFilter("SELECT count(*) as val, status as label FROM ? WHERE (isDeleted = false AND status <> 'Closed' AND ##) GROUP BY status", true)
+            let data = await getDashboard();
 
-            $('#chart_status').remove();
-            $('#chart_status_container').append('<canvas id="chart_status"><canvas>');
-            ctx = document.getElementById('chart_status')
-            myDoughnutChart = new Chart(ctx, {
-                type: 'pie',
-                data: prepareDataForSQL(sql, data),
-                options: {
-                    title: {
-                        display: true,
-                        text: 'By status for active requests'
-                    }
-                }
-
-            });
-            //#endregion
-
-
-
-
-
-
+            // ByRegion
+            makeChart('SELECT count(*) as val, region as label FROM ? ## GROUP BY region', false, 'region', 'doughnut', 'Requests', data);
+            // BySegement
+            makeChart('SELECT count(*) as val, segment as label FROM ? ## GROUP BY segment', false, 'segment', 'doughnut', 'By Segement', data);
+            // By RequestCategory
+            makeChart('SELECT count(*) as val, requestCategory as label FROM ? ## GROUP BY requestCategory', false, 'requestCategory', 'bar', 'By request Category', data);
+            // By RequestType
+            makeChart('SELECT count(*) as val, requestType as label FROM ? ## GROUP BY requestType', false, 'requestType', 'bar', 'By request Type', data);
+            // By Product
+            makeChart('SELECT count(*) as val, product as label FROM ? ## GROUP BY product', false, 'product', 'pie', 'By Product', data);
+            // By Status for Active and not Delted
+            makeChart("SELECT count(*) as val, status as label FROM ? WHERE (isDeleted = false AND status <> 'Closed' ##) GROUP BY status", true, 'status', 'pie', 'By status for active requests', data);
 
         }
 
