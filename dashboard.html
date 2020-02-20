@@ -8,7 +8,7 @@
     <link rel="shortcut icon" href="/favicon.ico">
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/alasql@0.5"></script>
+    <script src="https://cdn.jsdelivr.net/npm/alasql"></script>
     <script src="https://chartjs-plugin-datalabels.netlify.com/chartjs-plugin-datalabels.js"></script>
     <script src="js/requests.js"></script>
 
@@ -60,7 +60,7 @@
                         <label for="segment">Market Segment</label>
                         <select id="segment" name="segment" class="form-control">
                             <option value="" selected>All</option>
-                            <option value="Mid-Market">Mid-market</option>
+                            <option value="Mid-market">Mid-market</option>
                             <option value="Commercial">Commercial</option>
                             <option value="Enterprise">Enterprise</option>
                         </select>
@@ -68,18 +68,18 @@
                 </div>
                 <div class="form-row">
                     <div class="form-group col-md-4">
-                        <div class="chart-container" style="width:40vw" id="chart_region_container" name="requests">
+                        <div class="chart-container" style="width:35vw" id="chart_region_container" name="requests">
                             <canvas id="chart_region"></canvas>
                         </div>
                     </div>
-                   
+
                     <div class="form-group col-md-4">
-                        <div class="chart-container" style="width:40vw" id="chart_product_container" name="product">
+                        <div class="chart-container" style="width:35vw" id="chart_product_container" name="product">
                             <canvas id="chart_product"></canvas>
                         </div>
                     </div>
                     <div class="form-group col-md-4">
-                        <div class="chart-container" style="width:40vw" id="chart_segment_container" name="segment">
+                        <div class="chart-container" style="width:35vw" id="chart_segment_container" name="segment">
                             <canvas id="chart_segment"></canvas>
                         </div>
                     </div>
@@ -92,24 +92,26 @@
                         </div>
                     </div>
                     <div class="form-group col-md-6">
-                        <div class="chart-container" style="width:40vw" id="chart_requestCategory_container" name="requestCategory">
+                        <div class="chart-container" style="width:40vw" id="chart_requestCategory_container"
+                            name="requestCategory">
                             <canvas id="chart_requestCategory"></canvas>
                         </div>
-                    </div>              
+                    </div>
                 </div>
 
                 <div class="form-row">
                     <div class="form-group col-md-12">
-                        <div class="chart-container" style="width:90vw" id="chart_requestType_container" name="requestType">
+                        <div class="chart-container" style="width:90vw" id="chart_requestType_container"
+                            name="requestType">
                             <canvas id="chart_requestType"></canvas>
                         </div>
                     </div>
-                   
-                   
+
+
                 </div>
 
-              
-               
+
+
 
             </div>
         </div>
@@ -125,7 +127,7 @@
         document.getElementById("reviewRequestsButton").setAttribute("href", `./requests.html?region=${region}`);
 
         function prepareDataForSQL(_sql, _data) {
-            console.log(`prepareDataForSQL: ${_sql}`);
+            //console.log(`prepareDataForSQL: ${_sql}`);
             let res = alasql(_sql, [_data]);
 
             let labels = [];
@@ -184,7 +186,7 @@
 
             if (!_isWHERE)
                 filter = "WHERE ("
-                else 
+            else
                 filter = " AND "
 
 
@@ -215,13 +217,13 @@
             } else
                 _sql = _sql.replace('##', filter);
 
-            console.log(_sql);
             return _sql
         }
 
         function makeChart(_sql, _isWHERE, _chartName, _chartType, _chartTitle, _data) {
 
             let sql = buildFilter(_sql, _isWHERE);
+            console.log(sql);
 
             $(`#chart_${_chartName}`).remove();
             $(`#chart_${_chartName}_container`).append(`<canvas id="chart_${_chartName}"><canvas>`);
@@ -258,14 +260,82 @@
             makeChart('SELECT count(*) as val, region as label FROM ? ## GROUP BY region', false, 'region', 'doughnut', 'Requests', data);
             // BySegement
             makeChart('SELECT count(*) as val, segment as label FROM ? ## GROUP BY segment', false, 'segment', 'doughnut', 'By Segement', data);
-            // By RequestCategory
-            makeChart('SELECT count(*) as val, requestCategory as label FROM ? ## GROUP BY requestCategory', false, 'requestCategory', 'bar', 'By request Category', data);
             // By RequestType
             makeChart('SELECT count(*) as val, requestType as label FROM ? ## GROUP BY requestType', false, 'requestType', 'bar', 'By request Type', data);
             // By Product
             makeChart('SELECT count(*) as val, product as label FROM ? ## GROUP BY product', false, 'product', 'pie', 'By Product', data);
             // By Status for Active and not Delted
             makeChart("SELECT count(*) as val, status as label FROM ? WHERE (isDeleted = false AND status <> 'Closed' ##) GROUP BY status", true, 'status', 'pie', 'By status for active requests', data);
+
+
+
+            // By RequestCategory / Time spent
+            //makeChart('SELECT count(*) as val, requestCategory as label FROM ? ## GROUP BY requestCategory', false, 'requestCategory', 'bar', 'By request Category', data);
+
+            let tmpSQL = buildFilter('SELECT count(*) as val, requestCategory as label FROM ? ## GROUP BY requestCategory', false);
+            let res = alasql(tmpSQL, [data]);
+            var labels = [];
+            var values1 = [];
+            res.forEach(element => {
+                labels.push(element.label);
+                values1.push(element.val);
+            });
+
+            tmpSQL = buildFilter('SELECT SUM(time::NUMBER) as val, requestCategory as label FROM ? ## GROUP BY requestCategory', false);
+            res = alasql(tmpSQL, [data]);            
+            var values2 = [];
+            res.forEach(element => {
+                values2.push(element.val);
+            });
+            
+
+            $('#chart_requestCategory').remove();
+            $('#chart_requestCategory_container').append('<canvas id="chart_requestCategory"><canvas>');
+
+            var ctx = document.getElementById(`chart_requestCategory`)
+            var myDoughnutChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    datasets: [{
+                        data: values1,
+                        label: "Requests",
+                        backgroundColor: [
+                            'rgba(255, 99, 132, 1)',
+                            'rgba(54, 162, 235, 1)',
+                            'rgba(255, 206, 86, 1)',
+                            'rgba(75, 192, 192, 1)',
+                            'rgba(153, 102, 255, 1)',
+                            'rgba(255, 100, 64, 1)',
+                            'rgba(200, 109, 164, 1)',
+                            'rgba(255, 50, 99, 1)',
+                            'rgba(100, 30, 164, 1)',
+                            'rgba(200, 159, 255, 1)',
+                            'rgba(50, 100, 200, 1)',
+                            'rgba(70, 150, 76, 1)',
+                            'rgba(20, 255, 150, 1)',
+                            'rgba(250, 50, 40, 1)',
+                            'rgba(175, 55, 55, 1)',
+                            'rgba(240, 140, 40, 1)',
+                            'rgba(66, 66, 166, 1)'
+                        ]
+                    }, {
+                        type: 'line',
+                        data: values2,
+                        label: "Time spent",
+                        backgroundColor: [
+                            'rgba(70, 128, 215, 0.3)'
+                        ],
+                        borderWidth: 0
+                    }],
+                    labels: labels
+                },
+                options: {
+                        title: {
+                            display: true,
+                            text: "RequestCategory / Time spent"
+                        }
+                    }
+            });
 
         }
 
