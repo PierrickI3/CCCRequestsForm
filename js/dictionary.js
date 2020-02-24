@@ -18,7 +18,7 @@ let mailDistribution = {
     EMEA: "EMEACloudProgramManagement@genesys.com",
     NA: "NACompetencyCenterRequests@genesys.com",
     LATAM: "",
-    APAC: ""
+    APAC: "apac-cc@genesys.com"
 };
 
 let regions = {
