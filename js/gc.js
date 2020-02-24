@@ -4,7 +4,7 @@ const redirectUri = window.location.href; // 'http://localhost:444/index.html';
 const platformClient = require('platformClient');
 const client = platformClient.ApiClient.instance;
 
-client.setEnvironment("mypurecloud.ie");
+client.setEnvironment("mypurecloud.com");
 client.setPersistSettings(true);
 
 let userInfo = {
@@ -23,7 +23,7 @@ function getMe() {
         try {
             // Authenticate
 
-            client.loginImplicitGrant("42f3a603-79ca-4212-a4b5-7847846ce47e", redirectUri)
+            client.loginImplicitGrant("ae638594-45f7-4e59-bd8d-fd95c9df28c8", redirectUri) // PRD
                 .then(() => {
                     console.log('Logged In');
                     let apiInstance = new platformClient.UsersApi();
@@ -33,7 +33,6 @@ function getMe() {
 
                     apiInstance.getUsersMe(opts)
                         .then((data) => {
-                            //console.log(`getUsersMe success! data: ${JSON.stringify(data, null, 2)}`);
 
                             //Read UserData
                             userInfo.name = data.name;
@@ -57,7 +56,7 @@ function getMe() {
                                 userInfo.groups.push(aItem.id)
                             })
 
-                            console.log('User Info:', userInfo);                                                    
+                            console.log('User Info:', userInfo);
                             resolve(userInfo);
                         })
                         .catch((err) => {
@@ -83,7 +82,8 @@ function sendNotification(_message, _region) {
     }
 
     $.ajax({
-        url: `https://apps.mypurecloud.ie:443/webhooks/api/v1/webhook/91ebde78-7dfe-4279-b5af-b8fe187b0973`,
+        // url: `https://apps.mypurecloud.ie:443/webhooks/api/v1/webhook/91ebde78-7dfe-4279-b5af-b8fe187b0973`,
+        url: 'https://apps.mypurecloud.com:443/webhooks/api/v1/webhook/d68c7daf-2c0c-4872-8353-47c1b474008b',
         type: "POST",
         data: data,
         dataType: "json",
