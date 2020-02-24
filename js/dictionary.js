@@ -1,7 +1,7 @@
 
 let adminGroups = {
     EMEA: [
-        "4bfbc98d-35d6-4a85-85f9-4e661c1a32c0"
+        "89bc6b45-62d9-4d20-be78-cdf5a2e39ae8"
     ],
     NA: [
         "1234"
