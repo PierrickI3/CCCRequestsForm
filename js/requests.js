@@ -78,7 +78,6 @@ async function putRequest(id, region, subRegion, segment, product, requestCatego
     requesterPhoneNumber: requesterPhoneNumber,
     needCompletedBy: needCompletedBy,
     description: description,
-    priority: priority,
     status: status,
     programManager: programManager,
     acceptedRejected: acceptedRejected,
@@ -115,6 +114,11 @@ async function putRequest(id, region, subRegion, segment, product, requestCatego
   if (salesforceAccountOpportunity && salesforceAccountOpportunity.length > 0) {
     data.salesforceAccountOpportunity = salesforceAccountOpportunity
   }
+
+  if (priority && priority.length > 0) {
+    data.priority = priority
+  }
+
 
   //#endregion
 

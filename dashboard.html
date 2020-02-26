@@ -141,6 +141,7 @@
                 labels: labels,
                 datasets: [{
                     data: values,
+                    label: "All",
                     backgroundColor: [
                         'rgba(255, 99, 132, 1)',
                         'rgba(54, 162, 235, 1)',
@@ -261,7 +262,7 @@
             // BySegement
             makeChart('SELECT count(*) as val, segment as label FROM ? ## GROUP BY segment', false, 'segment', 'doughnut', 'By Segement', data);
             // By RequestType
-            makeChart('SELECT count(*) as val, requestType as label FROM ? ## GROUP BY requestType', false, 'requestType', 'bar', 'By request Type', data);
+            makeChart('SELECT count(*) as val, requestType as label FROM ? WHERE ( requestType <> "undefined"  ##) GROUP BY requestType', true, 'requestType', 'bar', 'By request Type', data);
             // By Product
             makeChart('SELECT count(*) as val, product as label FROM ? ## GROUP BY product', false, 'product', 'pie', 'By Product', data);
             // By Status for Active and not Delted
