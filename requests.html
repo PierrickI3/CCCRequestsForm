@@ -209,8 +209,8 @@
                                 <div class="form-group col-md-2">
                                     <label for="salesforceAccountOpportunity" style="color: white;">Open in new
                                         tab</label>
-                                    <button type="button" class="btn btn-primary pull-right"
-                                        onclick="navigateToSFLink();">navigate</button>
+                                    <button id="btnCopySFLink" type="button" class="btn btn-primary pull-right"
+                                        onclick="navigateToSFLink();">copy</button>
                                 </div>
 
                             </div>
@@ -402,11 +402,17 @@
 
         function navigateToSFLink() {
 
-            //var copyText = document.getElementById("#editModal #salesforceAccountOpportunity");
-            //copyText.select();            
-            //document.execCommand("copy");
+            var copyText = document.getElementById("salesforceAccountOpportunity");
+            copyText.select();
+            document.execCommand("copy");
+            // Clear selection
+            window.getSelection().removeAllRanges();
+            document.getElementById("btnCopySFLink").textContent = "copied! "
+            setTimeout(function () {
+                document.getElementById("btnCopySFLink").textContent = "copy"
+            }, 1000);
 
-            window.open(`${$("#editModal #salesforceAccountOpportunity").val()}`, '_blank');
+            //window.open(`${$("#editModal #salesforceAccountOpportunity").val()}`, '_blank');
         }
 
         function showRequests() {
