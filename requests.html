@@ -30,6 +30,7 @@
 </head>
 
 <body>
+
     <nav class="navbar navbar-light bg-light navbar-fixed-top">
         <ul class="nav navbar-nav">
             <a class="navbar-brand" href="#">
@@ -400,7 +401,12 @@
         });
 
         function navigateToSFLink() {
-            $(window.open(`${$("#editModal #salesforceAccountOpportunity").val()}`, '_blank'));
+
+            //var copyText = document.getElementById("#editModal #salesforceAccountOpportunity");
+            //copyText.select();            
+            //document.execCommand("copy");
+
+            window.open(`${$("#editModal #salesforceAccountOpportunity").val()}`, '_blank');
         }
 
         function showRequests() {
@@ -612,7 +618,7 @@
 
         function showModal(request) {
             console.log("Showing modal for:", request);
-            
+
 
             if (request.acceptedRejected == "Accepted") {
                 $("#modal-header").css('background', 'lightgreen');
@@ -643,10 +649,10 @@
             $("#editModal #segment").val(request.segment);
             $("#editModal #product").val(request.product);
             $("#editModal #requestCategory").val(request.requestCategory);
-            
+
             updateRequestTypeBasedOnRegionAndProduct();
             $("#editModal #requestType").val(request.requestType);
-            
+
             $("#editModal #requesterName").val(request.requesterName);
             $("#editModal #requesterEmail").val(request.requesterEmail);
             $("#editModal #requesterPhoneNumber").val(request.requesterPhoneNumber);
@@ -663,10 +669,10 @@
             $("#editModal #teamMembers").val(request.teamMembers);
 
 
-            
+
 
             $("#editModal").modal("show");
-            
+
         }
 
         $("#editModal #region").on("change", () => {
@@ -792,10 +798,14 @@
             let priority = $("#editModal #priority").val();
             let acceptedRejected = $("#editModal #bAcceptedRequest").val();
             let acceptedRejectedNotes = $("#editModal #txtAcceptedRejectedNotes").val();
-            let status = $("#editModal #status").val();
             let programManager = $("#editModal #programManager").val();
             let time = $("#editModal #time").val();
             let teamMembers = $("#editModal #teamMembers").val();
+            let status;
+            if (acceptedRejected == "Rejected")
+                status = "Closed"
+            else
+                status = $("#editModal #status").val();
 
             console.log(`Region: ${region}, subRegion: ${subRegion}, Product: ${product}, Request Type: ${requestType}, Requester Name: ${requesterName}, Requester Email: ${requesterEmail}, Requester Phone Number: ${requesterPhoneNumber}, Need Completed By: ${needCompletedBy}, Description: ${description}, Partner or Customer Name: ${partnerCustomerName}, Salesforce Opportunity: ${salesforceAccountOpportunity}`);
             console.log(`Priority: ${priority}, Accepted/Rejected: ${acceptedRejected}, Status: ${status}, Program Manager: ${programManager}, Time: ${time}, AcceptedRejectedNotes: ${acceptedRejectedNotes}, teamMembers: ${teamMembers}`);
