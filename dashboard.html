@@ -229,6 +229,27 @@
             $(`#chart_${_chartName}`).remove();
             $(`#chart_${_chartName}_container`).append(`<canvas id="chart_${_chartName}"><canvas>`);
 
+            let scales;
+            if (_chartType == "bar" || _chartType == "horizontalBar") {
+                scales = {
+                    yAxes: [{
+                        ticks: {
+                            min: 0,
+                            stepSize: 1
+                        }
+
+                    }],
+                    xAxes: [{
+                        ticks: {
+                            min: 0,
+                            stepSize: 1
+                        }
+
+                    }]
+                }
+            }
+
+
             var ctx = document.getElementById(`chart_${_chartName}`)
             var myDoughnutChart = new Chart(ctx, {
                 type: _chartType,
@@ -244,10 +265,11 @@
                             clamp: true
 
                         }
-                    }
+                    }, scales: scales
                 }
-
             });
+
+
 
         }
 
@@ -262,7 +284,7 @@
             // BySegement
             makeChart('SELECT count(*) as val, segment as label FROM ? ## GROUP BY segment', false, 'segment', 'doughnut', 'By Segement', data);
             // By RequestType
-            makeChart('SELECT count(*) as val, requestType as label FROM ? WHERE ( requestType <> "undefined"  ##) GROUP BY requestType', true, 'requestType', 'bar', 'By request Type', data);
+            makeChart('SELECT count(*) as val, requestType as label FROM ? WHERE ( requestType <> "undefined"  ##) GROUP BY requestType', true, 'requestType', 'horizontalBar', 'By request Type', data);
             // By Product
             makeChart('SELECT count(*) as val, product as label FROM ? ## GROUP BY product', false, 'product', 'pie', 'By Product', data);
             // By Status for Active and not Delted
@@ -283,12 +305,12 @@
             });
 
             tmpSQL = buildFilter('SELECT SUM(time::NUMBER) as val, requestCategory as label FROM ? ## GROUP BY requestCategory', false);
-            res = alasql(tmpSQL, [data]);            
+            res = alasql(tmpSQL, [data]);
             var values2 = [];
             res.forEach(element => {
                 values2.push(element.val);
             });
-            
+
 
             $('#chart_requestCategory').remove();
             $('#chart_requestCategory_container').append('<canvas id="chart_requestCategory"><canvas>');
@@ -331,11 +353,27 @@
                     labels: labels
                 },
                 options: {
-                        title: {
-                            display: true,
-                            text: "RequestCategory / Time spent"
-                        }
+                    title: {
+                        display: true,
+                        text: "RequestCategory / Time spent"
+                    },
+                    scales: {
+                        yAxes: [{
+                            ticks: {
+                                min: 0,
+                                stepSize: 1
+                            }
+
+                        }],
+                        xAxes: [{
+                            ticks: {
+                                min: 0,
+                                stepSize: 1
+                            }
+
+                        }]
                     }
+                }
             });
 
         }
