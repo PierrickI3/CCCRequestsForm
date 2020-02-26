@@ -38,7 +38,7 @@ function getMe() {
                             userInfo.name = data.name;
                             userInfo.mail = data.username;
                             userInfo.id = data.id;
-
+                            console.log(data.primaryContactInfo);
                             data.primaryContactInfo.forEach(function (aItem) {
                                 switch (aItem.mediaType.toLowerCase()) {
                                     case 'email':

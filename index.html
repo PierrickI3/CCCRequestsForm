@@ -365,8 +365,7 @@
             $("#requesterName").val(userInfo.name);
             $("#requesterEmail").val(userInfo.mail);
             $("#requesterPhoneNumber").val(userInfo.phone);
-            $("#requestCategory").empty();
-            $("<option selected disabled />", { value: "" }).text("Select a Request Category").appendTo("#requestCategory");
+            $("#requestCategory")[0].selectedIndex = 0
             $("#requestType").empty();
             $("#requestType")[0].disabled = false;
             $("<option selected disabled />", { value: "" }).text("Select a Request Type").appendTo("#requestType");
@@ -379,6 +378,7 @@
             $("#description").val('');
             $("#partnerCustomerName").val('');
             $("#salesforceAccountOpportunity").val('');
+            
         }
 
     </script>
