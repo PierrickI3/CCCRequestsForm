@@ -26,6 +26,7 @@
         .jsgrid-cell {
             word-wrap: break-word;
         }
+
     </style>
 </head>
 
@@ -610,7 +611,15 @@
                             filtering: false
                         }, {
                             type: "control",
-                            editButton: false
+                            //editButton: false,
+                            itemTemplate: function (value, item) {
+                                var $result = $([]);
+
+                                if (item.isDeleted == false) {
+                                    $result = $result.add(this._createDeleteButton(item));
+                                }
+                                return $result;
+                            }
                         }],
 
                 });
@@ -625,6 +634,9 @@
         function showModal(request) {
             console.log("Showing modal for:", request);
 
+            if (request.isDeleted) {
+
+            }
 
             if (request.acceptedRejected == "Accepted") {
                 $("#modal-header").css('background', 'lightgreen');
