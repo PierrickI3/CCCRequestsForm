@@ -286,31 +286,26 @@
             let task_raw = alasql(task_filter, [data]);
             let task_parsed = []; // Tasks with Time
             task_raw.forEach(function (aItem) {
-                if (aItem.tasks && aItem.tasks.length > 0) {                    
+                if (aItem.tasks && aItem.tasks.length > 0) {
                     aItem.tasks.forEach(function (aTask) {
-                        console.log(aTask);
                         task_parsed.push(aTask);
                     })
                 }
             });
 
+            console.log(task_parsed);
+
             // ByRegion
             makeChart('SELECT count(*) as val, region as label FROM ? ## GROUP BY region', false, 'region', 'doughnut', 'Requests', data);
             // BySegement
             makeChart('SELECT count(*) as val, segment as label FROM ? ## GROUP BY segment', false, 'segment', 'doughnut', 'By Segement', data);
-            // By RequestType
-            //makeChart('SELECT count(*) as val, requestType as label FROM ? WHERE ( requestType <> "undefined"  ##) GROUP BY requestType', true, 'requestType', 'horizontalBar', 'By request Type', data);
+
             // By Product
             makeChart('SELECT count(*) as val, product as label FROM ? ## GROUP BY product', false, 'product', 'pie', 'By Product', data);
             // By Status for Active and not Delted
             makeChart("SELECT count(*) as val, status as label FROM ? WHERE (isDeleted = false AND status <> 'Closed' ##) GROUP BY status", true, 'status', 'pie', 'By status for active requests', data);
 
 
-            // By RequestType
-            makeChart('SELECT count(*) as val, taskType as label FROM ? GROUP BY taskType', false, 'requestType', 'bar', 'By task Type', task_parsed);
-
-
-          
 
             // By Request Category / Time
 
@@ -322,7 +317,7 @@
                 values1.push(element.val);
             });
 
-            res = alasql('SELECT SUM(task_time::NUMBER) as val, taskCategory as label FROM ? GROUP BY taskCategory', [task_parsed]);
+            res = alasql('SELECT SUM(taskTime::NUMBER) as val, taskCategory as label FROM ? GROUP BY taskCategory', [task_parsed]);
             var values2 = [];
             res.forEach(element => {
                 values2.push(element.val);
@@ -393,6 +388,8 @@
                 }
             });
 
+            // By RequestType (a'ka taskType)
+            makeChart("SELECT count(*) as val, taskType as label FROM ? WHERE (taskType <> 'undefined') GROUP BY taskType", false, 'requestType', 'bar', 'By task Type', task_parsed);
 
         }
 
@@ -425,7 +422,7 @@
             csv.unshift(header.join(';'))
             csv = csv.join('\r\n')
 
-            download(csv, 'export.csv');
+            //download(csv, 'export.csv');
 
         }
 
