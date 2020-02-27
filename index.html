@@ -49,6 +49,8 @@
                             </select>
                         </div>
                     </div>
+
+                    <!-- Market Segment & Product -->
                     <div class="form-row">
                         <div class="form-group col-md-5">
                             <label for="segment">Market Segment</label>
@@ -71,32 +73,10 @@
                         </div>
                     </div>
 
+                    <!-- Tasks -->
                     <div class="border border-black mt-3 mb-3">
-                        <div class="form-row mt-2">
-                            <div class="form-group col-md-5">
-                                <label for="requestCategory">Request Category</label>
-                                <select id="requestCategory" name="requestCategory" class="form-control" required>
-                                    <option value="" disabled selected>Select a Request Category</option>
-                                    <option value="Demo & Trial Support">Demo & Trial Support</option>
-                                    <option value="Opportunity Support">Opportunity Support</option>
-                                    <option value="Security Support">Security Support</option>
-                                    <option value="Privacy Support">Privacy Support</option>
-                                    <option value="Strategic Business Consulting">Strategic Business Consulting</option>
-                                    <option value="Specialist Engagement">Specialist Engagement</option>
-                                    <option value="Enablement">Enablement</option>
-                                    <option value="Critical Situation Support">Critical Situation Support</option>
-                                    <option value="Other Request">Other Request</option>
-                                </select>
-                            </div>
-                            <div class="form-group col-md-5">
-                                <label for="requestType">Request Type</label>
-                                <select id="requestType" name="requestType" class="form-control" required>
-                                    <option value="" disabled selected>Select a Request Type</option>
-                                </select>
-                            </div>
-                        </div>
                         <div class="form-row mt-2" id="tasks"></div>
-                        <a href="#" id="addTask" class="form-group btn btn-primary"><i class="fa fa-plus"></i> Add New Task</a>
+                        <a href="#" id="addTask" class="form-group btn btn-primary mt-1"><em class="fa fa-plus"></em> Add New Task</a>
                     </div>
 
                     <div class="form-row">
@@ -186,6 +166,7 @@
 
 
     <noscript>You need to enable JavaScript to run this app.</noscript>
+    <!--#region Imports -->
     <!-- Bootstrap core JavaScript-->
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
@@ -210,8 +191,12 @@
     <!-- Dictionary -->
     <script src="js/dictionary.js"></script>
 
-    <script>
+    <!--#endregion -->
 
+    <script>
+        let tasksControls = [], taskId = 0;
+
+        // Init DatePicker
         $(function () {
             $("#datepicker").datepicker({
                 daysOfWeekDisabled: "0,6",
@@ -248,82 +233,70 @@
             }
         }
 
-        let taskId = 0;
-
-        $("#addTask").on("click", (e) => {
-            console.log('Add new task')
-            e.preventDefault();
-
+        function addNewTask(includeDeleteButton) {
+            let currentTaskId = taskId;
             taskId++;
 
             let categoryDiv = $("<div/>", { class: "form-group col-md-5" }).appendTo("#tasks");
-            let categorySelect = $("<select/>", { id: "requestCategory_" + taskId, name: "requestCategory_" + taskId, class: "form-control", required: true }).appendTo(categoryDiv);
+            let categorySelect = $("<select/>", { class: "form-control", required: true }).appendTo(categoryDiv);
             $("<option/>", { value: "", disabled: true, selected: true }).text("Select a Request Category").appendTo(categorySelect);
             for (const category of requestCategory) {
                 $("<option/>", { value: category }).text(category).appendTo(categorySelect);
             }
 
             let typeDiv = $("<div/>", { class: "form-group col-md-5" }).appendTo("#tasks");
-            let typeSelect = $("<select/>", { id: "requestType_" + taskId, name: "requestType_" + taskId, class: "form-control", required: true }).appendTo(typeDiv);
+            let typeSelect = $("<select/>", { class: "form-control", required: true }).appendTo(typeDiv);
             $("<option/>", { value: "", disabled: true, selected: true }).text("Select a Request Type").appendTo(typeSelect);
-            $("#requestCategory_" + taskId).on("change", () => {
-                updateRequestTypeBasedOnRegionAndProduct2("requestCategory_" + taskId, "requestType_" + taskId);
+            categorySelect.on("change", () => {
+                updateRequestTypeBasedOnRegionAndProduct(categorySelect, typeSelect);
             });
 
-            let deleteButton = $("<a/>", { href: "#", class: "btn btn-danger form-group" }).html(`<i class="fa fa-trash"></i>`).appendTo("#tasks");
-            deleteButton.on("click", (e) => {
-                categoryDiv.remove();
-                typeDiv.remove();
-                deleteButton.remove();
+            if (includeDeleteButton) {
+                let deleteButton = $("<a/>", { href: "#", class: "btn btn-danger form-group" }).html(`<i class="fa fa-trash"></i>`).appendTo("#tasks");
+                deleteButton.on("click", () => {
+                    categoryDiv.remove();
+                    typeDiv.remove();
+                    deleteButton.remove();
+                    tasksControls = tasksControls.filter(tc => tc.id != currentTaskId)
+                });
+            }
+
+            tasksControls.push({
+                id: currentTaskId,
+                categorySelect: categorySelect,
+                typeSelect: typeSelect
             });
+        }
+
+        $("#addTask").on("click", (e) => {
+            e.preventDefault();
+            addNewTask(true);
         });
+
+        addNewTask(false);
 
         $("#region").on("change", () => {
             $("#subRegion").empty();
             for (let subregion of regions[$("#region").val()]) {
                 $("<option/>", { value: subregion }).text(subregion).appendTo("#subRegion");
             }
-            //updateRequestTypeBasedOnRegionAndProduct();
         });
 
-        $("#requestCategory").on("change", () => {
-            updateRequestTypeBasedOnRegionAndProduct();
-        });
+        function updateRequestTypeBasedOnRegionAndProduct(categorySelect, typeSelect) {
+            typeSelect.empty();
+            $("<option selected disabled />", { value: "" }).text("Select a Request Type").appendTo(typeSelect);
 
-        function updateRequestTypeBasedOnRegionAndProduct() {
-            $("#requestType").empty();
-            $("<option selected disabled />", { value: "" }).text("Select a Request Type").appendTo("#requestType");
-
-            for (let aRequest of requestsType[$("#requestCategory").val()]) {
-                $("<option/>", { value: aRequest }).text(aRequest).appendTo("#requestType");
+            for (let aRequest of requestsType[categorySelect.val()]) {
+                $("<option/>", { value: aRequest }).text(aRequest).appendTo(typeSelect);
             }
 
-            if ($("#requestType")[0].length == 1) {
+            if ($(typeSelect)[0].length == 1) {
                 // No SubCategory
-                $("#requestType")[0].disabled = true;
-                $('#requestType').removeAttr('required');
+                $(typeSelect)[0].disabled = true;
+                $(typeSelect).removeAttr('required');
             } else {
-                $("#requestType")[0].disabled = false;
-                $('#requestType').attr("required", "");
-            }
-        }
-
-        function updateRequestTypeBasedOnRegionAndProduct2(categorySelect, typeSelect) {
-            console.log(`Update type select (${typeSelect}) with value from ${categorySelect}`);
-            $("#" + typeSelect).empty();
-            $("<option selected disabled />", { value: "" }).text("Select a Request Type").appendTo("#" + typeSelect);
-
-            for (let aRequest of requestsType[$("#" + categorySelect).val()]) {
-                $("<option/>", { value: aRequest }).text(aRequest).appendTo("#" + typeSelect);
-            }
-
-            if ($("#" + typeSelect)[0].length == 1) {
-                // No SubCategory
-                $("#" + typeSelect)[0].disabled = true;
-                $("#" + typeSelect).removeAttr('required');
-            } else {
-                $("#" + typeSelect)[0].disabled = false;
-                $("#" + typeSelect).attr("required", "");
+                $(typeSelect)[0].disabled = false;
+                $(typeSelect).attr("required", "");
             }
         }
 
@@ -344,8 +317,14 @@
             let subRegion = $("#subRegion").val();
             let segment = $("#segment").val();
             let product = $("#product").val();
-            let requestCategory = $("#requestCategory").val();
-            let requestType = $("#requestType").val();
+            let tasks = [];
+            for (const task of tasksControls) {
+                tasks.push({
+                    taskCategory: task.categorySelect.val(),
+                    taskType: task.typeSelect.val(),
+                    taskTime: 0
+                });
+            }
             let requesterName = $("#requesterName").val();
             let requesterEmail = $("#requesterEmail").val();
             let requesterPhoneNumber = $("#requesterPhoneNumber").val();
@@ -354,23 +333,17 @@
             let partnerCustomerName = $("#partnerCustomerName").val();
             let salesforceAccountOpportunity = $("#salesforceAccountOpportunity").val();
 
-            console.log(`Region: ${region}, subRegion: ${subRegion}, Product: ${product}, Request Type: ${requestType}, Requester Name: ${requesterName}, Requester Email: ${requesterEmail}, Requester Phone Number: ${requesterPhoneNumber}, Need Completed By: ${needCompletedBy}, Description: ${description}, Partner or Customer Name: ${partnerCustomerName}, Salesforce Opportunity: ${salesforceAccountOpportunity}`);
+            console.log(`Region: ${region}, subRegion: ${subRegion}, Product: ${product}, Tasks: ${JSON.stringify(tasks)}, Requester Name: ${requesterName}, Requester Email: ${requesterEmail}, Requester Phone Number: ${requesterPhoneNumber}, Need Completed By: ${needCompletedBy}, Description: ${description}, Partner or Customer Name: ${partnerCustomerName}, Salesforce Opportunity: ${salesforceAccountOpportunity}`);
 
             try {
-                await postRequests(region, subRegion, segment, product, requestCategory, requestType, requesterName, requesterEmail, requesterPhoneNumber, needCompletedBy, description, partnerCustomerName, salesforceAccountOpportunity);
+                await postRequests(region, subRegion, segment, product, tasks, requesterName, requesterEmail, requesterPhoneNumber, needCompletedBy, description, partnerCustomerName, salesforceAccountOpportunity);
                 console.log('Success!');
                 showMessage("Request submitted. Thanks!");
-                let notificationDetails = "";
-                if (requestType)
-                    notificationDetails = `${requestCategory} / ${requestType}`
-                else
-                    notificationDetails = `${requestCategory}`;
 
-                let detailedInfo = "\n```no-highlight\n region:\t\t" + region + "\n sub-region:\t\t" + subRegion + "\n segment:\t\t" + segment + "\n product:\t\t" + product + "\n req category:\t\t" + requestCategory +
-                    "\n req type:\t\t" + requestType + "\n req name:\t\t" + requesterName + "\n req email:\t\t" + requesterEmail + "\n req phone:\t\t" + requesterPhoneNumber +
+                let detailedInfo = "\n```no-highlight\n region:\t\t" + region + "\n sub-region:\t\t" + subRegion + "\n segment:\t\t" + segment + "\n product:\t\t" + product + "\n # of tasks:\t\t" + tasks.length +
+                    "\n req name:\t\t" + requesterName + "\n req email:\t\t" + requesterEmail + "\n req phone:\t\t" + requesterPhoneNumber +
                     "\n completed by:\t\t" + needCompletedBy + "\n description:\t\t" + description + "\n p/c name:\t\t" + partnerCustomerName + "\n sf/acc opp:\t\t" + salesforceAccountOpportunity + "\n ```\n";
 
-                //sendNotification(`> :loudspeaker: New CCC Request for **${product}** received from [@${userInfo.name}](#/person/${userInfo.id}) (${notificationDetails}) ${detailedInfo}`, region);
                 sendNotification(`:loudspeaker: New CCC Request from [@${userInfo.name}](#/person/${userInfo.id}) ${detailedInfo}`, region);
             } catch (error) {
                 console.error(error);
