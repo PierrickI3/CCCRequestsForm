@@ -32,7 +32,7 @@ let regions = {
         "Andean", "Brazil", "Mexico", "Southern-Cone"
     ],
     NA: [
-        "East Enterprise", "East Commercial", "East MM", "Central Enterprise", "Central Commercial", "Central MM", "West Enterprise", "West Commercial", "West MM", "Canada", "Government", "Velocity", "Channels"
+        "East", "Central", "West", "Canada", "Government", "Velocity", "Channels"
     ]
 }
 /*
