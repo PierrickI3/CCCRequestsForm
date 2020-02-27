@@ -317,6 +317,8 @@
             let subRegion = $("#subRegion").val();
             let segment = $("#segment").val();
             let product = $("#product").val();
+
+            // Tasks
             let tasks = [];
             for (const task of tasksControls) {
                 tasks.push({
@@ -325,10 +327,18 @@
                     taskTime: 0
                 });
             }
+
             let requesterName = $("#requesterName").val();
             let requesterEmail = $("#requesterEmail").val();
             let requesterPhoneNumber = $("#requesterPhoneNumber").val();
-            let needCompletedBy = moment($("#datepicker").datepicker('getDate')).format("YYYY-MM-DDT00:00:00.000") + "Z";
+
+            // Need completed by
+            let needCompletedBy = "Not Set";
+            let needCompletedByDate = moment($("#datepicker").datepicker('getDate')).format("YYYY-MM-DDT00:00:00.000");
+            if (needCompletedByDate != "Invalid date") {
+                needCompletedBy = moment($("#datepicker").datepicker('getDate')).format("YYYY-MM-DDT00:00:00.000") + "Z";
+            }
+
             let description = $("#description").val();
             let partnerCustomerName = $("#partnerCustomerName").val();
             let salesforceAccountOpportunity = $("#salesforceAccountOpportunity").val();
@@ -360,10 +370,9 @@
             $("#requesterName").val(userInfo.name);
             $("#requesterEmail").val(userInfo.mail);
             $("#requesterPhoneNumber").val(userInfo.phone);
-            $("#requestCategory")[0].selectedIndex = 0
-            $("#requestType").empty();
-            $("#requestType")[0].disabled = false;
-            $("<option selected disabled />", { value: "" }).text("Select a Request Type").appendTo("#requestType");
+            tasksControls = [];
+            $("#tasks").empty();
+            addNewTask(false);
             $("#subRegion").empty();
             $("<option selected disabled />", { value: "Select a Sub-Region" }).text("Select a Sub-Region").appendTo("#subRegion");
             $("#segment").val('');
