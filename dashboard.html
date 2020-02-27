@@ -23,12 +23,12 @@
 <body>
 
     <nav class="navbar navbar-light bg-light">
-        <a class="navbar-brand" href="#">            
+        <a class="navbar-brand" href="#">
             <img src="images/genesys.png" width="30" height="30" class="d-inline-block align-top" alt="">
             Cloud Competency Center Dashboard
-            
+
         </a>
-       
+
         <a href="./requests.html" id="reviewRequestsButton" class="admin btn btn-primary">Review Requests</a>
     </nav>
 
@@ -281,25 +281,40 @@
 
 
             data = await getDashboard();
+            // Parse Tasks
+            let task_filter = buildFilter('SELECT tasks FROM ? ##', false);
+            let task_raw = alasql(task_filter, [data]);
+            let task_parsed = []; // Tasks with Time
+            task_raw.forEach(function (aItem) {
+                if (aItem.tasks && aItem.tasks.length > 0) {                    
+                    aItem.tasks.forEach(function (aTask) {
+                        console.log(aTask);
+                        task_parsed.push(aTask);
+                    })
+                }
+            });
 
             // ByRegion
             makeChart('SELECT count(*) as val, region as label FROM ? ## GROUP BY region', false, 'region', 'doughnut', 'Requests', data);
             // BySegement
             makeChart('SELECT count(*) as val, segment as label FROM ? ## GROUP BY segment', false, 'segment', 'doughnut', 'By Segement', data);
             // By RequestType
-            makeChart('SELECT count(*) as val, requestType as label FROM ? WHERE ( requestType <> "undefined"  ##) GROUP BY requestType', true, 'requestType', 'horizontalBar', 'By request Type', data);
+            //makeChart('SELECT count(*) as val, requestType as label FROM ? WHERE ( requestType <> "undefined"  ##) GROUP BY requestType', true, 'requestType', 'horizontalBar', 'By request Type', data);
             // By Product
             makeChart('SELECT count(*) as val, product as label FROM ? ## GROUP BY product', false, 'product', 'pie', 'By Product', data);
             // By Status for Active and not Delted
             makeChart("SELECT count(*) as val, status as label FROM ? WHERE (isDeleted = false AND status <> 'Closed' ##) GROUP BY status", true, 'status', 'pie', 'By status for active requests', data);
 
 
+            // By RequestType
+            makeChart('SELECT count(*) as val, taskType as label FROM ? GROUP BY taskType', false, 'requestType', 'bar', 'By task Type', task_parsed);
 
-            // By RequestCategory / Time spent
-            //makeChart('SELECT count(*) as val, requestCategory as label FROM ? ## GROUP BY requestCategory', false, 'requestCategory', 'bar', 'By request Category', data);
 
-            let tmpSQL = buildFilter('SELECT count(*) as val, requestCategory as label FROM ? ## GROUP BY requestCategory', false);
-            let res = alasql(tmpSQL, [data]);
+          
+
+            // By Request Category / Time
+
+            let res = alasql('SELECT count(*) as val, taskCategory as label FROM ? GROUP BY taskCategory', [task_parsed]);
             var labels = [];
             var values1 = [];
             res.forEach(element => {
@@ -307,8 +322,7 @@
                 values1.push(element.val);
             });
 
-            tmpSQL = buildFilter('SELECT SUM(time::NUMBER) as val, requestCategory as label FROM ? ## GROUP BY requestCategory', false);
-            res = alasql(tmpSQL, [data]);
+            res = alasql('SELECT SUM(task_time::NUMBER) as val, taskCategory as label FROM ? GROUP BY taskCategory', [task_parsed]);
             var values2 = [];
             res.forEach(element => {
                 values2.push(element.val);
@@ -379,15 +393,36 @@
                 }
             });
 
+
         }
 
 
         function exportData() {
 
+            let sTasks = '';
+            let iTime = 0;
+            let flatData = [];
+
+            data.forEach(function (aItem) {
+                if (aItem.tasks && aItem.tasks.length > 0) {
+                    aItem.tasks.forEach(function (aTask) {
+                        sTasks = sTasks + `${aTask.taskCategory}/${aTask.taskType},`;
+                        iTime = iTime + aTask.iTime;
+                    });
+                    aItem.task = sTasks;
+                    aItem.timeTotal = iTime;
+
+                }
+
+                flatData.push(aItem);
+            })
+
+            console.log(flatData);
+
             const replacer = (key, value) => value === null ? '' : value // specify how you want to handle null values here
-            const header = Object.keys(data[0])
-            let csv = data.map(row => header.map(fieldName => JSON.stringify(row[fieldName], replacer)).join(','))
-            csv.unshift(header.join(','))
+            const header = Object.keys(flatData[0])
+            let csv = flatData.map(row => header.map(fieldName => JSON.stringify(row[fieldName], replacer)).join(';'))
+            csv.unshift(header.join(';'))
             csv = csv.join('\r\n')
 
             download(csv, 'export.csv');
