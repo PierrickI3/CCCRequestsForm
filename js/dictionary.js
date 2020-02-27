@@ -35,39 +35,6 @@ let regions = {
         "East", "Central", "West", "Canada", "Government", "Velocity", "Channels"
     ]
 }
-/*
-let requestsType = {
-
-    EMEA: {
-        "Genesys Cloud": ["Additional Privacy Support", "Additional Security Support", "Associate SC & AE Enablement", "Cloud Migrations", "Critical Situation Management", "End to End Partner Enablement", "Innovation (Custom Demos, Integrations, Beta Testing)", "Must Win/Strategic Opportunity Support", "Partner Enablement (Summits/ Events/ Webinars)", "POC & Pilots for Strategic Opportunities", "Technical Design/ Architecture Review", "Test Drive", "Other"],
-        "Genesys Engage": ["Cloud Migrations", "Innovation (Custom Demos, Integrations, Beta Testing)", "Must Win/Strategic Opportunity Support", "POC & Pilots for Strategic Opportunities", "Technical Design/ Architecture Review", "Other"],
-        "Genesys Engage Cloud": ["Cloud Migrations", "Innovation (Custom Demos, Integrations, Beta Testing)", "Must Win/Strategic Opportunity Support", "POC & Pilots for Strategic Opportunities", "Technical Design/ Architecture Review", "Other"],
-        "PureConnect": ["Additional Privacy Support", "Additional Security Support", "Cloud Migrations", "Technical Design/ Architecture Review", "Other"]
-
-    },
-    APAC: {
-        "Genesys Cloud": ["Cloud Migrations", "Innovation (Custom Demos, Integrations, Beta Testing)", "Must Win/Strategic Opportunity Support", "POCs & Pilots for Strategic Opportunities", "Technical Design/Architecture Review", "Other"],
-        "Genesys Engage": ["Cloud Migrations", "Innovation (Custom Demos, Integrations, Beta Testing)", "Must Win/Strategic Opportunity Support", "POCs & Pilots for Strategic Opportunities", "Technical Design/Architecture Review", "Other"],
-        "Genesys Engage Cloud": ["Cloud Migrations", "Innovation (Custom Demos, Integrations, Beta Testing)", "Must Win/Strategic Opportunity Support", "POCs & Pilots for Strategic Opportunities", "Technical Design/Architecture Review", "Other"],
-        "PureConnect": ["Cloud Migrations", "Innovation (Custom Demos, Integrations, Beta Testing)", "Must Win/Strategic Opportunity Support", "POCs & Pilots for Strategic Opportunities", "Technical Design/Architecture Review", "Other"]
-
-    },
-    LATAM: {
-        "Genesys Cloud": ["Cloud Migrations", "Innovation (Custom Demos, Integrations, Beta Testing)", "Must Win/Strategic Opportunity Support", "POCs & Pilots for Strategic Opportunities", "Technical Design/Architecture Review", "Other"],
-        "Genesys Engage": ["Cloud Migrations", "Innovation (Custom Demos, Integrations, Beta Testing)", "Must Win/Strategic Opportunity Support", "POCs & Pilots for Strategic Opportunities", "Technical Design/Architecture Review", "Other"],
-        "Genesys Engage Cloud": ["Cloud Migrations", "Innovation (Custom Demos, Integrations, Beta Testing)", "Must Win/Strategic Opportunity Support", "POCs & Pilots for Strategic Opportunities", "Technical Design/Architecture Review", "Other"],
-        "PureConnect": ["Cloud Migrations", "Innovation (Custom Demos, Integrations, Beta Testing)", "Must Win/Strategic Opportunity Support", "POCs & Pilots for Strategic Opportunities", "Technical Design/Architecture Review", "Other"]
-
-    },
-    NA: {
-        "Genesys Cloud": ["API Support", "AppFoundry Support", "Business Consulting", "Cloud Migrations", "Data Privacy & Security", "Demo Advanced", "EWM (Work Item Routing)", "POC/Pilot", "Predictive Engagement (Altocloud)", "PureBridge (Don't forget your DSR)", "RFP Advanced", "Service Automation (Self-Service, IVR BOT's)", "Outbound", "WEM/WFM", "Tech Design/Arch Review", "Vision Clip", "Other"],
-        "Genesys Engage": ["API Support", "AppFoundry Support", "Business Consulting", "Cloud Migrations", "Data Privacy & Security", "Demo Advanced", "EWM (Work Item Routing)", "Latitude/Collections", "POC/Pilot", "Predictive Engagement (Altocloud)", "PureBridge (Don't forget your DSR)", "RFP Advanced", "Service Automation (Self-Service, IVR BOT's)", "Outbound", "WEM/WFM", "Tech Design/Arch Review", "Vision Clip", "Other"],
-        "Genesys Engage Cloud": ["API Support", "AppFoundry Support", "Business Consulting", "Cloud Migrations", "Data Privacy & Security", "Demo Advanced", "EWM (Work Item Routing)", "Latitude/Collections", "POC/Pilot", "Predictive Engagement (Altocloud)", "PureBridge (Don't forget your DSR)", "RFP Advanced", "Service Automation (Self-Service, IVR BOT's)", "Outbound", "WEM/WFM", "Tech Design/Arch Review", "Vision Clip", "Other"],
-        "PureConnect": ["API Support", "AppFoundry Support", "Business Consulting", "Cloud Migrations", "Data Privacy & Security", "Demo Advanced", "EWM (Work Item Routing)", "POC/Pilot", "PureBridge (Don't forget your DSR)", "RFP Advanced", "Service Automation (Self-Service, IVR BOT's)", "Outbound", "WEM/WFM", "Tech Design/Arch Review", "Other"]
-
-    }
-}
-*/
 
 let requestsType = {
     "Demo & Trial Support": ["Test Drive (Trial)", "POCs, Pilots for Strategic Opps", "Innovation (Integration, Tailored Demos, Vision Clips)"],
@@ -83,11 +50,8 @@ let requestsType = {
 
 let requestCategory = [
     "Demo & Trial Support",
-    "Opportunity Support",
     "Security Support",
-    "Demo & Trial Support",
     "Opportunity Support",
-    "Security Support",
     "Privacy Support",
     "Strategic Business Consulting",
     "Specialist Engagement",

@@ -1,13 +1,13 @@
 const apiBasePath = "https://drbojb15ma.execute-api.eu-central-1.amazonaws.com/dev";
 
-async function postRequests(region, subRegion, segment, product, requestCategory, requestType, requesterName, requesterEmail, requesterPhoneNumber, needCompletedBy, description, partnerCustomerName, salesforceAccountOpportunity) {
+async function postRequests(region, subRegion, segment, product, tasks, requesterName, requesterEmail, requesterPhoneNumber, needCompletedBy, description, partnerCustomerName, salesforceAccountOpportunity) {
 
   var data = {
     region: region,
     subRegion: subRegion,
     segment: segment,
     product: product,
-    requestCategory: requestCategory,
+    tasks: tasks,
     requesterName: requesterName,
     requesterEmail: requesterEmail,
     requesterPhoneNumber: requesterPhoneNumber,
@@ -22,10 +22,6 @@ async function postRequests(region, subRegion, segment, product, requestCategory
 
   if (partnerCustomerName.length > 0) {
     data.partnerCustomerName = partnerCustomerName
-  }
-
-  if (requestType && requestType.length > 0) {
-    data.requestType = requestType
   }
 
   if (salesforceAccountOpportunity.length > 0) {
@@ -60,7 +56,7 @@ async function postRequests(region, subRegion, segment, product, requestCategory
     });
 }
 
-async function putRequest(id, region, subRegion, segment, product, requestCategory, requestType, requesterName, requesterEmail, requesterPhoneNumber, needCompletedBy, description, partnerCustomerName, salesforceAccountOpportunity, priority, acceptedRejected, status, programManager, time, acceptedRejectedNotes, teamMembers, isDeleted) {
+async function putRequest(id, region, subRegion, segment, product, tasks, requesterName, requesterEmail, requesterPhoneNumber, needCompletedBy, description, partnerCustomerName, salesforceAccountOpportunity, priority, acceptedRejected, status, programManager, acceptedRejectedNotes, teamMembers, isDeleted) {
 
 
   if (!isDeleted) isDeleted = false;
@@ -72,7 +68,7 @@ async function putRequest(id, region, subRegion, segment, product, requestCatego
     subRegion: subRegion,
     segment: segment,
     product: product,
-    requestCategory: requestCategory,
+    tasks: tasks,
     requesterName: requesterName,
     requesterEmail: requesterEmail,
     requesterPhoneNumber: requesterPhoneNumber,
@@ -87,10 +83,6 @@ async function putRequest(id, region, subRegion, segment, product, requestCatego
 
   //#region Optional fields
 
-  if (requestType && requestType.length > 0) {
-    data.requestType = requestType
-  }
-
   if (teamMembers && teamMembers.length > 0) {
     data.teamMembers = teamMembers;
   }
@@ -103,10 +95,6 @@ async function putRequest(id, region, subRegion, segment, product, requestCatego
     data.acceptedRejected = acceptedRejected;
   }
 */
-  if (time && time.length > 0) {
-    data.time = time;
-  }
-
   if (partnerCustomerName && partnerCustomerName.length > 0) {
     data.partnerCustomerName = partnerCustomerName
   }
