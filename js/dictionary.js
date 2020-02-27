@@ -80,3 +80,17 @@ let requestsType = {
     "Critical Situation Support": [],
     "Other Request": []
 }
+
+let requestCategory = [
+    "Demo & Trial Support",
+    "Opportunity Support",
+    "Security Support",
+    "Demo & Trial Support",
+    "Opportunity Support",
+    "Security Support",
+    "Privacy Support",
+    "Strategic Business Consulting",
+    "Specialist Engagement",
+    "Critical Situation Support",
+    "Other Request"
+]
