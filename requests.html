@@ -7,18 +7,14 @@
     <title>CCC Request Form</title>
     <link rel="shortcut icon" href="/favicon.ico">
     <!-- Bootstrap -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
-        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <!-- Bootstrap DatePicker -->
-    <link rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker3.min.css"
-        integrity="sha256-FAOaXTpl90/K8cXmSdsskbQN3nKYulhCpPbcFzGTWKI=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker3.min.css" integrity="sha256-FAOaXTpl90/K8cXmSdsskbQN3nKYulhCpPbcFzGTWKI=" crossorigin="anonymous" />
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <!-- Editable CSS -->
     <link type="text/css" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jsgrid/1.5.3/jsgrid.min.css" />
-    <link type="text/css" rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/jsgrid/1.5.3/jsgrid-theme.min.css" />
+    <link type="text/css" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jsgrid/1.5.3/jsgrid-theme.min.css" />
     <!-- jQuery Toast -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/jquery-toast-plugin/1.3.2/jquery.toast.min.css" rel="stylesheet">
     <!-- Custom CSS -->
@@ -26,7 +22,6 @@
         .jsgrid-cell {
             word-wrap: break-word;
         }
-
     </style>
 </head>
 
@@ -88,8 +83,7 @@
                             <div class="form-row">
                                 <div class="form-group col-md-5">
                                     <label>Created Date</label>
-                                    <input disabled type="text" class="form-control" id="createdDate"
-                                        name="createdDate" />
+                                    <input disabled type="text" class="form-control" id="createdDate" name="createdDate" />
                                 </div>
                             </div>
 
@@ -135,47 +129,31 @@
                             </div>
 
                             <div class="form-row">
-                                <div class="form-group col-md-5">
-                                    <label for="requestCategory">Request Category</label>
-                                    <select id="requestCategory" name="requestCategory" class="form-control" required>
-                                        <option value="" disabled selected>Select a Request Category</option>
-                                        <option value="Demo & Trial Support">Demo & Trial Support</option>
-                                        <option value="Opportunity Support">Opportunity Support</option>
-                                        <option value="Security Support">Security Support</option>
-                                        <option value="Privacy Support">Privacy Support</option>
-                                        <option value="Strategic Business Consulting">Strategic Business Consulting
-                                        </option>
-                                        <option value="Specialist Engagement">Specialist Engagement</option>
-                                        <option value="Enablement">Enablement</option>
-                                        <option value="Critical Situation Support">Critical Situation Support</option>
-                                        <option value="Other Request">Other Request</option>
-                                    </select>
-                                </div>
-                                <div class="form-group col-md-5">
-                                    <label for="requestType">Request Type</label>
-                                    <select id="requestType" name="requestType" class="form-control" required>
-                                        <option value="" disabled selected>Select a Request Type</option>
-                                    </select>
+                                <div class="border border-black col-md-11 mt-3 mb-3">
+                                    <div class="form-row mt-2">
+                                        <div class="form-group col-md-4 text-center"><strong>Category</strong></div>
+                                        <div class="form-group col-md-4 text-center"><strong>Type</strong></div>
+                                        <div class="form-group col-md-2 text-center"><strong>Time</strong></div>
+                                    </div>
+                                    <div class="form-row mt-2" id="tasks"></div>
+                                    <a href="#" id="addTask" class="form-group btn btn-primary mt-1"><em class="fa fa-plus"></em> Add New Task</a>
                                 </div>
                             </div>
 
                             <div class="form-row">
                                 <div class="form-group col-md-5">
                                     <label for="requesterName">Requester Name</label>
-                                    <input type="text" class="form-control" id="requesterName" name="requesterName"
-                                        placeholder="Your Name" required>
+                                    <input type="text" class="form-control" id="requesterName" name="requesterName" placeholder="Your Name" required>
                                 </div>
                                 <div class="form-group col-md-5">
                                     <label for="requesterEmail">Requester Email</label>
-                                    <input type="text" class="form-control" id="requesterEmail" name="requesterEmail"
-                                        placeholder="Your Email Address" required>
+                                    <input type="text" class="form-control" id="requesterEmail" name="requesterEmail" placeholder="Your Email Address" required>
                                 </div>
                             </div>
                             <div class="form-row">
                                 <div class="form-group col-md-5">
                                     <label for="requesterPhoneNumber">Requester Phone #</label>
-                                    <input type="text" class="form-control" id="requesterPhoneNumber"
-                                        name="requesterPhoneNumber" placeholder="Your Phone Number" required>
+                                    <input type="text" class="form-control" id="requesterPhoneNumber" name="requesterPhoneNumber" placeholder="Your Phone Number" required>
                                 </div>
                                 <div class="form-group col-md-3">
                                     <label for="datepicker">Need Completed By</label>
@@ -187,31 +165,26 @@
                             <div class="form-row">
                                 <div class="form-group col-md-10">
                                     <label for="description">Description</label>
-                                    <textarea class="form-control" id="description" name="description"
-                                        placeholder="Describe your request" required></textarea>
+                                    <textarea class="form-control" id="description" name="description" placeholder="Describe your request" required></textarea>
                                 </div>
                             </div>
                             <div class="form-row">
                                 <div class="form-group col-md-10">
                                     <label for="partnerCustomerName">Partner and/or Customer Name</label>
-                                    <input type="text" class="form-control" id="partnerCustomerName"
-                                        name="partnerCustomerName" placeholder="Partner and/or Customer Name" required>
+                                    <input type="text" class="form-control" id="partnerCustomerName" name="partnerCustomerName" placeholder="Partner and/or Customer Name" required>
                                 </div>
                             </div>
                             <div class="form-row">
                                 <div class="form-group col-md-8">
                                     <label for="salesforceAccountOpportunity">Salesforce Account / Opportunity
                                         URL</label>
-                                    <input type="text" class="form-control" id="salesforceAccountOpportunity"
-                                        name="salesforceAccountOpportunity"
-                                        placeholder="Link to Salesforce opportunity or account" required>
+                                    <input type="text" class="form-control" id="salesforceAccountOpportunity" name="salesforceAccountOpportunity" placeholder="Link to Salesforce opportunity or account" required>
 
                                 </div>
                                 <div class="form-group col-md-2">
                                     <label for="salesforceAccountOpportunity" style="color: white;">Open in new
                                         tab</label>
-                                    <button id="btnCopySFLink" type="button" class="btn btn-primary pull-right"
-                                        onclick="navigateToSFLink();">copy</button>
+                                    <button id="btnCopySFLink" type="button" class="btn btn-primary pull-right" onclick="navigateToSFLink();">copy</button>
                                 </div>
 
                             </div>
@@ -238,8 +211,7 @@
                                 </div>
                                 <div class="form-group col-md-4">
                                     <label for="programManager">Program Manager</label>
-                                    <input type="text" class="form-control" id="programManager" name="programManager"
-                                        placeholder="Program Manager" required>
+                                    <input type="text" class="form-control" id="programManager" name="programManager" placeholder="Program Manager" required>
                                 </div>
                             </div>
 
@@ -247,24 +219,17 @@
                                 <label id="bAcceptedRequest" hidden></label>
                                 <div class="form-group col-md-10">
                                     <label for="time">Additional Team Member(s) Assigned</label>
-                                    <input type="text" class="form-control" id="teamMembers" name="teamMembers"
-                                        placeholder="Additional Team Member(s)">
+                                    <input type="text" class="form-control" id="teamMembers" name="teamMembers" placeholder="Additional Team Member(s)">
 
                                 </div>
                             </div>
 
                             <div class="form-row">
                                 <label id="bAcceptedRequest" hidden></label>
-                                <div class="form-group col-md-8">
+                                <div class="form-group col-md-10">
                                     <label id="lblAcceptedRejectedNotes" for="description">Accepted / Rejected
                                         Notes</label>
-                                    <textarea class="form-control" id="txtAcceptedRejectedNotes" name="description"
-                                        placeholder="Notes" required> </textarea>
-                                </div>
-                                <div class="form-group col-md-2">
-                                    <label for="time">Time</label>
-                                    <input type="number" class="form-control" id="time" name="time" placeholder="Hours">
-
+                                    <textarea class="form-control" id="txtAcceptedRejectedNotes" name="description" placeholder="Notes" required> </textarea>
                                 </div>
                             </div>
                             <div class="form-row">
@@ -282,8 +247,7 @@
                             <button type="button" id="btnAcceptRequest" class="btn btn-success pull-left">Save and
                                 Accept</button>
                             <button id="submit" type="submit" class="btn btn-primary pull-left">Save</button>
-                            <button type="button" class="btn btn-secondary pull-right"
-                                data-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-secondary pull-right" data-dismiss="modal">Close</button>
 
                         </div>
                 </form>
@@ -295,18 +259,14 @@
     <noscript>You need to enable JavaScript to run this app.</noscript>
     <!-- Bootstrap core JavaScript-->
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
-        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
-        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
     <!-- Core plugin JavaScript-->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"></script>
     <!-- Moment.js -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"
-        integrity="sha256-4iQZ6BVL4qNKlQ27TExEhBN1HFPvAvAMbFavKKosSWQ=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js" integrity="sha256-4iQZ6BVL4qNKlQ27TExEhBN1HFPvAvAMbFavKKosSWQ=" crossorigin="anonymous"></script>
     <!-- Bootstrap DatePicker -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"
-        integrity="sha256-bqVeqGdJ7h/lYPq6xrPv/YGzMEb6dNxlfiTUHSgRCp8=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js" integrity="sha256-bqVeqGdJ7h/lYPq6xrPv/YGzMEb6dNxlfiTUHSgRCp8=" crossorigin="anonymous"></script>
     <!-- Genesys Cloud -->
     <script src="https://sdk-cdn.mypurecloud.com/javascript/61.0.0/purecloud-platform-client-v2.min.js"></script>
     <!-- Editable -->
@@ -337,6 +297,7 @@
 
     <script>
 
+        let tasksControls = [];
 
         let region = getUrlParameter("region");
         $("#region").text(region);
@@ -374,7 +335,8 @@
             $("#editModal #region").change();
             $("#editModal #subRegion").val("");
             $("#editModal #product").val("");
-            $("#editModal #requestType").val("");
+            $("#editModal #tasks").empty();
+            tasksControls = [];
             $("#editModal #requesterName").val("");
             $("#editModal #requesterEmail").val("");
             $("#editModal #requesterPhoneNumber").val("");
@@ -648,7 +610,6 @@
                 $("#btnRejectRequest").prop('disabled', false);
             }
 
-
             if (request.acceptedRejected)
                 $("#editModal #title").text(`Request (${request.acceptedRejected})`)
             else
@@ -661,10 +622,12 @@
             $("#editModal #subRegion").val(request.subRegion);
             $("#editModal #segment").val(request.segment);
             $("#editModal #product").val(request.product);
-            $("#editModal #requestCategory").val(request.requestCategory);
 
-            updateRequestTypeBasedOnRegionAndProduct();
-            $("#editModal #requestType").val(request.requestType);
+            // Load tasks
+            for (const task of request.tasks) {
+                console.log('Adding new task:', task);
+                addNewTask(task);
+            }
 
             $("#editModal #requesterName").val(request.requesterName);
             $("#editModal #requesterEmail").val(request.requesterEmail);
@@ -681,11 +644,48 @@
             $("#editModal #txtAcceptedRejectedNotes").val(request.acceptedRejectedNotes);
             $("#editModal #teamMembers").val(request.teamMembers);
 
-
-
-
             $("#editModal").modal("show");
+        }
 
+        function addNewTask(task) {
+            let currentTaskId = task.taskId;
+
+            // Category Select
+            let categoryDiv = $("<div/>", { class: "form-group col-md-4" }).appendTo("#tasks");
+            let categorySelect = $("<select/>", { class: "form-control", required: true }).appendTo(categoryDiv);
+            for (const category of requestCategory) {
+                $("<option/>", { value: category, selected: category === task.taskCategory }).text(category).appendTo(categorySelect);
+            }
+
+            // Type Select
+            let typeDiv = $("<div/>", { class: "form-group col-md-4" }).appendTo("#tasks");
+            let typeSelect = $("<select/>", { class: "form-control", required: true }).appendTo(typeDiv);
+            categorySelect.on("change", () => {
+                updateRequestTypeBasedOnRegionAndProduct(categorySelect, typeSelect, task.taskType);
+            });
+            updateRequestTypeBasedOnRegionAndProduct(categorySelect, typeSelect, task.taskType);
+
+            // Time Field
+            let timeDiv = $("<div/>", { class: "form-group col-md-2" }).appendTo("#tasks");
+            let timeInput = $("<input/>", { type: "number", class: "form-control", placeholder: "Hours" }).val(task.taskTime ? task.taskTime : 0).appendTo(timeDiv);
+
+            // Delete Button
+            let deleteButton = $("<a/>", { href: "#", class: "btn btn-danger form-group" }).html(`<i class="fa fa-trash"></i>`).appendTo("#tasks");
+            deleteButton.on("click", () => {
+                categoryDiv.remove();
+                typeDiv.remove();
+                deleteButton.remove();
+                timeDiv.remove();
+                tasksControls = tasksControls.filter(tc => tc.id != currentTaskId)
+            });
+
+            // Add controls to global list
+            tasksControls.push({
+                id: currentTaskId,
+                categorySelect: categorySelect,
+                typeSelect: typeSelect,
+                timeInput: timeInput
+            });
         }
 
         $("#editModal #region").on("change", () => {
@@ -694,51 +694,24 @@
             for (let subregion of regions[$("#editModal #region").val()]) {
                 $("<option/>", { value: subregion }).text(subregion).appendTo("#editModal #subRegion");
             }
-            //updateRequestTypeBasedOnRegionAndProduct();
-        });
-        /*
-        $("#editModal #product").on("change", () => {
-            updateRequestTypeBasedOnRegionAndProduct();
-        });
-        */
-
-        $("#editModal #requestCategory").on("change", () => {
-            updateRequestTypeBasedOnRegionAndProduct();
         });
 
+        function updateRequestTypeBasedOnRegionAndProduct(categorySelect, typeSelect, savedType) {
+            typeSelect.empty();
 
-        function updateRequestTypeBasedOnRegionAndProduct() {
-            /*
-            if (!$("#editModal #product").val() || !$("#editModal #region").val()) return
-
-            $("#editModal #requestType").empty();
-            $("<option selected disabled />", { value: "Select a Request Type" }).text("Select a Request Type").appendTo("#editModal #requestType");
-
-            for (let aRequest of requestsType[$("#editModal #region").val()][$("#editModal #product").val()]) {
-                $("<option/>", { value: aRequest }).text(aRequest).appendTo("#editModal #requestType");
-            }
-            */
-            $("#editModal #requestType").empty();
-            $("<option selected disabled />", { value: "" }).text("Select request Type").appendTo("#editModal #requestType");
-            console.log(requestsType);
-            for (let aRequest of requestsType[$("#editModal #requestCategory").val()]) {
-                $("<option/>", { value: aRequest }).text(aRequest).appendTo("#editModal #requestType");
+            for (let aRequest of requestsType[categorySelect.val()]) {
+                $("<option/>", { value: aRequest, selected: aRequest === savedType }).text(aRequest).appendTo(typeSelect);
             }
 
-            if ($("#requestType")[0].length == 1) {
+            if ($(typeSelect)[0].length == 0) {
                 // No SubCategory
-                $("#requestType")[0].disabled = true;
-                $('#requestType').removeAttr('required');
-
-
+                $(typeSelect)[0].disabled = true;
+                $(typeSelect).removeAttr('required');
             } else {
-                $("#requestType")[0].disabled = false;
-                $('#requestType').attr("required", "");
-
+                $(typeSelect)[0].disabled = false;
+                $(typeSelect).attr("required", "");
             }
-
         }
-
 
         $('#editModal').on('shown.bs.modal', (e) => {
         });
@@ -752,8 +725,6 @@
             errorClass: "text-danger",
             successClass: "test-success"
         });
-
-
 
         $("#btnOnlyClosed").on("click", async (e) => {
             if ($('#btnOnlyClosed')[0].classList.contains('btn-success'))
@@ -772,9 +743,6 @@
 
             refreshGrid();
         });
-
-
-
 
         $("#btnAcceptRequest").on("click", async (e) => {
             $("#editModal #bAcceptedRequest").val("Accepted");
@@ -799,8 +767,18 @@
             let subRegion = $("#editModal #subRegion").val();
             let product = $("#editModal #product").val();
             let segment = $("#editModal #segment").val();
-            let requestCategory = $("#editModal #requestCategory").val();
-            let requestType = $("#editModal #requestType").val();
+
+            // Tasks
+            let tasks = [];
+            for (const task of tasksControls) {
+                tasks.push({
+                    taskId: task.id,
+                    taskCategory: task.categorySelect.val(),
+                    taskType: task.typeSelect.val(),
+                    taskTime: task.timeInput.val()
+                });
+            }
+
             let requesterName = $("#editModal #requesterName").val();
             let requesterEmail = $("#editModal #requesterEmail").val();
             let requesterPhoneNumber = $("#editModal #requesterPhoneNumber").val();
@@ -820,11 +798,11 @@
             else
                 status = $("#editModal #status").val();
 
-            console.log(`Region: ${region}, subRegion: ${subRegion}, Product: ${product}, Request Type: ${requestType}, Requester Name: ${requesterName}, Requester Email: ${requesterEmail}, Requester Phone Number: ${requesterPhoneNumber}, Need Completed By: ${needCompletedBy}, Description: ${description}, Partner or Customer Name: ${partnerCustomerName}, Salesforce Opportunity: ${salesforceAccountOpportunity}`);
-            console.log(`Priority: ${priority}, Accepted/Rejected: ${acceptedRejected}, Status: ${status}, Program Manager: ${programManager}, Time: ${time}, AcceptedRejectedNotes: ${acceptedRejectedNotes}, teamMembers: ${teamMembers}`);
+            console.log(`Region: ${region}, subRegion: ${subRegion}, Product: ${product}, Segment: ${segment}, tasks: ${JSON.stringify(tasks)}, Requester Name: ${requesterName}, Requester Email: ${requesterEmail}, Requester Phone Number: ${requesterPhoneNumber}, Need Completed By: ${needCompletedBy}, Description: ${description}, Partner or Customer Name: ${partnerCustomerName}, Salesforce Opportunity: ${salesforceAccountOpportunity}`);
+            console.log(`Priority: ${priority}, Accepted/Rejected: ${acceptedRejected}, Status: ${status}, Program Manager: ${programManager}, AcceptedRejectedNotes: ${acceptedRejectedNotes}, teamMembers: ${teamMembers}`);
 
             try {
-                await putRequest(id, region, subRegion, segment, product, requestCategory, requestType, requesterName, requesterEmail, requesterPhoneNumber, needCompletedBy, description, partnerCustomerName, salesforceAccountOpportunity, priority, acceptedRejected, status, programManager, time, acceptedRejectedNotes, teamMembers);
+                await putRequest(id, region, subRegion, segment, product, tasks, requesterName, requesterEmail, requesterPhoneNumber, needCompletedBy, description, partnerCustomerName, salesforceAccountOpportunity, priority, acceptedRejected, status, programManager, acceptedRejectedNotes, teamMembers);
                 console.log('Success!');
                 showMessage("Request updated. Thanks!");
                 $("#editModal").modal("hide");
