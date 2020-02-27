@@ -322,6 +322,7 @@
             let tasks = [];
             for (const task of tasksControls) {
                 tasks.push({
+                    taskId: task.id,
                     taskCategory: task.categorySelect.val(),
                     taskType: task.typeSelect.val(),
                     taskTime: 0
