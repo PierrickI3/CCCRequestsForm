@@ -23,10 +23,12 @@
 <body>
 
     <nav class="navbar navbar-light bg-light">
-        <a class="navbar-brand" href="#">
+        <a class="navbar-brand" href="#">            
             <img src="images/genesys.png" width="30" height="30" class="d-inline-block align-top" alt="">
             Cloud Competency Center Dashboard
+            
         </a>
+       
         <a href="./requests.html" id="reviewRequestsButton" class="admin btn btn-primary">Review Requests</a>
     </nav>
 
@@ -115,11 +117,12 @@
 
             </div>
         </div>
+        <button onclick="exportData();" class="admin btn btn-dark" style="float: right;">Export to CSV</button>
     </div>
 
 
     <script>
-
+        let data;
         let region = getUrlParameter("region");
         $("#region").val(region);
 
@@ -277,7 +280,7 @@
         async function init() {
 
 
-            let data = await getDashboard();
+            data = await getDashboard();
 
             // ByRegion
             makeChart('SELECT count(*) as val, region as label FROM ? ## GROUP BY region', false, 'region', 'doughnut', 'Requests', data);
@@ -376,6 +379,38 @@
                 }
             });
 
+        }
+
+
+        function exportData() {
+
+            const replacer = (key, value) => value === null ? '' : value // specify how you want to handle null values here
+            const header = Object.keys(data[0])
+            let csv = data.map(row => header.map(fieldName => JSON.stringify(row[fieldName], replacer)).join(','))
+            csv.unshift(header.join(','))
+            csv = csv.join('\r\n')
+
+            download(csv, 'export.csv');
+
+        }
+
+        // Function to download data to a file
+        function download(data, filename, type) {
+            var file = new Blob([data], { type: type });
+            if (window.navigator.msSaveOrOpenBlob) // IE10+
+                window.navigator.msSaveOrOpenBlob(file, filename);
+            else { // Others
+                var a = document.createElement("a"),
+                    url = URL.createObjectURL(file);
+                a.href = url;
+                a.download = filename;
+                document.body.appendChild(a);
+                a.click();
+                setTimeout(function () {
+                    document.body.removeChild(a);
+                    window.URL.revokeObjectURL(url);
+                }, 0);
+            }
         }
 
 
