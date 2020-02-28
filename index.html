@@ -7,14 +7,11 @@
     <title>CCC Request Form</title>
     <link rel="shortcut icon" href="/favicon.ico">
     <!-- Bootstrap -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
-        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <!-- Bootstrap DatePicker -->
-    <link rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker3.min.css"
-        integrity="sha256-FAOaXTpl90/K8cXmSdsskbQN3nKYulhCpPbcFzGTWKI=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker3.min.css" integrity="sha256-FAOaXTpl90/K8cXmSdsskbQN3nKYulhCpPbcFzGTWKI=" crossorigin="anonymous" />
     <!-- jQuery Toast -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/jquery-toast-plugin/1.3.2/jquery.toast.min.css" rel="stylesheet">
 </head>
@@ -52,6 +49,8 @@
                             </select>
                         </div>
                     </div>
+
+                    <!-- Market Segment & Product -->
                     <div class="form-row">
                         <div class="form-group col-md-5">
                             <label for="segment">Market Segment</label>
@@ -74,76 +73,50 @@
                         </div>
                     </div>
 
-                    <div class="form-row">
-                        <div class="form-group col-md-5">
-                            <label for="requestCategory">Request Category</label>
-                            <select id="requestCategory" name="requestCategory" class="form-control" required>
-                                <option value="" disabled selected>Select a Request Category</option>
-                                <option value="Demo & Trial Support">Demo & Trial Support</option>
-                                <option value="Opportunity Support">Opportunity Support</option>
-                                <option value="Security Support">Security Support</option>
-                                <option value="Privacy Support">Privacy Support</option>
-                                <option value="Strategic Business Consulting">Strategic Business Consulting</option>
-                                <option value="Specialist Engagement">Specialist Engagement</option>
-                                <option value="Enablement">Enablement</option>
-                                <option value="Critical Situation Support">Critical Situation Support</option>
-                                <option value="Other Request">Other Request</option>
-                            </select>
+                    <!-- Tasks -->
+                    <div class="border border-black mt-3 mb-3">
+                        <div class="form-row mt-1">
+                            <div class="form-group col-md-5 text-center"><strong>Category</strong></div>
+                            <div class="form-group col-md-5 text-center"><strong>Type</strong></div>
                         </div>
-                        <div class="form-group col-md-5">
-                            <label for="requestType">Request Type</label>
-                            <select id="requestType" name="requestType" class="form-control" required>
-                                <option value="" disabled selected>Select a Request Type</option>
-                            </select>
-                        </div>
+                        <div class="form-row mt-2" id="tasks"></div>
+                        <a href="#" id="addTask" class="form-group btn btn-primary mt-1"><em class="fa fa-plus"></em> Add New Task</a>
                     </div>
-
 
                     <div class="form-row">
                         <div class="form-group col-md-5">
                             <label for="requesterName">Requester Name</label>
-                            <input type="text" class="form-control" id="requesterName" name="requesterName"
-                                placeholder="Your Name" required>
+                            <input type="text" class="form-control" id="requesterName" name="requesterName" placeholder="Your Name" required>
                         </div>
                         <div class="form-group col-md-5">
                             <label for="requesterEmail">Requester Email</label>
-                            <input type="text" class="form-control" id="requesterEmail" name="requesterEmail"
-                                placeholder="Your Email Address" required>
+                            <input type="text" class="form-control" id="requesterEmail" name="requesterEmail" placeholder="Your Email Address" required>
                         </div>
                     </div>
                     <div class="form-row">
                         <div class="form-group col-md-5">
                             <label for="requesterPhoneNumber">Requester Phone #</label>
-                            <input type="text" class="form-control" id="requesterPhoneNumber"
-                                name="requesterPhoneNumber" placeholder="Your Phone Number" required>
+                            <input type="text" class="form-control" id="requesterPhoneNumber" name="requesterPhoneNumber" placeholder="Your Phone Number" required>
                         </div>
                         <div class="form-group col-md-5">
                             <label for="datepicker">Need Completed By</label>
-                            <!--  <div class="input-group date"> -->
                             <input type="text" id="datepicker" class="form-control" required />
-                            <!-- </div> -->
                         </div>
                     </div>
                     <div class="form-row">
                         <div class="form-group col-md-10">
                             <label for="description">Description</label>
-                            <textarea class="form-control" id="description" name="description"
-                                placeholder="Describe your request" required></textarea>
+                            <textarea class="form-control" id="description" name="description" placeholder="Describe your request" required></textarea>
                         </div>
                     </div>
                     <div class="form-row">
-                        <div class="form-group col-md-10">
+                        <div class="form-group col-md-5">
                             <label for="partnerCustomerName">Partner and/or Customer Name</label>
-                            <input type="text" class="form-control" id="partnerCustomerName" name="partnerCustomerName"
-                                placeholder="Partner and/or Customer Name" required>
+                            <input type="text" class="form-control" id="partnerCustomerName" name="partnerCustomerName" placeholder="Partner and/or Customer Name">
                         </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group col-md-10">
-                            <label for="salesforceAccountOpportunity">Salesforce Account / Opportunity URL</label>
-                            <input type="text" class="form-control" id="salesforceAccountOpportunity"
-                                name="salesforceAccountOpportunity"
-                                placeholder="Link to Salesforce opportunity or account" required>
+                        <div class="form-group col-md-5">
+                            <label for="salesforceAccountOpportunity">SF Account / Opportunity URL</label>
+                            <input type="text" class="form-control" id="salesforceAccountOpportunity" name="salesforceAccountOpportunity" placeholder="Link to Salesforce opportunity or account">
                         </div>
                     </div>
                 </form>
@@ -195,20 +168,17 @@
 
 
     <noscript>You need to enable JavaScript to run this app.</noscript>
+    <!--#region Imports -->
     <!-- Bootstrap core JavaScript-->
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
-        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
-        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
     <!-- Core plugin JavaScript-->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"></script>
     <!-- Moment.js -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"
-        integrity="sha256-4iQZ6BVL4qNKlQ27TExEhBN1HFPvAvAMbFavKKosSWQ=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js" integrity="sha256-4iQZ6BVL4qNKlQ27TExEhBN1HFPvAvAMbFavKKosSWQ=" crossorigin="anonymous"></script>
     <!-- Bootstrap DatePicker -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"
-        integrity="sha256-bqVeqGdJ7h/lYPq6xrPv/YGzMEb6dNxlfiTUHSgRCp8=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js" integrity="sha256-bqVeqGdJ7h/lYPq6xrPv/YGzMEb6dNxlfiTUHSgRCp8=" crossorigin="anonymous"></script>
     <!-- Genesys Cloud -->
     <script src="https://sdk-cdn.mypurecloud.com/javascript/61.0.0/purecloud-platform-client-v2.min.js"></script>
     <!-- JQuery Validate -->
@@ -223,8 +193,12 @@
     <!-- Dictionary -->
     <script src="js/dictionary.js"></script>
 
-    <script>
+    <!--#endregion -->
 
+    <script>
+        let tasksControls = [], taskId = 0;
+
+        // Init DatePicker
         $(function () {
             $("#datepicker").datepicker({
                 daysOfWeekDisabled: "0,6",
@@ -261,54 +235,72 @@
             }
         }
 
+        function addNewTask(includeDeleteButton) {
+            let currentTaskId = taskId;
+            taskId++;
+
+            let categoryDiv = $("<div/>", { class: "form-group col-md-5" }).appendTo("#tasks");
+            let categorySelect = $("<select/>", { class: "form-control", name: "category_" + currentTaskId, required: true }).appendTo(categoryDiv);
+            $("<option/>", { value: "", disabled: true, selected: true }).text("Select a Request Category").appendTo(categorySelect);
+            for (const category of requestCategory) {
+                $("<option/>", { value: category }).text(category).appendTo(categorySelect);
+            }
+
+            let typeDiv = $("<div/>", { class: "form-group col-md-5" }).appendTo("#tasks");
+            let typeSelect = $("<select/>", { class: "form-control", name: "type_" + currentTaskId, required: true }).appendTo(typeDiv);
+            $("<option/>", { value: "", disabled: true, selected: true }).text("Select a Request Type").appendTo(typeSelect);
+            categorySelect.on("change", () => {
+                updateRequestTypeBasedOnRegionAndProduct(categorySelect, typeSelect);
+            });
+
+            if (includeDeleteButton) {
+                let deleteButton = $("<a/>", { href: "#", class: "btn btn-danger form-group" }).html(`<i class="fa fa-trash"></i>`).appendTo("#tasks");
+                deleteButton.on("click", () => {
+                    categoryDiv.remove();
+                    typeDiv.remove();
+                    deleteButton.remove();
+                    tasksControls = tasksControls.filter(tc => tc.id != currentTaskId)
+                });
+            }
+
+            tasksControls.push({
+                id: currentTaskId,
+                categorySelect: categorySelect,
+                typeSelect: typeSelect
+            });
+        }
+
+        $("#addTask").on("click", (e) => {
+            e.preventDefault();
+            addNewTask(true);
+        });
+
+        addNewTask(false);
+
         $("#region").on("change", () => {
             $("#subRegion").empty();
             for (let subregion of regions[$("#region").val()]) {
                 $("<option/>", { value: subregion }).text(subregion).appendTo("#subRegion");
             }
-            //updateRequestTypeBasedOnRegionAndProduct();
         });
 
+        function updateRequestTypeBasedOnRegionAndProduct(categorySelect, typeSelect) {
+            typeSelect.empty();
+            $("<option selected disabled />", { value: "" }).text("Select a Request Type").appendTo(typeSelect);
 
-        $("#requestCategory").on("change", () => {
-            updateRequestTypeBasedOnRegionAndProduct();
-        });
-
-
-        function updateRequestTypeBasedOnRegionAndProduct() {
-            /* Keep Previous version 
-            if (!$("#product").val() || !$("#region").val()) return
-
-            $("#requestType").empty();
-            $("<option selected disabled />", { value: "Select a Request Type" }).text("Select a Request Type").appendTo("#requestType");
-
-            for (let aRequest of requestsType[$("#region").val()][$("#product").val()]) {
-                $("<option/>", { value: aRequest }).text(aRequest).appendTo("#requestType");
-            }
-            */
-            $("#requestType").empty();
-            $("<option selected disabled />", { value: "" }).text("Select request Type").appendTo("#requestType");
-
-            for (let aRequest of requestsType[$("#requestCategory").val()]) {
-                $("<option/>", { value: aRequest }).text(aRequest).appendTo("#requestType");
+            for (let aRequest of requestsType[categorySelect.val()]) {
+                $("<option/>", { value: aRequest }).text(aRequest).appendTo(typeSelect);
             }
 
-            if ($("#requestType")[0].length == 1) {
+            if ($(typeSelect)[0].length == 1) {
                 // No SubCategory
-                $("#requestType")[0].disabled = true;
-                $('#requestType').removeAttr('required');
-
-
+                $(typeSelect)[0].disabled = true;
+                $(typeSelect).removeAttr('required');
             } else {
-                $("#requestType")[0].disabled = false;
-                $('#requestType').attr("required", "");
-
+                $(typeSelect)[0].disabled = false;
+                $(typeSelect).attr("required", "");
             }
-
-
         }
-
-
 
         $("#modal-form").validate({
             errorClass: "text-danger",
@@ -327,33 +319,44 @@
             let subRegion = $("#subRegion").val();
             let segment = $("#segment").val();
             let product = $("#product").val();
-            let requestCategory = $("#requestCategory").val();
-            let requestType = $("#requestType").val();
+
+            // Tasks
+            let tasks = [];
+            for (const task of tasksControls) {
+                tasks.push({
+                    taskId: task.id,
+                    taskCategory: task.categorySelect.val(),
+                    taskType: task.typeSelect.val(),
+                    taskTime: 0
+                });
+            }
+
             let requesterName = $("#requesterName").val();
             let requesterEmail = $("#requesterEmail").val();
             let requesterPhoneNumber = $("#requesterPhoneNumber").val();
-            let needCompletedBy = moment($("#datepicker").datepicker('getDate')).format("YYYY-MM-DDT00:00:00.000") + "Z";
+
+            // Need completed by
+            let needCompletedBy = "Not Set";
+            let needCompletedByDate = moment($("#datepicker").datepicker('getDate')).format("YYYY-MM-DDT00:00:00.000");
+            if (needCompletedByDate != "Invalid date") {
+                needCompletedBy = moment($("#datepicker").datepicker('getDate')).format("YYYY-MM-DDT00:00:00.000") + "Z";
+            }
+
             let description = $("#description").val();
             let partnerCustomerName = $("#partnerCustomerName").val();
             let salesforceAccountOpportunity = $("#salesforceAccountOpportunity").val();
 
-            console.log(`Region: ${region}, subRegion: ${subRegion}, Product: ${product}, Request Type: ${requestType}, Requester Name: ${requesterName}, Requester Email: ${requesterEmail}, Requester Phone Number: ${requesterPhoneNumber}, Need Completed By: ${needCompletedBy}, Description: ${description}, Partner or Customer Name: ${partnerCustomerName}, Salesforce Opportunity: ${salesforceAccountOpportunity}`);
+            console.log(`Region: ${region}, subRegion: ${subRegion}, Product: ${product}, Tasks: ${JSON.stringify(tasks)}, Requester Name: ${requesterName}, Requester Email: ${requesterEmail}, Requester Phone Number: ${requesterPhoneNumber}, Need Completed By: ${needCompletedBy}, Description: ${description}, Partner or Customer Name: ${partnerCustomerName}, Salesforce Opportunity: ${salesforceAccountOpportunity}`);
 
             try {
-                await postRequests(region, subRegion, segment, product, requestCategory, requestType, requesterName, requesterEmail, requesterPhoneNumber, needCompletedBy, description, partnerCustomerName, salesforceAccountOpportunity);
+                await postRequests(region, subRegion, segment, product, tasks, requesterName, requesterEmail, requesterPhoneNumber, needCompletedBy, description, partnerCustomerName, salesforceAccountOpportunity);
                 console.log('Success!');
                 showMessage("Request submitted. Thanks!");
-                let notificationDetails = "";
-                if (requestType)
-                    notificationDetails = `${requestCategory} / ${requestType}`
-                else
-                    notificationDetails = `${requestCategory}`;
 
-                let detailedInfo = "\n```no-highlight\n region:\t\t" + region + "\n sub-region:\t\t" + subRegion + "\n segment:\t\t" + segment + "\n product:\t\t" + product + "\n req category:\t\t" + requestCategory + 
-                "\n req type:\t\t" + requestType + "\n req name:\t\t" + requesterName + "\n req email:\t\t" + requesterEmail + "\n req phone:\t\t" + requesterPhoneNumber + 
-                "\n completed by:\t\t" + needCompletedBy + "\n description:\t\t" + description + "\n p/c name:\t\t" + partnerCustomerName + "\n sf/acc opp:\t\t" + salesforceAccountOpportunity + "\n ```\n";
+                let detailedInfo = "\n```no-highlight\n region:\t\t" + region + "\n sub-region:\t\t" + subRegion + "\n segment:\t\t" + segment + "\n product:\t\t" + product + "\n # of tasks:\t\t" + tasks.length +
+                    "\n req name:\t\t" + requesterName + "\n req email:\t\t" + requesterEmail + "\n req phone:\t\t" + requesterPhoneNumber +
+                    "\n completed by:\t\t" + needCompletedBy + "\n description:\t\t" + description + "\n p/c name:\t\t" + partnerCustomerName + "\n sf/acc opp:\t\t" + salesforceAccountOpportunity + "\n ```\n";
 
-                //sendNotification(`> :loudspeaker: New CCC Request for **${product}** received from [@${userInfo.name}](#/person/${userInfo.id}) (${notificationDetails}) ${detailedInfo}`, region);
                 sendNotification(`:loudspeaker: New CCC Request from [@${userInfo.name}](#/person/${userInfo.id}) ${detailedInfo}`, region);
             } catch (error) {
                 console.error(error);
@@ -370,10 +373,9 @@
             $("#requesterName").val(userInfo.name);
             $("#requesterEmail").val(userInfo.mail);
             $("#requesterPhoneNumber").val(userInfo.phone);
-            $("#requestCategory")[0].selectedIndex = 0
-            $("#requestType").empty();
-            $("#requestType")[0].disabled = false;
-            $("<option selected disabled />", { value: "" }).text("Select a Request Type").appendTo("#requestType");
+            tasksControls = [];
+            $("#tasks").empty();
+            addNewTask(false);
             $("#subRegion").empty();
             $("<option selected disabled />", { value: "Select a Sub-Region" }).text("Select a Sub-Region").appendTo("#subRegion");
             $("#segment").val('');
@@ -383,7 +385,7 @@
             $("#description").val('');
             $("#partnerCustomerName").val('');
             $("#salesforceAccountOpportunity").val('');
-            
+
         }
 
     </script>
