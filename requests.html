@@ -240,7 +240,7 @@
                         </form>
 
                         <div class="modal-footer">
-
+                            <button type="button" id="btnRestore" class="btn btn-warning pull-left">Restore</button>
                             <button type="button" id="btnRejectRequest" class="btn btn-danger pull-left">Save and
                                 Reject</button>
                             <button type="button" id="btnAcceptRequest" class="btn btn-success pull-left">Save and
@@ -598,9 +598,6 @@
         function showModal(request) {
             console.log("Showing modal for:", request);
 
-
-
-
             if (request.acceptedRejected)
                 $("#editModal #title").text(`Request (${request.acceptedRejected})`)
             else
@@ -646,12 +643,14 @@
                 $("#btnRejectRequest").attr("hidden", true);
                 $("#submit").attr("hidden", true);
                 $("#btnAcceptRequest").attr("hidden", true);
-
+                $("#btnRestore").attr("disabled", false);
+                $("#btnRestore").attr("hidden", false);            
             } else {
                 $("#modal-form :input").attr("disabled", false);
                 $("#btnRejectRequest").attr("hidden", false);
                 $("#submit").attr("hidden", false);
                 $("#btnAcceptRequest").attr("hidden", false);
+                $("#btnRestore").attr("hidden", true);
             }
 
             if (request.acceptedRejected == "Accepted") {
@@ -778,6 +777,13 @@
             $("#editModal #bAcceptedRequest").val("Rejected");
             $("#editModal #submit").click();
         });
+
+        $("#btnRestore").on("click", async (e) => {
+            e.preventDefault();
+            $("#editModal #submit").click();
+
+        });
+
 
         $("#editModal #submit").on("click", async (e) => {
             e.preventDefault();
