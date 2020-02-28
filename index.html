@@ -254,7 +254,7 @@
             });
 
             if (includeDeleteButton) {
-                let deleteButton = $("<a/>", { href: "#", class: "btn btn-danger form-group" }).html(`<i class="fa fa-trash"></i>`).appendTo("#tasks");
+                let deleteButton = $("<a/>", { href: "#", class: "btn btn-danger form-group", style: "max-height:38px" }).html(`<i class="fa fa-trash"></i>`).appendTo("#tasks");
                 deleteButton.on("click", () => {
                     categoryDiv.remove();
                     typeDiv.remove();
