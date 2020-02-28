@@ -50,7 +50,7 @@
                     </div>
                     <div class="form-group col-md-4">
                         <label for="product">Product</label>
-                        <select id="product" name="region" class="form-control">
+                        <select id="product" name="product" class="form-control">
                             <option value="" selected>All products</option>
                             <option value="Genesys Cloud">Genesys Cloud</option>
                             <option value="Genesys Engage">Genesys Engage</option>
@@ -394,11 +394,19 @@
         }
 
 
-        function exportData() {
+        async function exportData() {
+            
+            let exportRegion = $('#region').val() == "" ? undefined : $('#region').val();
+            let exportProduct = $('#product').val() == "" ? undefined : $('#product').val();
+            let exportSegment = $('#segment').val() == "" ? undefined : $('#segment').val();
 
+
+            let exportData = await getExport(exportRegion, exportProduct, exportSegment);
+            if (exportData.length == 0) 
+                return
 
             var flatData = [];
-            data.forEach(function (aItem) {               
+            exportData.forEach(function (aItem) {               
                 aItem.tasks.forEach(function (aTask) {
                     var singleRow = $.extend(true, {}, aItem);                    
                     singleRow.taskCategory = aTask.taskCategory;
@@ -412,6 +420,8 @@
 
             })
             
+            exportData = {};
+
             const replacer = (key, value) => value === null ? '' : value // specify how you want to handle null values here
             const header = Object.keys(flatData[0])
             let csv = flatData.map(row => header.map(fieldName => JSON.stringify(row[fieldName], replacer)).join(';'))
