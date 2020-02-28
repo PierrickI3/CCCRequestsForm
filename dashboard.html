@@ -13,8 +13,7 @@
     <script src="js/requests.js"></script>
 
     <!-- Bootstrap -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
-        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 
@@ -94,8 +93,7 @@
                         </div>
                     </div>
                     <div class="form-group col-md-6">
-                        <div class="chart-container" style="width:40vw" id="chart_requestCategory_container"
-                            name="requestCategory">
+                        <div class="chart-container" style="width:40vw" id="chart_requestCategory_container" name="requestCategory">
                             <canvas id="chart_requestCategory"></canvas>
                         </div>
                     </div>
@@ -103,23 +101,16 @@
 
                 <div class="form-row">
                     <div class="form-group col-md-12">
-                        <div class="chart-container" style="width:90vw" id="chart_requestType_container"
-                            name="requestType">
+                        <div class="chart-container" style="width:90vw" id="chart_requestType_container" name="requestType">
                             <canvas id="chart_requestType"></canvas>
                         </div>
                     </div>
-
-
                 </div>
-
-
-
-
             </div>
         </div>
         <button onclick="exportData();" class="admin btn btn-dark" style="float: right;">Export to CSV</button>
+        <br><br><br> 
     </div>
-
 
     <script>
         let data;
@@ -237,15 +228,15 @@
                 scales = {
                     yAxes: [{
                         ticks: {
-                            min: 0,
-                            stepSize: 1
+                            min: 0
+                            
                         }
 
                     }],
                     xAxes: [{
                         ticks: {
-                            min: 0,
-                            stepSize: 1
+                            min: 0
+                            
                         }
 
                     }]
@@ -293,7 +284,6 @@
                 }
             });
 
-            console.log(task_parsed);
 
             // ByRegion
             makeChart('SELECT count(*) as val, region as label FROM ? ## GROUP BY region', false, 'region', 'doughnut', 'Requests', data);
@@ -372,15 +362,15 @@
                     scales: {
                         yAxes: [{
                             ticks: {
-                                min: 0,
-                                stepSize: 1
+                                min: 0
+                              
                             }
 
                         }],
                         xAxes: [{
                             ticks: {
-                                min: 0,
-                                stepSize: 1
+                                min: 0
+                               
                             }
 
                         }]
@@ -395,31 +385,31 @@
 
 
         async function exportData() {
-            
+
             let exportRegion = $('#region').val() == "" ? undefined : $('#region').val();
             let exportProduct = $('#product').val() == "" ? undefined : $('#product').val();
             let exportSegment = $('#segment').val() == "" ? undefined : $('#segment').val();
 
 
             let exportData = await getExport(exportRegion, exportProduct, exportSegment);
-            if (exportData.length == 0) 
+            if (exportData.length == 0)
                 return
 
             var flatData = [];
-            exportData.forEach(function (aItem) {               
+            exportData.forEach(function (aItem) {
                 aItem.tasks.forEach(function (aTask) {
-                    var singleRow = $.extend(true, {}, aItem);                    
+                    var singleRow = $.extend(true, {}, aItem);
                     singleRow.taskCategory = aTask.taskCategory;
                     singleRow.taskType = aTask.taskType;
-                    singleRow.taskTime = aTask.taskTime;                    
+                    singleRow.taskTime = aTask.taskTime;
                     delete singleRow.tasks
-                    if (singleRow.mailDistibution) delete singleRow.mailDistibution;                    
+                    if (singleRow.mailDistibution) delete singleRow.mailDistibution;
                     flatData.push(singleRow);
 
                 });
 
             })
-            
+
             exportData = {};
 
             const replacer = (key, value) => value === null ? '' : value // specify how you want to handle null values here
