@@ -353,8 +353,15 @@
                 console.log('Success!');
                 showMessage("Request submitted. Thanks!");
 
-                let detailedInfo = "\n```no-highlight\n region:\t\t" + region + "\n sub-region:\t\t" + subRegion + "\n segment:\t\t" + segment + "\n product:\t\t" + product + "\n # of tasks:\t\t" + tasks.length +
-                    "\n req name:\t\t" + requesterName + "\n req email:\t\t" + requesterEmail + "\n req phone:\t\t" + requesterPhoneNumber +
+                let sTasks = '\n----------------------------------'
+                tasks.forEach(function (aTask) {
+                    sTasks = sTasks + "\n reqCategory:\t\t" + aTask.taskCategory + "\n requestType:\t\t" + aTask.taskType; 
+                })
+                sTasks = sTasks + '\n----------------------------------';
+                console.log(sTasks);
+
+                let detailedInfo = "\n```no-highlight\n region:\t\t" + region + "\n sub-region:\t\t" + subRegion + "\n segment:\t\t" + segment + "\n product:\t\t" + product + 
+                    "\n req name:\t\t" + requesterName + "\n req email:\t\t" + requesterEmail + "\n req phone:\t\t" + requesterPhoneNumber + sTasks + 
                     "\n completed by:\t\t" + needCompletedBy + "\n description:\t\t" + description + "\n p/c name:\t\t" + partnerCustomerName + "\n sf/acc opp:\t\t" + salesforceAccountOpportunity + "\n ```\n";
 
                 sendNotification(`:loudspeaker: New CCC Request from [@${userInfo.name}](#/person/${userInfo.id}) ${detailedInfo}`, region);
