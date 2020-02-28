@@ -76,8 +76,8 @@
                     <!-- Tasks -->
                     <div class="border border-black">
                         <div class="form-row mt-1 mr-4 ml-2">
-                            <div class="form-group col-md-6 text-center">Category</div>
-                            <div class="form-group col-md-6 text-center">Type</div>
+                            <div class="form-group col-md-5 text-center">Category</div>
+                            <div class="form-group col-md-5 text-center">Type</div>
                         </div>
                         <div class="form-row mt-2 mr-4 ml-2" id="tasks"></div>
                         <a href="#" id="addTask" class="form-group btn btn-primary mt-1 ml-3"><em class="fa fa-plus"></em> Add New Task</a>
@@ -237,14 +237,14 @@
             let currentTaskId = taskId;
             taskId++;
 
-            let categoryDiv = $("<div/>", { class: "form-group col-md-6" }).appendTo("#tasks");
+            let categoryDiv = $("<div/>", { class: "form-group col-md-5" }).appendTo("#tasks");
             let categorySelect = $("<select/>", { class: "form-control", name: "category_" + currentTaskId, required: true }).appendTo(categoryDiv);
             $("<option/>", { value: "", disabled: true, selected: true }).text("Select a Request Category").appendTo(categorySelect);
             for (const category of requestCategory) {
                 $("<option/>", { value: category }).text(category).appendTo(categorySelect);
             }
 
-            let typeDiv = $("<div/>", { class: "form-group col-md-6" }).appendTo("#tasks");
+            let typeDiv = $("<div/>", { class: "form-group col-md-5" }).appendTo("#tasks");
             let typeSelect = $("<select/>", { class: "form-control", name: "type_" + currentTaskId, required: true }).appendTo(typeDiv);
             $("<option/>", { value: "", disabled: true, selected: true }).text("Select a Request Type").appendTo(typeSelect);
             categorySelect.on("change", () => {
