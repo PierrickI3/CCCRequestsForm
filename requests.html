@@ -246,7 +246,7 @@
                             <button type="button" id="btnAcceptRequest" class="btn btn-success pull-left">Save and
                                 Accept</button>
                             <button id="submit" type="submit" class="btn btn-primary pull-left">Save</button>
-                            <button type="button" class="btn btn-secondary pull-right" data-dismiss="modal">Close</button>
+                            <button id="btnClose" type="button" class="btn btn-secondary pull-right" data-dismiss="modal">Close</button>
 
                         </div>
                 </form>
@@ -598,24 +598,8 @@
         function showModal(request) {
             console.log("Showing modal for:", request);
 
-            if (request.isDeleted) {
 
-            }
 
-            if (request.acceptedRejected == "Accepted") {
-                $("#modal-header").css('background', 'lightgreen');
-                $("#btnAcceptRequest").prop('disabled', true);
-                $("#btnRejectRequest").prop('disabled', false);
-            }
-            else if (request.acceptedRejected == "Rejected") {
-                $("#modal-header").css('background', 'red');
-                $("#btnAcceptRequest").prop('disabled', false);
-                $("#btnRejectRequest").prop('disabled', true);
-            } else {
-                $("#modal-header").css('background', 'white');
-                $("#btnAcceptRequest").prop('disabled', false);
-                $("#btnRejectRequest").prop('disabled', false);
-            }
 
             if (request.acceptedRejected)
                 $("#editModal #title").text(`Request (${request.acceptedRejected})`)
@@ -651,7 +635,50 @@
             $("#editModal #txtAcceptedRejectedNotes").val(request.acceptedRejectedNotes);
             $("#editModal #teamMembers").val(request.teamMembers);
 
+
             $("#editModal").modal("show");
+
+
+
+            if (request.isDeleted) {
+                $("#modal-form :input").attr("disabled", true);
+                $("#btnClose").prop('disabled', false);
+                $("#btnRejectRequest").attr("hidden", true);
+                $("#submit").attr("hidden", true);
+                $("#btnAcceptRequest").attr("hidden", true);
+
+            } else {
+                $("#modal-form :input").attr("disabled", false);
+                $("#btnRejectRequest").attr("hidden", false);
+                $("#submit").attr("hidden", false);
+                $("#btnAcceptRequest").attr("hidden", false);
+            }
+
+            if (request.acceptedRejected == "Accepted") {
+                $("#modal-header").css('background', 'lightgreen');
+                if (!request.isDeleted) {
+                    console.log('Not deleted!')
+                    $("#editModal #btnAcceptRequest").prop('disabled', true);
+                    $("#editModal #btnRejectRequest").prop('disabled', false);
+                }
+
+            }
+            else if (request.acceptedRejected == "Rejected") {
+                $("#modal-header").css('background', 'lightcoral');
+                if (!request.isDeleted) {
+                    $("#btnAcceptRequest").prop('disabled', false);
+                    $("#btnRejectRequest").prop('disabled', true);
+                }
+            } else {
+                $("#modal-header").css('background', 'white');
+                if (!request.isDeleted) {
+                    $("#btnAcceptRequest").prop('disabled', false);
+                    $("#btnRejectRequest").prop('disabled', false);
+                }
+            }
+
+
+
         }
 
         function addNewTask(task) {
