@@ -1,16 +1,16 @@
 
 let adminGroups = {
     EMEA: [
-        "89bc6b45-62d9-4d20-be78-cdf5a2e39ae8"
+        "691fce29-dc11-450a-89f1-73b51226863f"
     ],
     NA: [
-        "1234"
+        "cbc3ff94-f1d1-48aa-9c70-6fe32fe99455"
     ],
     LATAM: [
-        "4bfb"
+        "8f7d2225-23a3-4400-b512-e548cfe73b94"
     ],
     APAC: [
-        "1234"
+        "0ad890f8-5604-40e1-97a6-8fe463656381"
     ]
 };
 
