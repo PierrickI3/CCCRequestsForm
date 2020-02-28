@@ -90,11 +90,11 @@ async function putRequest(id, region, subRegion, segment, product, tasks, reques
   if (acceptedRejectedNotes && acceptedRejectedNotes.length > 0) {
     data.acceptedRejectedNotes = acceptedRejectedNotes;
   }
-/*
-  if (acceptedRejected && acceptedRejected.length > 0) {
-    data.acceptedRejected = acceptedRejected;
-  }
-*/
+  /*
+    if (acceptedRejected && acceptedRejected.length > 0) {
+      data.acceptedRejected = acceptedRejected;
+    }
+  */
   if (partnerCustomerName && partnerCustomerName.length > 0) {
     data.partnerCustomerName = partnerCustomerName
   }
@@ -235,3 +235,49 @@ async function getDashboard() {
       console.log("getRequests completed");
     });
 }
+
+
+async function getExport(_region, _product, _segment) {
+
+  var sFilter = "";
+
+  if (_region)
+    sFilter = sFilter + `region=${_region}&`;
+  if (_product)
+    sFilter = sFilter + `product=${_product}&`;
+
+  if (_segment) {
+    sFilter = sFilter + `segment=${_segment}&`;
+  }
+
+  // remove last char
+  if (sFilter.length > 0)
+    sFilter = "?" + sFilter.substring(0,sFilter.length-1);
+
+  console.log(`getExport with filter: ${sFilter}`);
+
+  return await $.ajax({
+    url: `${apiBasePath}/export${sFilter}`,
+    method: "GET",
+    contentType: 'application/json',
+    dataType: "json"
+  })
+    .done((data, textStatus, jqXHR) => {
+      try {
+        if (jqXHR.status === 200) {
+          console.log(jqXHR);
+          return data;
+        } else {
+          showMessage("Unexpected error: " + textStatus, true);
+          reject(textStatus);
+        }
+      } catch (error) {
+        console.error(error);
+        reject(error);
+      }
+    })
+    .always(() => {
+      console.log("getRequests completed");
+    });
+}
+
