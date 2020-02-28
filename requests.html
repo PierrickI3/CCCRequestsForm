@@ -668,16 +668,6 @@
             let timeDiv = $("<div/>", { class: "form-group col-md-2" }).appendTo("#tasks");
             let timeInput = $("<input/>", { type: "number", class: "form-control", placeholder: "Hours" }).val(task.taskTime ? task.taskTime : 0).appendTo(timeDiv);
 
-            // Delete Button
-            let deleteButton = $("<a/>", { href: "#", class: "btn btn-danger form-group" }).html(`<i class="fa fa-trash"></i>`).appendTo("#tasks");
-            deleteButton.on("click", () => {
-                categoryDiv.remove();
-                typeDiv.remove();
-                deleteButton.remove();
-                timeDiv.remove();
-                tasksControls = tasksControls.filter(tc => tc.id != currentTaskId)
-            });
-
             // Add controls to global list
             tasksControls.push({
                 id: currentTaskId,
