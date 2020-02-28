@@ -498,7 +498,7 @@
                                         && (!filter.region || request.region.toLowerCase().indexOf(filter.region.toLowerCase()) > -1)
                                         && (!filter.subRegion || request.subRegion.toLowerCase().indexOf(filter.subRegion.toLowerCase()) > -1)
                                         && (!filter.product || request.product.toLowerCase().indexOf(filter.product.toLowerCase()) > -1)
-                                        //&& (!filter.requestType || request.requestType.toLowerCase().indexOf(filter.requestType.toLowerCase()) > -1)
+                                        && (!filter.segment || request.segment.toLowerCase().indexOf(filter.segment.toLowerCase()) > -1)
                                         && (!filter.requesterName || request.requesterName.toLowerCase().indexOf(filter.requesterName.toLowerCase()) > -1)
                                         && (!filter.partnerCustomerName || request.partnerCustomerName.toLowerCase().indexOf(filter.partnerCustomerName.toLowerCase()) > -1)
                                 });
@@ -536,7 +536,13 @@
                             title: "Product",
                             type: "text",
                             width: "auto"
-                        }, {
+                        }, 
+                        {
+                            name: "segment",
+                            title: "Market Segment",
+                            type: "text",
+                            width: "auto"
+                        },{
                             name: "requesterName",
                             title: "Requester Name",
                             type: "text",
