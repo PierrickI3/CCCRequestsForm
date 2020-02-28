@@ -17,7 +17,7 @@ let adminGroups = {
 let mailDistribution = {
     EMEA: "EMEACloudProgramManagement@genesys.com",
     NA: "NACompetencyCenterRequests@genesys.com",
-    LATAM: "",
+    LATAM: "LATAMCompetencyCenter@genesys.com",
     APAC: "apac-cc@genesys.com"
 };
 
