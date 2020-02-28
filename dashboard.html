@@ -396,33 +396,29 @@
 
         function exportData() {
 
-            let sTasks = '';
-            let iTime = 0;
-            let flatData = [];
 
-            data.forEach(function (aItem) {
-                if (aItem.tasks && aItem.tasks.length > 0) {
-                    aItem.tasks.forEach(function (aTask) {
-                        sTasks = sTasks + `${aTask.taskCategory}/${aTask.taskType},`;
-                        iTime = iTime + aTask.iTime;
-                    });
-                    aItem.task = sTasks;
-                    aItem.timeTotal = iTime;
+            var flatData = [];
+            data.forEach(function (aItem) {               
+                aItem.tasks.forEach(function (aTask) {
+                    var singleRow = $.extend(true, {}, aItem);                    
+                    singleRow.taskCategory = aTask.taskCategory;
+                    singleRow.taskType = aTask.taskType;
+                    singleRow.taskTime = aTask.taskTime;                    
+                    delete singleRow.tasks
+                    if (singleRow.mailDistibution) delete singleRow.mailDistibution;                    
+                    flatData.push(singleRow);
 
-                }
+                });
 
-                flatData.push(aItem);
             })
-
-            console.log(flatData);
-
+            
             const replacer = (key, value) => value === null ? '' : value // specify how you want to handle null values here
             const header = Object.keys(flatData[0])
             let csv = flatData.map(row => header.map(fieldName => JSON.stringify(row[fieldName], replacer)).join(';'))
             csv.unshift(header.join(';'))
             csv = csv.join('\r\n')
 
-            //download(csv, 'export.csv');
+            download(csv, 'export.csv');
 
         }
 
