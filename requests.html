@@ -275,6 +275,8 @@
     <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.1/dist/additional-methods.min.js"></script>
     <!-- jQuery Toast -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-toast-plugin/1.3.2/jquery.toast.min.js"></script>
+    <!-- Bootbox -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/5.4.0/bootbox.min.js"></script>
     <!-- Our Scripts -->
     <script src="js/gc.js"></script>
     <script src="js/requests.js"></script>
@@ -453,18 +455,33 @@
 
                     },
                     deleteItem: async function (deletingRequest) {
-                        let r = confirm('Do you really want to delete this request?');
-                        if (r) {
-                            console.log('Deleting:', deletingRequest);
-                            try {
-                                await deleteRequest(deletingRequest.id);
-                                //await putRequest(deletingRequest.id, deletingRequest.region, deletingRequest.subRegion, deletingRequest.product, deletingRequest.requestType, deletingRequest.requesterName, deletingRequest.requesterEmail, deletingRequest.requesterPhoneNumber, deletingRequest.needCompletedBy, deletingRequest.description, deletingRequest.partnerCustomerName, deletingRequest.salesforceAccountOpportunity, deletingRequest.priority, deletingRequest.acceptedRejected, deletingRequest.status, deletingRequest.programManager, deletingRequest.time, deletingRequest.acceptedRejectedNotes, true);
-                                refreshGrid();
-                            } catch (error) {
-                                console.error(error);
-                                showMessage(error.hasOwnProperty('responseJSON') ? error.responseJSON.message : error, true);
+                        bootbox.confirm({
+                            message: 'Do you really want to delete this request?',
+                            buttons: {
+                                confirm: {
+                                    label: "Delete!",
+                                    className: "btn-danger"
+                                },
+                                cancel: {
+                                    label: "No",
+                                    className: "btn-secondary"
+                                }
+                            },
+                            callback: async function (result) {
+                                if (result) {
+                                    console.log('Deleting:', deletingRequest);
+                                    try {
+                                        await deleteRequest(deletingRequest.id);
+                                        refreshGrid();
+                                        showMessage("Request deleted", false);
+                                    } catch (error) {
+                                        console.error(error);
+                                        showMessage(error.hasOwnProperty('responseJSON') ? error.responseJSON.message : error, true);
+                                    }
+
+                                }
                             }
-                        }
+                        });
                     },
                     controller: {
                         loadData: async function (filter) {
