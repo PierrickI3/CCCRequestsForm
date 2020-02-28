@@ -240,14 +240,14 @@
             taskId++;
 
             let categoryDiv = $("<div/>", { class: "form-group col-md-5" }).appendTo("#tasks");
-            let categorySelect = $("<select/>", { class: "form-control", required: true }).appendTo(categoryDiv);
+            let categorySelect = $("<select/>", { class: "form-control", name: "category_" + currentTaskId, required: true }).appendTo(categoryDiv);
             $("<option/>", { value: "", disabled: true, selected: true }).text("Select a Request Category").appendTo(categorySelect);
             for (const category of requestCategory) {
                 $("<option/>", { value: category }).text(category).appendTo(categorySelect);
             }
 
             let typeDiv = $("<div/>", { class: "form-group col-md-5" }).appendTo("#tasks");
-            let typeSelect = $("<select/>", { class: "form-control", required: true }).appendTo(typeDiv);
+            let typeSelect = $("<select/>", { class: "form-control", name: "type_" + currentTaskId, required: true }).appendTo(typeDiv);
             $("<option/>", { value: "", disabled: true, selected: true }).text("Select a Request Type").appendTo(typeSelect);
             categorySelect.on("change", () => {
                 updateRequestTypeBasedOnRegionAndProduct(categorySelect, typeSelect);
