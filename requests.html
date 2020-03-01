@@ -656,7 +656,9 @@
                 $("#btnRejectRequest").attr("hidden", false);
                 $("#submit").attr("hidden", false);
                 $("#btnAcceptRequest").attr("hidden", false);
-                $("#btnRestore").attr("hidden", true);
+                $("#btnRestore").attr("hidden", true); 
+                $("#createdDate").attr("disabled", true);
+                
             }
 
             if (request.acceptedRejected == "Accepted") {
