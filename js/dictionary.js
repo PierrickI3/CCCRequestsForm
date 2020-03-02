@@ -37,7 +37,7 @@ let regions = {
 }
 
 let requestsType = {
-    "Demo & Trial Support": ["Trials (owned by the SC)", "POCs, Pilots for Strategic Opps", "Innovation (Integration, Tailored Demos, Vision Clips)"],
+    "Demo & Trial Support": ["Trials (owned by the SC)", "POCs, Pilots for Strategic Opps", "Innovation (Integrations, Tailored Demos, Vision Clips)"],
     "Opportunity Support": ["Technical Design / Architecture Review", "Other Commercial Support"],
     "Security Support": ["Assessments/Audits", "Other"],
     "Privacy Support": ["Assessments/Audits", "Other"],
