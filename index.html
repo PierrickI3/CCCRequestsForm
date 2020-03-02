@@ -20,7 +20,7 @@
     <nav class="navbar navbar-light bg-light">
         <a class="navbar-brand" href="#">
             <img src="images/genesys.png" width="30" height="30" class="d-inline-block align-top" alt="">
-            Cloud Competency Center Request Form
+            Competence Center Request Form
         </a>
         <a href="#" id="reviewRequestsButton" class="admin btn btn-primary">Review Requests</a>
     </nav>
@@ -126,7 +126,7 @@
 
             </div>
             <div class="form-group col-sm-5">
-                <H3 class="text-center">Welcome to the Competence Centre Request Form.</H3>
+                <H3 class="text-center">Welcome to the Competence Center Request Form.</H3>
                 <p>
                     This form can be used to request assistance on a variety of topics across different product types.
                 </p>
@@ -355,13 +355,13 @@
 
                 let sTasks = '\n----------------------------------'
                 tasks.forEach(function (aTask) {
-                    sTasks = sTasks + "\n reqCategory:\t\t" + aTask.taskCategory + "\n requestType:\t\t" + aTask.taskType; 
+                    sTasks = sTasks + "\n reqCategory:\t\t" + aTask.taskCategory + "\n requestType:\t\t" + aTask.taskType;
                 })
                 sTasks = sTasks + '\n----------------------------------';
                 console.log(sTasks);
 
-                let detailedInfo = "\n```no-highlight\n region:\t\t" + region + "\n sub-region:\t\t" + subRegion + "\n segment:\t\t" + segment + "\n product:\t\t" + product + 
-                    "\n req name:\t\t" + requesterName + "\n req email:\t\t" + requesterEmail + "\n req phone:\t\t" + requesterPhoneNumber + sTasks + 
+                let detailedInfo = "\n```no-highlight\n region:\t\t" + region + "\n sub-region:\t\t" + subRegion + "\n segment:\t\t" + segment + "\n product:\t\t" + product +
+                    "\n req name:\t\t" + requesterName + "\n req email:\t\t" + requesterEmail + "\n req phone:\t\t" + requesterPhoneNumber + sTasks +
                     "\n completed by:\t\t" + needCompletedBy + "\n description:\t\t" + description + "\n p/c name:\t\t" + partnerCustomerName + "\n sf/acc opp:\t\t" + salesforceAccountOpportunity + "\n ```\n";
 
                 sendNotification(`:loudspeaker: New CCC Request from [@${userInfo.name}](#/person/${userInfo.id}) ${detailedInfo}`, region);

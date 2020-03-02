@@ -31,7 +31,7 @@
         <ul class="nav navbar-nav">
             <a class="navbar-brand" href="#">
                 <img src="images/genesys.png" width="30" height="30" class="d-inline-block align-top" alt="">
-                Cloud Competence Center Request Form (<span id="region"></span>)
+                Competence Center Request Form (<span id="region"></span>)
             </a>
         </ul>
         <ul>
@@ -536,13 +536,13 @@
                             title: "Product",
                             type: "text",
                             width: "auto"
-                        }, 
+                        },
                         {
                             name: "segment",
                             title: "Market Segment",
                             type: "text",
                             width: "auto"
-                        },{
+                        }, {
                             name: "requesterName",
                             title: "Requester Name",
                             type: "text",
@@ -552,7 +552,7 @@
                             title: "Partner/Customer",
                             type: "text",
                             width: "160"
-                        },{
+                        }, {
                             name: "needCompletedBy",
                             title: "Need Completed",
                             type: "text",
@@ -650,15 +650,15 @@
                 $("#submit").attr("hidden", true);
                 $("#btnAcceptRequest").attr("hidden", true);
                 $("#btnRestore").attr("disabled", false);
-                $("#btnRestore").attr("hidden", false);            
+                $("#btnRestore").attr("hidden", false);
             } else {
                 $("#modal-form :input").attr("disabled", false);
                 $("#btnRejectRequest").attr("hidden", false);
                 $("#submit").attr("hidden", false);
                 $("#btnAcceptRequest").attr("hidden", false);
-                $("#btnRestore").attr("hidden", true); 
+                $("#btnRestore").attr("hidden", true);
                 $("#createdDate").attr("disabled", true);
-                
+
             }
 
             if (request.acceptedRejected == "Accepted") {
