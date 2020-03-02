@@ -45,6 +45,7 @@ let requestsType = {
     "Specialist Engagement": ["PureBridge", "Cloud Migration", "MultiCloud", "Self-Service Automation", "Digital AI", "WEM", "API (Platform/AppFoundry)", "Must Win Opportunity Engagement", "Other"],
     "Enablement": ["Partner Summits, Events, Webinars", "Partner End-to-End Enablement", "Partner Technical Enablement", "Internal SC/AE Enablement"],
     "Critical Situation Support": [],
+    "Top 100 Account Planning": [],
     "Other Request": []
 }
 
@@ -57,5 +58,6 @@ let requestCategory = [
     "Specialist Engagement",
     "Enablement",
     "Critical Situation Support",
+    "Top 100 Account Planning",
     "Other Request"
 ]
