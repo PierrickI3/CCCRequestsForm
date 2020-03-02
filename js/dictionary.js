@@ -39,7 +39,7 @@ let regions = {
 let requestsType = {
     "Demo & Trial Support": ["Trials (owned by the SC)", "POCs, Pilots for Strategic Opps", "Innovation (Integration, Tailored Demos, Vision Clips)"],
     "Enablement": ["Partner Summits, Events, Webinars", "Partner End-to-End Enablement", "Partner Technical Enablement", "Internal SC/AE Enablement"],
-    "Opportunity Support": ["Technical Design / Architecture Review", "RFP", "Other Commercial Support"],
+    "Opportunity Support": ["Technical Design / Architecture Review", "Other Commercial Support"],
     "Security Support": ["Assessments/Audits", "Questions", "Webex/Workship/Meeting", "Other"],
     "Privacy Support": ["Assessments/Audits", "Questions", "Webex/Workship/Meeting", "Other"],
     "Strategic Business Consulting": [],
