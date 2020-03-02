@@ -37,13 +37,13 @@ let regions = {
 }
 
 let requestsType = {
-    "Demo & Trial Support": ["Trial", "POCs, Pilots for Strategic Opps", "Innovation (Integration, Tailored Demos, Vision Clips)"],
+    "Demo & Trial Support": ["Trials (owned by the SC)", "POCs, Pilots for Strategic Opps", "Innovation (Integration, Tailored Demos, Vision Clips)"],
     "Enablement": ["Partner Summits, Events, Webinars", "Partner End-to-End Enablement", "Partner Technical Enablement", "Internal SC/AE Enablement"],
-    "Opportunity Support": ["Technical Design / Architecture Review", "MultiCloud", "RFP", "Other Commercial Support"],
+    "Opportunity Support": ["Technical Design / Architecture Review", "RFP", "Other Commercial Support"],
     "Security Support": ["Assessments/Audits", "Questions", "Contracts", "Webex/Workship/Meeting", "Other"],
     "Privacy Support": ["Assessments/Audits", "Questions", "Contracts", "Webex/Workship/Meeting", "Other"],
     "Strategic Business Consulting": [],
-    "Specialist Engagement": ["PureBridge", "Cloud Migration", "Self-Service Automation", "Digital AI", "WEM", "API (Platform/AppFoundry)", "Must Win Opportunity Engagement", "Other"],
+    "Specialist Engagement": ["PureBridge", "Cloud Migration", "MultiCloud", "Self-Service Automation", "Digital AI", "WEM", "API (Platform/AppFoundry)", "Must Win Opportunity Engagement", "Other"],
     "Critical Situation Support": [],
     "Other Request": []
 }
