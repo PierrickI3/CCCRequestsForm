@@ -16,6 +16,8 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <!-- Moment.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js" integrity="sha256-4iQZ6BVL4qNKlQ27TExEhBN1HFPvAvAMbFavKKosSWQ=" crossorigin="anonymous"></script>
 
 </head>
 
@@ -109,7 +111,7 @@
             </div>
         </div>
         <button onclick="exportData();" class="admin btn btn-dark" style="float: right;">Export to CSV</button>
-        <br><br><br> 
+        <br><br><br>
     </div>
 
     <script>
@@ -229,14 +231,14 @@
                     yAxes: [{
                         ticks: {
                             min: 0
-                            
+
                         }
 
                     }],
                     xAxes: [{
                         ticks: {
                             min: 0
-                            
+
                         }
 
                     }]
@@ -363,14 +365,14 @@
                         yAxes: [{
                             ticks: {
                                 min: 0
-                              
+
                             }
 
                         }],
                         xAxes: [{
                             ticks: {
                                 min: 0
-                               
+
                             }
 
                         }]
@@ -404,6 +406,8 @@
                     singleRow.taskTime = aTask.taskTime;
                     delete singleRow.tasks
                     if (singleRow.mailDistibution) delete singleRow.mailDistibution;
+                    singleRow.createdAt = moment.utc(singleRow.createdAt)
+                    singleRow.updatedAt = moment.utc(singleRow.updatedAt)
                     flatData.push(singleRow);
 
                 });
