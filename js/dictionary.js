@@ -44,7 +44,6 @@ let requestsType = {
     "Privacy Support": [],
     "Strategic Business Consulting": [],
     "Specialist Engagement": ["PureBridge", "Cloud Migration", "Self-Service Automation", "Digital AI", "WEM", "API (Platform/AppFoundry)", "Must Win Opportunity Engagement", "Other"],
-    "Enablement": ["Partner Summits, Events, Webinars", "Partner End-to-End Enablement", "Partner Technical Enablement", "Internal SC/AE Enablement"],
     "Critical Situation Support": [],
     "Other Request": []
 }
