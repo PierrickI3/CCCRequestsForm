@@ -38,6 +38,7 @@ let regions = {
 
 let requestsType = {
     "Demo & Trial Support": ["Test Drive (Trial)", "POCs, Pilots for Strategic Opps", "Innovation (Integration, Tailored Demos, Vision Clips)"],
+    "Enablement": ["Partner Summits, Events, Webinars", "Partner End-to-End Enablement", "Partner Technical Enablement", "Internal SC/AE Enablement"],
     "Opportunity Support": ["Technical Design / Architecture Review", "MultiCloud", "RFP", "Other Commercial Support"],
     "Security Support": [],
     "Privacy Support": [],
@@ -50,6 +51,7 @@ let requestsType = {
 
 let requestCategory = [
     "Demo & Trial Support",
+    "Enablement",
     "Security Support",
     "Opportunity Support",
     "Privacy Support",
