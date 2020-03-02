@@ -22,7 +22,7 @@
             <img src="images/genesys.png" width="30" height="30" class="d-inline-block align-top" alt="">
             Competence Center Request Form
         </a>
-        <a href="#" id="reviewRequestsButton" class="admin btn btn-primary">Review Requests</a>
+        <a href="#" id="reviewRequestsButton" class="admin btn btn-primary" hidden>Review Requests</a>
     </nav>
 
     <div class="container-fluid">
@@ -219,19 +219,30 @@
 
             // Show Admin fields?
             if (userInfo.groups.some(g => adminGroups["EMEA"].includes(g))) {
+                console.log('Show admin stuff')
                 $(".admin").show();
+                $(".admin").removeAttr('hidden');
                 $("#reviewRequestsButton").attr("href", "requests.html?region=EMEA");
             } else if (userInfo.groups.some(g => adminGroups["NA"].includes(g))) {
+                console.log('Show admin stuff')
                 $(".admin").show();
+                $(".admin").removeAttr('hidden');
                 $("#reviewRequestsButton").attr("href", "requests.html?region=NA");
             } else if (userInfo.groups.some(g => adminGroups["APAC"].includes(g))) {
+                console.log('Show admin stuff')
                 $(".admin").show();
+                $(".admin").removeAttr('hidden');
                 $("#reviewRequestsButton").attr("href", "requests.html?region=APAC");
             } else if (userInfo.groups.some(g => adminGroups["LATAM"].includes(g))) {
+                console.log('Show admin stuff')
                 $(".admin").show();
+                $(".admin").removeAttr('hidden');
                 $("#reviewRequestsButton").attr("href", "requests.html?region=LATAM");
             } else {
+                console.log('Hide admin stuff')
                 $(".admin").hide();
+                $(".admin").attr('hidden', true);
+                $("#reviewRequestsButton").hide();
             }
         }
 
