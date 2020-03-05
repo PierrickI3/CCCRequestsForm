@@ -290,7 +290,7 @@
             // ByRegion
             makeChart('SELECT count(*) as val, region as label FROM ? ## GROUP BY region', false, 'region', 'doughnut', 'Requests', data);
             // BySegement
-            makeChart('SELECT count(*) as val, segment as label FROM ? ## GROUP BY segment', false, 'segment', 'doughnut', 'By Segement', data);
+            makeChart('SELECT count(*) as val, segment as label FROM ? ## GROUP BY segment', false, 'segment', 'doughnut', 'By Segment', data);
 
             // By Product
             makeChart('SELECT count(*) as val, product as label FROM ? ## GROUP BY product', false, 'product', 'pie', 'By Product', data);
