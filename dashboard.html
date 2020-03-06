@@ -303,7 +303,7 @@
             // By Product
             makeChart('SELECT count(*) as val, product as label FROM ? ## GROUP BY product', false, 'product', 'pie', 'By Product', data);
             // By Status for Active and not Delted
-            makeChart("SELECT count(*) as val, status as label FROM ? WHERE (isDeleted = false AND status <> 'Closed' ##) GROUP BY status", true, 'status', 'pie', 'By status for active requests', data);
+            makeChart("SELECT count(*) as val, status as label FROM ? WHERE (isDeleted = false ##) GROUP BY status", true, 'status', 'pie', 'By status for active requests', data);
 
 
 
