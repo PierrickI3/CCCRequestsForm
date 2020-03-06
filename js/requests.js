@@ -1,6 +1,6 @@
-const apiBasePath = "https://drbojb15ma.execute-api.eu-central-1.amazonaws.com/dev";
+const apiBasePath = "http://localhost:3000" //"https://drbojb15ma.execute-api.eu-central-1.amazonaws.com/dev";
 
-async function postRequests(region, subRegion, segment, product, tasks, requesterName, requesterEmail, requesterPhoneNumber, needCompletedBy, description, partnerCustomerName, salesforceAccountOpportunity) {
+async function postRequests(region, subRegion, segment, product, tasks, requesterName, requesterEmail, requesterPhoneNumber, needCompletedBy, description, partnerCustomerName, salesforceAccountOpportunity, _token) {
 
   var data = {
     region: region,
@@ -15,7 +15,8 @@ async function postRequests(region, subRegion, segment, product, tasks, requeste
     description: description,
     status: "Open",
     isDeleted: false,
-    mailDistribution: mailDistribution[$("#region").val()]
+    mailDistribution: mailDistribution[$("#region").val()],
+    token: _token
   };
 
   //#region Optional fields
@@ -56,7 +57,7 @@ async function postRequests(region, subRegion, segment, product, tasks, requeste
     });
 }
 
-async function putRequest(id, region, subRegion, segment, product, tasks, requesterName, requesterEmail, requesterPhoneNumber, needCompletedBy, description, partnerCustomerName, salesforceAccountOpportunity, priority, acceptedRejected, status, programManager, acceptedRejectedNotes, teamMembers, isDeleted) {
+async function putRequest(id, region, subRegion, segment, product, tasks, requesterName, requesterEmail, requesterPhoneNumber, needCompletedBy, description, partnerCustomerName, salesforceAccountOpportunity, priority, acceptedRejected, status, programManager, acceptedRejectedNotes, teamMembers, _token, isDeleted) {
 
 
   if (!isDeleted) isDeleted = false;
@@ -78,7 +79,8 @@ async function putRequest(id, region, subRegion, segment, product, tasks, reques
     programManager: programManager,
     acceptedRejected: acceptedRejected,
     isDeleted: isDeleted,
-    mailDistribution: mailDistribution[$("#editModal #region").val()]
+    mailDistribution: mailDistribution[$("#editModal #region").val()],
+    token: _token
   };
 
   //#region Optional fields
@@ -136,7 +138,7 @@ async function putRequest(id, region, subRegion, segment, product, tasks, reques
     });
 }
 
-async function getRequests(region = "") {
+async function getRequests(region = "", _token) {
 
   let onlyClosed = "";
   let onlyDeleted = "";
@@ -150,7 +152,7 @@ async function getRequests(region = "") {
 
 
   return await $.ajax({
-    url: `${apiBasePath}/requests?region=${region}${onlyClosed}${onlyDeleted}`,
+    url: `${apiBasePath}/requests?region=${region}${onlyClosed}${onlyDeleted}&token=${_token}`,
     method: "GET",
     contentType: 'application/json',
     dataType: "json"
@@ -174,12 +176,13 @@ async function getRequests(region = "") {
     });
 }
 
-async function deleteRequest(requestId) {
+async function deleteRequest(requestId, _token) {
 
   console.log('Deleting request:', requestId);
 
   let data = {
-    "isDeleted": true
+    "isDeleted": true,
+    "token": _token
   }
 
   return await $.ajax({
@@ -208,11 +211,10 @@ async function deleteRequest(requestId) {
     });
 }
 
-
-async function getDashboard() {
+async function getDashboard(_token) {
 
   return await $.ajax({
-    url: `${apiBasePath}/dashboard`,
+    url: `${apiBasePath}/dashboard?token=${_token}`,
     method: "GET",
     contentType: 'application/json',
     dataType: "json"
@@ -235,7 +237,6 @@ async function getDashboard() {
       console.log("getRequests completed");
     });
 }
-
 
 async function getExport(_region, _product, _segment, _token) {
 

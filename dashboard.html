@@ -273,9 +273,15 @@
 
 
         async function init() {
+            
+            try {
+                data = await getDashboard(gcToken);
+            } catch (error) {
+                if (error.status == 401) {
+                    window.open(`${window.location.href.split('/')[0]}//${window.location.href.split('/')[2]}/index.html`, "_self");
+                }
+            }
 
-
-            data = await getDashboard();
             // Parse Tasks
             let task_filter = buildFilter('SELECT tasks FROM ? ##', false);
             let task_raw = alasql(task_filter, [data]);

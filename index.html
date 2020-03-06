@@ -199,7 +199,7 @@
     <!--#endregion -->
 
     <script>
-        let tasksControls = [], taskId = 0;
+        let tasksControls = [], taskId = 0, gcToken;
 
         // Init DatePicker
         $(function () {
@@ -214,7 +214,8 @@
         init();
         async function init() {
             var userInfo = await getMe();
-            localStorage.setItem("gcToken", userInfo.token);
+            gcToken = userInfo.token
+            localStorage.setItem("gcToken", gcToken);
             /* // TODO: Reuse already exitsing token, instead of login without it and save duplicate
             let authToken = localStorage.getItem('purecloud_auth_data');
             console.log(authToken);
@@ -379,7 +380,7 @@
             console.log(`Region: ${region}, subRegion: ${subRegion}, Product: ${product}, Tasks: ${JSON.stringify(tasks)}, Requester Name: ${requesterName}, Requester Email: ${requesterEmail}, Requester Phone Number: ${requesterPhoneNumber}, Need Completed By: ${needCompletedBy}, Description: ${description}, Partner or Customer Name: ${partnerCustomerName}, Salesforce Opportunity: ${salesforceAccountOpportunity}`);
 
             try {
-                await postRequests(region, subRegion, segment, product, tasks, requesterName, requesterEmail, requesterPhoneNumber, needCompletedBy, description, partnerCustomerName, salesforceAccountOpportunity);
+                await postRequests(region, subRegion, segment, product, tasks, requesterName, requesterEmail, requesterPhoneNumber, needCompletedBy, description, partnerCustomerName, salesforceAccountOpportunity, gcToken);
                 console.log('Success!');
                 showMessage("Request submitted. Thanks!");
 
