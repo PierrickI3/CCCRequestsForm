@@ -395,8 +395,8 @@
             let exportSegment = $('#segment').val() == "" ? undefined : $('#segment').val();
 
             try {
-                let exportData = await getExport(exportRegion, exportProduct, exportSegment, gcToken);
-                if (exportData.length == 0)
+                let myExportData = await getExport(exportRegion, exportProduct, exportSegment, gcToken);
+                if (myExportData.length == 0)
                     return
             } catch (error) {
                 console.log(error);
@@ -405,7 +405,7 @@
 
 
             var flatData = [];
-            exportData.forEach(function (aItem) {
+            myExportData.forEach(function (aItem) {
                 aItem.tasks.forEach(function (aTask) {
                     var singleRow = $.extend(true, {}, aItem);
                     singleRow.taskCategory = aTask.taskCategory;
@@ -421,7 +421,7 @@
 
             })
 
-            exportData = {};
+            myExportData = {};
 
             const replacer = (key, value) => value === null ? '' : value // specify how you want to handle null values here
             const header = Object.keys(flatData[0])
