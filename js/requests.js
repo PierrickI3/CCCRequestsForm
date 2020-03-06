@@ -76,7 +76,6 @@ async function putRequest(id, region, subRegion, segment, product, tasks, reques
     needCompletedBy: needCompletedBy,
     description: description,
     status: status,
-    programManager: programManager,
     acceptedRejected: acceptedRejected,
     isDeleted: isDeleted,
     mailDistribution: mailDistribution[$("#editModal #region").val()],
@@ -92,11 +91,11 @@ async function putRequest(id, region, subRegion, segment, product, tasks, reques
   if (acceptedRejectedNotes && acceptedRejectedNotes.length > 0) {
     data.acceptedRejectedNotes = acceptedRejectedNotes;
   }
-  /*
-    if (acceptedRejected && acceptedRejected.length > 0) {
-      data.acceptedRejected = acceptedRejected;
-    }
-  */
+
+  if (programManager && programManager.length > 0) {
+    data.programManager = programManager;
+  }
+
   if (partnerCustomerName && partnerCustomerName.length > 0) {
     data.partnerCustomerName = partnerCustomerName
   }
@@ -253,7 +252,7 @@ async function getExport(_region, _product, _segment, _token) {
 
   // remove last char
   if (sFilter.length > 0)
-    sFilter = "?" + sFilter.substring(0,sFilter.length-1);
+    sFilter = "?" + sFilter.substring(0, sFilter.length - 1);
 
   console.log(`getExport with filter: ${sFilter}`);
 
