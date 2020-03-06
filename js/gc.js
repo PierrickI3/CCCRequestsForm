@@ -1,6 +1,5 @@
 // **** Token Implicit Grant (Browser) - UserLogin ****
-//let redirectUri = 'https://szlaskidaniel.github.io/purecloud-place-call/index.html';
-const redirectUri = window.location.href; // 'http://localhost:444/index.html';
+const redirectUri = window.location.href;
 const platformClient = require('platformClient');
 const client = platformClient.ApiClient.instance;
 
