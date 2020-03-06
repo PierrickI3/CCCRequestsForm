@@ -370,8 +370,6 @@
             setTimeout(function () {
                 document.getElementById("btnCopySFLink").textContent = "copy"
             }, 1000);
-
-            //window.open(`${$("#editModal #salesforceAccountOpportunity").val()}`, '_blank');
         }
 
         function showRequests() {
@@ -472,7 +470,7 @@
                                     } catch (error) {
                                         console.error(error);
                                         if (error.status == 401) {
-                                            window.open(`${window.location.href.split('/')[0]}//${window.location.href.split('/')[2]}/index.html`, "_self");
+                                            window.open('https://pierricki3.github.io/CCCRequestsForm/index.html', "_self");
                                         } else
                                             showMessage(error.hasOwnProperty('responseJSON') ? error.responseJSON.message : error, true);
                                     }
@@ -507,7 +505,7 @@
                                     return requests.requests;
                                 } catch (error) {
                                     if (error.status == 401) {
-                                        window.open(`${window.location.href.split('/')[0]}//${window.location.href.split('/')[2]}/index.html`, "_self");
+                                        window.open('https://pierricki3.github.io/CCCRequestsForm/index.html', "_self");
                                     }
                                 }
                             }
@@ -851,7 +849,7 @@
             } catch (error) {
                 console.error(error);
                 if (error.status == 401) {
-                    window.open(`${window.location.href.split('/')[0]}//${window.location.href.split('/')[2]}/index.html`, "_self");
+                    window.open('https://pierricki3.github.io/CCCRequestsForm/index.html', "_self");
                 } else
                     showMessage(error.hasOwnProperty('responseJSON') ? error.responseJSON.message : error, true);
             }
