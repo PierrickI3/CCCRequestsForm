@@ -237,7 +237,7 @@ async function getDashboard() {
 }
 
 
-async function getExport(_region, _product, _segment) {
+async function getExport(_region, _product, _segment, _token) {
 
   var sFilter = "";
 
@@ -257,7 +257,7 @@ async function getExport(_region, _product, _segment) {
   console.log(`getExport with filter: ${sFilter}`);
 
   return await $.ajax({
-    url: `${apiBasePath}/export${sFilter}`,
+    url: `${apiBasePath}/export${sFilter}&token=${_token}`,
     method: "GET",
     contentType: 'application/json',
     dataType: "json"

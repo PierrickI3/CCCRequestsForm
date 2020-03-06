@@ -12,7 +12,8 @@ let userInfo = {
     name: undefined,
     mail: undefined,
     phone: undefined,
-    groups: []
+    groups: [],
+    token: undefined
 };
 
 
@@ -26,6 +27,7 @@ function getMe() {
             client.loginImplicitGrant("ae638594-45f7-4e59-bd8d-fd95c9df28c8", redirectUri) // PRD
                 .then(() => {
                     console.log('Logged In');
+                    let gcToken = platformClient.ApiClient.instance.authData.accessToken;
                     let apiInstance = new platformClient.UsersApi();
                     let opts = {
                         'expand': ["groups"]
@@ -57,6 +59,7 @@ function getMe() {
                             })
 
                             console.log('User Info:', userInfo);
+                            userInfo.token = gcToken;
                             resolve(userInfo);
                         })
                         .catch((err) => {

@@ -297,7 +297,7 @@
     </style>
 
     <script>
-
+        let gcToken = sessionStorage.getItem("gcToken");
         let tasksControls = [];
 
         let region = getUrlParameter("region");
@@ -322,13 +322,8 @@
                 startDate: new Date()
             });
         });
-
-        init();
-        async function init() {
-            var userInfo = await getMe();
-            showRequests();
-        }
-
+       
+        showRequests();
         function initModal() {
             $("#editModal #id").text("");
             $("#editModal #createdDate").val("");

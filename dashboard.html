@@ -115,9 +115,11 @@
     </div>
 
     <script>
+        let gcToken = sessionStorage.getItem("gcToken");
         let data;
         let region = getUrlParameter("region");
         $("#region").val(region);
+
 
         // SetLink for review Requests
         document.getElementById("reviewRequestsButton").setAttribute("href", `./requests.html?region=${region}`);
@@ -392,10 +394,15 @@
             let exportProduct = $('#product').val() == "" ? undefined : $('#product').val();
             let exportSegment = $('#segment').val() == "" ? undefined : $('#segment').val();
 
+            try {
+                let exportData = await getExport(exportRegion, exportProduct, exportSegment, gcToken);
+                if (exportData.length == 0)
+                    return
+            } catch (error) {
+                console.log(error);
+                
+            }
 
-            let exportData = await getExport(exportRegion, exportProduct, exportSegment);
-            if (exportData.length == 0)
-                return
 
             var flatData = [];
             exportData.forEach(function (aItem) {
