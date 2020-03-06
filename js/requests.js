@@ -1,4 +1,4 @@
-const apiBasePath = "http://localhost:3000" //"https://drbojb15ma.execute-api.eu-central-1.amazonaws.com/dev";
+const apiBasePath = "https://drbojb15ma.execute-api.eu-central-1.amazonaws.com/dev";
 
 async function postRequests(region, subRegion, segment, product, tasks, requesterName, requesterEmail, requesterPhoneNumber, needCompletedBy, description, partnerCustomerName, salesforceAccountOpportunity, _token) {
 
