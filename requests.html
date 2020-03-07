@@ -297,26 +297,7 @@
     </style>
 
     <script>
-        let gcToken;
-        let authToken = localStorage.getItem('purecloud_auth_data');        
-        try {
-            let parsed_authToken = JSON.parse(authToken)
-            if (parsed_authToken && parsed_authToken.accessToken) {
-                gcToken = JSON.parse(authToken).accessToken
-                
-            } else {
-                console.log('accessToken not available');
-                gcToken = undefined;
-                window.open('https://pierricki3.github.io/CCCRequestsForm/index.html', "_self");
-            }
-
-            
-        } catch (error) {
-            console.error(error);
-            gcToken = undefined;
-            window.open('https://pierricki3.github.io/CCCRequestsForm/index.html', "_self");
-        }
-
+        let gcToken = localStorage.getItem("gcToken");
         let tasksControls = [];
 
         let region = getUrlParameter("region");
