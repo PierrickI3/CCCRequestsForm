@@ -115,9 +115,26 @@
     </div>
 
     <script>
+        let gcToken = localStorage.getItem("gcToken");
+
+        // Test with original Token
+        let authToken = localStorage.getItem('purecloud_auth_data');
+        console.log(authToken);
+        try {
+            let parsed_authToken = JSON.parse(authToken)
+            if (parsed_authToken && parsed_authToken.accessToken) {
+                console.log('authToken from GenesysCloud', JSON.parse(authToken).accessToken)
+                alert(JSON.parse(authToken).accessToken);
+            }
+                
+        } catch (error) {
+            console.error(error);            
+        }
+
         let data;
         let region = getUrlParameter("region");
         $("#region").val(region);
+
 
         // SetLink for review Requests
         document.getElementById("reviewRequestsButton").setAttribute("href", `./requests.html?region=${region}`);
@@ -272,8 +289,14 @@
 
         async function init() {
 
+            try {
+                data = await getDashboard(gcToken);
+            } catch (error) {
+                if (error.status == 401) {
+                    window.open('https://pierricki3.github.io/CCCRequestsForm/index.html', "_self");
+                }
+            }
 
-            data = await getDashboard();
             // Parse Tasks
             let task_filter = buildFilter('SELECT tasks FROM ? ##', false);
             let task_raw = alasql(task_filter, [data]);
@@ -290,12 +313,12 @@
             // ByRegion
             makeChart('SELECT count(*) as val, region as label FROM ? ## GROUP BY region', false, 'region', 'doughnut', 'Requests', data);
             // BySegement
-            makeChart('SELECT count(*) as val, segment as label FROM ? ## GROUP BY segment', false, 'segment', 'doughnut', 'By Segement', data);
+            makeChart('SELECT count(*) as val, segment as label FROM ? ## GROUP BY segment', false, 'segment', 'doughnut', 'By Segment', data);
 
             // By Product
             makeChart('SELECT count(*) as val, product as label FROM ? ## GROUP BY product', false, 'product', 'pie', 'By Product', data);
             // By Status for Active and not Delted
-            makeChart("SELECT count(*) as val, status as label FROM ? WHERE (isDeleted = false AND status <> 'Closed' ##) GROUP BY status", true, 'status', 'pie', 'By status for active requests', data);
+            makeChart("SELECT count(*) as val, status as label FROM ? WHERE (isDeleted = false ##) GROUP BY status", true, 'status', 'pie', 'By status for active requests', data);
 
 
 
@@ -391,38 +414,47 @@
             let exportRegion = $('#region').val() == "" ? undefined : $('#region').val();
             let exportProduct = $('#product').val() == "" ? undefined : $('#product').val();
             let exportSegment = $('#segment').val() == "" ? undefined : $('#segment').val();
+            let myExportData;
+            try {
+                myExportData = await getExport(exportRegion, exportProduct, exportSegment, gcToken);
+                if (myExportData.length == 0)
+                    return
 
 
-            let exportData = await getExport(exportRegion, exportProduct, exportSegment);
-            if (exportData.length == 0)
-                return
 
-            var flatData = [];
-            exportData.forEach(function (aItem) {
-                aItem.tasks.forEach(function (aTask) {
-                    var singleRow = $.extend(true, {}, aItem);
-                    singleRow.taskCategory = aTask.taskCategory;
-                    singleRow.taskType = aTask.taskType;
-                    singleRow.taskTime = aTask.taskTime;
-                    delete singleRow.tasks
-                    if (singleRow.mailDistibution) delete singleRow.mailDistibution;
-                    singleRow.createdAt = moment.utc(singleRow.createdAt)
-                    singleRow.updatedAt = moment.utc(singleRow.updatedAt)
-                    flatData.push(singleRow);
+                var flatData = [];
+                myExportData.forEach(function (aItem) {
+                    aItem.tasks.forEach(function (aTask) {
+                        var singleRow = $.extend(true, {}, aItem);
+                        singleRow.taskCategory = aTask.taskCategory;
+                        singleRow.taskType = aTask.taskType;
+                        singleRow.taskTime = aTask.taskTime;
+                        delete singleRow.tasks
+                        if (singleRow.mailDistibution) delete singleRow.mailDistibution;
+                        singleRow.createdAt = moment.utc(singleRow.createdAt)
+                        singleRow.updatedAt = moment.utc(singleRow.updatedAt)
+                        flatData.push(singleRow);
 
-                });
+                    });
 
-            })
+                })
 
-            exportData = {};
+                myExportData = {};
 
-            const replacer = (key, value) => value === null ? '' : value // specify how you want to handle null values here
-            const header = Object.keys(flatData[0])
-            let csv = flatData.map(row => header.map(fieldName => JSON.stringify(row[fieldName], replacer)).join(';'))
-            csv.unshift(header.join(';'))
-            csv = csv.join('\r\n')
+                const replacer = (key, value) => value === null ? '' : value // specify how you want to handle null values here
+                const header = Object.keys(flatData[0])
+                let csv = flatData.map(row => header.map(fieldName => JSON.stringify(row[fieldName], replacer)).join(';'))
+                csv.unshift(header.join(';'))
+                csv = csv.join('\r\n')
 
-            download(csv, 'export.csv');
+                download(csv, 'export.csv');
+            } catch (error) {
+                console.log(error);
+                if (error.status == 401) {
+                    window.open('https://pierricki3.github.io/CCCRequestsForm/index.html', "_self");
+                }
+
+            }
 
         }
 

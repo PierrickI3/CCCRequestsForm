@@ -297,7 +297,7 @@
     </style>
 
     <script>
-
+        let gcToken = localStorage.getItem("gcToken");
         let tasksControls = [];
 
         let region = getUrlParameter("region");
@@ -323,12 +323,7 @@
             });
         });
 
-        init();
-        async function init() {
-            var userInfo = await getMe();
-            showRequests();
-        }
-
+        showRequests();
         function initModal() {
             $("#editModal #id").text("");
             $("#editModal #createdDate").val("");
@@ -375,12 +370,11 @@
             setTimeout(function () {
                 document.getElementById("btnCopySFLink").textContent = "copy"
             }, 1000);
-
-            //window.open(`${$("#editModal #salesforceAccountOpportunity").val()}`, '_blank');
         }
 
         function showRequests() {
             console.log('Showing requests...');
+            
             try {
 
                 jsGrid.setDefaults({ tableClass: "jsgrid-table table table-striped table-hover" });
@@ -471,12 +465,15 @@
                                 if (result) {
                                     console.log('Deleting:', deletingRequest);
                                     try {
-                                        await deleteRequest(deletingRequest.id);
+                                        await deleteRequest(deletingRequest.id, gcToken);
                                         refreshGrid();
                                         showMessage("Request deleted", false);
                                     } catch (error) {
                                         console.error(error);
-                                        showMessage(error.hasOwnProperty('responseJSON') ? error.responseJSON.message : error, true);
+                                        if (error.status == 401) {
+                                            window.open('https://pierricki3.github.io/CCCRequestsForm/index.html', "_self");
+                                        } else
+                                            showMessage(error.hasOwnProperty('responseJSON') ? error.responseJSON.message : error, true);
                                     }
 
                                 }
@@ -504,8 +501,14 @@
                                 });
                             } else {
 
-                                requests.requests = await getRequests(region);
-                                return requests.requests;
+                                try {
+                                    requests.requests = await getRequests(region, gcToken);
+                                    return requests.requests;
+                                } catch (error) {
+                                    if (error.status == 401) {
+                                        window.open('https://pierricki3.github.io/CCCRequestsForm/index.html', "_self");
+                                    }
+                                }
                             }
                         }
                     },
@@ -840,13 +843,16 @@
             console.log(`Priority: ${priority}, Accepted/Rejected: ${acceptedRejected}, Status: ${status}, Program Manager: ${programManager}, AcceptedRejectedNotes: ${acceptedRejectedNotes}, teamMembers: ${teamMembers}`);
 
             try {
-                await putRequest(id, region, subRegion, segment, product, tasks, requesterName, requesterEmail, requesterPhoneNumber, needCompletedBy, description, partnerCustomerName, salesforceAccountOpportunity, priority, acceptedRejected, status, programManager, acceptedRejectedNotes, teamMembers);
+                await putRequest(id, region, subRegion, segment, product, tasks, requesterName, requesterEmail, requesterPhoneNumber, needCompletedBy, description, partnerCustomerName, salesforceAccountOpportunity, priority, acceptedRejected, status, programManager, acceptedRejectedNotes, teamMembers, gcToken);
                 console.log('Success!');
                 showMessage("Request updated. Thanks!");
                 $("#editModal").modal("hide");
             } catch (error) {
                 console.error(error);
-                showMessage(error.hasOwnProperty('responseJSON') ? error.responseJSON.message : error, true);
+                if (error.status == 401) {
+                    window.open('https://pierricki3.github.io/CCCRequestsForm/index.html', "_self");
+                } else
+                    showMessage(error.hasOwnProperty('responseJSON') ? error.responseJSON.message : error, true);
             }
         });
 
@@ -870,6 +876,3 @@
 </body>
 
 </html>
-<!--
-TODO: Additional Team Member(s) Assigned 
--->

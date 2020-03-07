@@ -1,6 +1,5 @@
 // **** Token Implicit Grant (Browser) - UserLogin ****
-//let redirectUri = 'https://szlaskidaniel.github.io/purecloud-place-call/index.html';
-const redirectUri = window.location.href; // 'http://localhost:444/index.html';
+const redirectUri = window.location.href;
 const platformClient = require('platformClient');
 const client = platformClient.ApiClient.instance;
 
@@ -12,20 +11,21 @@ let userInfo = {
     name: undefined,
     mail: undefined,
     phone: undefined,
-    groups: []
+    groups: [],
+    token: undefined
 };
 
 
-
-
 function getMe() {
+    console.log('function getMe()');
     return new Promise(async (resolve, reject) => {
         try {
-            // Authenticate
-
+            // check for token first 
             client.loginImplicitGrant("ae638594-45f7-4e59-bd8d-fd95c9df28c8", redirectUri) // PRD
                 .then(() => {
-                    console.log('Logged In');
+                    console.log('Logged in!');
+                    gcToken = platformClient.ApiClient.instance.authData.accessToken;
+
                     let apiInstance = new platformClient.UsersApi();
                     let opts = {
                         'expand': ["groups"]
@@ -57,6 +57,7 @@ function getMe() {
                             })
 
                             console.log('User Info:', userInfo);
+                            userInfo.token = gcToken;
                             resolve(userInfo);
                         })
                         .catch((err) => {
@@ -64,14 +65,34 @@ function getMe() {
                             console.error(err);
                             reject(err);
                         });
-
                 })
+
+
         } catch (error) {
             console.log(error);
             reject(error);
         }
     });
 }
+
+/*
+async function login() {
+    console.log('function login()');
+    return new Promise(async (resolve, reject) => {
+        client.loginImplicitGrant("ae638594-45f7-4e59-bd8d-fd95c9df28c8", redirectUri) // PRD
+            .then(() => {
+                console.log('Logged in!');
+                gcToken = platformClient.ApiClient.instance.authData.accessToken;
+                resolve();
+            }).catch((err) => {
+                console.log('There was a failure calling getUsersMe');
+                console.error(err);
+                reject(err);
+            });
+
+    });
+}
+*/
 
 function sendNotification(_message, _region) {
 
