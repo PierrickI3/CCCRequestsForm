@@ -216,21 +216,6 @@
             var userInfo = await getMe();
             gcToken = userInfo.token
             //localStorage.setItem("gcToken", gcToken);
-            /* // TODO: Reuse already exitsing token, instead of login without it and save duplicate
-            let authToken = localStorage.getItem('purecloud_auth_data');
-            console.log(authToken);
-            try {
-                if (authToken) {
-                console.log(JSON.parse(authToken).accessToken);
-            }
-            } catch (error) {
-                console.error(error);
-            }
-            */
-           
-
-
-
 
             // Populate user info
             $("#requesterName").val(userInfo.name);
