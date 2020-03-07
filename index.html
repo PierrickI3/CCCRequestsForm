@@ -199,7 +199,7 @@
     <!--#endregion -->
 
     <script>
-        let tasksControls = [], taskId = 0;
+        let tasksControls = [], taskId = 0//, gcToken;
 
         // Init DatePicker
         $(function () {
@@ -214,7 +214,7 @@
         init();
         async function init() {
             var userInfo = await getMe(localStorage.getItem('purecloud_auth_data'));
-            gcToken = userInfo.token
+            //gcToken = userInfo.token
             //localStorage.setItem("gcToken", gcToken);
 
             // Populate user info
