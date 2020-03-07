@@ -298,16 +298,14 @@
 
     <script>
         let gcToken;
-        //let gcToken = localStorage.getItem("gcToken");
-        let authToken = localStorage.getItem('purecloud_auth_data');
-        console.log(authToken);
+        let authToken = localStorage.getItem('purecloud_auth_data');        
         try {
             let parsed_authToken = JSON.parse(authToken)
             if (parsed_authToken && parsed_authToken.accessToken) {
                 gcToken = JSON.parse(authToken).accessToken
-                console.log(`gcToken: ${gcToken}`);
+                
             } else {
-                console.log('no parsed token');
+                console.log('accessToken not available');
                 gcToken = undefined;
                 window.open('https://pierricki3.github.io/CCCRequestsForm/index.html', "_self");
             }
@@ -320,8 +318,6 @@
         }
 
         let tasksControls = [];
-
-        console.log(`continue with gcToken: ${gcToken}`);
 
         let region = getUrlParameter("region");
         $("#region").text(region);
@@ -397,7 +393,7 @@
 
         function showRequests() {
             console.log('Showing requests...');
-            console.log(`requests with gcToken: ${gcToken}`);
+            
             try {
 
                 jsGrid.setDefaults({ tableClass: "jsgrid-table table table-striped table-hover" });
