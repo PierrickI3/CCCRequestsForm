@@ -300,13 +300,17 @@
         let gcToken;
         //let gcToken = localStorage.getItem("gcToken");
         let authToken = localStorage.getItem('purecloud_auth_data');
+        console.log(authToken);
         try {
             let parsed_authToken = JSON.parse(authToken)
-            if (parsed_authToken && parsed_authToken.accessToken)
+            if (parsed_authToken && parsed_authToken.accessToken) {
                 gcToken = JSON.parse(authToken).accessToken
+                console.log(`gcToken: ${gcToken}`);
+            }
             else
-                gcToken = undefined;
-                //window.open('https://pierricki3.github.io/CCCRequestsForm/index.html', "_self");
+            console.log('no parsed token');
+            gcToken = undefined;
+            //window.open('https://pierricki3.github.io/CCCRequestsForm/index.html', "_self");
         } catch (error) {
             console.error(error);
             gcToken = undefined;
