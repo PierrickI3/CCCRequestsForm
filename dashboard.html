@@ -117,6 +117,17 @@
     <script>
         let gcToken = localStorage.getItem("gcToken");
 
+        // Test with original Token
+        let authToken = localStorage.getItem('purecloud_auth_data');
+        console.log(authToken);
+        try {
+            let parsed_authToken = JSON.parse(authToken)
+            if (parsed_authToken && parsed_authToken.accessToken)
+                console.log('authToken from GenesysCloud', JSON.parse(authToken).accessToken)
+        } catch (error) {
+            console.error(error);            
+        }
+
         let data;
         let region = getUrlParameter("region");
         $("#region").val(region);
@@ -274,7 +285,7 @@
 
 
         async function init() {
-            
+
             try {
                 data = await getDashboard(gcToken);
             } catch (error) {

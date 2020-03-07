@@ -69,7 +69,6 @@ function getMe() {
 
 
         } catch (error) {
-            alert(JSON.stringify(error));
             console.log(error);
             reject(error);
         }
