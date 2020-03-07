@@ -176,7 +176,3 @@ function sendNotification(_message, _region) {
 
 
 }
-
-function redirectToLogin() {
-    window.location.href = 'https://login.mypurecloud.ie';
-}
