@@ -115,21 +115,21 @@
     </div>
 
     <script>
-        let gcToken = localStorage.getItem("gcToken");
-
-        // Test with original Token
+        let gcToken;  //= localStorage.getItem("gcToken");
         let authToken = localStorage.getItem('purecloud_auth_data');
         console.log(authToken);
         try {
             let parsed_authToken = JSON.parse(authToken)
             if (parsed_authToken && parsed_authToken.accessToken) {
-                console.log('authToken from GenesysCloud', JSON.parse(authToken).accessToken)
-                alert(JSON.parse(authToken).accessToken);
+                gcToken = JSON.parse(authToken).accessToken;
             }
-                
+
         } catch (error) {
-            console.error(error);            
+            console.error(error);
         }
+        if (!gcToken)
+            window.open('https://pierricki3.github.io/CCCRequestsForm/index.html', "_self");
+        console.log(`continue with gcToken: ${gcToken}`);
 
         let data;
         let region = getUrlParameter("region");

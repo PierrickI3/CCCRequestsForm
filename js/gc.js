@@ -15,16 +15,44 @@ let userInfo = {
     token: undefined
 };
 
+var gcToken = undefined;
 
-function getMe() {
+function getMe(_token) {
     console.log('function getMe()');
     return new Promise(async (resolve, reject) => {
         try {
             // check for token first 
+            try {
+                let parsed_authToken = JSON.parse(_token)
+                if (parsed_authToken && parsed_authToken.accessToken)
+                    gcToken = JSON.parse(_token).accessToken
+                else
+            } catch (error) {
+                console.error(error);
+            }
+            console.log(`gcToken: ${gcToken}`);
+
+            if (gcToken) {
+                console.log('use token from localstorage');
+                client.setAccessToken(gcToken);
+            } else {
+                console.log('cached token not present - call login API function');
+                await login().then((data) => {
+                    console.log('Logged In!! Response from await login();');
+
+                }).catch((err) => {
+                    console.log('There was a failure calling login, nothing will help here');
+                    console.error(err);
+                    reject(err);
+                });;
+            }
+
+
+
             client.loginImplicitGrant("ae638594-45f7-4e59-bd8d-fd95c9df28c8", redirectUri) // PRD
                 .then(() => {
                     console.log('Logged in!');
-                    var gcToken = platformClient.ApiClient.instance.authData.accessToken;
+                    //gcToken = platformClient.ApiClient.instance.authData.accessToken;
 
                     let apiInstance = new platformClient.UsersApi();
                     let opts = {
@@ -75,7 +103,7 @@ function getMe() {
     });
 }
 
-/*
+
 async function login() {
     console.log('function login()');
     return new Promise(async (resolve, reject) => {
@@ -92,7 +120,7 @@ async function login() {
 
     });
 }
-*/
+
 
 function sendNotification(_message, _region) {
 
