@@ -306,10 +306,11 @@
             if (parsed_authToken && parsed_authToken.accessToken) {
                 gcToken = JSON.parse(authToken).accessToken
                 console.log(`gcToken: ${gcToken}`);
+            } else {
+                console.log('no parsed token');
+                gcToken = undefined;
             }
-            else
-            console.log('no parsed token');
-            gcToken = undefined;
+
             //window.open('https://pierricki3.github.io/CCCRequestsForm/index.html', "_self");
         } catch (error) {
             console.error(error);

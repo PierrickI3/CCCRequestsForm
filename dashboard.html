@@ -121,9 +121,11 @@
             let parsed_authToken = JSON.parse(authToken)
             if (parsed_authToken && parsed_authToken.accessToken)
                 gcToken = JSON.parse(authToken).accessToken
-            else
+            else {
                 gcToken = undefined;
                 //window.open('https://pierricki3.github.io/CCCRequestsForm/index.html', "_self");
+
+            }
         } catch (error) {
             console.error(error);
             gcToken = undefined;
