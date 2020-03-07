@@ -39,25 +39,11 @@ function getMe(_token) {
                 await login().then((data) => {
                     console.log('Logged In!! Response from await login();');
 
-                }).catch((err) => {
-                    console.log('There was a failure calling login, nothing will help here');
-                    console.error(err);
-                    reject(err);
-                });;
-            }
-
-
-
-            client.loginImplicitGrant("ae638594-45f7-4e59-bd8d-fd95c9df28c8", redirectUri) // PRD
-                .then(() => {
-                    console.log('Logged in!');
-                    //gcToken = platformClient.ApiClient.instance.authData.accessToken;
-
+                    // Get Users/me
                     let apiInstance = new platformClient.UsersApi();
                     let opts = {
                         'expand': ["groups"]
                     };
-
                     apiInstance.getUsersMe(opts)
                         .then((data) => {
 
@@ -92,9 +78,13 @@ function getMe(_token) {
                             console.error(err);
                             reject(err);
                         });
-                })
 
-
+                }).catch((err) => {
+                    console.log('There was a failure calling login, nothing will help here');
+                    console.error(err);
+                    reject(err);
+                });
+            }
         } catch (error) {
             console.log(error);
             reject(error);
