@@ -24,7 +24,7 @@ function getMe() {
             client.loginImplicitGrant("ae638594-45f7-4e59-bd8d-fd95c9df28c8", redirectUri) // PRD
                 .then(() => {
                     console.log('Logged in!');
-                    gcToken = platformClient.ApiClient.instance.authData.accessToken;
+                    var gcToken = platformClient.ApiClient.instance.authData.accessToken;
 
                     let apiInstance = new platformClient.UsersApi();
                     let opts = {
