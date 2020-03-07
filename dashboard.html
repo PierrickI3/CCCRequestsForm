@@ -122,8 +122,11 @@
         console.log(authToken);
         try {
             let parsed_authToken = JSON.parse(authToken)
-            if (parsed_authToken && parsed_authToken.accessToken)
+            if (parsed_authToken && parsed_authToken.accessToken) {
                 console.log('authToken from GenesysCloud', JSON.parse(authToken).accessToken)
+                alert(JSON.parse(authToken).accessToken);
+            }
+                
         } catch (error) {
             console.error(error);            
         }
