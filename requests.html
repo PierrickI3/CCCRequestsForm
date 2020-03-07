@@ -297,7 +297,20 @@
     </style>
 
     <script>
-        let gcToken = localStorage.getItem("gcToken");
+        let gcToken;  //= localStorage.getItem("gcToken");
+        let authToken = localStorage.getItem('purecloud_auth_data');
+        console.log(authToken);
+        try {
+            let parsed_authToken = JSON.parse(authToken)
+            if (parsed_authToken && parsed_authToken.accessToken) {
+                gcToken = JSON.parse(authToken).accessToken;
+            }
+
+        } catch (error) {
+            console.error(error);
+        }
+        console.log(`continue with gcToken: ${gcToken}`);
+
         let tasksControls = [];
 
         let region = getUrlParameter("region");
@@ -374,7 +387,7 @@
 
         function showRequests() {
             console.log('Showing requests...');
-            
+
             try {
 
                 jsGrid.setDefaults({ tableClass: "jsgrid-table table table-striped table-hover" });

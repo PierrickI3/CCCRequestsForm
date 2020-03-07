@@ -213,9 +213,9 @@
 
         init();
         async function init() {
-            var userInfo = await getMe();
+            var userInfo = await getMe(localStorage.getItem('purecloud_auth_data'));
             gcToken = userInfo.token
-            localStorage.setItem("gcToken", gcToken);
+            //localStorage.setItem("gcToken", gcToken);
 
             // Populate user info
             $("#requesterName").val(userInfo.name);
