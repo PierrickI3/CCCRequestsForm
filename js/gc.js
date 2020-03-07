@@ -26,7 +26,6 @@ function getMe(_token) {
                 let parsed_authToken = JSON.parse(_token)
                 if (parsed_authToken && parsed_authToken.accessToken)
                     gcToken = JSON.parse(_token).accessToken
-                else
             } catch (error) {
                 console.error(error);
             }
@@ -146,4 +145,8 @@ function sendNotification(_message, _region) {
     });
 
 
+}
+
+function redirectToLogin() {
+    window.location.href = 'https://login.mypurecloud.ie';
 }
