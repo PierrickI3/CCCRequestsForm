@@ -383,7 +383,7 @@
                 sendNotification(`:loudspeaker: New CCC Request from [@${userInfo.name}](#/person/${userInfo.id}) ${detailedInfo}`, region);
             } catch (error) {
                 console.error(error);
-                showMessage(error.hasOwnProperty('messageJSON') ? error.messageJSON : JSON.stringify(error, null, 2), true);
+                showMessage(error.hasOwnProperty('message') ? error.message : JSON.stringify(error, null, 2), true);
             } finally {
                 cleanForm();
             }
