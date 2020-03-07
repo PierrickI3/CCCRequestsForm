@@ -309,6 +309,8 @@
         } catch (error) {
             console.error(error);
         }
+        if (!gcToken)
+            window.open('https://pierricki3.github.io/CCCRequestsForm/index.html', "_self");
         console.log(`continue with gcToken: ${gcToken}`);
 
         let tasksControls = [];
