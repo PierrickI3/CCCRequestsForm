@@ -34,6 +34,46 @@ function getMe(_token) {
             if (gcToken) {
                 console.log('use token from localstorage');
                 client.setAccessToken(gcToken);
+
+                // Get Users/me
+                let apiInstance = new platformClient.UsersApi();
+                let opts = {
+                    'expand': ["groups"]
+                };
+                apiInstance.getUsersMe(opts)
+                    .then((data) => {
+
+                        //Read UserData
+                        userInfo.name = data.name;
+                        userInfo.mail = data.username;
+                        userInfo.id = data.id;
+                        console.log(data.primaryContactInfo);
+                        data.primaryContactInfo.forEach(function (aItem) {
+                            switch (aItem.mediaType.toLowerCase()) {
+                                case 'email':
+                                    userInfo.mail = aItem.address;
+                                    break;
+                                case 'phone':
+                                    userInfo.phone = aItem.address;
+                                    break;
+                                default:
+                                    break;
+                            }
+                        })
+
+                        data.groups.forEach(function (aItem) {
+                            userInfo.groups.push(aItem.id)
+                        })
+
+                        console.log('User Info:', userInfo);
+                        userInfo.token = gcToken;
+                        resolve(userInfo);
+                    })
+                    .catch((err) => {
+                        console.log('There was a failure calling getUsersMe');
+                        console.error(err);
+                        reject(err);
+                    });
             } else {
                 console.log('cached token not present - call login API function');
                 await login().then((data) => {
