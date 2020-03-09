@@ -213,9 +213,14 @@
 
         init();
         async function init() {
+            console.log('init page');
             var userInfo = await getMe(localStorage.getItem('purecloud_auth_data'));
-            if (!userInfo.token)
+            console.log(userInfo);
+            if (!userInfo.token) {
+                console.log('try to relogin');
                 await getMe();
+            }
+
             //gcToken = userInfo.token
             //localStorage.setItem("gcToken", gcToken);
 
