@@ -8,8 +8,6 @@ client.setPersistSettings(true);
 
 let userInfo;
 
-var gcToken = undefined;
-
 function getMe() {
     console.log('function getMe()');
     userInfo = {
