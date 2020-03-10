@@ -199,7 +199,7 @@
     <!--#endregion -->
 
     <script>
-        let tasksControls = [], taskId = 0//, gcToken;
+        let tasksControls = [], taskId = 0, gcToken;
 
         // Init DatePicker
         $(function () {
@@ -213,9 +213,18 @@
 
         init();
         async function init() {
-            var userInfo = await getMe(localStorage.getItem('purecloud_auth_data'));
-            //gcToken = userInfo.token
-            //localStorage.setItem("gcToken", gcToken);
+            //var userInfo = await getMe(localStorage.getItem('purecloud_auth_data'));
+            try {
+                await getMe();
+            } catch (error) {
+                showMessage(error.hasOwnProperty('message') ? error.message : `Unable to login to Genesys Cloud ${JSON.stringify(error)}`, true);
+                return
+            }
+           
+            gcToken = userInfo.token
+            localStorage.setItem("gcToken", gcToken);
+           
+            
 
             // Populate user info
             $("#requesterName").val(userInfo.name);
