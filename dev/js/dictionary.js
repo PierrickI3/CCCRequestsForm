@@ -11,6 +11,9 @@ let adminGroups = {
     ],
     APAC: [
         "0ad890f8-5604-40e1-97a6-8fe463656381"
+    ],
+    super: [
+        "1eb0ded8-d845-4d8b-9057-e6144871f68b"
     ]
 };
 

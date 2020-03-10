@@ -27,21 +27,19 @@
 
 <body>
 
-    <nav class="navbar navbar-light bg-light navbar-fixed-top">
-        <ul class="nav navbar-nav">
+    <nav class="navbar navbar-dark bg-dark navbar-fixed-top">
             <a class="navbar-brand" href="#">
                 <img src="images/genesys.png" width="30" height="30" class="d-inline-block align-top" alt="">
-                Competence Center Request Form (<span id="region"></span>)
+                Competence Center Request Form <small><span class="badge badge-pill badge-warning" id="region"></span></small>
             </a>
-        </ul>
-        <ul>
+        <ul class="mb-0">
             <ul class="nav navbar-nav mr-2" style="float: left;">
                 <li>
                     <button class="btn btn-secondary" id="btnOnlyClosed"> Closed </button>
                 </li>
 
             </ul>
-            <ul class="nav navbar-nav mr-2" style="float: left;">
+            <ul class="nav navbar-nav mr-4" style="float: left;">
                 <li>
                     <button class="btn btn-secondary" id="btnOnlyDeleted"> Deleted </button>
                 </li>
@@ -531,7 +529,7 @@
                             title: "Region",
                             type: "text",
                             width: "auto",
-                            visible: false
+                            visible: region == 'super-user' ? true : false
                         }, {
                             name: "subRegion",
                             title: "Territory",
