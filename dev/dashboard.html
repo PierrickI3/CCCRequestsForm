@@ -25,11 +25,13 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js" integrity="sha256-4iQZ6BVL4qNKlQ27TExEhBN1HFPvAvAMbFavKKosSWQ=" crossorigin="anonymous"></script>
     <!-- Bootbox -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/5.4.0/bootbox.min.js"></script>
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="./css/custom.css">
 
 </head>
 
 <body>
-
+    <img class="overlay" src="./images/devmode.png" id="devModeImage" hidden />
     <nav class="navbar navbar-dark bg-dark">
         <a class="navbar-brand" href="#">
             <img src="images/genesys.png" width="30" height="30" class="d-inline-block align-top" alt="">
@@ -122,18 +124,21 @@
     </div>
 
     <script>
+        if (window.location.href.includes('dev'))
+            $("#devModeImage").removeAttr('hidden');
+
         let gcToken = localStorage.getItem("gcToken");
         if (!gcToken)
-            window.open('https://pierricki3.github.io/CCCRequestsForm/index.html', "_self");
+            window.open('./index.html', "_self");
         console.log(`continue with gcToken: ${gcToken}`);
 
         let data;
         let region = getUrlParameter("region");
-        if (region == 'super-user') 
+        if (region == 'super-user')
             $("#region").val()
         else
             $("#region").val(region);
-        
+
         $("#regionBadge").text(region);
 
 
@@ -423,8 +428,8 @@
                     bootbox.alert("Nothing to export...");
                     return
                 }
-        
-    
+
+
                 var flatData = [];
                 myExportData.forEach(function (aItem) {
                     aItem.tasks.forEach(function (aTask) {
