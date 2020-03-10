@@ -1,10 +1,4 @@
 {
-    "liveServer.settings.port": 444,
-    "liveServer.settings.https": {
-        "enable": false,
-        "cert": "",
-        "key": "",
-        "passphrase": ""
-    },
+    "liveServer.settings.port": 443,
     "editor.wordWrap": "off"
 }
