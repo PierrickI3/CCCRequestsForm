@@ -3,7 +3,7 @@ const redirectUri = window.location.href;
 const platformClient = require('platformClient');
 const client = platformClient.ApiClient.instance;
 
-client.setEnvironment("mypurecloud.ie");
+client.setEnvironment("mypurecloud.com");
 client.setPersistSettings(true);
 
 let userInfo;
