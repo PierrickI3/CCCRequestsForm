@@ -18,20 +18,17 @@
     <!-- jQuery Toast -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/jquery-toast-plugin/1.3.2/jquery.toast.min.css" rel="stylesheet">
     <!-- Custom CSS -->
-    <style>
-        .jsgrid-cell {
-            word-wrap: break-word;
-        }
-    </style>
+    <link rel="stylesheet" href="./css/custom.css">
+
 </head>
 
 <body>
-
+    <img class="overlay" src="./images/devmode.png" id="devModeImage" hidden />
     <nav class="navbar navbar-dark bg-dark navbar-fixed-top">
-            <a class="navbar-brand" href="#">
-                <img src="images/genesys.png" width="30" height="30" class="d-inline-block align-top" alt="">
-                Competence Center Request Form <small><span class="badge badge-pill badge-warning" id="region"></span></small>
-            </a>
+        <a class="navbar-brand" href="#">
+            <img src="images/genesys.png" width="30" height="30" class="d-inline-block align-top" alt="">
+            Competence Center Request Form <small><span class="badge badge-pill badge-warning" id="region"></span></small>
+        </a>
         <ul class="mb-0">
             <ul class="nav navbar-nav mr-2" style="float: left;">
                 <li>
@@ -281,22 +278,13 @@
     <!-- Dictionary -->
     <script src="js/dictionary.js"></script>
 
-    <style>
-        .task-accepted td:first-child {
-            background-color: lightgreen !important;
-
-        }
-
-        .task-rejected td:first-child {
-            background-color: lightcoral !important;
-            opacity: 1.0;
-        }
-    </style>
-
     <script>
+        if (window.location.href.includes('dev'))
+            $("#devModeImage").removeAttr('hidden');
+
         let gcToken = localStorage.getItem("gcToken");
         if (!gcToken)
-            window.open('https://pierricki3.github.io/CCCRequestsForm/index.html', "_self");
+            window.open('./index.html', "_self");
         console.log(`continue with gcToken: ${gcToken}`);
 
         let tasksControls = [];
@@ -472,7 +460,7 @@
                                     } catch (error) {
                                         console.error(error);
                                         if (error.status == 401) {
-                                            window.open('https://pierricki3.github.io/CCCRequestsForm/index.html', "_self");
+                                            window.open('./index.html', "_self");
                                         } else
                                             showMessage(error.hasOwnProperty('responseJSON') ? error.responseJSON.message : error, true);
                                     }
@@ -507,7 +495,7 @@
                                     return requests.requests;
                                 } catch (error) {
                                     if (error.status == 401) {
-                                        window.open('https://pierricki3.github.io/CCCRequestsForm/index.html', "_self");
+                                        window.open('./index.html', "_self");
                                     }
                                 }
                             }
@@ -851,7 +839,7 @@
             } catch (error) {
                 console.error(error);
                 if (error.status == 401) {
-                    window.open('https://pierricki3.github.io/CCCRequestsForm/index.html', "_self");
+                    window.open('./index.html', "_self");
                 } else
                     showMessage(error.hasOwnProperty('responseJSON') ? error.responseJSON.message : error, true);
             }
