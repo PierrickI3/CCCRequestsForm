@@ -6,25 +6,79 @@ const client = platformClient.ApiClient.instance;
 client.setEnvironment("mypurecloud.ie");
 client.setPersistSettings(true);
 
-let userInfo;
+let userInfo = {
+    id: undefined,
+    name: undefined,
+    mail: undefined,
+    phone: undefined,
+    groups: [],
+    token: undefined
+};
 
-function getMe() {
+var gcToken = undefined;
+
+function getMe(_token) {
     console.log('function getMe()');
-    userInfo = {
-        id: undefined,
-        name: undefined,
-        mail: undefined,
-        phone: undefined,
-        groups: [],
-        token: undefined
-    };
-
     return new Promise(async (resolve, reject) => {
         try {
-            client.loginImplicitGrant("ae638594-45f7-4e59-bd8d-fd95c9df28c8", redirectUri) // PRD
-                .then(() => {
-                    console.log('Logged in!');
-                    userInfo.token = platformClient.ApiClient.instance.authData.accessToken;
+            // check for token first 
+            try {
+                let parsed_authToken = JSON.parse(_token)
+                if (parsed_authToken && parsed_authToken.accessToken)
+                    gcToken = JSON.parse(_token).accessToken
+            } catch (error) {
+                console.error(error);
+            }
+            console.log(`gcToken: ${gcToken}`);
+
+            if (gcToken) {
+                console.log('use token from localstorage');
+                client.setAccessToken(gcToken);
+
+                // Get Users/me
+                let apiInstance = new platformClient.UsersApi();
+                let opts = {
+                    'expand': ["groups"]
+                };
+                apiInstance.getUsersMe(opts)
+                    .then((data) => {
+
+                        //Read UserData
+                        userInfo.name = data.name;
+                        userInfo.mail = data.username;
+                        userInfo.id = data.id;
+                        console.log(data.primaryContactInfo);
+                        data.primaryContactInfo.forEach(function (aItem) {
+                            switch (aItem.mediaType.toLowerCase()) {
+                                case 'email':
+                                    userInfo.mail = aItem.address;
+                                    break;
+                                case 'phone':
+                                    userInfo.phone = aItem.address;
+                                    break;
+                                default:
+                                    break;
+                            }
+                        })
+
+                        data.groups.forEach(function (aItem) {
+                            userInfo.groups.push(aItem.id)
+                        })
+
+                        console.log('User Info:', userInfo);
+                        userInfo.token = gcToken;
+                        resolve(userInfo);
+                    })
+                    .catch((err) => {
+                        console.log('There was a failure calling getUsersMe');
+                        console.error(err);
+                        reject(err);
+                    });
+            } else {
+                console.log('cached token not present - call login API function');
+                await login().then((data) => {
+                    console.log('Logged In!! Response from await login();');
+
                     // Get Users/me
                     let apiInstance = new platformClient.UsersApi();
                     let opts = {
@@ -56,6 +110,7 @@ function getMe() {
                             })
 
                             console.log('User Info:', userInfo);
+                            userInfo.token = gcToken;
                             resolve(userInfo);
                         })
                         .catch((err) => {
@@ -65,11 +120,11 @@ function getMe() {
                         });
 
                 }).catch((err) => {
-                    console.log('There was a failure calling loginIn');
+                    console.log('There was a failure calling login, nothing will help here');
                     console.error(err);
                     reject(err);
                 });
-
+            }
         } catch (error) {
             console.log(error);
             reject(error);
@@ -77,7 +132,7 @@ function getMe() {
     });
 }
 
-/* 
+
 async function login() {
     console.log('function login()');
     return new Promise(async (resolve, reject) => {
@@ -94,7 +149,7 @@ async function login() {
 
     });
 }
-*/
+
 
 function sendNotification(_message, _region) {
 
