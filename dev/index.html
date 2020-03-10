@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no">
-    <title>CCC Request Form (DEV)</title>
+    <title>CCC Request Form</title>
     <link rel="shortcut icon" href="/favicon.ico">
     <!-- Bootstrap -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
@@ -20,7 +20,7 @@
     <nav class="navbar navbar-light bg-light">
         <a class="navbar-brand" href="#">
             <img src="images/genesys.png" width="30" height="30" class="d-inline-block align-top" alt="">
-            Competence Center Request Form (DEV)
+            Competence Center Request Form
         </a>
         <a href="#" id="reviewRequestsButton" class="admin btn btn-primary" hidden>Review Requests</a>
     </nav>
@@ -199,7 +199,7 @@
     <!--#endregion -->
 
     <script>
-        let tasksControls = [], taskId = 0//, gcToken;
+        let tasksControls = [], taskId = 0, gcToken;
 
         // Init DatePicker
         $(function () {
@@ -213,9 +213,18 @@
 
         init();
         async function init() {
-            var userInfo = await getMe(localStorage.getItem('purecloud_auth_data'));
-            //gcToken = userInfo.token
-            //localStorage.setItem("gcToken", gcToken);
+            //var userInfo = await getMe(localStorage.getItem('purecloud_auth_data'));
+            try {
+                await getMe();
+            } catch (error) {
+                showMessage(error.hasOwnProperty('message') ? error.message : `Unable to login to Genesys Cloud ${JSON.stringify(error)}`, true);
+                return
+            }
+           
+            gcToken = userInfo.token
+            localStorage.setItem("gcToken", gcToken);
+           
+            
 
             // Populate user info
             $("#requesterName").val(userInfo.name);
