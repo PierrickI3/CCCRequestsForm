@@ -7,6 +7,7 @@ else
 
 async function postRequests(region, subRegion, segment, product, tasks, requesterName, requesterEmail, requesterPhoneNumber, needCompletedBy, description, partnerCustomerName, salesforceAccountOpportunity, _token) {
 
+  console.log('Mail Distribution:', mailDistribution[product][$("#region").val()]);
   var data = {
     region: region,
     subRegion: subRegion,
@@ -20,7 +21,7 @@ async function postRequests(region, subRegion, segment, product, tasks, requeste
     description: description,
     status: "Open",
     isDeleted: false,
-    mailDistribution: mailDistribution[$("#region").val()],
+    mailDistribution: mailDistribution[product][$("#region").val()],
     token: _token
   };
 
@@ -83,7 +84,7 @@ async function putRequest(id, region, subRegion, segment, product, tasks, reques
     status: status,
     acceptedRejected: acceptedRejected,
     isDeleted: isDeleted,
-    mailDistribution: mailDistribution[$("#editModal #region").val()],
+    mailDistribution: mailDistribution[product][$("#editModal #region").val()],
     token: _token
   };
 

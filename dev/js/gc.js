@@ -109,14 +109,15 @@ async function login() {
 }
 */
 
-function sendNotification(_message, _region) {
+function sendNotification(_message, _region, _subRegion, _segment, _product) {
 
     let data =
     {
         "message": _message,
-        "metadata": `newRequest | ${_region}`
+        "metadata": `newRequest | ${_region} | ${_subRegion} | ${_segment} | ${_product}`
     }
 
+    console.log('Sending notification:', data);
     $.ajax({
         url: config.prd.webhook,
         type: "POST",

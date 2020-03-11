@@ -230,7 +230,7 @@
                 $("#submit").prop('disabled', true);
                 return
             }
-            
+
             gcToken = userInfo.token
             localStorage.setItem("gcToken", gcToken);
 
@@ -409,7 +409,7 @@
                     "\n req name:\t\t" + requesterName + "\n req email:\t\t" + requesterEmail + "\n req phone:\t\t" + requesterPhoneNumber + sTasks +
                     "\n completed by:\t\t" + needCompletedBy + "\n description:\t\t" + description + "\n p/c name:\t\t" + partnerCustomerName + "\n sf/acc opp:\t\t" + salesforceAccountOpportunity + "\n ```\n";
 
-                sendNotification(`:loudspeaker: New CCC Request from [@${userInfo.name}](#/person/${userInfo.id}) ${detailedInfo}`, region);
+                sendNotification(`:loudspeaker: New CCC Request from [@${userInfo.name}](#/person/${userInfo.id}) ${detailedInfo}`, region, subRegion, segment, product);
             } catch (error) {
                 console.error(error);
                 showMessage(error.hasOwnProperty('message') ? error.message : JSON.stringify(error, null, 2), true);
