@@ -135,6 +135,7 @@
                                         <div class="form-group col-md-2 text-center"><strong>Time (hours)</strong></div>
                                     </div>
                                     <div class="form-row mt-2" id="tasks"></div>
+                                    <a href="#" id="addTask" class="form-group btn btn-primary mt-1 ml-3"><em class="fa fa-plus"></em> Add New Task</a>
                                 </div>
                             </div>
 
@@ -291,7 +292,7 @@
             window.open('./index.html', "_self");
         console.log(`continue with gcToken: ${gcToken}`);
 
-        let tasksControls = [];
+        let tasksControls = [], taskId = 10000;
 
         let region = getUrlParameter("region");
         $("#region").text(region);
@@ -313,7 +314,6 @@
         } else {
             showRequests();
         }
-
 
         $(function () {
             $("#datepicker").datepicker({
@@ -560,7 +560,11 @@
                             title: "Need Completed",
                             type: "text",
                             itemTemplate: function (value, item) {
-                                return `${moment.utc(value).fromNow()}`;
+                                if (value != "Invalid dateZ") {
+                                    return `${moment.utc(value).fromNow()}`;
+                                } else {
+                                    return '';
+                                }
                             },
                             width: "auto",
                             filtering: false
@@ -621,9 +625,10 @@
             $("#editModal #product").val(request.product);
 
             // Load tasks
+            let i = 0;
             for (const task of request.tasks) {
                 console.log('Adding new task:', task);
-                addNewTask(task);
+                addNewTask(task, i++ > 0 ? true : false);
             }
 
             $("#editModal #requesterName").val(request.requesterName);
@@ -687,39 +692,89 @@
                 }
             }
 
-
-
         }
 
-        function addNewTask(task) {
-            let currentTaskId = task.taskId;
+        function addNewTask(task, includeDeleteButton = false) {
+            if (!task) {
+                let currentTaskId = taskId;
+                taskId++;
 
-            // Category Select
-            let categoryDiv = $("<div/>", { class: "form-group col-md-4" }).appendTo("#tasks");
-            let categorySelect = $("<select/>", { class: "form-control", required: true }).appendTo(categoryDiv);
-            for (const category of requestCategory) {
-                $("<option/>", { value: category, selected: category === task.taskCategory }).text(category).appendTo(categorySelect);
-            }
+                let categoryDiv = $("<div/>", { class: "form-group col-md-4" }).appendTo("#tasks");
+                let categorySelect = $("<select/>", { class: "form-control", name: "category_" + currentTaskId, required: true }).appendTo(categoryDiv);
+                $("<option/>", { value: "", disabled: true, selected: true }).text("Select a Request Category").appendTo(categorySelect);
+                for (const category of requestCategory) {
+                    $("<option/>", { value: category }).text(category).appendTo(categorySelect);
+                }
 
-            // Type Select
-            let typeDiv = $("<div/>", { class: "form-group col-md-4" }).appendTo("#tasks");
-            let typeSelect = $("<select/>", { class: "form-control", required: true }).appendTo(typeDiv);
-            categorySelect.on("change", () => {
+                let typeDiv = $("<div/>", { class: "form-group col-md-4" }).appendTo("#tasks");
+                let typeSelect = $("<select/>", { class: "form-control", name: "type_" + currentTaskId, required: true }).appendTo(typeDiv);
+                $("<option/>", { value: "", disabled: true, selected: true }).text("Select a Request Type").appendTo(typeSelect);
+                categorySelect.on("change", () => {
+                    updateRequestTypeBasedOnRegionAndProduct(categorySelect, typeSelect);
+                });
+
+                // Time Field
+                let timeDiv = $("<div/>", { class: "form-group col-md-2" }).appendTo("#tasks");
+                let timeInput = $("<input/>", { type: "number", class: "form-control", placeholder: "Hours" }).val(0).appendTo(timeDiv);
+
+                if (includeDeleteButton) {
+                    let deleteButton = $("<a/>", { href: "#", class: "btn btn-danger form-group", style: "max-height:38px" }).html(`<i class="fa fa-trash"></i>`).appendTo("#tasks");
+                    deleteButton.on("click", () => {
+                        categoryDiv.remove();
+                        typeDiv.remove();
+                        deleteButton.remove();
+                        timeDiv.remove();
+                        tasksControls = tasksControls.filter(tc => tc.id != currentTaskId)
+                    });
+                }
+
+                tasksControls.push({
+                    id: currentTaskId,
+                    categorySelect: categorySelect,
+                    typeSelect: typeSelect,
+                    timeInput: timeInput
+                });
+            } else {
+                let currentTaskId = task.taskId;
+
+                // Category Select
+                let categoryDiv = $("<div/>", { class: "form-group col-md-4" }).appendTo("#tasks");
+                let categorySelect = $("<select/>", { class: "form-control", required: true }).appendTo(categoryDiv);
+                for (const category of requestCategory) {
+                    $("<option/>", { value: category, selected: category === task.taskCategory }).text(category).appendTo(categorySelect);
+                }
+
+                // Type Select
+                let typeDiv = $("<div/>", { class: "form-group col-md-4" }).appendTo("#tasks");
+                let typeSelect = $("<select/>", { class: "form-control", required: true }).appendTo(typeDiv);
+                categorySelect.on("change", () => {
+                    updateRequestTypeBasedOnRegionAndProduct(categorySelect, typeSelect, task.taskType);
+                });
                 updateRequestTypeBasedOnRegionAndProduct(categorySelect, typeSelect, task.taskType);
-            });
-            updateRequestTypeBasedOnRegionAndProduct(categorySelect, typeSelect, task.taskType);
 
-            // Time Field
-            let timeDiv = $("<div/>", { class: "form-group col-md-2" }).appendTo("#tasks");
-            let timeInput = $("<input/>", { type: "number", class: "form-control", placeholder: "Hours" }).val(task.taskTime ? task.taskTime : 0).appendTo(timeDiv);
+                // Time Field
+                let timeDiv = $("<div/>", { class: "form-group col-md-2" }).appendTo("#tasks");
+                let timeInput = $("<input/>", { type: "number", class: "form-control", placeholder: "Hours" }).val(task.taskTime ? task.taskTime : 0).appendTo(timeDiv);
 
-            // Add controls to global list
-            tasksControls.push({
-                id: currentTaskId,
-                categorySelect: categorySelect,
-                typeSelect: typeSelect,
-                timeInput: timeInput
-            });
+                if (includeDeleteButton) {
+                    let deleteButton = $("<a/>", { href: "#", class: "btn btn-danger form-group", style: "max-height:38px" }).html(`<i class="fa fa-trash"></i>`).appendTo("#tasks");
+                    deleteButton.on("click", () => {
+                        categoryDiv.remove();
+                        typeDiv.remove();
+                        timeDiv.remove();
+                        deleteButton.remove();
+                        tasksControls = tasksControls.filter(tc => tc.id != currentTaskId)
+                    });
+                }
+
+                // Add controls to global list
+                tasksControls.push({
+                    id: currentTaskId,
+                    categorySelect: categorySelect,
+                    typeSelect: typeSelect,
+                    timeInput: timeInput
+                });
+            }
         }
 
         $("#editModal #region").on("change", () => {
@@ -795,7 +850,6 @@
 
         });
 
-
         $("#editModal #submit").on("click", async (e) => {
             e.preventDefault();
             if (!$("#modal-form").valid()) {
@@ -854,6 +908,12 @@
                 } else
                     showMessage(error.hasOwnProperty('responseJSON') ? error.responseJSON.message : error, true);
             }
+        });
+
+        $("#addTask").on("click", (e) => {
+            e.preventDefault();
+            if (maintenanceMode) return;
+            addNewTask(undefined, true);
         });
 
         function getUrlParameter(sParam) {
