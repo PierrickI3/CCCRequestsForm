@@ -12,4 +12,4 @@
 * When ready, copy all code from `dev` to the root folder
   * Code automatically checks whether localhost is being used and in the `dev` folder or not
 
-### Phase2
+### Live
