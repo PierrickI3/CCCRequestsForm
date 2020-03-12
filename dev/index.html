@@ -31,10 +31,10 @@
 
     <div class="alert alert-danger fade show" role="alert" id="alert" hidden>
         <strong>Maintenance Alert</strong> This site is being updated. Please wait until this is processed.
-        <a class="btn btn-light" href="./index.html"><i class="fa fa-refresh"></i> Refresh</a>
+        <a class="btn btn-light" href="#" onclick="location.reload();"><i class="fa fa-refresh"></i> Refresh</a>
     </div>
 
-    <div class="container-fluid">
+    <div id="form" class="container-fluid">
         <br>
         <div class="form-row">
             <div class="form-group col-sm-7">
@@ -210,7 +210,7 @@
     <script>
         let tasksControls = [], taskId = 0, gcToken;
 
-        if (alert) {
+        if (maintenanceMode) {
             $("#alert").attr("hidden", false);
             $("#form :input").attr("disabled", true);
             $("#form :button").attr("disabled", true);
@@ -236,10 +236,10 @@
 
             try {
                 await getMe();
-                $("#submit").prop('disabled', false);
+                if (!maintenanceMode) $("#submit").attr('disabled', false);
             } catch (error) {
                 showMessage(error.hasOwnProperty('message') ? error.message : `Unable to login to Genesys Cloud ${JSON.stringify(error)}`, true);
-                $("#submit").prop('disabled', true);
+                $("#submit").attr('disabled', true);
                 return
             }
 
@@ -329,11 +329,9 @@
 
         $("#addTask").on("click", (e) => {
             e.preventDefault();
-            if (alert) return;
+            if (maintenanceMode) return;
             addNewTask(true);
         });
-
-        addNewTask(false);
 
         $("#region").on("change", () => {
             $("#subRegion").empty();
