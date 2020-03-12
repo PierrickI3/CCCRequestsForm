@@ -1,4 +1,5 @@
 const apiBasePath = "https://drbojb15ma.execute-api.eu-central-1.amazonaws.com/dev";
+const alert = false; // Set to true to disable all controls
 
 async function postRequests(region, subRegion, segment, product, tasks, requesterName, requesterEmail, requesterPhoneNumber, needCompletedBy, description, partnerCustomerName, salesforceAccountOpportunity, _token) {
 
