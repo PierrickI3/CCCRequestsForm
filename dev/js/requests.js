@@ -1,5 +1,5 @@
 let apiBasePath;
-const maintenanceMode = true; // Set to true to disable all controls
+const maintenanceMode = false; // Set to true to disable all controls
 
 if (window.location.href.includes('localhost'))
   apiBasePath = "http://localhost:3000"
