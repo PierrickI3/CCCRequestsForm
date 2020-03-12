@@ -1,7 +1,9 @@
 
+// Used to check if the user is an admin
 let adminGroups = {
     EMEA: [
-        "691fce29-dc11-450a-89f1-73b51226863f"
+        "691fce29-dc11-450a-89f1-73b51226863f", // ECCC Internal
+        "fd3d95a6-0989-4174-b389-252e9bab80cb"  // EMEA Enterprise CC Internal
     ],
     NA: [
         "cbc3ff94-f1d1-48aa-9c70-6fe32fe99455"
@@ -11,14 +13,38 @@ let adminGroups = {
     ],
     APAC: [
         "0ad890f8-5604-40e1-97a6-8fe463656381"
+    ],
+    super: [
+        "1eb0ded8-d845-4d8b-9057-e6144871f68b" // CC Request Form Admin
     ]
 };
 
+// Different email addresses per product and per region
 let mailDistribution = {
-    EMEA: "EMEACloudProgramManagement@genesys.com",
-    NA: "NACompetencyCenterRequests@genesys.com",
-    LATAM: "LATAMCompetencyCenter@genesys.com",
-    APAC: "apac-cc@genesys.com"
+    "Genesys Cloud": {
+        EMEA: ["EMEACloudProgramManagement@genesys.com"],
+        NA: ["NACompetencyCenterRequests@genesys.com"],
+        LATAM: ["LATAMCompetencyCenter@genesys.com"],
+        APAC: ["apac-cc@genesys.com"]
+    },
+    "Genesys Engage": {
+        EMEA: ["EMEAEntCCRequests@genesys.com"],
+        NA: ["NACompetencyCenterRequests@genesys.com"],
+        LATAM: ["LATAMCompetencyCenter@genesys.com"],
+        APAC: ["apac-cc@genesys.com"]
+    },
+    "Genesys Engage Cloud": {
+        EMEA: ["EMEAEntCCRequests@genesys.com"],
+        NA: ["NACompetencyCenterRequests@genesys.com"],
+        LATAM: ["LATAMCompetencyCenter@genesys.com"],
+        APAC: ["apac-cc@genesys.com"]
+    },
+    "PureConnect": {
+        EMEA: ["EMEACloudProgramManagement@genesys.com"],
+        NA: ["NACompetencyCenterRequests@genesys.com"],
+        LATAM: ["LATAMCompetencyCenter@genesys.com"],
+        APAC: ["apac-cc@genesys.com"]
+    }
 };
 
 let regions = {

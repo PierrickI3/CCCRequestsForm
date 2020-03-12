@@ -3,7 +3,20 @@ const redirectUri = window.location.href;
 const platformClient = require('platformClient');
 const client = platformClient.ApiClient.instance;
 
-client.setEnvironment("mypurecloud.com");
+const config = {
+    prd: {
+        env: "mypurecloud.com",
+        clientId: "ae638594-45f7-4e59-bd8d-fd95c9df28c8",
+        webhook: "https://apps.mypurecloud.com:443/webhooks/api/v1/webhook/d68c7daf-2c0c-4872-8353-47c1b474008b"
+    },
+    emeabilling: {
+        env: "mypurecloud.ie",
+        clientId: "42f3a603-79ca-4212-a4b5-7847846ce47e",
+        webhook: "https://apps.mypurecloud.ie:443/webhooks/api/v1/webhook/91ebde78-7dfe-4279-b5af-b8fe187b0973"
+    }
+}
+
+client.setEnvironment(config.prd.env);
 client.setPersistSettings(true);
 
 let userInfo;
@@ -21,7 +34,7 @@ function getMe() {
 
     return new Promise(async (resolve, reject) => {
         try {
-            client.loginImplicitGrant("ae638594-45f7-4e59-bd8d-fd95c9df28c8", redirectUri) // PRD
+            client.loginImplicitGrant(config.prd.clientId, redirectUri) // PRD
                 .then(() => {
                     console.log('Logged in!');
                     userInfo.token = platformClient.ApiClient.instance.authData.accessToken;
@@ -96,17 +109,17 @@ async function login() {
 }
 */
 
-function sendNotification(_message, _region) {
+function sendNotification(_message, _region, _subRegion, _segment, _product) {
 
     let data =
     {
         "message": _message,
-        "metadata": `newRequest | ${_region}`
+        "metadata": `newRequest | ${_region} | ${_subRegion} | ${_segment} | ${_product}`
     }
 
+    console.log('Sending notification:', data);
     $.ajax({
-        //url: `https://apps.mypurecloud.ie:443/webhooks/api/v1/webhook/91ebde78-7dfe-4279-b5af-b8fe187b0973`, // emeabilling
-        url: 'https://apps.mypurecloud.com:443/webhooks/api/v1/webhook/d68c7daf-2c0c-4872-8353-47c1b474008b',
+        url: config.prd.webhook,
         type: "POST",
         data: data,
         dataType: "json",

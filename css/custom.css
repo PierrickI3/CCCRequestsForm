@@ -1,0 +1,21 @@
+.overlay {
+    position: absolute;
+    left: 46%;
+    top: 42%;    
+    height: 12em;
+    z-index: 99;
+    opacity: 20%;
+
+}
+.jsgrid-cell {
+    word-wrap: break-word;
+}
+.task-accepted td:first-child {
+    background-color: lightgreen !important;
+
+}
+
+.task-rejected td:first-child {
+    background-color: lightcoral !important;
+    opacity: 1.0;
+}

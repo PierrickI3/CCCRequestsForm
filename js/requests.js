@@ -1,8 +1,15 @@
-const apiBasePath = "https://drbojb15ma.execute-api.eu-central-1.amazonaws.com/dev";
-const alert = false; // Set to true to disable all controls
+let apiBasePath;
+const maintenanceMode = true; // Set to true to disable all controls
+
+if (window.location.href.includes('localhost'))
+  apiBasePath = "http://localhost:3000"
+else
+  apiBasePath = "https://drbojb15ma.execute-api.eu-central-1.amazonaws.com/dev";
+
 
 async function postRequests(region, subRegion, segment, product, tasks, requesterName, requesterEmail, requesterPhoneNumber, needCompletedBy, description, partnerCustomerName, salesforceAccountOpportunity, _token) {
 
+  console.log('Mail Distribution:', mailDistribution[product][$("#region").val()]);
   var data = {
     region: region,
     subRegion: subRegion,
@@ -16,7 +23,7 @@ async function postRequests(region, subRegion, segment, product, tasks, requeste
     description: description,
     status: "Open",
     isDeleted: false,
-    mailDistribution: mailDistribution[$("#region").val()],
+    mailDistribution: mailDistribution[product][$("#region").val()],
     token: _token
   };
 
@@ -79,7 +86,7 @@ async function putRequest(id, region, subRegion, segment, product, tasks, reques
     status: status,
     acceptedRejected: acceptedRejected,
     isDeleted: isDeleted,
-    mailDistribution: mailDistribution[$("#editModal #region").val()],
+    mailDistribution: mailDistribution[product][$("#editModal #region").val()],
     token: _token
   };
 
@@ -149,7 +156,8 @@ async function getRequests(region = "", _token) {
   if ($('#btnOnlyDeleted')[0].classList.contains('btn-success'))
     onlyDeleted = "&onlyDeleted=true";
 
-
+  if (region == "super-user") 
+    region = "ALL";
 
   return await $.ajax({
     url: `${apiBasePath}/requests?region=${region}${onlyClosed}${onlyDeleted}&token=${_token}`,
@@ -252,13 +260,15 @@ async function getExport(_region, _product, _segment, _token) {
   }
 
   // remove last char
+  /*
   if (sFilter.length > 0)
-    sFilter = "?" + sFilter.substring(0, sFilter.length - 1);
-
+    sFilter = "?"
+  else sFilter = sFilter + "&" //+ sFilter.substring(0, sFilter.length - 1);
+*/
   console.log(`getExport with filter: ${sFilter}`);
 
   return await $.ajax({
-    url: `${apiBasePath}/export${sFilter}&token=${_token}`,
+    url: `${apiBasePath}/export?${sFilter}token=${_token}`,
     method: "GET",
     contentType: 'application/json',
     dataType: "json"

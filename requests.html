@@ -18,30 +18,24 @@
     <!-- jQuery Toast -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/jquery-toast-plugin/1.3.2/jquery.toast.min.css" rel="stylesheet">
     <!-- Custom CSS -->
-    <style>
-        .jsgrid-cell {
-            word-wrap: break-word;
-        }
-    </style>
+    <link rel="stylesheet" href="./css/custom.css">
 </head>
 
 <body>
-
-    <nav class="navbar navbar-light bg-light navbar-fixed-top">
-        <ul class="nav navbar-nav">
-            <a class="navbar-brand" href="#">
-                <img src="images/genesys.png" width="30" height="30" class="d-inline-block align-top" alt="">
-                Competence Center Request Form (<span id="region"></span>)
-            </a>
-        </ul>
-        <ul>
+    <img class="overlay" src="./images/devmode.png" id="devModeImage" hidden />
+    <nav class="navbar navbar-dark bg-dark navbar-fixed-top">
+        <a class="navbar-brand" href="#">
+            <img src="images/genesys.png" width="30" height="30" class="d-inline-block align-top" alt="">
+            Competence Center Request Form <small><span class="badge badge-pill badge-warning" id="region"></span></small>
+        </a>
+        <ul class="mb-0">
             <ul class="nav navbar-nav mr-2" style="float: left;">
                 <li>
                     <button class="btn btn-secondary" id="btnOnlyClosed"> Closed </button>
                 </li>
 
             </ul>
-            <ul class="nav navbar-nav mr-2" style="float: left;">
+            <ul class="nav navbar-nav mr-4" style="float: left;">
                 <li>
                     <button class="btn btn-secondary" id="btnOnlyDeleted"> Deleted </button>
                 </li>
@@ -62,8 +56,8 @@
     </nav>
 
     <div class="alert alert-danger fade show" role="alert" id="alert" hidden>
-        <strong>Maintenance Alert</strong> This site is being updated. Please wait until this is processed.
-        <a class="btn btn-light" href="./index.html"><i class="fa fa-refresh"></i> Refresh</a>
+        <strong>Maintenance Alert</strong> This site is being updated. Please wait.
+        <a class="btn btn-light" href="#" onclick="location.reload();"><i class="fa fa-refresh"></i> Refresh</a>
     </div>
 
     <div class="col-12 admin">
@@ -288,22 +282,13 @@
     <!-- Dictionary -->
     <script src="js/dictionary.js"></script>
 
-    <style>
-        .task-accepted td:first-child {
-            background-color: lightgreen !important;
-
-        }
-
-        .task-rejected td:first-child {
-            background-color: lightcoral !important;
-            opacity: 1.0;
-        }
-    </style>
-
     <script>
+        if (window.location.href.includes('dev'))
+            $("#devModeImage").removeAttr('hidden');
+
         let gcToken = localStorage.getItem("gcToken");
         if (!gcToken)
-            window.open('https://pierricki3.github.io/CCCRequestsForm/index.html', "_self");
+            window.open('./index.html', "_self");
         console.log(`continue with gcToken: ${gcToken}`);
 
         let tasksControls = [];
@@ -322,7 +307,7 @@
             }
         }
 
-        if (alert) {
+        if (maintenanceMode) {
             $("#alert").attr("hidden", false);
             $("#basicgrid").attr("disabled", true);
         } else {
@@ -486,7 +471,7 @@
                                     } catch (error) {
                                         console.error(error);
                                         if (error.status == 401) {
-                                            window.open('https://pierricki3.github.io/CCCRequestsForm/index.html', "_self");
+                                            window.open('./index.html', "_self");
                                         } else
                                             showMessage(error.hasOwnProperty('responseJSON') ? error.responseJSON.message : error, true);
                                     }
@@ -521,7 +506,7 @@
                                     return requests.requests;
                                 } catch (error) {
                                     if (error.status == 401) {
-                                        window.open('https://pierricki3.github.io/CCCRequestsForm/index.html', "_self");
+                                        window.open('./index.html', "_self");
                                     }
                                 }
                             }
@@ -543,7 +528,7 @@
                             title: "Region",
                             type: "text",
                             width: "auto",
-                            visible: false
+                            visible: region == 'super-user' ? true : false
                         }, {
                             name: "subRegion",
                             title: "Territory",
@@ -865,7 +850,7 @@
             } catch (error) {
                 console.error(error);
                 if (error.status == 401) {
-                    window.open('https://pierricki3.github.io/CCCRequestsForm/index.html', "_self");
+                    window.open('./index.html', "_self");
                 } else
                     showMessage(error.hasOwnProperty('responseJSON') ? error.responseJSON.message : error, true);
             }
