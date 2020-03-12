@@ -41,6 +41,11 @@
         <a href="./requests.html" id="reviewRequestsButton" class="admin btn btn-primary">Review Requests</a>
     </nav>
 
+    <div class="alert alert-danger fade show" role="alert" id="alert" hidden>
+        <strong>Maintenance Alert</strong> This site is being updated. Please wait until this is processed.
+        <a class="btn btn-light" href="./index.html"><i class="fa fa-refresh"></i> Refresh</a>
+    </div>
+
 
     <div class="container-fluid">
         <br>
@@ -140,6 +145,12 @@
 
         $("#regionBadge").text(region);
 
+        if (alert) {
+            $("#alert").attr("hidden", false);
+            $("#dashboard :input").attr("disabled", true);
+        } else {
+            init();
+        }
 
         // SetLink for review Requests
         document.getElementById("reviewRequestsButton").setAttribute("href", `./requests.html?region=${region}`);

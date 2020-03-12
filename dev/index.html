@@ -29,6 +29,11 @@
         <a href="#" id="reviewRequestsButton" class="admin btn btn-primary" hidden>Review Requests</a>
     </nav>
 
+    <div class="alert alert-danger fade show" role="alert" id="alert" hidden>
+        <strong>Maintenance Alert</strong> This site is being updated. Please wait until this is processed.
+        <a class="btn btn-light" href="./index.html"><i class="fa fa-refresh"></i> Refresh</a>
+    </div>
+
     <div class="container-fluid">
         <br>
         <div class="form-row">
@@ -205,6 +210,14 @@
     <script>
         let tasksControls = [], taskId = 0, gcToken;
 
+        if (alert) {
+            $("#alert").attr("hidden", false);
+            $("#form :input").attr("disabled", true);
+            $("#form :button").attr("disabled", true);
+        } else {
+            addNewTask(false);
+        }
+
         if (window.location.href.includes('dev'))
             $("#devModeImage").removeAttr('hidden');
 
@@ -316,6 +329,7 @@
 
         $("#addTask").on("click", (e) => {
             e.preventDefault();
+            if (alert) return;
             addNewTask(true);
         });
 

@@ -1,4 +1,6 @@
 let apiBasePath;
+const alert = false; // Set to true to disable all controls
+
 if (window.location.href.includes('localhost'))
   apiBasePath = "http://localhost:3000"
 else
