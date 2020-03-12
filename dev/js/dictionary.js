@@ -22,19 +22,19 @@ let adminGroups = {
 // Different email addresses per product and per region
 let mailDistribution = {
     "Genesys Cloud": {
-        EMEA: ["pierrick.lozach@genesys.com", "daniel.szlaski@genesys.com"],
+        EMEA: ["EMEACloudProgramManagement@genesys.com"],
         NA: ["NACompetencyCenterRequests@genesys.com"],
         LATAM: ["LATAMCompetencyCenter@genesys.com"],
         APAC: ["apac-cc@genesys.com"]
     },
     "Genesys Engage": {
-        EMEA: ["EMEACloudProgramManagement@genesys.com"],
+        EMEA: ["EMEAEntCCRequests@genesys.com"],
         NA: ["NACompetencyCenterRequests@genesys.com"],
         LATAM: ["LATAMCompetencyCenter@genesys.com"],
         APAC: ["apac-cc@genesys.com"]
     },
     "Genesys Engage Cloud": {
-        EMEA: ["EMEACloudProgramManagement@genesys.com"],
+        EMEA: ["EMEAEntCCRequests@genesys.com"],
         NA: ["NACompetencyCenterRequests@genesys.com"],
         LATAM: ["LATAMCompetencyCenter@genesys.com"],
         APAC: ["apac-cc@genesys.com"]
