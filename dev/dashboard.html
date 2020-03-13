@@ -46,7 +46,6 @@
         <a class="btn btn-light" href="#" onclick="location.reload();"><i class="fa fa-refresh"></i> Refresh</a>
     </div>
 
-
     <div class="container-fluid" id="dashboard">
         <br>
         <div class="form-row">
@@ -82,13 +81,21 @@
                         </select>
                     </div>
                 </div>
+
                 <div class="form-row">
                     <div class="form-group col-md-4">
-                        <div class="chart-container" style="width:35vw" id="chart_region_container" name="requests">
+                        <div class="chart-container" style="width:35vw" id="chart_region_container" name="region">
                             <canvas id="chart_region"></canvas>
                         </div>
                     </div>
+                    <div class="form-group col-md-4">
+                        <div class="chart-container" style="width:35vw" id="chart_subRegion_container" name="subRegion">
+                            <canvas id="chart_subRegion"></canvas>
+                        </div>
+                    </div>
+                </div>
 
+                <div class="form-row">
                     <div class="form-group col-md-4">
                         <div class="chart-container" style="width:35vw" id="chart_product_container" name="product">
                             <canvas id="chart_product"></canvas>
@@ -102,8 +109,8 @@
                 </div>
 
                 <div class="form-row">
-                    <div class="form-group col-md-6">
-                        <div class="chart-container" style="width:40vw" id="chart_status_container" name="status">
+                    <div class="form-group col-md-4">
+                        <div class="chart-container" style="width:35vw" id="chart_status_container" name="status">
                             <canvas id="chart_status"></canvas>
                         </div>
                     </div>
@@ -279,7 +286,6 @@
                 }
             }
 
-
             var ctx = document.getElementById(`chart_${_chartName}`)
             var myDoughnutChart = new Chart(ctx, {
                 type: _chartType,
@@ -293,16 +299,11 @@
                             color: 'black',
                             align: 'center',
                             clamp: true
-
                         }
                     }, scales: scales
                 }
             });
-
-
-
         }
-
 
         async function init() {
 
@@ -313,7 +314,6 @@
                     window.open('./index.html', "_self");
                 }
             }
-
 
             // Parse Tasks
             let task_filter = buildFilter('SELECT tasks FROM ? ##', false);
@@ -327,21 +327,22 @@
                 }
             });
 
+            // By Region
+            makeChart('SELECT count(*) as val, region as label FROM ? ## GROUP BY region', false, 'region', 'doughnut', 'By Region', data);
 
-            // ByRegion
-            makeChart('SELECT count(*) as val, region as label FROM ? ## GROUP BY region', false, 'region', 'doughnut', 'Requests', data);
-            // BySegement
+            // By Territory
+            makeChart('SELECT count(*) as val, subRegion as label FROM ? ## GROUP BY subRegion', false, 'subRegion', 'doughnut', 'By Territory', data);
+
+            // By Segment
             makeChart('SELECT count(*) as val, segment as label FROM ? ## GROUP BY segment', false, 'segment', 'doughnut', 'By Segment', data);
 
             // By Product
             makeChart('SELECT count(*) as val, product as label FROM ? ## GROUP BY product', false, 'product', 'pie', 'By Product', data);
+
             // By Status for Active and not Delted
             makeChart("SELECT count(*) as val, status as label FROM ? WHERE (isDeleted = false ##) GROUP BY status", true, 'status', 'pie', 'By status for active requests', data);
 
-
-
             // By Request Category / Time
-
             let res = alasql('SELECT count(*) as val, taskCategory as label FROM ? GROUP BY taskCategory', [task_parsed]);
             var labels = [];
             var values1 = [];
@@ -355,7 +356,6 @@
             res.forEach(element => {
                 values2.push(element.val);
             });
-
 
             $('#chart_requestCategory').remove();
             $('#chart_requestCategory_container').append('<canvas id="chart_requestCategory"><canvas>');
@@ -426,7 +426,6 @@
 
         }
 
-
         async function exportData() {
 
             let exportRegion = $('#region').val() == "" ? undefined : $('#region').val();
@@ -495,7 +494,6 @@
                 }, 0);
             }
         }
-
 
         function getUrlParameter(sParam) {
             var sPageURL = window.location.search.substring(1),
