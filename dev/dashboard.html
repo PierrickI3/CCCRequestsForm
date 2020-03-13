@@ -134,6 +134,7 @@
         if (window.location.href.includes('dev'))
             $("#devModeImage").removeAttr('hidden');
 
+        let task_parsed = [];
         let gcToken = localStorage.getItem("gcToken");
         if (!gcToken)
             window.open('./index.html', "_self");
@@ -158,6 +159,11 @@
         // SetLink for review Requests
         document.getElementById("reviewRequestsButton").setAttribute("href", `./requests.html?region=${region}`);
 
+        function graphClick_taskType(event, array) {
+            if (array && array.length > 0 && array[0]._model)
+                console.log(array[0]._model.label);
+
+        }
         function prepareDataForSQL(_sql, _data) {
             //console.log(`prepareDataForSQL: ${_sql}`);
             let res = alasql(_sql, [_data]);
@@ -251,7 +257,7 @@
             return _sql
         }
 
-        function makeChart(_sql, _isWHERE, _chartName, _chartType, _chartTitle, _data) {
+        function makeChart(_sql, _isWHERE, _chartName, _chartType, _chartTitle, _data, _functionOnClick) {
 
             let sql = buildFilter(_sql, _isWHERE);
             console.log(sql);
@@ -285,6 +291,7 @@
                 type: _chartType,
                 data: prepareDataForSQL(sql, _data),
                 options: {
+                    onClick: _functionOnClick,
                     title: {
                         display: true,
                         text: _chartTitle
@@ -303,7 +310,6 @@
 
         }
 
-
         async function init() {
 
             try {
@@ -318,7 +324,7 @@
             // Parse Tasks
             let task_filter = buildFilter('SELECT tasks FROM ? ##', false);
             let task_raw = alasql(task_filter, [data]);
-            let task_parsed = []; // Tasks with Time
+            task_parsed = []; // Tasks with Time
             task_raw.forEach(function (aItem) {
                 if (aItem.tasks && aItem.tasks.length > 0) {
                     aItem.tasks.forEach(function (aTask) {
@@ -422,10 +428,9 @@
             });
 
             // By RequestType (a'ka taskType)
-            makeChart("SELECT count(*) as val, taskType as label FROM ? WHERE (taskType <> 'undefined') GROUP BY taskType", false, 'requestType', 'bar', 'By task Type', task_parsed);
+            makeChart("SELECT count(*) as val, taskType as label FROM ? WHERE (taskType <> 'undefined') GROUP BY taskType", false, 'requestType', 'bar', 'By task Type', task_parsed, graphClick_taskType);
 
         }
-
 
         async function exportData() {
 
@@ -511,6 +516,7 @@
                 }
             }
         };
+
 
     </script>
 
