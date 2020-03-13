@@ -5,7 +5,7 @@
   "url": "https://localhost/index.html",
   "tests": [{
     "id": "e2fc74b4-a4aa-462b-9aa6-25e7fc0d94a4",
-    "name": "Region - Should have an \"EMEA\" entry",
+    "name": "Production - Region - Should have an \"EMEA\" entry",
     "commands": [{
       "id": "514c5e8d-fee6-4855-b7d0-77fc0051bcce",
       "comment": "",
@@ -58,7 +58,7 @@
     }]
   }, {
     "id": "e4766b2d-876f-4a3d-b6ec-7aa8c745db29",
-    "name": "Subregion - \"EMEA\" should have a \"South\" entry",
+    "name": "Production - Subregion - \"EMEA\" should have a \"South\" entry",
     "commands": [{
       "id": "148ee75d-74aa-48c5-8e3a-2fb4b60fd70f",
       "comment": "",
@@ -146,7 +146,7 @@
     }]
   }, {
     "id": "08918db6-21bf-4121-b3da-37b3c2a34aa4",
-    "name": "Product - Should contain a \"Genesys Cloud\" entry",
+    "name": "Production - Product - Should contain a \"Genesys Cloud\" entry",
     "commands": [{
       "id": "788c5be3-8c77-4184-ab29-39698a2206db",
       "comment": "",
@@ -199,7 +199,7 @@
     }]
   }, {
     "id": "da498001-3595-4e40-bc2d-2728043aa40d",
-    "name": "Tasks - Should be able to add a new task",
+    "name": "Production - Tasks - Should be able to add a new task",
     "commands": [{
       "id": "aa165c98-d462-46d9-bdaa-15d97a3be777",
       "comment": "",
@@ -272,7 +272,7 @@
     }]
   }, {
     "id": "9d1b5828-0fb6-425b-a652-7bfb47356388",
-    "name": "Submit - Can't submit if all fields are empty",
+    "name": "Production - Submit - Can't submit if all fields are empty",
     "commands": [{
       "id": "d686923d-7884-4ff7-a4a7-4902c19c34e5",
       "comment": "",
@@ -287,6 +287,34 @@
       "target": "940x634",
       "targets": [],
       "value": ""
+    }, {
+      "id": "7d8de945-daab-48a6-99b2-7357a721a7e7",
+      "comment": "Wait for Submit to be visible",
+      "command": "waitForElementVisible",
+      "target": "id=submit",
+      "targets": [
+        ["id=submit", "id"],
+        ["css=#submit", "css:finder"],
+        ["xpath=//button[@id='submit']", "xpath:attributes"],
+        ["xpath=//div[@id='form']/div/div/button", "xpath:idRelative"],
+        ["xpath=//button", "xpath:position"],
+        ["xpath=//button[contains(.,'Submit')]", "xpath:innerText"]
+      ],
+      "value": "30000"
+    }, {
+      "id": "fba0a722-fa79-443f-a05d-af222d0a419d",
+      "comment": "Wait until Submit is enabled",
+      "command": "assertEditable",
+      "target": "id=submit",
+      "targets": [
+        ["id=submit", "id"],
+        ["css=#submit", "css:finder"],
+        ["xpath=//button[@id='submit']", "xpath:attributes"],
+        ["xpath=//div[@id='form']/div/div/button", "xpath:idRelative"],
+        ["xpath=//button", "xpath:position"],
+        ["xpath=//button[contains(.,'Submit')]", "xpath:innerText"]
+      ],
+      "value": "30000"
     }, {
       "id": "ed56b463-7f74-40e1-aefa-6561c86fb488",
       "comment": "",
@@ -416,7 +444,7 @@
     }]
   }, {
     "id": "b5feaeb3-a33a-45f6-acc8-e051b4ae8bab",
-    "name": "Form Controls & Help should be visible",
+    "name": "Production - Form Controls & Help should be visible",
     "commands": [{
       "id": "316e8e4b-b246-46e9-a751-9965f5d1e2f6",
       "comment": "",
@@ -820,15 +848,981 @@
       ],
       "value": "30000"
     }]
+  }, {
+    "id": "9271e4d1-625c-4a2f-bfa3-0c9764e2d1eb",
+    "name": "Dev - Form Controls & Help should be visible",
+    "commands": [{
+      "id": "d447de52-9595-4642-954c-83c128935884",
+      "comment": "",
+      "command": "open",
+      "target": "https://localhost/dev/index.html",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "6cb4f92b-4274-4b30-821c-ba3602457087",
+      "comment": "Help should be visible",
+      "command": "waitForElementVisible",
+      "target": "css=.col-sm-5",
+      "targets": [
+        ["css=.col-sm-5", "css:finder"],
+        ["xpath=//div[@id='form']/div/div[2]", "xpath:idRelative"],
+        ["xpath=//div[4]/div/div[2]", "xpath:position"]
+      ],
+      "value": "30000"
+    }, {
+      "id": "c523a1bf-62d7-4ab0-b334-e389fe462202",
+      "comment": "Region - Label should be visible",
+      "command": "waitForElementVisible",
+      "target": "css=.form-row:nth-child(1) > .form-group:nth-child(1) > label",
+      "targets": [
+        ["css=.form-row:nth-child(1) > .form-group:nth-child(1) > label", "css:finder"],
+        ["xpath=//form[@id='modal-form']/div/div/label", "xpath:idRelative"],
+        ["xpath=//label", "xpath:position"],
+        ["xpath=//label[contains(.,'Region')]", "xpath:innerText"]
+      ],
+      "value": "30000"
+    }, {
+      "id": "7340561e-3f96-449c-aeb1-b000c367a9ab",
+      "comment": "Region - Select should be visible",
+      "command": "waitForElementVisible",
+      "target": "id=region",
+      "targets": [
+        ["id=region", "id"],
+        ["name=region", "name"],
+        ["css=#region", "css:finder"],
+        ["xpath=//select[@id='region']", "xpath:attributes"],
+        ["xpath=//form[@id='modal-form']/div/div/select", "xpath:idRelative"],
+        ["xpath=//select", "xpath:position"]
+      ],
+      "value": "30000"
+    }, {
+      "id": "2bd71728-5830-4542-a5a8-f02629532a6e",
+      "comment": "Territory - Label should be visible",
+      "command": "waitForElementVisible",
+      "target": "css=.form-row:nth-child(1) > .form-group:nth-child(2) > label",
+      "targets": [
+        ["css=.form-row:nth-child(1) > .form-group:nth-child(2) > label", "css:finder"],
+        ["xpath=//form[@id='modal-form']/div/div[2]/label", "xpath:idRelative"],
+        ["xpath=//div[2]/label", "xpath:position"],
+        ["xpath=//label[contains(.,'Territory')]", "xpath:innerText"]
+      ],
+      "value": "30000"
+    }, {
+      "id": "6d82a1a1-0753-488b-9ebb-50910a196d0d",
+      "comment": "Territory - Select should be visible",
+      "command": "waitForElementVisible",
+      "target": "id=subRegion",
+      "targets": [
+        ["id=subRegion", "id"],
+        ["name=subRegion", "name"],
+        ["css=#subRegion", "css:finder"],
+        ["xpath=//select[@id='subRegion']", "xpath:attributes"],
+        ["xpath=//form[@id='modal-form']/div/div[2]/select", "xpath:idRelative"],
+        ["xpath=//div[2]/select", "xpath:position"],
+        ["xpath=//select[contains(.,'Select a Territory')]", "xpath:innerText"]
+      ],
+      "value": "30000"
+    }, {
+      "id": "7656c2be-ac88-4ebb-a83d-da6e5e2c3604",
+      "comment": "Segment - Label should be visible",
+      "command": "waitForElementVisible",
+      "target": "css=.form-row:nth-child(2) > .form-group:nth-child(1) > label",
+      "targets": [
+        ["css=.form-row:nth-child(2) > .form-group:nth-child(1) > label", "css:finder"],
+        ["xpath=//form[@id='modal-form']/div[2]/div/label", "xpath:idRelative"],
+        ["xpath=//div[2]/div/label", "xpath:position"],
+        ["xpath=//label[contains(.,'Market Segment')]", "xpath:innerText"]
+      ],
+      "value": "30000"
+    }, {
+      "id": "1a0930cf-ae80-467a-91a5-88d04bc74b59",
+      "comment": "Segment - Select should be visible",
+      "command": "waitForElementVisible",
+      "target": "id=segment",
+      "targets": [
+        ["id=segment", "id"],
+        ["name=segment", "name"],
+        ["css=#segment", "css:finder"],
+        ["xpath=//select[@id='segment']", "xpath:attributes"],
+        ["xpath=//form[@id='modal-form']/div[2]/div/select", "xpath:idRelative"],
+        ["xpath=//div[2]/div/select", "xpath:position"]
+      ],
+      "value": "30000"
+    }, {
+      "id": "34bbf72c-e3e2-4cd0-a6a7-b777ee82565b",
+      "comment": "Product - Label should be visible",
+      "command": "waitForElementVisible",
+      "target": "css=.form-row:nth-child(2) > .form-group:nth-child(2) > label",
+      "targets": [
+        ["css=.form-row:nth-child(2) > .form-group:nth-child(2) > label", "css:finder"],
+        ["xpath=//form[@id='modal-form']/div[2]/div[2]/label", "xpath:idRelative"],
+        ["xpath=//div[2]/div[2]/label", "xpath:position"],
+        ["xpath=//label[contains(.,'Product')]", "xpath:innerText"]
+      ],
+      "value": "30000"
+    }, {
+      "id": "0be17b4d-a5f0-4b95-b55c-9be27b380d7f",
+      "comment": "Product - Select should be visible",
+      "command": "waitForElementVisible",
+      "target": "id=product",
+      "targets": [
+        ["id=product", "id"],
+        ["name=product", "name"],
+        ["css=#product", "css:finder"],
+        ["xpath=//select[@id='product']", "xpath:attributes"],
+        ["xpath=//form[@id='modal-form']/div[2]/div[2]/select", "xpath:idRelative"],
+        ["xpath=//div[2]/div[2]/select", "xpath:position"]
+      ],
+      "value": "30000"
+    }, {
+      "id": "e38b64bc-cf49-44c4-a1fc-b9ee18114714",
+      "comment": "Tasks div should be visible",
+      "command": "waitForElementVisible",
+      "target": "css=.border",
+      "targets": [
+        ["css=.border", "css:finder"],
+        ["xpath=//form[@id='modal-form']/div[3]", "xpath:idRelative"],
+        ["xpath=//form/div[3]", "xpath:position"]
+      ],
+      "value": "30000"
+    }, {
+      "id": "646cd4ab-7fc5-4642-82c7-96384ae5deec",
+      "comment": "Tasks - Category - Label should be visible",
+      "command": "waitForElementVisible",
+      "target": "css=.mt-1 > .form-group:nth-child(1)",
+      "targets": [
+        ["css=.mt-1 > .form-group:nth-child(1)", "css:finder"],
+        ["xpath=//form[@id='modal-form']/div[3]/div/div", "xpath:idRelative"],
+        ["xpath=//div[3]/div/div", "xpath:position"]
+      ],
+      "value": "30000"
+    }, {
+      "id": "e1598970-84d4-4ba5-ba45-b9b75a3e2430",
+      "comment": "Tasks - Category - Select should be visible",
+      "command": "waitForElementVisible",
+      "target": "name=category_0",
+      "targets": [
+        ["name=category_0", "name"],
+        ["css=.col-md-5:nth-child(1) > .form-control", "css:finder"],
+        ["xpath=//select[@name='category_0']", "xpath:attributes"],
+        ["xpath=//div[@id='tasks']/div/select", "xpath:idRelative"],
+        ["xpath=//div[3]/div[2]/div/select", "xpath:position"]
+      ],
+      "value": "30000"
+    }, {
+      "id": "856e30f0-20e2-46af-8a51-a911ffef1deb",
+      "comment": "Tasks - Type - Label should be visible",
+      "command": "waitForElementVisible",
+      "target": "css=.text-center:nth-child(2)",
+      "targets": [
+        ["css=.text-center:nth-child(2)", "css:finder"],
+        ["xpath=//form[@id='modal-form']/div[3]/div/div[2]", "xpath:idRelative"],
+        ["xpath=//div[3]/div/div[2]", "xpath:position"]
+      ],
+      "value": "30000"
+    }, {
+      "id": "fedc342d-32ef-4e72-bcdb-67d7fd96f0a1",
+      "comment": "Tasks - Type - Select should be visible",
+      "command": "waitForElementVisible",
+      "target": "name=type_0",
+      "targets": [
+        ["name=type_0", "name"],
+        ["css=.col-md-5:nth-child(2) > .form-control", "css:finder"],
+        ["xpath=//select[@name='type_0']", "xpath:attributes"],
+        ["xpath=//div[@id='tasks']/div[2]/select", "xpath:idRelative"],
+        ["xpath=//div[3]/div[2]/div[2]/select", "xpath:position"],
+        ["xpath=//select[contains(.,'Select a Request Type')]", "xpath:innerText"]
+      ],
+      "value": "30000"
+    }, {
+      "id": "3e581213-3eba-43d0-aa9e-5363dc79839e",
+      "comment": "Tasks - Button should be visible",
+      "command": "waitForElementVisible",
+      "target": "id=addTask",
+      "targets": [
+        ["id=addTask", "id"],
+        ["linkText=Add New Task", "linkText"],
+        ["css=#addTask", "css:finder"],
+        ["xpath=//a[contains(text(),'Add New Task')]", "xpath:link"],
+        ["xpath=//a[@id='addTask']", "xpath:attributes"],
+        ["xpath=//form[@id='modal-form']/div[3]/a", "xpath:idRelative"],
+        ["xpath=(//a[contains(@href, '#')])[3]", "xpath:href"],
+        ["xpath=//div[3]/a", "xpath:position"],
+        ["xpath=//a[contains(.,' Add New Task')]", "xpath:innerText"]
+      ],
+      "value": "30000"
+    }, {
+      "id": "aa9fe479-1918-44b1-89ae-299c71d630bf",
+      "comment": "Requester Name - Label should be visible",
+      "command": "waitForElementVisible",
+      "target": "css=.form-row:nth-child(4) > .form-group:nth-child(1) > label",
+      "targets": [
+        ["css=.form-row:nth-child(4) > .form-group:nth-child(1) > label", "css:finder"],
+        ["xpath=//form[@id='modal-form']/div[4]/div/label", "xpath:idRelative"],
+        ["xpath=//div[4]/div/label", "xpath:position"],
+        ["xpath=//label[contains(.,'Requester Name')]", "xpath:innerText"]
+      ],
+      "value": "30000"
+    }, {
+      "id": "e321282a-bfa8-4fa0-a7b5-cd76a6ab61ca",
+      "comment": "Requester Name - Input should be visible",
+      "command": "waitForElementVisible",
+      "target": "id=requesterName",
+      "targets": [
+        ["id=requesterName", "id"],
+        ["name=requesterName", "name"],
+        ["css=#requesterName", "css:finder"],
+        ["xpath=//input[@id='requesterName']", "xpath:attributes"],
+        ["xpath=//form[@id='modal-form']/div[4]/div/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": "30000"
+    }, {
+      "id": "8165bdba-145b-4706-b666-03639a4724ee",
+      "comment": "Requester Email - Label should be visible",
+      "command": "waitForElementVisible",
+      "target": "css=.form-row:nth-child(4) > .form-group:nth-child(2) > label",
+      "targets": [
+        ["css=.form-row:nth-child(4) > .form-group:nth-child(2) > label", "css:finder"],
+        ["xpath=//form[@id='modal-form']/div[4]/div[2]/label", "xpath:idRelative"],
+        ["xpath=//div[4]/div[2]/label", "xpath:position"],
+        ["xpath=//label[contains(.,'Requester Email')]", "xpath:innerText"]
+      ],
+      "value": "30000"
+    }, {
+      "id": "e90adfc1-5426-4e2f-bedf-014db4b1c784",
+      "comment": "Requester Email - Input should be visible",
+      "command": "waitForElementVisible",
+      "target": "id=requesterEmail",
+      "targets": [
+        ["id=requesterEmail", "id"],
+        ["name=requesterEmail", "name"],
+        ["css=#requesterEmail", "css:finder"],
+        ["xpath=//input[@id='requesterEmail']", "xpath:attributes"],
+        ["xpath=//form[@id='modal-form']/div[4]/div[2]/input", "xpath:idRelative"],
+        ["xpath=//div[2]/input", "xpath:position"]
+      ],
+      "value": "30000"
+    }, {
+      "id": "f6e4a26e-39d7-4458-86f4-8a33b4367916",
+      "comment": "Requester Phone # - Label should be visible",
+      "command": "waitForElementVisible",
+      "target": "css=.form-row:nth-child(5) > .form-group:nth-child(1) > label",
+      "targets": [
+        ["css=.form-row:nth-child(5) > .form-group:nth-child(1) > label", "css:finder"],
+        ["xpath=//form[@id='modal-form']/div[5]/div/label", "xpath:idRelative"],
+        ["xpath=//div[5]/div/label", "xpath:position"],
+        ["xpath=//label[contains(.,'Requester Phone #')]", "xpath:innerText"]
+      ],
+      "value": "30000"
+    }, {
+      "id": "2ba95d35-ed2e-407f-982a-d733468e0b7d",
+      "comment": "Requester Phone # - Input should be visible",
+      "command": "waitForElementVisible",
+      "target": "id=requesterPhoneNumber",
+      "targets": [
+        ["id=requesterPhoneNumber", "id"],
+        ["name=requesterPhoneNumber", "name"],
+        ["css=#requesterPhoneNumber", "css:finder"],
+        ["xpath=//input[@id='requesterPhoneNumber']", "xpath:attributes"],
+        ["xpath=//form[@id='modal-form']/div[5]/div/input", "xpath:idRelative"],
+        ["xpath=//div[5]/div/input", "xpath:position"]
+      ],
+      "value": "30000"
+    }, {
+      "id": "45ba5492-a290-4d59-9f3f-4a621a7df3bf",
+      "comment": "Need Completed By - Label should be visible",
+      "command": "waitForElementVisible",
+      "target": "css=.form-row:nth-child(5) > .form-group:nth-child(2) > label",
+      "targets": [
+        ["css=.form-row:nth-child(5) > .form-group:nth-child(2) > label", "css:finder"],
+        ["xpath=//form[@id='modal-form']/div[5]/div[2]/label", "xpath:idRelative"],
+        ["xpath=//div[5]/div[2]/label", "xpath:position"],
+        ["xpath=//label[contains(.,'Need Completed By')]", "xpath:innerText"]
+      ],
+      "value": "30000"
+    }, {
+      "id": "f9ab0c51-8083-4b00-ae34-a80c0a57e57e",
+      "comment": "Click on Need Completed By input field",
+      "command": "click",
+      "target": "id=datepicker",
+      "targets": [
+        ["id=datepicker", "id"],
+        ["css=#datepicker", "css:finder"],
+        ["xpath=//input[@id='datepicker']", "xpath:attributes"],
+        ["xpath=//form[@id='modal-form']/div[5]/div[2]/input", "xpath:idRelative"],
+        ["xpath=//div[5]/div[2]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "1c071e73-1799-4c8d-b44d-8e399ff226f5",
+      "comment": "Calendar should be visible",
+      "command": "waitForElementVisible",
+      "target": "css=.datepicker",
+      "targets": [],
+      "value": "30000"
+    }, {
+      "id": "9f074b9d-3007-45b2-983f-ef3db7b6096e",
+      "comment": "Description - Label should be visible",
+      "command": "waitForElementVisible",
+      "target": "css=.col-md-12 > label",
+      "targets": [
+        ["css=.col-md-12 > label", "css:finder"],
+        ["xpath=//form[@id='modal-form']/div[6]/div/label", "xpath:idRelative"],
+        ["xpath=//div[6]/div/label", "xpath:position"],
+        ["xpath=//label[contains(.,'Description')]", "xpath:innerText"]
+      ],
+      "value": "30000"
+    }, {
+      "id": "664248db-cdb4-4c9f-aafc-47d31bffe02b",
+      "comment": "Description - Input should be visible",
+      "command": "waitForElementVisible",
+      "target": "id=description",
+      "targets": [
+        ["id=description", "id"],
+        ["name=description", "name"],
+        ["css=#description", "css:finder"],
+        ["xpath=//textarea[@id='description']", "xpath:attributes"],
+        ["xpath=//form[@id='modal-form']/div[6]/div/textarea", "xpath:idRelative"],
+        ["xpath=//textarea", "xpath:position"]
+      ],
+      "value": "30000"
+    }, {
+      "id": "f3c4956e-7814-4456-802d-1396190109ef",
+      "comment": "Partner and/or Customer Name - Label should be visible",
+      "command": "waitForElementVisible",
+      "target": "css=.form-row:nth-child(7) > .form-group:nth-child(1) > label",
+      "targets": [
+        ["css=.form-row:nth-child(7) > .form-group:nth-child(1) > label", "css:finder"],
+        ["xpath=//form[@id='modal-form']/div[7]/div/label", "xpath:idRelative"],
+        ["xpath=//div[7]/div/label", "xpath:position"],
+        ["xpath=//label[contains(.,'Partner and/or Customer Name')]", "xpath:innerText"]
+      ],
+      "value": "30000"
+    }, {
+      "id": "f0fb2c0e-2d4f-4abd-936f-14889a161852",
+      "comment": "Partner and/org Customer Name - Input should be visible",
+      "command": "waitForElementVisible",
+      "target": "id=partnerCustomerName",
+      "targets": [
+        ["id=partnerCustomerName", "id"],
+        ["name=partnerCustomerName", "name"],
+        ["css=#partnerCustomerName", "css:finder"],
+        ["xpath=//input[@id='partnerCustomerName']", "xpath:attributes"],
+        ["xpath=//form[@id='modal-form']/div[7]/div/input", "xpath:idRelative"],
+        ["xpath=//div[7]/div/input", "xpath:position"]
+      ],
+      "value": "30000"
+    }, {
+      "id": "4f9ad71b-a650-4a8e-b5ec-f9b370f47128",
+      "comment": "SF Account / Opportunity URL - Label should be visible",
+      "command": "waitForElementVisible",
+      "target": "css=.form-row:nth-child(7) > .form-group:nth-child(2) > label",
+      "targets": [
+        ["css=.form-row:nth-child(7) > .form-group:nth-child(2) > label", "css:finder"],
+        ["xpath=//form[@id='modal-form']/div[7]/div[2]/label", "xpath:idRelative"],
+        ["xpath=//div[7]/div[2]/label", "xpath:position"],
+        ["xpath=//label[contains(.,'SF Account / Opportunity URL')]", "xpath:innerText"]
+      ],
+      "value": "30000"
+    }, {
+      "id": "54654852-20d9-41f8-9653-f6f8429c06dd",
+      "comment": "SF Account / Opportunity URL - Input should be visible",
+      "command": "waitForElementVisible",
+      "target": "id=salesforceAccountOpportunity",
+      "targets": [
+        ["id=salesforceAccountOpportunity", "id"],
+        ["name=salesforceAccountOpportunity", "name"],
+        ["css=#salesforceAccountOpportunity", "css:finder"],
+        ["xpath=//input[@id='salesforceAccountOpportunity']", "xpath:attributes"],
+        ["xpath=//form[@id='modal-form']/div[7]/div[2]/input", "xpath:idRelative"],
+        ["xpath=//div[7]/div[2]/input", "xpath:position"]
+      ],
+      "value": "30000"
+    }, {
+      "id": "0a66e320-124d-44c6-921c-f9e46ac8749f",
+      "comment": "Submit - Button should be visible",
+      "command": "waitForElementVisible",
+      "target": "id=submit",
+      "targets": [
+        ["id=submit", "id"],
+        ["css=#submit", "css:finder"],
+        ["xpath=//button[@id='submit']", "xpath:attributes"],
+        ["xpath=//div[@id='form']/div/div/button", "xpath:idRelative"],
+        ["xpath=//button", "xpath:position"],
+        ["xpath=//button[contains(.,'Submit')]", "xpath:innerText"]
+      ],
+      "value": "30000"
+    }]
+  }, {
+    "id": "37582b4b-6004-402b-a5d4-28f9722b8af3",
+    "name": "Dev - Product - Should contain a \"Genesys Cloud\" entry (1)",
+    "commands": [{
+      "id": "c85e2b32-7492-4fd2-a814-da4e6ebb1d28",
+      "comment": "",
+      "command": "open",
+      "target": "https://localhost/dev/index.html",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "7bc6b3b8-d0e4-47ab-bde1-42af0f614252",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "940x634",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "6c9aa9a6-99dd-4e40-838c-60ef261d4741",
+      "comment": "",
+      "command": "click",
+      "target": "id=product",
+      "targets": [
+        ["id=product", "id"],
+        ["name=product", "name"],
+        ["css=#product", "css:finder"],
+        ["xpath=//select[@id='product']", "xpath:attributes"],
+        ["xpath=//form[@id='modal-form']/div[2]/div[2]/select", "xpath:idRelative"],
+        ["xpath=//div[2]/div[2]/select", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "4d4c7f52-fcfa-49d0-9787-881f84c7e2af",
+      "comment": "",
+      "command": "select",
+      "target": "id=product",
+      "targets": [],
+      "value": "label=Genesys Cloud"
+    }, {
+      "id": "3b6816ae-d543-49c2-9c02-e8f23ebb9c1f",
+      "comment": "",
+      "command": "click",
+      "target": "id=product",
+      "targets": [
+        ["id=product", "id"],
+        ["name=product", "name"],
+        ["css=#product", "css:finder"],
+        ["xpath=//select[@id='product']", "xpath:attributes"],
+        ["xpath=//form[@id='modal-form']/div[2]/div[2]/select", "xpath:idRelative"],
+        ["xpath=//div[2]/div[2]/select", "xpath:position"]
+      ],
+      "value": ""
+    }]
+  }, {
+    "id": "319c890e-f905-4904-af82-dd5650ac13fd",
+    "name": "Dev - Region - Should have an \"EMEA\" entry",
+    "commands": [{
+      "id": "fb1710f7-00a3-4c8c-b883-9233976fe5ff",
+      "comment": "",
+      "command": "open",
+      "target": "https://localhost/dev/index.html",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "ce061aa9-542f-4876-8460-da18fc7af437",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "940x634",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "a74da393-5afa-40f9-9fb2-79abd63f8ff1",
+      "comment": "",
+      "command": "click",
+      "target": "id=region",
+      "targets": [
+        ["id=region", "id"],
+        ["name=region", "name"],
+        ["css=#region", "css:finder"],
+        ["xpath=//select[@id='region']", "xpath:attributes"],
+        ["xpath=//form[@id='modal-form']/div/div/select", "xpath:idRelative"],
+        ["xpath=//select", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "48d5a070-6592-4126-895e-39bee5a18099",
+      "comment": "",
+      "command": "select",
+      "target": "id=region",
+      "targets": [],
+      "value": "label=EMEA"
+    }, {
+      "id": "2cf5b187-0efe-471c-a5f8-f52f6328786b",
+      "comment": "",
+      "command": "click",
+      "target": "id=region",
+      "targets": [
+        ["id=region", "id"],
+        ["name=region", "name"],
+        ["css=#region", "css:finder"],
+        ["xpath=//select[@id='region']", "xpath:attributes"],
+        ["xpath=//form[@id='modal-form']/div/div/select", "xpath:idRelative"],
+        ["xpath=//select", "xpath:position"]
+      ],
+      "value": ""
+    }]
+  }, {
+    "id": "edd345c2-58ff-49e8-b52b-f464513e46cb",
+    "name": "Dev - Submit - Can't submit if all fields are empty",
+    "commands": [{
+      "id": "e63a656b-3e8e-46ed-b798-59490906254d",
+      "comment": "",
+      "command": "open",
+      "target": "https://localhost/dev/index.html",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "36b562fc-ec7f-43d8-b755-eb314c2e1632",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "940x634",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "64b3cfd7-96a9-478d-ad06-f016235f10ee",
+      "comment": "Wait for Submit to be visible",
+      "command": "waitForElementVisible",
+      "target": "id=submit",
+      "targets": [
+        ["id=submit", "id"],
+        ["css=#submit", "css:finder"],
+        ["xpath=//button[@id='submit']", "xpath:attributes"],
+        ["xpath=//div[@id='form']/div/div/button", "xpath:idRelative"],
+        ["xpath=//button", "xpath:position"],
+        ["xpath=//button[contains(.,'Submit')]", "xpath:innerText"]
+      ],
+      "value": "30000"
+    }, {
+      "id": "3bea1281-d36b-4a14-9585-b38f7e2f3527",
+      "comment": "Wait until Submit is enabled",
+      "command": "assertEditable",
+      "target": "id=submit",
+      "targets": [
+        ["id=submit", "id"],
+        ["css=#submit", "css:finder"],
+        ["xpath=//button[@id='submit']", "xpath:attributes"],
+        ["xpath=//div[@id='form']/div/div/button", "xpath:idRelative"],
+        ["xpath=//button", "xpath:position"],
+        ["xpath=//button[contains(.,'Submit')]", "xpath:innerText"]
+      ],
+      "value": "30000"
+    }, {
+      "id": "7737e72c-d534-42a7-8b72-1f4d9ca171ef",
+      "comment": "",
+      "command": "click",
+      "target": "id=submit",
+      "targets": [
+        ["id=submit", "id"],
+        ["css=#submit", "css:finder"],
+        ["xpath=//button[@id='submit']", "xpath:attributes"],
+        ["xpath=//div[@id='form']/div/div/button", "xpath:idRelative"],
+        ["xpath=//button", "xpath:position"],
+        ["xpath=//button[contains(.,'Submit')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "2c77fbc3-df38-4b68-9ea7-bd9acb7080ab",
+      "comment": "Region error should be visible",
+      "command": "waitForElementVisible",
+      "target": "id=region-error",
+      "targets": [
+        ["id=region-error", "id"],
+        ["css=#region-error", "css:finder"],
+        ["xpath=//label[@id='region-error']", "xpath:attributes"],
+        ["xpath=//form[@id='modal-form']/div/div/label[2]", "xpath:idRelative"],
+        ["xpath=//label[2]", "xpath:position"],
+        ["xpath=//label[contains(.,'This field is required.')]", "xpath:innerText"]
+      ],
+      "value": "30000"
+    }, {
+      "id": "8c0237a2-d61a-4dd5-b783-11e5533354a1",
+      "comment": "Territory error should be visible",
+      "command": "waitForElementVisible",
+      "target": "id=subRegion-error",
+      "targets": [
+        ["id=subRegion-error", "id"],
+        ["css=#subRegion-error", "css:finder"],
+        ["xpath=//label[@id='subRegion-error']", "xpath:attributes"],
+        ["xpath=//form[@id='modal-form']/div/div[2]/label[2]", "xpath:idRelative"],
+        ["xpath=//div[2]/label[2]", "xpath:position"]
+      ],
+      "value": "30000"
+    }, {
+      "id": "0b93b6f6-5e7d-4a0c-9147-718c1fb284ed",
+      "comment": "Segment error should be visible",
+      "command": "waitForElementVisible",
+      "target": "id=segment-error",
+      "targets": [
+        ["id=segment-error", "id"],
+        ["css=#segment-error", "css:finder"],
+        ["xpath=//label[@id='segment-error']", "xpath:attributes"],
+        ["xpath=//form[@id='modal-form']/div[2]/div/label[2]", "xpath:idRelative"],
+        ["xpath=//div[2]/div/label[2]", "xpath:position"]
+      ],
+      "value": "30000"
+    }, {
+      "id": "7ba73901-ea02-4573-80b7-9e4e738cd675",
+      "comment": "Product error should be visible",
+      "command": "waitForElementVisible",
+      "target": "id=product-error",
+      "targets": [
+        ["id=product-error", "id"],
+        ["css=#product-error", "css:finder"],
+        ["xpath=//label[@id='product-error']", "xpath:attributes"],
+        ["xpath=//form[@id='modal-form']/div[2]/div[2]/label[2]", "xpath:idRelative"],
+        ["xpath=//div[2]/div[2]/label[2]", "xpath:position"]
+      ],
+      "value": "30000"
+    }, {
+      "id": "26fd48d6-9e78-4222-95e4-80b52ca6ad4e",
+      "comment": "Request category error should be visible",
+      "command": "waitForElementVisible",
+      "target": "id=category_0-error",
+      "targets": [
+        ["id=category_0-error", "id"],
+        ["css=#category_0-error", "css:finder"],
+        ["xpath=//label[@id='category_0-error']", "xpath:attributes"],
+        ["xpath=//div[@id='tasks']/div/label", "xpath:idRelative"],
+        ["xpath=//div[3]/div[2]/div/label", "xpath:position"]
+      ],
+      "value": "30000"
+    }, {
+      "id": "660d3d08-8c04-4c34-8916-3dc8d69a4d7a",
+      "comment": "Request type error should be visible",
+      "command": "waitForElementVisible",
+      "target": "id=type_0-error",
+      "targets": [
+        ["id=type_0-error", "id"],
+        ["css=#type_0-error", "css:finder"],
+        ["xpath=//label[@id='type_0-error']", "xpath:attributes"],
+        ["xpath=//div[@id='tasks']/div[2]/label", "xpath:idRelative"],
+        ["xpath=//div[3]/div[2]/div[2]/label", "xpath:position"]
+      ],
+      "value": "30000"
+    }, {
+      "id": "8365112b-7363-4bc3-bc06-c7a8946d3f92",
+      "comment": "Need Completed By error should be visible",
+      "command": "waitForElementVisible",
+      "target": "id=datepicker-error",
+      "targets": [
+        ["id=datepicker-error", "id"],
+        ["css=#datepicker-error", "css:finder"],
+        ["xpath=//label[@id='datepicker-error']", "xpath:attributes"],
+        ["xpath=//form[@id='modal-form']/div[5]/div[2]/label[2]", "xpath:idRelative"],
+        ["xpath=//div[5]/div[2]/label[2]", "xpath:position"]
+      ],
+      "value": "30000"
+    }, {
+      "id": "acc0a3ad-3c55-403f-be50-fa08d2f22f90",
+      "comment": "Description error should be visible",
+      "command": "waitForElementVisible",
+      "target": "id=description-error",
+      "targets": [
+        ["id=description-error", "id"],
+        ["css=#description-error", "css:finder"],
+        ["xpath=//label[@id='description-error']", "xpath:attributes"],
+        ["xpath=//form[@id='modal-form']/div[6]/div/label[2]", "xpath:idRelative"],
+        ["xpath=//div[6]/div/label[2]", "xpath:position"]
+      ],
+      "value": "30000"
+    }, {
+      "id": "3781e57e-d6c4-4a4a-b0c9-89f3e75d9144",
+      "comment": "",
+      "command": "close",
+      "target": "",
+      "targets": [],
+      "value": ""
+    }]
+  }, {
+    "id": "d1000cc4-b8eb-404d-9314-409d0a43a882",
+    "name": "Dev - Subregion - \"EMEA\" should have a \"South\" entry",
+    "commands": [{
+      "id": "b22eeecd-fb3e-4e88-a141-9cd6859985ee",
+      "comment": "",
+      "command": "open",
+      "target": "https://localhost/dev/index.html",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "41b79f86-4803-461c-9694-2496e0633992",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "940x634",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "d3a7627b-ea32-4df6-951c-75fa2e649846",
+      "comment": "",
+      "command": "click",
+      "target": "id=region",
+      "targets": [
+        ["id=region", "id"],
+        ["name=region", "name"],
+        ["css=#region", "css:finder"],
+        ["xpath=//select[@id='region']", "xpath:attributes"],
+        ["xpath=//form[@id='modal-form']/div/div/select", "xpath:idRelative"],
+        ["xpath=//select", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "29c8ed72-2a91-45cd-8b2e-e89988a4816e",
+      "comment": "",
+      "command": "select",
+      "target": "id=region",
+      "targets": [],
+      "value": "label=EMEA"
+    }, {
+      "id": "dc3c7b68-1cb0-478b-9799-141c5fb318e3",
+      "comment": "",
+      "command": "click",
+      "target": "id=region",
+      "targets": [
+        ["id=region", "id"],
+        ["name=region", "name"],
+        ["css=#region", "css:finder"],
+        ["xpath=//select[@id='region']", "xpath:attributes"],
+        ["xpath=//form[@id='modal-form']/div/div/select", "xpath:idRelative"],
+        ["xpath=//select", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "377185bd-cf49-4a06-abda-2e6a7b6ec2d4",
+      "comment": "",
+      "command": "click",
+      "target": "id=subRegion",
+      "targets": [
+        ["id=subRegion", "id"],
+        ["name=subRegion", "name"],
+        ["css=#subRegion", "css:finder"],
+        ["xpath=//select[@id='subRegion']", "xpath:attributes"],
+        ["xpath=//form[@id='modal-form']/div/div[2]/select", "xpath:idRelative"],
+        ["xpath=//div[2]/select", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "bf012ac4-09b2-43aa-9119-ce9a79998e77",
+      "comment": "",
+      "command": "select",
+      "target": "id=subRegion",
+      "targets": [],
+      "value": "label=South"
+    }, {
+      "id": "94c25104-3840-4f96-bee3-716f9a51aa20",
+      "comment": "",
+      "command": "click",
+      "target": "id=subRegion",
+      "targets": [
+        ["id=subRegion", "id"],
+        ["name=subRegion", "name"],
+        ["css=#subRegion", "css:finder"],
+        ["xpath=//select[@id='subRegion']", "xpath:attributes"],
+        ["xpath=//form[@id='modal-form']/div/div[2]/select", "xpath:idRelative"],
+        ["xpath=//div[2]/select", "xpath:position"]
+      ],
+      "value": ""
+    }]
+  }, {
+    "id": "99e5e216-fd84-48e6-b9e9-ec2e88da748f",
+    "name": "Dev - Tasks - Should be able to add a new task",
+    "commands": [{
+      "id": "a31c986e-bdc3-44a9-9b24-95c9863ccb31",
+      "comment": "",
+      "command": "open",
+      "target": "https://localhost/dev/index.html",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "65a2abc5-02ae-46e3-9a72-ae25774990f0",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "940x634",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "f8195147-b06f-4677-9139-25265df9a2c3",
+      "comment": "",
+      "command": "click",
+      "target": "id=addTask",
+      "targets": [
+        ["id=addTask", "id"],
+        ["linkText=Add New Task", "linkText"],
+        ["css=#addTask", "css:finder"],
+        ["xpath=//a[contains(text(),'Add New Task')]", "xpath:link"],
+        ["xpath=//a[@id='addTask']", "xpath:attributes"],
+        ["xpath=//form[@id='modal-form']/div[3]/a", "xpath:idRelative"],
+        ["xpath=(//a[contains(@href, '#')])[3]", "xpath:href"],
+        ["xpath=//div[3]/a", "xpath:position"],
+        ["xpath=//a[contains(.,' Add New Task')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "4addea5b-c848-4322-a40c-07c4de9aef52",
+      "comment": "New request category dropdown should be present",
+      "command": "assertElementPresent",
+      "target": "name=category_1",
+      "targets": [
+        ["name=category_1", "name"],
+        ["css=.form-group:nth-child(3) > .form-control", "css:finder"],
+        ["xpath=//select[@name='category_1']", "xpath:attributes"],
+        ["xpath=//div[@id='tasks']/div[3]/select", "xpath:idRelative"],
+        ["xpath=//div[3]/select", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "7af36839-c34c-4093-ba55-ddb8fead2f8e",
+      "comment": "New request type dropdown should be present",
+      "command": "assertElementPresent",
+      "target": "name=type_1",
+      "targets": [
+        ["name=type_1", "name"],
+        ["css=.form-group:nth-child(4) > .form-control", "css:finder"],
+        ["xpath=//select[@name='type_1']", "xpath:attributes"],
+        ["xpath=//div[@id='tasks']/div[4]/select", "xpath:idRelative"],
+        ["xpath=//div[4]/select", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "3c51beda-504c-4848-9fff-65cd5561b5a8",
+      "comment": "Delete button should be present",
+      "command": "assertElementPresent",
+      "target": "css=.btn-danger",
+      "targets": [
+        ["css=.btn-danger", "css:finder"],
+        ["xpath=//div[@id='tasks']/a", "xpath:idRelative"],
+        ["xpath=(//a[contains(@href, '#')])[3]", "xpath:href"],
+        ["xpath=//div[2]/a", "xpath:position"]
+      ],
+      "value": ""
+    }]
+  }, {
+    "id": "c8299f20-8cf0-4c8a-923e-e1f40d0cf4ee",
+    "name": "Production - Clicking on \"Review Requests\" should go to the requests page",
+    "commands": [{
+      "id": "33506b66-de4c-40a0-b1ee-471b747551d3",
+      "comment": "",
+      "command": "open",
+      "target": "https://localhost/index.html",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "99ea5bd4-207d-48bc-95e0-ea78fb8b168c",
+      "comment": "Wait for the \"Review Requests\" button to be visible",
+      "command": "waitForElementVisible",
+      "target": "id=reviewRequestsButton",
+      "targets": [
+        ["id=reviewRequestsButton", "id"],
+        ["linkText=Review Requests", "linkText"],
+        ["css=#reviewRequestsButton", "css:finder"],
+        ["xpath=//a[contains(text(),'Review Requests')]", "xpath:link"],
+        ["xpath=//a[@id='reviewRequestsButton']", "xpath:attributes"],
+        ["xpath=//a[contains(@href, 'requests.html?region=super-user')]", "xpath:href"],
+        ["xpath=//a[2]", "xpath:position"],
+        ["xpath=//a[contains(.,'Review Requests')]", "xpath:innerText"]
+      ],
+      "value": "30000"
+    }, {
+      "id": "140a4a75-7131-4f6c-a334-ecbc75a5835f",
+      "comment": "Click on \"Review Requests\"",
+      "command": "click",
+      "target": "id=reviewRequestsButton",
+      "targets": [
+        ["id=reviewRequestsButton", "id"],
+        ["linkText=Review Requests", "linkText"],
+        ["css=#reviewRequestsButton", "css:finder"],
+        ["xpath=//a[contains(text(),'Review Requests')]", "xpath:link"],
+        ["xpath=//a[@id='reviewRequestsButton']", "xpath:attributes"],
+        ["xpath=//a[contains(@href, 'requests.html?region=super-user')]", "xpath:href"],
+        ["xpath=//a[2]", "xpath:position"],
+        ["xpath=//a[contains(.,'Review Requests')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "cf74e7dd-14f9-4029-a663-6dd3abecb871",
+      "comment": "Wait until the \"Submit a new Request\" button is visible",
+      "command": "waitForElementVisible",
+      "target": "linkText=Submit a new Request",
+      "targets": [
+        ["linkText=Submit a new Request", "linkText"],
+        ["css=.btn-primary:nth-child(1)", "css:finder"],
+        ["xpath=//a[contains(text(),'Submit a new Request')]", "xpath:link"],
+        ["xpath=//a[contains(@href, './index.html')]", "xpath:href"],
+        ["xpath=//li/a", "xpath:position"],
+        ["xpath=//a[contains(.,'Submit a new Request')]", "xpath:innerText"]
+      ],
+      "value": "30000"
+    }]
+  }, {
+    "id": "ed8f0de3-10af-412d-a5f3-b6ca92e6d18e",
+    "name": "Dev - Clicking on \"Review Requests\" should go to the requests page",
+    "commands": [{
+      "id": "ce29c766-fe23-4d90-a9e4-d1be721912b1",
+      "comment": "",
+      "command": "open",
+      "target": "https://localhost/index.html",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "a64008a2-99f4-4b80-ace6-3eb214503101",
+      "comment": "Wait for the \"Review Requests\" button to be visible",
+      "command": "waitForElementVisible",
+      "target": "id=reviewRequestsButton",
+      "targets": [
+        ["id=reviewRequestsButton", "id"],
+        ["linkText=Review Requests", "linkText"],
+        ["css=#reviewRequestsButton", "css:finder"],
+        ["xpath=//a[contains(text(),'Review Requests')]", "xpath:link"],
+        ["xpath=//a[@id='reviewRequestsButton']", "xpath:attributes"],
+        ["xpath=//a[contains(@href, 'requests.html?region=super-user')]", "xpath:href"],
+        ["xpath=//a[2]", "xpath:position"],
+        ["xpath=//a[contains(.,'Review Requests')]", "xpath:innerText"]
+      ],
+      "value": "30000"
+    }, {
+      "id": "82689a8f-f52e-4bdc-8028-c544498046bd",
+      "comment": "Click on \"Review Requests\"",
+      "command": "click",
+      "target": "id=reviewRequestsButton",
+      "targets": [
+        ["id=reviewRequestsButton", "id"],
+        ["linkText=Review Requests", "linkText"],
+        ["css=#reviewRequestsButton", "css:finder"],
+        ["xpath=//a[contains(text(),'Review Requests')]", "xpath:link"],
+        ["xpath=//a[@id='reviewRequestsButton']", "xpath:attributes"],
+        ["xpath=//a[contains(@href, 'requests.html?region=super-user')]", "xpath:href"],
+        ["xpath=//a[2]", "xpath:position"],
+        ["xpath=//a[contains(.,'Review Requests')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "d9e77fa8-29c9-41ee-bbee-97a29543019f",
+      "comment": "Wait until the \"Submit a new Request\" button is visible",
+      "command": "waitForElementVisible",
+      "target": "linkText=Submit a new Request",
+      "targets": [
+        ["linkText=Submit a new Request", "linkText"],
+        ["css=.btn-primary:nth-child(1)", "css:finder"],
+        ["xpath=//a[contains(text(),'Submit a new Request')]", "xpath:link"],
+        ["xpath=//a[contains(@href, './index.html')]", "xpath:href"],
+        ["xpath=//li/a", "xpath:position"],
+        ["xpath=//a[contains(.,'Submit a new Request')]", "xpath:innerText"]
+      ],
+      "value": "30000"
+    }]
   }],
   "suites": [{
     "id": "88dae628-2772-4c65-b363-4660e52a1a40",
-    "name": "Default Suite",
+    "name": "Production",
     "persistSession": false,
     "parallel": false,
     "timeout": 300,
-    "tests": ["e2fc74b4-a4aa-462b-9aa6-25e7fc0d94a4", "e4766b2d-876f-4a3d-b6ec-7aa8c745db29", "08918db6-21bf-4121-b3da-37b3c2a34aa4", "da498001-3595-4e40-bc2d-2728043aa40d", "9d1b5828-0fb6-425b-a652-7bfb47356388", "b5feaeb3-a33a-45f6-acc8-e051b4ae8bab"]
+    "tests": ["e2fc74b4-a4aa-462b-9aa6-25e7fc0d94a4", "e4766b2d-876f-4a3d-b6ec-7aa8c745db29", "08918db6-21bf-4121-b3da-37b3c2a34aa4", "da498001-3595-4e40-bc2d-2728043aa40d", "9d1b5828-0fb6-425b-a652-7bfb47356388", "b5feaeb3-a33a-45f6-acc8-e051b4ae8bab", "c8299f20-8cf0-4c8a-923e-e1f40d0cf4ee"]
+  }, {
+    "id": "d7a91955-d95e-4de2-a030-1c89037ce6bc",
+    "name": "Dev",
+    "persistSession": false,
+    "parallel": false,
+    "timeout": 300,
+    "tests": ["9271e4d1-625c-4a2f-bfa3-0c9764e2d1eb", "37582b4b-6004-402b-a5d4-28f9722b8af3", "319c890e-f905-4904-af82-dd5650ac13fd", "edd345c2-58ff-49e8-b52b-f464513e46cb", "d1000cc4-b8eb-404d-9314-409d0a43a882", "99e5e216-fd84-48e6-b9e9-ec2e88da748f", "ed8f0de3-10af-412d-a5f3-b6ca92e6d18e"]
   }],
-  "urls": ["https://localhost/", "https://localhost/index.html"],
+  "urls": ["https://localhost/index.html", "https://localhost/dev/index.html"],
   "plugins": []
 }
