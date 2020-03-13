@@ -366,12 +366,12 @@
             makeChart('SELECT count(*) as val, region as label FROM ? ## GROUP BY region', false, 'region', 'doughnut', 'By Region', data);
 
             // By Territory
-            console.log('SubRegion:', $("#subRegion").val());
-            if ($("#subRegion").val() && $("#subRegion").val().length > 0) {
-                makeChart(`SELECT count(*) as val, subRegion as label FROM ? WHERE (subRegion = '${$("#subRegion").val()}' ##) GROUP BY subRegion`, true, 'subRegion', 'doughnut', 'By Territory', data);
-            } else {
-                makeChart(`SELECT count(*) as val, subRegion as label FROM ? ## GROUP BY subRegion`, false, 'subRegion', 'doughnut', 'By Territory', data);
-            }
+            //console.log('SubRegion:', $("#subRegion").val());
+            //if ($("#subRegion").val() && $("#subRegion").val().length > 0) {
+            //    makeChart(`SELECT count(*) as val, subRegion as label FROM ? WHERE (subRegion = '${$("#subRegion").val()}' ##) GROUP BY subRegion`, true, 'subRegion', 'doughnut', 'By Territory', data);
+            //} else {
+            makeChart(`SELECT count(*) as val, subRegion as label FROM ? ## GROUP BY subRegion`, false, 'subRegion', 'doughnut', 'By Territory', data);
+            //}
 
             // By Segment
             makeChart('SELECT count(*) as val, segment as label FROM ? ## GROUP BY segment', false, 'segment', 'doughnut', `By Segment (${$("#region option:selected").text()})`, data);
