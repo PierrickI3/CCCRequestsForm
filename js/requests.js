@@ -242,7 +242,7 @@ async function getDashboard(_token) {
       }
     })
     .always(() => {
-      console.log("getRequests completed");
+      console.log("getDashboard completed");
     });
 }
 
@@ -291,4 +291,3 @@ async function getExport(_region, _product, _segment, _token) {
       console.log("getRequests completed");
     });
 }
-

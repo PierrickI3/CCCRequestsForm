@@ -46,13 +46,12 @@
         <a class="btn btn-light" href="#" onclick="location.reload();"><i class="fa fa-refresh"></i> Refresh</a>
     </div>
 
-
     <div class="container-fluid" id="dashboard">
         <br>
         <div class="form-row">
             <div class="form-group col-sm-12">
                 <div class="form-row">
-                    <div class="form-group col-md-4">
+                    <div class="form-group col-md-3">
                         <label for="region">Region</label>
                         <select id="region" name="region" class="form-control">
                             <option value="" selected>All regions</option>
@@ -62,7 +61,13 @@
                             <option value="NA">North America</option>
                         </select>
                     </div>
-                    <div class="form-group col-md-4">
+                    <div class="form-group col-md-3">
+                        <label for="subRegion">Territory</label>
+                        <select id="subRegion" name="subRegion" class="form-control" required>
+                            <option value="" disabled selected>Select a Territory</option>
+                        </select>
+                    </div>
+                    <div class="form-group col-md-3">
                         <label for="product">Product</label>
                         <select id="product" name="product" class="form-control">
                             <option value="" selected>All products</option>
@@ -72,7 +77,7 @@
                             <option value="PureConnect">PureConnect</option>
                         </select>
                     </div>
-                    <div class="form-group col-md-4">
+                    <div class="form-group col-md-3">
                         <label for="segment">Market Segment</label>
                         <select id="segment" name="segment" class="form-control">
                             <option value="" selected>All</option>
@@ -82,13 +87,21 @@
                         </select>
                     </div>
                 </div>
+
                 <div class="form-row">
                     <div class="form-group col-md-4">
-                        <div class="chart-container" style="width:35vw" id="chart_region_container" name="requests">
+                        <div class="chart-container" style="width:35vw" id="chart_region_container" name="region">
                             <canvas id="chart_region"></canvas>
                         </div>
                     </div>
+                    <div class="form-group col-md-4">
+                        <div class="chart-container" style="width:35vw" id="chart_subRegion_container" name="subRegion">
+                            <canvas id="chart_subRegion"></canvas>
+                        </div>
+                    </div>
+                </div>
 
+                <div class="form-row">
                     <div class="form-group col-md-4">
                         <div class="chart-container" style="width:35vw" id="chart_product_container" name="product">
                             <canvas id="chart_product"></canvas>
@@ -102,8 +115,8 @@
                 </div>
 
                 <div class="form-row">
-                    <div class="form-group col-md-6">
-                        <div class="chart-container" style="width:40vw" id="chart_status_container" name="status">
+                    <div class="form-group col-md-4">
+                        <div class="chart-container" style="width:35vw" id="chart_status_container" name="status">
                             <canvas id="chart_status"></canvas>
                         </div>
                     </div>
@@ -129,6 +142,9 @@
         <button onclick="exportData();" class="admin btn btn-dark" style="float: right;">Export to CSV</button>
         <br><br><br>
     </div>
+
+    <!-- Dictionary -->
+    <script src="js/dictionary.js"></script>
 
     <script>
         if (window.location.href.includes('dev'))
@@ -206,6 +222,18 @@
         }
 
         $("#region").on("change", () => {
+            $("#subRegion").empty();
+            $("<option/>", { value: "" }).text("").appendTo("#subRegion");
+            console.log("Regions:", regions);
+            console.log("Selected Region:", $("#region").val());
+            if (regions[$("#region").val()]) {
+                for (let subregion of regions[$("#region").val()]) {
+                    $("<option/>", { value: subregion }).text(subregion).appendTo("#subRegion");
+                }
+            }
+            init();
+        });
+        $("#subRegion").on("change", () => {
             init();
         });
         $("#product").on("change", () => {
@@ -285,7 +313,6 @@
                 }
             }
 
-
             var ctx = document.getElementById(`chart_${_chartName}`)
             var myDoughnutChart = new Chart(ctx, {
                 type: _chartType,
@@ -300,14 +327,10 @@
                             color: 'black',
                             align: 'center',
                             clamp: true
-
                         }
                     }, scales: scales
                 }
             });
-
-
-
         }
 
         async function init() {
@@ -319,7 +342,6 @@
                     window.open('./index.html', "_self");
                 }
             }
-
 
             // Parse Tasks
             let task_filter = buildFilter('SELECT tasks FROM ? ##', false);
@@ -333,21 +355,27 @@
                 }
             });
 
+            // By Region
+            makeChart('SELECT count(*) as val, region as label FROM ? ## GROUP BY region', false, 'region', 'doughnut', 'By Region', data);
 
-            // ByRegion
-            makeChart('SELECT count(*) as val, region as label FROM ? ## GROUP BY region', false, 'region', 'doughnut', 'Requests', data);
-            // BySegement
-            makeChart('SELECT count(*) as val, segment as label FROM ? ## GROUP BY segment', false, 'segment', 'doughnut', 'By Segment', data);
+            // By Territory
+            console.log('SubRegion:', $("#subRegion").val());
+            if ($("#subRegion").val() && $("#subRegion").val().length > 0) {
+                makeChart(`SELECT count(*) as val, subRegion as label FROM ? WHERE (subRegion = '${$("#subRegion").val()}' ##) GROUP BY subRegion`, true, 'subRegion', 'doughnut', 'By Territory', data);
+            } else {
+                makeChart(`SELECT count(*) as val, subRegion as label FROM ? ## GROUP BY subRegion`, false, 'subRegion', 'doughnut', 'By Territory', data);
+            }
+
+            // By Segment
+            makeChart('SELECT count(*) as val, segment as label FROM ? ## GROUP BY segment', false, 'segment', 'doughnut', `By Segment (${$("#region option:selected").text()})`, data);
 
             // By Product
-            makeChart('SELECT count(*) as val, product as label FROM ? ## GROUP BY product', false, 'product', 'pie', 'By Product', data);
+            makeChart('SELECT count(*) as val, product as label FROM ? ## GROUP BY product', false, 'product', 'pie', `By Product (${$("#region option:selected").text()})`, data);
+
             // By Status for Active and not Delted
-            makeChart("SELECT count(*) as val, status as label FROM ? WHERE (isDeleted = false ##) GROUP BY status", true, 'status', 'pie', 'By status for active requests', data);
-
-
+            makeChart("SELECT count(*) as val, status as label FROM ? WHERE (isDeleted = false ##) GROUP BY status", true, 'status', 'pie', `By status for active requests (${$("#region option:selected").text()})`, data);
 
             // By Request Category / Time
-
             let res = alasql('SELECT count(*) as val, taskCategory as label FROM ? GROUP BY taskCategory', [task_parsed]);
             var labels = [];
             var values1 = [];
@@ -361,7 +389,6 @@
             res.forEach(element => {
                 values2.push(element.val);
             });
-
 
             $('#chart_requestCategory').remove();
             $('#chart_requestCategory_container').append('<canvas id="chart_requestCategory"><canvas>');
@@ -406,7 +433,7 @@
                 options: {
                     title: {
                         display: true,
-                        text: "RequestCategory / Time spent"
+                        text: `RequestCategory / Time spent (${$("#region option:selected").text()})`
                     },
                     scales: {
                         yAxes: [{
@@ -428,7 +455,7 @@
             });
 
             // By RequestType (a'ka taskType)
-            makeChart("SELECT count(*) as val, taskType as label FROM ? WHERE (taskType <> 'undefined') GROUP BY taskType", false, 'requestType', 'bar', 'By task Type', task_parsed, graphClick_taskType);
+            makeChart("SELECT count(*) as val, taskType as label FROM ? WHERE (taskType <> 'undefined') GROUP BY taskType", false, 'requestType', 'bar', `By task Type (${$("#region option:selected").text()})`, task_parsed);
 
         }
 
@@ -500,7 +527,6 @@
                 }, 0);
             }
         }
-
 
         function getUrlParameter(sParam) {
             var sPageURL = window.location.search.substring(1),
