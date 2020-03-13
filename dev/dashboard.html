@@ -455,7 +455,7 @@
             });
 
             // By RequestType (a'ka taskType)
-            makeChart("SELECT count(*) as val, taskType as label FROM ? WHERE (taskType <> 'undefined') GROUP BY taskType", false, 'requestType', 'bar', `By task Type (${$("#region option:selected").text()})`, task_parsed);
+            makeChart("SELECT count(*) as val, taskType as label FROM ? WHERE (taskType <> 'undefined') GROUP BY taskType", false, 'requestType', 'bar', `By task Type (${$("#region option:selected").text()})`, task_parsed, graphClick_taskType);
 
         }
 
