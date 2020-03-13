@@ -377,13 +377,13 @@
             //}
 
             // By Segment
-            makeChart('SELECT count(*) as val, segment as label FROM ? ## GROUP BY segment', false, 'segment', 'doughnut', `By Segment (${$("#region option:selected").text()})`, data);
+            makeChart('SELECT count(*) as val, segment as label FROM ? ## GROUP BY segment', false, 'segment', 'doughnut', 'By Segment', data);
 
             // By Product
-            makeChart('SELECT count(*) as val, product as label FROM ? ## GROUP BY product', false, 'product', 'pie', `By Product (${$("#region option:selected").text()})`, data);
+            makeChart('SELECT count(*) as val, product as label FROM ? ## GROUP BY product', false, 'product', 'pie', 'By Product', data);
 
             // By Status for Active and not Delted
-            makeChart("SELECT count(*) as val, status as label FROM ? WHERE (isDeleted = false ##) GROUP BY status", true, 'status', 'pie', `By status for active requests (${$("#region option:selected").text()})`, data);
+            makeChart("SELECT count(*) as val, status as label FROM ? WHERE (isDeleted = false ##) GROUP BY status", true, 'status', 'pie', 'By status for active requests' , data);
 
             // By Request Category / Time
             let res = alasql('SELECT count(*) as val, taskCategory as label FROM ? GROUP BY taskCategory', [task_parsed]);
@@ -443,20 +443,18 @@
                 options: {
                     title: {
                         display: true,
-                        text: `RequestCategory / Time spent (${$("#region option:selected").text()})`
+                        text: 'RequestCategory / Time spent'
                     },
                     scales: {
                         yAxes: [{
                             ticks: {
                                 min: 0
-
                             }
 
                         }],
                         xAxes: [{
                             ticks: {
                                 min: 0
-
                             }
 
                         }]
@@ -465,7 +463,7 @@
             });
 
             // By RequestType (a'ka taskType)
-            makeChart("SELECT count(*) as val, taskType as label FROM ? WHERE (taskType <> 'undefined') GROUP BY taskType", false, 'requestType', 'bar', `By task Type (${$("#region option:selected").text()})`, task_parsed, graphClick_taskType);
+            makeChart("SELECT count(*) as val, taskType as label FROM ? WHERE (taskType <> 'undefined') GROUP BY taskType", false, 'requestType', 'bar', 'By task Type', task_parsed, graphClick_taskType);
 
         }
 
