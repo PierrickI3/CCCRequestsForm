@@ -64,7 +64,7 @@
                     <div class="form-group col-md-3">
                         <label for="subRegion">Territory</label>
                         <select id="subRegion" name="subRegion" class="form-control" required>
-                            <option value="" disabled selected>Select a Territory</option>
+                            <option value="" selected>All</option>
                         </select>
                     </div>
                     <div class="form-group col-md-3">
@@ -223,7 +223,7 @@
 
         $("#region").on("change", () => {
             $("#subRegion").empty();
-            $("<option/>", { value: "" }).text("").appendTo("#subRegion");
+            $("<option/>", { value: "" }).text("All").appendTo("#subRegion");
             console.log("Regions:", regions);
             console.log("Selected Region:", $("#region").val());
             if (regions[$("#region").val()]) {
@@ -231,6 +231,7 @@
                     $("<option/>", { value: subregion }).text(subregion).appendTo("#subRegion");
                 }
             }
+
             init();
         });
         $("#subRegion").on("change", () => {
@@ -254,8 +255,7 @@
             else
                 filter = " AND "
 
-
-            if ($('#region').val() != "" || $('#product').val() != "" || $('#segment').val() != "") {
+            if ($('#region').val() != "" || $('#product').val() != "" || $('#segment').val() != "" || $('#subRegion').val() != "") {
                 if ($('#region').val() != "") {
                     filter = filter + ` region = '${$('#region').val()}' `
                     bAND = true;
@@ -274,6 +274,13 @@
                     filter = filter + `segment = '${$('#segment').val()}' `;
                     bEmpty = false;
                 }
+
+                if ($('#subRegion').val() != "") {
+                    if (bAND) filter = filter + " AND ";
+                    filter = filter + `subRegion = '${$('#subRegion').val()}' `;
+                    bEmpty = false;
+                }
+
 
             }
             if (!_isWHERE) filter = filter + ")";
@@ -464,9 +471,10 @@
             let exportRegion = $('#region').val() == "" ? undefined : $('#region').val();
             let exportProduct = $('#product').val() == "" ? undefined : $('#product').val();
             let exportSegment = $('#segment').val() == "" ? undefined : $('#segment').val();
+            let exportSubRegion = $('#subRegion').val() == "" ? undefined : $('#subRegion').val();
             let myExportData;
             try {
-                myExportData = await getExport(exportRegion, exportProduct, exportSegment, gcToken);
+                myExportData = await getExport(exportRegion, exportSubRegion, exportProduct, exportSegment, gcToken);
                 if (myExportData.length == 0) {
                     bootbox.alert("Nothing to export...");
                     return

@@ -156,7 +156,7 @@ async function getRequests(region = "", _token) {
   if ($('#btnOnlyDeleted')[0].classList.contains('btn-success'))
     onlyDeleted = "&onlyDeleted=true";
 
-  if (region == "super-user") 
+  if (region == "super-user")
     region = "ALL";
 
   return await $.ajax({
@@ -246,7 +246,7 @@ async function getDashboard(_token) {
     });
 }
 
-async function getExport(_region, _product, _segment, _token) {
+async function getExport(_region, _subRegion, _product, _segment, _token) {
 
   var sFilter = "";
 
@@ -254,41 +254,42 @@ async function getExport(_region, _product, _segment, _token) {
     sFilter = sFilter + `region=${_region}&`;
   if (_product)
     sFilter = sFilter + `product=${_product}&`;
-
-  if (_segment) {
+  if (_segment)
     sFilter = sFilter + `segment=${_segment}&`;
-  }
+  if (_subRegion)
+    sFilter = sFilter + `subRegion=${_subRegion}&`;
 
-  // remove last char
-  /*
-  if (sFilter.length > 0)
-    sFilter = "?"
-  else sFilter = sFilter + "&" //+ sFilter.substring(0, sFilter.length - 1);
+
+// remove last char
+/*
+if (sFilter.length > 0)
+  sFilter = "?"
+else sFilter = sFilter + "&" //+ sFilter.substring(0, sFilter.length - 1);
 */
-  console.log(`getExport with filter: ${sFilter}`);
+console.log(`getExport with filter: ${sFilter}`);
 
-  return await $.ajax({
-    url: `${apiBasePath}/export?${sFilter}token=${_token}`,
-    method: "GET",
-    contentType: 'application/json',
-    dataType: "json"
-  })
-    .done((data, textStatus, jqXHR) => {
-      try {
-        if (jqXHR.status === 200) {
-          console.log(jqXHR);
-          return data;
-        } else {
-          showMessage("Unexpected error: " + textStatus, true);
-          reject(textStatus);
-        }
-      } catch (error) {
-        console.error(error);
-        reject(error);
+return await $.ajax({
+  url: `${apiBasePath}/export?${sFilter}token=${_token}`,
+  method: "GET",
+  contentType: 'application/json',
+  dataType: "json"
+})
+  .done((data, textStatus, jqXHR) => {
+    try {
+      if (jqXHR.status === 200) {
+        console.log(jqXHR);
+        return data;
+      } else {
+        showMessage("Unexpected error: " + textStatus, true);
+        reject(textStatus);
       }
-    })
-    .always(() => {
-      console.log("getRequests completed");
-    });
+    } catch (error) {
+      console.error(error);
+      reject(error);
+    }
+  })
+  .always(() => {
+    console.log("getRequests completed");
+  });
 }
 
