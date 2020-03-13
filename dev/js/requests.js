@@ -242,7 +242,7 @@ async function getDashboard(_token) {
       }
     })
     .always(() => {
-      console.log("getRequests completed");
+      console.log("getDashboard completed");
     });
 }
 
