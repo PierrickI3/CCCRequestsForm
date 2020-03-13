@@ -1757,7 +1757,7 @@
       "id": "ce29c766-fe23-4d90-a9e4-d1be721912b1",
       "comment": "",
       "command": "open",
-      "target": "https://localhost/index.html",
+      "target": "https://localhost/dev/index.html",
       "targets": [],
       "value": ""
     }, {
