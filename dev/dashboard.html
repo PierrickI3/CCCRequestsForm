@@ -89,34 +89,34 @@
                 </div>
 
                 <div class="form-row">
-                    <div class="form-group col-md-4">
-                        <div class="chart-container" style="width:35vw" id="chart_region_container" name="region">
+                    <div class="form-group col-md-5">
+                        <div class="chart-container" style="width:40vw" id="chart_region_container" name="region">
                             <canvas id="chart_region"></canvas>
                         </div>
                     </div>
-                    <div class="form-group col-md-4">
-                        <div class="chart-container" style="width:35vw" id="chart_subRegion_container" name="subRegion">
+                    <div class="form-group col-md-5">
+                        <div class="chart-container" style="width:40vw" id="chart_subRegion_container" name="subRegion">
                             <canvas id="chart_subRegion"></canvas>
                         </div>
                     </div>
                 </div>
 
                 <div class="form-row">
-                    <div class="form-group col-md-4">
-                        <div class="chart-container" style="width:35vw" id="chart_product_container" name="product">
+                    <div class="form-group col-md-5">
+                        <div class="chart-container" style="width:40vw" id="chart_product_container" name="product">
                             <canvas id="chart_product"></canvas>
                         </div>
                     </div>
-                    <div class="form-group col-md-4">
-                        <div class="chart-container" style="width:35vw" id="chart_segment_container" name="segment">
+                    <div class="form-group col-md-5">
+                        <div class="chart-container" style="width:40vw" id="chart_segment_container" name="segment">
                             <canvas id="chart_segment"></canvas>
                         </div>
                     </div>
                 </div>
 
                 <div class="form-row">
-                    <div class="form-group col-md-4">
-                        <div class="chart-container" style="width:35vw" id="chart_status_container" name="status">
+                    <div class="form-group col-md-5">
+                        <div class="chart-container" style="width:40vw" id="chart_status_container" name="status">
                             <canvas id="chart_status"></canvas>
                         </div>
                     </div>
@@ -335,7 +335,10 @@
                             align: 'center',
                             clamp: true
                         }
-                    }, scales: scales
+                    }, scales: scales,
+                    legend: {
+                        position: 'right'
+                    }
                 }
             });
         }
