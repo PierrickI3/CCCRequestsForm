@@ -370,7 +370,7 @@
             //if ($("#subRegion").val() && $("#subRegion").val().length > 0) {
             //    makeChart(`SELECT count(*) as val, subRegion as label FROM ? WHERE (subRegion = '${$("#subRegion").val()}' ##) GROUP BY subRegion`, true, 'subRegion', 'doughnut', 'By Territory', data);
             //} else {
-            makeChart(`SELECT count(*) as val, subRegion as label FROM ? ## GROUP BY subRegion`, false, 'subRegion', 'doughnut', 'By Territory', data);
+            makeChart(`SELECT count(*) as val, subRegion as label FROM ? ## GROUP BY subRegion`, false, 'subRegion', 'pie', 'By Territory', data);
             //}
 
             // By Segment
