@@ -4,13 +4,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no">
-    <title>Document</title>
+    <title>CCC Request Form</title>
     <link rel="shortcut icon" href="/favicon.ico">
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/alasql"></script>
     <script src="https://chartjs-plugin-datalabels.netlify.com/chartjs-plugin-datalabels.js"></script>
     <script src="js/requests.js"></script>
+    <link type="text/css" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jsgrid/1.5.3/jsgrid.min.css" />
+    <link type="text/css" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jsgrid/1.5.3/jsgrid-theme.min.css" />
+
+
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
@@ -30,6 +34,7 @@
 </head>
 
 <body>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jsgrid/1.5.3/jsgrid.min.js"></script>
     <img class="overlay" src="./images/devmode.png" id="devModeImage" hidden />
     <nav class="navbar navbar-dark bg-dark">
         <a class="navbar-brand" href="#">
@@ -132,11 +137,17 @@
 
                 <div class="form-row">
                     <div class="form-group col-md-12">
-                        <div class="chart-container" style="width:90vw" id="chart_requestType_container" name="requestType">
+                        <div class="chart-container" style="width:80vw" id="chart_requestType_container" name="requestType">
                             <canvas id="chart_requestType"></canvas>
                         </div>
                     </div>
                 </div>
+            </div>
+            <div class="col-12 admin">
+                <center>
+                    <h5 id="selectedTaskType">Task Type: Not selected </h5>
+                </center>
+                <div id="basicgrid"></div>
             </div>
         </div>
         <button onclick="exportData();" class="admin btn btn-dark" style="float: right;">Export to CSV</button>
@@ -150,7 +161,10 @@
         if (window.location.href.includes('dev'))
             $("#devModeImage").removeAttr('hidden');
 
-        let task_parsed = [];
+
+        let task_parsed = [], filter = "";
+
+
         let gcToken = localStorage.getItem("gcToken");
         if (!gcToken)
             window.open('./index.html', "_self");
@@ -176,8 +190,13 @@
         document.getElementById("reviewRequestsButton").setAttribute("href", `./requests.html?region=${region}`);
 
         function graphClick_taskType(event, array) {
-            if (array && array.length > 0 && array[0]._model)
+            if (array && array.length > 0 && array[0]._model) {
                 console.log(array[0]._model.label);
+                filter = array[0]._model.label;
+                document.getElementById('selectedTaskType').innerHTML = `TaskType: ${array[0]._model.label}`;
+                refreshGrid();
+            }
+
 
         }
         function prepareDataForSQL(_sql, _data) {
@@ -233,6 +252,7 @@
             }
 
             init();
+
         });
         $("#subRegion").on("change", () => {
             init();
@@ -243,6 +263,158 @@
         $("#segment").on("change", () => {
             init();
         });
+
+        function refreshGrid() {
+            $("#basicgrid").jsGrid("loadData")
+        }
+
+
+
+        function showRequests() {
+            console.log('Showing requests by TaskType...');
+
+            try {
+
+                jsGrid.setDefaults({ tableClass: "jsgrid-table table table-striped table-hover" });
+                jsGrid.setDefaults("text", {
+                    _createTextBox: function () {
+                        return $("<input>").attr("type", "text").attr("class", "form-control input-sm")
+                    }
+                });
+                jsGrid.setDefaults("number", {
+                    _createTextBox: function () {
+                        return $("<input>").attr("type", "number").attr("class", "form-control input-sm")
+                    }
+                });
+                jsGrid.setDefaults("textarea", {
+                    _createTextBox: function () {
+                        return $("<input>").attr("type", "textarea").attr("class", "form-control")
+                    }
+                });
+                jsGrid.setDefaults("control", {
+                    _createGridButton: function (cls, tooltip, clickHandler) {
+                        var grid = this._grid;
+                        return $("<button>").addClass(this.buttonClass).addClass(cls).attr({
+                            type: "button",
+                            title: tooltip
+                        }).on("click", function (e) {
+                            clickHandler(grid, e)
+                        })
+                    }
+                });
+                jsGrid.setDefaults("select", {
+                    _createSelect: function () {
+                        var $result = $("<select>").attr("class", "form-control input-sm"),
+                            valueField = this.valueField,
+                            textField = this.textField,
+                            selectedIndex = this.selectedIndex;
+                        return $.each(this.items, function (index, item) {
+                            var value = valueField ? item[valueField] : index,
+                                text = textField ? item[textField] : item,
+                                $option = $("<option>").attr("value", value).text(text).appendTo($result);
+                            $option.prop("selected", selectedIndex === index)
+                        }), $result
+                    }
+                });
+
+                $("#basicgrid").jsGrid({
+                    height: "40vh",
+                    width: "100%",
+                    filtering: false,
+                    editing: false,
+                    sorting: true,
+                    paging: true,
+                    autoload: true,
+                    pageSize: 25,
+                    pageButtonCount: 5,
+                    loadIndication: true,
+                    loadIndicationDelay: 500,
+                    loadMessage: "Loading...",
+                    loadShading: true,
+                    autoload: true,
+                    rowClick: function (args) {
+
+                    },
+                    rowClass: function (item, itemIndex) {
+
+                        if (item.acceptedRejected == "Accepted") {
+                            return "task-accepted"
+                        } else if (item.acceptedRejected == "Rejected")
+                            return "task-rejected"
+                        else
+                            return
+
+
+                    },
+                    deleteItem: async function (deletingRequest) {
+
+                    },
+                    controller: {
+                        loadData: async function () {
+                            console.log('display data for TaskType: ', filter);
+                            return $.grep(data, function (request) {
+                                return (
+                                     ($('#region').val() === "" || request.region == $('#region').val())
+                                    && ($('#subRegion').val() === "" || request.subRegion == $('#subRegion').val())
+                                    && ($('#product').val() === "" || request.product == $('#product').val())
+                                    && ($('#segment').val() === "" || request.segment == $('#segment').val())
+                                    && (!filter || (request.tasks.find(o => o.taskType === filter)) )
+                                )
+
+                            });
+
+                        }
+                    },
+                    noDataContent: "No Requests",
+                    fields: [
+                        {
+                            name: "id",
+                            title: "Id",
+                            type: "text",
+                            width: "auto",
+                            itemTemplate: function (value, item) {
+                                return `<small>${value}</small>`;
+                            },
+                            visible: false
+                        }, {
+                            name: "region",
+                            title: "Region",
+                            type: "text",
+                            width: "auto",
+                            visible: region == 'super-user' ? true : false
+                        }, {
+                            name: "subRegion",
+                            title: "Territory",
+                            type: "text",
+                            width: "auto"
+                        }, {
+                            name: "product",
+                            title: "Product",
+                            type: "text",
+                            width: "auto"
+                        },
+                        {
+                            name: "segment",
+                            title: "Market Segment",
+                            type: "text",
+                            width: "auto"
+                        },{
+                            name: "updatedAt",
+                            title: "Last Updated",
+                            type: "text",
+                            itemTemplate: function (value, item) {
+                                return `${moment(value).fromNow()}`;
+                            },
+                            width: "auto",
+                            filtering: false
+                        }]
+
+                });
+
+            } catch (error) {
+                console.error(error);
+            }
+        }
 
 
         function buildFilter(_sql, _isWHERE) {
@@ -343,6 +515,8 @@
             });
         }
 
+        showRequests();
+
         async function init() {
 
             try {
@@ -365,6 +539,10 @@
                 }
             });
 
+            filter = undefined;
+            document.getElementById('selectedTaskType').innerHTML = "Task Type: Not Selected";
+            refreshGrid();
+
             // By Region
             makeChart('SELECT count(*) as val, region as label FROM ? ## GROUP BY region', false, 'region', 'doughnut', 'By Region', data);
 
@@ -383,7 +561,7 @@
             makeChart('SELECT count(*) as val, product as label FROM ? ## GROUP BY product', false, 'product', 'pie', 'By Product', data);
 
             // By Status for Active and not Delted
-            makeChart("SELECT count(*) as val, status as label FROM ? WHERE (isDeleted = false ##) GROUP BY status", true, 'status', 'pie', 'By status for active requests' , data);
+            makeChart("SELECT count(*) as val, status as label FROM ? WHERE (isDeleted = false ##) GROUP BY status", true, 'status', 'pie', 'By status for active requests', data);
 
             // By Request Category / Time
             let res = alasql('SELECT count(*) as val, taskCategory as label FROM ? GROUP BY taskCategory', [task_parsed]);
