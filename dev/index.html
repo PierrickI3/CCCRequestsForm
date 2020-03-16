@@ -245,6 +245,7 @@
 
             gcToken = userInfo.token
             localStorage.setItem("gcToken", gcToken);
+            localStorage.setItem("userName", userInfo.name);
 
             // Populate user info
             $("#requesterName").val(userInfo.name);
