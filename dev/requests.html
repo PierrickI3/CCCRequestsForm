@@ -504,17 +504,31 @@
                         loadData: async function (filter) {
                             let hasFilter = false;
 
-                            if ($('#btnAssignedToMe')[0].classList.contains('btn-success')) {
-                                // $("#basicgrid").data('JSGrid').search({ teamMembers: userName });
-                                filter['teamMembers'] = userName;
+                            // Check if Assigned to Me is filled in!
+                            if ($("#basicgrid").data('JSGrid').fields[6].filterControl.val() == userName) {
+                                filter['teamMembers'] = userName
                             }
+
+                            // Closed/Deleted/Refresh -> Remove filter
+                            /*
+                            if ($('#btnOnlyClosed')[0].classList.contains('btn-success') ||  $('#btnOnlyDeleted')[0].classList.contains('btn-success')) {
+                                $('#btnAssignedToMe')[0].classList.remove('btn-success');
+                                filter = {};
+                            }
+                            */
 
                             for (var field in filter) {
                                 if (filter[field]) {
                                     hasFilter = true;
                                 }
                             }
-                            console.log(filter);
+
+                            if (filter['teamMembers'] !== userName)
+                                $('#btnAssignedToMe')[0].classList.remove('btn-success');
+                            else
+                                $('#btnAssignedToMe')[0].classList.add('btn-success');
+
+                            console.log(`filter: ${JSON.stringify(filter)}`);
                             if (hasFilter) {
                                 return $.grep(requests.requests, function (request) {
                                     return (!filter.id || request.id.toLowerCase().indexOf(filter.id.toLowerCase()) > -1)
@@ -590,10 +604,10 @@
                         },
                         {
                             name: "teamMembers",
-                            title: "teamMembers",
+                            title: "Team Members",
                             type: "text",
                             width: "auto",
-                            visible: false
+                            visible: true
                         }, {
                             name: "partnerCustomerName",
                             title: "Partner/Customer",
@@ -646,6 +660,7 @@
 
                 });
 
+                // Need to remove hide filter by default, as Assigned to Me use it
                 $(document.getElementsByClassName('jsgrid-search-mode-button')[0].click());
 
             } catch (error) {
@@ -854,10 +869,6 @@
             initModal();
             refreshGrid();
 
-
-
-
-
         });
 
         let validator = $("#editModal #modal-form").validate({
@@ -867,14 +878,27 @@
 
         $("#btnAssignedToMe").on("click", async (e) => {
             if ($('#btnAssignedToMe')[0].classList.contains('btn-success')) {
+                //$(document.getElementsByClassName('jsgrid-search-mode-button')[0].click());
                 $('#btnAssignedToMe')[0].classList.remove('btn-success');
-                $("#basicgrid").data('JSGrid').search();
+                $("#basicgrid").data('JSGrid').fields[6].filterControl[0].value = "";
+
+                refreshGrid();
             }
 
             else {
                 $('#btnAssignedToMe')[0].classList.add('btn-success');
-                $("#basicgrid").data('JSGrid').search({ teamMembers: userName });
+                $("#basicgrid").data('JSGrid').fields[6].filterControl[0].value = userName;
+                $("#basicgrid").data('JSGrid').fields.forEach(function (aFilter) {
+                    if (aFilter.filterControl) {
+                        if (aFilter.name == "teamMembers")
+                            aFilter.filterControl[0].value = userName
+                        else
+                            aFilter.filterControl[0].value = ''
+                    }
+                })
 
+                //refreshGrid();
+                $("#basicgrid").data('JSGrid').search({ teamMembers: userName });
             }
 
         });
