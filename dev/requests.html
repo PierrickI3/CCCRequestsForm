@@ -539,6 +539,8 @@
                                         && (!filter.requesterName || request.requesterName.toLowerCase().indexOf(filter.requesterName.toLowerCase()) > -1)
                                         && (!filter.partnerCustomerName || request.partnerCustomerName.toLowerCase().indexOf(filter.partnerCustomerName.toLowerCase()) > -1)
                                         && (!filter.teamMembers || request.teamMembers.toLowerCase().indexOf(filter.teamMembers.toLowerCase()) > -1)
+                                        && (!$('#btnOnlyClosed')[0].classList.contains('btn-success') || request.status === "Closed")
+                                        && (!$('#btnOnlyDeleted')[0].classList.contains('btn-success') || request.isDeleted)
                                 });
                             } else {
 
