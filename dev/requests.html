@@ -87,6 +87,10 @@
                                     <label>Created Date</label>
                                     <input disabled type="text" class="form-control" id="createdDate" name="createdDate" />
                                 </div>
+                                <div class="form-group col-md-5">
+                                    <label>Last Updated</label>
+                                    <input disabled type="text" class="form-control" id="updatedDate" name="updatedDate" />
+                                </div>
                             </div>
 
                             <div class="form-row">
@@ -332,6 +336,7 @@
         function initModal() {
             $("#editModal #id").text("");
             $("#editModal #createdDate").val("");
+            $("#editModal #updatedDate").val("");
             $("#editModal #region").val("");
             $("#editModal #region").change();
             $("#editModal #subRegion").val("");
@@ -528,39 +533,37 @@
                             else
                                 $('#btnAssignedToMe')[0].classList.add('btn-success');
 
-                            console.log(`filter: ${JSON.stringify(filter)}`);
-                            if (hasFilter) {
-                                return $.grep(requests.requests, function (request) {
-                                    return (!filter.id || request.id.toLowerCase().indexOf(filter.id.toLowerCase()) > -1)
-                                        && (!filter.region || request.region.toLowerCase().indexOf(filter.region.toLowerCase()) > -1)
-                                        && (!filter.subRegion || request.subRegion.toLowerCase().indexOf(filter.subRegion.toLowerCase()) > -1)
-                                        && (!filter.product || request.product.toLowerCase().indexOf(filter.product.toLowerCase()) > -1)
-                                        && (!filter.segment || request.segment.toLowerCase().indexOf(filter.segment.toLowerCase()) > -1)
-                                        && (!filter.requesterName || request.requesterName.toLowerCase().indexOf(filter.requesterName.toLowerCase()) > -1)
-                                        && (!filter.partnerCustomerName || request.partnerCustomerName.toLowerCase().indexOf(filter.partnerCustomerName.toLowerCase()) > -1)
-                                        && (!filter.teamMembers || request.teamMembers.toLowerCase().indexOf(filter.teamMembers.toLowerCase()) > -1)
-                                        && (!$('#btnOnlyClosed')[0].classList.contains('btn-success') || request.status === "Closed")
-                                        && (!$('#btnOnlyDeleted')[0].classList.contains('btn-success') || request.isDeleted)
+                            try {
+                                requests.requests = await getRequests(region, gcToken);
+
+                                // set default values for undefined/optional item. Without it filtering fails
+                                requests.requests.forEach(function (aItem) {
+                                    if (!aItem.teamMembers)
+                                        aItem.teamMembers = 'n/a';
+                                    if (!aItem.partnerCustomerName)
+                                        aItem.partnerCustomerName = 'n/a';
                                 });
-                            } else {
 
-                                try {
-                                    requests.requests = await getRequests(region, gcToken);
-
-                                    // set default values for undefined/optional item. Without it filtering fails
-                                    requests.requests.forEach(function (aItem) {
-                                        if (!aItem.teamMembers)
-                                            aItem.teamMembers = 'n/a';
-                                        if (!aItem.partnerCustomerName)
-                                            aItem.partnerCustomerName = 'n/a';
-
+                                console.log(`filter: ${JSON.stringify(filter)}`);
+                                if (hasFilter) {
+                                    return $.grep(requests.requests, function (request) {
+                                        return (!filter.id || request.id.toLowerCase().indexOf(filter.id.toLowerCase()) > -1)
+                                            && (!filter.region || request.region.toLowerCase().indexOf(filter.region.toLowerCase()) > -1)
+                                            && (!filter.subRegion || request.subRegion.toLowerCase().indexOf(filter.subRegion.toLowerCase()) > -1)
+                                            && (!filter.product || request.product.toLowerCase().indexOf(filter.product.toLowerCase()) > -1)
+                                            && (!filter.segment || request.segment.toLowerCase().indexOf(filter.segment.toLowerCase()) > -1)
+                                            && (!filter.requesterName || request.requesterName.toLowerCase().indexOf(filter.requesterName.toLowerCase()) > -1)
+                                            && (!filter.partnerCustomerName || request.partnerCustomerName.toLowerCase().indexOf(filter.partnerCustomerName.toLowerCase()) > -1)
+                                            && (!filter.teamMembers || request.teamMembers.toLowerCase().indexOf(filter.teamMembers.toLowerCase()) > -1)
+                                            && (!$('#btnOnlyClosed')[0].classList.contains('btn-success') || request.status === "Closed")
+                                            && (!$('#btnOnlyDeleted')[0].classList.contains('btn-success') || request.isDeleted)
                                     });
-
+                                } else {
                                     return requests.requests;
-                                } catch (error) {
-                                    if (error.status == 401) {
-                                        window.open('./index.html', "_self");
-                                    }
+                                }
+                            } catch (error) {
+                                if (error.status == 401) {
+                                    window.open('./index.html', "_self");
                                 }
                             }
                         }
@@ -680,6 +683,7 @@
 
             $("#editModal #id").text(request.id);
             $("#editModal #createdDate").val(moment(request.createdAt).format('LLLL'));
+            $("#editModal #updatedDate").val(moment(request.updatedAt).format('LLLL'));
             $("#editModal #region").val(request.region);
             $("#editModal #region").change();
             $("#editModal #subRegion").val(request.subRegion);
@@ -728,7 +732,7 @@
                 $("#btnAcceptRequest").attr("hidden", false);
                 $("#btnRestore").attr("hidden", true);
                 $("#createdDate").attr("disabled", true);
-
+                $("#updatedDate").attr("disabled", true);
             }
 
             if (request.acceptedRejected == "Accepted") {
@@ -868,9 +872,8 @@
         });
 
         $('#editModal').on('hidden.bs.modal', async () => {
-            initModal();
             refreshGrid();
-
+            initModal();
         });
 
         let validator = $("#editModal #modal-form").validate({
