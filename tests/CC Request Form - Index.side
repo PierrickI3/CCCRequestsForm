@@ -2,7 +2,7 @@
   "id": "b512ff3f-a0db-480a-af29-58363a54af62",
   "version": "2.0",
   "name": "CC Request Form - Index",
-  "url": "https://localhost/index.html",
+  "url": "https://localhost/dev/requests.html?region=super-user",
   "tests": [{
     "id": "e2fc74b4-a4aa-462b-9aa6-25e7fc0d94a4",
     "name": "Production - Region - Should have an \"EMEA\" entry",
@@ -1807,6 +1807,100 @@
       ],
       "value": "30000"
     }]
+  }, {
+    "id": "8e6c3d3d-e9e2-4e67-97f3-bb199dcd8d65",
+    "name": "Production - SUPER-USER - Requests should appear in the requests page",
+    "commands": [{
+      "id": "360f9e96-cfde-45b2-ad3e-8f2948996ddc",
+      "comment": "",
+      "command": "open",
+      "target": "https://localhost/requests.html?region=super-user",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "2ce8c887-ab05-421e-b16d-c7d1f02d9751",
+      "comment": "Wait for first column header to appear",
+      "command": "waitForElementVisible",
+      "target": "css=.jsgrid-header-cell:nth-child(1)",
+      "targets": [
+        ["css=.jsgrid-header-cell:nth-child(1)", "css:finder"],
+        ["xpath=//div[@id='basicgrid']/div/table/tr/th", "xpath:idRelative"],
+        ["xpath=//th", "xpath:position"],
+        ["xpath=//th[contains(.,'Region')]", "xpath:innerText"]
+      ],
+      "value": "30000"
+    }, {
+      "id": "55f67d2f-8f6b-4278-8a49-c659a4967c40",
+      "comment": "At least one request should be present",
+      "command": "waitForElementVisible",
+      "target": "xpath=//div[@id='basicgrid']/div[2]/table/tbody/tr/td[2]",
+      "targets": [
+        ["css=.jsgrid-selected-row > .jsgrid-cell:nth-child(2)", "css:finder"],
+        ["xpath=//div[@id='basicgrid']/div[2]/table/tbody/tr/td[2]", "xpath:idRelative"],
+        ["xpath=//tbody/tr/td[2]", "xpath:position"],
+        ["xpath=//td[contains(.,'East')]", "xpath:innerText"]
+      ],
+      "value": "30000"
+    }, {
+      "id": "24ef3d18-fdc6-4970-b602-d320384bdb4b",
+      "comment": "Delete icon should be visible",
+      "command": "waitForElementVisible",
+      "target": "xpath=(//button[@type='button'])[5]",
+      "targets": [
+        ["css=.jsgrid-selected-row .jsgrid-button", "css:finder"],
+        ["xpath=(//button[@type='button'])[5]", "xpath:attributes"],
+        ["xpath=//div[@id='basicgrid']/div[2]/table/tbody/tr/td[11]/button", "xpath:idRelative"],
+        ["xpath=//tbody/tr/td[11]/button", "xpath:position"]
+      ],
+      "value": "30000"
+    }]
+  }, {
+    "id": "d95244dd-28b4-4e70-ab50-c8a0d6364aec",
+    "name": "Dev - SUPER-USER - Requests should appear in the requests page",
+    "commands": [{
+      "id": "8ad54de4-ba03-4c98-a954-3a9d540394a3",
+      "comment": "",
+      "command": "open",
+      "target": "https://localhost/dev/requests.html?region=super-user",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "e5df976c-3b96-4444-9b70-06f72c204e1d",
+      "comment": "Wait for first column header to appear",
+      "command": "waitForElementVisible",
+      "target": "css=.jsgrid-header-cell:nth-child(1)",
+      "targets": [
+        ["css=.jsgrid-header-cell:nth-child(1)", "css:finder"],
+        ["xpath=//div[@id='basicgrid']/div/table/tr/th", "xpath:idRelative"],
+        ["xpath=//th", "xpath:position"],
+        ["xpath=//th[contains(.,'Region')]", "xpath:innerText"]
+      ],
+      "value": "30000"
+    }, {
+      "id": "526a6f33-9443-4083-be22-3774921e9779",
+      "comment": "At least one request should be present",
+      "command": "waitForElementVisible",
+      "target": "xpath=//div[@id='basicgrid']/div[2]/table/tbody/tr/td[2]",
+      "targets": [
+        ["css=.jsgrid-selected-row > .jsgrid-cell:nth-child(2)", "css:finder"],
+        ["xpath=//div[@id='basicgrid']/div[2]/table/tbody/tr/td[2]", "xpath:idRelative"],
+        ["xpath=//tbody/tr/td[2]", "xpath:position"],
+        ["xpath=//td[contains(.,'East')]", "xpath:innerText"]
+      ],
+      "value": "30000"
+    }, {
+      "id": "2613a6f1-6c58-4577-af10-74a7d7e28e54",
+      "comment": "Delete icon should be visible",
+      "command": "waitForElementVisible",
+      "target": "xpath=(//button[@type='button'])[5]",
+      "targets": [
+        ["css=.jsgrid-selected-row .jsgrid-button", "css:finder"],
+        ["xpath=(//button[@type='button'])[5]", "xpath:attributes"],
+        ["xpath=//div[@id='basicgrid']/div[2]/table/tbody/tr/td[11]/button", "xpath:idRelative"],
+        ["xpath=//tbody/tr/td[11]/button", "xpath:position"]
+      ],
+      "value": "30000"
+    }]
   }],
   "suites": [{
     "id": "88dae628-2772-4c65-b363-4660e52a1a40",
@@ -1814,7 +1908,7 @@
     "persistSession": false,
     "parallel": false,
     "timeout": 300,
-    "tests": ["e2fc74b4-a4aa-462b-9aa6-25e7fc0d94a4", "e4766b2d-876f-4a3d-b6ec-7aa8c745db29", "08918db6-21bf-4121-b3da-37b3c2a34aa4", "da498001-3595-4e40-bc2d-2728043aa40d", "9d1b5828-0fb6-425b-a652-7bfb47356388", "b5feaeb3-a33a-45f6-acc8-e051b4ae8bab", "c8299f20-8cf0-4c8a-923e-e1f40d0cf4ee"]
+    "tests": ["e2fc74b4-a4aa-462b-9aa6-25e7fc0d94a4", "e4766b2d-876f-4a3d-b6ec-7aa8c745db29", "08918db6-21bf-4121-b3da-37b3c2a34aa4", "da498001-3595-4e40-bc2d-2728043aa40d", "9d1b5828-0fb6-425b-a652-7bfb47356388", "b5feaeb3-a33a-45f6-acc8-e051b4ae8bab", "c8299f20-8cf0-4c8a-923e-e1f40d0cf4ee", "8e6c3d3d-e9e2-4e67-97f3-bb199dcd8d65"]
   }, {
     "id": "d7a91955-d95e-4de2-a030-1c89037ce6bc",
     "name": "Dev",
@@ -1823,6 +1917,6 @@
     "timeout": 300,
     "tests": ["9271e4d1-625c-4a2f-bfa3-0c9764e2d1eb", "37582b4b-6004-402b-a5d4-28f9722b8af3", "319c890e-f905-4904-af82-dd5650ac13fd", "edd345c2-58ff-49e8-b52b-f464513e46cb", "d1000cc4-b8eb-404d-9314-409d0a43a882", "99e5e216-fd84-48e6-b9e9-ec2e88da748f", "ed8f0de3-10af-412d-a5f3-b6ca92e6d18e"]
   }],
-  "urls": ["https://localhost/index.html", "https://localhost/dev/index.html"],
+  "urls": ["https://localhost/index.html", "https://localhost/dev/index.html", "https://localhost/requests.html?region=super-user", "https://localhost/dev/requests.html?region=super-user"],
   "plugins": []
 }
