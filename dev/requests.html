@@ -357,12 +357,27 @@
 
         function refreshGrid() {
             $("#basicgrid").jsGrid("loadData");
+
         }
 
         $("#refresh").on("click", (e) => {
             e.preventDefault();
             refreshGrid();
         });
+
+        /*
+        $("#basicgrid").jsGrid({
+            onRefreshed: function (args) {
+                console.log('refreshed');
+                console.log(args);
+
+                if ($('#btnAssignedToMe')[0].classList.contains('btn-success')) {
+                    $("#basicgrid").data('JSGrid').search({ teamMembers: userName });
+                }
+
+            }
+        });
+        */
 
         function navigateToSFLink() {
 
@@ -488,6 +503,12 @@
                     controller: {
                         loadData: async function (filter) {
                             let hasFilter = false;
+
+                            if ($('#btnAssignedToMe')[0].classList.contains('btn-success')) {
+                                // $("#basicgrid").data('JSGrid').search({ teamMembers: userName });
+                                filter['teamMembers'] = userName;
+                            }
+
                             for (var field in filter) {
                                 if (filter[field]) {
                                     hasFilter = true;
@@ -566,6 +587,13 @@
                             title: "Requester Name",
                             type: "text",
                             width: "auto"
+                        },
+                        {
+                            name: "teamMembers",
+                            title: "teamMembers",
+                            type: "text",
+                            width: "auto",
+                            visible: false
                         }, {
                             name: "partnerCustomerName",
                             title: "Partner/Customer",
@@ -823,8 +851,13 @@
         });
 
         $('#editModal').on('hidden.bs.modal', async () => {
-            refreshGrid();
             initModal();
+            refreshGrid();
+
+
+
+
+
         });
 
         let validator = $("#editModal #modal-form").validate({
