@@ -95,12 +95,12 @@
 
                 <div class="form-row">
                     <div class="form-group col-md-5">
-                        <div class="chart-container" style="width:40vw" id="chart_region_container" name="region">
+                        <div class="chart-container" style="width:50vw" id="chart_region_container" name="region">
                             <canvas id="chart_region"></canvas>
                         </div>
                     </div>
                     <div class="form-group col-md-5">
-                        <div class="chart-container" style="width:40vw" id="chart_subRegion_container" name="subRegion">
+                        <div class="chart-container" style="width:50vw" id="chart_subRegion_container" name="subRegion">
                             <canvas id="chart_subRegion"></canvas>
                         </div>
                     </div>
@@ -108,12 +108,12 @@
 
                 <div class="form-row">
                     <div class="form-group col-md-5">
-                        <div class="chart-container" style="width:40vw" id="chart_product_container" name="product">
+                        <div class="chart-container" style="width:50vw" id="chart_product_container" name="product">
                             <canvas id="chart_product"></canvas>
                         </div>
                     </div>
                     <div class="form-group col-md-5">
-                        <div class="chart-container" style="width:40vw" id="chart_segment_container" name="segment">
+                        <div class="chart-container" style="width:50vw" id="chart_segment_container" name="segment">
                             <canvas id="chart_segment"></canvas>
                         </div>
                     </div>
@@ -121,8 +121,13 @@
 
                 <div class="form-row">
                     <div class="form-group col-md-5">
-                        <div class="chart-container" style="width:40vw" id="chart_status_container" name="status">
+                        <div class="chart-container" style="width:50vw" id="chart_status_container" name="status">
                             <canvas id="chart_status"></canvas>
+                        </div>
+                    </div>
+                    <div class="form-group col-md-5">
+                        <div class="chart-container" style="width:50vw" id="chart_acceptedRejected_container" name="acceptedRejected">
+                            <canvas id="chart_acceptedRejected"></canvas>
                         </div>
                     </div>
                 </div>
@@ -208,7 +213,11 @@
             let labels = [];
             let values = [];
             res.forEach(element => {
-                labels.push(element.label);
+                if (!element.label)
+                    labels.push("Not Handled")
+                else
+                    labels.push(element.label);
+
                 values.push(element.val);
             });
 
@@ -480,16 +489,12 @@
                     yAxes: [{
                         ticks: {
                             min: 0
-
                         }
-
                     }],
                     xAxes: [{
                         ticks: {
                             min: 0
-
                         }
-
                     }]
                 }
             }
@@ -511,7 +516,7 @@
                         }
                     }, scales: scales,
                     legend: {
-                        position: 'right'
+                        position: 'bottom'
                     }
                 }
             });
@@ -548,22 +553,20 @@
             // By Region
             makeChart('SELECT count(*) as val, region as label FROM ? ## GROUP BY region', false, 'region', 'doughnut', 'By Region', data);
 
-            // By Territory
-            //console.log('SubRegion:', $("#subRegion").val());
-            //if ($("#subRegion").val() && $("#subRegion").val().length > 0) {
-            //    makeChart(`SELECT count(*) as val, subRegion as label FROM ? WHERE (subRegion = '${$("#subRegion").val()}' ##) GROUP BY subRegion`, true, 'subRegion', 'doughnut', 'By Territory', data);
-            //} else {
-            makeChart(`SELECT count(*) as val, subRegion as label FROM ? ## GROUP BY subRegion`, false, 'subRegion', 'pie', 'By Territory', data);
-            //}
-
+            // By Teritory
+            makeChart(`SELECT count(*) as val, subRegion as label FROM ? ## GROUP BY subRegion`, false, 'subRegion', 'doughnut', 'By Territory', data);
+           
             // By Segment
-            makeChart('SELECT count(*) as val, segment as label FROM ? ## GROUP BY segment', false, 'segment', 'doughnut', 'By Segment', data);
+            makeChart('SELECT count(*) as val, segment as label FROM ? ## GROUP BY segment', false, 'segment', 'pie', 'By Segment', data);
 
             // By Product
             makeChart('SELECT count(*) as val, product as label FROM ? ## GROUP BY product', false, 'product', 'pie', 'By Product', data);
 
-            // By Status for Active and not Delted
-            makeChart("SELECT count(*) as val, status as label FROM ? WHERE (isDeleted = false ##) GROUP BY status", true, 'status', 'pie', 'By status for active requests', data);
+            // By Status for Active and not deleted
+            makeChart("SELECT count(*) as val, status as label FROM ? WHERE (isDeleted = false ##) GROUP BY status", true, 'status', 'doughnut', 'By Status for Active Requests', data);
+
+            // By Handled Status for Active
+            makeChart("SELECT count(*) as val, acceptedRejected as label FROM ? WHERE (isDeleted = false ##) GROUP BY acceptedRejected", true, 'acceptedRejected', 'doughnut', 'By Accepted/Rejected Status', data);
 
             // By Request Category / Time
             let res = alasql('SELECT count(*) as val, taskCategory as label FROM ? GROUP BY taskCategory', [task_parsed]);
