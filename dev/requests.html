@@ -642,15 +642,6 @@
                             width: "auto",
                             filtering: false
                         }, {
-                            name: "updatedAt",
-                            title: "Last Updated",
-                            type: "text",
-                            itemTemplate: function (value, item) {
-                                return `${moment(value).fromNow()}`;
-                            },
-                            width: "auto",
-                            filtering: false
-                        }, {
                             type: "control",
                             //editButton: false,
                             itemTemplate: function (value, item) {
@@ -683,7 +674,7 @@
 
             $("#editModal #id").text(request.id);
             $("#editModal #createdDate").val(moment(request.createdAt).format('LLLL'));
-            $("#editModal #updatedDate").val(moment(request.updatedAt).format('LLLL'));
+            $("#editModal #updatedDate").val(moment(request.updatedAt).fromNow()); 
             $("#editModal #region").val(request.region);
             $("#editModal #region").change();
             $("#editModal #subRegion").val(request.subRegion);
