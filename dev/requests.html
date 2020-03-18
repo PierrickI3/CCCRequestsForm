@@ -711,11 +711,7 @@
             $("#editModal #time").val(request.time);
             $("#editModal #txtAcceptedRejectedNotes").val(request.acceptedRejectedNotes);
             $("#editModal #teamMembers").val(request.teamMembers);
-
-
             $("#editModal").modal("show");
-
-
 
             if (request.isDeleted) {
                 $("#modal-form :input").attr("disabled", true);
@@ -742,7 +738,6 @@
                     $("#editModal #btnAcceptRequest").prop('disabled', true);
                     $("#editModal #btnRejectRequest").prop('disabled', false);
                 }
-
             }
             else if (request.acceptedRejected == "Rejected") {
                 $("#modal-header").css('background', 'lightcoral');
@@ -757,7 +752,6 @@
                     $("#btnRejectRequest").prop('disabled', false);
                 }
             }
-
         }
 
         function addNewTask(task, includeDeleteButton = false) {
@@ -929,7 +923,6 @@
         $("#btnAcceptRequest").on("click", async (e) => {
             $("#editModal #bAcceptedRequest").val("Accepted");
             $("#editModal #submit").click();
-
         });
 
         $("#btnRejectRequest").on("click", async (e) => {
@@ -940,7 +933,6 @@
         $("#btnRestore").on("click", async (e) => {
             e.preventDefault();
             $("#editModal #submit").click();
-
         });
 
         $("#editModal #submit").on("click", async (e) => {
@@ -950,46 +942,60 @@
                 return;
             }
 
-            let id = $("#editModal #id").text();
-            let region = $("#editModal #region").val();
-            let subRegion = $("#editModal #subRegion").val();
-            let product = $("#editModal #product").val();
-            let segment = $("#editModal #segment").val();
-
-            // Tasks
-            let tasks = [];
-            for (const task of tasksControls) {
-                tasks.push({
-                    taskId: task.id,
-                    taskCategory: task.categorySelect.val(),
-                    taskType: task.typeSelect.val(),
-                    taskTime: task.timeInput.val()
-                });
-            }
-
-            let requesterName = $("#editModal #requesterName").val();
-            let requesterEmail = $("#editModal #requesterEmail").val();
-            let requesterPhoneNumber = $("#editModal #requesterPhoneNumber").val();
-            let needCompletedBy = moment($("#datepicker").datepicker('getDate')).format("YYYY-MM-DDT00:00:00.000") + "Z";
-            let description = $("#editModal #description").val();
-            let partnerCustomerName = $("#editModal #partnerCustomerName").val();
-            let salesforceAccountOpportunity = $("#editModal #salesforceAccountOpportunity").val();
-            let priority = $("#editModal #priority").val();
-            let acceptedRejected = $("#editModal #bAcceptedRequest").val();
-            let acceptedRejectedNotes = $("#editModal #txtAcceptedRejectedNotes").val();
-            let programManager = $("#editModal #programManager").val();
-            let time = $("#editModal #time").val();
-            let teamMembers = $("#editModal #teamMembers").val();
-            let status;
-            if (acceptedRejected == "Rejected")
-                status = "Closed"
-            else
-                status = $("#editModal #status").val();
-
-            console.log(`Region: ${region}, subRegion: ${subRegion}, Product: ${product}, Segment: ${segment}, tasks: ${JSON.stringify(tasks)}, Requester Name: ${requesterName}, Requester Email: ${requesterEmail}, Requester Phone Number: ${requesterPhoneNumber}, Need Completed By: ${needCompletedBy}, Description: ${description}, Partner or Customer Name: ${partnerCustomerName}, Salesforce Opportunity: ${salesforceAccountOpportunity}`);
-            console.log(`Priority: ${priority}, Accepted/Rejected: ${acceptedRejected}, Status: ${status}, Program Manager: ${programManager}, AcceptedRejectedNotes: ${acceptedRejectedNotes}, teamMembers: ${teamMembers}`);
-
             try {
+                // Disable button and add animation
+                $("#editModal #submit").prop('disabled', true);
+                $("#editModal #submit").html(
+                    `<span class="spinner-border-sm text-light" role="status" aria-hidden="true"></span> Please Wait...`
+                )
+                $("#btnAcceptRequest").prop('disabled', true);
+                $("#btnAcceptRequest").html(
+                    `<span class="spinner-border-sm text-light" role="status" aria-hidden="true"></span> Please Wait...`
+                )
+                $("#btnRejectRequest").prop('disabled', true);
+                $("#btnRejectRequest").html(
+                    `<span class="spinner-border-sm text-light" role="status" aria-hidden="true"></span> Please Wait...`
+                )
+
+                let id = $("#editModal #id").text();
+                let region = $("#editModal #region").val();
+                let subRegion = $("#editModal #subRegion").val();
+                let product = $("#editModal #product").val();
+                let segment = $("#editModal #segment").val();
+
+                // Tasks
+                let tasks = [];
+                for (const task of tasksControls) {
+                    tasks.push({
+                        taskId: task.id,
+                        taskCategory: task.categorySelect.val(),
+                        taskType: task.typeSelect.val(),
+                        taskTime: task.timeInput.val()
+                    });
+                }
+
+                let requesterName = $("#editModal #requesterName").val();
+                let requesterEmail = $("#editModal #requesterEmail").val();
+                let requesterPhoneNumber = $("#editModal #requesterPhoneNumber").val();
+                let needCompletedBy = moment($("#datepicker").datepicker('getDate')).format("YYYY-MM-DDT00:00:00.000") + "Z";
+                let description = $("#editModal #description").val();
+                let partnerCustomerName = $("#editModal #partnerCustomerName").val();
+                let salesforceAccountOpportunity = $("#editModal #salesforceAccountOpportunity").val();
+                let priority = $("#editModal #priority").val();
+                let acceptedRejected = $("#editModal #bAcceptedRequest").val();
+                let acceptedRejectedNotes = $("#editModal #txtAcceptedRejectedNotes").val();
+                let programManager = $("#editModal #programManager").val();
+                let time = $("#editModal #time").val();
+                let teamMembers = $("#editModal #teamMembers").val();
+                let status;
+                if (acceptedRejected == "Rejected")
+                    status = "Closed"
+                else
+                    status = $("#editModal #status").val();
+
+                console.log(`Region: ${region}, subRegion: ${subRegion}, Product: ${product}, Segment: ${segment}, tasks: ${JSON.stringify(tasks)}, Requester Name: ${requesterName}, Requester Email: ${requesterEmail}, Requester Phone Number: ${requesterPhoneNumber}, Need Completed By: ${needCompletedBy}, Description: ${description}, Partner or Customer Name: ${partnerCustomerName}, Salesforce Opportunity: ${salesforceAccountOpportunity}`);
+                console.log(`Priority: ${priority}, Accepted/Rejected: ${acceptedRejected}, Status: ${status}, Program Manager: ${programManager}, AcceptedRejectedNotes: ${acceptedRejectedNotes}, teamMembers: ${teamMembers}`);
+
                 await putRequest(id, region, subRegion, segment, product, tasks, requesterName, requesterEmail, requesterPhoneNumber, needCompletedBy, description, partnerCustomerName, salesforceAccountOpportunity, priority, acceptedRejected, status, programManager, acceptedRejectedNotes, teamMembers, gcToken);
                 console.log('Success!');
                 showMessage("Request updated. Thanks!");
@@ -1000,6 +1006,14 @@
                     window.open('./index.html', "_self");
                 } else
                     showMessage(error.hasOwnProperty('responseJSON') ? error.responseJSON.message : error, true);
+            } finally {
+                // Enable buttons
+                $("#editModal #submit").prop('disabled', false);
+                $("#editModal #submit").html('Save');
+                $("#btnAcceptRequest").prop('disabled', false);
+                $("#btnAcceptRequest").html('Save and Accept');
+                $("#btnRejectRequest").prop('disabled', false);
+                $("#btnRejectRequest").html('Save and Reject');
             }
         });
 

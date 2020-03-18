@@ -370,41 +370,45 @@
                 return;
             }
 
-
-            let region = $("#region").val();
-            let subRegion = $("#subRegion").val();
-            let segment = $("#segment").val();
-            let product = $("#product").val();
-
-            // Tasks
-            let tasks = [];
-            for (const task of tasksControls) {
-                tasks.push({
-                    taskId: task.id,
-                    taskCategory: task.categorySelect.val(),
-                    taskType: task.typeSelect.val(),
-                    taskTime: 0
-                });
-            }
-
-            let requesterName = $("#requesterName").val();
-            let requesterEmail = $("#requesterEmail").val();
-            let requesterPhoneNumber = $("#requesterPhoneNumber").val();
-
-            // Need completed by
-            let needCompletedBy = "Not Set";
-            let needCompletedByDate = moment($("#datepicker").datepicker('getDate')).format("YYYY-MM-DDT00:00:00.000");
-            if (needCompletedByDate != "Invalid date") {
-                needCompletedBy = moment($("#datepicker").datepicker('getDate')).format("YYYY-MM-DDT00:00:00.000") + "Z";
-            }
-
-            let description = $("#description").val();
-            let partnerCustomerName = $("#partnerCustomerName").val();
-            let salesforceAccountOpportunity = $("#salesforceAccountOpportunity").val();
-
-            console.log(`Region: ${region}, subRegion: ${subRegion}, Product: ${product}, Tasks: ${JSON.stringify(tasks)}, Requester Name: ${requesterName}, Requester Email: ${requesterEmail}, Requester Phone Number: ${requesterPhoneNumber}, Need Completed By: ${needCompletedBy}, Description: ${description}, Partner or Customer Name: ${partnerCustomerName}, Salesforce Opportunity: ${salesforceAccountOpportunity}`);
-
             try {
+                $("#submit").prop('disabled', true);
+                $("#submit").html(
+                    `<span class="spinner-border-sm text-light" role="status" aria-hidden="true"></span> Please Wait...`
+                )
+
+                let region = $("#region").val();
+                let subRegion = $("#subRegion").val();
+                let segment = $("#segment").val();
+                let product = $("#product").val();
+
+                // Tasks
+                let tasks = [];
+                for (const task of tasksControls) {
+                    tasks.push({
+                        taskId: task.id,
+                        taskCategory: task.categorySelect.val(),
+                        taskType: task.typeSelect.val(),
+                        taskTime: 0
+                    });
+                }
+
+                let requesterName = $("#requesterName").val();
+                let requesterEmail = $("#requesterEmail").val();
+                let requesterPhoneNumber = $("#requesterPhoneNumber").val();
+
+                // Need completed by
+                let needCompletedBy = "Not Set";
+                let needCompletedByDate = moment($("#datepicker").datepicker('getDate')).format("YYYY-MM-DDT00:00:00.000");
+                if (needCompletedByDate != "Invalid date") {
+                    needCompletedBy = moment($("#datepicker").datepicker('getDate')).format("YYYY-MM-DDT00:00:00.000") + "Z";
+                }
+
+                let description = $("#description").val();
+                let partnerCustomerName = $("#partnerCustomerName").val();
+                let salesforceAccountOpportunity = $("#salesforceAccountOpportunity").val();
+
+                console.log(`Region: ${region}, subRegion: ${subRegion}, Product: ${product}, Tasks: ${JSON.stringify(tasks)}, Requester Name: ${requesterName}, Requester Email: ${requesterEmail}, Requester Phone Number: ${requesterPhoneNumber}, Need Completed By: ${needCompletedBy}, Description: ${description}, Partner or Customer Name: ${partnerCustomerName}, Salesforce Opportunity: ${salesforceAccountOpportunity}`);
+
                 await postRequests(region, subRegion, segment, product, tasks, requesterName, requesterEmail, requesterPhoneNumber, needCompletedBy, description, partnerCustomerName, salesforceAccountOpportunity, gcToken);
                 console.log('Success!');
                 showMessage("Request submitted. Thanks!");
@@ -425,9 +429,11 @@
                 console.error(error);
                 showMessage(error.hasOwnProperty('message') ? error.message : JSON.stringify(error, null, 2), true);
             } finally {
+                // Enable button
+                $("#submit").prop('disabled', false);
+                $("#submit").html('Submit');
                 cleanForm();
             }
-
         });
 
         function cleanForm() {
