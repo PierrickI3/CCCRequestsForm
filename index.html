@@ -245,6 +245,7 @@
 
             gcToken = userInfo.token
             localStorage.setItem("gcToken", gcToken);
+            localStorage.setItem("userName", userInfo.name);
 
             // Populate user info
             $("#requesterName").val(userInfo.name);
@@ -371,10 +372,12 @@
             }
 
             try {
+                // Disable submit button
                 $("#submit").prop('disabled', true);
                 $("#submit").html(
                     `<span class="spinner-border-sm text-light" role="status" aria-hidden="true"></span> Please Wait...`
                 )
+
 
                 let region = $("#region").val();
                 let subRegion = $("#subRegion").val();
@@ -434,6 +437,7 @@
                 $("#submit").html('Submit');
                 cleanForm();
             }
+
         });
 
         function cleanForm() {
