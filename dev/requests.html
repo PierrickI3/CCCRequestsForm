@@ -948,6 +948,14 @@
                 $("#editModal #submit").html(
                     `<span class="spinner-border-sm text-light" role="status" aria-hidden="true"></span> Please Wait...`
                 )
+                $("#btnAcceptRequest").prop('disabled', true);
+                $("#btnAcceptRequest").html(
+                    `<span class="spinner-border-sm text-light" role="status" aria-hidden="true"></span> Please Wait...`
+                )
+                $("#btnRejectRequest").prop('disabled', true);
+                $("#btnRejectRequest").html(
+                    `<span class="spinner-border-sm text-light" role="status" aria-hidden="true"></span> Please Wait...`
+                )
 
                 let id = $("#editModal #id").text();
                 let region = $("#editModal #region").val();
@@ -999,9 +1007,13 @@
                 } else
                     showMessage(error.hasOwnProperty('responseJSON') ? error.responseJSON.message : error, true);
             } finally {
-                // Enable button
+                // Enable buttons
                 $("#editModal #submit").prop('disabled', false);
                 $("#editModal #submit").html('Save');
+                $("#btnAcceptRequest").prop('disabled', false);
+                $("#btnAcceptRequest").html('Save and Accept');
+                $("#btnRejectRequest").prop('disabled', false);
+                $("#btnRejectRequest").html('Save and Reject');
             }
         });
 
