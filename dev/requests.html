@@ -407,7 +407,7 @@
                     width: "100%",
                     filtering: true,
                     editing: false,
-                    sorting: true,
+                    sorting: false,
                     paging: true,
                     autoload: true,
                     pageSize: 25,
@@ -550,6 +550,8 @@
                                                     $("#basicgrid").jsGrid("loadData", searches);
                                                 });
                                             }
+                                        } else {
+                                            searches.subRegion = "";
                                         }
 
                                         $("#basicgrid").jsGrid("loadData", searches);
