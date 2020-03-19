@@ -540,27 +540,26 @@
                                 $("<option/>", { value: "" }).text("(All)").appendTo(select);
                                 for (const region of Object.keys(regions)) {
                                     let option = $("<option/>", { value: region }).text(region).appendTo(select);
-                                    select.on('change', (e) => {
-                                        let selectedRegion = select.children("option:selected").val();
-                                        searches.region = selectedRegion;
-                                        $("#selectSubRegion").empty();
-                                        $("<option/>", { value: "" }).text("(All)").appendTo("#selectSubRegion");
-                                        if (selectedRegion && selectedRegion != "(All)") {
-                                            for (const subRegion of regions[selectedRegion]) {
-                                                let option = $("<option/>", { value: subRegion }).text(subRegion).appendTo("#selectSubRegion");
-                                                $("#selectSubRegion").on('change', (e) => {
-                                                    let selectedSubRegion = $("#selectSubRegion").children("option:selected").val();
-                                                    searches.subRegion = selectedSubRegion;
-                                                    $("#basicgrid").jsGrid("loadData", searches);
-                                                });
-                                            }
-                                        } else {
-                                            searches.subRegion = "";
-                                        }
-
-                                        $("#basicgrid").jsGrid("loadData", searches);
-                                    });
                                 }
+                                select.on('change', (e) => {
+                                    let selectedRegion = select.children("option:selected").val();
+                                    searches.region = selectedRegion;
+                                    $("#selectSubRegion").empty();
+                                    $("<option/>", { value: "" }).text("(All)").appendTo("#selectSubRegion");
+                                    if (selectedRegion && selectedRegion != "(All)") {
+                                        for (const subRegion of regions[selectedRegion]) {
+                                            let option = $("<option/>", { value: subRegion }).text(subRegion).appendTo("#selectSubRegion");
+                                        }
+                                    } else {
+                                        searches.subRegion = "";
+                                    }
+                                    $("#selectSubRegion").on('change', (e) => {
+                                        let selectedSubRegion = $("#selectSubRegion").children("option:selected").val();
+                                        searches.subRegion = selectedSubRegion;
+                                        $("#basicgrid").data('JSGrid').search(searches);
+                                    });
+                                    $("#basicgrid").data('JSGrid').search(searches);
+                                });
                                 return this.filterControl = select;
                             },
                             items: Object.keys(regions),
@@ -582,13 +581,13 @@
                                 if (selectedRegion && selectedRegion != "(All)") {
                                     for (const subRegion of regions[selectedRegion]) {
                                         let option = $("<option/>", { value: subRegion }).text(subRegion).appendTo(select);
-                                        select.on('change', (e) => {
-                                            let selectedSubRegion = select.children("option:selected").val();
-                                            searches.subRegion = selectedSubRegion;
-                                            $("#basicgrid").jsGrid("loadData", searches);
-                                        });
                                     }
                                 }
+                                select.on('change', (e) => {
+                                    let selectedSubRegion = select.children("option:selected").val();
+                                    searches.subRegion = selectedSubRegion;
+                                    $("#basicgrid").data('JSGrid').search(searches);
+                                });
                                 return this.filterControl = select;
                             },
                             items: $("#selectRegion").children("option:selected").val() == "(All)" ? Object.keys(regions) : regions[$("#selectRegion").children("option:selected").val()],
@@ -606,12 +605,13 @@
                                 $("<option/>", { value: "" }).text("(All)").appendTo(select);
                                 for (const product of Object.keys(mailDistribution)) {
                                     let option = $("<option/>", { value: product }).text(product).appendTo(select);
-                                    select.on('change', (e) => {
-                                        let selectedProduct = select.children("option:selected").val();
-                                        searches.product = selectedProduct;
-                                        $("#basicgrid").jsGrid("loadData", searches);
-                                    });
                                 }
+                                select.on('change', (e) => {
+                                    console.log('e:', e);
+                                    let selectedProduct = select.children("option:selected").val();
+                                    searches.product = selectedProduct;
+                                    $("#basicgrid").data('JSGrid').search(searches);
+                                });
                                 return this.filterControl = select;
                             },
                             items: Object.keys(regions),
@@ -629,7 +629,7 @@
                                 let input = $("<input/>", { type: "text" });
                                 input.on('keyup', () => {
                                     searches.segment = input.val();
-                                    $("#basicgrid").jsGrid("loadData", searches);
+                                    $("#basicgrid").data('JSGrid').search(searches);
                                 });
                                 return this.filterControl = input;
                             },
@@ -643,7 +643,7 @@
                                 let input = $("<input/>", { type: "text" });
                                 input.on('keyup', () => {
                                     searches.requesterName = input.val();
-                                    $("#basicgrid").jsGrid("loadData", searches);
+                                    $("#basicgrid").data('JSGrid').search(searches);
                                 });
                                 return this.filterControl = input;
                             },
@@ -659,7 +659,7 @@
                                 let input = $("<input/>", { type: "text" });
                                 input.on('keyup', () => {
                                     searches.teamMembers = input.val();
-                                    $("#basicgrid").jsGrid("loadData", searches);
+                                    $("#basicgrid").data('JSGrid').search(searches);
                                 });
                                 return this.filterControl = input;
                             },
@@ -673,7 +673,7 @@
                                 let input = $("<input/>", { type: "text" });
                                 input.on('keyup', () => {
                                     searches.partnerCustomerName = input.val();
-                                    $("#basicgrid").jsGrid("loadData", searches);
+                                    $("#basicgrid").data('JSGrid').search(searches);
                                 });
                                 return this.filterControl = input;
                             },
@@ -926,13 +926,13 @@
                 $('#btnAssignedToMe')[0].classList.remove('btn-success');
                 $("#basicgrid").data('JSGrid').fields[6].filterControl[0].value = "";
                 searches.teamMembers = "";
-                $("#basicgrid").jsGrid("loadData", searches);
+                $("#basicgrid").data('JSGrid').search(searches);
             }
             else {
                 $('#btnAssignedToMe')[0].classList.add('btn-success');
                 $("#basicgrid").data('JSGrid').fields[6].filterControl[0].value = userName;
                 searches.teamMembers = userName;
-                $("#basicgrid").jsGrid("loadData", searches);
+                $("#basicgrid").data('JSGrid').search(searches);
             }
 
         });
