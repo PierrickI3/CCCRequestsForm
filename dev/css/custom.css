@@ -19,3 +19,7 @@
     background-color: lightcoral !important;
     opacity: 1.0;
 }
+
+.task-hidden td {
+    display: none;
+}
