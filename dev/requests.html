@@ -422,6 +422,10 @@
                     },
                     rowClass: function (item, itemIndex) {
 
+                        // Hide by default Test objects on PRD url
+                        if (!window.location.href.includes('localhost') && item.hasOwnProperty('isTest')) {
+                            return "task-hidden"
+                        }
                         if (item.acceptedRejected == "Accepted") {
                             return "task-accepted"
                         } else if (item.acceptedRejected == "Rejected")
