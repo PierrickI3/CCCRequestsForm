@@ -92,7 +92,14 @@
                         </select>
                     </div>
                 </div>
-
+                <center>
+                    <div id="spinner" class="justify-content-center">
+                        <div class="spinner-grow text-secondary" role="status">                           
+                        </div>
+                        <br>
+                        <p class="text-secondary">Refreshing Dashboard...</p>
+                    </div>
+                </center>
                 <div class="form-row">
                     <div class="form-group col-md-5">
                         <div class="chart-container" style="width:50vw" id="chart_region_container" name="region">
@@ -525,7 +532,7 @@
         //showRequests();
 
         async function init() {
-
+            document.getElementById("spinner").style.display = "block";
             try {
                 data = await getDashboard(gcToken);
             } catch (error) {
@@ -533,7 +540,7 @@
                     window.open('./index.html', "_self");
                 }
             }
-
+            document.getElementById("spinner").style.display = "none";
             // Parse Tasks
             let task_filter = buildFilter('SELECT tasks FROM ? ##', false);
             let task_raw = alasql(task_filter, [data]);
@@ -555,7 +562,7 @@
 
             // By Teritory
             makeChart(`SELECT count(*) as val, subRegion as label FROM ? ## GROUP BY subRegion`, false, 'subRegion', 'doughnut', 'By Territory', data);
-           
+
             // By Segment
             makeChart('SELECT count(*) as val, segment as label FROM ? ## GROUP BY segment', false, 'segment', 'pie', 'By Segment', data);
 

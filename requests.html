@@ -362,27 +362,12 @@
 
         function refreshGrid() {
             $("#basicgrid").jsGrid("loadData");
-
         }
 
         $("#refresh").on("click", (e) => {
             e.preventDefault();
             refreshGrid();
         });
-
-        /*
-        $("#basicgrid").jsGrid({
-            onRefreshed: function (args) {
-                console.log('refreshed');
-                console.log(args);
-
-                if ($('#btnAssignedToMe')[0].classList.contains('btn-success')) {
-                    $("#basicgrid").data('JSGrid').search({ teamMembers: userName });
-                }
-
-            }
-        });
-        */
 
         function navigateToSFLink() {
 
@@ -397,27 +382,14 @@
             }, 1000);
         }
 
+        var searches = {};
+
         function showRequests() {
             console.log('Showing requests...');
 
             try {
 
                 jsGrid.setDefaults({ tableClass: "jsgrid-table table table-striped table-hover" });
-                jsGrid.setDefaults("text", {
-                    _createTextBox: function () {
-                        return $("<input>").attr("type", "text").attr("class", "form-control input-sm")
-                    }
-                });
-                jsGrid.setDefaults("number", {
-                    _createTextBox: function () {
-                        return $("<input>").attr("type", "number").attr("class", "form-control input-sm")
-                    }
-                });
-                jsGrid.setDefaults("textarea", {
-                    _createTextBox: function () {
-                        return $("<input>").attr("type", "textarea").attr("class", "form-control")
-                    }
-                });
                 jsGrid.setDefaults("control", {
                     _createGridButton: function (cls, tooltip, clickHandler) {
                         var grid = this._grid;
@@ -427,20 +399,6 @@
                         }).on("click", function (e) {
                             clickHandler(grid, e)
                         })
-                    }
-                });
-                jsGrid.setDefaults("select", {
-                    _createSelect: function () {
-                        var $result = $("<select>").attr("class", "form-control input-sm"),
-                            valueField = this.valueField,
-                            textField = this.textField,
-                            selectedIndex = this.selectedIndex;
-                        return $.each(this.items, function (index, item) {
-                            var value = valueField ? item[valueField] : index,
-                                text = textField ? item[textField] : item,
-                                $option = $("<option>").attr("value", value).text(text).appendTo($result);
-                            $option.prop("selected", selectedIndex === index)
-                        }), $result
                     }
                 });
 
@@ -464,14 +422,16 @@
                     },
                     rowClass: function (item, itemIndex) {
 
+                        // Hide by default Test objects on PRD url
+                        if (!window.location.href.includes('localhost') && item.hasOwnProperty('isTest')) {
+                            return "task-hidden"
+                        }
                         if (item.acceptedRejected == "Accepted") {
                             return "task-accepted"
                         } else if (item.acceptedRejected == "Rejected")
                             return "task-rejected"
                         else
                             return
-
-
                     },
                     deleteItem: async function (deletingRequest) {
                         bootbox.confirm({
@@ -513,14 +473,6 @@
                             if ($("#basicgrid").data('JSGrid').fields[6].filterControl.val() == userName) {
                                 filter['teamMembers'] = userName
                             }
-
-                            // Closed/Deleted/Refresh -> Remove filter
-                            /*
-                            if ($('#btnOnlyClosed')[0].classList.contains('btn-success') ||  $('#btnOnlyDeleted')[0].classList.contains('btn-success')) {
-                                $('#btnAssignedToMe')[0].classList.remove('btn-success');
-                                filter = {};
-                            }
-                            */
 
                             for (var field in filter) {
                                 if (filter[field]) {
@@ -582,42 +534,149 @@
                         }, {
                             name: "region",
                             title: "Region",
-                            type: "text",
+                            type: "select",
+                            filterTemplate: function () {
+                                let select = $("<select/>", { id: "selectRegion" });
+                                $("<option/>", { value: "" }).text("(All)").appendTo(select);
+                                for (const region of Object.keys(regions)) {
+                                    let option = $("<option/>", { value: region }).text(region).appendTo(select);
+                                }
+                                select.on('change', (e) => {
+                                    let selectedRegion = select.children("option:selected").val();
+                                    searches.region = selectedRegion;
+                                    $("#selectSubRegion").empty();
+                                    $("<option/>", { value: "" }).text("(All)").appendTo("#selectSubRegion");
+                                    if (selectedRegion && selectedRegion != "(All)") {
+                                        for (const subRegion of regions[selectedRegion]) {
+                                            let option = $("<option/>", { value: subRegion }).text(subRegion).appendTo("#selectSubRegion");
+                                        }
+                                    } else {
+                                        searches.subRegion = "";
+                                    }
+                                    $("#selectSubRegion").on('change', (e) => {
+                                        let selectedSubRegion = $("#selectSubRegion").children("option:selected").val();
+                                        searches.subRegion = selectedSubRegion;
+                                        $("#basicgrid").data('JSGrid').search(searches);
+                                    });
+                                    $("#basicgrid").data('JSGrid').search(searches);
+                                });
+                                return this.filterControl = select;
+                            },
+                            items: Object.keys(regions),
+                            itemTemplate: function (value, item) {
+                                return value;
+                            },
                             width: "auto",
-                            visible: region == 'super-user' ? true : false
+                            visible: region == 'super-user' ? true : false,
                         }, {
                             name: "subRegion",
                             title: "Territory",
-                            type: "text",
-                            width: "auto"
+                            type: "select",
+                            width: "auto",
+                            align: "center",
+                            filterTemplate: function () {
+                                let select = $("<select/>", { id: "selectSubRegion" });
+                                $("<option/>", { value: "" }).text("(All)").appendTo(select);
+                                let selectedRegion = $("#selectRegion").children("option:selected").val();
+                                if (selectedRegion && selectedRegion != "(All)") {
+                                    for (const subRegion of regions[selectedRegion]) {
+                                        let option = $("<option/>", { value: subRegion }).text(subRegion).appendTo(select);
+                                    }
+                                }
+                                select.on('change', (e) => {
+                                    let selectedSubRegion = select.children("option:selected").val();
+                                    searches.subRegion = selectedSubRegion;
+                                    $("#basicgrid").data('JSGrid').search(searches);
+                                });
+                                return this.filterControl = select;
+                            },
+                            items: $("#selectRegion").children("option:selected").val() == "(All)" ? Object.keys(regions) : regions[$("#selectRegion").children("option:selected").val()],
+                            itemTemplate: function (value, item) {
+                                return value;
+                            }
                         }, {
                             name: "product",
                             title: "Product",
                             type: "text",
-                            width: "auto"
+                            width: "auto",
+                            align: "center",
+                            filterTemplate: function () {
+                                let select = $("<select/>");
+                                $("<option/>", { value: "" }).text("(All)").appendTo(select);
+                                for (const product of Object.keys(mailDistribution)) {
+                                    let option = $("<option/>", { value: product }).text(product).appendTo(select);
+                                }
+                                select.on('change', (e) => {
+                                    console.log('e:', e);
+                                    let selectedProduct = select.children("option:selected").val();
+                                    searches.product = selectedProduct;
+                                    $("#basicgrid").data('JSGrid').search(searches);
+                                });
+                                return this.filterControl = select;
+                            },
+                            items: Object.keys(regions),
+                            itemTemplate: function (value, item) {
+                                return value;
+                            },
                         },
                         {
                             name: "segment",
                             title: "Market Segment",
                             type: "text",
-                            width: "auto"
+                            width: "auto",
+                            align: "center",
+                            filterTemplate: function () {
+                                let input = $("<input/>", { type: "text" });
+                                input.on('keyup', () => {
+                                    searches.segment = input.val();
+                                    $("#basicgrid").data('JSGrid').search(searches);
+                                });
+                                return this.filterControl = input;
+                            },
                         }, {
                             name: "requesterName",
                             title: "Requester Name",
                             type: "text",
-                            width: "auto"
+                            width: "auto",
+                            align: "center",
+                            filterTemplate: function () {
+                                let input = $("<input/>", { type: "text" });
+                                input.on('keyup', () => {
+                                    searches.requesterName = input.val();
+                                    $("#basicgrid").data('JSGrid').search(searches);
+                                });
+                                return this.filterControl = input;
+                            },
                         },
                         {
                             name: "teamMembers",
                             title: "Team Members",
                             type: "text",
                             width: "auto",
-                            visible: true
+                            visible: true,
+                            align: "center",
+                            filterTemplate: function () {
+                                let input = $("<input/>", { type: "text" });
+                                input.on('keyup', () => {
+                                    searches.teamMembers = input.val();
+                                    $("#basicgrid").data('JSGrid').search(searches);
+                                });
+                                return this.filterControl = input;
+                            },
                         }, {
                             name: "partnerCustomerName",
                             title: "Partner/Customer",
                             type: "text",
-                            width: "160"
+                            width: "160",
+                            align: "center",
+                            filterTemplate: function () {
+                                let input = $("<input/>", { type: "text" });
+                                input.on('keyup', () => {
+                                    searches.partnerCustomerName = input.val();
+                                    $("#basicgrid").data('JSGrid').search(searches);
+                                });
+                                return this.filterControl = input;
+                            },
                         }, {
                             name: "needCompletedBy",
                             title: "Need Completed",
@@ -630,7 +689,8 @@
                                 }
                             },
                             width: "auto",
-                            filtering: false
+                            filtering: false,
+                            align: "center",
                         },
                         {
                             name: "createdAt",
@@ -640,19 +700,10 @@
                                 return `${moment(value).fromNow()}`;
                             },
                             width: "auto",
-                            filtering: false
-                        }, {
-                            name: "updatedAt",
-                            title: "Last Updated",
-                            type: "text",
-                            itemTemplate: function (value, item) {
-                                return `${moment(value).fromNow()}`;
-                            },
-                            width: "auto",
-                            filtering: false
+                            filtering: false,
+                            align: "center"
                         }, {
                             type: "control",
-                            //editButton: false,
                             itemTemplate: function (value, item) {
                                 var $result = $([]);
 
@@ -662,12 +713,7 @@
                                 return $result;
                             }
                         }],
-
                 });
-
-                // Need to remove hide filter by default, as Assigned to Me use it
-                $(document.getElementsByClassName('jsgrid-search-mode-button')[0].click());
-
             } catch (error) {
                 console.error(error);
             }
@@ -683,7 +729,7 @@
 
             $("#editModal #id").text(request.id);
             $("#editModal #createdDate").val(moment(request.createdAt).format('LLLL'));
-            $("#editModal #updatedDate").val(moment(request.updatedAt).format('LLLL'));
+            $("#editModal #updatedDate").val(moment(request.updatedAt).fromNow());
             $("#editModal #region").val(request.region);
             $("#editModal #region").change();
             $("#editModal #subRegion").val(request.subRegion);
@@ -877,27 +923,16 @@
 
         $("#btnAssignedToMe").on("click", async (e) => {
             if ($('#btnAssignedToMe')[0].classList.contains('btn-success')) {
-                //$(document.getElementsByClassName('jsgrid-search-mode-button')[0].click());
                 $('#btnAssignedToMe')[0].classList.remove('btn-success');
                 $("#basicgrid").data('JSGrid').fields[6].filterControl[0].value = "";
-
-                refreshGrid();
+                searches.teamMembers = "";
+                $("#basicgrid").data('JSGrid').search(searches);
             }
-
             else {
                 $('#btnAssignedToMe')[0].classList.add('btn-success');
                 $("#basicgrid").data('JSGrid').fields[6].filterControl[0].value = userName;
-                $("#basicgrid").data('JSGrid').fields.forEach(function (aFilter) {
-                    if (aFilter.filterControl) {
-                        if (aFilter.name == "teamMembers")
-                            aFilter.filterControl[0].value = userName
-                        else
-                            aFilter.filterControl[0].value = ''
-                    }
-                })
-
-                //refreshGrid();
-                $("#basicgrid").data('JSGrid').search({ teamMembers: userName });
+                searches.teamMembers = userName;
+                $("#basicgrid").data('JSGrid').search(searches);
             }
 
         });
