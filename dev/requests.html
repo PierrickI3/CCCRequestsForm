@@ -727,7 +727,7 @@
 
             $("#editModal #id").text(request.id);
             $("#editModal #createdDate").val(moment(request.createdAt).format('LLLL'));
-            $("#editModal #updatedDate").val(moment(request.updatedAt).fromNow()); 
+            $("#editModal #updatedDate").val(moment(request.updatedAt).fromNow());
             $("#editModal #region").val(request.region);
             $("#editModal #region").change();
             $("#editModal #subRegion").val(request.subRegion);
@@ -923,23 +923,14 @@
             if ($('#btnAssignedToMe')[0].classList.contains('btn-success')) {
                 $('#btnAssignedToMe')[0].classList.remove('btn-success');
                 $("#basicgrid").data('JSGrid').fields[6].filterControl[0].value = "";
-
-                refreshGrid();
+                searches.teamMembers = "";
+                $("#basicgrid").jsGrid("loadData", searches);
             }
             else {
                 $('#btnAssignedToMe')[0].classList.add('btn-success');
                 $("#basicgrid").data('JSGrid').fields[6].filterControl[0].value = userName;
-                $("#basicgrid").data('JSGrid').fields.forEach(function (aFilter) {
-                    if (aFilter.filterControl) {
-                        if (aFilter.name == "teamMembers")
-                            aFilter.filterControl[0].value = userName
-                        else
-                            aFilter.filterControl[0].value = ''
-                    }
-                })
-
-                //refreshGrid();
-                $("#basicgrid").data('JSGrid').search({ teamMembers: userName });
+                searches.teamMembers = userName;
+                $("#basicgrid").jsGrid("loadData", searches);
             }
 
         });
