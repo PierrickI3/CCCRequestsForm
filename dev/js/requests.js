@@ -27,6 +27,12 @@ async function postRequests(region, subRegion, segment, product, tasks, requeste
     token: _token
   };
 
+  // override Test objects
+  if (window.location.href.includes('localhost')) {
+    data.mailDistribution = requesterEmail;
+    data.isTest = true
+  }
+
   //#region Optional fields
 
   if (partnerCustomerName.length > 0) {
