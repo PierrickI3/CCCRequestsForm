@@ -3622,6 +3622,614 @@
       ],
       "value": "30000"
     }]
+  }, {
+    "id": "c1250524-8d08-44cc-8328-63d99d298218",
+    "name": "Dev - SUPER-USER - Requests - Clicking on dashboard should show dashboard page",
+    "commands": [{
+      "id": "603f508d-1e72-45a8-9b62-39a2916072fd",
+      "comment": "",
+      "command": "open",
+      "target": "https://localhost/dev/requests.html?region=super-user",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "1929a9fc-a283-4080-981f-51472c772e9e",
+      "comment": "Wait for dashboard button to be visible",
+      "command": "waitForElementVisible",
+      "target": "id=dashboardLink",
+      "targets": [
+        ["id=dashboardLink", "id"],
+        ["linkText=Dashboard", "linkText"],
+        ["css=#dashboardLink", "css:finder"],
+        ["xpath=//a[contains(text(),'Dashboard')]", "xpath:link"],
+        ["xpath=//a[@id='dashboardLink']", "xpath:attributes"],
+        ["xpath=//a[contains(@href, './dashboard.html?region=super-user')]", "xpath:href"],
+        ["xpath=//ul[4]/li/a", "xpath:position"],
+        ["xpath=//a[contains(.,'Dashboard')]", "xpath:innerText"]
+      ],
+      "value": "30000"
+    }, {
+      "id": "01a63b6b-f2f5-42e5-9cf0-d651012b90b1",
+      "comment": "Click on dashboard button",
+      "command": "click",
+      "target": "id=dashboardLink",
+      "targets": [
+        ["id=dashboardLink", "id"],
+        ["linkText=Dashboard", "linkText"],
+        ["css=#dashboardLink", "css:finder"],
+        ["xpath=//a[contains(text(),'Dashboard')]", "xpath:link"],
+        ["xpath=//a[@id='dashboardLink']", "xpath:attributes"],
+        ["xpath=//a[contains(@href, './dashboard.html?region=super-user')]", "xpath:href"],
+        ["xpath=//ul[4]/li/a", "xpath:position"],
+        ["xpath=//a[contains(.,'Dashboard')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "e876ef56-70ee-4c59-b436-d75edcab8c17",
+      "comment": "Wait for \"Export to CSV\" button to be visible",
+      "command": "waitForElementVisible",
+      "target": "xpath=//button[@onclick='exportData();']",
+      "targets": [
+        ["css=.btn-dark", "css:finder"],
+        ["xpath=//button[@onclick='exportData();']", "xpath:attributes"],
+        ["xpath=//div[@id='dashboard']/button", "xpath:idRelative"],
+        ["xpath=//button", "xpath:position"],
+        ["xpath=//button[contains(.,'Export to CSV')]", "xpath:innerText"]
+      ],
+      "value": "30000"
+    }]
+  }, {
+    "id": "e02fa5d7-6738-48b8-8c5b-a6068179461d",
+    "name": "Production - SUPER-USER - Requests - Clicking on dashboard should show dashboard page",
+    "commands": [{
+      "id": "b932e94d-696c-4529-8913-a29096e81001",
+      "comment": "",
+      "command": "open",
+      "target": "https://localhost/requests.html?region=super-user",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "b307a8f0-c710-4d0e-9f4c-b04a185a2356",
+      "comment": "Wait for dashboard button to be visible",
+      "command": "waitForElementVisible",
+      "target": "id=dashboardLink",
+      "targets": [
+        ["id=dashboardLink", "id"],
+        ["linkText=Dashboard", "linkText"],
+        ["css=#dashboardLink", "css:finder"],
+        ["xpath=//a[contains(text(),'Dashboard')]", "xpath:link"],
+        ["xpath=//a[@id='dashboardLink']", "xpath:attributes"],
+        ["xpath=//a[contains(@href, './dashboard.html?region=super-user')]", "xpath:href"],
+        ["xpath=//ul[4]/li/a", "xpath:position"],
+        ["xpath=//a[contains(.,'Dashboard')]", "xpath:innerText"]
+      ],
+      "value": "30000"
+    }, {
+      "id": "979d0b63-0a02-48b0-ad3e-4edb584612a1",
+      "comment": "Click on dashboard button",
+      "command": "click",
+      "target": "id=dashboardLink",
+      "targets": [
+        ["id=dashboardLink", "id"],
+        ["linkText=Dashboard", "linkText"],
+        ["css=#dashboardLink", "css:finder"],
+        ["xpath=//a[contains(text(),'Dashboard')]", "xpath:link"],
+        ["xpath=//a[@id='dashboardLink']", "xpath:attributes"],
+        ["xpath=//a[contains(@href, './dashboard.html?region=super-user')]", "xpath:href"],
+        ["xpath=//ul[4]/li/a", "xpath:position"],
+        ["xpath=//a[contains(.,'Dashboard')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "b2970711-587f-4cd9-8664-b69fecbf37fa",
+      "comment": "Wait for \"Export to CSV\" button to be visible",
+      "command": "waitForElementVisible",
+      "target": "xpath=//button[@onclick='exportData();']",
+      "targets": [
+        ["css=.btn-dark", "css:finder"],
+        ["xpath=//button[@onclick='exportData();']", "xpath:attributes"],
+        ["xpath=//div[@id='dashboard']/button", "xpath:idRelative"],
+        ["xpath=//button", "xpath:position"],
+        ["xpath=//button[contains(.,'Export to CSV')]", "xpath:innerText"]
+      ],
+      "value": "30000"
+    }]
+  }, {
+    "id": "63049203-0986-4b8d-8257-4b8aced78f3e",
+    "name": "Dev - SUPER-USER - Dashboard - Check if all content is visible",
+    "commands": [{
+      "id": "1c0a9b53-a1c6-4124-91e6-57717a2379ad",
+      "comment": "",
+      "command": "open",
+      "target": "https://localhost/dev/dashboard.html?region=super-user",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "98cb227f-0144-421b-b087-6aae61daf5ac",
+      "comment": "Wait for Review Requests button to be visible",
+      "command": "waitForElementVisible",
+      "target": "id=reviewRequestsButton",
+      "targets": [
+        ["id=reviewRequestsButton", "id"],
+        ["linkText=Review Requests", "linkText"],
+        ["css=#reviewRequestsButton", "css:finder"],
+        ["xpath=//a[contains(text(),'Review Requests')]", "xpath:link"],
+        ["xpath=//a[@id='reviewRequestsButton']", "xpath:attributes"],
+        ["xpath=//a[contains(@href, './requests.html?region=super-user')]", "xpath:href"],
+        ["xpath=//a[2]", "xpath:position"],
+        ["xpath=//a[contains(.,'Review Requests')]", "xpath:innerText"]
+      ],
+      "value": "30000"
+    }, {
+      "id": "3b7257cb-500d-41ad-ad80-0b7cb0477f80",
+      "comment": "Wait for \"Region\" label to be visible",
+      "command": "waitForElementVisible",
+      "target": "css=.form-group:nth-child(1) > label",
+      "targets": [
+        ["css=.form-group:nth-child(1) > label", "css:finder"],
+        ["xpath=//div[@id='dashboard']/div/div/div/div/label", "xpath:idRelative"],
+        ["xpath=//label", "xpath:position"],
+        ["xpath=//label[contains(.,'Region')]", "xpath:innerText"]
+      ],
+      "value": "30000"
+    }, {
+      "id": "a35fc098-0b0b-48f5-81ee-7a2c09fd8b3a",
+      "comment": "Wait for \"Region\" select to be visible",
+      "command": "waitForElementVisible",
+      "target": "id=region",
+      "targets": [
+        ["id=region", "id"],
+        ["name=region", "name"],
+        ["css=#region", "css:finder"],
+        ["xpath=//select[@id='region']", "xpath:attributes"],
+        ["xpath=//div[@id='dashboard']/div/div/div/div/select", "xpath:idRelative"],
+        ["xpath=//select", "xpath:position"]
+      ],
+      "value": "30000"
+    }, {
+      "id": "d03b30f1-2548-4f5c-b8ab-b7b24589e6cb",
+      "comment": "Wait for \"Territory\" label to be visible",
+      "command": "waitForElementVisible",
+      "target": "css=.form-group:nth-child(2) > label",
+      "targets": [
+        ["css=.form-group:nth-child(2) > label", "css:finder"],
+        ["xpath=//div[@id='dashboard']/div/div/div/div[2]/label", "xpath:idRelative"],
+        ["xpath=//div[2]/label", "xpath:position"],
+        ["xpath=//label[contains(.,'Territory')]", "xpath:innerText"]
+      ],
+      "value": "30000"
+    }, {
+      "id": "33da4c92-9941-48ee-97da-daa42a1e9427",
+      "comment": "Wait for \"Territory\" select to be visible",
+      "command": "waitForElementVisible",
+      "target": "id=subRegion",
+      "targets": [
+        ["id=subRegion", "id"],
+        ["name=subRegion", "name"],
+        ["css=#subRegion", "css:finder"],
+        ["xpath=//select[@id='subRegion']", "xpath:attributes"],
+        ["xpath=//div[@id='dashboard']/div/div/div/div[2]/select", "xpath:idRelative"],
+        ["xpath=//div[2]/select", "xpath:position"]
+      ],
+      "value": "30000"
+    }, {
+      "id": "3d139190-59dc-4942-b630-7068b7b1c001",
+      "comment": "Wait for \"Product\" label to be visible",
+      "command": "waitForElementVisible",
+      "target": "css=.form-group:nth-child(3) > label",
+      "targets": [
+        ["css=.form-group:nth-child(3) > label", "css:finder"],
+        ["xpath=//div[@id='dashboard']/div/div/div/div[3]/label", "xpath:idRelative"],
+        ["xpath=//div[3]/label", "xpath:position"],
+        ["xpath=//label[contains(.,'Product')]", "xpath:innerText"]
+      ],
+      "value": "30000"
+    }, {
+      "id": "e6b5ab65-0028-4788-8cf1-b6672d687fd1",
+      "comment": "Wait for \"Product\" select to be visible",
+      "command": "waitForElementVisible",
+      "target": "id=product",
+      "targets": [
+        ["id=product", "id"],
+        ["name=product", "name"],
+        ["css=#product", "css:finder"],
+        ["xpath=//select[@id='product']", "xpath:attributes"],
+        ["xpath=//div[@id='dashboard']/div/div/div/div[3]/select", "xpath:idRelative"],
+        ["xpath=//div[3]/select", "xpath:position"]
+      ],
+      "value": "30000"
+    }, {
+      "id": "58568fa6-d514-44b1-ba1b-31c4360603be",
+      "comment": "Wait for \"Market Segment\" label to be visible",
+      "command": "waitForElementVisible",
+      "target": "css=.form-group:nth-child(4) > label",
+      "targets": [
+        ["css=.form-group:nth-child(4) > label", "css:finder"],
+        ["xpath=//div[@id='dashboard']/div/div/div/div[4]/label", "xpath:idRelative"],
+        ["xpath=//div[4]/label", "xpath:position"],
+        ["xpath=//label[contains(.,'Market Segment')]", "xpath:innerText"]
+      ],
+      "value": "30000"
+    }, {
+      "id": "a63ada4a-a31f-47fc-ad94-1dc11f23f9e2",
+      "comment": "Wait for \"Market Segment\" select to be visible",
+      "command": "waitForElementVisible",
+      "target": "id=segment",
+      "targets": [
+        ["id=segment", "id"],
+        ["name=segment", "name"],
+        ["css=#segment", "css:finder"],
+        ["xpath=//select[@id='segment']", "xpath:attributes"],
+        ["xpath=//div[@id='dashboard']/div/div/div/div[4]/select", "xpath:idRelative"],
+        ["xpath=//div[4]/select", "xpath:position"]
+      ],
+      "value": "30000"
+    }, {
+      "id": "fd67230c-cfef-468d-ba41-945d4ddb7361",
+      "comment": "Wait for region chart to be visible",
+      "command": "waitForElementVisible",
+      "target": "id=chart_region",
+      "targets": [
+        ["id=chart_region", "id"],
+        ["css=#chart_region", "css:finder"],
+        ["xpath=//canvas[@id='chart_region']", "xpath:attributes"],
+        ["xpath=//div[@id='chart_region_container']/canvas", "xpath:idRelative"],
+        ["xpath=//canvas", "xpath:position"]
+      ],
+      "value": "30000"
+    }, {
+      "id": "21f97a0b-c528-4804-935a-a0243e1f5587",
+      "comment": "Wait for subregion chart to be visible",
+      "command": "waitForElementVisible",
+      "target": "id=chart_subRegion",
+      "targets": [
+        ["id=chart_subRegion", "id"],
+        ["css=#chart_subRegion", "css:finder"],
+        ["xpath=//canvas[@id='chart_subRegion']", "xpath:attributes"],
+        ["xpath=//div[@id='chart_subRegion_container']/canvas", "xpath:idRelative"],
+        ["xpath=//div[2]/div/canvas", "xpath:position"]
+      ],
+      "value": "30000"
+    }, {
+      "id": "22f34ff1-841f-41cb-9550-722ac75f8e61",
+      "comment": "Wait for product chart to be visible",
+      "command": "waitForElementVisible",
+      "target": "id=chart_product",
+      "targets": [
+        ["id=chart_product", "id"],
+        ["css=#chart_product", "css:finder"],
+        ["xpath=//canvas[@id='chart_product']", "xpath:attributes"],
+        ["xpath=//div[@id='chart_product_container']/canvas", "xpath:idRelative"],
+        ["xpath=//div[3]/div/div/canvas", "xpath:position"]
+      ],
+      "value": "30000"
+    }, {
+      "id": "fa9f059d-1e7c-4700-a8ee-036896bf78ce",
+      "comment": "Wait for segment chart to be visible",
+      "command": "waitForElementVisible",
+      "target": "id=chart_segment",
+      "targets": [
+        ["id=chart_segment", "id"],
+        ["css=#chart_segment", "css:finder"],
+        ["xpath=//canvas[@id='chart_segment']", "xpath:attributes"],
+        ["xpath=//div[@id='chart_segment_container']/canvas", "xpath:idRelative"],
+        ["xpath=//div[3]/div[2]/div/canvas", "xpath:position"]
+      ],
+      "value": "30000"
+    }, {
+      "id": "093b16a2-2e5a-4a12-839b-d22212f05eb6",
+      "comment": "Wait for status for active requests chart to be visible",
+      "command": "waitForElementVisible",
+      "target": "id=chart_status",
+      "targets": [
+        ["id=chart_status", "id"],
+        ["css=#chart_status", "css:finder"],
+        ["xpath=//canvas[@id='chart_status']", "xpath:attributes"],
+        ["xpath=//div[@id='chart_status_container']/canvas", "xpath:idRelative"],
+        ["xpath=//div[4]/div/div/canvas", "xpath:position"]
+      ],
+      "value": "30000"
+    }, {
+      "id": "5e8bc2a9-3791-48ab-ba1e-4d0dd757023b",
+      "comment": "Wait for accepted/rejected status chart to be visible",
+      "command": "waitForElementVisible",
+      "target": "id=chart_acceptedRejected",
+      "targets": [
+        ["id=chart_acceptedRejected", "id"],
+        ["css=#chart_acceptedRejected", "css:finder"],
+        ["xpath=//canvas[@id='chart_acceptedRejected']", "xpath:attributes"],
+        ["xpath=//div[@id='chart_acceptedRejected_container']/canvas", "xpath:idRelative"],
+        ["xpath=//div[4]/div[2]/div/canvas", "xpath:position"]
+      ],
+      "value": "30000"
+    }, {
+      "id": "a08d612b-f898-4100-b3f2-84c1e79f0adf",
+      "comment": "Wait for requestcategory/timespent chart to be visible",
+      "command": "waitForElementVisible",
+      "target": "id=chart_requestCategory",
+      "targets": [
+        ["id=chart_requestCategory", "id"],
+        ["css=#chart_requestCategory", "css:finder"],
+        ["xpath=//canvas[@id='chart_requestCategory']", "xpath:attributes"],
+        ["xpath=//div[@id='chart_requestCategory_container']/canvas", "xpath:idRelative"],
+        ["xpath=//div[5]/div/div/canvas", "xpath:position"]
+      ],
+      "value": "30000"
+    }, {
+      "id": "30ca9e56-d738-4a74-9dd7-dbb838e32471",
+      "comment": "Wait for task type chart to be visible",
+      "command": "waitForElementVisible",
+      "target": "id=chart_requestType",
+      "targets": [
+        ["id=chart_requestType", "id"],
+        ["css=#chart_requestType", "css:finder"],
+        ["xpath=//canvas[@id='chart_requestType']", "xpath:attributes"],
+        ["xpath=//div[@id='chart_requestType_container']/canvas", "xpath:idRelative"],
+        ["xpath=//div[6]/div/div/canvas", "xpath:position"]
+      ],
+      "value": "30000"
+    }, {
+      "id": "aeb87ca8-de2b-4cd9-9a24-7f785b67df5b",
+      "comment": "Wait for export to CSV button to be visible",
+      "command": "waitForElementVisible",
+      "target": "css=.btn-dark",
+      "targets": [
+        ["css=.btn-dark", "css:finder"],
+        ["xpath=//button[@onclick='exportData();']", "xpath:attributes"],
+        ["xpath=//div[@id='dashboard']/button", "xpath:idRelative"],
+        ["xpath=//button", "xpath:position"],
+        ["xpath=//button[contains(.,'Export to CSV')]", "xpath:innerText"]
+      ],
+      "value": "30000"
+    }]
+  }, {
+    "id": "ba042817-d836-4fb2-92d6-317f28203f3a",
+    "name": "Production - SUPER-USER - Dashboard - Check if all content is visible",
+    "commands": [{
+      "id": "29513caf-93ba-4ea7-bc13-eb1859eb95bf",
+      "comment": "",
+      "command": "open",
+      "target": "https://localhost/dashboard.html?region=super-user",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "47c88ca7-334f-4d29-93c2-6411b2bf238b",
+      "comment": "Wait for Review Requests button to be visible",
+      "command": "waitForElementVisible",
+      "target": "id=reviewRequestsButton",
+      "targets": [
+        ["id=reviewRequestsButton", "id"],
+        ["linkText=Review Requests", "linkText"],
+        ["css=#reviewRequestsButton", "css:finder"],
+        ["xpath=//a[contains(text(),'Review Requests')]", "xpath:link"],
+        ["xpath=//a[@id='reviewRequestsButton']", "xpath:attributes"],
+        ["xpath=//a[contains(@href, './requests.html?region=super-user')]", "xpath:href"],
+        ["xpath=//a[2]", "xpath:position"],
+        ["xpath=//a[contains(.,'Review Requests')]", "xpath:innerText"]
+      ],
+      "value": "30000"
+    }, {
+      "id": "e1213ee8-a978-4066-a7e8-4d3ea13a45a7",
+      "comment": "Wait for \"Region\" label to be visible",
+      "command": "waitForElementVisible",
+      "target": "css=.form-group:nth-child(1) > label",
+      "targets": [
+        ["css=.form-group:nth-child(1) > label", "css:finder"],
+        ["xpath=//div[@id='dashboard']/div/div/div/div/label", "xpath:idRelative"],
+        ["xpath=//label", "xpath:position"],
+        ["xpath=//label[contains(.,'Region')]", "xpath:innerText"]
+      ],
+      "value": "30000"
+    }, {
+      "id": "4f0042b3-19f0-43b0-b6c9-503404b7bfd8",
+      "comment": "Wait for \"Region\" select to be visible",
+      "command": "waitForElementVisible",
+      "target": "id=region",
+      "targets": [
+        ["id=region", "id"],
+        ["name=region", "name"],
+        ["css=#region", "css:finder"],
+        ["xpath=//select[@id='region']", "xpath:attributes"],
+        ["xpath=//div[@id='dashboard']/div/div/div/div/select", "xpath:idRelative"],
+        ["xpath=//select", "xpath:position"]
+      ],
+      "value": "30000"
+    }, {
+      "id": "3965d629-6040-41c8-803e-b856af39884c",
+      "comment": "Wait for \"Territory\" label to be visible",
+      "command": "waitForElementVisible",
+      "target": "css=.form-group:nth-child(2) > label",
+      "targets": [
+        ["css=.form-group:nth-child(2) > label", "css:finder"],
+        ["xpath=//div[@id='dashboard']/div/div/div/div[2]/label", "xpath:idRelative"],
+        ["xpath=//div[2]/label", "xpath:position"],
+        ["xpath=//label[contains(.,'Territory')]", "xpath:innerText"]
+      ],
+      "value": "30000"
+    }, {
+      "id": "390c0aba-a001-449c-a79c-a721b6326d2b",
+      "comment": "Wait for \"Territory\" select to be visible",
+      "command": "waitForElementVisible",
+      "target": "id=subRegion",
+      "targets": [
+        ["id=subRegion", "id"],
+        ["name=subRegion", "name"],
+        ["css=#subRegion", "css:finder"],
+        ["xpath=//select[@id='subRegion']", "xpath:attributes"],
+        ["xpath=//div[@id='dashboard']/div/div/div/div[2]/select", "xpath:idRelative"],
+        ["xpath=//div[2]/select", "xpath:position"]
+      ],
+      "value": "30000"
+    }, {
+      "id": "a1b4aeae-1a3f-49b1-a880-0bec53d12515",
+      "comment": "Wait for \"Product\" label to be visible",
+      "command": "waitForElementVisible",
+      "target": "css=.form-group:nth-child(3) > label",
+      "targets": [
+        ["css=.form-group:nth-child(3) > label", "css:finder"],
+        ["xpath=//div[@id='dashboard']/div/div/div/div[3]/label", "xpath:idRelative"],
+        ["xpath=//div[3]/label", "xpath:position"],
+        ["xpath=//label[contains(.,'Product')]", "xpath:innerText"]
+      ],
+      "value": "30000"
+    }, {
+      "id": "00fd1f1e-eff5-41fb-8dd2-14de6b208844",
+      "comment": "Wait for \"Product\" select to be visible",
+      "command": "waitForElementVisible",
+      "target": "id=product",
+      "targets": [
+        ["id=product", "id"],
+        ["name=product", "name"],
+        ["css=#product", "css:finder"],
+        ["xpath=//select[@id='product']", "xpath:attributes"],
+        ["xpath=//div[@id='dashboard']/div/div/div/div[3]/select", "xpath:idRelative"],
+        ["xpath=//div[3]/select", "xpath:position"]
+      ],
+      "value": "30000"
+    }, {
+      "id": "8da6f588-90fd-48dc-8d61-5088150cedba",
+      "comment": "Wait for \"Market Segment\" label to be visible",
+      "command": "waitForElementVisible",
+      "target": "css=.form-group:nth-child(4) > label",
+      "targets": [
+        ["css=.form-group:nth-child(4) > label", "css:finder"],
+        ["xpath=//div[@id='dashboard']/div/div/div/div[4]/label", "xpath:idRelative"],
+        ["xpath=//div[4]/label", "xpath:position"],
+        ["xpath=//label[contains(.,'Market Segment')]", "xpath:innerText"]
+      ],
+      "value": "30000"
+    }, {
+      "id": "7b65b496-c53d-4573-b73e-83669e9f88a8",
+      "comment": "Wait for \"Market Segment\" select to be visible",
+      "command": "waitForElementVisible",
+      "target": "id=segment",
+      "targets": [
+        ["id=segment", "id"],
+        ["name=segment", "name"],
+        ["css=#segment", "css:finder"],
+        ["xpath=//select[@id='segment']", "xpath:attributes"],
+        ["xpath=//div[@id='dashboard']/div/div/div/div[4]/select", "xpath:idRelative"],
+        ["xpath=//div[4]/select", "xpath:position"]
+      ],
+      "value": "30000"
+    }, {
+      "id": "e136a324-d2be-433b-ad2a-bfff898f9a86",
+      "comment": "Wait for region chart to be visible",
+      "command": "waitForElementVisible",
+      "target": "id=chart_region",
+      "targets": [
+        ["id=chart_region", "id"],
+        ["css=#chart_region", "css:finder"],
+        ["xpath=//canvas[@id='chart_region']", "xpath:attributes"],
+        ["xpath=//div[@id='chart_region_container']/canvas", "xpath:idRelative"],
+        ["xpath=//canvas", "xpath:position"]
+      ],
+      "value": "30000"
+    }, {
+      "id": "27243f01-5868-4b0c-be04-18fb2d5ef9bc",
+      "comment": "Wait for subregion chart to be visible",
+      "command": "waitForElementVisible",
+      "target": "id=chart_subRegion",
+      "targets": [
+        ["id=chart_subRegion", "id"],
+        ["css=#chart_subRegion", "css:finder"],
+        ["xpath=//canvas[@id='chart_subRegion']", "xpath:attributes"],
+        ["xpath=//div[@id='chart_subRegion_container']/canvas", "xpath:idRelative"],
+        ["xpath=//div[2]/div/canvas", "xpath:position"]
+      ],
+      "value": "30000"
+    }, {
+      "id": "9a12b17e-2ff4-4333-bf0e-d1ff61f20f11",
+      "comment": "Wait for product chart to be visible",
+      "command": "waitForElementVisible",
+      "target": "id=chart_product",
+      "targets": [
+        ["id=chart_product", "id"],
+        ["css=#chart_product", "css:finder"],
+        ["xpath=//canvas[@id='chart_product']", "xpath:attributes"],
+        ["xpath=//div[@id='chart_product_container']/canvas", "xpath:idRelative"],
+        ["xpath=//div[3]/div/div/canvas", "xpath:position"]
+      ],
+      "value": "30000"
+    }, {
+      "id": "31ba4c1e-00b6-497b-9a5d-b23a57fa2322",
+      "comment": "Wait for segment chart to be visible",
+      "command": "waitForElementVisible",
+      "target": "id=chart_segment",
+      "targets": [
+        ["id=chart_segment", "id"],
+        ["css=#chart_segment", "css:finder"],
+        ["xpath=//canvas[@id='chart_segment']", "xpath:attributes"],
+        ["xpath=//div[@id='chart_segment_container']/canvas", "xpath:idRelative"],
+        ["xpath=//div[3]/div[2]/div/canvas", "xpath:position"]
+      ],
+      "value": "30000"
+    }, {
+      "id": "0b5c42d6-1fbb-4207-b8c0-55c1098db694",
+      "comment": "Wait for status for active requests chart to be visible",
+      "command": "waitForElementVisible",
+      "target": "id=chart_status",
+      "targets": [
+        ["id=chart_status", "id"],
+        ["css=#chart_status", "css:finder"],
+        ["xpath=//canvas[@id='chart_status']", "xpath:attributes"],
+        ["xpath=//div[@id='chart_status_container']/canvas", "xpath:idRelative"],
+        ["xpath=//div[4]/div/div/canvas", "xpath:position"]
+      ],
+      "value": "30000"
+    }, {
+      "id": "bc01ba64-242c-4c4a-9a11-8e992f7d377b",
+      "comment": "Wait for accepted/rejected status chart to be visible",
+      "command": "waitForElementVisible",
+      "target": "id=chart_acceptedRejected",
+      "targets": [
+        ["id=chart_acceptedRejected", "id"],
+        ["css=#chart_acceptedRejected", "css:finder"],
+        ["xpath=//canvas[@id='chart_acceptedRejected']", "xpath:attributes"],
+        ["xpath=//div[@id='chart_acceptedRejected_container']/canvas", "xpath:idRelative"],
+        ["xpath=//div[4]/div[2]/div/canvas", "xpath:position"]
+      ],
+      "value": "30000"
+    }, {
+      "id": "b6654376-905f-4470-a5b1-89e1947eb11f",
+      "comment": "Wait for requestcategory/timespent chart to be visible",
+      "command": "waitForElementVisible",
+      "target": "id=chart_requestCategory",
+      "targets": [
+        ["id=chart_requestCategory", "id"],
+        ["css=#chart_requestCategory", "css:finder"],
+        ["xpath=//canvas[@id='chart_requestCategory']", "xpath:attributes"],
+        ["xpath=//div[@id='chart_requestCategory_container']/canvas", "xpath:idRelative"],
+        ["xpath=//div[5]/div/div/canvas", "xpath:position"]
+      ],
+      "value": "30000"
+    }, {
+      "id": "72073d8f-f1db-4e40-9b21-c71093130b92",
+      "comment": "Wait for task type chart to be visible",
+      "command": "waitForElementVisible",
+      "target": "id=chart_requestType",
+      "targets": [
+        ["id=chart_requestType", "id"],
+        ["css=#chart_requestType", "css:finder"],
+        ["xpath=//canvas[@id='chart_requestType']", "xpath:attributes"],
+        ["xpath=//div[@id='chart_requestType_container']/canvas", "xpath:idRelative"],
+        ["xpath=//div[6]/div/div/canvas", "xpath:position"]
+      ],
+      "value": "30000"
+    }, {
+      "id": "20f8d444-41e8-4c47-9378-b18bc90e449f",
+      "comment": "Wait for export to CSV button to be visible",
+      "command": "waitForElementVisible",
+      "target": "css=.btn-dark",
+      "targets": [
+        ["css=.btn-dark", "css:finder"],
+        ["xpath=//button[@onclick='exportData();']", "xpath:attributes"],
+        ["xpath=//div[@id='dashboard']/button", "xpath:idRelative"],
+        ["xpath=//button", "xpath:position"],
+        ["xpath=//button[contains(.,'Export to CSV')]", "xpath:innerText"]
+      ],
+      "value": "30000"
+    }]
   }],
   "suites": [{
     "id": "88dae628-2772-4c65-b363-4660e52a1a40",
@@ -3629,14 +4237,14 @@
     "persistSession": false,
     "parallel": false,
     "timeout": 300,
-    "tests": ["e2fc74b4-a4aa-462b-9aa6-25e7fc0d94a4", "e4766b2d-876f-4a3d-b6ec-7aa8c745db29", "08918db6-21bf-4121-b3da-37b3c2a34aa4", "da498001-3595-4e40-bc2d-2728043aa40d", "9d1b5828-0fb6-425b-a652-7bfb47356388", "b5feaeb3-a33a-45f6-acc8-e051b4ae8bab", "c8299f20-8cf0-4c8a-923e-e1f40d0cf4ee", "8e6c3d3d-e9e2-4e67-97f3-bb199dcd8d65", "5a402a14-b08f-4dad-a920-72d2da6b33eb", "8af7815d-a86b-44f2-8749-a788b3a1b20c", "45cbc292-b3bb-4b04-ada8-203b366ce19c"]
+    "tests": ["e2fc74b4-a4aa-462b-9aa6-25e7fc0d94a4", "e4766b2d-876f-4a3d-b6ec-7aa8c745db29", "08918db6-21bf-4121-b3da-37b3c2a34aa4", "da498001-3595-4e40-bc2d-2728043aa40d", "9d1b5828-0fb6-425b-a652-7bfb47356388", "b5feaeb3-a33a-45f6-acc8-e051b4ae8bab", "c8299f20-8cf0-4c8a-923e-e1f40d0cf4ee", "8e6c3d3d-e9e2-4e67-97f3-bb199dcd8d65", "5a402a14-b08f-4dad-a920-72d2da6b33eb", "8af7815d-a86b-44f2-8749-a788b3a1b20c", "45cbc292-b3bb-4b04-ada8-203b366ce19c", "e02fa5d7-6738-48b8-8c5b-a6068179461d", "ba042817-d836-4fb2-92d6-317f28203f3a"]
   }, {
     "id": "d7a91955-d95e-4de2-a030-1c89037ce6bc",
     "name": "Dev",
     "persistSession": false,
     "parallel": false,
     "timeout": 300,
-    "tests": ["9271e4d1-625c-4a2f-bfa3-0c9764e2d1eb", "37582b4b-6004-402b-a5d4-28f9722b8af3", "319c890e-f905-4904-af82-dd5650ac13fd", "edd345c2-58ff-49e8-b52b-f464513e46cb", "d1000cc4-b8eb-404d-9314-409d0a43a882", "99e5e216-fd84-48e6-b9e9-ec2e88da748f", "ed8f0de3-10af-412d-a5f3-b6ca92e6d18e", "605ad94c-1ed2-4cbe-8ff4-ce02488b0197", "d95244dd-28b4-4e70-ab50-c8a0d6364aec", "99929ef7-ba10-4645-bd86-0b204f7b1396", "310db6d1-32b7-4c63-966c-0a773149e498"]
+    "tests": ["9271e4d1-625c-4a2f-bfa3-0c9764e2d1eb", "37582b4b-6004-402b-a5d4-28f9722b8af3", "319c890e-f905-4904-af82-dd5650ac13fd", "edd345c2-58ff-49e8-b52b-f464513e46cb", "d1000cc4-b8eb-404d-9314-409d0a43a882", "99e5e216-fd84-48e6-b9e9-ec2e88da748f", "ed8f0de3-10af-412d-a5f3-b6ca92e6d18e", "605ad94c-1ed2-4cbe-8ff4-ce02488b0197", "d95244dd-28b4-4e70-ab50-c8a0d6364aec", "99929ef7-ba10-4645-bd86-0b204f7b1396", "310db6d1-32b7-4c63-966c-0a773149e498", "63049203-0986-4b8d-8257-4b8aced78f3e", "c1250524-8d08-44cc-8328-63d99d298218"]
   }],
   "urls": ["https://localhost/index.html", "https://localhost/dev/index.html", "https://localhost/requests.html?region=super-user", "https://localhost/dev/requests.html?region=super-user"],
   "plugins": []
