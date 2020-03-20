@@ -19,6 +19,39 @@ let adminGroups = {
     ]
 };
 
+let supportedBYOCCloudCarriers = {
+    US: [
+        {
+            name: "Twillio",
+            url: "https://www.twilio.com/"
+        },
+        {
+            name: "Nexmo (Vonage)",
+            url: "https://www.nexmo.com/"
+        }
+    ],
+    EU: [
+        {
+            name: "Twillio",
+            url: "https://www.twilio.com/"
+        },
+        {
+            name: "Colt",
+            url: "https://www.colt.net/"
+        }
+    ],
+    AP: [
+        {
+            name: "Telstra",
+            url: "https://www.telstra.com.au/"
+        },
+        {
+            name: "Nexmo (Vonage)",
+            url: "https://www.nexmo.com/"
+        }
+    ]
+};
+
 // Different email addresses per product and per region
 let mailDistribution = {
     "Genesys Cloud": {
