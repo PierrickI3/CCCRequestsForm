@@ -685,13 +685,6 @@
                         </div>
                     </div>
 
-                    <!-- Regulatory Considerations -->
-                    <div class="form-row mr-4 ml-2">
-                        <div class="form-group col-md-12">
-                            <label for="regulatoryConsiderations">Key Regulatory Considerations</label>
-                            <textarea class="form-control" id="regulatoryConsiderations" name="regulatoryConsiderations" placeholder="Are there any key regulatory considerations, for example: Call Recording? Do country specific regulations prevent telephony being delivered from another country?"></textarea>
-                        </div>
-                    </div>
 
                     <!-- Phone Numbers Deployment -->
                     <div class="form-row mr-4 ml-2">
@@ -734,11 +727,13 @@
                         </div>
                     </div>
 
-                    <!-- IT Infrastructure -->
-                    <div class="form-row mr-4 ml-2">
+                    <!-- Internet Bandwidth -->
+                    <div class="form-check mr-4">
                         <div class="form-group col-md-12">
-                            <label for="itInfrastructure">IT Infrastructure</label>
-                            <textarea class="form-control" id="itInfrastructure" name="itInfrastructure" placeholder="Is the IT infrastructure supported in-house or via a third-party, including internet connections, user/company provided laptops and headsets?"></textarea>
+                            <input class="form-check-input" type="checkbox" value="" id="usersInternetBandwidth">
+                            <label class="form-check-label" for="usersInternetBandwidth">
+                                Do users have sufficient internet bandwidth for the intended use, noting high bandwidth demand from other family members etc.?
+                            </label>
                         </div>
                     </div>
 
@@ -752,29 +747,18 @@
                         </div>
                     </div>
 
-                    <!-- Internet Bandwidth -->
-                    <div class="form-check mr-4">
-                        <div class="form-group col-md-12">
-                            <input class="form-check-input" type="checkbox" value="" id="usersInternetBandwidth">
-                            <label class="form-check-label" for="usersInternetBandwidth">
-                                Do users have sufficient internet bandwidth for the intended use, noting high bandwidth demand from other family members etc.?
-                            </label>
-                        </div>
+                    <!-- Questions shown for all deployments -->
+                    
+                    <div class="col-md-12">
+                        <hr />
+                        <h2 class="text-center">Common questions</h2>
+                        <hr />
                     </div>
-
-                    <!-- Virtual Solution -->
+                    <!-- Regulatory Considerations -->
                     <div class="form-row mr-4 ml-2">
                         <div class="form-group col-md-12">
-                            <label for="virtualDesktopSolution">Virtual Desktop Solution</label>
-                            <textarea class="form-control" id="virtualDesktopSolution" name="virtualDesktopSolution" placeholder="Does the prospect use a Virtual Desktop solution, e.g. Citrix, thin-clients, etc.?"></textarea>
-                        </div>
-                    </div>
-
-                    <!-- Email Infrastructure -->
-                    <div class="form-row mr-4 ml-2">
-                        <div class="form-group col-md-12">
-                            <label for="emailInfrastructure">Email Infrastructure</label>
-                            <textarea class="form-control" id="emailInfrastructure" name="emailInfrastructure" placeholder="What is the existing email infrastructure and can it be modified to use a company domain email address?"></textarea>
+                            <label for="regulatoryConsiderations">Key Regulatory Considerations</label>
+                            <textarea class="form-control" id="regulatoryConsiderations" name="regulatoryConsiderations" placeholder="Are there any key regulatory considerations, for example: Call Recording? Do country specific regulations prevent telephony being delivered from another country?"></textarea>
                         </div>
                     </div>
 
@@ -806,6 +790,39 @@
                         </div>
                     </div>
 
+                    <!-- IT Infrastructure -->
+                    <div class="form-row mr-4 ml-2">
+                        <div class="form-group col-md-12">
+                            <label for="itInfrastructure">IT Infrastructure</label>
+                            <textarea class="form-control" id="itInfrastructure" name="itInfrastructure" placeholder="Is the IT infrastructure supported in-house or via a third-party, including internet connections, user/company provided laptops and headsets?"></textarea>
+                        </div>
+                    </div>
+
+                    <!-- Virtual Solution -->
+                    <div class="form-row mr-4 ml-2">
+                        <div class="form-group col-md-12">
+                            <label for="virtualDesktopSolution">Virtual Desktop Solution</label>
+                            <textarea class="form-control" id="virtualDesktopSolution" name="virtualDesktopSolution" placeholder="Does the prospect use a Virtual Desktop solution, e.g. Citrix, thin-clients, etc.?"></textarea>
+                        </div>
+                    </div>
+
+                    <!-- Email Infrastructure -->
+                    <div class="form-row mr-4 ml-2">
+                        <div class="form-group col-md-12">
+                            <label for="emailInfrastructure">Email Infrastructure</label>
+                            <textarea class="form-control" id="emailInfrastructure" name="emailInfrastructure" placeholder="What is the existing email infrastructure and can it be modified to use a company domain email address?"></textarea>
+                        </div>
+                    </div>
+
+
+
+                    <!-- Requester Info -->
+                    <!-- Requester Info -->
+                    <div class="col-md-12">
+                        <h2 class="text-center">Requester Info</h2>
+                        <hr />
+                    </div>
+
                     <div class="form-row mr-4 ml-2">
                         <div class="form-group col-md-6">
                             <label for="requesterName">Requester Name</label>
@@ -817,7 +834,6 @@
                         </div>
                     </div>
 
-                    <!-- Requester Info -->
                     <div class="form-row mr-4 ml-2">
                         <div class="form-group col-md-6">
                             <label for="requesterPhoneNumber">Requester Phone #</label>
