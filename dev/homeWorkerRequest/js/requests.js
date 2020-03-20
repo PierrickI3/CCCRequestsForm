@@ -6,30 +6,41 @@ if (window.location.href.includes('localhost'))
 else
   apiBasePath = "https://drbojb15ma.execute-api.eu-central-1.amazonaws.com/dev";
 
+// Homeworker create newRequest
+async function postRequests() {
+  console.log('postRequests()');
 
-async function postRequests(region, subRegion, segment, product, tasks, requesterName, requesterEmail, requesterPhoneNumber, needCompletedBy, description, partnerCustomerName, salesforceAccountOpportunity, _token) {
-
-  console.log('Mail Distribution:', mailDistribution[product][$("#region").val()]);
+  //console.log('Mail Distribution:', mailDistribution[product][$("#region").val()]);
   var data = {
-    region: region,
-    subRegion: subRegion,
-    segment: segment,
-    product: product,
-    tasks: tasks,
-    requesterName: requesterName,
-    requesterEmail: requesterEmail,
-    requesterPhoneNumber: requesterPhoneNumber,
-    needCompletedBy: needCompletedBy,
-    description: description,
+    region: $("#region").val(),
+    subRegion: $("#subRegion").val(),
+    countries: getSelectedCountries(),
+    languages: getSelectedLanguages(),
+    questions: {
+      changeManagementProcess: $("#changeManagementProcess").val(),
+      regulatoryConsiderations: $("#regulatoryConsiderations").val(),
+      numbersDeployment: $("#numbersDeployment").val(),
+      newNumbersBroadcast: $("#newNumbersBroadcast").val()
+    },
+
+
+    requesterName: $("#requesterName").val(),
+    requesterEmail: $("#requesterEmail").val(),
+    requesterPhoneNumber: $("#requesterPhoneNumber").val(),
+    needCompletedBy: $("#needCompletedBy").val(),
+    description: $("#description").val(),
     status: "Open",
     isDeleted: false,
-    mailDistribution: mailDistribution[product][$("#region").val()],
-    token: _token
+    mailDistribution: mailDistribution['Genesys Cloud'][$("#region").val()],
+    token: gcToken
   };
 
+  console.log(data);
+
+  
   // override Test objects
   if (window.location.href.includes('localhost')) {
-    data.mailDistribution = requesterEmail;
+    data.mailDistribution = $("#requesterEmail").val();
     data.isTest = true
   }
 
@@ -39,12 +50,9 @@ async function postRequests(region, subRegion, segment, product, tasks, requeste
     data.partnerCustomerName = partnerCustomerName
   }
 
-  if (salesforceAccountOpportunity.length > 0) {
-    data.salesforceAccountOpportunity = salesforceAccountOpportunity
-  }
 
   //#endregion
-
+  /*
   return await $.ajax({
     url: `${apiBasePath}/requests`,
     method: "POST",
@@ -69,6 +77,8 @@ async function postRequests(region, subRegion, segment, product, tasks, requeste
     .always(() => {
       console.log("postRequests completed");
     });
+    */
+
 }
 
 async function putRequest(id, region, subRegion, segment, product, tasks, requesterName, requesterEmail, requesterPhoneNumber, needCompletedBy, description, partnerCustomerName, salesforceAccountOpportunity, priority, acceptedRejected, status, programManager, acceptedRejectedNotes, teamMembers, _token, isDeleted) {
@@ -266,36 +276,36 @@ async function getExport(_region, _subRegion, _product, _segment, _token) {
     sFilter = sFilter + `subRegion=${_subRegion}&`;
 
 
-// remove last char
-/*
-if (sFilter.length > 0)
-  sFilter = "?"
-else sFilter = sFilter + "&" //+ sFilter.substring(0, sFilter.length - 1);
-*/
-console.log(`getExport with filter: ${sFilter}`);
+  // remove last char
+  /*
+  if (sFilter.length > 0)
+    sFilter = "?"
+  else sFilter = sFilter + "&" //+ sFilter.substring(0, sFilter.length - 1);
+  */
+  console.log(`getExport with filter: ${sFilter}`);
 
-return await $.ajax({
-  url: `${apiBasePath}/export?${sFilter}token=${_token}`,
-  method: "GET",
-  contentType: 'application/json',
-  dataType: "json"
-})
-  .done((data, textStatus, jqXHR) => {
-    try {
-      if (jqXHR.status === 200) {
-        console.log(jqXHR);
-        return data;
-      } else {
-        showMessage("Unexpected error: " + textStatus, true);
-        reject(textStatus);
-      }
-    } catch (error) {
-      console.error(error);
-      reject(error);
-    }
+  return await $.ajax({
+    url: `${apiBasePath}/export?${sFilter}token=${_token}`,
+    method: "GET",
+    contentType: 'application/json',
+    dataType: "json"
   })
-  .always(() => {
-    console.log("getRequests completed");
-  });
+    .done((data, textStatus, jqXHR) => {
+      try {
+        if (jqXHR.status === 200) {
+          console.log(jqXHR);
+          return data;
+        } else {
+          showMessage("Unexpected error: " + textStatus, true);
+          reject(textStatus);
+        }
+      } catch (error) {
+        console.error(error);
+        reject(error);
+      }
+    })
+    .always(() => {
+      console.log("getRequests completed");
+    });
 }
 
