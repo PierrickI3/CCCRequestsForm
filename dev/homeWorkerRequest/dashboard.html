@@ -72,25 +72,7 @@
                             <option value="" selected>All</option>
                         </select>
                     </div>
-                    <div class="form-group col-md-3">
-                        <label for="product">Product</label>
-                        <select id="product" name="product" class="form-control">
-                            <option value="" selected>All products</option>
-                            <option value="Genesys Cloud">Genesys Cloud</option>
-                            <option value="Genesys Engage">Genesys Engage</option>
-                            <option value="Genesys Engage Cloud">Genesys Engage Cloud</option>
-                            <option value="PureConnect">PureConnect</option>
-                        </select>
-                    </div>
-                    <div class="form-group col-md-3">
-                        <label for="segment">Market Segment</label>
-                        <select id="segment" name="segment" class="form-control">
-                            <option value="" selected>All</option>
-                            <option value="Mid-market">Mid-market</option>
-                            <option value="Commercial">Commercial</option>
-                            <option value="Enterprise">Enterprise</option>
-                        </select>
-                    </div>
+                    
                 </div>
                 <center>
                     <div id="spinner" class="justify-content-center">
@@ -113,19 +95,7 @@
                     </div>
                 </div>
 
-                <div class="form-row">
-                    <div class="form-group col-md-5">
-                        <div class="chart-container" style="width:50vw" id="chart_product_container" name="product">
-                            <canvas id="chart_product"></canvas>
-                        </div>
-                    </div>
-                    <div class="form-group col-md-5">
-                        <div class="chart-container" style="width:50vw" id="chart_segment_container" name="segment">
-                            <canvas id="chart_segment"></canvas>
-                        </div>
-                    </div>
-                </div>
-
+            
                 <div class="form-row">
                     <div class="form-group col-md-5">
                         <div class="chart-container" style="width:50vw" id="chart_status_container" name="status">
@@ -139,30 +109,9 @@
                     </div>
                 </div>
 
-                <div class="form-row">
-                    <div class="form-group col-md-12">
-                        <div class="chart-container" style="width:90vw" id="chart_requestCategory_container" name="requestCategory">
-                            <canvas id="chart_requestCategory"></canvas>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="form-row">
-                    <div class="form-group col-md-12">
-                        <div class="chart-container" style="width:80vw" id="chart_requestType_container" name="requestType">
-                            <canvas id="chart_requestType"></canvas>
-                        </div>
-                    </div>
-                </div>
+               
             </div>
-            <!--
-            <div class="col-12 admin">
-                <center>
-                    <h5 id="selectedTaskType">Task Type: Not selected </h5>
-                </center>
-                <div id="basicgrid"></div>
-            </div>
-            -->
+           
         </div>
         <button onclick="exportData();" class="admin btn btn-dark" style="float: right;">Export to CSV</button>
         <br><br><br>
@@ -275,165 +224,7 @@
         $("#subRegion").on("change", () => {
             init();
         });
-        $("#product").on("change", () => {
-            init();
-        });
-        $("#segment").on("change", () => {
-            init();
-        });
-        /*
-                function refreshGrid() {
-                    $("#basicgrid").jsGrid("loadData")
-                }
-        
-        */
-        /*
-                function showRequests() {
-                    console.log('Showing requests by TaskType...');
-        
-                    try {
-        
-                        jsGrid.setDefaults({ tableClass: "jsgrid-table table table-striped table-hover" });
-                        jsGrid.setDefaults("text", {
-                            _createTextBox: function () {
-                                return $("<input>").attr("type", "text").attr("class", "form-control input-sm")
-                            }
-                        });
-                        jsGrid.setDefaults("number", {
-                            _createTextBox: function () {
-                                return $("<input>").attr("type", "number").attr("class", "form-control input-sm")
-                            }
-                        });
-                        jsGrid.setDefaults("textarea", {
-                            _createTextBox: function () {
-                                return $("<input>").attr("type", "textarea").attr("class", "form-control")
-                            }
-                        });
-                        jsGrid.setDefaults("control", {
-                            _createGridButton: function (cls, tooltip, clickHandler) {
-                                var grid = this._grid;
-                                return $("<button>").addClass(this.buttonClass).addClass(cls).attr({
-                                    type: "button",
-                                    title: tooltip
-                                }).on("click", function (e) {
-                                    clickHandler(grid, e)
-                                })
-                            }
-                        });
-                        jsGrid.setDefaults("select", {
-                            _createSelect: function () {
-                                var $result = $("<select>").attr("class", "form-control input-sm"),
-                                    valueField = this.valueField,
-                                    textField = this.textField,
-                                    selectedIndex = this.selectedIndex;
-                                return $.each(this.items, function (index, item) {
-                                    var value = valueField ? item[valueField] : index,
-                                        text = textField ? item[textField] : item,
-                                        $option = $("<option>").attr("value", value).text(text).appendTo($result);
-                                    $option.prop("selected", selectedIndex === index)
-                                }), $result
-                            }
-                        });
-        
-                        $("#basicgrid").jsGrid({
-                            height: "40vh",
-                            width: "100%",
-                            filtering: false,
-                            editing: false,
-                            sorting: true,
-                            paging: true,
-                            autoload: true,
-                            pageSize: 25,
-                            pageButtonCount: 5,
-                            loadIndication: true,
-                            loadIndicationDelay: 500,
-                            loadMessage: "Loading...",
-                            loadShading: true,
-                            autoload: true,
-                            rowClick: function (args) {
-        
-                            },
-                            rowClass: function (item, itemIndex) {
-        
-                                if (item.acceptedRejected == "Accepted") {
-                                    return "task-accepted"
-                                } else if (item.acceptedRejected == "Rejected")
-                                    return "task-rejected"
-                                else
-                                    return
-        
-        
-                            },
-                            deleteItem: async function (deletingRequest) {
-        
-                            },
-                            controller: {
-                                loadData: async function () {
-                                    console.log('display data for TaskType: ', filter);
-                                    return $.grep(data, function (request) {
-                                        return (
-                                             ($('#region').val() === "" || request.region == $('#region').val())
-                                            && ($('#subRegion').val() === "" || request.subRegion == $('#subRegion').val())
-                                            && ($('#product').val() === "" || request.product == $('#product').val())
-                                            && ($('#segment').val() === "" || request.segment == $('#segment').val())
-                                            && (!filter || (request.tasks.find(o => o.taskType === filter)) )
-                                        )
-        
-                                    });
-        
-                                }
-                            },
-                            noDataContent: "No Requests",
-                            fields: [
-                                {
-                                    name: "id",
-                                    title: "Id",
-                                    type: "text",
-                                    width: "auto",
-                                    itemTemplate: function (value, item) {
-                                        return `<small>${value}</small>`;
-                                    },
-                                    visible: false
-                                }, {
-                                    name: "region",
-                                    title: "Region",
-                                    type: "text",
-                                    width: "auto",
-                                    visible: region == 'super-user' ? true : false
-                                }, {
-                                    name: "subRegion",
-                                    title: "Territory",
-                                    type: "text",
-                                    width: "auto"
-                                }, {
-                                    name: "product",
-                                    title: "Product",
-                                    type: "text",
-                                    width: "auto"
-                                },
-                                {
-                                    name: "segment",
-                                    title: "Market Segment",
-                                    type: "text",
-                                    width: "auto"
-                                },{
-                                    name: "updatedAt",
-                                    title: "Last Updated",
-                                    type: "text",
-                                    itemTemplate: function (value, item) {
-                                        return `${moment(value).fromNow()}`;
-                                    },
-                                    width: "auto",
-                                    filtering: false
-                                }]
-        
-                        });
-        
-                    } catch (error) {
-                        console.error(error);
-                    }
-                }
-        */
+       
 
         function buildFilter(_sql, _isWHERE) {
             var filter = "";
@@ -445,23 +236,10 @@
             else
                 filter = " AND "
 
-            if ($('#region').val() != "" || $('#product').val() != "" || $('#segment').val() != "" || $('#subRegion').val() != "") {
+            if ($('#region').val() != "" || $('#subRegion').val() != "") {
                 if ($('#region').val() != "") {
                     filter = filter + ` region = '${$('#region').val()}' `
                     bAND = true;
-                    bEmpty = false;
-                }
-
-                if ($('#product').val() != "") {
-                    if (bAND) filter = filter + " AND ";
-                    filter = filter + `product = '${$('#product').val()}' `;
-                    bEmpty = false;
-                    bAND = true;
-                }
-
-                if ($('#segment').val() != "") {
-                    if (bAND) filter = filter + " AND ";
-                    filter = filter + `segment = '${$('#segment').val()}' `;
                     bEmpty = false;
                 }
 
@@ -563,109 +341,22 @@
             // By Teritory
             makeChart(`SELECT count(*) as val, subRegion as label FROM ? ## GROUP BY subRegion`, false, 'subRegion', 'doughnut', 'By Territory', data);
 
-            // By Segment
-            makeChart('SELECT count(*) as val, segment as label FROM ? ## GROUP BY segment', false, 'segment', 'pie', 'By Segment', data);
-
-            // By Product
-            makeChart('SELECT count(*) as val, product as label FROM ? ## GROUP BY product', false, 'product', 'pie', 'By Product', data);
-
+           
             // By Status for Active and not deleted
             makeChart("SELECT count(*) as val, status as label FROM ? WHERE (isDeleted = false ##) GROUP BY status", true, 'status', 'doughnut', 'By Status for Active Requests', data);
 
             // By Handled Status for Active
             makeChart("SELECT count(*) as val, acceptedRejected as label FROM ? WHERE (isDeleted = false ##) GROUP BY acceptedRejected", true, 'acceptedRejected', 'doughnut', 'By Accepted/Rejected Status', data);
 
-            // By Request Category / Time
-            let res = alasql('SELECT count(*) as val, taskCategory as label FROM ? GROUP BY taskCategory', [task_parsed]);
-            var labels = [];
-            var values1 = [];
-            res.forEach(element => {
-                labels.push(element.label);
-                values1.push(element.val);
-            });
-
-            res = alasql('SELECT SUM(taskTime::NUMBER) as val, taskCategory as label FROM ? GROUP BY taskCategory', [task_parsed]);
-            var values2 = [];
-            res.forEach(element => {
-                values2.push(element.val);
-            });
-
-            $('#chart_requestCategory').remove();
-            $('#chart_requestCategory_container').append('<canvas id="chart_requestCategory"><canvas>');
-
-            var ctx = document.getElementById(`chart_requestCategory`)
-            var myDoughnutChart = new Chart(ctx, {
-                type: 'bar',
-                data: {
-                    datasets: [{
-                        data: values1,
-                        label: "Requests",
-                        backgroundColor: [
-                            'rgba(255, 99, 132, 1)',
-                            'rgba(54, 162, 235, 1)',
-                            'rgba(255, 206, 86, 1)',
-                            'rgba(75, 192, 192, 1)',
-                            'rgba(153, 102, 255, 1)',
-                            'rgba(255, 100, 64, 1)',
-                            'rgba(200, 109, 164, 1)',
-                            'rgba(255, 50, 99, 1)',
-                            'rgba(100, 30, 164, 1)',
-                            'rgba(200, 159, 255, 1)',
-                            'rgba(50, 100, 200, 1)',
-                            'rgba(70, 150, 76, 1)',
-                            'rgba(20, 255, 150, 1)',
-                            'rgba(250, 50, 40, 1)',
-                            'rgba(175, 55, 55, 1)',
-                            'rgba(240, 140, 40, 1)',
-                            'rgba(66, 66, 166, 1)'
-                        ]
-                    }, {
-                        type: 'line',
-                        data: values2,
-                        label: "Time spent",
-                        backgroundColor: [
-                            'rgba(70, 128, 215, 0.3)'
-                        ],
-                        borderWidth: 0
-                    }],
-                    labels: labels
-                },
-                options: {
-                    title: {
-                        display: true,
-                        text: 'RequestCategory / Time spent'
-                    },
-                    scales: {
-                        yAxes: [{
-                            ticks: {
-                                min: 0
-                            }
-
-                        }],
-                        xAxes: [{
-                            ticks: {
-                                min: 0
-                            }
-
-                        }]
-                    }
-                }
-            });
-
-            // By RequestType (a'ka taskType)
-            makeChart("SELECT count(*) as val, taskType as label FROM ? WHERE (taskType <> 'undefined') GROUP BY taskType", false, 'requestType', 'bar', 'By task Type', task_parsed, graphClick_taskType);
-
+            
         }
 
         async function exportData() {
 
-            let exportRegion = $('#region').val() == "" ? undefined : $('#region').val();
-            let exportProduct = $('#product').val() == "" ? undefined : $('#product').val();
-            let exportSegment = $('#segment').val() == "" ? undefined : $('#segment').val();
-            let exportSubRegion = $('#subRegion').val() == "" ? undefined : $('#subRegion').val();
+           
             let myExportData;
             try {
-                myExportData = await getExport(exportRegion, exportSubRegion, exportProduct, exportSegment, gcToken);
+                myExportData = await getExport();
                 if (myExportData.length == 0) {
                     bootbox.alert("Nothing to export...");
                     return
