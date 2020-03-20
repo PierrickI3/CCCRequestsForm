@@ -59,24 +59,6 @@ let mailDistribution = {
         NA: ["NACompetencyCenterRequests@genesys.com"],
         LATAM: ["LATAMCompetencyCenter@genesys.com"],
         APAC: ["apac-cc@genesys.com"]
-    },
-    "Genesys Engage": {
-        EMEA: ["EMEAEntCCRequests@genesys.com"],
-        NA: ["NACompetencyCenterRequests@genesys.com"],
-        LATAM: ["LATAMCompetencyCenter@genesys.com"],
-        APAC: ["apac-cc@genesys.com"]
-    },
-    "Genesys Engage Cloud": {
-        EMEA: ["EMEAEntCCRequests@genesys.com"],
-        NA: ["NACompetencyCenterRequests@genesys.com"],
-        LATAM: ["LATAMCompetencyCenter@genesys.com"],
-        APAC: ["apac-cc@genesys.com"]
-    },
-    "PureConnect": {
-        EMEA: ["EMEACloudProgramManagement@genesys.com"],
-        NA: ["NACompetencyCenterRequests@genesys.com"],
-        LATAM: ["LATAMCompetencyCenter@genesys.com"],
-        APAC: ["apac-cc@genesys.com"]
     }
 };
 
