@@ -14,13 +14,26 @@ async function postRequests() {
   var data = {
     region: $("#region").val(),
     subRegion: $("#subRegion").val(),
-    countries: getSelectedCountries(),
-    languages: getSelectedLanguages(),
     questions: {
+      countries: getSelectedCountries(),
+      languages: getSelectedLanguages(),
+      customerResourceCommitted: $("#customerResourceCommitted").prop("checked"),
+      projectSponsorAssigned: $("#projectSponsorAssigned").prop("checked"),
       changeManagementProcess: $("#changeManagementProcess").val(),
       regulatoryConsiderations: $("#regulatoryConsiderations").val(),
       numbersDeployment: $("#numbersDeployment").val(),
-      newNumbersBroadcast: $("#newNumbersBroadcast").val()
+      newNumbersBroadcast: $("#newNumbersBroadcast").val(),
+      existingTelephonyUsage: $("#existingTelephonyUsage").val(),
+      numberTypes: $("#numberTypes").val(),
+      itInfrastructure: $("#itInfrastructure").val(),
+      endUserDevicesRequireVPN: $("#endUserDevicesRequireVPN").prop("checked"),
+      usersInternetBandwidth: $("#usersInternetBandwidth").prop("checked"),
+      virtualDesktopSolution: $("#virtualDesktopSolution").val(),
+      emailInfrastructure: $("#emailInfrastructure").val(),
+      callFlows: $("#callFlows").prop("checked"),
+      prompts: $("#prompts").prop("checked"),
+      identificationAndVerificationProcesses: $("#identificationAndVerificationProcesses").val()
+
     },
 
 
@@ -37,7 +50,7 @@ async function postRequests() {
 
   console.log(data);
 
-  
+
   // override Test objects
   if (window.location.href.includes('localhost')) {
     data.mailDistribution = $("#requesterEmail").val();
