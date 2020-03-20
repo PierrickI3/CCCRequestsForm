@@ -67,7 +67,7 @@
                         <div class="form-group col-md-6">
                             <label for="countries">Countries</label>
                             <select class="selectpicker" id="countries" name="countries" class="form-control" required multiple data-live-search="true">
-                                <option value="Afganistan">Afghanistan</option>
+                                <option value="Afghanistan">Afghanistan</option>
                                 <option value="Albania">Albania</option>
                                 <option value="Algeria">Algeria</option>
                                 <option value="American Samoa">American Samoa</option>
@@ -358,6 +358,40 @@
                         </div>
                     </div>
 
+                    <!-- Telephony Model -->
+                    <div class="form-group col-md-6">
+                        <label for="telephonyModel">Telephony Model</label>
+                        <select id="telephonyModel" name="telephonyModel" class="form-control" required>
+                            <option value="" disabled selected>Select a Telephony Model</option>
+                            <option value="GCV">Genesys Cloud Voice (recommended)</option>
+                            <option value="BYOCCloud">BYOC Cloud</option>
+                            <option value="BYOCPremiseVirtualEdge">BYOC Premise w/ Virtual Edge</option>
+                        </select>
+                    </div>
+
+                    <div class="border border-black mr-3" id="gcvCarriersDiv" style="display: none;">
+                        <div class="form-row mt-1 mr-4 ml-2">
+                            <div class="form-group col-md-5 text-center">Country</div>
+                            <div class="form-group col-md-5 text-center">Carrier</div>
+                        </div>
+                        <div class="form-row mt-2 mr-4 ml-2" id="gcvCarriers"></div>
+                        <small id="otherNote" class="form-group ml-2">
+                            If you have selected "Other":
+                            <ul>
+                                <li>Carrier must meeting standard requirements as per Resource Centre</li>
+                                <li>Expectation that deployment time will be extended, <strong>in most cases significantly</strong></li>
+                            </ul>
+                        </small>
+                        <div class="form-check mr-4">
+                            <div class="form-group col-md-12">
+                                <input class="form-check-input" type="checkbox" value="" id="relationshipWithCarrier">
+                                <label class="form-check-label" for="relationshipWithCarrier">
+                                    Does the prospect already have a relationship with the carrier and access to technical resources?
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
                     <!-- Phone Numbers Deployment -->
                     <div class="form-row mr-4 ml-2">
                         <div class="form-group col-md-12">
@@ -497,6 +531,8 @@
                             <input type="text" class="form-control" id="requesterEmail" name="requesterEmail" placeholder="Your Email Address" required>
                         </div>
                     </div>
+
+                    <!-- Requester Info -->
                     <div class="form-row mr-4 ml-2">
                         <div class="form-group col-md-6">
                             <label for="requesterPhoneNumber">Requester Phone #</label>
@@ -507,10 +543,11 @@
                             <input type="text" id="datepicker" class="form-control" required />
                         </div>
                     </div>
+
                     <div class="form-row mr-4 ml-2">
                         <div class="form-group col-md-12">
-                            <label for="description">Description</label>
-                            <textarea class="form-control" id="description" name="description" placeholder="Anything else we should be aware of?" required></textarea>
+                            <label for="notes">Notes/Comments</label>
+                            <textarea class="form-control" id="notes" name="notes" placeholder="Anything else we should be aware of?" required></textarea>
                         </div>
                     </div>
 
@@ -582,20 +619,21 @@
     <!--#endregion -->
 
     <script>
-        let tasksControls = [], taskId = 0, gcToken;
+        let countriesAndCarriers = [], countryCarrierId = 0, gcToken;
 
         if (maintenanceMode) {
             $("#alert").attr("hidden", false);
             $("#form :input").attr("disabled", true);
             $("#form :button").attr("disabled", true);
         } else {
-            addNewTask(false);
+            //addNewTask(false);
         }
 
-        if (window.location.href.includes('dev'))
+        if (window.location.href.includes('dev')) {
             $("#devModeImage").removeAttr('hidden');
+        }
 
-        $("#countries").selectpicker({
+        $(".selectpicker").selectpicker({
             width: '281px',
             selectedTextFormat: 'values'
         });
@@ -605,11 +643,6 @@
             $("<option/>", { id: languageCode }).text(languageName).appendTo("#languages");
         });
 
-        $("#languages").selectpicker({
-            width: '281px',
-            selectedTextFormat: 'values'
-        });
-
         function getSelectedCountries() {
             return $("#countries").val();
         }
@@ -617,6 +650,21 @@
         function getSelectedLanguages() {
             return $("#languages").val();
         }
+
+        $("#telephonyModel").on('change', (e) => {
+            switch ($("#telephonyModel").val()) {
+                case 'GCV':
+                    $("#gcvCarriersDiv").hide();
+                    break;
+                case 'BYOCCloud':
+                    refreshCountryCarriers();
+                    $("#gcvCarriersDiv").show();
+                    break;
+                default:
+                    $("#gcvCarriersDiv").hide();
+                    break;
+            }
+        });
 
         // Init DatePicker
         $(function () {
@@ -690,46 +738,41 @@
             }
         }
 
-        function addNewTask(includeDeleteButton) {
-            let currentTaskId = taskId;
-            taskId++;
+        function refreshCountryCarriers() {
+            let currentCountryCarrierId = countryCarrierId++;
 
-            let categoryDiv = $("<div/>", { class: "form-group col-md-5" }).appendTo("#tasks");
-            let categorySelect = $("<select/>", { class: "form-control", name: "category_" + currentTaskId, required: true }).appendTo(categoryDiv);
-            $("<option/>", { value: "", disabled: true, selected: true }).text("Select a Request Category").appendTo(categorySelect);
-            for (const category of requestCategory) {
-                $("<option/>", { value: category }).text(category).appendTo(categorySelect);
-            }
+            $.each($("#countries").val(), (i, country) => {
+                // Country
+                let countryDiv = $("<div/>", { class: "form-group col-md-5" }).appendTo("#gcvCarriers");
+                $("<label/>", { id: "country_" + currentCountryCarrierId }).text(country).appendTo(countryDiv);
 
-            let typeDiv = $("<div/>", { class: "form-group col-md-5" }).appendTo("#tasks");
-            let typeSelect = $("<select/>", { class: "form-control", name: "type_" + currentTaskId, required: true }).appendTo(typeDiv);
-            $("<option/>", { value: "", disabled: true, selected: true }).text("Select a Request Type").appendTo(typeSelect);
-            categorySelect.on("change", () => {
-                updateRequestTypeBasedOnRegionAndProduct(categorySelect, typeSelect);
-            });
-
-            if (includeDeleteButton) {
-                let deleteButton = $("<a/>", { href: "#", class: "btn btn-danger form-group", style: "max-height:38px" }).html(`<i class="fa fa-trash"></i>`).appendTo("#tasks");
-                deleteButton.on("click", () => {
-                    categoryDiv.remove();
-                    typeDiv.remove();
-                    deleteButton.remove();
-                    tasksControls = tasksControls.filter(tc => tc.id != currentTaskId)
+                // Carriers
+                let carriersDiv = $("<div/>", { class: "form-group col-md-5" }).appendTo("#gcvCarriers");
+                let carriersSelect = $("<select/>", { class: "selectpicker form-control", id: "carriers_" + currentCountryCarrierId, name: "carriers_" + currentCountryCarrierId, ["data-live-search"]: true, required: true, multiple: true }).appendTo(carriersDiv);
+                $("<option/>", { value: "", disabled: true, selected: true }).text("Select a Carrier").appendTo(carriersSelect);
+                $.each(supportedBYOCCloudCarriers, (region, regionalSupportedBYOCCloudCarriers) => {
+                    let optGroup = $("<optgroup/>", { label: region }).appendTo(carriersSelect);
+                    $.each(regionalSupportedBYOCCloudCarriers, (i, regionalSupportedBYOCCloudCarrier) => {
+                        $("<option/>", { value: regionalSupportedBYOCCloudCarrier.name }).text(regionalSupportedBYOCCloudCarrier.name).appendTo(optGroup);
+                    });
                 });
-            }
-
-            tasksControls.push({
-                id: currentTaskId,
-                categorySelect: categorySelect,
-                typeSelect: typeSelect
+                $("<option/>", { value: "Other" }).text("Other").appendTo(carriersSelect);
+                carriersSelect.selectpicker();
+                carriersSelect.on('change', (e) => {
+                    if (carriersSelect.val().includes("Other")) {
+                        $("otherNote").show();
+                    } else {
+                        $("otherNote").hide();
+                    }
+                })
             });
-        }
 
-        $("#addTask").on("click", (e) => {
-            e.preventDefault();
-            if (maintenanceMode) return;
-            addNewTask(true);
-        });
+            // countriesAndCarriers.push({
+            //     id: currentCountryCarrierId,
+            //     country: country,
+            //     typeSelect: typeSelect
+            // });
+        }
 
         $("#region").on("change", () => {
             $("#subRegion").empty();
@@ -843,9 +886,9 @@
             $("#requesterName").val(userInfo.name);
             $("#requesterEmail").val(userInfo.mail);
             $("#requesterPhoneNumber").val(userInfo.phone);
-            tasksControls = [];
-            $("#tasks").empty();
-            addNewTask(false);
+            countriesAndCarriers = [];
+            $("#gcvCarriers").empty();
+            //addNewTask(false);
             $("#subRegion").empty();
             $("<option selected disabled />", { value: "Select a Sub-Region" }).text("Select a Sub-Region").appendTo("#subRegion");
             $("#segment").val('');
