@@ -611,53 +611,23 @@
                             },
                         },
                         {
-                            name: "countries",
-                            title: "Countries",
-                            type: "text",
-                            width: "160",
-                            align: "center",
-                            filterTemplate: function () {
-                                let input = $("<input/>", { type: "text" });
-                                input.on('keyup', () => {
-                                    searches.countries = input.val();
-                                    $("#basicgrid").data('JSGrid').search(searches);
-                                });
-                                return this.filterControl = input;
-                            },
-                        },
-                        {
-                            name: "languages",
-                            title: "Lanugages",
-                            type: "text",
-                            width: "160",
-                            align: "center",
-                            filterTemplate: function () {
-                                let input = $("<input/>", { type: "text" });
-                                input.on('keyup', () => {
-                                    searches.lanugages = input.val();
-                                    $("#basicgrid").data('JSGrid').search(searches);
-                                });
-                                return this.filterControl = input;
-                            },
-                        },
-                        {
-                            name: "existingTelephonyUsage",
-                            title: "Existing Telephony",
+                            name: "telephonyModel",
+                            title: "Telephony Model",
                             type: "text",
                             width: "auto",
                             align: "center",
                             filterTemplate: function () {
-                                let select = $("<select/>", { id: "selectExistingTelephonyUsage" });
+                                let select = $("<select/>", { id: "telephonyModel" });
                                 $("<option/>", { value: "" }).text("(All)").appendTo(select);
-                                let selectedRegion = $("#selectExistingTelephonyUsage").children("option:selected").val();
-                                $("<option/>", { value: "NoExistingTelephony" }).text("(No Existing Telephony)").appendTo(select);
-                                $("<option/>", { value: "TelephonyCarrier" }).text("TelephonyCarrier").appendTo(select);
-                                $("<option/>", { value: "PBX" }).text("PBX").appendTo(select);
-                                $("<option/>", { value: "SBC" }).text("SBC").appendTo(select);
+                                let selectedRegion = $("#telephonyModel").children("option:selected").val();
+
+                                $("<option/>", { value: "GCV" }).text("Genesys Cloud Voice (recommended)").appendTo(select);
+                                $("<option/>", { value: "BYOCCloud" }).text("BYOC Cloud").appendTo(select);
+                                $("<option/>", { value: "BYOCPremiseVirtualEdge" }).text("BYOC Premise w/ Virtual Edge").appendTo(select);
 
                                 select.on('change', (e) => {
-                                    let selectedSubRegion = select.children("option:selected").val();
-                                    searches.subRegion = selectedSubRegion;
+                                    let selectedTelephonyModel = select.children("option:selected").val();
+                                    searches.telephonyModel = selectedTelephonyModel;
                                     $("#basicgrid").data('JSGrid').search(searches);
                                 });
                                 return this.filterControl = select;
@@ -696,7 +666,7 @@
                                 });
                                 return this.filterControl = input;
                             },
-                        },{
+                        }, {
                             name: "needCompletedBy",
                             title: "Need Completed",
                             type: "text",
