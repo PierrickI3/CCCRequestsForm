@@ -87,6 +87,7 @@ let requestsType = {
     "Enablement": ["Partner Summits, Events, Webinars", "Partner End-to-End Enablement", "Partner Technical Enablement", "Internal SC/AE Enablement"],
     "Critical Situation Support": [],
     "Top 100 Account Planning": [],
+    "Rapid Response Offer": [],
     "Other Request": []
 }
 
@@ -100,6 +101,7 @@ let requestCategory = [
     "Enablement",
     "Critical Situation Support",
     "Top 100 Account Planning",
+    "Rapid Response Offer",
     "Other Request"
 ]
 
