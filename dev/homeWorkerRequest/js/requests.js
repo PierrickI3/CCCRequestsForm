@@ -40,7 +40,6 @@ async function postRequests() {
     requesterName: $("#requesterName").val(),
     requesterEmail: $("#requesterEmail").val(),
     requesterPhoneNumber: $("#requesterPhoneNumber").val(),
-    needCompletedBy: $("#needCompletedBy").val(),
     description: $("#description").val(),
     status: "Open",
     isDeleted: false,
@@ -67,7 +66,7 @@ async function postRequests() {
   //#endregion
   /*
   return await $.ajax({
-    url: `${apiBasePath}/requests`,
+    url: `${apiBasePath}/homeworkerrequests`,
     method: "POST",
     contentType: 'application/json',
     dataType: "json",
@@ -189,7 +188,7 @@ async function getRequests(region = "", _token) {
     region = "ALL";
 
   return await $.ajax({
-    url: `${apiBasePath}/requests?region=${region}${onlyClosed}${onlyDeleted}&token=${_token}`,
+    url: `${apiBasePath}/homeworkerrequests?region=${region}${onlyClosed}${onlyDeleted}&token=${_token}`,
     method: "GET",
     contentType: 'application/json',
     dataType: "json"
@@ -223,7 +222,7 @@ async function deleteRequest(requestId, _token) {
   }
 
   return await $.ajax({
-    url: `${apiBasePath}/requests/${requestId}`,
+    url: `${apiBasePath}/homeworkerrequests/${requestId}`,
     method: "PATCH",
     contentType: 'application/json',
     dataType: "json",
@@ -251,7 +250,7 @@ async function deleteRequest(requestId, _token) {
 async function getDashboard(_token) {
 
   return await $.ajax({
-    url: `${apiBasePath}/dashboard?token=${_token}`,
+    url: `${apiBasePath}/homeworkerdashboard?token=${_token}`,
     method: "GET",
     contentType: 'application/json',
     dataType: "json"
@@ -298,7 +297,7 @@ async function getExport(_region, _subRegion, _product, _segment, _token) {
   console.log(`getExport with filter: ${sFilter}`);
 
   return await $.ajax({
-    url: `${apiBasePath}/export?${sFilter}token=${_token}`,
+    url: `${apiBasePath}/homeworkerexport?${sFilter}token=${_token}`,
     method: "GET",
     contentType: 'application/json',
     dataType: "json"
