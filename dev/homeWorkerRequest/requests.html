@@ -1,0 +1,1084 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no">
+    <title>CCC Request Form</title>
+    <link rel="shortcut icon" href="/favicon.ico">
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <!-- Bootstrap DatePicker -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker3.min.css" integrity="sha256-FAOaXTpl90/K8cXmSdsskbQN3nKYulhCpPbcFzGTWKI=" crossorigin="anonymous" />
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <!-- Editable CSS -->
+    <link type="text/css" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jsgrid/1.5.3/jsgrid.min.css" />
+    <link type="text/css" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jsgrid/1.5.3/jsgrid-theme.min.css" />
+    <!-- jQuery Toast -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/jquery-toast-plugin/1.3.2/jquery.toast.min.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="./css/custom.css">
+</head>
+
+<body>
+    <img class="overlay" src="./images/devmode.png" id="devModeImage" hidden />
+    <nav class="navbar navbar-dark bg-dark navbar-fixed-top">
+        <a class="navbar-brand" href="#">
+            <img src="images/genesys.png" width="30" height="30" class="d-inline-block align-top" alt="">
+            Competence Center Request Form <small><span class="badge badge-pill badge-warning" id="region"></span></small>
+        </a>
+
+        <ul class="mb-0">
+            <ul class="nav navbar-nav mr-2" style="float: left;">
+                <li>
+                    <button class="btn btn-secondary btn-sm" id="btnAssignedToMe"> My Requests </button>
+                </li>
+            </ul>
+            <ul class="nav navbar-nav mr-2" style="float: left;">
+                <li>
+                    <button class="btn btn-secondary btn-sm" id="btnOnlyClosed"> Closed </button>
+                </li>
+            </ul>
+            <ul class="nav navbar-nav mr-4" style="float: left;">
+                <li>
+                    <button class="btn btn-secondary btn-sm" id="btnOnlyDeleted"> Deleted </button>
+                </li>
+            </ul>
+            <ul class="nav navbar-nav" style="float: right;">
+                <li><a href="./index.html" class="admin btn btn-primary btn-sm ml-2">Submit a new Request</a></li>
+            </ul>
+            <ul class="nav navbar-nav" style="float: right;">
+                <li><a href="./dashboard.html" id="dashboardLink" class="admin btn btn-info btn-sm ml-2">Dashboard</a></li>
+            </ul>
+
+            <ul class="nav navbar-nav" style="float: right;">
+                <li><button id="refresh" class="admin btn btn-secondary btn-sm"><em class="fa fa-refresh"></em></button></li>
+
+            </ul>
+        </ul>
+    </nav>
+
+    <div class="alert alert-danger fade show" role="alert" id="alert" hidden>
+        <strong>Maintenance Alert</strong> This site is being updated. Please wait.
+        <a class="btn btn-light" href="#" onclick="location.reload();"><i class="fa fa-refresh"></i> Refresh</a>
+    </div>
+
+    <div class="col-12 admin">
+        <div id="basicgrid"></div>
+    </div>
+
+    <!-- Edit Modal -->
+    <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header" id="modal-header">
+                    <h5 id="title" class="modal-title">Request</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form class="modal-body form-horizontal" id="modal-form">
+                    <div class="form-group">
+
+                        <form id="modal-form">
+
+                            <div class="form-row">
+                                <div class="form-group col-md-5">
+                                    <label>Created Date</label>
+                                    <input disabled type="text" class="form-control" id="createdDate" name="createdDate" />
+                                </div>
+                                <div class="form-group col-md-5">
+                                    <label>Last Updated</label>
+                                    <input disabled type="text" class="form-control" id="updatedDate" name="updatedDate" />
+                                </div>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group col-md-5">
+                                    <label for="region">Region</label>
+                                    <select id="region" name="region" class="form-control" required>
+                                        <option value="" disabled selected>Select a Region</option>
+                                        <option value="APAC">APAC</option>
+                                        <option value="EMEA">EMEA</option>
+                                        <option value="LATAM">LATAM</option>
+                                        <option value="NA">North America</option>
+                                    </select>
+                                </div>
+                                <div class="form-group col-md-5">
+                                    <label for="subRegion">Territory</label>
+                                    <select id="subRegion" name="subRegion" class="form-control" required>
+                                        <option value="" disabled selected>Select a Territory</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group col-md-5">
+                                    <label for="segment">Market Segment</label>
+                                    <select id="segment" name="segment" class="form-control" required>
+                                        <option value="" disabled selected>Select segment</option>
+                                        <option value="Mid-market">Mid-market</option>
+                                        <option value="Commercial">Commercial</option>
+                                        <option value="Enterprise">Enterprise</option>
+                                    </select>
+                                </div>
+                                <div class="form-group col-md-5">
+                                    <label for="product">Product</label>
+                                    <select id="product" name="product" class="form-control" required>
+                                        <option value="" disabled selected>Select a Product</option>
+                                        <option value="Genesys Cloud">Genesys Cloud</option>
+                                        <option value="Genesys Engage">Genesys Engage</option>
+                                        <option value="Genesys Engage Cloud">Genesys Engage Cloud</option>
+                                        <option value="PureConnect">PureConnect</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="border border-black col-md-11 mt-3 mb-3">
+                                    <div class="form-row mt-2">
+                                        <div class="form-group col-md-4 text-center"><strong>Category</strong></div>
+                                        <div class="form-group col-md-4 text-center"><strong>Type</strong></div>
+                                        <div class="form-group col-md-2 text-center"><strong>Time (hours)</strong></div>
+                                    </div>
+                                    <div class="form-row mt-2" id="tasks"></div>
+                                    <a href="#" id="addTask" class="form-group btn btn-primary mt-1 ml-3"><em class="fa fa-plus"></em> Add New Task</a>
+                                </div>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group col-md-5">
+                                    <label for="requesterName">Requester Name</label>
+                                    <input type="text" class="form-control" id="requesterName" name="requesterName" placeholder="Your Name" required>
+                                </div>
+                                <div class="form-group col-md-5">
+                                    <label for="requesterEmail">Requester Email</label>
+                                    <input type="text" class="form-control" id="requesterEmail" name="requesterEmail" placeholder="Your Email Address" required>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-md-5">
+                                    <label for="requesterPhoneNumber">Requester Phone #</label>
+                                    <input type="text" class="form-control" id="requesterPhoneNumber" name="requesterPhoneNumber" placeholder="Your Phone Number" required>
+                                </div>
+                                <div class="form-group col-md-3">
+                                    <label for="datepicker">Need Completed By</label>
+                                    <div class="input-group date">
+                                        <input type="text" id="datepicker" class="form-control" required />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-md-10">
+                                    <label for="description">Description</label>
+                                    <textarea class="form-control" id="description" name="description" placeholder="Describe your request" required></textarea>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-md-10">
+                                    <label for="partnerCustomerName">Partner and/or Customer Name</label>
+                                    <input type="text" class="form-control" id="partnerCustomerName" name="partnerCustomerName" placeholder="Partner and/or Customer Name">
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-md-8">
+                                    <label for="salesforceAccountOpportunity">Salesforce Account / Opportunity
+                                        URL</label>
+                                    <input type="text" class="form-control" id="salesforceAccountOpportunity" name="salesforceAccountOpportunity" placeholder="Link to Salesforce opportunity or account">
+
+                                </div>
+                                <div class="form-group col-md-2">
+                                    <label for="salesforceAccountOpportunity" style="color: white;">Open in new
+                                        tab</label>
+                                    <button id="btnCopySFLink" type="button" class="btn btn-primary pull-right" onclick="navigateToSFLink();">copy</button>
+                                </div>
+
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-md-3">
+                                    <label for="priority">Priority</label>
+                                    <select id="priority" name="priority" class="form-control">
+                                        <option value="" disabled selected>Select a Priority</option>
+                                        <option value="Low">Low</option>
+                                        <option value="Medium">Medium</option>
+                                        <option value="High">High</option>
+                                    </select>
+                                </div>
+                                <div class="form-group col-md-3">
+                                    <label for="status">Status</label>
+                                    <select id="status" name="status" class="form-control" required>
+                                        <option value="" disabled selected>Select a Status</option>
+                                        <option value="Open">Open</option>
+                                        <option value="On Hold">On Hold</option>
+                                        <option value="Waiting On Additional Information">Waiting On Additional
+                                            Information</option>
+                                        <option value="Closed">Closed</option>
+                                    </select>
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <label for="programManager">Program Manager</label>
+                                    <input type="text" class="form-control" id="programManager" name="programManager" placeholder="Program Manager" required>
+                                </div>
+                            </div>
+
+                            <div class="form-row">
+                                <label id="bAcceptedRequest" hidden></label>
+                                <div class="form-group col-md-10">
+                                    <label for="time">Additional Team Member(s) Assigned</label>
+                                    <input type="text" class="form-control" id="teamMembers" name="teamMembers" placeholder="Additional Team Member(s)">
+
+                                </div>
+                            </div>
+
+                            <div class="form-row">
+                                <label id="bAcceptedRequest" hidden></label>
+                                <div class="form-group col-md-10">
+                                    <label id="lblAcceptedRejectedNotes" for="description">Accepted / Rejected
+                                        Notes</label>
+                                    <textarea class="form-control" id="txtAcceptedRejectedNotes" name="description" placeholder="Notes" required> </textarea>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <footer id="id" name="id" class="blockquote-footer"></footer>
+                                </div>
+                            </div>
+
+                        </form>
+
+                        <div class="modal-footer">
+                            <button type="button" id="btnRestore" class="btn btn-warning pull-left">Restore</button>
+                            <button type="button" id="btnRejectRequest" class="btn btn-danger pull-left">Save and
+                                Reject</button>
+                            <button type="button" id="btnAcceptRequest" class="btn btn-success pull-left">Save and
+                                Accept</button>
+                            <button id="submit" type="submit" class="btn btn-primary pull-left">Save</button>
+                            <button id="btnClose" type="button" class="btn btn-secondary pull-right" data-dismiss="modal">Close</button>
+
+                        </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+    <noscript>You need to enable JavaScript to run this app.</noscript>
+    <!-- Bootstrap core JavaScript-->
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
+    <!-- Core plugin JavaScript-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"></script>
+    <!-- Moment.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js" integrity="sha256-4iQZ6BVL4qNKlQ27TExEhBN1HFPvAvAMbFavKKosSWQ=" crossorigin="anonymous"></script>
+    <!-- Bootstrap DatePicker -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js" integrity="sha256-bqVeqGdJ7h/lYPq6xrPv/YGzMEb6dNxlfiTUHSgRCp8=" crossorigin="anonymous"></script>
+    <!-- Genesys Cloud -->
+    <script src="https://sdk-cdn.mypurecloud.com/javascript/61.0.0/purecloud-platform-client-v2.min.js"></script>
+    <!-- Editable -->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jsgrid/1.5.3/jsgrid.min.js"></script>
+    <!-- JQuery Validate -->
+    <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.1/dist/jquery.validate.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.1/dist/additional-methods.min.js"></script>
+    <!-- jQuery Toast -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-toast-plugin/1.3.2/jquery.toast.min.js"></script>
+    <!-- Bootbox -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/5.4.0/bootbox.min.js"></script>
+    <!-- Our Scripts -->
+    <script src="js/requests.js"></script>
+    <script src="js/tools.js"></script>
+    <!-- Dictionary -->
+    <script src="js/dictionary.js"></script>
+
+    <script>
+        if (window.location.href.includes('dev'))
+            $("#devModeImage").removeAttr('hidden');
+
+        let gcToken = localStorage.getItem("gcToken");
+        let userName = localStorage.getItem("userName");
+
+        if (!gcToken)
+            window.open('./index.html', "_self");
+        console.log(`continue with gcToken: ${gcToken}`);
+
+        let tasksControls = [], taskId = 10000;
+
+        let region = getUrlParameter("region");
+        $("#region").text(region);
+
+        // SetLink for Dashboard
+        document.getElementById("dashboardLink").setAttribute("href", `./dashboard.html?region=${$("#region").text()}`);
+
+        var requests = {
+            updateItem: function (updatingRequest) { },
+            deleteItem: function (deletingRequest) {
+                var requestIndex = $.inArray(deletingRequest, this.requests);
+                this.requests.splice(requestIndex, 1);
+            }
+        }
+
+        if (maintenanceMode) {
+            $("#alert").attr("hidden", false);
+            $("#basicgrid").attr("disabled", true);
+        } else {
+            showRequests();
+        }
+
+        $(function () {
+            $("#datepicker").datepicker({
+                daysOfWeekDisabled: "0,6",
+                todayHighlight: true,
+                autoclose: true,
+                startDate: new Date()
+            });
+        });
+
+        function initModal() {
+            $("#editModal #id").text("");
+            $("#editModal #createdDate").val("");
+            $("#editModal #updatedDate").val("");
+            $("#editModal #region").val("");
+            $("#editModal #region").change();
+            $("#editModal #subRegion").val("");
+            $("#editModal #product").val("");
+            $("#editModal #tasks").empty();
+            tasksControls = [];
+            $("#editModal #requesterName").val("");
+            $("#editModal #requesterEmail").val("");
+            $("#editModal #requesterPhoneNumber").val("");
+            $("#editModal #datepicker").datepicker('update', '');
+            $("#editModal #description").val("");
+            $("#editModal #partnerCustomerName").val("");
+            $("#editModal #salesforceAccountOpportunity").val("");
+            $("#editModal #priority").val("");
+            $("#editModal #bAcceptedRequest").val("");
+            $("#editModal #status").val("");
+            $("#editModal #programManager").val("");
+            $("#editModal #time").val("");
+            $("#editModal #txtAcceptedRejectedNotes").val("");
+
+            validator.resetForm(); // Reset validation errors
+        }
+
+        function refreshGrid() {
+            $("#basicgrid").jsGrid("loadData");
+        }
+
+        $("#refresh").on("click", (e) => {
+            e.preventDefault();
+            refreshGrid();
+        });
+
+        function navigateToSFLink() {
+
+            var copyText = document.getElementById("salesforceAccountOpportunity");
+            copyText.select();
+            document.execCommand("copy");
+            // Clear selection
+            window.getSelection().removeAllRanges();
+            document.getElementById("btnCopySFLink").textContent = "copied! "
+            setTimeout(function () {
+                document.getElementById("btnCopySFLink").textContent = "copy"
+            }, 1000);
+        }
+
+        var searches = {};
+
+        function showRequests() {
+            console.log('Showing requests...');
+
+            try {
+
+                jsGrid.setDefaults({ tableClass: "jsgrid-table table table-striped table-hover" });
+                jsGrid.setDefaults("control", {
+                    _createGridButton: function (cls, tooltip, clickHandler) {
+                        var grid = this._grid;
+                        return $("<button>").addClass(this.buttonClass).addClass(cls).attr({
+                            type: "button",
+                            title: tooltip
+                        }).on("click", function (e) {
+                            clickHandler(grid, e)
+                        })
+                    }
+                });
+
+                $("#basicgrid").jsGrid({
+                    height: "100vh",
+                    width: "100%",
+                    filtering: true,
+                    editing: false,
+                    sorting: true,
+                    paging: true,
+                    autoload: true,
+                    pageSize: 25,
+                    pageButtonCount: 5,
+                    loadIndication: true,
+                    loadIndicationDelay: 500,
+                    loadMessage: "Loading...",
+                    loadShading: true,
+                    autoload: true,
+                    rowClick: function (args) {
+                        showModal(args.item);
+                    },
+                    rowClass: function (item, itemIndex) {
+
+                        // Hide by default Test objects on PRD url
+                        if (!window.location.href.includes('localhost') && item.hasOwnProperty('isTest')) {
+                            return "task-hidden"
+                        }
+                        if (item.acceptedRejected == "Accepted") {
+                            return "task-accepted"
+                        } else if (item.acceptedRejected == "Rejected")
+                            return "task-rejected"
+                        else
+                            return
+                    },
+                    deleteItem: async function (deletingRequest) {
+                        bootbox.confirm({
+                            message: 'Do you really want to delete this request?',
+                            buttons: {
+                                confirm: {
+                                    label: "Delete!",
+                                    className: "btn-danger"
+                                },
+                                cancel: {
+                                    label: "No",
+                                    className: "btn-secondary"
+                                }
+                            },
+                            callback: async function (result) {
+                                if (result) {
+                                    console.log('Deleting:', deletingRequest);
+                                    try {
+                                        await deleteRequest(deletingRequest.id, gcToken);
+                                        refreshGrid();
+                                        showMessage("Request deleted", false);
+                                    } catch (error) {
+                                        console.error(error);
+                                        if (error.status == 401) {
+                                            window.open('./index.html', "_self");
+                                        } else
+                                            showMessage(error.hasOwnProperty('responseJSON') ? error.responseJSON.message : error, true);
+                                    }
+
+                                }
+                            }
+                        });
+                    },
+                    controller: {
+                        loadData: async function (filter) {
+                            let hasFilter = false;
+
+                            // Check if Assigned to Me is filled in!
+                            if ($("#basicgrid").data('JSGrid').fields[6].filterControl.val() == userName) {
+                                filter['teamMembers'] = userName
+                            }
+
+                            for (var field in filter) {
+                                if (filter[field]) {
+                                    hasFilter = true;
+                                }
+                            }
+
+                            if (filter['teamMembers'] !== userName)
+                                $('#btnAssignedToMe')[0].classList.remove('btn-success');
+                            else
+                                $('#btnAssignedToMe')[0].classList.add('btn-success');
+
+                            try {
+                                requests.requests = await getRequests(region, gcToken);
+
+                                // set default values for undefined/optional item. Without it filtering fails
+                                requests.requests.forEach(function (aItem) {
+                                    if (!aItem.teamMembers)
+                                        aItem.teamMembers = 'n/a';
+                                    if (!aItem.partnerCustomerName)
+                                        aItem.partnerCustomerName = 'n/a';
+                                });
+
+                                console.log(`filter: ${JSON.stringify(filter)}`);
+                                if (hasFilter) {
+                                    return $.grep(requests.requests, function (request) {
+                                        return (!filter.id || request.id.toLowerCase().indexOf(filter.id.toLowerCase()) > -1)
+                                            && (!filter.region || request.region.toLowerCase().indexOf(filter.region.toLowerCase()) > -1)
+                                            && (!filter.subRegion || request.subRegion.toLowerCase().indexOf(filter.subRegion.toLowerCase()) > -1)
+                                            && (!filter.product || request.product.toLowerCase().indexOf(filter.product.toLowerCase()) > -1)
+                                            && (!filter.segment || request.segment.toLowerCase().indexOf(filter.segment.toLowerCase()) > -1)
+                                            && (!filter.requesterName || request.requesterName.toLowerCase().indexOf(filter.requesterName.toLowerCase()) > -1)
+                                            && (!filter.partnerCustomerName || request.partnerCustomerName.toLowerCase().indexOf(filter.partnerCustomerName.toLowerCase()) > -1)
+                                            && (!filter.teamMembers || request.teamMembers.toLowerCase().indexOf(filter.teamMembers.toLowerCase()) > -1)
+                                            && (!$('#btnOnlyClosed')[0].classList.contains('btn-success') || request.status === "Closed")
+                                            && (!$('#btnOnlyDeleted')[0].classList.contains('btn-success') || request.isDeleted)
+                                    });
+                                } else {
+                                    return requests.requests;
+                                }
+                            } catch (error) {
+                                if (error.status == 401) {
+                                    window.open('./index.html', "_self");
+                                }
+                            }
+                        }
+                    },
+                    noDataContent: "No Requests",
+                    fields: [
+                        {
+                            name: "id",
+                            title: "Id",
+                            type: "text",
+                            width: "auto",
+                            itemTemplate: function (value, item) {
+                                return `<small>${value}</small>`;
+                            },
+                            visible: false
+                        }, {
+                            name: "region",
+                            title: "Region",
+                            type: "select",
+                            filterTemplate: function () {
+                                let select = $("<select/>", { id: "selectRegion" });
+                                $("<option/>", { value: "" }).text("(All)").appendTo(select);
+                                for (const region of Object.keys(regions)) {
+                                    let option = $("<option/>", { value: region }).text(region).appendTo(select);
+                                }
+                                select.on('change', (e) => {
+                                    let selectedRegion = select.children("option:selected").val();
+                                    searches.region = selectedRegion;
+                                    $("#selectSubRegion").empty();
+                                    $("<option/>", { value: "" }).text("(All)").appendTo("#selectSubRegion");
+                                    if (selectedRegion && selectedRegion != "(All)") {
+                                        for (const subRegion of regions[selectedRegion]) {
+                                            let option = $("<option/>", { value: subRegion }).text(subRegion).appendTo("#selectSubRegion");
+                                        }
+                                    } else {
+                                        searches.subRegion = "";
+                                    }
+                                    $("#selectSubRegion").on('change', (e) => {
+                                        let selectedSubRegion = $("#selectSubRegion").children("option:selected").val();
+                                        searches.subRegion = selectedSubRegion;
+                                        $("#basicgrid").data('JSGrid').search(searches);
+                                    });
+                                    $("#basicgrid").data('JSGrid').search(searches);
+                                });
+                                return this.filterControl = select;
+                            },
+                            items: Object.keys(regions),
+                            itemTemplate: function (value, item) {
+                                return value;
+                            },
+                            width: "auto",
+                            visible: region == 'super-user' ? true : false,
+                        }, {
+                            name: "subRegion",
+                            title: "Territory",
+                            type: "select",
+                            width: "auto",
+                            align: "center",
+                            filterTemplate: function () {
+                                let select = $("<select/>", { id: "selectSubRegion" });
+                                $("<option/>", { value: "" }).text("(All)").appendTo(select);
+                                let selectedRegion = $("#selectRegion").children("option:selected").val();
+                                if (selectedRegion && selectedRegion != "(All)") {
+                                    for (const subRegion of regions[selectedRegion]) {
+                                        let option = $("<option/>", { value: subRegion }).text(subRegion).appendTo(select);
+                                    }
+                                }
+                                select.on('change', (e) => {
+                                    let selectedSubRegion = select.children("option:selected").val();
+                                    searches.subRegion = selectedSubRegion;
+                                    $("#basicgrid").data('JSGrid').search(searches);
+                                });
+                                return this.filterControl = select;
+                            },
+                            items: $("#selectRegion").children("option:selected").val() == "(All)" ? Object.keys(regions) : regions[$("#selectRegion").children("option:selected").val()],
+                            itemTemplate: function (value, item) {
+                                return value;
+                            }
+                        }, {
+                            name: "product",
+                            title: "Product",
+                            type: "text",
+                            width: "auto",
+                            align: "center",
+                            filterTemplate: function () {
+                                let select = $("<select/>");
+                                $("<option/>", { value: "" }).text("(All)").appendTo(select);
+                                for (const product of Object.keys(mailDistribution)) {
+                                    let option = $("<option/>", { value: product }).text(product).appendTo(select);
+                                }
+                                select.on('change', (e) => {
+                                    console.log('e:', e);
+                                    let selectedProduct = select.children("option:selected").val();
+                                    searches.product = selectedProduct;
+                                    $("#basicgrid").data('JSGrid').search(searches);
+                                });
+                                return this.filterControl = select;
+                            },
+                            items: Object.keys(regions),
+                            itemTemplate: function (value, item) {
+                                return value;
+                            },
+                        },
+                        {
+                            name: "segment",
+                            title: "Market Segment",
+                            type: "text",
+                            width: "auto",
+                            align: "center",
+                            filterTemplate: function () {
+                                let input = $("<input/>", { type: "text" });
+                                input.on('keyup', () => {
+                                    searches.segment = input.val();
+                                    $("#basicgrid").data('JSGrid').search(searches);
+                                });
+                                return this.filterControl = input;
+                            },
+                        }, {
+                            name: "requesterName",
+                            title: "Requester Name",
+                            type: "text",
+                            width: "auto",
+                            align: "center",
+                            filterTemplate: function () {
+                                let input = $("<input/>", { type: "text" });
+                                input.on('keyup', () => {
+                                    searches.requesterName = input.val();
+                                    $("#basicgrid").data('JSGrid').search(searches);
+                                });
+                                return this.filterControl = input;
+                            },
+                        },
+                        {
+                            name: "teamMembers",
+                            title: "Team Members",
+                            type: "text",
+                            width: "auto",
+                            visible: true,
+                            align: "center",
+                            filterTemplate: function () {
+                                let input = $("<input/>", { type: "text" });
+                                input.on('keyup', () => {
+                                    searches.teamMembers = input.val();
+                                    $("#basicgrid").data('JSGrid').search(searches);
+                                });
+                                return this.filterControl = input;
+                            },
+                        }, {
+                            name: "partnerCustomerName",
+                            title: "Partner/Customer",
+                            type: "text",
+                            width: "160",
+                            align: "center",
+                            filterTemplate: function () {
+                                let input = $("<input/>", { type: "text" });
+                                input.on('keyup', () => {
+                                    searches.partnerCustomerName = input.val();
+                                    $("#basicgrid").data('JSGrid').search(searches);
+                                });
+                                return this.filterControl = input;
+                            },
+                        }, {
+                            name: "needCompletedBy",
+                            title: "Need Completed",
+                            type: "text",
+                            itemTemplate: function (value, item) {
+                                if (value != "Invalid dateZ") {
+                                    return `${moment.utc(value).fromNow()}`;
+                                } else {
+                                    return '';
+                                }
+                            },
+                            width: "auto",
+                            filtering: false,
+                            align: "center",
+                        },
+                        {
+                            name: "createdAt",
+                            title: "Created",
+                            type: "text",
+                            itemTemplate: function (value, item) {
+                                return `${moment(value).fromNow()}`;
+                            },
+                            width: "auto",
+                            filtering: false,
+                            align: "center"
+                        }, {
+                            type: "control",
+                            itemTemplate: function (value, item) {
+                                var $result = $([]);
+
+                                if (item.isDeleted == false) {
+                                    $result = $result.add(this._createDeleteButton(item));
+                                }
+                                return $result;
+                            }
+                        }],
+                });
+            } catch (error) {
+                console.error(error);
+            }
+        }
+
+        function showModal(request) {
+            console.log("Showing modal for:", request);
+
+            if (request.acceptedRejected)
+                $("#editModal #title").text(`Request (${request.acceptedRejected})`)
+            else
+                $("#editModal #title").text(`Request (not handled)`);
+
+            $("#editModal #id").text(request.id);
+            $("#editModal #createdDate").val(moment(request.createdAt).format('LLLL'));
+            $("#editModal #updatedDate").val(moment(request.updatedAt).fromNow());
+            $("#editModal #region").val(request.region);
+            $("#editModal #region").change();
+            $("#editModal #subRegion").val(request.subRegion);
+            $("#editModal #segment").val(request.segment);
+            $("#editModal #product").val(request.product);
+
+            // Load tasks
+            let i = 0;
+            for (const task of request.tasks) {
+                console.log('Adding new task:', task);
+                addNewTask(task, i++ > 0 ? true : false);
+            }
+
+            $("#editModal #requesterName").val(request.requesterName);
+            $("#editModal #requesterEmail").val(request.requesterEmail);
+            $("#editModal #requesterPhoneNumber").val(request.requesterPhoneNumber);
+            $("#editModal #datepicker").datepicker('update', new Date(request.needCompletedBy));
+            $("#editModal #description").val(request.description);
+            $("#editModal #partnerCustomerName").val(request.partnerCustomerName);
+            $("#editModal #salesforceAccountOpportunity").val(request.salesforceAccountOpportunity);
+            $("#editModal #priority").val(request.priority);
+            $("#editModal #bAcceptedRequest").val(request.acceptedRejected);
+            $("#editModal #status").val(request.status);
+            $("#editModal #programManager").val(request.programManager);
+            $("#editModal #time").val(request.time);
+            $("#editModal #txtAcceptedRejectedNotes").val(request.acceptedRejectedNotes);
+            $("#editModal #teamMembers").val(request.teamMembers);
+            $("#editModal").modal("show");
+
+            if (request.isDeleted) {
+                $("#modal-form :input").attr("disabled", true);
+                $("#btnClose").prop('disabled', false);
+                $("#btnRejectRequest").attr("hidden", true);
+                $("#submit").attr("hidden", true);
+                $("#btnAcceptRequest").attr("hidden", true);
+                $("#btnRestore").attr("disabled", false);
+                $("#btnRestore").attr("hidden", false);
+            } else {
+                $("#modal-form :input").attr("disabled", false);
+                $("#btnRejectRequest").attr("hidden", false);
+                $("#submit").attr("hidden", false);
+                $("#btnAcceptRequest").attr("hidden", false);
+                $("#btnRestore").attr("hidden", true);
+                $("#createdDate").attr("disabled", true);
+                $("#updatedDate").attr("disabled", true);
+            }
+
+            if (request.acceptedRejected == "Accepted") {
+                $("#modal-header").css('background', 'lightgreen');
+                if (!request.isDeleted) {
+                    console.log('Not deleted!')
+                    $("#editModal #btnAcceptRequest").prop('disabled', true);
+                    $("#editModal #btnRejectRequest").prop('disabled', false);
+                }
+            }
+            else if (request.acceptedRejected == "Rejected") {
+                $("#modal-header").css('background', 'lightcoral');
+                if (!request.isDeleted) {
+                    $("#btnAcceptRequest").prop('disabled', false);
+                    $("#btnRejectRequest").prop('disabled', true);
+                }
+            } else {
+                $("#modal-header").css('background', 'white');
+                if (!request.isDeleted) {
+                    $("#btnAcceptRequest").prop('disabled', false);
+                    $("#btnRejectRequest").prop('disabled', false);
+                }
+            }
+        }
+
+        function addNewTask(task, includeDeleteButton = false) {
+            if (!task) {
+                let currentTaskId = taskId;
+                taskId++;
+
+                let categoryDiv = $("<div/>", { class: "form-group col-md-4" }).appendTo("#tasks");
+                let categorySelect = $("<select/>", { class: "form-control", name: "category_" + currentTaskId, required: true }).appendTo(categoryDiv);
+                $("<option/>", { value: "", disabled: true, selected: true }).text("Select a Request Category").appendTo(categorySelect);
+                for (const category of requestCategory) {
+                    $("<option/>", { value: category }).text(category).appendTo(categorySelect);
+                }
+
+                let typeDiv = $("<div/>", { class: "form-group col-md-4" }).appendTo("#tasks");
+                let typeSelect = $("<select/>", { class: "form-control", name: "type_" + currentTaskId, required: true }).appendTo(typeDiv);
+                $("<option/>", { value: "", disabled: true, selected: true }).text("Select a Request Type").appendTo(typeSelect);
+                categorySelect.on("change", () => {
+                    updateRequestTypeBasedOnRegionAndProduct(categorySelect, typeSelect);
+                });
+
+                // Time Field
+                let timeDiv = $("<div/>", { class: "form-group col-md-2" }).appendTo("#tasks");
+                let timeInput = $("<input/>", { type: "number", class: "form-control", placeholder: "Hours" }).val(0).appendTo(timeDiv);
+
+                if (includeDeleteButton) {
+                    let deleteButton = $("<a/>", { href: "#", class: "btn btn-danger form-group", style: "max-height:38px" }).html(`<i class="fa fa-trash"></i>`).appendTo("#tasks");
+                    deleteButton.on("click", () => {
+                        categoryDiv.remove();
+                        typeDiv.remove();
+                        deleteButton.remove();
+                        timeDiv.remove();
+                        tasksControls = tasksControls.filter(tc => tc.id != currentTaskId)
+                    });
+                }
+
+                tasksControls.push({
+                    id: currentTaskId,
+                    categorySelect: categorySelect,
+                    typeSelect: typeSelect,
+                    timeInput: timeInput
+                });
+            } else {
+                let currentTaskId = task.taskId;
+
+                // Category Select
+                let categoryDiv = $("<div/>", { class: "form-group col-md-4" }).appendTo("#tasks");
+                let categorySelect = $("<select/>", { class: "form-control", required: true }).appendTo(categoryDiv);
+                for (const category of requestCategory) {
+                    $("<option/>", { value: category, selected: category === task.taskCategory }).text(category).appendTo(categorySelect);
+                }
+
+                // Type Select
+                let typeDiv = $("<div/>", { class: "form-group col-md-4" }).appendTo("#tasks");
+                let typeSelect = $("<select/>", { class: "form-control", required: true }).appendTo(typeDiv);
+                categorySelect.on("change", () => {
+                    updateRequestTypeBasedOnRegionAndProduct(categorySelect, typeSelect, task.taskType);
+                });
+                updateRequestTypeBasedOnRegionAndProduct(categorySelect, typeSelect, task.taskType);
+
+                // Time Field
+                let timeDiv = $("<div/>", { class: "form-group col-md-2" }).appendTo("#tasks");
+                let timeInput = $("<input/>", { type: "number", class: "form-control", placeholder: "Hours" }).val(task.taskTime ? task.taskTime : 0).appendTo(timeDiv);
+
+                if (includeDeleteButton) {
+                    let deleteButton = $("<a/>", { href: "#", class: "btn btn-danger form-group", style: "max-height:38px" }).html(`<i class="fa fa-trash"></i>`).appendTo("#tasks");
+                    deleteButton.on("click", () => {
+                        categoryDiv.remove();
+                        typeDiv.remove();
+                        timeDiv.remove();
+                        deleteButton.remove();
+                        tasksControls = tasksControls.filter(tc => tc.id != currentTaskId)
+                    });
+                }
+
+                // Add controls to global list
+                tasksControls.push({
+                    id: currentTaskId,
+                    categorySelect: categorySelect,
+                    typeSelect: typeSelect,
+                    timeInput: timeInput
+                });
+            }
+        }
+
+        $("#editModal #region").on("change", () => {
+            $("#editModal #subRegion").empty();
+            if (!$("#editModal #region").val()) return;
+            for (let subregion of regions[$("#editModal #region").val()]) {
+                $("<option/>", { value: subregion }).text(subregion).appendTo("#editModal #subRegion");
+            }
+        });
+
+        function updateRequestTypeBasedOnRegionAndProduct(categorySelect, typeSelect, savedType) {
+            typeSelect.empty();
+
+            for (let aRequest of requestsType[categorySelect.val()]) {
+                $("<option/>", { value: aRequest, selected: aRequest === savedType }).text(aRequest).appendTo(typeSelect);
+            }
+
+            if ($(typeSelect)[0].length == 0) {
+                // No SubCategory
+                $(typeSelect)[0].disabled = true;
+                $(typeSelect).removeAttr('required');
+            } else {
+                $(typeSelect)[0].disabled = false;
+                $(typeSelect).attr("required", "");
+            }
+        }
+
+        $('#editModal').on('shown.bs.modal', (e) => {
+        });
+
+        $('#editModal').on('hidden.bs.modal', async () => {
+            refreshGrid();
+            initModal();
+        });
+
+        let validator = $("#editModal #modal-form").validate({
+            errorClass: "text-danger",
+            successClass: "test-success"
+        });
+
+        $("#btnAssignedToMe").on("click", async (e) => {
+            if ($('#btnAssignedToMe')[0].classList.contains('btn-success')) {
+                $('#btnAssignedToMe')[0].classList.remove('btn-success');
+                $("#basicgrid").data('JSGrid').fields[6].filterControl[0].value = "";
+                searches.teamMembers = "";
+                $("#basicgrid").data('JSGrid').search(searches);
+            }
+            else {
+                $('#btnAssignedToMe')[0].classList.add('btn-success');
+                $("#basicgrid").data('JSGrid').fields[6].filterControl[0].value = userName;
+                searches.teamMembers = userName;
+                $("#basicgrid").data('JSGrid').search(searches);
+            }
+
+        });
+
+        $("#btnOnlyClosed").on("click", async (e) => {
+            if ($('#btnOnlyClosed')[0].classList.contains('btn-success'))
+                $('#btnOnlyClosed')[0].classList.remove('btn-success');
+            else
+                $('#btnOnlyClosed')[0].classList.add('btn-success');
+
+            refreshGrid();
+        });
+
+        $("#btnOnlyDeleted").on("click", async (e) => {
+            if ($('#btnOnlyDeleted')[0].classList.contains('btn-success'))
+                $('#btnOnlyDeleted')[0].classList.remove('btn-success');
+            else
+                $('#btnOnlyDeleted')[0].classList.add('btn-success');
+
+            refreshGrid();
+        });
+
+        $("#btnAcceptRequest").on("click", async (e) => {
+            $("#editModal #bAcceptedRequest").val("Accepted");
+            $("#editModal #submit").click();
+        });
+
+        $("#btnRejectRequest").on("click", async (e) => {
+            $("#editModal #bAcceptedRequest").val("Rejected");
+            $("#editModal #submit").click();
+        });
+
+        $("#btnRestore").on("click", async (e) => {
+            e.preventDefault();
+            $("#editModal #submit").click();
+        });
+
+        $("#editModal #submit").on("click", async (e) => {
+            e.preventDefault();
+            if (!$("#modal-form").valid()) {
+                showMessage("Missing or invalid fields", true);
+                return;
+            }
+
+            try {
+                // Disable button and add animation
+                $("#editModal #submit").prop('disabled', true);
+                $("#editModal #submit").html(
+                    `<span class="spinner-border-sm text-light" role="status" aria-hidden="true"></span> Please Wait...`
+                )
+                $("#btnAcceptRequest").prop('disabled', true);
+                $("#btnAcceptRequest").html(
+                    `<span class="spinner-border-sm text-light" role="status" aria-hidden="true"></span> Please Wait...`
+                )
+                $("#btnRejectRequest").prop('disabled', true);
+                $("#btnRejectRequest").html(
+                    `<span class="spinner-border-sm text-light" role="status" aria-hidden="true"></span> Please Wait...`
+                )
+
+                let id = $("#editModal #id").text();
+                let region = $("#editModal #region").val();
+                let subRegion = $("#editModal #subRegion").val();
+                let product = $("#editModal #product").val();
+                let segment = $("#editModal #segment").val();
+
+                // Tasks
+                let tasks = [];
+                for (const task of tasksControls) {
+                    tasks.push({
+                        taskId: task.id,
+                        taskCategory: task.categorySelect.val(),
+                        taskType: task.typeSelect.val(),
+                        taskTime: task.timeInput.val()
+                    });
+                }
+
+                let requesterName = $("#editModal #requesterName").val();
+                let requesterEmail = $("#editModal #requesterEmail").val();
+                let requesterPhoneNumber = $("#editModal #requesterPhoneNumber").val();
+                let needCompletedBy = moment($("#datepicker").datepicker('getDate')).format("YYYY-MM-DDT00:00:00.000") + "Z";
+                let description = $("#editModal #description").val();
+                let partnerCustomerName = $("#editModal #partnerCustomerName").val();
+                let salesforceAccountOpportunity = $("#editModal #salesforceAccountOpportunity").val();
+                let priority = $("#editModal #priority").val();
+                let acceptedRejected = $("#editModal #bAcceptedRequest").val();
+                let acceptedRejectedNotes = $("#editModal #txtAcceptedRejectedNotes").val();
+                let programManager = $("#editModal #programManager").val();
+                let time = $("#editModal #time").val();
+                let teamMembers = $("#editModal #teamMembers").val();
+                let status;
+                if (acceptedRejected == "Rejected")
+                    status = "Closed"
+                else
+                    status = $("#editModal #status").val();
+
+                console.log(`Region: ${region}, subRegion: ${subRegion}, Product: ${product}, Segment: ${segment}, tasks: ${JSON.stringify(tasks)}, Requester Name: ${requesterName}, Requester Email: ${requesterEmail}, Requester Phone Number: ${requesterPhoneNumber}, Need Completed By: ${needCompletedBy}, Description: ${description}, Partner or Customer Name: ${partnerCustomerName}, Salesforce Opportunity: ${salesforceAccountOpportunity}`);
+                console.log(`Priority: ${priority}, Accepted/Rejected: ${acceptedRejected}, Status: ${status}, Program Manager: ${programManager}, AcceptedRejectedNotes: ${acceptedRejectedNotes}, teamMembers: ${teamMembers}`);
+
+                await putRequest(id, region, subRegion, segment, product, tasks, requesterName, requesterEmail, requesterPhoneNumber, needCompletedBy, description, partnerCustomerName, salesforceAccountOpportunity, priority, acceptedRejected, status, programManager, acceptedRejectedNotes, teamMembers, gcToken);
+                console.log('Success!');
+                showMessage("Request updated. Thanks!");
+                $("#editModal").modal("hide");
+            } catch (error) {
+                console.error(error);
+                if (error.status == 401) {
+                    window.open('./index.html', "_self");
+                } else
+                    showMessage(error.hasOwnProperty('responseJSON') ? error.responseJSON.message : error, true);
+            } finally {
+                // Enable buttons
+                $("#editModal #submit").prop('disabled', false);
+                $("#editModal #submit").html('Save');
+                $("#btnAcceptRequest").prop('disabled', false);
+                $("#btnAcceptRequest").html('Save and Accept');
+                $("#btnRejectRequest").prop('disabled', false);
+                $("#btnRejectRequest").html('Save and Reject');
+            }
+        });
+
+        $("#addTask").on("click", (e) => {
+            e.preventDefault();
+            if (maintenanceMode) return;
+            addNewTask(undefined, true);
+        });
+
+        function getUrlParameter(sParam) {
+            var sPageURL = window.location.search.substring(1),
+                sURLVariables = sPageURL.split('&'),
+                sParameterName,
+                i;
+
+            for (i = 0; i < sURLVariables.length; i++) {
+                sParameterName = sURLVariables[i].split('=');
+
+                if (sParameterName[0] === sParam) {
+                    return sParameterName[1] === undefined ? true : decodeURIComponent(sParameterName[1]);
+                }
+            }
+        };
+
+    </script>
+
+    <!--Coollabs -->
+    <script async defer src="https://cdn.coollabs.io/save.js"></script>
+
+</body>
+
+</html>
