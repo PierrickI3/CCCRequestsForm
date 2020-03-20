@@ -270,30 +270,22 @@ async function getDashboard(_token) {
     });
 }
 
-async function getExport(_region, _subRegion, _product, _segment, _token) {
+async function getExport() {
+
+  let exportRegion = $('#region').val() == "" ? undefined : $('#region').val();
+  let exportSubRegion = $('#subRegion').val() == "" ? undefined : $('#subRegion').val();
 
   var sFilter = "";
 
-  if (_region)
+  if (exportRegion)
     sFilter = sFilter + `region=${_region}&`;
-  if (_product)
-    sFilter = sFilter + `product=${_product}&`;
-  if (_segment)
-    sFilter = sFilter + `segment=${_segment}&`;
-  if (_subRegion)
+  if (exportSubRegion)
     sFilter = sFilter + `subRegion=${_subRegion}&`;
 
-
-  // remove last char
-  /*
-  if (sFilter.length > 0)
-    sFilter = "?"
-  else sFilter = sFilter + "&" //+ sFilter.substring(0, sFilter.length - 1);
-  */
   console.log(`getExport with filter: ${sFilter}`);
 
   return await $.ajax({
-    url: `${apiBasePath}/homeworkerexport?${sFilter}token=${_token}`,
+    url: `${apiBasePath}/homeworkerexport?${sFilter}token=${gcToken}`,
     method: "GET",
     contentType: 'application/json',
     dataType: "json"
