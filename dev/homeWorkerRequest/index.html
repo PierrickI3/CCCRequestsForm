@@ -317,13 +317,12 @@
                         <div class="form-group col-md-6">
                             <label for="languages">Languages</label>
                             <select class="selectpicker" id="languages" name="languages" class="form-control" required multiple data-live-search="true">
-
                             </select>
                         </div>
                     </div>
 
-                    <!-- Customer Resource/Project Sponsor-->
-                    <div class="form-check mr-4 ml-2">
+                    <!-- Commmitted Customer Resource -->
+                    <div class="form-check mr-4">
                         <div class="form-group col-md-12">
                             <input class="form-check-input" type="checkbox" value="" id="customerResourceCommitted">
                             <label class="form-check-label" for="customerResourceCommitted">
@@ -332,7 +331,8 @@
                         </div>
                     </div>
 
-                    <div class="form-check mr-4 ml-2">
+                    <!-- Project Sponsor -->
+                    <div class="form-check mr-4">
                         <div class="form-group col-md-12">
                             <input class="form-check-input" type="checkbox" value="" id="projectSponsorAssigned">
                             <label class="form-check-label" for="projectSponsorAssigned">
@@ -353,15 +353,23 @@
                     <div class="form-row mr-4 ml-2">
                         <div class="form-group col-md-12">
                             <label for="regulatoryConsiderations">Key Regulatory Considerations</label>
-                            <textarea class="form-control" id="regulatoryConsiderations" name="regulatoryConsiderations" placeholder="Are there any key regulatory considerations, for example: Call Recording?"></textarea>
+                            <textarea class="form-control" id="regulatoryConsiderations" name="regulatoryConsiderations" placeholder="Are there any key regulatory considerations, for example: Call Recording? Do country specific regulations prevent telephony being delivered from another country?"></textarea>
                         </div>
                     </div>
 
-                    <!-- Numbers Deployment -->
+                    <!-- Phone Numbers Deployment -->
                     <div class="form-row mr-4 ml-2">
                         <div class="form-group col-md-12">
                             <label for="numbersDeployment">Phone Numbers Deployment</label>
                             <textarea class="form-control" id="numbersDeployment" name="numbersDeployment" placeholder="Does the prospect intend to deploy new numbers, re-route non-geographic numbers, or port existing numbers?"></textarea>
+                            <small>Genesys supports:
+                                <ul>
+                                    <li>Forwarding of existing numbers to Genesys Cloud Voice</li>
+                                    <li>Provisioning of new numbers with Genesys Cloud Voice</li>
+                                    <li>SIP trunk connections to existing infrastructure (BYOC Cloud)</li>
+                                    <li>SIP trunks direct to carriers (BYOC Cloud)</li>
+                                </ul>
+                            </small>
                         </div>
                     </div>
 
@@ -372,6 +380,110 @@
                             <textarea class="form-control" id="newNumbersBroadcast" name="newNumbersBroadcast" placeholder="How will any new numbers be broadcast/advertised to the end customers?"></textarea>
                         </div>
                     </div>
+
+                    <!-- Existing Telephony -->
+                    <div class="form-row mr-4 ml-2">
+                        <div class="form-group col-md-12">
+                            <label for="existingTelephonyUsage">Does the prospect intend to use an existing telephony carrier, PBX or SBC?</label>
+                            <select id="existingTelephonyUsage" name="existingTelephonyUsage" class="form-control" required>
+                                <option value="" disabled selected>Select a Model</option>
+                                <option value="NoExistingTelephony">(No Existing Telephony)</option>
+                                <option value="TelephonyCarrier">Telephony Carrier</option>
+                                <option value="PBX">PBX</option>
+                                <option value="SBC">SBC</option>
+                            </select>
+                            <small>Where a SIP trunk cannot be easily established, it is recommended to use Genesys Cloud Voice and forwarding of calls.</small><br>
+                            <small>Number porting is a longer-term option which is <strong>NOT</strong> recommended for speed of deployment.</small>
+                        </div>
+                    </div>
+
+                    <!-- Number Types -->
+                    <div class="form-row mr-4 ml-2">
+                        <div class="form-group col-md-12">
+                            <label for="numberTypes">Phone Number Types</label>
+                            <textarea class="form-control" id="numberTypes" name="numberTypes" placeholder="What number types are required?"></textarea>
+                            <small>Premium numbers in most countries are not supported by Genesys Cloud Voice</small>
+                        </div>
+                    </div>
+
+                    <!-- IT Infrastructure -->
+                    <div class="form-row mr-4 ml-2">
+                        <div class="form-group col-md-12">
+                            <label for="itInfrastructure">Phone Number Types</label>
+                            <textarea class="form-control" id="itInfrastructure" name="itInfrastructure" placeholder="Is the IT infrastructure supported in-house or via a third-party, including internet connections, user/company provided laptops and headsets?"></textarea>
+                        </div>
+                    </div>
+
+                    <!-- End devices require VPN? -->
+                    <div class="form-check mr-4">
+                        <div class="form-group col-md-12">
+                            <input class="form-check-input" type="checkbox" value="" id="endUserDevicesRequireVPN">
+                            <label class="form-check-label" for="endUserDevicesRequireVPN">
+                                Are user end-devices required to connect via VPN?
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Internet Bandwidth -->
+                    <div class="form-check mr-4">
+                        <div class="form-group col-md-12">
+                            <input class="form-check-input" type="checkbox" value="" id="usersInternetBandwidth">
+                            <label class="form-check-label" for="usersInternetBandwidth">
+                                Do users have sufficient internet bandwidth for the intended use, noting high bandwidth demand from other family members etc.?
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Virtual Solution -->
+                    <div class="form-row mr-4 ml-2">
+                        <div class="form-group col-md-12">
+                            <label for="virtualDesktopSolution">Virtual Desktop Solution</label>
+                            <textarea class="form-control" id="virtualDesktopSolution" name="virtualDesktopSolution" placeholder="Does the prospect use a Virtual Desktop solution, e.g. Citrix, thin-clients, etc.?"></textarea>
+                        </div>
+                    </div>
+
+                    <!-- Email Infrastructure -->
+                    <div class="form-row mr-4 ml-2">
+                        <div class="form-group col-md-12">
+                            <label for="emailInfrastructure">Email Infrastructure</label>
+                            <textarea class="form-control" id="virtualDesktopSolution" name="virtualDesktopSolution" placeholder="What is the existing email infrastructure and can it be modified to use a company domain email address?"></textarea>
+                        </div>
+                    </div>
+
+                    <!-- Call Flows -->
+                    <div class="form-check mr-4">
+                        <div class="form-group col-md-12">
+                            <input class="form-check-input" type="checkbox" value="" id="callFlows">
+                            <label class="form-check-label" for="callFlows">
+                                Are the required call flows documented?
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Prompts -->
+                    <div class="form-check mr-4">
+                        <div class="form-group col-md-12">
+                            <input class="form-check-input" type="checkbox" value="" id="prompts">
+                            <label class="form-check-label" for="prompts">
+                                Are the required announcements (prompts) available as audio files?
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Identification and Verification -->
+                    <div class="form-row mr-4 ml-2">
+                        <div class="form-group col-md-12">
+                            <label for="identificationAndVerificationProcesses">Identity and Verification Processes</label>
+                            <textarea class="form-control" id="identificationAndVerificationProcesses" name="identificationAndVerificationProcesses" placeholder="Are there any mandatory Identification and Verification processes?"></textarea>
+                        </div>
+                    </div>
+
+
+
+
+
+
+
 
 
                     <!-- Tasks -->
