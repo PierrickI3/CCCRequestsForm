@@ -19,7 +19,7 @@ async function postRequests() {
     existingTelephonyUsage: $("#existingTelephonyUsage").is(':checked'),
     telephonyModel: $("#telephonyModel").val(),
     byocCloudCarriers: countriesAndCarriers,
-    byocPremiseWithVirtualEdges: getBYOCWithVirtualEdges(),
+    //byocPremiseWithVirtualEdges: getBYOCWithVirtualEdges(),
     relationshipWithCarrier: $("#relationshipWithCarrier").is(':checked'),
     phoneNumbersDeployment: $("#numbersDeployment").val(),
     nonGeographicNumbersReRouting: $("#nonGeographicNumbersReRouting").val(),
