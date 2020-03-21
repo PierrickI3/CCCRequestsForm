@@ -12,52 +12,63 @@ async function postRequests() {
 
   //console.log('Mail Distribution:', mailDistribution[product][$("#region").val()]);
   var data = {
-    region: $("#region").val(),
-    subRegion: $("#subRegion").val(),
-    countries: getSelectedCountries(),
-    languages: getSelectedLanguages(),
-    customerResourceCommitted: $("#customerResourceCommitted").prop("checked"),
-    projectSponsorAssigned: $("#projectSponsorAssigned").prop("checked"),
-    changeManagementProcess: $("#changeManagementProcess").val(),
-    regulatoryConsiderations: $("#regulatoryConsiderations").val(),
-    numbersDeployment: $("#numbersDeployment").val(),
+    countriesAgents: $("#countriesAgents").val(),
+    countriesOperation: $("#countriesOperation").val(),
+
+    // Telephony
+    existingTelephonyUsage: $("#existingTelephonyUsage").is(':checked'),
+    telephonyModel: $("#telephonyModel").val(),
+    byocCloudCarriers: getBYOCCloudCarriers(),
+    byocPremiseWithVirtualEdges: getBYOCWithVirtualEdges(),
+    phoneNumbersDeployment: $("#numbersDeployment").val(),
+    nonGeographicNumbersReRouting: $("#nonGeographicNumbersReRouting").val(),
     newNumbersBroadcast: $("#newNumbersBroadcast").val(),
-    existingTelephonyUsage: $("#existingTelephonyUsage").val(),
-    numberTypes: $("#numberTypes").val(),
+    customerResourceCommitted: $("#customerResourceCommitted").is(':checked'),
+    projectSponsorAssigned: $("#projectSponsorAssigned").is(':checked'),
+    changeManagementProcess: $("#changeManagementProcess").val(),
+
+    // Common Questions
+    regulatoryConsiderations: $("#regulatoryConsiderations").val(),
+    callFlowsDocumented: $("#callFlowsDocumented").is(':checked'),
+    promptsAvailable: $("#promptsAvailable").is(':checked'),
+    identificationAndVerificationProcesses: $("#identificationAndVerificationProcesses").val(),
     itInfrastructure: $("#itInfrastructure").val(),
-    endUserDevicesRequireVPN: $("#endUserDevicesRequireVPN").prop("checked"),
-    usersInternetBandwidth: $("#usersInternetBandwidth").prop("checked"),
+    usersInternetBandwidth: $("#usersInternetBandwidth").is(':checked'),
+    endUserDevicesRequireVPN: $("#endUserDevicesRequireVPN").is(':checked'),
     virtualDesktopSolution: $("#virtualDesktopSolution").val(),
     emailInfrastructure: $("#emailInfrastructure").val(),
-    callFlows: $("#callFlows").prop("checked"),
-    prompts: $("#prompts").prop("checked"),
-    identificationAndVerificationProcesses: $("#identificationAndVerificationProcesses").val(),
+
+    // Your info
+    region: $("#region").val(),
+    subRegion: $("#subRegion").val(),
     requesterName: $("#requesterName").val(),
     requesterEmail: $("#requesterEmail").val(),
     requesterPhoneNumber: $("#requesterPhoneNumber").val(),
-    description: $("#description").val(),
-    needCompletedBy: $("#needCompletedBy").val(),
+    notes: $("#notes").val(),
+    partnerCustomerName: $("#partnerCustomerName").val(),
+    salesforceAccountOpportunity: $("#salesforceAccountOpportunity").val(),
+
     status: "Open",
     isDeleted: false,
     mailDistribution: mailDistribution['Genesys Cloud'][$("#region").val()],
     token: gcToken
   };
 
-  console.log(data);
+  // Need completed by
+  let needCompletedBy = "Not Set";
+  let needCompletedByDate = moment($("#datepicker").datepicker('getDate')).format("YYYY-MM-DDT00:00:00.000");
+  if (needCompletedByDate != "Invalid date") {
+      needCompletedBy = moment($("#datepicker").datepicker('getDate')).format("YYYY-MM-DDT00:00:00.000") + "Z";
+  }
+  data.needCompletedBy = needCompletedBy;
 
+  console.log(data);
 
   // override Test objects
   if (window.location.href.includes('localhost')) {
     data.mailDistribution = $("#requesterEmail").val();
     data.isTest = true
   }
-
-  //#region Optional fields
-
-  if (partnerCustomerName.length > 0) {
-    data.partnerCustomerName = partnerCustomerName
-  }
-
 
   //#endregion
   /*
