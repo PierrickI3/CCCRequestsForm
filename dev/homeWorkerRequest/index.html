@@ -55,36 +55,21 @@
     <div id="form" class="container-fluid">
         <br>
         <div class="form-row">
-            <div class="form-group col-sm-7">
+            <div class="form-group">
+                <H3 class="text-center">Welcome to the Homeworker Request Form</H3>
+                <hr>
+                <p/c>This is designed to be a 90 day Emergency Solution. <em>It is not designed to be a replication of what customers or prospects have today</em></p>
+                <p class="text-muted">Genesys Cloud Voice is the <strong>recommended</strong> deployment model. WebRTC to be used unless there are special circumstances preventing this. User bandwidth is expected to be in high demand due to additional family members consuming services, e.g. Video on Demand, Gaming, etc.</p>
+                <p class="text-muted">Customers should perform "spot-tests" on as many home workers as possible using the Genesys Network Assessment Tool. IVRs will be limited to simple call handling trees for routing and skill identification will be included. CRM integration, as well as other back integrations, will not be part of this deployment</p>
+                <p class="text-muted">Number porting is not possible within our 48 hour go live target. Corporate VPN’s may require additional technical investigation and configuration</p>
 
-                <form id="modal-form">
-
-                    <!-- Region and Territory -->
-                    <div class="form-row mr-4 ml-2">
-                        <div class="form-group col-md-6">
-                            <label for="region">Region</label>
-                            <select id="region" name="region" class="form-control" required>
-                                <option value="" disabled selected>Select your Region</option>
-                                <option value="APAC">APAC</option>
-                                <option value="EMEA">EMEA</option>
-                                <option value="LATAM">LATAM</option>
-                                <option value="NA">North America</option>
-                            </select>
-                        </div>
-                        <div class="form-group col-md-6">
-                            <label for="subRegion">Territory</label>
-                            <select id="subRegion" name="subRegion" class="form-control" required>
-                                <option value="" disabled selected>Select your Territory</option>
-                            </select>
-                        </div>
-                    </div>
+                <form id="mainform">
 
                     <!--#region Telephony -->
 
-                    <!-- Title -->
                     <div class="col-md-12">
                         <hr />
-                        <h2 class="text-center">Telephony</h2>
+                        <h3 class="text-center">Telephony</h3>
                         <hr />
                     </div>
 
@@ -110,10 +95,6 @@
                                 Does the prospect intend to use an existing telephony carrier, PBX or SBC?
                             </label>
                             <br>
-                            <div class="text-muted">
-                                <small>Where a SIP trunk cannot be easily established, it is recommended to use Genesys Cloud Voice and forwarding of calls.</small><br>
-                                <small>Number porting is a longer-term option which is <strong>NOT</strong> recommended for speed of deployment.</small>
-                            </div>
                         </div>
                     </div>
 
@@ -128,6 +109,11 @@
                         </select>
                         <div class="text-muted" id="recommendation">
                         </div>
+                    </div>
+
+                    <div class="text-muted form-group ml-3">
+                        <small>Where a SIP trunk cannot be easily established, it is recommended to use Genesys Cloud Voice and forwarding of calls.</small><br>
+                        <small>Number porting is a longer-term option which is <strong>NOT</strong> recommended for speed of deployment.</small>
                     </div>
 
                     <!-- BYOC Cloud Carriers -->
@@ -164,37 +150,6 @@
                             </ul>
                         </small>
                     </div>
-
-                    <!--#endregion Telephony -->
-
-                    <!-- Commmitted Customer Resource -->
-                    <div class="form-check mr-4">
-                        <div class="form-group col-md-12">
-                            <input class="form-check-input" type="checkbox" value="" id="customerResourceCommitted">
-                            <label class="form-check-label" for="customerResourceCommitted">
-                                Has customer resource been committed?
-                            </label>
-                        </div>
-                    </div>
-
-                    <!-- Project Sponsor -->
-                    <div class="form-check mr-4">
-                        <div class="form-group col-md-12">
-                            <input class="form-check-input" type="checkbox" value="" id="projectSponsorAssigned">
-                            <label class="form-check-label" for="projectSponsorAssigned">
-                                Has a project sponsor been assigned?
-                            </label>
-                        </div>
-                    </div>
-
-                    <!-- Change Management Process -->
-                    <div class="form-row mr-4 ml-2">
-                        <div class="form-group col-md-12">
-                            <label for="changeManagementProcess">Change Management Process</label>
-                            <textarea class="form-control" id="changeManagementProcess" name="changeManagementProcess" placeholder="Is there a change management process that needs to be followed?"></textarea>
-                        </div>
-                    </div>
-
 
                     <!-- Phone Numbers Deployment -->
                     <div class="form-row mr-4 ml-2">
@@ -237,33 +192,54 @@
                         </div>
                     </div>
 
-                    <!-- Internet Bandwidth -->
+                    <!--#endregion Telephony -->
+
+                    <!--#region Customer Engagement -->
+
+                    <div class="col-md-12">
+                        <hr />
+                        <h3 class="text-center">Customer Engagement</h3>
+                        <hr />
+                    </div>
+
+                    <!-- Commmitted Customer Resource -->
                     <div class="form-check mr-4">
                         <div class="form-group col-md-12">
-                            <input class="form-check-input" type="checkbox" value="" id="usersInternetBandwidth">
-                            <label class="form-check-label" for="usersInternetBandwidth">
-                                Do users have sufficient internet bandwidth for the intended use, noting high bandwidth demand from other family members etc.?
+                            <input class="form-check-input" type="checkbox" value="" id="customerResourceCommitted">
+                            <label class="form-check-label" for="customerResourceCommitted">
+                                Has customer resource been committed?
                             </label>
                         </div>
                     </div>
 
-                    <!-- End devices require VPN? -->
+                    <!-- Project Sponsor -->
                     <div class="form-check mr-4">
                         <div class="form-group col-md-12">
-                            <input class="form-check-input" type="checkbox" value="" id="endUserDevicesRequireVPN">
-                            <label class="form-check-label" for="endUserDevicesRequireVPN">
-                                Are user end-devices required to connect via VPN?
+                            <input class="form-check-input" type="checkbox" value="" id="projectSponsorAssigned">
+                            <label class="form-check-label" for="projectSponsorAssigned">
+                                Has a project sponsor been assigned?
                             </label>
                         </div>
                     </div>
+
+                    <!-- Change Management Process -->
+                    <div class="form-row mr-4 ml-2">
+                        <div class="form-group col-md-12">
+                            <label for="changeManagementProcess">Change Management Process</label>
+                            <textarea class="form-control" id="changeManagementProcess" name="changeManagementProcess" placeholder="Is there a change management process that needs to be followed?"></textarea>
+                        </div>
+                    </div>
+
+                    <!--#endregion Customer Engagement -->
 
                     <!-- Questions shown for all deployments -->
-                    
+
                     <div class="col-md-12">
                         <hr />
                         <h2 class="text-center">Common questions</h2>
                         <hr />
                     </div>
+
                     <!-- Regulatory Considerations -->
                     <div class="form-row mr-4 ml-2">
                         <div class="form-group col-md-12">
@@ -308,6 +284,26 @@
                         </div>
                     </div>
 
+                    <!-- Internet Bandwidth -->
+                    <div class="form-check mr-4">
+                        <div class="form-group col-md-12">
+                            <input class="form-check-input" type="checkbox" value="" id="usersInternetBandwidth">
+                            <label class="form-check-label" for="usersInternetBandwidth">
+                                Do users have sufficient internet bandwidth for the intended use, noting high bandwidth demand from other family members etc.?
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- End devices require VPN? -->
+                    <div class="form-check mr-4">
+                        <div class="form-group col-md-12">
+                            <input class="form-check-input" type="checkbox" value="" id="endUserDevicesRequireVPN">
+                            <label class="form-check-label" for="endUserDevicesRequireVPN">
+                                Are user end-devices required to connect via VPN?
+                            </label>
+                        </div>
+                    </div>
+
                     <!-- Virtual Solution -->
                     <div class="form-row mr-4 ml-2">
                         <div class="form-group col-md-12">
@@ -327,10 +323,29 @@
 
 
                     <!-- Requester Info -->
-                    <!-- Requester Info -->
                     <div class="col-md-12">
-                        <h2 class="text-center">Requester Info</h2>
+                        <h2 class="text-center">Your Info</h2>
                         <hr />
+                    </div>
+
+                    <!-- Region and Territory -->
+                    <div class="form-row mr-4 ml-2">
+                        <div class="form-group col-md-6">
+                            <label for="region">Region</label>
+                            <select id="region" name="region" class="form-control" required>
+                                <option value="" disabled selected>Select your Region</option>
+                                <option value="APAC">APAC</option>
+                                <option value="EMEA">EMEA</option>
+                                <option value="LATAM">LATAM</option>
+                                <option value="NA">North America</option>
+                            </select>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="subRegion">Territory</label>
+                            <select id="subRegion" name="subRegion" class="form-control" required>
+                                <option value="" disabled selected>Select your Territory</option>
+                            </select>
+                        </div>
                     </div>
 
                     <div class="form-row mr-4 ml-2">
@@ -377,22 +392,6 @@
 
                 <br>
                 <button type="submit" id="submit" class="btn btn-primary ml-3" disabled>Submit</button>
-
-            </div>
-            <div class="form-group col-sm-5">
-                <H3 class="text-center">Welcome to the Homeworker Request Form</H3>
-                <H5 class="mt-5"> Expectation Setting</H5>
-                <p>This is designed to be a 90 day Emergency Solution</p>
-                <ul><em>It is not designed to be a replication of what they have today</em></ul>
-                <p>Genesys Cloud Voice is the recommended deployment model</p>
-                <p>WebRTC to be used unless there are special circumstances preventing this</p>
-                <p>User bandwidth is expected to be in high demand due to additional family members consuming services, e.g. Video on Demand, Gaming, etc.</p>
-                <p>Customers should perform "spot-tests" on as many home workers as possible using the Genesys Network Assessment Tool</p>
-                <p>IVR’s will be limited to simple call handling trees for routing and skill identification will be included</p>
-                <p>CRM integration, as well as other back integrations, will not be part of this deployment</p>
-                <p>Number porting is not possible within our 48 hour go live target</p>
-                <p>Corporate VPN’s may require additional technical investigation and configuration</p>
-
 
             </div>
         </div>
@@ -623,14 +622,14 @@
             }
         });
 
-        $("#modal-form").validate({
+        $("#mainform").validate({
             errorClass: "text-danger",
             successClass: "test-success"
         });
 
         $("#submit").on("click", async (e) => {
             e.preventDefault();
-            if (!$("#modal-form").valid()) {
+            if (!$("#mainform").valid()) {
                 showMessage("Missing or invalid fields", true);
                 return;
             }
