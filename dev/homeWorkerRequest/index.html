@@ -179,7 +179,7 @@
                     <div class="form-row mr-4 ml-2">
                         <div class="form-group col-md-12">
                             <label for="newNumbersBroadcast">New Numbers Broadcast</label>
-                            <textarea class="form-control" id="newNumbersBroadcast" name="newNumbersBroadcast" placeholder="How will any new numbers be broadcast/advertised to the end customers?"></textarea>
+                            <textarea class="form-control" id="newNumbersBroadcast" name="newNumbersBroadcast" placeholder="How will any new numbers be broadcast/advertised to the end customers?" required></textarea>
                         </div>
                     </div>
 
@@ -187,7 +187,7 @@
                     <div class="form-row mr-4 ml-2">
                         <div class="form-group col-md-12">
                             <label for="numberTypes">Phone Number Types</label>
-                            <textarea class="form-control" id="numberTypes" name="numberTypes" placeholder="What number types are required?"></textarea>
+                            <textarea class="form-control" id="numberTypes" name="numberTypes" placeholder="What number types are required?" required></textarea>
                             <small>Premium numbers in most countries are not supported by Genesys Cloud Voice</small>
                         </div>
                     </div>
@@ -244,15 +244,15 @@
                     <div class="form-row mr-4 ml-2">
                         <div class="form-group col-md-12">
                             <label for="regulatoryConsiderations">Key Regulatory Considerations</label>
-                            <textarea class="form-control" id="regulatoryConsiderations" name="regulatoryConsiderations" placeholder="Are there any key regulatory considerations, for example: Call Recording? Do country specific regulations prevent telephony being delivered from another country?"></textarea>
+                            <textarea class="form-control" id="regulatoryConsiderations" name="regulatoryConsiderations" placeholder="Are there any key regulatory considerations, for example: Call Recording? Do country specific regulations prevent telephony being delivered from another country?" required></textarea>
                         </div>
                     </div>
 
                     <!-- Call Flows -->
                     <div class="form-check mr-4">
                         <div class="form-group col-md-12">
-                            <input class="form-check-input" type="checkbox" value="" id="callFlows">
-                            <label class="form-check-label" for="callFlows">
+                            <input class="form-check-input" type="checkbox" value="" id="callFlowsDocumented">
+                            <label class="form-check-label" for="callFlowsDocumented">
                                 Are the required call flows documented?
                             </label>
                         </div>
@@ -261,8 +261,8 @@
                     <!-- Prompts -->
                     <div class="form-check mr-4">
                         <div class="form-group col-md-12">
-                            <input class="form-check-input" type="checkbox" value="" id="prompts">
-                            <label class="form-check-label" for="prompts">
+                            <input class="form-check-input" type="checkbox" value="" id="promptsAvailable">
+                            <label class="form-check-label" for="promptsAvailable">
                                 Are the required announcements (prompts) available as audio files?
                             </label>
                         </div>
@@ -280,7 +280,7 @@
                     <div class="form-row mr-4 ml-2">
                         <div class="form-group col-md-12">
                             <label for="itInfrastructure">IT Infrastructure</label>
-                            <textarea class="form-control" id="itInfrastructure" name="itInfrastructure" placeholder="Is the IT infrastructure supported in-house or via a third-party, including internet connections, user/company provided laptops and headsets?"></textarea>
+                            <textarea class="form-control" id="itInfrastructure" name="itInfrastructure" placeholder="Is the IT infrastructure supported in-house or via a third-party, including internet connections, user/company provided laptops and headsets?" required></textarea>
                         </div>
                     </div>
 
@@ -308,7 +308,7 @@
                     <div class="form-row mr-4 ml-2">
                         <div class="form-group col-md-12">
                             <label for="virtualDesktopSolution">Virtual Desktop Solution</label>
-                            <textarea class="form-control" id="virtualDesktopSolution" name="virtualDesktopSolution" placeholder="Does the prospect use a Virtual Desktop solution, e.g. Citrix, thin-clients, etc.?"></textarea>
+                            <textarea class="form-control" id="virtualDesktopSolution" name="virtualDesktopSolution" placeholder="Does the prospect use a Virtual Desktop solution, e.g. Citrix, thin-clients, etc.?" required></textarea>
                         </div>
                     </div>
 
@@ -316,11 +316,11 @@
                     <div class="form-row mr-4 ml-2">
                         <div class="form-group col-md-12">
                             <label for="emailInfrastructure">Email Infrastructure</label>
-                            <textarea class="form-control" id="emailInfrastructure" name="emailInfrastructure" placeholder="What is the existing email infrastructure and can it be modified to use a company domain email address?"></textarea>
+                            <textarea class="form-control" id="emailInfrastructure" name="emailInfrastructure" placeholder="What is the existing email infrastructure and can it be modified to use a company domain email address?" required></textarea>
                         </div>
                     </div>
 
-
+                    <!--#region Your Info -->
 
                     <!-- Requester Info -->
                     <div class="col-md-12">
@@ -387,6 +387,8 @@
                             <input type="text" class="form-control" id="salesforceAccountOpportunity" name="salesforceAccountOpportunity" placeholder="Link to Salesforce opportunity or account">
                         </div>
                     </div>
+
+                    <!--#endregion Your Info -->
 
                 </form>
 
@@ -641,41 +643,7 @@
                     `<span class="spinner-border-sm text-light" role="status" aria-hidden="true"></span> Please Wait...`
                 )
 
-
-                let region = $("#region").val();
-                let subRegion = $("#subRegion").val();
-                let segment = $("#segment").val();
-                let product = $("#product").val();
-
-                // Tasks
-                let tasks = [];
-                for (const task of tasksControls) {
-                    tasks.push({
-                        taskId: task.id,
-                        taskCategory: task.categorySelect.val(),
-                        taskType: task.typeSelect.val(),
-                        taskTime: 0
-                    });
-                }
-
-                let requesterName = $("#requesterName").val();
-                let requesterEmail = $("#requesterEmail").val();
-                let requesterPhoneNumber = $("#requesterPhoneNumber").val();
-
-                // Need completed by
-                let needCompletedBy = "Not Set";
-                let needCompletedByDate = moment($("#datepicker").datepicker('getDate')).format("YYYY-MM-DDT00:00:00.000");
-                if (needCompletedByDate != "Invalid date") {
-                    needCompletedBy = moment($("#datepicker").datepicker('getDate')).format("YYYY-MM-DDT00:00:00.000") + "Z";
-                }
-
-                let description = $("#description").val();
-                let partnerCustomerName = $("#partnerCustomerName").val();
-                let salesforceAccountOpportunity = $("#salesforceAccountOpportunity").val();
-
-                console.log(`Region: ${region}, subRegion: ${subRegion}, Product: ${product}, Tasks: ${JSON.stringify(tasks)}, Requester Name: ${requesterName}, Requester Email: ${requesterEmail}, Requester Phone Number: ${requesterPhoneNumber}, Need Completed By: ${needCompletedBy}, Description: ${description}, Partner or Customer Name: ${partnerCustomerName}, Salesforce Opportunity: ${salesforceAccountOpportunity}`);
-
-                await postRequests(region, subRegion, segment, product, tasks, requesterName, requesterEmail, requesterPhoneNumber, needCompletedBy, description, partnerCustomerName, salesforceAccountOpportunity, gcToken);
+                await postRequests();
                 console.log('Success!');
                 showMessage("Request submitted. Thanks!");
 
