@@ -503,11 +503,10 @@
                                         return (!filter.id || request.id.toLowerCase().indexOf(filter.id.toLowerCase()) > -1)
                                             && (!filter.region || request.region.toLowerCase().indexOf(filter.region.toLowerCase()) > -1)
                                             && (!filter.subRegion || request.subRegion.toLowerCase().indexOf(filter.subRegion.toLowerCase()) > -1)
-                                            && (!filter.product || request.product.toLowerCase().indexOf(filter.product.toLowerCase()) > -1)
-                                            && (!filter.segment || request.segment.toLowerCase().indexOf(filter.segment.toLowerCase()) > -1)
                                             && (!filter.requesterName || request.requesterName.toLowerCase().indexOf(filter.requesterName.toLowerCase()) > -1)
                                             && (!filter.partnerCustomerName || request.partnerCustomerName.toLowerCase().indexOf(filter.partnerCustomerName.toLowerCase()) > -1)
                                             && (!filter.teamMembers || request.teamMembers.toLowerCase().indexOf(filter.teamMembers.toLowerCase()) > -1)
+                                            && (!filter.telephonyModel || request.telephonyModel.toLowerCase().indexOf(filter.telephonyModel.toLowerCase()) > -1)
                                             && (!$('#btnOnlyClosed')[0].classList.contains('btn-success') || request.status === "Closed")
                                             && (!$('#btnOnlyDeleted')[0].classList.contains('btn-success') || request.isDeleted)
                                     });
@@ -621,9 +620,9 @@
                                 $("<option/>", { value: "" }).text("(All)").appendTo(select);
                                 let selectedRegion = $("#telephonyModel").children("option:selected").val();
 
-                                $("<option/>", { value: "GCV" }).text("Genesys Cloud Voice (recommended)").appendTo(select);
-                                $("<option/>", { value: "BYOCCloud" }).text("BYOC Cloud").appendTo(select);
-                                $("<option/>", { value: "BYOCPremiseVirtualEdge" }).text("BYOC Premise w/ Virtual Edge").appendTo(select);
+                                $.each(telephonyModel, (key, value) => {
+                                    $("<option/>", { value: key }).text(value).appendTo(select);
+                                }),
 
                                 select.on('change', (e) => {
                                     let selectedTelephonyModel = select.children("option:selected").val();
@@ -634,7 +633,8 @@
                             },
                             items: $("#selectRegion").children("option:selected").val() == "(All)" ? Object.keys(regions) : regions[$("#selectRegion").children("option:selected").val()],
                             itemTemplate: function (value, item) {
-                                return value;
+
+                                return telephonyModel[value];
                             }
                         }, {
                             name: "requesterName",
@@ -652,7 +652,7 @@
                             },
                         },
                         {
-                            name: "teamMembers",
+                            name: "teamMembers", // index=6
                             title: "Team Members",
                             type: "text",
                             width: "auto",
