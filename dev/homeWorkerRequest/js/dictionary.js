@@ -789,3 +789,9 @@ let languages = {
     zu_ZA: "Zulu (South Africa)",
     zu: "Zulu"
 }
+
+let telephonyModel = {
+    GCV: "Genesys Cloud Voice (recommended)",
+    BYOCCloud: "BYOC Cloud",
+    BYOCPremiseWithVirtualEdges: "BYOC Premise w/ Virtual Edge"
+}
