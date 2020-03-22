@@ -618,7 +618,6 @@
                             filterTemplate: function () {
                                 let select = $("<select/>", { id: "telephonyModel" });
                                 $("<option/>", { value: "" }).text("(All)").appendTo(select);
-                                let selectedRegion = $("#telephonyModel").children("option:selected").val();
 
                                 $.each(telephonyModel, (key, value) => {
                                     $("<option/>", { value: key }).text(value).appendTo(select);
