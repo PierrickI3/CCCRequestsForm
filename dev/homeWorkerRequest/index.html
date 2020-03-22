@@ -94,11 +94,11 @@
                     </div>
 
                     <div class="form-group col-md-6">
+                        <div class="text-muted" id="recommendation">
+                        </div>
                         <select id="telephonyModel" name="telephonyModel" class="form-control" required>
                             <option value="" disabled selected>Select a Telephony Model</option>
                         </select>
-                        <div class="text-muted" id="recommendation">
-                        </div>
                     </div>
 
                     <!-- GCV Questions -->
@@ -155,7 +155,6 @@
 
                     <!-- BYOC Cloud Questions -->
                     <div id="BYOCCloudQuestions" style="display:none;">
-
                         <!-- Phone Numbers Deployment -->
                         <div class="form-check mr-4">
                             <div class="form-group col-md-12">
@@ -166,7 +165,6 @@
                                 <br>
                             </div>
                         </div>
-
                     </div>
 
                     <!-- BYOC Premise with Virtual Edges -->
@@ -379,7 +377,7 @@
                         </div>
                         <div class="form-group col-md-6">
                             <label for="datepicker">Need Completed By</label>
-                            <input type="text" id="datepicker" class="form-control" required />
+                            <input type="text" id="datepicker" class="form-control" required placeholder="Click to set a date" autocomplete="off" />
                         </div>
                     </div>
 
@@ -468,9 +466,16 @@
             $("<option/>", { value: key }).text(value).appendTo("#telephonyModel");
         });
 
-        $(".selectpicker").selectpicker({
+        $("#countriesAgents").selectpicker({
             width: '100%',
-            selectedTextFormat: 'count > 3'
+            selectedTextFormat: 'count > 3',
+            title: "Select one or more countries"
+        });
+
+        $("#countriesOperation").selectpicker({
+            width: '100%',
+            selectedTextFormat: 'count > 3',
+            title: "Select one or more countries"
         });
 
         $("#countriesOperation").on('change', (e) => {
@@ -497,18 +502,18 @@
                     $("#telephonyModel").val('GCV');
                     $("#telephonyModel").change();
                     $("#recommendation").empty();
-                    $("<small/>").html(`Based on your selection of countries, <strong>${$("#telephonyModel option:selected").text()}</strong> is the recommended choice`).appendTo("#recommendation")
+                    $("<small/>", { class: "btn-warning" }).html(`Based on your selection of countries, <strong>${$("#telephonyModel option:selected").text()}</strong> is the recommended choice`).appendTo("#recommendation")
                 } else {
                     $("#telephonyModel").val('BYOCCloud');
                     $("#telephonyModel").change();
                     $("#recommendation").empty();
-                    $("<small/>").html(`Based on your selection of countries, <strong>${$("#telephonyModel option:selected").text()}</strong> is the recommended choice`).appendTo("#recommendation")
+                    $("<small/>", { class: "btn-warning" }).html(`Based on your selection of countries, <strong>${$("#telephonyModel option:selected").text()}</strong> is the recommended choice`).appendTo("#recommendation")
                 }
             } else {
                 $("#telephonyModel").val('BYOCCloud');
                 $("#telephonyModel").change();
                 $("#recommendation").empty();
-                $("<small/>").html(`Based on your selection of countries, <strong>${$("#telephonyModel option:selected").text()}</strong> is the recommended choice`).appendTo("#recommendation")
+                $("<small/>", { class: "btn-warning" }).html(`Based on your selection of countries, <strong>${$("#telephonyModel option:selected").text()}</strong> is the recommended choice`).appendTo("#recommendation")
             }
         }
 
@@ -524,7 +529,6 @@
                     break;
                 case 'BYOCCloud':
                     if (!$("#countriesOperation").val() || $("#countriesOperation").val().length === 0) {
-                        alert("Please select one or more countries the prospect operates in first.");
                         $("#telephonyModel").val('');
                         return;
                     }
@@ -649,7 +653,9 @@
                     });
                 });
                 $("<option/>", { value: "Other" }).text("Other").appendTo(carriersSelect);
-                carriersSelect.selectpicker();
+                carriersSelect.selectpicker({
+                    title: "Select one or more carriers"
+                });
                 carriersSelect.on('change', (e) => {
                     if (carriersSelect.val().includes("Other")) {
                         $("otherNote").show();
