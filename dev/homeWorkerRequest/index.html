@@ -107,8 +107,8 @@
                         <!-- Phone Numbers Deployment -->
                         <div class="form-row mr-4 ml-2">
                             <div class="form-group col-md-12">
-                                <label for="numbersDeployment">Phone Numbers Deployment</label>
-                                <textarea class="form-control" id="numbersDeployment" name="numbersDeployment" placeholder="Will the prospect deploy new customer facing numbers from GCV, re-route non-geographic numbers to GCV or forward calls to GCV numbers?"></textarea>
+                                <label for="phoneNumbersDeployment">Phone Numbers Deployment</label>
+                                <textarea class="form-control" id="phoneNumbersDeployment" name="phoneNumbersDeployment" placeholder="Will the prospect deploy new customer facing numbers from GCV, re-route non-geographic numbers to GCV or forward calls to GCV numbers?"></textarea>
                                 <small>Genesys supports:
                                     <ul>
                                         <li>Forwarding of existing numbers to Genesys Cloud Voice</li>
@@ -533,14 +533,14 @@
                     $("#byocPremiseDiv").hide();
                     $("#GCVQuestions").hide();
                     $("#BYOCPremiseQuestions").hide();
-                    $("#numbersDeployment").val('');
+                    $("#phoneNumbersDeployment").val('');
                     $("#BYOCCloudQuestions").show();
                     break;
                 case 'BYOCPremiseWithVirtualEdges':
                     $("#byocPremiseDiv").show();
                     countriesAndCarriers = [];
                     $("#GCVQuestions").hide();
-                    $("#numbersDeployment").val('');
+                    $("#phoneNumbersDeployment").val('');
                     $("#BYOCCloudQuestions").hide();
                     $("#BYOCPremiseQuestions").show();
                     break;
@@ -549,7 +549,7 @@
                     $("#byocPremiseDiv").hide();
                     countriesAndCarriers = [];
                     $("#GCVQuestions").hide();
-                    $("#numbersDeployment").val('');
+                    $("#phoneNumbersDeployment").val('');
                     $("#BYOCCloudQuestions").hide();
                     $("#BYOCPremiseQuestions").hide();
                     break;
@@ -741,7 +741,7 @@
             //byocCloudCarriers: countriesAndCarriers,
             //byocPremiseWithVirtualEdges: getBYOCWithVirtualEdges(),
             $("#relationshipWithCarrier").prop('checked', false);
-            $("#numbersDeployment").val('');
+            $("#phoneNumbersDeployment").val('');
             $("#nonGeographicNumbersReRouting").val('');
             $("#newNumbers").val('');
             $("#customerResourceCommitted").prop('checked', false);
