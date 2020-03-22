@@ -172,6 +172,114 @@
 
                             </div>
 
+                            <!-- Commmitted Customer Resource -->
+                            <div class="form-check mr-4">
+                                <div class="form-group col-md-12">
+                                    <input class="form-check-input" type="checkbox" value="" id="customerResourceCommitted">
+                                    <label class="form-check-label" for="customerResourceCommitted">
+                                        Has customer resource been committed?
+                                    </label>
+                                </div>
+                            </div>
+
+                            <!-- Project Sponsor -->
+                            <div class="form-check mr-4">
+                                <div class="form-group col-md-12">
+                                    <input class="form-check-input" type="checkbox" value="" id="projectSponsorAssigned">
+                                    <label class="form-check-label" for="projectSponsorAssigned">
+                                        Has a project sponsor been assigned?
+                                    </label>
+                                </div>
+                            </div>
+
+                            <!-- Change Management Process -->
+                            <div class="form-row mr-4">
+                                <div class="form-group col-md-12">
+                                    <label for="changeManagementProcess">Change Management Process</label>
+                                    <textarea class="form-control" id="changeManagementProcess" name="changeManagementProcess" placeholder="Is there a change management process that needs to be followed?"></textarea>
+                                </div>
+                            </div>
+
+                            <!-- Regulatory Considerations -->
+                            <div class="form-row mr-4">
+                                <div class="form-group col-md-12">
+                                    <label for="regulatoryConsiderations">Key Regulatory Considerations</label>
+                                    <textarea class="form-control" id="regulatoryConsiderations" name="regulatoryConsiderations" placeholder="Are there any key regulatory to consider, for example: Call Recording? Do country specific regulations prevent telephony being delivered from another country?" required></textarea>
+                                </div>
+                            </div>
+
+                            <!-- Call Flows -->
+                            <div class="form-check mr-4">
+                                <div class="form-group col-md-12">
+                                    <input class="form-check-input" type="checkbox" value="" id="callFlowsDocumented">
+                                    <label class="form-check-label" for="callFlowsDocumented">
+                                        Are the required call flows documented?
+                                    </label>
+                                </div>
+                            </div>
+
+                            <!-- Prompts -->
+                            <div class="form-check mr-4">
+                                <div class="form-group col-md-12">
+                                    <input class="form-check-input" type="checkbox" value="" id="promptsAvailable">
+                                    <label class="form-check-label" for="promptsAvailable">
+                                        Are the required announcements (prompts) available as audio files?
+                                    </label>
+                                </div>
+                            </div>
+
+                            <!-- Identification and Verification -->
+                            <div class="form-row mr-4">
+                                <div class="form-group col-md-12">
+                                    <label for="identificationAndVerificationProcesses">Identity and Verification Processes</label>
+                                    <textarea class="form-control" id="identificationAndVerificationProcesses" name="identificationAndVerificationProcesses" placeholder="Are there any mandatory Identification and Verification processes?"></textarea>
+                                </div>
+                            </div>
+
+                            <!-- IT Infrastructure -->
+                            <div class="form-row mr-4">
+                                <div class="form-group col-md-12">
+                                    <label for="itInfrastructure">IT Infrastructure</label>
+                                    <textarea class="form-control" id="itInfrastructure" name="itInfrastructure" placeholder="Is the IT infrastructure supported in-house or via a third-party, including internet connections, user/company provided laptops and headsets?" required></textarea>
+                                </div>
+                            </div>
+
+                            <!-- Internet Bandwidth -->
+                            <div class="form-check mr-4">
+                                <div class="form-group col-md-12">
+                                    <input class="form-check-input" type="checkbox" value="" id="usersInternetBandwidth">
+                                    <label class="form-check-label" for="usersInternetBandwidth">
+                                        Do users have sufficient internet bandwidth for the intended use, noting high bandwidth demand from other family members etc.?
+                                    </label>
+                                </div>
+                            </div>
+
+                            <!-- End devices require VPN? -->
+                            <div class="form-check mr-4">
+                                <div class="form-group col-md-12">
+                                    <input class="form-check-input" type="checkbox" value="" id="endUserDevicesRequireVPN">
+                                    <label class="form-check-label" for="endUserDevicesRequireVPN">
+                                        Are user end-devices required to connect via VPN?
+                                    </label>
+                                </div>
+                            </div>
+
+                            <!-- Virtual Solution -->
+                            <div class="form-row mr-4">
+                                <div class="form-group col-md-12">
+                                    <label for="virtualDesktopSolution">Virtual Desktop Solution</label>
+                                    <textarea class="form-control" id="virtualDesktopSolution" name="virtualDesktopSolution" placeholder="Does the prospect use a Virtual Desktop solution, e.g. Citrix, thin-clients, etc.?" required></textarea>
+                                </div>
+                            </div>
+
+                            <!-- Email Infrastructure -->
+                            <div class="form-row mr-4">
+                                <div class="form-group col-md-12">
+                                    <label for="emailInfrastructure">Email Infrastructure</label>
+                                    <textarea class="form-control" id="emailInfrastructure" name="emailInfrastructure" placeholder="What is the existing email infrastructure and can it be modified to use a company domain email address?" required></textarea>
+                                </div>
+                            </div>
+
                             <div class="form-row">
                                 <div class="form-group col-md-6">
                                     <label for="region">Region</label>
@@ -213,32 +321,35 @@
                                     </div>
                                 </div>
                             </div>
+
                             <div class="form-row">
                                 <div class="form-group col-md-10">
                                     <label for="notes">Notes</label>
                                     <textarea class="form-control" id="notes" name="notes" placeholder="Describe your request" required></textarea>
                                 </div>
                             </div>
+
                             <div class="form-row">
                                 <div class="form-group col-md-10">
                                     <label for="partnerCustomerName">Partner and/or Customer Name</label>
                                     <input type="text" class="form-control" id="partnerCustomerName" name="partnerCustomerName" placeholder="Partner and/or Customer Name">
                                 </div>
                             </div>
+
                             <div class="form-row">
-                                <div class="form-group col-md-8">
+                                <div class="form-group col-md-9">
                                     <label for="salesforceAccountOpportunity">Salesforce Account / Opportunity
                                         URL</label>
                                     <input type="text" class="form-control" id="salesforceAccountOpportunity" name="salesforceAccountOpportunity" placeholder="Link to Salesforce opportunity or account">
 
                                 </div>
                                 <div class="form-group col-md-2">
-                                    <label for="salesforceAccountOpportunity" style="color: white;">Open in new
-                                        tab</label>
-                                    <button id="btnCopySFLink" type="button" class="btn btn-primary pull-right" onclick="navigateToSFLink();">copy</button>
+                                    <label for="salesforceAccountOpportunity" style="color: white;">Open in new tab</label>
+                                    <button id="btnCopySFLink" type="button" class="btn btn-primary pull-left" onclick="navigateToSFLink();">Copy</button>
                                 </div>
 
                             </div>
+
                             <div class="form-row">
                                 <div class="form-group col-md-3">
                                     <label for="priority">Priority</label>
@@ -409,12 +520,43 @@
             $("#editModal #id").text("");
             $("#editModal #createdDate").val("");
             $("#editModal #updatedDate").val("");
+
+            // Telephony
+            $("#editModal #telephonyModel").val("");
+            $("#editModal #telephonyModel").change();
+            $("#editModal #countriesAgents").val("");
+            $("#editModal #countriesAgents").selectpicker('refresh');
+            $("#editModal #countriesOperation").val("");
+            $("#editModal #countriesOperation").selectpicker('refresh');
+
+            // GCV
+            $("#editModal #phoneNumbersDeployment").val("");
+            $("#editModal #newNumbers").val("");
+
+            // BYOC Cloud
+            $("#editModal #relationshipWithCarrier").attr('checked', false)
+
+            // BYOC Premise
+            $("#editModal #hyperVEnvironment").val("");
+
+            // Common Questions
+            $("#editModal #customerResourceCommitted").attr('checked', false);
+            $("#editModal #projectSponsorAssigned").attr('checked', false);
+            $("#editModal #changeManagementProcess").val("");
+            $("#editModal #regulatoryConsiderations").val("");
+            $("#editModal #callFlowsDocumented").attr('checked', false);
+            $("#editModal #promptsAvailable").attr('checked', false);
+            $("#editModal #identificationAndVerificationProcesses").val("");
+            $("#editModal #itInfrastructure").val("");
+            $("#editModal #usersInternetBandwidth").attr('checked', false);
+            $("#editModal #endUserDevicesRequireVPN").attr('checked', false);
+            $("#editModal #virtualDesktopSolution").val("");
+            $("#editModal #emailInfrastructure").val("");
+
+            // Requester Info
             $("#editModal #region").val("");
             $("#editModal #region").change();
             $("#editModal #subRegion").val("");
-            $("#editModal #product").val("");
-            $("#editModal #tasks").empty();
-            tasksControls = [];
             $("#editModal #requesterName").val("");
             $("#editModal #requesterEmail").val("");
             $("#editModal #requesterPhoneNumber").val("");
@@ -422,12 +564,15 @@
             $("#editModal #notes").val("");
             $("#editModal #partnerCustomerName").val("");
             $("#editModal #salesforceAccountOpportunity").val("");
+
+            // CC Fields
             $("#editModal #priority").val("");
             $("#editModal #bAcceptedRequest").val("");
             $("#editModal #status").val("");
             $("#editModal #programManager").val("");
             $("#editModal #time").val("");
             $("#editModal #txtAcceptedRejectedNotes").val("");
+            $("#editModal #teamMembers").val("");
 
             validator.resetForm(); // Reset validation errors
         }
@@ -789,9 +934,6 @@
             $("#editModal #id").text(request.id);
             $("#editModal #createdDate").val(moment(request.createdAt).format('LLLL'));
             $("#editModal #updatedDate").val(moment(request.updatedAt).fromNow());
-            $("#editModal #region").val(request.region);
-            $("#editModal #region").change();
-            $("#editModal #subRegion").val(request.subRegion);
 
             // Telephony
             countriesAndCarriers = request.byocCloudCarriers;
@@ -812,7 +954,24 @@
             // BYOC Premise
             $("#editModal #hyperVEnvironment").val(request.hyperVEnvironment);
 
+            // Common Questions
+            $("#editModal #customerResourceCommitted").attr('checked', request.customerResourceCommitted);
+            $("#editModal #projectSponsorAssigned").attr('checked', request.projectSponsorAssigned);
+            $("#editModal #changeManagementProcess").val(request.changeManagementProcess);
+            $("#editModal #regulatoryConsiderations").val(request.regulatoryConsiderations);
+            $("#editModal #callFlowsDocumented").attr('checked', request.callFlowsDocumented);
+            $("#editModal #promptsAvailable").attr('checked', request.promptsAvailable);
+            $("#editModal #identificationAndVerificationProcesses").val(request.identificationAndVerificationProcesses);
+            $("#editModal #itInfrastructure").val(request.itInfrastructure);
+            $("#editModal #usersInternetBandwidth").attr('checked', request.usersInternetBandwidth);
+            $("#editModal #endUserDevicesRequireVPN").attr('checked', request.endUserDevicesRequireVPN);
+            $("#editModal #virtualDesktopSolution").val(request.virtualDesktopSolution);
+            $("#editModal #emailInfrastructure").val(request.emailInfrastructure);
+
             // Requester Info
+            $("#editModal #region").val(request.region);
+            $("#editModal #region").change();
+            $("#editModal #subRegion").val(request.subRegion);
             $("#editModal #requesterName").val(request.requesterName);
             $("#editModal #requesterEmail").val(request.requesterEmail);
             $("#editModal #requesterPhoneNumber").val(request.requesterPhoneNumber);
@@ -878,37 +1037,31 @@
                 case 'GCV':
                     $("#editModal #byocCloudCarriersDiv").hide();
                     $("#editModal #byocPremiseDiv").hide();
-
                     $("#editModal #BYOCCloudQuestions").hide();
-
                     $("#editModal #BYOCPremiseQuestions").hide();
 
                     $("#editModal #GCVQuestions").show();
                     break;
                 case 'BYOCCloud':
                     $("#editModal #byocPremiseDiv").hide();
-                    $("#editModal #byocCloudCarriersDiv").show();
-
                     $("#editModal #GCVQuestions").hide();
-
                     $("#editModal #BYOCPremiseQuestions").hide();
 
                     refreshBYOCCloudCountryCarriers();
+                    $("#editModal #byocCloudCarriersDiv").show();
                     $("#editModal #BYOCCloudQuestions").show();
                     break;
                 case 'BYOCPremiseWithVirtualEdges':
                     $("#editModal #byocCloudCarriersDiv").hide();
-
                     $("#editModal #GCVQuestions").hide();
-
                     $("#editModal #phoneNumbersDeployment").val('');
-
                     $("#editModal #BYOCCloudQuestions").hide();
 
                     $("#editModal #BYOCPremiseQuestions").show();
                     $("#editModal #byocPremiseDiv").show();
                     break;
                 default:
+                    // Hide everything
                     $("#editModal #byocCloudCarriersDiv").hide();
                     $("#editModal #byocPremiseDiv").hide();
                     $("#editModal #GCVQuestions").hide();
@@ -924,50 +1077,100 @@
 
             $("#byocCloudCarriers").empty();
 
-            $.each(countriesAndCarriers, (i, byocCloudCarrier) => {
-                console.log(i, byocCloudCarrier);
-                let country = Object.keys(byocCloudCarrier)[0];
-                let carriers = Object.values(byocCloudCarrier)[0].split(',');
+            // If no countries and carriers are present, this means the program manager has changed the telephony model
+            if (countriesAndCarriers.length == 0) {
+                $.each($("#countriesOperation").val(), (i, country) => {
 
-                // Country
-                let countryDiv = $("<div/>", { class: "form-group col-md-6" }).appendTo("#byocCloudCarriers");
-                $("<label/>", { id: "country_" + country }).text(country).appendTo(countryDiv);
+                    // Country
+                    let countryDiv = $("<div/>", { class: "form-group col-md-5" }).appendTo("#byocCloudCarriers");
+                    $("<label/>", { id: "country_" + country }).text(country).appendTo(countryDiv);
 
-                // Carriers
-                let carriersDiv = $("<div/>", { class: "form-group col-md-6" }).appendTo("#byocCloudCarriers");
-                let carriersSelect = $("<select/>", { class: "selectpicker form-control", id: "carriers_" + country, name: "carriers_" + country, ["data-live-search"]: true, required: true, multiple: true }).appendTo(carriersDiv);
-                //$("<option/>", { value: "", disabled: true }).text("Select a Carrier").appendTo(carriersSelect);
-                $.each(supportedBYOCCloudCarriers, (region, regionalSupportedBYOCCloudCarriers) => {
-                    let optGroup = $("<optgroup/>", { label: region }).appendTo(carriersSelect);
-                    $.each(regionalSupportedBYOCCloudCarriers, (i, regionalSupportedBYOCCloudCarrier) => {
-                        $("<option/>", { value: regionalSupportedBYOCCloudCarrier.name, selected: carriers.includes(regionalSupportedBYOCCloudCarrier.name) }).text(regionalSupportedBYOCCloudCarrier.name).appendTo(optGroup);
+                    // Carriers
+                    let carriersDiv = $("<div/>", { class: "form-group col-md-5" }).appendTo("#byocCloudCarriers");
+                    let carriersSelect = $("<select/>", { class: "selectpicker form-control", id: "carriers_" + country, name: "carriers_" + country, ["data-live-search"]: true, required: true, multiple: true }).appendTo(carriersDiv);
+                    //$("<option/>", { value: "", disabled: true }).text("Select a Carrier").appendTo(carriersSelect);
+                    $.each(supportedBYOCCloudCarriers, (region, regionalSupportedBYOCCloudCarriers) => {
+                        let optGroup = $("<optgroup/>", { label: region }).appendTo(carriersSelect);
+                        $.each(regionalSupportedBYOCCloudCarriers, (i, regionalSupportedBYOCCloudCarrier) => {
+                            $("<option/>", { value: regionalSupportedBYOCCloudCarrier.name }).text(regionalSupportedBYOCCloudCarrier.name).appendTo(optGroup);
+                        });
+                    });
+                    $("<option/>", { value: "Other" }).text("Other").appendTo(carriersSelect);
+                    carriersSelect.selectpicker({
+                        title: "Select one or more carriers"
+                    });
+                    carriersSelect.on('change', (e) => {
+                        if (carriersSelect.val().includes("Other")) {
+                            $("otherNote").show();
+                        } else {
+                            $("otherNote").hide();
+                        }
+
+                        let bFound = false;
+                        for (var i in countriesAndCarriers) {
+                            if (countriesAndCarriers[i].hasOwnProperty(country)) {
+                                countriesAndCarriers[i] = {
+                                    [country]: carriersSelect.val().join(',')
+                                }
+                                bFound = true;
+                                break;
+                            }
+                        }
+                        if (!bFound) {
+                            // Add to array
+                            countriesAndCarriers.push({
+                                [country]: carriersSelect.val().join(',')
+                            });
+                        }
+
                     });
                 });
-                $("<option/>", { value: "Other", selected: carriers.includes('Other') }).text("Other").appendTo(carriersSelect);
-                carriersSelect.selectpicker({
-                    title: "Select one or more carriers"
-                });
-                carriersSelect.on('change', (e) => {
-                    let bFound = false;
-                    for (var i in countriesAndCarriers) {
-                        if (countriesAndCarriers[i].hasOwnProperty(country)) {
-                            countriesAndCarriers[i] = {
-                                [country]: carriersSelect.val().join(',')
-                            }
-                            bFound = true;
-                            break;
-                        }
-                    }
-                    if (!bFound) {
-                        // Add to array
-                        countriesAndCarriers.push({
-                            [country]: carriersSelect.val().join(',')
+            }
+            else {
+                $.each(countriesAndCarriers, (i, byocCloudCarrier) => {
+                    console.log(i, byocCloudCarrier);
+                    let country = Object.keys(byocCloudCarrier)[0];
+                    let carriers = Object.values(byocCloudCarrier)[0].split(',');
+
+                    // Country
+                    let countryDiv = $("<div/>", { class: "form-group col-md-6" }).appendTo("#byocCloudCarriers");
+                    $("<label/>", { id: "country_" + country }).text(country).appendTo(countryDiv);
+
+                    // Carriers
+                    let carriersDiv = $("<div/>", { class: "form-group col-md-6" }).appendTo("#byocCloudCarriers");
+                    let carriersSelect = $("<select/>", { class: "selectpicker form-control", id: "carriers_" + country, name: "carriers_" + country, ["data-live-search"]: true, required: true, multiple: true }).appendTo(carriersDiv);
+                    //$("<option/>", { value: "", disabled: true }).text("Select a Carrier").appendTo(carriersSelect);
+                    $.each(supportedBYOCCloudCarriers, (region, regionalSupportedBYOCCloudCarriers) => {
+                        let optGroup = $("<optgroup/>", { label: region }).appendTo(carriersSelect);
+                        $.each(regionalSupportedBYOCCloudCarriers, (i, regionalSupportedBYOCCloudCarrier) => {
+                            $("<option/>", { value: regionalSupportedBYOCCloudCarrier.name, selected: carriers.includes(regionalSupportedBYOCCloudCarrier.name) }).text(regionalSupportedBYOCCloudCarrier.name).appendTo(optGroup);
                         });
-                    }
+                    });
+                    $("<option/>", { value: "Other", selected: carriers.includes('Other') }).text("Other").appendTo(carriersSelect);
+                    carriersSelect.selectpicker({
+                        title: "Select one or more carriers"
+                    });
+                    carriersSelect.on('change', (e) => {
+                        let bFound = false;
+                        for (var i in countriesAndCarriers) {
+                            if (countriesAndCarriers[i].hasOwnProperty(country)) {
+                                countriesAndCarriers[i] = {
+                                    [country]: carriersSelect.val().join(',')
+                                }
+                                bFound = true;
+                                break;
+                            }
+                        }
+                        if (!bFound) {
+                            // Add to array
+                            countriesAndCarriers.push({
+                                [country]: carriersSelect.val().join(',')
+                            });
+                        }
 
+                    });
                 });
-            });
-
+            }
         }
 
         $("#editModal #region").on("change", () => {
@@ -1065,16 +1268,6 @@
                 let product = $("#editModal #product").val();
                 let segment = $("#editModal #segment").val();
 
-                // Tasks
-                let tasks = [];
-                for (const task of tasksControls) {
-                    tasks.push({
-                        taskId: task.id,
-                        taskCategory: task.categorySelect.val(),
-                        taskType: task.typeSelect.val(),
-                        taskTime: task.timeInput.val()
-                    });
-                }
 
                 let requesterName = $("#editModal #requesterName").val();
                 let requesterEmail = $("#editModal #requesterEmail").val();
