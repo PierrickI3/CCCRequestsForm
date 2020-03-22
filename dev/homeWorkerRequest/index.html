@@ -384,7 +384,7 @@
                     <div class="form-row mr-4 ml-2">
                         <div class="form-group col-md-6">
                             <label for="partnerCustomerName">Partner and/or Customer Name</label>
-                            <input type="text" class="form-control" id="partnerCustomerName" name="partnerCustomerName" placeholder="Partner and/or Customer Name">
+                            <input type="text" class="form-control" id="partnerCustomerName" name="partnerCustomerName" placeholder="Partner and/or Customer Name" required>
                         </div>
                         <div class="form-group col-md-6">
                             <label for="salesforceAccountOpportunity">SF Account / Opportunity URL</label>
@@ -633,10 +633,36 @@
                         $("otherNote").hide();
                     }
 
+
+                    //TODO If array contains the country already, it needs to be removed
+
+                    $.each(countriesAndCarriers, (i, countryAndCarriers) => {
+                        if (Object.keys(countryAndCarriers).includes('Anguilla')) {
+                            console.log('Found!');
+                            countriesAndCarriers.splice(i, 1);
+                        }
+                    })
+
+                    // var flatData = [];
+                    // myExportData.forEach(function (aItem) {
+
+                    //     var singleRow = $.extend(true, {}, aItem);
+                    //     singleRow.countriesAgents = aItem.countriesAgents.join(", ");
+                    //     singleRow.countriesOperation = aItem.countriesOperation.join(", ");
+                    //     singleRow.telephonyModel = telephonyModel[aItem.telephonyModel];
+
+                    //     if (singleRow.mailDistibution) delete singleRow.mailDistibution;
+                    //     singleRow.createdAt = moment.utc(singleRow.createdAt)
+                    //     singleRow.updatedAt = moment.utc(singleRow.updatedAt)
+                    //     flatData.push(singleRow);
+
+                    // })
+
+
                     // Add to array
-                    countriesAndCarriers[country] = {
-                        carriers: carriersSelect.val()
-                    };
+                    countriesAndCarriers.push({
+                        [country]: carriersSelect.val().join(',')
+                    });
                 });
             });
 
@@ -678,7 +704,6 @@
                 if (needCompletedByDate != "Invalid date") {
                     needCompletedBy = moment($("#datepicker").datepicker('getDate')).format("YYYY-MM-DDT00:00:00.000") + "Z";
                 }
-
 
                 let detailedInfo = "\n```no-highlight\n region:\t\t" + $("#region").val() + "\n sub-region:\t\t" + $("#subRegion").val() + "\n req name:\t\t" + $("#requesterName").val() + "\n req email:\t\t" + $("#requesterEmail").val() + "\n req phone:\t\t" + $("#requesterPhoneNumber").val() +
                     "\n completed by:\t\t" + needCompletedBy + "\n notes:\t\t" + $("#notes").val() + "\n p/c name:\t\t" + $("#partnerCustomerName").val() + "\n sf/acc opp:\t\t" + $("#salesforceAccountOpportunity").val() + "\n ```\n";
