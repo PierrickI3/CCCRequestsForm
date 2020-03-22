@@ -2,700 +2,700 @@
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no">
-  <title>CCC Request Form</title>
-  <link rel="shortcut icon" href="/favicon.ico">
-  <!-- Bootstrap -->
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-  <!-- Font Awesome -->
-  <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-  <!-- Bootstrap DatePicker -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker3.min.css" integrity="sha256-FAOaXTpl90/K8cXmSdsskbQN3nKYulhCpPbcFzGTWKI=" crossorigin="anonymous" />
-  <!-- jQuery Toast -->
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/jquery-toast-plugin/1.3.2/jquery.toast.min.css" rel="stylesheet">
-  <!-- Bootstrap Select -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.9/dist/css/bootstrap-select.min.css">
-  <!-- Custom CSS -->
-  <link rel="stylesheet" href="./css/custom.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no">
+    <title>CCC Request Form</title>
+    <link rel="shortcut icon" href="/favicon.ico">
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <!-- Bootstrap DatePicker -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker3.min.css" integrity="sha256-FAOaXTpl90/K8cXmSdsskbQN3nKYulhCpPbcFzGTWKI=" crossorigin="anonymous" />
+    <!-- jQuery Toast -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/jquery-toast-plugin/1.3.2/jquery.toast.min.css" rel="stylesheet">
+    <!-- Bootstrap Select -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.9/dist/css/bootstrap-select.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="./css/custom.css">
 
 </head>
 
 <body>
-  <img class="overlay" src="./images/devmode.png" id="devModeImage" hidden alt="devMode" />
-  <nav class="navbar navbar-dark bg-dark">
-    <a class="navbar-brand" href="#">
-      <img src="images/genesys.png" width="30" height="30" class="d-inline-block align-top" alt="">
-      <span class="badge badge-warning">#homeworker</span> Request Form <small><span class="badge badge-pill badge-warning" id="regionBadge"></span></small>
-    </a>
+    <img class="overlay" src="./images/devmode.png" id="devModeImage" hidden alt="devMode" />
+    <nav class="navbar navbar-dark bg-dark">
+        <a class="navbar-brand" href="#">
+            <img src="images/genesys.png" width="30" height="30" class="d-inline-block align-top" alt="">
+            <span class="badge badge-warning">#homeworker</span> Request Form <small><span class="badge badge-pill badge-warning" id="regionBadge"></span></small>
+        </a>
 
-    <ul class="mb-0">
-      <ul class="nav navbar-nav" style="float: right;">
-        <li>
-          <a href="#" id="reviewRequestsButton" class="admin btn btn-primary btn-sm" hidden>Review Requests</a>
-        </li>
+        <ul class="mb-0">
+            <ul class="nav navbar-nav" style="float: right;">
+                <li>
+                    <a href="#" id="reviewRequestsButton" class="admin btn btn-primary btn-sm" hidden>Review Requests</a>
+                </li>
 
-      </ul>
-      <ul class="nav navbar-nav mr-2" style="float: right;">
-        <li>
-          <a href="../index.html" id="backToCCCRequestForm" class="admin btn btn-secondary btn-sm" hidden>Back to CCC RequestForm</a>
-        </li>
+            </ul>
+            <ul class="nav navbar-nav mr-2" style="float: right;">
+                <li>
+                    <a href="../index.html" id="backToCCCRequestForm" class="admin btn btn-secondary btn-sm" hidden>Back to CCC RequestForm</a>
+                </li>
 
-      </ul>
+            </ul>
 
-    </ul>
+        </ul>
 
-  </nav>
+    </nav>
 
-  <div class="alert alert-danger fade show" role="alert" id="alert" hidden>
-    <strong>Maintenance Alert</strong> This site is being updated. Please wait.
-    <a class="btn btn-light" href="#" onclick="location.reload();"><i class="fa fa-refresh"></i> Refresh</a>
-  </div>
-
-  <div id="form" class="container-fluid">
-    <br>
-    <div class="form-row">
-      <div class="form-group">
-        <H3 class="text-center">Welcome to the Homeworker Request Form</H3>
-        <hr>
-        <p /c>This is designed to be a 90 day Emergency Solution. <em>It is not designed to be a replication of what customers or prospects have today</em></p>
-        <p class="text-muted">Genesys Cloud Voice is the <strong>recommended</strong> deployment model. WebRTC is to be used unless there are special circumstances preventing this. User bandwidth is expected to be in high demand due to additional family members consuming services, e.g. Video on Demand, Gaming, etc.</p>
-        <p class="text-muted">Customers should perform "spot-tests" on as many home workers as possible using the Genesys Network Assessment Tool. IVRs will be limited to simple call handling trees for routing and skill identification will be included. CRM integration, as well as other back integrations, will not be part of this deployment</p>
-        <p class="text-muted">Number porting is not possible within our 48 hour go live target. Corporate VPN’s may require additional technical investigation and configuration.</p>
-
-        <form id="mainform">
-
-          <!--#region Telephony -->
-
-          <div class="col-md-12 bg-light shadow">
-            <hr />
-            <h3 class="text-center">Telephony</h3>
-            <hr />
-          </div>
-
-          <!-- Countries & Languages -->
-          <div class="form-row mr-4 ml-2">
-            <div class="form-group col-md-6">
-              <label for="countriesAgents"><br>In which countries are the prospect's agents located?</label>
-              <select class="selectpicker" id="countriesAgents" name="countriesAgents" class="form-control" required multiple data-live-search="true">
-              </select>
-            </div>
-            <div class="form-group col-md-6">
-              <label for="countriesOperation">In which countries does the prospect operate and require (or have existing) phone numbers?</label>
-              <select class="selectpicker" id="countriesOperation" name="countriesOperation" class="form-control" required multiple data-live-search="true">
-              </select>
-            </div>
-          </div>
-
-          <!-- Existing Telephony -->
-          <div class="form-check mr-4">
-            <div class="form-group col-md-12">
-              <input class="form-check-input" type="checkbox" value="" id="existingTelephonyUsage">
-              <label class="form-check-label" for="existingTelephonyUsage">
-                Does the prospect intend to use an existing telephony carrier, PBX or SBC?
-              </label>
-              <br>
-            </div>
-          </div>
-
-          <!-- Telephony Model -->
-          <div class="form-group col-md-6">
-            <label for="telephonyModel">Telephony Model</label>
-            <select id="telephonyModel" name="telephonyModel" class="form-control" required>
-              <option value="" disabled selected>Select a Telephony Model</option>
-              <option value="GCV">Genesys Cloud Voice</option>
-              <option value="BYOCCloud">BYOC Cloud</option>
-              <option value="BYOCPremiseWithVirtualEdges">BYOC Premise with Virtual Edges</option>
-            </select>
-            <div class="text-muted" id="recommendation">
-            </div>
-          </div>
-
-          <div class="text-muted form-group ml-3">
-            <small>Where a SIP trunk cannot be easily established, it is recommended to use Genesys Cloud Voice and forwarding of calls.</small><br>
-            <small>Number porting is a longer-term option which is <strong>NOT</strong> recommended for speed of deployment.</small>
-          </div>
-
-          <!-- BYOC Cloud Carriers -->
-          <div class="border border-black mr-3" id="byocCloudCarriersDiv" style="display: none;">
-            <div class="form-row mt-1 mr-4 ml-2">
-              <div class="form-group col-md-5 text-center">Country</div>
-              <div class="form-group col-md-5 text-center">Select one or more Carriers</div>
-            </div>
-            <div class="form-row mt-2 mr-4 ml-2" id="byocCloudCarriers"></div>
-            <small id="otherNote" class="form-group ml-2">
-              If you have selected "Other":
-              <ul>
-                <li>Carrier must meeting standard requirements as per Resource Centre</li>
-                <li>Expectation that deployment time will be extended, <strong>in most cases significantly</strong></li>
-              </ul>
-            </small>
-            <div class="form-check mr-4">
-              <div class="form-group col-md-12">
-                <input class="form-check-input" type="checkbox" value="" id="relationshipWithCarrier">
-                <label class="form-check-label" for="relationshipWithCarrier">
-                  Does the prospect already have a relationship with the carrier and access to technical resources?
-                </label>
-              </div>
-            </div>
-          </div>
-
-          <!-- BYOC Premise with Virtual Edges -->
-          <div class="border border-black mr-3" id="byocPremiseDiv" style="display: none;">
-            <small class="form-group ml-2">
-              If planning to use a virtual edge, very strict guidelines for deployment must be followed:
-              <ul>
-                <li><a href="https://help.mypurecloud.com/articles/virtual-edge-hardware-software-requirements/" target="_blank">Virtual Edge Hardware/Software Requirements</a></li>
-                <li><a href="https://help.mypurecloud.com/articles/virtual-edge-warnings/" target="_blank">Virtual Edge Warnings</a></li>
-              </ul>
-            </small>
-          </div>
-
-          <!-- Phone Numbers Deployment -->
-          <div class="form-row mr-4 ml-2">
-            <div class="form-group col-md-12">
-              <label for="numbersDeployment">Phone Numbers Deployment</label>
-              <textarea class="form-control" id="numbersDeployment" name="numbersDeployment" placeholder="Does the prospect intend to deploy new numbers, re-route non-geographic numbers, or port existing numbers?"></textarea>
-              <small>Genesys supports:
-                <ul>
-                  <li>Forwarding of existing numbers to Genesys Cloud Voice</li>
-                  <li>Provisioning of new numbers with Genesys Cloud Voice</li>
-                  <li>SIP trunk connections to existing infrastructure (BYOC Cloud)</li>
-                  <li>SIP trunks direct to carriers (BYOC Cloud)</li>
-                </ul>
-              </small>
-            </div>
-          </div>
-
-          <!-- Non-Geographic Numbers Re-Routing -->
-          <div class="form-row mr-4 ml-2">
-            <div class="form-group col-md-12">
-              <label for="nonGeographicNumbersReRouting">Non-Geographic Numbers re-Routing</label>
-              <textarea class="form-control" id="nonGeographicNumbersReRouting" name="nonGeographicNumbersReRouting" placeholder="If re-routing non-geographic numbers, can this be done via an online portal or is another provider required to make the changes?"></textarea>
-            </div>
-          </div>
-
-          <!-- New Numbers Broadcast -->
-          <div class="form-row mr-4 ml-2">
-            <div class="form-group col-md-12">
-              <label for="newNumbersBroadcast">New Numbers Broadcast</label>
-              <textarea class="form-control" id="newNumbersBroadcast" name="newNumbersBroadcast" placeholder="How will any new numbers be broadcast/advertised to the end customers?" required></textarea>
-            </div>
-          </div>
-
-          <!-- Number Types -->
-          <div class="form-row mr-4 ml-2">
-            <div class="form-group col-md-12">
-              <label for="numberTypes">Phone Number Types</label>
-              <textarea class="form-control" id="numberTypes" name="numberTypes" placeholder="What number types are required?" required></textarea>
-              <small>Premium numbers in most countries are not supported by Genesys Cloud Voice</small>
-            </div>
-          </div>
-
-          <!--#endregion Telephony -->
-
-          <!--#region Customer Engagement -->
-
-          <div class="col-md-12 bg-light shadow">
-            <hr />
-            <h3 class="text-center">Customer Engagement</h3>
-            <hr />
-          </div>
-
-          <!-- Commmitted Customer Resource -->
-          <div class="form-check mr-4">
-            <div class="form-group col-md-12">
-              <input class="form-check-input" type="checkbox" value="" id="customerResourceCommitted">
-              <label class="form-check-label" for="customerResourceCommitted">
-                Has customer resource been committed?
-              </label>
-            </div>
-          </div>
-
-          <!-- Project Sponsor -->
-          <div class="form-check mr-4">
-            <div class="form-group col-md-12">
-              <input class="form-check-input" type="checkbox" value="" id="projectSponsorAssigned">
-              <label class="form-check-label" for="projectSponsorAssigned">
-                Has a project sponsor been assigned?
-              </label>
-            </div>
-          </div>
-
-          <!-- Change Management Process -->
-          <div class="form-row mr-4 ml-2">
-            <div class="form-group col-md-12">
-              <label for="changeManagementProcess">Change Management Process</label>
-              <textarea class="form-control" id="changeManagementProcess" name="changeManagementProcess" placeholder="Is there a change management process that needs to be followed?"></textarea>
-            </div>
-          </div>
-
-          <!--#endregion Customer Engagement -->
-
-          <!--#region Common Questions -->
-
-          <div class="col-md-12 bg-light shadow">
-            <hr />
-            <h3 class="text-center">Common questions</h3>
-            <hr />
-          </div>
-
-          <!-- Regulatory Considerations -->
-          <div class="form-row mr-4 ml-2">
-            <div class="form-group col-md-12">
-              <label for="regulatoryConsiderations">Key Regulatory Considerations</label>
-              <textarea class="form-control" id="regulatoryConsiderations" name="regulatoryConsiderations" placeholder="Are there any key regulatory considerations, for example: Call Recording? Do country specific regulations prevent telephony being delivered from another country?" required></textarea>
-            </div>
-          </div>
-
-          <!-- Call Flows -->
-          <div class="form-check mr-4">
-            <div class="form-group col-md-12">
-              <input class="form-check-input" type="checkbox" value="" id="callFlowsDocumented">
-              <label class="form-check-label" for="callFlowsDocumented">
-                Are the required call flows documented?
-              </label>
-            </div>
-          </div>
-
-          <!-- Prompts -->
-          <div class="form-check mr-4">
-            <div class="form-group col-md-12">
-              <input class="form-check-input" type="checkbox" value="" id="promptsAvailable">
-              <label class="form-check-label" for="promptsAvailable">
-                Are the required announcements (prompts) available as audio files?
-              </label>
-            </div>
-          </div>
-
-          <!-- Identification and Verification -->
-          <div class="form-row mr-4 ml-2">
-            <div class="form-group col-md-12">
-              <label for="identificationAndVerificationProcesses">Identity and Verification Processes</label>
-              <textarea class="form-control" id="identificationAndVerificationProcesses" name="identificationAndVerificationProcesses" placeholder="Are there any mandatory Identification and Verification processes?"></textarea>
-            </div>
-          </div>
-
-          <!-- IT Infrastructure -->
-          <div class="form-row mr-4 ml-2">
-            <div class="form-group col-md-12">
-              <label for="itInfrastructure">IT Infrastructure</label>
-              <textarea class="form-control" id="itInfrastructure" name="itInfrastructure" placeholder="Is the IT infrastructure supported in-house or via a third-party, including internet connections, user/company provided laptops and headsets?" required></textarea>
-            </div>
-          </div>
-
-          <!-- Internet Bandwidth -->
-          <div class="form-check mr-4">
-            <div class="form-group col-md-12">
-              <input class="form-check-input" type="checkbox" value="" id="usersInternetBandwidth">
-              <label class="form-check-label" for="usersInternetBandwidth">
-                Do users have sufficient internet bandwidth for the intended use, noting high bandwidth demand from other family members etc.?
-              </label>
-            </div>
-          </div>
-
-          <!-- End devices require VPN? -->
-          <div class="form-check mr-4">
-            <div class="form-group col-md-12">
-              <input class="form-check-input" type="checkbox" value="" id="endUserDevicesRequireVPN">
-              <label class="form-check-label" for="endUserDevicesRequireVPN">
-                Are user end-devices required to connect via VPN?
-              </label>
-            </div>
-          </div>
-
-          <!-- Virtual Solution -->
-          <div class="form-row mr-4 ml-2">
-            <div class="form-group col-md-12">
-              <label for="virtualDesktopSolution">Virtual Desktop Solution</label>
-              <textarea class="form-control" id="virtualDesktopSolution" name="virtualDesktopSolution" placeholder="Does the prospect use a Virtual Desktop solution, e.g. Citrix, thin-clients, etc.?" required></textarea>
-            </div>
-          </div>
-
-          <!-- Email Infrastructure -->
-          <div class="form-row mr-4 ml-2">
-            <div class="form-group col-md-12">
-              <label for="emailInfrastructure">Email Infrastructure</label>
-              <textarea class="form-control" id="emailInfrastructure" name="emailInfrastructure" placeholder="What is the existing email infrastructure and can it be modified to use a company domain email address?" required></textarea>
-            </div>
-          </div>
-
-          <!--#endregion Common Questions-->
-
-          <!--#region Your Info -->
-
-          <!-- Requester Info -->
-          <div class="col-md-12 bg-light shadow">
-            <h3 class="text-center">Your Info</h3>
-            <hr />
-          </div>
-
-          <!-- Region and Territory -->
-          <div class="form-row mr-4 ml-2">
-            <div class="form-group col-md-6">
-              <label for="region">Region</label>
-              <select id="region" name="region" class="form-control" required>
-                <option value="" disabled selected>Select your Region</option>
-                <option value="APAC">APAC</option>
-                <option value="EMEA">EMEA</option>
-                <option value="LATAM">LATAM</option>
-                <option value="NA">North America</option>
-              </select>
-            </div>
-            <div class="form-group col-md-6">
-              <label for="subRegion">Territory</label>
-              <select id="subRegion" name="subRegion" class="form-control" required>
-                <option value="" disabled selected>Select your Territory</option>
-              </select>
-            </div>
-          </div>
-
-          <div class="form-row mr-4 ml-2">
-            <div class="form-group col-md-6">
-              <label for="requesterName">Requester Name</label>
-              <input type="text" class="form-control" id="requesterName" name="requesterName" placeholder="Your Name" required>
-            </div>
-            <div class="form-group col-md-6">
-              <label for="requesterEmail">Requester Email</label>
-              <input type="text" class="form-control" id="requesterEmail" name="requesterEmail" placeholder="Your Email Address" required>
-            </div>
-          </div>
-
-          <div class="form-row mr-4 ml-2">
-            <div class="form-group col-md-6">
-              <label for="requesterPhoneNumber">Requester Phone #</label>
-              <input type="text" class="form-control" id="requesterPhoneNumber" name="requesterPhoneNumber" placeholder="Your Phone Number" required>
-            </div>
-            <div class="form-group col-md-6">
-              <label for="datepicker">Need Completed By</label>
-              <input type="text" id="datepicker" class="form-control" required />
-            </div>
-          </div>
-
-          <div class="form-row mr-4 ml-2">
-            <div class="form-group col-md-12">
-              <label for="notes">Notes/Comments</label>
-              <textarea class="form-control" id="notes" name="notes" placeholder="Anything else we should be aware of?" required></textarea>
-            </div>
-          </div>
-
-          <div class="form-row mr-4 ml-2">
-            <div class="form-group col-md-6">
-              <label for="partnerCustomerName">Partner and/or Customer Name</label>
-              <input type="text" class="form-control" id="partnerCustomerName" name="partnerCustomerName" placeholder="Partner and/or Customer Name">
-            </div>
-            <div class="form-group col-md-6">
-              <label for="salesforceAccountOpportunity">SF Account / Opportunity URL</label>
-              <input type="text" class="form-control" id="salesforceAccountOpportunity" name="salesforceAccountOpportunity" placeholder="Link to Salesforce opportunity or account">
-            </div>
-          </div>
-
-          <!--#endregion Your Info -->
-
-        </form>
-
-        <br>
-        <button type="submit" id="submit" class="btn btn-primary ml-3" disabled>Submit</button>
-
-      </div>
+    <div class="alert alert-danger fade show" role="alert" id="alert" hidden>
+        <strong>Maintenance Alert</strong> This site is being updated. Please wait.
+        <a class="btn btn-light" href="#" onclick="location.reload();"><i class="fa fa-refresh"></i> Refresh</a>
     </div>
-  </div>
+
+    <div id="form" class="container-fluid">
+        <br>
+        <div class="form-row">
+            <div class="form-group">
+                <H3 class="text-center">Welcome to the Homeworker Request Form</H3>
+                <hr>
+                <p /c>This is designed to be a 90 day Emergency Solution. <em>It is not designed to be a replication of what customers or prospects have today</em></p>
+                <p class="text-muted">Genesys Cloud Voice is the <strong>recommended</strong> deployment model. WebRTC is to be used unless there are special circumstances preventing this. User bandwidth is expected to be in high demand due to additional family members consuming services, e.g. Video on Demand, Gaming, etc.</p>
+                <p class="text-muted">Customers should perform "spot-tests" on as many home workers as possible using the Genesys Network Assessment Tool. IVRs will be limited to simple call handling trees for routing and skill identification will be included. CRM integration, as well as other back integrations, will not be part of this deployment</p>
+                <p class="text-muted">Number porting is not possible within our 48 hour go live target. Corporate VPN’s may require additional technical investigation and configuration.</p>
+
+                <form id="mainform">
+
+                    <!--#region Telephony -->
+
+                    <div class="col-md-12 bg-light shadow">
+                        <hr />
+                        <h3 class="text-center">Telephony</h3>
+                        <hr />
+                    </div>
+
+                    <!-- Countries & Languages -->
+                    <div class="form-row mr-4 ml-2">
+                        <div class="form-group col-md-6">
+                            <label for="countriesAgents"><br>In which countries are the prospect's agents located?</label>
+                            <select class="selectpicker" id="countriesAgents" name="countriesAgents" class="form-control" required multiple data-live-search="true">
+                            </select>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="countriesOperation">In which countries does the prospect operate and require (or have existing) phone numbers?</label>
+                            <select class="selectpicker" id="countriesOperation" name="countriesOperation" class="form-control" required multiple data-live-search="true">
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Existing Telephony -->
+                    <div class="form-check mr-4">
+                        <div class="form-group col-md-12">
+                            <input class="form-check-input" type="checkbox" value="" id="existingTelephonyUsage">
+                            <label class="form-check-label" for="existingTelephonyUsage">
+                                Does the prospect intend to use an existing telephony carrier, PBX or SBC?
+                            </label>
+                            <br>
+                        </div>
+                    </div>
+
+                    <!-- Telephony Model -->
+                    <div class="form-group col-md-6">
+                        <label for="telephonyModel">Telephony Model</label>
+                        <select id="telephonyModel" name="telephonyModel" class="form-control" required>
+                            <option value="" disabled selected>Select a Telephony Model</option>
+                            <option value="GCV">Genesys Cloud Voice</option>
+                            <option value="BYOCCloud">BYOC Cloud</option>
+                            <option value="BYOCPremiseWithVirtualEdges">BYOC Premise with Virtual Edges</option>
+                        </select>
+                        <div class="text-muted" id="recommendation">
+                        </div>
+                    </div>
+
+                    <div class="text-muted form-group ml-3">
+                        <small>Where a SIP trunk cannot be easily established, it is recommended to use Genesys Cloud Voice and forwarding of calls.</small><br>
+                        <small>Number porting is a longer-term option which is <strong>NOT</strong> recommended for speed of deployment.</small>
+                    </div>
+
+                    <!-- BYOC Cloud Carriers -->
+                    <div class="border border-black mr-3" id="byocCloudCarriersDiv" style="display: none;">
+                        <div class="form-row mt-1 mr-4 ml-2">
+                            <div class="form-group col-md-5 text-center">Country</div>
+                            <div class="form-group col-md-5 text-center">Select one or more Carriers</div>
+                        </div>
+                        <div class="form-row mt-2 mr-4 ml-2" id="byocCloudCarriers"></div>
+                        <small id="otherNote" class="form-group ml-2">
+                            If you have selected "Other":
+                            <ul>
+                                <li>Carrier must meeting standard requirements as per Resource Centre</li>
+                                <li>Expectation that deployment time will be extended, <strong>in most cases significantly</strong></li>
+                            </ul>
+                        </small>
+                        <div class="form-check mr-4">
+                            <div class="form-group col-md-12">
+                                <input class="form-check-input" type="checkbox" value="" id="relationshipWithCarrier">
+                                <label class="form-check-label" for="relationshipWithCarrier">
+                                    Does the prospect already have a relationship with the carrier and access to technical resources?
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- BYOC Premise with Virtual Edges -->
+                    <div class="border border-black mr-3" id="byocPremiseDiv" style="display: none;">
+                        <small class="form-group ml-2">
+                            If planning to use a virtual edge, very strict guidelines for deployment must be followed:
+                            <ul>
+                                <li><a href="https://help.mypurecloud.com/articles/virtual-edge-hardware-software-requirements/" target="_blank">Virtual Edge Hardware/Software Requirements</a></li>
+                                <li><a href="https://help.mypurecloud.com/articles/virtual-edge-warnings/" target="_blank">Virtual Edge Warnings</a></li>
+                            </ul>
+                        </small>
+                    </div>
+
+                    <!-- Phone Numbers Deployment -->
+                    <div class="form-row mr-4 ml-2">
+                        <div class="form-group col-md-12">
+                            <label for="numbersDeployment">Phone Numbers Deployment</label>
+                            <textarea class="form-control" id="numbersDeployment" name="numbersDeployment" placeholder="Does the prospect intend to deploy new numbers, re-route non-geographic numbers, or port existing numbers?"></textarea>
+                            <small>Genesys supports:
+                                <ul>
+                                    <li>Forwarding of existing numbers to Genesys Cloud Voice</li>
+                                    <li>Provisioning of new numbers with Genesys Cloud Voice</li>
+                                    <li>SIP trunk connections to existing infrastructure (BYOC Cloud)</li>
+                                    <li>SIP trunks direct to carriers (BYOC Cloud)</li>
+                                </ul>
+                            </small>
+                        </div>
+                    </div>
+
+                    <!-- Non-Geographic Numbers Re-Routing -->
+                    <div class="form-row mr-4 ml-2">
+                        <div class="form-group col-md-12">
+                            <label for="nonGeographicNumbersReRouting">Non-Geographic Numbers re-Routing</label>
+                            <textarea class="form-control" id="nonGeographicNumbersReRouting" name="nonGeographicNumbersReRouting" placeholder="If re-routing non-geographic numbers, can this be done via an online portal or is another provider required to make the changes?"></textarea>
+                        </div>
+                    </div>
+
+                    <!-- New Numbers Broadcast -->
+                    <div class="form-row mr-4 ml-2">
+                        <div class="form-group col-md-12">
+                            <label for="newNumbersBroadcast">New Numbers Broadcast</label>
+                            <textarea class="form-control" id="newNumbersBroadcast" name="newNumbersBroadcast" placeholder="How will any new numbers be broadcast/advertised to the end customers?" required></textarea>
+                        </div>
+                    </div>
+
+                    <!-- Number Types -->
+                    <div class="form-row mr-4 ml-2">
+                        <div class="form-group col-md-12">
+                            <label for="numberTypes">Phone Number Types</label>
+                            <textarea class="form-control" id="numberTypes" name="numberTypes" placeholder="What number types are required?" required></textarea>
+                            <small>Premium numbers in most countries are not supported by Genesys Cloud Voice</small>
+                        </div>
+                    </div>
+
+                    <!--#endregion Telephony -->
+
+                    <!--#region Customer Engagement -->
+
+                    <div class="col-md-12 bg-light shadow">
+                        <hr />
+                        <h3 class="text-center">Customer Engagement</h3>
+                        <hr />
+                    </div>
+
+                    <!-- Commmitted Customer Resource -->
+                    <div class="form-check mr-4">
+                        <div class="form-group col-md-12">
+                            <input class="form-check-input" type="checkbox" value="" id="customerResourceCommitted">
+                            <label class="form-check-label" for="customerResourceCommitted">
+                                Has customer resource been committed?
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Project Sponsor -->
+                    <div class="form-check mr-4">
+                        <div class="form-group col-md-12">
+                            <input class="form-check-input" type="checkbox" value="" id="projectSponsorAssigned">
+                            <label class="form-check-label" for="projectSponsorAssigned">
+                                Has a project sponsor been assigned?
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Change Management Process -->
+                    <div class="form-row mr-4 ml-2">
+                        <div class="form-group col-md-12">
+                            <label for="changeManagementProcess">Change Management Process</label>
+                            <textarea class="form-control" id="changeManagementProcess" name="changeManagementProcess" placeholder="Is there a change management process that needs to be followed?"></textarea>
+                        </div>
+                    </div>
+
+                    <!--#endregion Customer Engagement -->
+
+                    <!--#region Common Questions -->
+
+                    <div class="col-md-12 bg-light shadow">
+                        <hr />
+                        <h3 class="text-center">Common questions</h3>
+                        <hr />
+                    </div>
+
+                    <!-- Regulatory Considerations -->
+                    <div class="form-row mr-4 ml-2">
+                        <div class="form-group col-md-12">
+                            <label for="regulatoryConsiderations">Key Regulatory Considerations</label>
+                            <textarea class="form-control" id="regulatoryConsiderations" name="regulatoryConsiderations" placeholder="Are there any key regulatory considerations, for example: Call Recording? Do country specific regulations prevent telephony being delivered from another country?" required></textarea>
+                        </div>
+                    </div>
+
+                    <!-- Call Flows -->
+                    <div class="form-check mr-4">
+                        <div class="form-group col-md-12">
+                            <input class="form-check-input" type="checkbox" value="" id="callFlowsDocumented">
+                            <label class="form-check-label" for="callFlowsDocumented">
+                                Are the required call flows documented?
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Prompts -->
+                    <div class="form-check mr-4">
+                        <div class="form-group col-md-12">
+                            <input class="form-check-input" type="checkbox" value="" id="promptsAvailable">
+                            <label class="form-check-label" for="promptsAvailable">
+                                Are the required announcements (prompts) available as audio files?
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Identification and Verification -->
+                    <div class="form-row mr-4 ml-2">
+                        <div class="form-group col-md-12">
+                            <label for="identificationAndVerificationProcesses">Identity and Verification Processes</label>
+                            <textarea class="form-control" id="identificationAndVerificationProcesses" name="identificationAndVerificationProcesses" placeholder="Are there any mandatory Identification and Verification processes?"></textarea>
+                        </div>
+                    </div>
+
+                    <!-- IT Infrastructure -->
+                    <div class="form-row mr-4 ml-2">
+                        <div class="form-group col-md-12">
+                            <label for="itInfrastructure">IT Infrastructure</label>
+                            <textarea class="form-control" id="itInfrastructure" name="itInfrastructure" placeholder="Is the IT infrastructure supported in-house or via a third-party, including internet connections, user/company provided laptops and headsets?" required></textarea>
+                        </div>
+                    </div>
+
+                    <!-- Internet Bandwidth -->
+                    <div class="form-check mr-4">
+                        <div class="form-group col-md-12">
+                            <input class="form-check-input" type="checkbox" value="" id="usersInternetBandwidth">
+                            <label class="form-check-label" for="usersInternetBandwidth">
+                                Do users have sufficient internet bandwidth for the intended use, noting high bandwidth demand from other family members etc.?
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- End devices require VPN? -->
+                    <div class="form-check mr-4">
+                        <div class="form-group col-md-12">
+                            <input class="form-check-input" type="checkbox" value="" id="endUserDevicesRequireVPN">
+                            <label class="form-check-label" for="endUserDevicesRequireVPN">
+                                Are user end-devices required to connect via VPN?
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Virtual Solution -->
+                    <div class="form-row mr-4 ml-2">
+                        <div class="form-group col-md-12">
+                            <label for="virtualDesktopSolution">Virtual Desktop Solution</label>
+                            <textarea class="form-control" id="virtualDesktopSolution" name="virtualDesktopSolution" placeholder="Does the prospect use a Virtual Desktop solution, e.g. Citrix, thin-clients, etc.?" required></textarea>
+                        </div>
+                    </div>
+
+                    <!-- Email Infrastructure -->
+                    <div class="form-row mr-4 ml-2">
+                        <div class="form-group col-md-12">
+                            <label for="emailInfrastructure">Email Infrastructure</label>
+                            <textarea class="form-control" id="emailInfrastructure" name="emailInfrastructure" placeholder="What is the existing email infrastructure and can it be modified to use a company domain email address?" required></textarea>
+                        </div>
+                    </div>
+
+                    <!--#endregion Common Questions-->
+
+                    <!--#region Your Info -->
+
+                    <!-- Requester Info -->
+                    <div class="col-md-12 bg-light shadow">
+                        <h3 class="text-center">Your Info</h3>
+                        <hr />
+                    </div>
+
+                    <!-- Region and Territory -->
+                    <div class="form-row mr-4 ml-2">
+                        <div class="form-group col-md-6">
+                            <label for="region">Region</label>
+                            <select id="region" name="region" class="form-control" required>
+                                <option value="" disabled selected>Select your Region</option>
+                                <option value="APAC">APAC</option>
+                                <option value="EMEA">EMEA</option>
+                                <option value="LATAM">LATAM</option>
+                                <option value="NA">North America</option>
+                            </select>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="subRegion">Territory</label>
+                            <select id="subRegion" name="subRegion" class="form-control" required>
+                                <option value="" disabled selected>Select your Territory</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-row mr-4 ml-2">
+                        <div class="form-group col-md-6">
+                            <label for="requesterName">Requester Name</label>
+                            <input type="text" class="form-control" id="requesterName" name="requesterName" placeholder="Your Name" required>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="requesterEmail">Requester Email</label>
+                            <input type="text" class="form-control" id="requesterEmail" name="requesterEmail" placeholder="Your Email Address" required>
+                        </div>
+                    </div>
+
+                    <div class="form-row mr-4 ml-2">
+                        <div class="form-group col-md-6">
+                            <label for="requesterPhoneNumber">Requester Phone #</label>
+                            <input type="text" class="form-control" id="requesterPhoneNumber" name="requesterPhoneNumber" placeholder="Your Phone Number" required>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="datepicker">Need Completed By</label>
+                            <input type="text" id="datepicker" class="form-control" required />
+                        </div>
+                    </div>
+
+                    <div class="form-row mr-4 ml-2">
+                        <div class="form-group col-md-12">
+                            <label for="notes">Notes/Comments</label>
+                            <textarea class="form-control" id="notes" name="notes" placeholder="Anything else we should be aware of?" required></textarea>
+                        </div>
+                    </div>
+
+                    <div class="form-row mr-4 ml-2">
+                        <div class="form-group col-md-6">
+                            <label for="partnerCustomerName">Partner and/or Customer Name</label>
+                            <input type="text" class="form-control" id="partnerCustomerName" name="partnerCustomerName" placeholder="Partner and/or Customer Name">
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="salesforceAccountOpportunity">SF Account / Opportunity URL</label>
+                            <input type="text" class="form-control" id="salesforceAccountOpportunity" name="salesforceAccountOpportunity" placeholder="Link to Salesforce opportunity or account">
+                        </div>
+                    </div>
+
+                    <!--#endregion Your Info -->
+
+                </form>
+
+                <br>
+                <button type="submit" id="submit" class="btn btn-primary ml-3" disabled>Submit</button>
+
+            </div>
+        </div>
+    </div>
 
 
-  <noscript>You need to enable JavaScript to run this app.</noscript>
-  <!--#region Imports -->
-  <!-- Bootstrap core JavaScript-->
-  <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
-  <!-- Core plugin JavaScript-->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"></script>
-  <!-- Moment.js -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js" integrity="sha256-4iQZ6BVL4qNKlQ27TExEhBN1HFPvAvAMbFavKKosSWQ=" crossorigin="anonymous"></script>
-  <!-- Bootstrap DatePicker -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js" integrity="sha256-bqVeqGdJ7h/lYPq6xrPv/YGzMEb6dNxlfiTUHSgRCp8=" crossorigin="anonymous"></script>
-  <!-- Genesys Cloud -->
-  <script src="https://sdk-cdn.mypurecloud.com/javascript/61.0.0/purecloud-platform-client-v2.min.js"></script>
-  <!-- JQuery Validate -->
-  <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.1/dist/jquery.validate.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.1/dist/additional-methods.min.js"></script>
-  <!-- jQuery Toast -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-toast-plugin/1.3.2/jquery.toast.min.js"></script>
-  <!-- Bootstrap Select -->
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.9/dist/js/bootstrap-select.min.js"></script>
-  <!-- Our Scripts -->
-  <script src="js/gc.js"></script>
-  <script src="js/requests.js"></script>
-  <script src="js/tools.js"></script>
-  <!-- Dictionary -->
-  <script src="js/dictionary.js"></script>
+    <noscript>You need to enable JavaScript to run this app.</noscript>
+    <!--#region Imports -->
+    <!-- Bootstrap core JavaScript-->
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
+    <!-- Core plugin JavaScript-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"></script>
+    <!-- Moment.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js" integrity="sha256-4iQZ6BVL4qNKlQ27TExEhBN1HFPvAvAMbFavKKosSWQ=" crossorigin="anonymous"></script>
+    <!-- Bootstrap DatePicker -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js" integrity="sha256-bqVeqGdJ7h/lYPq6xrPv/YGzMEb6dNxlfiTUHSgRCp8=" crossorigin="anonymous"></script>
+    <!-- Genesys Cloud -->
+    <script src="https://sdk-cdn.mypurecloud.com/javascript/61.0.0/purecloud-platform-client-v2.min.js"></script>
+    <!-- JQuery Validate -->
+    <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.1/dist/jquery.validate.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.1/dist/additional-methods.min.js"></script>
+    <!-- jQuery Toast -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-toast-plugin/1.3.2/jquery.toast.min.js"></script>
+    <!-- Bootstrap Select -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.9/dist/js/bootstrap-select.min.js"></script>
+    <!-- Our Scripts -->
+    <script src="js/gc.js"></script>
+    <script src="js/requests.js"></script>
+    <script src="js/tools.js"></script>
+    <!-- Dictionary -->
+    <script src="js/dictionary.js"></script>
 
-  <!--#endregion -->
+    <!--#endregion -->
 
-  <script>
-    let countriesAndCarriers = [], countryCarrierId = 0, gcToken, selectedCountries = [];
+    <script>
+        let countriesAndCarriers = [], countryCarrierId = 0, gcToken, selectedCountries = [];
 
-    if (maintenanceMode) {
-      $("#alert").attr("hidden", false);
-      $("#form :input").attr("disabled", true);
-      $("#form :button").attr("disabled", true);
-    } else {
-      //addNewTask(false);
-    }
+        if (maintenanceMode) {
+            $("#alert").attr("hidden", false);
+            $("#form :input").attr("disabled", true);
+            $("#form :button").attr("disabled", true);
+        } else {
+            //addNewTask(false);
+        }
 
-    if (window.location.href.includes('dev')) {
-      $("#devModeImage").removeAttr('hidden');
-    }
+        if (window.location.href.includes('dev')) {
+            $("#devModeImage").removeAttr('hidden');
+        }
 
-    // Populate countries selects
-    $.each(countries, (i, country) => {
-      $("<option/>", { value: country.name, ["data-gcv"]: country.gcv }).text(country.name).appendTo("#countriesAgents, #countriesOperation");
-    });
-
-    $(".selectpicker").selectpicker({
-      width: '100%',
-      selectedTextFormat: 'count > 3'
-    });
-
-    $("#countriesOperation").on('change', (e) => {
-      selectedCountries = [];
-      $.each($("#countriesOperation").val(), (i, selectedCountry) => {
-        selectedCountries.push({
-          name: selectedCountry,
-          gcv: $(`#countriesOperation option[value="${selectedCountry}"]`).attr('data-gcv') == "true" || false
+        // Populate countries selects
+        $.each(countries, (i, country) => {
+            $("<option/>", { value: country.name, ["data-gcv"]: country.gcv }).text(country.name).appendTo("#countriesAgents, #countriesOperation");
         });
-      });
-      console.log(selectedCountries);
-      refreshBYOCCloudCountryCarriers();
-      setTelephonyModel();
-    });
 
-    function setTelephonyModel() {
-      let gcvSupported = selectedCountries.length > 0 && selectedCountries.every(c => c.gcv);
-      if (gcvSupported) {
-        $("#telephonyModel").val('GCV');
-        $("#recommendation").empty();
-        $("<small/>").html(`Based on your selection of countries, <strong>${$("#telephonyModel option:selected").text()}</strong> is the recommended choice`).appendTo("#recommendation")
-      } else {
-        $("#recommendation").empty();
-      }
-    }
-
-    $("#telephonyModel").on('change', (e) => {
-      switch ($("#telephonyModel").val()) {
-        case 'GCV':
-          $("#byocCloudCarriersDiv").hide();
-          $("#byocPremiseDiv").hide();
-          break;
-        case 'BYOCCloud':
-          if (!$("#countriesOperation").val() || $("#countriesOperation").val().length === 0) {
-            alert("Please select one or more countries the prospect operates in first.");
-            $("#telephonyModel").val('');
-            return;
-          }
-          refreshBYOCCloudCountryCarriers();
-          $("#byocCloudCarriersDiv").show();
-          $("#byocPremiseDiv").hide();
-          break;
-        case 'BYOCPremiseWithVirtualEdges':
-          $("#byocPremiseDiv").show();
-          break;
-        default:
-          $("#byocCloudCarriersDiv").hide();
-          $("#byocPremiseDiv").hide();
-          break;
-      }
-    });
-
-    // Init DatePicker
-    $(function () {
-      $("#datepicker").datepicker({
-        daysOfWeekDisabled: "0,6",
-        todayHighlight: true,
-        autoclose: true,
-        startDate: new Date()
-      });
-    });
-
-    init();
-    async function init() {
-
-      try {
-        await getMe();
-        if (!maintenanceMode) $("#submit").attr('disabled', false);
-      } catch (error) {
-        showMessage(error.hasOwnProperty('message') ? error.message : `Unable to login to Genesys Cloud ${JSON.stringify(error)}`, true);
-        $("#submit").attr('disabled', true);
-        return
-      }
-
-      gcToken = userInfo.token
-      localStorage.setItem("gcToken", gcToken);
-      localStorage.setItem("userName", userInfo.name);
-
-      // Populate user info
-      $("#requesterName").val(userInfo.name);
-      $("#requesterEmail").val(userInfo.mail);
-      $("#requesterPhoneNumber").val(userInfo.phone);
-
-      // Show Admin fields?
-
-      if (userInfo.groups.some(g => adminGroups["super"].includes(g))) {
-        console.log('Show super admin stuff')
-        $(".admin").show();
-        $(".admin").removeAttr('hidden');
-        $("#reviewRequestsButton").attr("href", "requests.html?region=super-user");
-        $("#regionBadge").text('super-user');
-      } else if (userInfo.groups.some(g => adminGroups["EMEA"].includes(g))) {
-        console.log('Show admin stuff')
-        $(".admin").show();
-        $(".admin").removeAttr('hidden');
-        $("#reviewRequestsButton").attr("href", "requests.html?region=EMEA");
-        $("#regionBadge").text('EMEA');
-      } else if (userInfo.groups.some(g => adminGroups["NA"].includes(g))) {
-        console.log('Show admin stuff')
-        $(".admin").show();
-        $(".admin").removeAttr('hidden');
-        $("#reviewRequestsButton").attr("href", "requests.html?region=NA");
-        $("#regionBadge").text('NA');
-      } else if (userInfo.groups.some(g => adminGroups["APAC"].includes(g))) {
-        console.log('Show admin stuff')
-        $(".admin").show();
-        $(".admin").removeAttr('hidden');
-        $("#reviewRequestsButton").attr("href", "requests.html?region=APAC");
-        $("#regionBadge").text('APAC');
-      } else if (userInfo.groups.some(g => adminGroups["LATAM"].includes(g))) {
-        console.log('Show admin stuff')
-        $(".admin").show();
-        $(".admin").removeAttr('hidden');
-        $("#reviewRequestsButton").attr("href", "requests.html?region=LATAM");
-        $("#regionBadge").text('LATAM');
-      } else {
-        console.log('Hide admin stuff')
-        $(".admin").hide();
-        $(".admin").attr('hidden', true);
-        $("#regionBadge").text('');
-        $("#reviewRequestsButton").hide();
-      }
-    }
-
-    function refreshBYOCCloudCountryCarriers() {
-      let currentCountryCarrierId = countryCarrierId++;
-
-      $("#byocCloudCarriers").empty();
-      $.each($("#countriesOperation").val(), (i, country) => {
-
-        // Country
-        let countryDiv = $("<div/>", { class: "form-group col-md-5" }).appendTo("#byocCloudCarriers");
-        $("<label/>", { id: "country_" + country }).text(country).appendTo(countryDiv);
-
-        // Carriers
-        let carriersDiv = $("<div/>", { class: "form-group col-md-5" }).appendTo("#byocCloudCarriers");
-        let carriersSelect = $("<select/>", { class: "selectpicker form-control", id: "carriers_" + country, name: "carriers_" + country, ["data-live-search"]: true, required: true, multiple: true }).appendTo(carriersDiv);
-        //$("<option/>", { value: "", disabled: true }).text("Select a Carrier").appendTo(carriersSelect);
-        $.each(supportedBYOCCloudCarriers, (region, regionalSupportedBYOCCloudCarriers) => {
-          let optGroup = $("<optgroup/>", { label: region }).appendTo(carriersSelect);
-          $.each(regionalSupportedBYOCCloudCarriers, (i, regionalSupportedBYOCCloudCarrier) => {
-            $("<option/>", { value: regionalSupportedBYOCCloudCarrier.name }).text(regionalSupportedBYOCCloudCarrier.name).appendTo(optGroup);
-          });
+        $(".selectpicker").selectpicker({
+            width: '100%',
+            selectedTextFormat: 'count > 3'
         });
-        $("<option/>", { value: "Other" }).text("Other").appendTo(carriersSelect);
-        carriersSelect.selectpicker();
-        carriersSelect.on('change', (e) => {
-          if (carriersSelect.val().includes("Other")) {
-            $("otherNote").show();
-          } else {
-            $("otherNote").hide();
-          }
 
-          // Add to array
-          countriesAndCarriers[country] = {
-            carriers: carriersSelect.val()
-          };
+        $("#countriesOperation").on('change', (e) => {
+            selectedCountries = [];
+            $.each($("#countriesOperation").val(), (i, selectedCountry) => {
+                selectedCountries.push({
+                    name: selectedCountry,
+                    gcv: $(`#countriesOperation option[value="${selectedCountry}"]`).attr('data-gcv') == "true" || false
+                });
+            });
+            console.log(selectedCountries);
+            refreshBYOCCloudCountryCarriers();
+            setTelephonyModel();
         });
-      });
 
-    }
+        function setTelephonyModel() {
+            let gcvSupported = selectedCountries.length > 0 && selectedCountries.every(c => c.gcv);
+            if (gcvSupported) {
+                $("#telephonyModel").val('GCV');
+                $("#recommendation").empty();
+                $("<small/>").html(`Based on your selection of countries, <strong>${$("#telephonyModel option:selected").text()}</strong> is the recommended choice`).appendTo("#recommendation")
+            } else {
+                $("#recommendation").empty();
+            }
+        }
 
-    $("#region").on("change", () => {
-      $("#subRegion").empty();
-      for (let subregion of regions[$("#region").val()]) {
-        $("<option/>", { value: subregion }).text(subregion).appendTo("#subRegion");
-      }
-    });
+        $("#telephonyModel").on('change', (e) => {
+            switch ($("#telephonyModel").val()) {
+                case 'GCV':
+                    $("#byocCloudCarriersDiv").hide();
+                    $("#byocPremiseDiv").hide();
+                    break;
+                case 'BYOCCloud':
+                    if (!$("#countriesOperation").val() || $("#countriesOperation").val().length === 0) {
+                        alert("Please select one or more countries the prospect operates in first.");
+                        $("#telephonyModel").val('');
+                        return;
+                    }
+                    refreshBYOCCloudCountryCarriers();
+                    $("#byocCloudCarriersDiv").show();
+                    $("#byocPremiseDiv").hide();
+                    break;
+                case 'BYOCPremiseWithVirtualEdges':
+                    $("#byocPremiseDiv").show();
+                    break;
+                default:
+                    $("#byocCloudCarriersDiv").hide();
+                    $("#byocPremiseDiv").hide();
+                    break;
+            }
+        });
 
-    $("#mainform").validate({
-      errorClass: "text-danger",
-      successClass: "test-success"
-    });
+        // Init DatePicker
+        $(function () {
+            $("#datepicker").datepicker({
+                daysOfWeekDisabled: "0,6",
+                todayHighlight: true,
+                autoclose: true,
+                startDate: new Date()
+            });
+        });
 
-    $("#submit").on("click", async (e) => {
-      e.preventDefault();
-      if (!$("#mainform").valid()) {
-        showMessage("Missing or invalid fields", true);
-        return;
-      }
+        init();
+        async function init() {
 
-      try {
-        // Disable submit button
-        $("#submit").prop('disabled', true);
-        $("#submit").html(
-          `<span class="spinner-border-sm text-light" role="status" aria-hidden="true"></span> Please Wait...`
-        )
+            try {
+                await getMe();
+                if (!maintenanceMode) $("#submit").attr('disabled', false);
+            } catch (error) {
+                showMessage(error.hasOwnProperty('message') ? error.message : `Unable to login to Genesys Cloud ${JSON.stringify(error)}`, true);
+                $("#submit").attr('disabled', true);
+                return
+            }
 
-        await postRequests();
-        console.log('Success!');
-        showMessage("Request submitted. Thanks!");
+            gcToken = userInfo.token
+            localStorage.setItem("gcToken", gcToken);
+            localStorage.setItem("userName", userInfo.name);
 
-        let sTasks = '\n----------------------------------'
-        tasks.forEach(function (aTask) {
-          sTasks = sTasks + "\n reqCategory:\t\t" + aTask.taskCategory + "\n requestType:\t\t" + aTask.taskType;
-        })
-        sTasks = sTasks + '\n----------------------------------';
-        console.log(sTasks);
+            // Populate user info
+            $("#requesterName").val(userInfo.name);
+            $("#requesterEmail").val(userInfo.mail);
+            $("#requesterPhoneNumber").val(userInfo.phone);
 
-        let detailedInfo = "\n```no-highlight\n region:\t\t" + region + "\n sub-region:\t\t" + subRegion + "\n segment:\t\t" + segment + "\n product:\t\t" + product +
-          "\n req name:\t\t" + requesterName + "\n req email:\t\t" + requesterEmail + "\n req phone:\t\t" + requesterPhoneNumber + sTasks +
-          "\n completed by:\t\t" + needCompletedBy + "\n description:\t\t" + description + "\n p/c name:\t\t" + partnerCustomerName + "\n sf/acc opp:\t\t" + salesforceAccountOpportunity + "\n ```\n";
-        if (!window.location.href.includes('localhost'))
-          sendNotification(`:loudspeaker: New CCC Request from [@${userInfo.name}](#/person/${userInfo.id}) ${detailedInfo}`, region, subRegion, segment, product);
-      } catch (error) {
-        console.error(error);
-        showMessage(error.hasOwnProperty('message') ? error.message : JSON.stringify(error, null, 2), true);
-      } finally {
-        // Enable button
-        $("#submit").prop('disabled', false);
-        $("#submit").html('Submit');
-        cleanForm();
-      }
+            // Show Admin fields?
 
-    });
+            if (userInfo.groups.some(g => adminGroups["super"].includes(g))) {
+                console.log('Show super admin stuff')
+                $(".admin").show();
+                $(".admin").removeAttr('hidden');
+                $("#reviewRequestsButton").attr("href", "requests.html?region=super-user");
+                $("#regionBadge").text('super-user');
+            } else if (userInfo.groups.some(g => adminGroups["EMEA"].includes(g))) {
+                console.log('Show admin stuff')
+                $(".admin").show();
+                $(".admin").removeAttr('hidden');
+                $("#reviewRequestsButton").attr("href", "requests.html?region=EMEA");
+                $("#regionBadge").text('EMEA');
+            } else if (userInfo.groups.some(g => adminGroups["NA"].includes(g))) {
+                console.log('Show admin stuff')
+                $(".admin").show();
+                $(".admin").removeAttr('hidden');
+                $("#reviewRequestsButton").attr("href", "requests.html?region=NA");
+                $("#regionBadge").text('NA');
+            } else if (userInfo.groups.some(g => adminGroups["APAC"].includes(g))) {
+                console.log('Show admin stuff')
+                $(".admin").show();
+                $(".admin").removeAttr('hidden');
+                $("#reviewRequestsButton").attr("href", "requests.html?region=APAC");
+                $("#regionBadge").text('APAC');
+            } else if (userInfo.groups.some(g => adminGroups["LATAM"].includes(g))) {
+                console.log('Show admin stuff')
+                $(".admin").show();
+                $(".admin").removeAttr('hidden');
+                $("#reviewRequestsButton").attr("href", "requests.html?region=LATAM");
+                $("#regionBadge").text('LATAM');
+            } else {
+                console.log('Hide admin stuff')
+                $(".admin").hide();
+                $(".admin").attr('hidden', true);
+                $("#regionBadge").text('');
+                $("#reviewRequestsButton").hide();
+            }
+        }
 
-    function cleanForm() {
+        function refreshBYOCCloudCountryCarriers() {
+            let currentCountryCarrierId = countryCarrierId++;
 
-      // Populate user info
-      $("#requesterName").val(userInfo.name);
-      $("#requesterEmail").val(userInfo.mail);
-      $("#requesterPhoneNumber").val(userInfo.phone);
-      countriesAndCarriers = [];
-      $("#byocCloudCarriers").empty();
-      //addNewTask(false);
-      $("#subRegion").empty();
-      $("<option selected disabled />", { value: "Select a Sub-Region" }).text("Select a Sub-Region").appendTo("#subRegion");
-      $("#segment").val('');
-      $("#region").val('');
-      $("#product").val('');
-      $("#datepicker").val('');
-      $("#description").val('');
-      $("#partnerCustomerName").val('');
-      $("#salesforceAccountOpportunity").val('');
+            $("#byocCloudCarriers").empty();
+            $.each($("#countriesOperation").val(), (i, country) => {
 
-    }
+                // Country
+                let countryDiv = $("<div/>", { class: "form-group col-md-5" }).appendTo("#byocCloudCarriers");
+                $("<label/>", { id: "country_" + country }).text(country).appendTo(countryDiv);
 
-  </script>
+                // Carriers
+                let carriersDiv = $("<div/>", { class: "form-group col-md-5" }).appendTo("#byocCloudCarriers");
+                let carriersSelect = $("<select/>", { class: "selectpicker form-control", id: "carriers_" + country, name: "carriers_" + country, ["data-live-search"]: true, required: true, multiple: true }).appendTo(carriersDiv);
+                //$("<option/>", { value: "", disabled: true }).text("Select a Carrier").appendTo(carriersSelect);
+                $.each(supportedBYOCCloudCarriers, (region, regionalSupportedBYOCCloudCarriers) => {
+                    let optGroup = $("<optgroup/>", { label: region }).appendTo(carriersSelect);
+                    $.each(regionalSupportedBYOCCloudCarriers, (i, regionalSupportedBYOCCloudCarrier) => {
+                        $("<option/>", { value: regionalSupportedBYOCCloudCarrier.name }).text(regionalSupportedBYOCCloudCarrier.name).appendTo(optGroup);
+                    });
+                });
+                $("<option/>", { value: "Other" }).text("Other").appendTo(carriersSelect);
+                carriersSelect.selectpicker();
+                carriersSelect.on('change', (e) => {
+                    if (carriersSelect.val().includes("Other")) {
+                        $("otherNote").show();
+                    } else {
+                        $("otherNote").hide();
+                    }
 
-  <!--Coollabs -->
-  <script async defer src="https://cdn.coollabs.io/save.js"></script>
+                    // Add to array
+                    countriesAndCarriers[country] = {
+                        carriers: carriersSelect.val()
+                    };
+                });
+            });
+
+        }
+
+        $("#region").on("change", () => {
+            $("#subRegion").empty();
+            for (let subregion of regions[$("#region").val()]) {
+                $("<option/>", { value: subregion }).text(subregion).appendTo("#subRegion");
+            }
+        });
+
+        $("#mainform").validate({
+            errorClass: "text-danger",
+            successClass: "test-success"
+        });
+
+        $("#submit").on("click", async (e) => {
+            e.preventDefault();
+            if (!$("#mainform").valid()) {
+                showMessage("Missing or invalid fields", true);
+                return;
+            }
+
+            try {
+                // Disable submit button
+                $("#submit").prop('disabled', true);
+                $("#submit").html(
+                    `<span class="spinner-border-sm text-light" role="status" aria-hidden="true"></span> Please Wait...`
+                )
+
+                await postRequests();
+                console.log('Success!');
+                showMessage("Request submitted. Thanks!");
+
+                // Need completed by
+                let needCompletedBy = "Not Set";
+                let needCompletedByDate = moment($("#datepicker").datepicker('getDate')).format("YYYY-MM-DDT00:00:00.000");
+                if (needCompletedByDate != "Invalid date") {
+                    needCompletedBy = moment($("#datepicker").datepicker('getDate')).format("YYYY-MM-DDT00:00:00.000") + "Z";
+                }
+
+
+                let detailedInfo = "\n```no-highlight\n region:\t\t" + $("#region").val() + "\n sub-region:\t\t" + $("#subRegion").val() + "\n req name:\t\t" + $("#requesterName").val() + "\n req email:\t\t" + $("#requesterEmail").val() + "\n req phone:\t\t" + $("#requesterPhoneNumber").val() +
+                    "\n completed by:\t\t" + needCompletedBy + "\n notes:\t\t" + $("#notes").val() + "\n p/c name:\t\t" + $("#partnerCustomerName").val() + "\n sf/acc opp:\t\t" + $("#salesforceAccountOpportunity").val() + "\n ```\n";
+                if (!window.location.href.includes('localhost'))
+                    sendNotification(`:loudspeaker: New CCC Request from [@${userInfo.name}](#/person/${userInfo.id}) ${detailedInfo}`, region, subRegion, segment, product);
+            } catch (error) {
+                console.error(error);
+                showMessage(error.hasOwnProperty('message') ? error.message : JSON.stringify(error, null, 2), true);
+            } finally {
+                // Enable button
+                $("#submit").prop('disabled', false);
+                $("#submit").html('Submit');
+                cleanForm();
+            }
+
+        });
+
+        function cleanForm() {
+
+            // Populate user info
+            $("#requesterName").val(userInfo.name);
+            $("#requesterEmail").val(userInfo.mail);
+            $("#requesterPhoneNumber").val(userInfo.phone);
+            countriesAndCarriers = [];
+            $("#byocCloudCarriers").empty();
+            //addNewTask(false);
+            $("#subRegion").empty();
+            $("<option selected disabled />", { value: "Select a Sub-Region" }).text("Select a Sub-Region").appendTo("#subRegion");
+            $("#segment").val('');
+            $("#region").val('');
+            $("#product").val('');
+            $("#datepicker").val('');
+            $("#description").val('');
+            $("#partnerCustomerName").val('');
+            $("#salesforceAccountOpportunity").val('');
+
+        }
+
+    </script>
+
+    <!--Coollabs -->
+    <script async defer src="https://cdn.coollabs.io/save.js"></script>
 
 </body>
 
