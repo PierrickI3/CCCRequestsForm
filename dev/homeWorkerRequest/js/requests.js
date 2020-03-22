@@ -10,10 +10,6 @@ else
 async function postRequests() {
   console.log('postRequests()');
 
-  console.log('Countries and Carriers:');
-  console.log(countriesAndCarriers);
-
-  //console.log('Mail Distribution:', mailDistribution[product][$("#region").val()]);
   var data = {
     countriesAgents: $("#countriesAgents").val(),
     countriesOperation: $("#countriesOperation").val(),
@@ -24,7 +20,7 @@ async function postRequests() {
     byocCloudCarriers: countriesAndCarriers,
     //byocPremiseWithVirtualEdges: getBYOCWithVirtualEdges(),
     relationshipWithCarrier: $("#relationshipWithCarrier").is(':checked'),
-    phoneNumbersDeployment: $("#numbersDeployment").val(),
+    
     //nonGeographicNumbersReRouting: $("#nonGeographicNumbersReRouting").val(),
     customerResourceCommitted: $("#customerResourceCommitted").is(':checked'),
     projectSponsorAssigned: $("#projectSponsorAssigned").is(':checked'),
@@ -69,6 +65,10 @@ async function postRequests() {
 
   if ($("#salesforceAccountOpportunity").val().length > 0) {
     data.salesforceAccountOpportunity = $("#salesforceAccountOpportunity").val()
+  }
+
+  if ($("#phoneNumbersDeployment").val().length > 0) {
+    data.phoneNumbersDeployment = $("#phoneNumbersDeployment").val()
   }
 
   if ($("#newNumbers").val().length > 0) {
