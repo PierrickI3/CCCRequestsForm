@@ -1253,47 +1253,20 @@
                 $("#editModal #submit").html(
                     `<span class="spinner-border-sm text-light" role="status" aria-hidden="true"></span> Please Wait...`
                 )
-                $("#btnAcceptRequest").prop('disabled', true);
-                $("#btnAcceptRequest").html(
+                $("#editModal #btnAcceptRequest").prop('disabled', true);
+                $("#editModal #btnAcceptRequest").html(
                     `<span class="spinner-border-sm text-light" role="status" aria-hidden="true"></span> Please Wait...`
                 )
-                $("#btnRejectRequest").prop('disabled', true);
-                $("#btnRejectRequest").html(
+                $("#editModal #btnRejectRequest").prop('disabled', true);
+                $("#editModal #btnRejectRequest").html(
                     `<span class="spinner-border-sm text-light" role="status" aria-hidden="true"></span> Please Wait...`
                 )
 
-                let id = $("#editModal #id").text();
-                let region = $("#editModal #region").val();
-                let subRegion = $("#editModal #subRegion").val();
-                let product = $("#editModal #product").val();
-                let segment = $("#editModal #segment").val();
-
-
-                let requesterName = $("#editModal #requesterName").val();
-                let requesterEmail = $("#editModal #requesterEmail").val();
-                let requesterPhoneNumber = $("#editModal #requesterPhoneNumber").val();
-                let needCompletedBy = moment($("#datepicker").datepicker('getDate')).format("YYYY-MM-DDT00:00:00.000") + "Z";
-                let notes = $("#editModal #notes").val();
-                let partnerCustomerName = $("#editModal #partnerCustomerName").val();
-                let salesforceAccountOpportunity = $("#editModal #salesforceAccountOpportunity").val();
-                let priority = $("#editModal #priority").val();
-                let acceptedRejected = $("#editModal #bAcceptedRequest").val();
-                let acceptedRejectedNotes = $("#editModal #txtAcceptedRejectedNotes").val();
-                let programManager = $("#editModal #programManager").val();
-                let time = $("#editModal #time").val();
-                let teamMembers = $("#editModal #teamMembers").val();
-                let status;
-                if (acceptedRejected == "Rejected")
-                    status = "Closed"
-                else
-                    status = $("#editModal #status").val();
-
-                console.log(`Region: ${region}, subRegion: ${subRegion}, Product: ${product}, Segment: ${segment}, tasks: ${JSON.stringify(tasks)}, Requester Name: ${requesterName}, Requester Email: ${requesterEmail}, Requester Phone Number: ${requesterPhoneNumber}, Need Completed By: ${needCompletedBy}, Notes: ${notes}, Partner or Customer Name: ${partnerCustomerName}, Salesforce Opportunity: ${salesforceAccountOpportunity}`);
-                console.log(`Priority: ${priority}, Accepted/Rejected: ${acceptedRejected}, Status: ${status}, Program Manager: ${programManager}, AcceptedRejectedNotes: ${acceptedRejectedNotes}, teamMembers: ${teamMembers}`);
-
-                await putRequest(id, region, subRegion, segment, product, tasks, requesterName, requesterEmail, requesterPhoneNumber, needCompletedBy, notes, partnerCustomerName, salesforceAccountOpportunity, priority, acceptedRejected, status, programManager, acceptedRejectedNotes, teamMembers, gcToken);
+                console.log('Updating request...');
+                await putRequest();
                 console.log('Success!');
                 showMessage("Request updated. Thanks!");
+
                 $("#editModal").modal("hide");
             } catch (error) {
                 console.error(error);
@@ -1305,17 +1278,11 @@
                 // Enable buttons
                 $("#editModal #submit").prop('disabled', false);
                 $("#editModal #submit").html('Save');
-                $("#btnAcceptRequest").prop('disabled', false);
-                $("#btnAcceptRequest").html('Save and Accept');
-                $("#btnRejectRequest").prop('disabled', false);
-                $("#btnRejectRequest").html('Save and Reject');
+                $("#editModal #btnAcceptRequest").prop('disabled', false);
+                $("#editModal #btnAcceptRequest").html('Save and Accept');
+                $("#editModal #btnRejectRequest").prop('disabled', false);
+                $("#editModal #btnRejectRequest").html('Save and Reject');
             }
-        });
-
-        $("#addTask").on("click", (e) => {
-            e.preventDefault();
-            if (maintenanceMode) return;
-            addNewTask(undefined, true);
         });
 
         function getUrlParameter(sParam) {

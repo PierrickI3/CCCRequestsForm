@@ -117,8 +117,15 @@ async function postRequests() {
 
 async function putRequest() {
 
-  if (!isDeleted) isDeleted = false;
-  if (!acceptedRejected) acceptedRejected = "not handled";
+  //TODO Not sure how to handle this
+  //if (!isDeleted) isDeleted = false;
+  // if (acceptedRejected == "Rejected")
+  //   status = "Closed"
+  // else
+  //   status = $("#editModal #status").val();
+  // if (!acceptedRejected) acceptedRejected = "not handled";
+
+  let id = $("#editModal #id").text();
 
   var data = {
     countriesAgents: $("#editModal #countriesAgents").val(),
