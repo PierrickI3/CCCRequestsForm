@@ -72,7 +72,7 @@ async function postRequests() {
   }
 
   //#endregion
-  /*
+  
   return await $.ajax({
     url: `${apiBasePath}/homeworkerrequests`,
     method: "POST",
@@ -97,7 +97,7 @@ async function postRequests() {
     .always(() => {
       console.log("postRequests completed");
     });
-    */
+    
 
 }
 
@@ -290,9 +290,9 @@ async function getExport() {
   var sFilter = "";
 
   if (exportRegion)
-    sFilter = sFilter + `region=${_region}&`;
+    sFilter = sFilter + `region=${exportRegion}&`;
   if (exportSubRegion)
-    sFilter = sFilter + `subRegion=${_subRegion}&`;
+    sFilter = sFilter + `subRegion=${exportSubRegion}&`;
 
   console.log(`getExport with filter: ${sFilter}`);
 
