@@ -103,9 +103,6 @@
                         <label for="telephonyModel">Telephony Model</label>
                         <select id="telephonyModel" name="telephonyModel" class="form-control" required>
                             <option value="" disabled selected>Select a Telephony Model</option>
-                            <option value="GCV">Genesys Cloud Voice</option>
-                            <option value="BYOCCloud">BYOC Cloud</option>
-                            <option value="BYOCPremiseWithVirtualEdges">BYOC Premise with Virtual Edges</option>
                         </select>
                         <div class="text-muted" id="recommendation">
                         </div>
@@ -452,6 +449,11 @@
             $("<option/>", { value: country.name, ["data-gcv"]: country.gcv }).text(country.name).appendTo("#countriesAgents, #countriesOperation");
         });
 
+        // Populate telephonyModel selects from dictionary
+        $.each(telephonyModel, (key, value) => {
+            $("<option/>", { value: key }).text(value).appendTo("#telephonyModel");
+        });
+
         $(".selectpicker").selectpicker({
             width: '100%',
             selectedTextFormat: 'count > 3'
@@ -672,6 +674,31 @@
         });
 
         function cleanForm() {
+
+
+            // Telephony
+            $("#existingTelephonyUsage").prop('checked', false)
+            $("#telephonyModel")[0].selectedIndex = 0;
+            //byocCloudCarriers: countriesAndCarriers,
+            //byocPremiseWithVirtualEdges: getBYOCWithVirtualEdges(),
+            $("#relationshipWithCarrier").prop('checked', false);
+            $("#numbersDeployment").val('');
+            $("#nonGeographicNumbersReRouting").val('');
+            $("#newNumbersBroadcast").val('');
+            $("#customerResourceCommitted").prop('checked', false);
+            $("#projectSponsorAssigned").prop('checked', false);
+            $("#changeManagementProcess").val('');
+
+            // Common Questions
+            $("#regulatoryConsiderations").val('');
+            $("#callFlowsDocumented").prop('checked', false);
+            $("#promptsAvailable").prop('checked', false);
+            $("#identificationAndVerificationProcesses").val('');
+            $("#itInfrastructure").val('');
+            $("#usersInternetBandwidth").prop('checked', false);
+            $("#endUserDevicesRequireVPN").prop('checked', false);
+            $("#virtualDesktopSolution").val('');
+            $("#emailInfrastructure").val('');
 
             // Populate user info
             $("#requesterName").val(userInfo.name);
