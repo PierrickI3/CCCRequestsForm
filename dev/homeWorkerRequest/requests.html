@@ -17,6 +17,8 @@
     <link type="text/css" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jsgrid/1.5.3/jsgrid-theme.min.css" />
     <!-- jQuery Toast -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/jquery-toast-plugin/1.3.2/jquery.toast.min.css" rel="stylesheet">
+    <!-- Bootstrap Select -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.9/dist/css/bootstrap-select.min.css">
     <!-- Custom CSS -->
     <link rel="stylesheet" href="./css/custom.css">
 </head>
@@ -84,18 +86,94 @@
                         <form id="modal-form">
 
                             <div class="form-row">
-                                <div class="form-group col-md-5">
+                                <div class="form-group col-md-6">
                                     <label>Created Date</label>
                                     <input disabled type="text" class="form-control" id="createdDate" name="createdDate" />
                                 </div>
-                                <div class="form-group col-md-5">
+                                <div class="form-group col-md-6">
                                     <label>Last Updated</label>
                                     <input disabled type="text" class="form-control" id="updatedDate" name="updatedDate" />
                                 </div>
                             </div>
 
                             <div class="form-row">
-                                <div class="form-group col-md-5">
+                                <div class="form-group col-md-6">
+                                    <label for="countriesAgents">Countries where agents are located</label>
+                                    <select class="selectpicker" id="countriesAgents" name="countriesAgents" class="form-control" required multiple data-live-search="true">
+                                    </select>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for="countriesOperation">Countries where the prospect operates</label>
+                                    <select class="selectpicker" id="countriesOperation" name="countriesOperation" class="form-control" required multiple data-live-search="true">
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label for="telephonyModel">Telephony Model</label>
+                                    <select id="telephonyModel" name="subRegion" class="form-control" required>
+                                        <option value="" disabled selected>Select a Telephony Model</option>
+                                    </select>
+                                </div>
+                            </div>
+
+
+                            <!-- GCV -->
+                            <div id="GCVQuestions" style="display:none;">
+
+                                <!-- Phone Numbers Deployment -->
+                                <div class="form-row mr-4">
+                                    <div class="form-group col-md-12">
+                                        <label for="phoneNumbersDeployment">Phone Numbers Deployment</label>
+                                        <textarea class="form-control" id="phoneNumbersDeployment" name="phoneNumbersDeployment" placeholder="Will the prospect deploy new customer facing numbers from GCV, re-route non-geographic numbers to GCV or forward calls to GCV numbers?"></textarea>
+                                    </div>
+                                </div>
+
+                                <!-- New Numbers -->
+                                <div class="form-row mr-4">
+                                    <div class="form-group col-md-12">
+                                        <label for="newNumbers">New Numbers</label>
+                                        <textarea class="form-control" id="newNumbers" name="newNumbers" placeholder="If using new numbers, how many of each number type and which area codes are required?"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- BYOC Cloud Carriers -->
+                            <div class="border border-black mr-3 col-md-12" id="byocCloudCarriersDiv" style="display: none;">
+                                <div class="form-row mt-1 mr-4">
+                                    <div class="form-group col-md-6 text-center">Country</div>
+                                    <div class="form-group col-md-6 text-center">Select one or more Carriers</div>
+                                </div>
+                                <div class="form-row mt-2 mr-4" id="byocCloudCarriers"></div>
+                                <div class="form-check mr-4">
+                                    <div class="form-group col-md-12">
+                                        <input class="form-check-input" type="checkbox" value="" id="relationshipWithCarrier">
+                                        <label class="form-check-label" for="relationshipWithCarrier">
+                                            Does the prospect already have a relationship with the carrier and access to technical resources?
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- BYOC Premise Questions -->
+                            <div id="BYOCPremiseQuestions" class="mt-2" style="display:none;">
+
+                                <!-- Phone Numbers Deployment -->
+                                <div class="form-check mr-4">
+                                    <div class="form-group col-md-12">
+                                        <input class="form-check-input" type="checkbox" value="" id="hyperVEnvironment">
+                                        <label class="form-check-label" for="hyperVEnvironment">
+                                            Does the prospect have a Hyper-V environment available?
+                                        </label>
+                                        <br>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
                                     <label for="region">Region</label>
                                     <select id="region" name="region" class="form-control" required>
                                         <option value="" disabled selected>Select a Region</option>
@@ -105,45 +183,11 @@
                                         <option value="NA">North America</option>
                                     </select>
                                 </div>
-                                <div class="form-group col-md-5">
+                                <div class="form-group col-md-6">
                                     <label for="subRegion">Territory</label>
                                     <select id="subRegion" name="subRegion" class="form-control" required>
                                         <option value="" disabled selected>Select a Territory</option>
                                     </select>
-                                </div>
-                            </div>
-
-                            <div class="form-row">
-                                <div class="form-group col-md-5">
-                                    <label for="segment">Market Segment</label>
-                                    <select id="segment" name="segment" class="form-control" required>
-                                        <option value="" disabled selected>Select segment</option>
-                                        <option value="Mid-market">Mid-market</option>
-                                        <option value="Commercial">Commercial</option>
-                                        <option value="Enterprise">Enterprise</option>
-                                    </select>
-                                </div>
-                                <div class="form-group col-md-5">
-                                    <label for="product">Product</label>
-                                    <select id="product" name="product" class="form-control" required>
-                                        <option value="" disabled selected>Select a Product</option>
-                                        <option value="Genesys Cloud">Genesys Cloud</option>
-                                        <option value="Genesys Engage">Genesys Engage</option>
-                                        <option value="Genesys Engage Cloud">Genesys Engage Cloud</option>
-                                        <option value="PureConnect">PureConnect</option>
-                                    </select>
-                                </div>
-                            </div>
-
-                            <div class="form-row">
-                                <div class="border border-black col-md-11 mt-3 mb-3">
-                                    <div class="form-row mt-2">
-                                        <div class="form-group col-md-4 text-center"><strong>Category</strong></div>
-                                        <div class="form-group col-md-4 text-center"><strong>Type</strong></div>
-                                        <div class="form-group col-md-2 text-center"><strong>Time (hours)</strong></div>
-                                    </div>
-                                    <div class="form-row mt-2" id="tasks"></div>
-                                    <a href="#" id="addTask" class="form-group btn btn-primary mt-1 ml-3"><em class="fa fa-plus"></em> Add New Task</a>
                                 </div>
                             </div>
 
@@ -171,8 +215,8 @@
                             </div>
                             <div class="form-row">
                                 <div class="form-group col-md-10">
-                                    <label for="description">Description</label>
-                                    <textarea class="form-control" id="description" name="description" placeholder="Describe your request" required></textarea>
+                                    <label for="notes">Notes</label>
+                                    <textarea class="form-control" id="notes" name="notes" placeholder="Describe your request" required></textarea>
                                 </div>
                             </div>
                             <div class="form-row">
@@ -234,9 +278,9 @@
                             <div class="form-row">
                                 <label id="bAcceptedRequest" hidden></label>
                                 <div class="form-group col-md-10">
-                                    <label id="lblAcceptedRejectedNotes" for="description">Accepted / Rejected
+                                    <label id="lblAcceptedRejectedNotes" for="txtAcceptedRejectedNotes">Accepted / Rejected
                                         Notes</label>
-                                    <textarea class="form-control" id="txtAcceptedRejectedNotes" name="description" placeholder="Notes" required> </textarea>
+                                    <textarea class="form-control" id="txtAcceptedRejectedNotes" name="txtAcceptedRejectedNotes" placeholder="Notes" required> </textarea>
                                 </div>
                             </div>
                             <div class="form-row">
@@ -285,6 +329,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-toast-plugin/1.3.2/jquery.toast.min.js"></script>
     <!-- Bootbox -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/5.4.0/bootbox.min.js"></script>
+    <!-- Bootstrap Select -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.9/dist/js/bootstrap-select.min.js"></script>
     <!-- Our Scripts -->
     <script src="js/requests.js"></script>
     <script src="js/tools.js"></script>
@@ -292,6 +338,9 @@
     <script src="js/dictionary.js"></script>
 
     <script>
+
+        let countriesAndCarriers = [], countryCarrierId = 0, selectedCountries = [];
+
         if (window.location.href.includes('dev'))
             $("#devModeImage").removeAttr('hidden');
 
@@ -309,6 +358,28 @@
 
         // SetLink for Dashboard
         document.getElementById("dashboardLink").setAttribute("href", `./dashboard.html?region=${$("#region").text()}`);
+
+        // Populate telephonyModel selects from dictionary
+        $.each(telephonyModel, (key, value) => {
+            $("<option/>", { value: key }).text(value).appendTo("#telephonyModel");
+        });
+
+        // Populate countries selects
+        $.each(countries, (i, country) => {
+            $("<option/>", { value: country.name, ["data-gcv"]: country.gcv }).text(country.name).appendTo("#countriesAgents, #countriesOperation");
+        });
+
+        $("#countriesAgents").selectpicker({
+            width: '100%',
+            selectedTextFormat: 'count > 3',
+            title: "Select one or more countries"
+        });
+
+        $("#countriesOperation").selectpicker({
+            width: '100%',
+            selectedTextFormat: 'count > 3',
+            title: "Select one or more countries"
+        });
 
         var requests = {
             updateItem: function (updatingRequest) { },
@@ -348,7 +419,7 @@
             $("#editModal #requesterEmail").val("");
             $("#editModal #requesterPhoneNumber").val("");
             $("#editModal #datepicker").datepicker('update', '');
-            $("#editModal #description").val("");
+            $("#editModal #notes").val("");
             $("#editModal #partnerCustomerName").val("");
             $("#editModal #salesforceAccountOpportunity").val("");
             $("#editModal #priority").val("");
@@ -623,11 +694,11 @@
                                     $("<option/>", { value: key }).text(value).appendTo(select);
                                 }),
 
-                                select.on('change', (e) => {
-                                    let selectedTelephonyModel = select.children("option:selected").val();
-                                    searches.telephonyModel = selectedTelephonyModel;
-                                    $("#basicgrid").data('JSGrid').search(searches);
-                                });
+                                    select.on('change', (e) => {
+                                        let selectedTelephonyModel = select.children("option:selected").val();
+                                        searches.telephonyModel = selectedTelephonyModel;
+                                        $("#basicgrid").data('JSGrid').search(searches);
+                                    });
                                 return this.filterControl = select;
                             },
                             items: $("#selectRegion").children("option:selected").val() == "(All)" ? Object.keys(regions) : regions[$("#selectRegion").children("option:selected").val()],
@@ -721,23 +792,36 @@
             $("#editModal #region").val(request.region);
             $("#editModal #region").change();
             $("#editModal #subRegion").val(request.subRegion);
-            $("#editModal #segment").val(request.segment);
-            $("#editModal #product").val(request.product);
 
-            // Load tasks
-            let i = 0;
-            for (const task of request.tasks) {
-                console.log('Adding new task:', task);
-                addNewTask(task, i++ > 0 ? true : false);
-            }
+            // Telephony
+            countriesAndCarriers = request.byocCloudCarriers;
+            $("#editModal #telephonyModel").val(request.telephonyModel);
+            $("#editModal #telephonyModel").change();
+            $("#editModal #countriesAgents").val(request.countriesAgents);
+            $("#editModal #countriesAgents").selectpicker('refresh');
+            $("#editModal #countriesOperation").val(request.countriesOperation);
+            $("#editModal #countriesOperation").selectpicker('refresh');
 
+            // GCV
+            $("#editModal #phoneNumbersDeployment").val(request.phoneNumbersDeployment);
+            $("#editModal #newNumbers").val(request.newNumbers);
+
+            // BYOC Cloud
+            $("#editModal #relationshipWithCarrier").attr('checked', request.relationshipWithCarrier)
+
+            // BYOC Premise
+            $("#editModal #hyperVEnvironment").val(request.hyperVEnvironment);
+
+            // Requester Info
             $("#editModal #requesterName").val(request.requesterName);
             $("#editModal #requesterEmail").val(request.requesterEmail);
             $("#editModal #requesterPhoneNumber").val(request.requesterPhoneNumber);
             $("#editModal #datepicker").datepicker('update', new Date(request.needCompletedBy));
-            $("#editModal #description").val(request.description);
+            $("#editModal #notes").val(request.notes);
             $("#editModal #partnerCustomerName").val(request.partnerCustomerName);
             $("#editModal #salesforceAccountOpportunity").val(request.salesforceAccountOpportunity);
+
+            // CC Fields
             $("#editModal #priority").val(request.priority);
             $("#editModal #bAcceptedRequest").val(request.acceptedRejected);
             $("#editModal #status").val(request.status);
@@ -788,87 +872,102 @@
             }
         }
 
-        function addNewTask(task, includeDeleteButton = false) {
-            if (!task) {
-                let currentTaskId = taskId;
-                taskId++;
+        $("#editModal #telephonyModel").on('change', (e) => {
+            console.log('Telephony Model:', $("#editModal #telephonyModel").val());
+            switch ($("#editModal #telephonyModel").val()) {
+                case 'GCV':
+                    $("#editModal #byocCloudCarriersDiv").hide();
+                    $("#editModal #byocPremiseDiv").hide();
 
-                let categoryDiv = $("<div/>", { class: "form-group col-md-4" }).appendTo("#tasks");
-                let categorySelect = $("<select/>", { class: "form-control", name: "category_" + currentTaskId, required: true }).appendTo(categoryDiv);
-                $("<option/>", { value: "", disabled: true, selected: true }).text("Select a Request Category").appendTo(categorySelect);
-                for (const category of requestCategory) {
-                    $("<option/>", { value: category }).text(category).appendTo(categorySelect);
-                }
+                    $("#editModal #BYOCCloudQuestions").hide();
 
-                let typeDiv = $("<div/>", { class: "form-group col-md-4" }).appendTo("#tasks");
-                let typeSelect = $("<select/>", { class: "form-control", name: "type_" + currentTaskId, required: true }).appendTo(typeDiv);
-                $("<option/>", { value: "", disabled: true, selected: true }).text("Select a Request Type").appendTo(typeSelect);
-                categorySelect.on("change", () => {
-                    updateRequestTypeBasedOnRegionAndProduct(categorySelect, typeSelect);
-                });
+                    $("#editModal #BYOCPremiseQuestions").hide();
 
-                // Time Field
-                let timeDiv = $("<div/>", { class: "form-group col-md-2" }).appendTo("#tasks");
-                let timeInput = $("<input/>", { type: "number", class: "form-control", placeholder: "Hours" }).val(0).appendTo(timeDiv);
+                    $("#editModal #GCVQuestions").show();
+                    break;
+                case 'BYOCCloud':
+                    $("#editModal #byocPremiseDiv").hide();
+                    $("#editModal #byocCloudCarriersDiv").show();
 
-                if (includeDeleteButton) {
-                    let deleteButton = $("<a/>", { href: "#", class: "btn btn-danger form-group", style: "max-height:38px" }).html(`<i class="fa fa-trash"></i>`).appendTo("#tasks");
-                    deleteButton.on("click", () => {
-                        categoryDiv.remove();
-                        typeDiv.remove();
-                        deleteButton.remove();
-                        timeDiv.remove();
-                        tasksControls = tasksControls.filter(tc => tc.id != currentTaskId)
-                    });
-                }
+                    $("#editModal #GCVQuestions").hide();
 
-                tasksControls.push({
-                    id: currentTaskId,
-                    categorySelect: categorySelect,
-                    typeSelect: typeSelect,
-                    timeInput: timeInput
-                });
-            } else {
-                let currentTaskId = task.taskId;
+                    $("#editModal #BYOCPremiseQuestions").hide();
 
-                // Category Select
-                let categoryDiv = $("<div/>", { class: "form-group col-md-4" }).appendTo("#tasks");
-                let categorySelect = $("<select/>", { class: "form-control", required: true }).appendTo(categoryDiv);
-                for (const category of requestCategory) {
-                    $("<option/>", { value: category, selected: category === task.taskCategory }).text(category).appendTo(categorySelect);
-                }
+                    refreshBYOCCloudCountryCarriers();
+                    $("#editModal #BYOCCloudQuestions").show();
+                    break;
+                case 'BYOCPremiseWithVirtualEdges':
+                    $("#editModal #byocCloudCarriersDiv").hide();
 
-                // Type Select
-                let typeDiv = $("<div/>", { class: "form-group col-md-4" }).appendTo("#tasks");
-                let typeSelect = $("<select/>", { class: "form-control", required: true }).appendTo(typeDiv);
-                categorySelect.on("change", () => {
-                    updateRequestTypeBasedOnRegionAndProduct(categorySelect, typeSelect, task.taskType);
-                });
-                updateRequestTypeBasedOnRegionAndProduct(categorySelect, typeSelect, task.taskType);
+                    $("#editModal #GCVQuestions").hide();
 
-                // Time Field
-                let timeDiv = $("<div/>", { class: "form-group col-md-2" }).appendTo("#tasks");
-                let timeInput = $("<input/>", { type: "number", class: "form-control", placeholder: "Hours" }).val(task.taskTime ? task.taskTime : 0).appendTo(timeDiv);
+                    $("#editModal #phoneNumbersDeployment").val('');
 
-                if (includeDeleteButton) {
-                    let deleteButton = $("<a/>", { href: "#", class: "btn btn-danger form-group", style: "max-height:38px" }).html(`<i class="fa fa-trash"></i>`).appendTo("#tasks");
-                    deleteButton.on("click", () => {
-                        categoryDiv.remove();
-                        typeDiv.remove();
-                        timeDiv.remove();
-                        deleteButton.remove();
-                        tasksControls = tasksControls.filter(tc => tc.id != currentTaskId)
-                    });
-                }
+                    $("#editModal #BYOCCloudQuestions").hide();
 
-                // Add controls to global list
-                tasksControls.push({
-                    id: currentTaskId,
-                    categorySelect: categorySelect,
-                    typeSelect: typeSelect,
-                    timeInput: timeInput
-                });
+                    $("#editModal #BYOCPremiseQuestions").show();
+                    $("#editModal #byocPremiseDiv").show();
+                    break;
+                default:
+                    $("#editModal #byocCloudCarriersDiv").hide();
+                    $("#editModal #byocPremiseDiv").hide();
+                    $("#editModal #GCVQuestions").hide();
+                    $("#editModal #phoneNumbersDeployment").val('');
+                    $("#editModal #BYOCCloudQuestions").hide();
+                    $("#editModal #BYOCPremiseQuestions").hide();
+                    break;
             }
+        });
+
+        function refreshBYOCCloudCountryCarriers() {
+            let currentCountryCarrierId = countryCarrierId++;
+
+            $("#byocCloudCarriers").empty();
+
+            $.each(countriesAndCarriers, (i, byocCloudCarrier) => {
+                console.log(i, byocCloudCarrier);
+                let country = Object.keys(byocCloudCarrier)[0];
+                let carriers = Object.values(byocCloudCarrier)[0].split(',');
+
+                // Country
+                let countryDiv = $("<div/>", { class: "form-group col-md-6" }).appendTo("#byocCloudCarriers");
+                $("<label/>", { id: "country_" + country }).text(country).appendTo(countryDiv);
+
+                // Carriers
+                let carriersDiv = $("<div/>", { class: "form-group col-md-6" }).appendTo("#byocCloudCarriers");
+                let carriersSelect = $("<select/>", { class: "selectpicker form-control", id: "carriers_" + country, name: "carriers_" + country, ["data-live-search"]: true, required: true, multiple: true }).appendTo(carriersDiv);
+                //$("<option/>", { value: "", disabled: true }).text("Select a Carrier").appendTo(carriersSelect);
+                $.each(supportedBYOCCloudCarriers, (region, regionalSupportedBYOCCloudCarriers) => {
+                    let optGroup = $("<optgroup/>", { label: region }).appendTo(carriersSelect);
+                    $.each(regionalSupportedBYOCCloudCarriers, (i, regionalSupportedBYOCCloudCarrier) => {
+                        $("<option/>", { value: regionalSupportedBYOCCloudCarrier.name, selected: carriers.includes(regionalSupportedBYOCCloudCarrier.name) }).text(regionalSupportedBYOCCloudCarrier.name).appendTo(optGroup);
+                    });
+                });
+                $("<option/>", { value: "Other", selected: carriers.includes('Other') }).text("Other").appendTo(carriersSelect);
+                carriersSelect.selectpicker({
+                    title: "Select one or more carriers"
+                });
+                carriersSelect.on('change', (e) => {
+                    let bFound = false;
+                    for (var i in countriesAndCarriers) {
+                        if (countriesAndCarriers[i].hasOwnProperty(country)) {
+                            countriesAndCarriers[i] = {
+                                [country]: carriersSelect.val().join(',')
+                            }
+                            bFound = true;
+                            break;
+                        }
+                    }
+                    if (!bFound) {
+                        // Add to array
+                        countriesAndCarriers.push({
+                            [country]: carriersSelect.val().join(',')
+                        });
+                    }
+
+                });
+            });
+
         }
 
         $("#editModal #region").on("change", () => {
@@ -877,26 +976,6 @@
             for (let subregion of regions[$("#editModal #region").val()]) {
                 $("<option/>", { value: subregion }).text(subregion).appendTo("#editModal #subRegion");
             }
-        });
-
-        function updateRequestTypeBasedOnRegionAndProduct(categorySelect, typeSelect, savedType) {
-            typeSelect.empty();
-
-            for (let aRequest of requestsType[categorySelect.val()]) {
-                $("<option/>", { value: aRequest, selected: aRequest === savedType }).text(aRequest).appendTo(typeSelect);
-            }
-
-            if ($(typeSelect)[0].length == 0) {
-                // No SubCategory
-                $(typeSelect)[0].disabled = true;
-                $(typeSelect).removeAttr('required');
-            } else {
-                $(typeSelect)[0].disabled = false;
-                $(typeSelect).attr("required", "");
-            }
-        }
-
-        $('#editModal').on('shown.bs.modal', (e) => {
         });
 
         $('#editModal').on('hidden.bs.modal', async () => {
@@ -1001,7 +1080,7 @@
                 let requesterEmail = $("#editModal #requesterEmail").val();
                 let requesterPhoneNumber = $("#editModal #requesterPhoneNumber").val();
                 let needCompletedBy = moment($("#datepicker").datepicker('getDate')).format("YYYY-MM-DDT00:00:00.000") + "Z";
-                let description = $("#editModal #description").val();
+                let notes = $("#editModal #notes").val();
                 let partnerCustomerName = $("#editModal #partnerCustomerName").val();
                 let salesforceAccountOpportunity = $("#editModal #salesforceAccountOpportunity").val();
                 let priority = $("#editModal #priority").val();
@@ -1016,10 +1095,10 @@
                 else
                     status = $("#editModal #status").val();
 
-                console.log(`Region: ${region}, subRegion: ${subRegion}, Product: ${product}, Segment: ${segment}, tasks: ${JSON.stringify(tasks)}, Requester Name: ${requesterName}, Requester Email: ${requesterEmail}, Requester Phone Number: ${requesterPhoneNumber}, Need Completed By: ${needCompletedBy}, Description: ${description}, Partner or Customer Name: ${partnerCustomerName}, Salesforce Opportunity: ${salesforceAccountOpportunity}`);
+                console.log(`Region: ${region}, subRegion: ${subRegion}, Product: ${product}, Segment: ${segment}, tasks: ${JSON.stringify(tasks)}, Requester Name: ${requesterName}, Requester Email: ${requesterEmail}, Requester Phone Number: ${requesterPhoneNumber}, Need Completed By: ${needCompletedBy}, Notes: ${notes}, Partner or Customer Name: ${partnerCustomerName}, Salesforce Opportunity: ${salesforceAccountOpportunity}`);
                 console.log(`Priority: ${priority}, Accepted/Rejected: ${acceptedRejected}, Status: ${status}, Program Manager: ${programManager}, AcceptedRejectedNotes: ${acceptedRejectedNotes}, teamMembers: ${teamMembers}`);
 
-                await putRequest(id, region, subRegion, segment, product, tasks, requesterName, requesterEmail, requesterPhoneNumber, needCompletedBy, description, partnerCustomerName, salesforceAccountOpportunity, priority, acceptedRejected, status, programManager, acceptedRejectedNotes, teamMembers, gcToken);
+                await putRequest(id, region, subRegion, segment, product, tasks, requesterName, requesterEmail, requesterPhoneNumber, needCompletedBy, notes, partnerCustomerName, salesforceAccountOpportunity, priority, acceptedRejected, status, programManager, acceptedRejectedNotes, teamMembers, gcToken);
                 console.log('Success!');
                 showMessage("Request updated. Thanks!");
                 $("#editModal").modal("hide");
