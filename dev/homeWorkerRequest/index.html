@@ -87,22 +87,10 @@
                         </div>
                     </div>
 
-                    <!-- Existing Telephony -->
-                    <div class="form-check mr-4">
-                        <div class="form-group col-md-12">
-                            <input class="form-check-input" type="checkbox" value="" id="existingTelephonyUsage">
-                            <label class="form-check-label" for="existingTelephonyUsage">
-                                Does the prospect intend to use an existing telephony carrier, PBX or SBC?
-                            </label>
-                            <br>
-                        </div>
-                    </div>
-
                     <!-- Telephony Model -->
-                    <div class="col-md-12 bg-light shadow">
-                        <hr />
-                        <h5 class="text-center">Telephony Model</h5>
-                        <hr />
+
+                    <div class="text-muted form-group ml-3">
+                        <small>Where a SIP trunk cannot be easily established, it is recommended to use Genesys Cloud Voice and forwarding of calls. Number porting is a longer-term option which is <strong>NOT</strong> recommended for speed of deployment.</small>
                     </div>
 
                     <div class="form-group col-md-6">
@@ -113,13 +101,36 @@
                         </div>
                     </div>
 
-                    <div class="text-muted form-group ml-3">
-                        <small>Where a SIP trunk cannot be easily established, it is recommended to use Genesys Cloud Voice and forwarding of calls.</small><br>
-                        <small>Number porting is a longer-term option which is <strong>NOT</strong> recommended for speed of deployment.</small>
+                    <!-- GCV Questions -->
+                    <div id="GCVQuestions" style="display:none;">
+
+                        <!-- Phone Numbers Deployment -->
+                        <div class="form-row mr-4 ml-2">
+                            <div class="form-group col-md-12">
+                                <label for="numbersDeployment">Phone Numbers Deployment</label>
+                                <textarea class="form-control" id="numbersDeployment" name="numbersDeployment" placeholder="Will the prospect deploy new customer facing numbers from GCV, re-route non-geographic numbers to GCV or forward calls to GCV numbers?"></textarea>
+                                <small>Genesys supports:
+                                    <ul>
+                                        <li>Forwarding of existing numbers to Genesys Cloud Voice</li>
+                                        <li>Provisioning of new numbers with Genesys Cloud Voice</li>
+                                        <li>SIP trunk connections to existing infrastructure (BYOC Cloud)</li>
+                                        <li>SIP trunks direct to carriers (BYOC Cloud)</li>
+                                    </ul>
+                                </small>
+                            </div>
+                        </div>
+
+                        <!-- New Numbers -->
+                        <div class="form-row mr-4 ml-2">
+                            <div class="form-group col-md-12">
+                                <label for="newNumbers">New Numbers</label>
+                                <textarea class="form-control" id="newNumbers" name="newNumbers" placeholder="If using new numbers, how many of each number type and which area codes are required?"></textarea>
+                            </div>
+                        </div>
                     </div>
 
                     <!-- BYOC Cloud Carriers -->
-                    <div class="border border-black mr-3" id="byocCloudCarriersDiv" style="display: none;">
+                    <div class="border border-black mr-3 col-md-6" id="byocCloudCarriersDiv" style="display: none;">
                         <div class="form-row mt-1 mr-4 ml-2">
                             <div class="form-group col-md-5 text-center">Country</div>
                             <div class="form-group col-md-5 text-center">Select one or more Carriers</div>
@@ -142,56 +153,54 @@
                         </div>
                     </div>
 
+                    <!-- BYOC Cloud Questions -->
+                    <div id="BYOCCloudQuestions" style="display:none;">
+
+                        <!-- Phone Numbers Deployment -->
+                        <div class="form-check mr-4">
+                            <div class="form-group col-md-12">
+                                <input class="form-check-input" type="checkbox" value="" id="existingTelephonyUsage">
+                                <label class="form-check-label" for="existingTelephonyUsage">
+                                    Is the prospect connecting to a PBX, SBC or intending to have a direct carrier connection?
+                                </label>
+                                <br>
+                            </div>
+                        </div>
+
+                    </div>
+
                     <!-- BYOC Premise with Virtual Edges -->
-                    <div class="border border-black mr-3" id="byocPremiseDiv" style="display: none;">
-                        <small class="form-group ml-2">
+                    <div class="border border-black mr-3 ml-2 bg-warning" id="byocPremiseDiv" style="display: none;">
+                        <p class="form-group ml-2">
                             If planning to use a virtual edge, very strict guidelines for deployment must be followed:
                             <ul>
                                 <li><a href="https://help.mypurecloud.com/articles/virtual-edge-hardware-software-requirements/" target="_blank">Virtual Edge Hardware/Software Requirements</a></li>
                                 <li><a href="https://help.mypurecloud.com/articles/virtual-edge-warnings/" target="_blank">Virtual Edge Warnings</a></li>
                             </ul>
-                        </small>
+                        </p>
+                        <p class="form-group ml-2">
+                            The prospect must acknowledge that failing to comply with the requirements and warnings will result in:
+                            <ul>
+                                <li>Possibly audio quality issues.</li>
+                                <li>No Care support.</li>
+                            </ul>
+                        </p>
                     </div>
 
-                    <!-- Phone Numbers Deployment -->
-                    <div class="form-row mr-4 ml-2">
-                        <div class="form-group col-md-12">
-                            <label for="numbersDeployment">Phone Numbers Deployment</label>
-                            <textarea class="form-control" id="numbersDeployment" name="numbersDeployment" placeholder="Does the prospect intend to deploy new numbers, re-route non-geographic numbers, or port existing numbers?"></textarea>
-                            <small>Genesys supports:
-                                <ul>
-                                    <li>Forwarding of existing numbers to Genesys Cloud Voice</li>
-                                    <li>Provisioning of new numbers with Genesys Cloud Voice</li>
-                                    <li>SIP trunk connections to existing infrastructure (BYOC Cloud)</li>
-                                    <li>SIP trunks direct to carriers (BYOC Cloud)</li>
-                                </ul>
-                            </small>
-                        </div>
-                    </div>
+                    <!-- BYOC Premise Questions -->
+                    <div id="BYOCPremiseQuestions" class="mt-2" style="display:none;">
 
-                    <!-- Non-Geographic Numbers Re-Routing -->
-                    <div class="form-row mr-4 ml-2">
-                        <div class="form-group col-md-12">
-                            <label for="nonGeographicNumbersReRouting">Non-Geographic Numbers re-Routing</label>
-                            <textarea class="form-control" id="nonGeographicNumbersReRouting" name="nonGeographicNumbersReRouting" placeholder="If re-routing non-geographic numbers, can this be done via an online portal or is another provider required to make the changes?"></textarea>
+                        <!-- Phone Numbers Deployment -->
+                        <div class="form-check mr-4">
+                            <div class="form-group col-md-12">
+                                <input class="form-check-input" type="checkbox" value="" id="hyperVEnvironment">
+                                <label class="form-check-label" for="hyperVEnvironment">
+                                    Does the prospect have a Hyper-V environment available?
+                                </label>
+                                <br>
+                            </div>
                         </div>
-                    </div>
 
-                    <!-- New Numbers Broadcast -->
-                    <div class="form-row mr-4 ml-2">
-                        <div class="form-group col-md-12">
-                            <label for="newNumbersBroadcast">New Numbers Broadcast</label>
-                            <textarea class="form-control" id="newNumbersBroadcast" name="newNumbersBroadcast" placeholder="How will any new numbers be broadcast/advertised to the end customers?" required></textarea>
-                        </div>
-                    </div>
-
-                    <!-- Number Types -->
-                    <div class="form-row mr-4 ml-2">
-                        <div class="form-group col-md-12">
-                            <label for="numberTypes">Phone Number Types</label>
-                            <textarea class="form-control" id="numberTypes" name="numberTypes" placeholder="What number types are required?" required></textarea>
-                            <small>Premium numbers in most countries are not supported by Genesys Cloud Voice</small>
-                        </div>
                     </div>
 
                     <!--#endregion Telephony -->
@@ -509,6 +518,9 @@
                     $("#byocCloudCarriersDiv").hide();
                     $("#byocPremiseDiv").hide();
                     countriesAndCarriers = [];
+                    $("#GCVQuestions").show();
+                    $("#BYOCCloudQuestions").hide();
+                    $("#BYOCPremiseQuestions").hide();
                     break;
                 case 'BYOCCloud':
                     if (!$("#countriesOperation").val() || $("#countriesOperation").val().length === 0) {
@@ -519,15 +531,27 @@
                     refreshBYOCCloudCountryCarriers();
                     $("#byocCloudCarriersDiv").show();
                     $("#byocPremiseDiv").hide();
+                    $("#GCVQuestions").hide();
+                    $("#BYOCPremiseQuestions").hide();
+                    $("#numbersDeployment").val('');
+                    $("#BYOCCloudQuestions").show();
                     break;
                 case 'BYOCPremiseWithVirtualEdges':
                     $("#byocPremiseDiv").show();
                     countriesAndCarriers = [];
+                    $("#GCVQuestions").hide();
+                    $("#numbersDeployment").val('');
+                    $("#BYOCCloudQuestions").hide();
+                    $("#BYOCPremiseQuestions").show();
                     break;
                 default:
                     $("#byocCloudCarriersDiv").hide();
                     $("#byocPremiseDiv").hide();
                     countriesAndCarriers = [];
+                    $("#GCVQuestions").hide();
+                    $("#numbersDeployment").val('');
+                    $("#BYOCCloudQuestions").hide();
+                    $("#BYOCPremiseQuestions").hide();
                     break;
             }
         });
@@ -732,7 +756,7 @@
             $("#relationshipWithCarrier").prop('checked', false);
             $("#numbersDeployment").val('');
             $("#nonGeographicNumbersReRouting").val('');
-            $("#newNumbersBroadcast").val('');
+            $("#newNumbers").val('');
             $("#customerResourceCommitted").prop('checked', false);
             $("#projectSponsorAssigned").prop('checked', false);
             $("#changeManagementProcess").val('');

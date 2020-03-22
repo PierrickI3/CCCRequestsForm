@@ -25,11 +25,11 @@ async function postRequests() {
     //byocPremiseWithVirtualEdges: getBYOCWithVirtualEdges(),
     relationshipWithCarrier: $("#relationshipWithCarrier").is(':checked'),
     phoneNumbersDeployment: $("#numbersDeployment").val(),
-    nonGeographicNumbersReRouting: $("#nonGeographicNumbersReRouting").val(),
-    newNumbersBroadcast: $("#newNumbersBroadcast").val(),
+    //nonGeographicNumbersReRouting: $("#nonGeographicNumbersReRouting").val(),
     customerResourceCommitted: $("#customerResourceCommitted").is(':checked'),
     projectSponsorAssigned: $("#projectSponsorAssigned").is(':checked'),
     changeManagementProcess: $("#changeManagementProcess").val(),
+    hyperVEnvironment: $("hyperVEnvironment").is(':checked'),
 
     // Common Questions
     regulatoryConsiderations: $("#regulatoryConsiderations").val(),
@@ -69,6 +69,10 @@ async function postRequests() {
 
   if ($("#salesforceAccountOpportunity").val().length > 0) {
     data.salesforceAccountOpportunity = $("#salesforceAccountOpportunity").val()
+  }
+
+  if ($("#newNumbers").val().length > 0) {
+     data. newNumbers = $("#newNumbers").val();
   }
 
   //#endregion
