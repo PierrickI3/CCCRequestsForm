@@ -76,7 +76,7 @@
                     <!-- Countries & Languages -->
                     <div class="form-row mr-4 ml-2">
                         <div class="form-group col-md-6">
-                            <label for="countriesAgents"><br>In which countries are the prospect's agents located?</label>
+                            <label for="countriesAgents">In which countries are the prospect's agents located?</label>
                             <select class="selectpicker" id="countriesAgents" name="countriesAgents" class="form-control" required multiple data-live-search="true">
                             </select>
                         </div>
@@ -99,8 +99,13 @@
                     </div>
 
                     <!-- Telephony Model -->
+                    <div class="col-md-12 bg-light shadow">
+                        <hr />
+                        <h5 class="text-center">Telephony Model</h5>
+                        <hr />
+                    </div>
+
                     <div class="form-group col-md-6">
-                        <label for="telephonyModel">Telephony Model</label>
                         <select id="telephonyModel" name="telephonyModel" class="form-control" required>
                             <option value="" disabled selected>Select a Telephony Model</option>
                         </select>
@@ -472,14 +477,29 @@
             setTelephonyModel();
         });
 
+        $("#existingTelephonyUsage").on('change', () => {
+            setTelephonyModel();
+        });
+
         function setTelephonyModel() {
             let gcvSupported = selectedCountries.length > 0 && selectedCountries.every(c => c.gcv);
             if (gcvSupported) {
-                $("#telephonyModel").val('GCV');
+                if (!$("#existingTelephonyUsage").is(":checked")) {
+                    $("#telephonyModel").val('GCV');
+                    $("#telephonyModel").change();
+                    $("#recommendation").empty();
+                    $("<small/>").html(`Based on your selection of countries, <strong>${$("#telephonyModel option:selected").text()}</strong> is the recommended choice`).appendTo("#recommendation")
+                } else {
+                    $("#telephonyModel").val('BYOCCloud');
+                    $("#telephonyModel").change();
+                    $("#recommendation").empty();
+                    $("<small/>").html(`Based on your selection of countries, <strong>${$("#telephonyModel option:selected").text()}</strong> is the recommended choice`).appendTo("#recommendation")
+                }
+            } else {
+                $("#telephonyModel").val('BYOCCloud');
+                $("#telephonyModel").change();
                 $("#recommendation").empty();
                 $("<small/>").html(`Based on your selection of countries, <strong>${$("#telephonyModel option:selected").text()}</strong> is the recommended choice`).appendTo("#recommendation")
-            } else {
-                $("#recommendation").empty();
             }
         }
 
@@ -488,6 +508,7 @@
                 case 'GCV':
                     $("#byocCloudCarriersDiv").hide();
                     $("#byocPremiseDiv").hide();
+                    countriesAndCarriers = [];
                     break;
                 case 'BYOCCloud':
                     if (!$("#countriesOperation").val() || $("#countriesOperation").val().length === 0) {
@@ -501,10 +522,12 @@
                     break;
                 case 'BYOCPremiseWithVirtualEdges':
                     $("#byocPremiseDiv").show();
+                    countriesAndCarriers = [];
                     break;
                 default:
                     $("#byocCloudCarriersDiv").hide();
                     $("#byocPremiseDiv").hide();
+                    countriesAndCarriers = [];
                     break;
             }
         });
