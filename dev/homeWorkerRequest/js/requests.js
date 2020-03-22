@@ -10,6 +10,9 @@ else
 async function postRequests() {
   console.log('postRequests()');
 
+  console.log('Countries and Carriers:');
+  console.log(countriesAndCarriers);
+
   //console.log('Mail Distribution:', mailDistribution[product][$("#region").val()]);
   var data = {
     countriesAgents: $("#countriesAgents").val(),
@@ -47,13 +50,14 @@ async function postRequests() {
     requesterPhoneNumber: $("#requesterPhoneNumber").val(),
     notes: $("#notes").val(),
     partnerCustomerName: $("#partnerCustomerName").val(),
-    salesforceAccountOpportunity: $("#salesforceAccountOpportunity").val(),
 
     status: "Open",
     isDeleted: false,
     mailDistribution: mailDistribution['Genesys Cloud'][$("#region").val()],
     token: gcToken
   };
+
+  //#region Optional fields
 
   // Need completed by
   let needCompletedBy = "Not Set";
@@ -63,7 +67,15 @@ async function postRequests() {
   }
   data.needCompletedBy = needCompletedBy;
 
+  if ($("#salesforceAccountOpportunity").val().length > 0) {
+    data.salesforceAccountOpportunity = $("#salesforceAccountOpportunity").val()
+  }
+
+  //#endregion
+
   console.log(data);
+  console.log('Data (stringified)');
+  console.log(JSON.stringify(data));
 
   // override Test objects
   if (window.location.href.includes('localhost')) {
