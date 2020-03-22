@@ -25,7 +25,7 @@ async function postRequests() {
     customerResourceCommitted: $("#customerResourceCommitted").is(':checked'),
     projectSponsorAssigned: $("#projectSponsorAssigned").is(':checked'),
     changeManagementProcess: $("#changeManagementProcess").val(),
-    hyperVEnvironment: $("hyperVEnvironment").is(':checked'),
+    hyperVEnvironment: $("#hyperVEnvironment").is(':checked'),
 
     // Common Questions
     regulatoryConsiderations: $("#regulatoryConsiderations").val(),
@@ -78,8 +78,6 @@ async function postRequests() {
   //#endregion
 
   console.log(data);
-  console.log('Data (stringified)');
-  console.log(JSON.stringify(data));
 
   // override Test objects
   if (window.location.href.includes('localhost')) {
@@ -117,24 +115,47 @@ async function postRequests() {
 
 }
 
-async function putRequest(id, region, subRegion, segment, product, tasks, requesterName, requesterEmail, requesterPhoneNumber, needCompletedBy, description, partnerCustomerName, salesforceAccountOpportunity, priority, acceptedRejected, status, programManager, acceptedRejectedNotes, teamMembers, _token, isDeleted) {
-
+async function putRequest() {
 
   if (!isDeleted) isDeleted = false;
   if (!acceptedRejected) acceptedRejected = "not handled";
 
   var data = {
-    id: id,
-    region: region,
-    subRegion: subRegion,
-    segment: segment,
-    product: product,
-    tasks: tasks,
-    requesterName: requesterName,
-    requesterEmail: requesterEmail,
-    requesterPhoneNumber: requesterPhoneNumber,
-    needCompletedBy: needCompletedBy,
-    description: description,
+    countriesAgents: $("#editModal #countriesAgents").val(),
+    countriesOperation: $("#editModal #countriesOperation").val(),
+
+    // Telephony
+    existingTelephonyUsage: $("#editModal #existingTelephonyUsage").is(':checked'),
+    telephonyModel: $("#editModal #telephonyModel").val(),
+    byocCloudCarriers: countriesAndCarriers,
+    relationshipWithCarrier: $("#editModal #relationshipWithCarrier").is(':checked'),
+    
+    //nonGeographicNumbersReRouting: $("#nonGeographicNumbersReRouting").val(),
+    customerResourceCommitted: $("#editModal #customerResourceCommitted").is(':checked'),
+    projectSponsorAssigned: $("#editModal #projectSponsorAssigned").is(':checked'),
+    changeManagementProcess: $("#editModal #changeManagementProcess").val(),
+    hyperVEnvironment: $("#editModal #hyperVEnvironment").is(':checked'),
+
+    // Common Questions
+    regulatoryConsiderations: $("#editModal #regulatoryConsiderations").val(),
+    callFlowsDocumented: $("#editModal #callFlowsDocumented").is(':checked'),
+    promptsAvailable: $("#editModal #promptsAvailable").is(':checked'),
+    identificationAndVerificationProcesses: $("#editModal #identificationAndVerificationProcesses").val(),
+    itInfrastructure: $("#editModal #itInfrastructure").val(),
+    usersInternetBandwidth: $("#editModal #usersInternetBandwidth").is(':checked'),
+    endUserDevicesRequireVPN: $("#editModal #endUserDevicesRequireVPN").is(':checked'),
+    virtualDesktopSolution: $("#editModal #virtualDesktopSolution").val(),
+    emailInfrastructure: $("#editModal #emailInfrastructure").val(),
+
+    // Your info
+    region: $("#editModal #region").val(),
+    subRegion: $("#editModal #subRegion").val(),
+    requesterName: $("#editModal #requesterName").val(),
+    requesterEmail: $("#editModal #requesterEmail").val(),
+    requesterPhoneNumber: $("#editModal #requesterPhoneNumber").val(),
+    notes: $("#editModal #notes").val(),
+    partnerCustomerName: $("#editModal #partnerCustomerName").val(),
+
     status: status,
     acceptedRejected: acceptedRejected,
     isDeleted: isDeleted,
@@ -143,6 +164,26 @@ async function putRequest(id, region, subRegion, segment, product, tasks, reques
   };
 
   //#region Optional fields
+
+  // Need completed by
+  let needCompletedBy = "Not Set";
+  let needCompletedByDate = moment($("#editModal #datepicker").datepicker('getDate')).format("YYYY-MM-DDT00:00:00.000");
+  if (needCompletedByDate != "Invalid date") {
+      needCompletedBy = moment($("#editModal #datepicker").datepicker('getDate')).format("YYYY-MM-DDT00:00:00.000") + "Z";
+  }
+  data.needCompletedBy = needCompletedBy;
+
+  if ($("#editModal #salesforceAccountOpportunity").val().length > 0) {
+    data.salesforceAccountOpportunity = $("#editModal #salesforceAccountOpportunity").val()
+  }
+
+  if ($("#editModal #phoneNumbersDeployment").val().length > 0) {
+    data.phoneNumbersDeployment = $("#editModal #phoneNumbersDeployment").val()
+  }
+
+  if ($("#editModal #newNumbers").val().length > 0) {
+     data. newNumbers = $("#editModal #newNumbers").val();
+  }
 
   if (teamMembers && teamMembers.length > 0) {
     data.teamMembers = teamMembers;
@@ -168,6 +209,13 @@ async function putRequest(id, region, subRegion, segment, product, tasks, reques
     data.priority = priority
   }
 
+  console.log(data);
+
+  // override Test objects
+  if (window.location.href.includes('localhost')) {
+    data.mailDistribution = $("#editModal #requesterEmail").val();
+    data.isTest = true
+  }
 
   //#endregion
 
