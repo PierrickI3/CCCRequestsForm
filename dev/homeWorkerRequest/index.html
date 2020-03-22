@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no">
-    <title>CCC Request Form</title>
+    <title>CCC Homeworker Request Form</title>
     <link rel="shortcut icon" href="/favicon.ico">
     <!-- Bootstrap -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
@@ -38,7 +38,7 @@
             </ul>
             <ul class="nav navbar-nav mr-2" style="float: right;">
                 <li>
-                    <a href="../index.html" id="backToCCCRequestForm" class="admin btn btn-secondary btn-sm" hidden>Back to CCC RequestForm</a>
+                    <a href="../index.html" id="backToCCCRequestForm" class="admin btn btn-secondary btn-sm" hidden>Back to CC Request Form</a>
                 </li>
 
             </ul>
@@ -719,7 +719,7 @@
                 let detailedInfo = "\n```no-highlight\n region:\t\t" + $("#region").val() + "\n sub-region:\t\t" + $("#subRegion").val() + "\n req name:\t\t" + $("#requesterName").val() + "\n req email:\t\t" + $("#requesterEmail").val() + "\n req phone:\t\t" + $("#requesterPhoneNumber").val() +
                     "\n completed by:\t\t" + needCompletedBy + "\n notes:\t\t" + $("#notes").val() + "\n p/c name:\t\t" + $("#partnerCustomerName").val() + "\n sf/acc opp:\t\t" + $("#salesforceAccountOpportunity").val() + "\n ```\n";
                 if (!window.location.href.includes('localhost'))
-                    sendNotification(`:loudspeaker: New CCC Request from [@${userInfo.name}](#/person/${userInfo.id}) ${detailedInfo}`, region, subRegion, segment, product);
+                    sendNotification(`:loudspeaker: New CC Homeworker Request from [@${userInfo.name}](#/person/${userInfo.id}) ${detailedInfo}`, region, subRegion, segment, product);
             } catch (error) {
                 console.error(error);
                 showMessage(error.hasOwnProperty('message') ? error.message : JSON.stringify(error, null, 2), true);
