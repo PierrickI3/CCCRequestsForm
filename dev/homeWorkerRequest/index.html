@@ -110,6 +110,8 @@
                             <div class="form-group col-md-12">
                                 <label for="phoneNumbersDeployment">Phone Numbers Deployment</label>
                                 <textarea class="form-control" id="phoneNumbersDeployment" name="phoneNumbersDeployment" placeholder="Will the customer deploy new customer-facing numbers from GCV, re-route non-geographic numbers to GCV or forward calls to GCV numbers?"></textarea>
+                                <a href="https://help.mypurecloud.com/articles/about-purecloud-voice/" target="_blank">Genesys Cloud Voice (Resource Center)</a>
+                                <br>
                                 <small>Genesys supports:
                                     <ul>
                                         <li>Forwarding of existing numbers to Genesys Cloud Voice</li>
@@ -140,7 +142,7 @@
                         <small id="otherNote" class="form-group ml-2">
                             If you have selected "Other":
                             <ul>
-                                <li>Carrier must meeting standard requirements as per Resource Centre</li>
+                                <li>Carrier must meeting standard requirements as per <a href="https://help.mypurecloud.com/articles/carrier-requirements-byoc-cloud/" target="_blank">Resource Centre</a></li>
                                 <li>Expectation that deployment time will be extended, <strong>in most cases significantly</strong></li>
                             </ul>
                         </small>
@@ -157,13 +159,10 @@
                     <!-- BYOC Cloud Questions -->
                     <div id="BYOCCloudQuestions" style="display:none;">
                         <!-- Phone Numbers Deployment -->
-                        <div class="form-check mr-4">
+                        <div class="form-row mr-4 ml-2">
                             <div class="form-group col-md-12">
-                                <input class="form-check-input" type="checkbox" value="" id="existingTelephonyUsage">
-                                <label class="form-check-label" for="existingTelephonyUsage">
-                                    Is the customer connecting to a PBX, SBC or intending to have a direct carrier connection?
-                                </label>
-                                <br>
+                                <label for="existingTelephonyUsage">Existing Telephony</label>
+                                <textarea class="form-control" id="existingTelephonyUsage" name="existingTelephonyUsage" placeholder="Is the customer connecting to a PBX, SBC or intending to have a direct carrier connection?"></textarea>
                             </div>
                         </div>
                     </div>

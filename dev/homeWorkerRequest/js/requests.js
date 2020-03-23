@@ -29,6 +29,7 @@ async function postRequests() {
 
     // Common Questions
     regulatoryConsiderations: $("#regulatoryConsiderations").val(),
+    numberConcurrentCalls: $("#numberConcurrentCalls").val(),
     callFlowsDocumented: $("#callFlowsDocumented").is(':checked'),
     promptsAvailable: $("#promptsAvailable").is(':checked'),
     identificationAndVerificationProcesses: $("#identificationAndVerificationProcesses").val(),
@@ -138,6 +139,7 @@ async function putRequest() {
 
     // Common Questions
     regulatoryConsiderations: $("#editModal #regulatoryConsiderations").val(),
+    numberConcurrentCalls: $("#editModal #numberConcurrentCalls").val(),
     callFlowsDocumented: $("#editModal #callFlowsDocumented").is(':checked'),
     promptsAvailable: $("#editModal #promptsAvailable").is(':checked'),
     identificationAndVerificationProcesses: $("#editModal #identificationAndVerificationProcesses").val(),

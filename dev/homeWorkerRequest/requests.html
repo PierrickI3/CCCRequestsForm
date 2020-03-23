@@ -208,6 +208,14 @@
                                 </div>
                             </div>
 
+                            <!-- Concurrent Calls -->
+                            <div class="form-row mr-4">
+                                <div class="form-group col-md-12">
+                                    <label for="numberConcurrentCalls">What is the expected number of concurrent calls?</label>
+                                    <textarea class="form-control" id="numberConcurrentCalls" name="numberConcurrentCalls" placeholder="" required></textarea>
+                                </div>
+                            </div>
+
                             <!-- Call Flows -->
                             <div class="form-check mr-4">
                                 <div class="form-group col-md-12">
@@ -544,6 +552,7 @@
             $("#editModal #projectSponsorAssigned").attr('checked', false);
             $("#editModal #changeManagementProcess").val("");
             $("#editModal #regulatoryConsiderations").val("");
+            $("#editModal #numberConcurrentCalls").val("");
             $("#editModal #callFlowsDocumented").attr('checked', false);
             $("#editModal #promptsAvailable").attr('checked', false);
             $("#editModal #identificationAndVerificationProcesses").val("");
@@ -958,6 +967,7 @@
             $("#editModal #projectSponsorAssigned").attr('checked', request.projectSponsorAssigned);
             $("#editModal #changeManagementProcess").val(request.changeManagementProcess);
             $("#editModal #regulatoryConsiderations").val(request.regulatoryConsiderations);
+            $("#editModal #numberConcurrentCalls").val(request.numberConcurrentCalls || "");
             $("#editModal #callFlowsDocumented").attr('checked', request.callFlowsDocumented);
             $("#editModal #promptsAvailable").attr('checked', request.promptsAvailable);
             $("#editModal #identificationAndVerificationProcesses").val(request.identificationAndVerificationProcesses);
