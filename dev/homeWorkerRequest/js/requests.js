@@ -18,10 +18,7 @@ async function postRequests() {
     existingTelephonyUsage: $("#existingTelephonyUsage").is(':checked'),
     telephonyModel: $("#telephonyModel").val(),
     byocCloudCarriers: countriesAndCarriers,
-    //byocPremiseWithVirtualEdges: getBYOCWithVirtualEdges(),
     relationshipWithCarrier: $("#relationshipWithCarrier").is(':checked'),
-
-    //nonGeographicNumbersReRouting: $("#nonGeographicNumbersReRouting").val(),
     customerResourceCommitted: $("#customerResourceCommitted").is(':checked'),
     hyperVEnvironment: $("#hyperVEnvironment").is(':checked'),
 
