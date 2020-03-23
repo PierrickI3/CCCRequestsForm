@@ -118,7 +118,6 @@
                                 </div>
                             </div>
 
-
                             <!-- GCV -->
                             <div id="GCVQuestions" style="display:none;">
 
@@ -153,6 +152,21 @@
                                             Does the customer already have a relationship with the carrier and access to technical resources?
                                         </label>
                                     </div>
+                                </div>
+                            </div>
+
+                            <!-- Existing Telephony -->
+                            <div class="form-check mr-4">
+                                <div class="form-group col-md-12">
+                                    <input class="form-check-input" type="checkbox" value="" id="existingTelephonyUsage">
+                                    <label class="form-check-label" for="existingTelephonyUsage">
+                                        Is the customer connecting to a PBX, SBC or intending to have a direct carrier connection?
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="form-row mr-4 mt-2">
+                                <div class="form-group col-md-12">
+                                    <textarea class="form-control" id="existingTelephonyUsageDetails" name="existingTelephonyUsageDetails" placeholder="Please provide more details..." disabled></textarea>
                                 </div>
                             </div>
 
@@ -205,6 +219,14 @@
                                 <div class="form-group col-md-12">
                                     <label for="regulatoryConsiderations">Key Regulatory Considerations</label>
                                     <textarea class="form-control" id="regulatoryConsiderations" name="regulatoryConsiderations" placeholder="Are there any key regulatory to consider, for example: Call Recording? Do country specific regulations prevent telephony being delivered from another country?" required></textarea>
+                                </div>
+                            </div>
+
+                            <!-- Concurrent Calls -->
+                            <div class="form-row mr-4">
+                                <div class="form-group col-md-12">
+                                    <label for="numberConcurrentCalls">What is the expected number of concurrent calls?</label>
+                                    <textarea class="form-control" id="numberConcurrentCalls" name="numberConcurrentCalls" placeholder="" required></textarea>
                                 </div>
                             </div>
 
@@ -465,7 +487,7 @@
         let tasksControls = [], taskId = 10000;
 
         let region = getUrlParameter("region");
-        $("#region").text(region);
+        $("#editModal #region").text(region);
 
         // SetLink for Dashboard
         document.getElementById("dashboardLink").setAttribute("href", `./dashboard.html?region=${$("#region").text()}`);
@@ -480,16 +502,96 @@
             $("<option/>", { value: country.name, ["data-gcv"]: country.gcv }).text(country.name).appendTo("#countriesAgents, #countriesOperation");
         });
 
-        $("#countriesAgents").selectpicker({
+        $("#editModal #countriesAgents").selectpicker({
             width: '100%',
             selectedTextFormat: 'count > 3',
             title: "Select one or more countries"
         });
 
-        $("#countriesOperation").selectpicker({
+        $("#editModal #countriesOperation").selectpicker({
             width: '100%',
             selectedTextFormat: 'count > 3',
             title: "Select one or more countries"
+        });
+
+        $("#editModal #countriesOperation").on('change', (e) => {
+            selectedCountries = [];
+            $.each($("#editModal #countriesOperation").val(), (i, selectedCountry) => {
+                selectedCountries.push({
+                    name: selectedCountry,
+                    gcv: $(`#editModal #countriesOperation option[value="${selectedCountry}"]`).attr('data-gcv') == "true" || false
+                });
+            });
+            console.log(selectedCountries);
+            refreshBYOCCloudCountryCarriers();
+            setTelephonyModel();
+        });
+
+        $("#editModal #existingTelephonyUsage").on('change', () => {
+            $("#editModal #existingTelephonyUsageDetails").attr('disabled', !$("#editModal #existingTelephonyUsage").is(":checked"));
+            setTelephonyModel();
+        });
+
+        function setTelephonyModel() {
+            let gcvSupported = selectedCountries.length > 0 && selectedCountries.every(c => c.gcv);
+            if (gcvSupported) {
+                if (!$("#editModal #existingTelephonyUsage").is(":checked")) {
+                    $("#editModal #telephonyModel").val('GCV');
+                    $("#editModal #telephonyModel").change();
+                    $("#editModal #recommendation").empty();
+                    $("<small/>", { class: "btn-warning" }).html(`Based on your selection of countries, <strong>${$("#editModal #telephonyModel option:selected").text()}</strong> is the recommended choice`).appendTo("#editModal #recommendation")
+                } else {
+                    $("#editModal #telephonyModel").val('BYOCCloud');
+                    $("#editModal #telephonyModel").change();
+                    $("#editModal #recommendation").empty();
+                    $("<small/>", { class: "btn-warning" }).html(`Based on your selection of countries, <strong>${$("#editModal #telephonyModel option:selected").text()}</strong> is the recommended choice`).appendTo("#editModal #recommendation")
+                }
+            } else {
+                $("#editModal #telephonyModel").val('BYOCCloud');
+                $("#editModal #telephonyModel").change();
+                $("#editModal #recommendation").empty();
+            }
+        }
+
+        $("#editModal #telephonyModel").on('change', (e) => {
+            console.log('Telephony Model:', $("#editModal #telephonyModel").val());
+            switch ($("#editModal #telephonyModel").val()) {
+                case 'GCV':
+                    $("#editModal #byocCloudCarriersDiv").hide();
+                    $("#editModal #byocPremiseDiv").hide();
+                    $("#editModal #BYOCCloudQuestions").hide();
+                    $("#editModal #BYOCPremiseQuestions").hide();
+
+                    $("#editModal #GCVQuestions").show();
+                    break;
+                case 'BYOCCloud':
+                    $("#editModal #byocPremiseDiv").hide();
+                    $("#editModal #GCVQuestions").hide();
+                    $("#editModal #BYOCPremiseQuestions").hide();
+
+                    refreshBYOCCloudCountryCarriers();
+                    $("#editModal #byocCloudCarriersDiv").show();
+                    $("#editModal #BYOCCloudQuestions").show();
+                    break;
+                case 'BYOCPremiseWithVirtualEdges':
+                    $("#editModal #byocCloudCarriersDiv").hide();
+                    $("#editModal #GCVQuestions").hide();
+                    $("#editModal #phoneNumbersDeployment").val('');
+                    $("#editModal #BYOCCloudQuestions").hide();
+
+                    $("#editModal #BYOCPremiseQuestions").show();
+                    $("#editModal #byocPremiseDiv").show();
+                    break;
+                default:
+                    // Hide everything
+                    $("#editModal #byocCloudCarriersDiv").hide();
+                    $("#editModal #byocPremiseDiv").hide();
+                    $("#editModal #GCVQuestions").hide();
+                    $("#editModal #phoneNumbersDeployment").val('');
+                    $("#editModal #BYOCCloudQuestions").hide();
+                    $("#editModal #BYOCPremiseQuestions").hide();
+                    break;
+            }
         });
 
         var requests = {
@@ -529,6 +631,9 @@
             $("#editModal #countriesOperation").val("");
             $("#editModal #countriesOperation").selectpicker('refresh');
 
+            $("#editModal #existingTelephonyUsage").attr('checked', false);
+            $("#editModal #existingTelephonyUsageDetails").val("");
+
             // GCV
             $("#editModal #phoneNumbersDeployment").val("");
             $("#editModal #newNumbers").val("");
@@ -544,6 +649,7 @@
             $("#editModal #projectSponsorAssigned").attr('checked', false);
             $("#editModal #changeManagementProcess").val("");
             $("#editModal #regulatoryConsiderations").val("");
+            $("#editModal #numberConcurrentCalls").val("");
             $("#editModal #callFlowsDocumented").attr('checked', false);
             $("#editModal #promptsAvailable").attr('checked', false);
             $("#editModal #identificationAndVerificationProcesses").val("");
@@ -942,6 +1048,8 @@
             $("#editModal #countriesAgents").selectpicker('refresh');
             $("#editModal #countriesOperation").val(request.countriesOperation);
             $("#editModal #countriesOperation").selectpicker('refresh');
+            $("#editModal #existingTelephonyUsage").attr('checked', request.existingTelephonyUsage);
+            $("#editModal #existingTelephonyUsageDetails").val(request.existingTelephonyUsageDetails || "");
 
             // GCV
             $("#editModal #phoneNumbersDeployment").val(request.phoneNumbersDeployment);
@@ -958,6 +1066,7 @@
             $("#editModal #projectSponsorAssigned").attr('checked', request.projectSponsorAssigned);
             $("#editModal #changeManagementProcess").val(request.changeManagementProcess);
             $("#editModal #regulatoryConsiderations").val(request.regulatoryConsiderations);
+            $("#editModal #numberConcurrentCalls").val(request.numberConcurrentCalls || "");
             $("#editModal #callFlowsDocumented").attr('checked', request.callFlowsDocumented);
             $("#editModal #promptsAvailable").attr('checked', request.promptsAvailable);
             $("#editModal #identificationAndVerificationProcesses").val(request.identificationAndVerificationProcesses);
@@ -1028,47 +1137,6 @@
                 }
             }
         }
-
-        $("#editModal #telephonyModel").on('change', (e) => {
-            console.log('Telephony Model:', $("#editModal #telephonyModel").val());
-            switch ($("#editModal #telephonyModel").val()) {
-                case 'GCV':
-                    $("#editModal #byocCloudCarriersDiv").hide();
-                    $("#editModal #byocPremiseDiv").hide();
-                    $("#editModal #BYOCCloudQuestions").hide();
-                    $("#editModal #BYOCPremiseQuestions").hide();
-
-                    $("#editModal #GCVQuestions").show();
-                    break;
-                case 'BYOCCloud':
-                    $("#editModal #byocPremiseDiv").hide();
-                    $("#editModal #GCVQuestions").hide();
-                    $("#editModal #BYOCPremiseQuestions").hide();
-
-                    refreshBYOCCloudCountryCarriers();
-                    $("#editModal #byocCloudCarriersDiv").show();
-                    $("#editModal #BYOCCloudQuestions").show();
-                    break;
-                case 'BYOCPremiseWithVirtualEdges':
-                    $("#editModal #byocCloudCarriersDiv").hide();
-                    $("#editModal #GCVQuestions").hide();
-                    $("#editModal #phoneNumbersDeployment").val('');
-                    $("#editModal #BYOCCloudQuestions").hide();
-
-                    $("#editModal #BYOCPremiseQuestions").show();
-                    $("#editModal #byocPremiseDiv").show();
-                    break;
-                default:
-                    // Hide everything
-                    $("#editModal #byocCloudCarriersDiv").hide();
-                    $("#editModal #byocPremiseDiv").hide();
-                    $("#editModal #GCVQuestions").hide();
-                    $("#editModal #phoneNumbersDeployment").val('');
-                    $("#editModal #BYOCCloudQuestions").hide();
-                    $("#editModal #BYOCPremiseQuestions").hide();
-                    break;
-            }
-        });
 
         function refreshBYOCCloudCountryCarriers() {
             let currentCountryCarrierId = countryCarrierId++;

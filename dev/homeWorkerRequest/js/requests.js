@@ -29,6 +29,7 @@ async function postRequests() {
 
     // Common Questions
     regulatoryConsiderations: $("#regulatoryConsiderations").val(),
+    numberConcurrentCalls: $("#numberConcurrentCalls").val(),
     callFlowsDocumented: $("#callFlowsDocumented").is(':checked'),
     promptsAvailable: $("#promptsAvailable").is(':checked'),
     identificationAndVerificationProcesses: $("#identificationAndVerificationProcesses").val(),
@@ -73,6 +74,10 @@ async function postRequests() {
 
   if ($("#newNumbers").val().length > 0) {
     data.newNumbers = $("#newNumbers").val();
+  }
+
+  if ($("#existingTelephonyUsageDetails").val().length > 0) {
+      data.existingTelephonyUsageDetails = $("#existingTelephonyUsageDetails").val();
   }
 
   //#endregion
@@ -138,6 +143,7 @@ async function putRequest() {
 
     // Common Questions
     regulatoryConsiderations: $("#editModal #regulatoryConsiderations").val(),
+    numberConcurrentCalls: $("#editModal #numberConcurrentCalls").val(),
     callFlowsDocumented: $("#editModal #callFlowsDocumented").is(':checked'),
     promptsAvailable: $("#editModal #promptsAvailable").is(':checked'),
     identificationAndVerificationProcesses: $("#editModal #identificationAndVerificationProcesses").val(),
@@ -188,6 +194,10 @@ async function putRequest() {
 
   if ($("#editModal #phoneNumbersDeployment").val().length > 0) {
     data.phoneNumbersDeployment = $("#editModal #phoneNumbersDeployment").val()
+  }
+
+  if ($("#editModal #existingTelephonyUsageDetails").val().length > 0) {
+      data.existingTelephonyUsageDetails = $("#editModal #existingTelephonyUsageDetails").val();
   }
 
   if ($("#editModal #newNumbers").val().length > 0) {

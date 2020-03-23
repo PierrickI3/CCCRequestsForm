@@ -58,11 +58,11 @@
             <div class="form-group">
                 <H3 class="text-center">Welcome to the Homeworker Request Form</H3>
                 <hr>
-                <p /c>This is designed to be a 90 day Emergency Solution. <em>It is not designed to be a replication of what existing customers have today</em></p>
+                <p>This is designed to be a 90 day Emergency Solution. <em>It is not designed to be a replication of what existing customers have today</em></p>
 
-                <p>Our 3 months of free COVID-19 offer is only for <span class="bg-warning">existing customers</span> in good standing* (Direct or Indirect). Direct existing customer will get free PS services as per our defined package. Indirect existing customers, Partners will get benefit of COVID-19 commercial benefit, but they will have to deliver PS services on their own. (Exceptions for PS requires approval)</p>
+                <p>Our 3 months of free COVID-19 offer is only for <span class="bg-warning">existing customers</span> in good standing (Direct or Indirect). Direct existing customer will get free PS services as per our defined package. Indirect existing customers via partners will get benefit of COVID-19 commercial offer, but they will have to deliver PS services on their own (exceptions require approval).</p>
                 <p>WebRTC should be used unless there are special circumstances preventing this. User bandwidth is expected to be in high demand due to additional family members consuming services, e.g. Video on Demand, Gaming, etc. Customers should perform "spot-tests" on as many home workers as possible using the Genesys Network Assessment Tool. IVRs will be limited to simple call handling trees for routing and skill identification will be included. CRM integration, as well as other back integrations, will not be part of this deployment</p>
-                <p>Number porting is not possible within our 48 hour go live target. Corporate VPN’s may require additional technical investigation and configuration.</p>
+                <p>Number porting is not possible with this offer. Corporate VPN’s may require additional technical investigation and configuration.</p>
 
                 <form id="mainform">
 
@@ -110,6 +110,8 @@
                             <div class="form-group col-md-12">
                                 <label for="phoneNumbersDeployment">Phone Numbers Deployment</label>
                                 <textarea class="form-control" id="phoneNumbersDeployment" name="phoneNumbersDeployment" placeholder="Will the customer deploy new customer-facing numbers from GCV, re-route non-geographic numbers to GCV or forward calls to GCV numbers?"></textarea>
+                                <a href="https://help.mypurecloud.com/articles/about-purecloud-voice/" target="_blank">Genesys Cloud Voice (Resource Center)</a>
+                                <br>
                                 <small>Genesys supports:
                                     <ul>
                                         <li>Forwarding of existing numbers to Genesys Cloud Voice</li>
@@ -140,7 +142,7 @@
                         <small id="otherNote" class="form-group ml-2">
                             If you have selected "Other":
                             <ul>
-                                <li>Carrier must meeting standard requirements as per Resource Centre</li>
+                                <li>Carrier must meeting standard requirements as per <a href="https://help.mypurecloud.com/articles/carrier-requirements-byoc-cloud/" target="_blank">Resource Centre</a></li>
                                 <li>Expectation that deployment time will be extended, <strong>in most cases significantly</strong></li>
                             </ul>
                         </small>
@@ -154,18 +156,24 @@
                         </div>
                     </div>
 
+
+                    <!-- Phone Numbers Deployment -->
+
+                    <div class="form-check mr-4 mt-2 ml-2">
+                        <input class="form-check-input" type="checkbox" value="" id="existingTelephonyUsage">
+                        <label class="form-check-label" for="existingTelephonyUsage">
+                            Is the customer connecting to a PBX, SBC or intending to have a direct carrier connection?
+                        </label>
+                        <br>
+                    </div>
+                    <div class="form-row mr-4 ml-2 mt-2">
+                        <div class="form-group col-md-12">
+                            <textarea class="form-control" id="existingTelephonyUsageDetails" name="existingTelephonyUsageDetails" placeholder="Please provide more details..." disabled></textarea>
+                        </div>
+                    </div>
+
                     <!-- BYOC Cloud Questions -->
                     <div id="BYOCCloudQuestions" style="display:none;">
-                        <!-- Phone Numbers Deployment -->
-                        <div class="form-check mr-4">
-                            <div class="form-group col-md-12">
-                                <input class="form-check-input" type="checkbox" value="" id="existingTelephonyUsage">
-                                <label class="form-check-label" for="existingTelephonyUsage">
-                                    Is the customer connecting to a PBX, SBC or intending to have a direct carrier connection?
-                                </label>
-                                <br>
-                            </div>
-                        </div>
                     </div>
 
                     <!-- BYOC Premise with Virtual Edges -->
@@ -338,6 +346,10 @@
                         </div>
                     </div>
 
+                    <div class="mr-4 ml-2 mb-5">
+                        Click <a href="./files/Questionnaire-Import.xlsx" target="_blank">here</a> to download a copy of the PS Questionnaire. Please inform the customer that this information is essential to complete the deployment of Genesys Cloud.
+                    </div>
+
                     <!--#endregion -->
 
                     <!--#region Your Info -->
@@ -501,6 +513,7 @@
         });
 
         $("#existingTelephonyUsage").on('change', () => {
+            $("#existingTelephonyUsageDetails").attr('disabled', !$("#existingTelephonyUsage").is(":checked"));
             setTelephonyModel();
         });
 
@@ -522,7 +535,7 @@
                 $("#telephonyModel").val('BYOCCloud');
                 $("#telephonyModel").change();
                 $("#recommendation").empty();
-                $("<small/>", { class: "btn-warning" }).html(`Based on your selection of countries, <strong>${$("#telephonyModel option:selected").text()}</strong> is the recommended choice`).appendTo("#recommendation")
+                //$("<small/>", { class: "btn-warning" }).html(`Based on your selection of countries, <strong>${$("#telephonyModel option:selected").text()}</strong> is the recommended choice`).appendTo("#recommendation")
             }
         }
 
@@ -750,12 +763,10 @@
 
         function cleanForm() {
 
-
             // Telephony
-            $("#existingTelephonyUsage").prop('checked', false)
+            $("#existingTelephonyUsage").prop('checked', false);
+            $("#existingTelephonyUsageDetails").val('');
             $("#telephonyModel")[0].selectedIndex = 0;
-            //byocCloudCarriers: countriesAndCarriers,
-            //byocPremiseWithVirtualEdges: getBYOCWithVirtualEdges(),
             $("#relationshipWithCarrier").prop('checked', false);
             $("#phoneNumbersDeployment").val('');
             $("#nonGeographicNumbersReRouting").val('');
