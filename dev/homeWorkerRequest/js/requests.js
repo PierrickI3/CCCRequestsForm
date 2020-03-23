@@ -16,7 +16,6 @@ async function postRequests() {
 
     // Telephony
     existingTelephonyUsage: $("#existingTelephonyUsage").is(':checked'),
-    existingTelephonyUsageDetails: $("#existingTelephonyUsageDetails").val(),
     telephonyModel: $("#telephonyModel").val(),
     byocCloudCarriers: countriesAndCarriers,
     //byocPremiseWithVirtualEdges: getBYOCWithVirtualEdges(),
@@ -77,6 +76,10 @@ async function postRequests() {
     data.newNumbers = $("#newNumbers").val();
   }
 
+  if ($("#existingTelephonyUsageDetails").val().length > 0) {
+      data.existingTelephonyUsageDetails = $("#existingTelephonyUsageDetails").val();
+  }
+
   //#endregion
 
   console.log(data);
@@ -128,7 +131,6 @@ async function putRequest() {
 
     // Telephony
     existingTelephonyUsage: $("#editModal #existingTelephonyUsage").is(':checked'),
-    existingTelephonyUsageDetails: $("#editModal #existingTelephonyUsageDetails").val(),
     telephonyModel: $("#editModal #telephonyModel").val(),
     byocCloudCarriers: countriesAndCarriers,
     relationshipWithCarrier: $("#editModal #relationshipWithCarrier").is(':checked'),
@@ -192,6 +194,10 @@ async function putRequest() {
 
   if ($("#editModal #phoneNumbersDeployment").val().length > 0) {
     data.phoneNumbersDeployment = $("#editModal #phoneNumbersDeployment").val()
+  }
+
+  if ($("#editModal #existingTelephonyUsageDetails").val().length > 0) {
+      data.existingTelephonyUsageDetails = $("#editModal #existingTelephonyUsageDetails").val();
   }
 
   if ($("#editModal #newNumbers").val().length > 0) {
