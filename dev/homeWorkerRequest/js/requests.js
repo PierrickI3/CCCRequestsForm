@@ -214,11 +214,6 @@ async function putRequest() {
     data.priority = $("#editModal #priority").val();
   }
 
-  if ($("#editModal #time").val() && $("#editModal #time").val().length > 0) {
-    data.time = $("#editModal #time").val()
-  } else
-    data.time = "0"
-
   console.log(data);
 
   // override Test objects
