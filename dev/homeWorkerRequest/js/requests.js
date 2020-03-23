@@ -28,6 +28,7 @@ async function postRequests() {
     // Common Questions
     numberConcurrentCalls: $("#numberConcurrentCalls").val(),
     callFlowsDocumented: $("#callFlowsDocumented").is(':checked'),
+    emailFlowDocumented: $("#emailFlowDocumented").is(':checked'),
     promptsAvailable: $("#promptsAvailable").is(':checked'),
     identificationAndVerificationProcesses: $("#identificationAndVerificationProcesses").val(),
     itInfrastructure: $("#itInfrastructure").val(),
@@ -143,6 +144,7 @@ async function putRequest() {
     // Common Questions
     numberConcurrentCalls: $("#editModal #numberConcurrentCalls").val(),
     callFlowsDocumented: $("#editModal #callFlowsDocumented").is(':checked'),
+    emailFlowDocumented: $("#editModal #emailFlowDocumented").is(':checked'),
     promptsAvailable: $("#editModal #promptsAvailable").is(':checked'),
     identificationAndVerificationProcesses: $("#editModal #identificationAndVerificationProcesses").val(),
     itInfrastructure: $("#editModal #itInfrastructure").val(),

@@ -214,6 +214,16 @@
                                 </div>
                             </div>
 
+                            <!-- Email Flow -->
+                            <div class="form-check mr-4">
+                                <div class="form-group col-md-12">
+                                    <input class="form-check-input" type="checkbox" value="" id="emailFlowDocumented">
+                                    <label class="form-check-label" for="emailFlowDocumented">
+                                        Is the email flow documented? (optional)
+                                    </label>
+                                </div>
+                            </div>
+
                             <!-- Prompts -->
                             <div class="form-check mr-4">
                                 <div class="form-group col-md-12">
@@ -622,6 +632,7 @@
             $("#editModal #customerResourceCommitted").attr('checked', false);
             $("#editModal #numberConcurrentCalls").val("");
             $("#editModal #callFlowsDocumented").attr('checked', false);
+            $("#editModal #emailFlowDocumented").attr('checked', false);
             $("#editModal #promptsAvailable").attr('checked', false);
             $("#editModal #identificationAndVerificationProcesses").val("");
             $("#editModal #itInfrastructure").val("");
@@ -1036,6 +1047,7 @@
             $("#editModal #customerResourceCommitted").attr('checked', request.customerResourceCommitted);
             $("#editModal #numberConcurrentCalls").val(request.numberConcurrentCalls || "");
             $("#editModal #callFlowsDocumented").attr('checked', request.callFlowsDocumented);
+            $("#editModal #emailFlowDocumented").attr('checked', request.emailFlowDocumented || false);
             $("#editModal #promptsAvailable").attr('checked', request.promptsAvailable);
             $("#editModal #identificationAndVerificationProcesses").val(request.identificationAndVerificationProcesses);
             $("#editModal #itInfrastructure").val(request.itInfrastructure);
