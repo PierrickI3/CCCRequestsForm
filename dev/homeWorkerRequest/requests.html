@@ -118,6 +118,20 @@
                                 </div>
                             </div>
 
+                            <!-- Existing Telephony -->
+                            <div class="form-check mr-4">
+                                <div class="form-group col-md-12">
+                                    <input class="form-check-input" type="checkbox" value="" id="existingTelephonyUsage">
+                                    <label class="form-check-label" for="existingTelephonyUsage">
+                                        Is the customer connecting to a PBX, SBC or intending to have a direct carrier connection?
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="form-row mr-4 mt-2">
+                                <div class="form-group col-md-12">
+                                    <textarea class="form-control" id="existingTelephonyUsageDetails" name="existingTelephonyUsageDetails" placeholder="Please provide more details..." disabled></textarea>
+                                </div>
+                            </div>
 
                             <!-- GCV -->
                             <div id="GCVQuestions" style="display:none;">
@@ -537,6 +551,9 @@
             $("#editModal #countriesOperation").val("");
             $("#editModal #countriesOperation").selectpicker('refresh');
 
+            $("#editModal #existingTelephonyUsage").attr('checked', false);
+            $("#editModal #existingTelephonyUsageDetails").val("");
+
             // GCV
             $("#editModal #phoneNumbersDeployment").val("");
             $("#editModal #newNumbers").val("");
@@ -951,6 +968,8 @@
             $("#editModal #countriesAgents").selectpicker('refresh');
             $("#editModal #countriesOperation").val(request.countriesOperation);
             $("#editModal #countriesOperation").selectpicker('refresh');
+            $("#editModal #existingTelephonyUsage").attr('checked', request.existingTelephonyUsage);
+            $("#editModal #existingTelephonyUsageDetails").val(request.existingTelephonyUsageDetails || "");
 
             // GCV
             $("#editModal #phoneNumbersDeployment").val(request.phoneNumbersDeployment);

@@ -16,6 +16,7 @@ async function postRequests() {
 
     // Telephony
     existingTelephonyUsage: $("#existingTelephonyUsage").is(':checked'),
+    existingTelephonyUsageDetails: $("#existingTelephonyUsageDetails").val(),
     telephonyModel: $("#telephonyModel").val(),
     byocCloudCarriers: countriesAndCarriers,
     //byocPremiseWithVirtualEdges: getBYOCWithVirtualEdges(),
@@ -127,6 +128,7 @@ async function putRequest() {
 
     // Telephony
     existingTelephonyUsage: $("#editModal #existingTelephonyUsage").is(':checked'),
+    existingTelephonyUsageDetails: $("#editModal #existingTelephonyUsageDetails").val(),
     telephonyModel: $("#editModal #telephonyModel").val(),
     byocCloudCarriers: countriesAndCarriers,
     relationshipWithCarrier: $("#editModal #relationshipWithCarrier").is(':checked'),

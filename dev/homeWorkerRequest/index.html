@@ -156,15 +156,24 @@
                         </div>
                     </div>
 
+
+                    <!-- Phone Numbers Deployment -->
+
+                    <div class="form-check mr-4 mt-2 ml-2">
+                        <input class="form-check-input" type="checkbox" value="" id="existingTelephonyUsage">
+                        <label class="form-check-label" for="existingTelephonyUsage">
+                            Is the customer connecting to a PBX, SBC or intending to have a direct carrier connection?
+                        </label>
+                        <br>
+                    </div>
+                    <div class="form-row mr-4 ml-2 mt-2">
+                        <div class="form-group col-md-12">
+                            <textarea class="form-control" id="existingTelephonyUsageDetails" name="existingTelephonyUsageDetails" placeholder="Please provide more details..." disabled></textarea>
+                        </div>
+                    </div>
+
                     <!-- BYOC Cloud Questions -->
                     <div id="BYOCCloudQuestions" style="display:none;">
-                        <!-- Phone Numbers Deployment -->
-                        <div class="form-row mr-4 ml-2">
-                            <div class="form-group col-md-12">
-                                <label for="existingTelephonyUsage">Existing Telephony</label>
-                                <textarea class="form-control" id="existingTelephonyUsage" name="existingTelephonyUsage" placeholder="Is the customer connecting to a PBX, SBC or intending to have a direct carrier connection?"></textarea>
-                            </div>
-                        </div>
                     </div>
 
                     <!-- BYOC Premise with Virtual Edges -->
@@ -500,6 +509,7 @@
         });
 
         $("#existingTelephonyUsage").on('change', () => {
+            $("#existingTelephonyUsageDetails").attr('disabled', !$("#existingTelephonyUsage").is(":checked"));
             setTelephonyModel();
         });
 
@@ -521,7 +531,7 @@
                 $("#telephonyModel").val('BYOCCloud');
                 $("#telephonyModel").change();
                 $("#recommendation").empty();
-                $("<small/>", { class: "btn-warning" }).html(`Based on your selection of countries, <strong>${$("#telephonyModel option:selected").text()}</strong> is the recommended choice`).appendTo("#recommendation")
+                //$("<small/>", { class: "btn-warning" }).html(`Based on your selection of countries, <strong>${$("#telephonyModel option:selected").text()}</strong> is the recommended choice`).appendTo("#recommendation")
             }
         }
 
@@ -749,12 +759,10 @@
 
         function cleanForm() {
 
-
             // Telephony
-            $("#existingTelephonyUsage").prop('checked', false)
+            $("#existingTelephonyUsage").prop('checked', false);
+            $("#existingTelephonyUsageDetails").val('');
             $("#telephonyModel")[0].selectedIndex = 0;
-            //byocCloudCarriers: countriesAndCarriers,
-            //byocPremiseWithVirtualEdges: getBYOCWithVirtualEdges(),
             $("#relationshipWithCarrier").prop('checked', false);
             $("#phoneNumbersDeployment").val('');
             $("#nonGeographicNumbersReRouting").val('');
