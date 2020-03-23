@@ -30,18 +30,6 @@
         </a>
 
         <ul class="mb-0">
-            <ul class="nav navbar-nav" style="float: right;">
-                <li>
-                    <a href="#" id="reviewRequestsButton" class="admin btn btn-primary btn-sm" hidden>Review Requests</a>
-                </li>
-
-            </ul>
-            <ul class="nav navbar-nav mr-2" style="float: right;">
-                <li>
-                    <a href="../index.html" id="backToCCCRequestForm" class="admin btn btn-secondary btn-sm" hidden>Back to CC Request Form</a>
-                </li>
-
-            </ul>
 
         </ul>
 
@@ -87,7 +75,7 @@
     <script>
         let gcToken;
 
-        let requestId = getUrlParameter("id");
+        let requestId = getUrlParameter("requestId");
         if (requestId)
             $('#requestId')[0].innerHTML = "requestId: " + requestId;
         else
@@ -110,50 +98,6 @@
             localStorage.setItem("gcToken", gcToken);
             localStorage.setItem("userName", userInfo.name);
 
-            // Populate user info
-            $("#requesterName").val(userInfo.name);
-            $("#requesterEmail").val(userInfo.mail);
-            $("#requesterPhoneNumber").val(userInfo.phone);
-
-            // Show Admin fields?
-
-            if (userInfo.groups.some(g => adminGroups["super"].includes(g))) {
-                console.log('Show super admin stuff')
-                $(".admin").show();
-                $(".admin").removeAttr('hidden');
-                $("#reviewRequestsButton").attr("href", "requests.html?region=super-user");
-                $("#regionBadge").text('super-user');
-            } else if (userInfo.groups.some(g => adminGroups["EMEA"].includes(g))) {
-                console.log('Show admin stuff')
-                $(".admin").show();
-                $(".admin").removeAttr('hidden');
-                $("#reviewRequestsButton").attr("href", "requests.html?region=EMEA");
-                $("#regionBadge").text('EMEA');
-            } else if (userInfo.groups.some(g => adminGroups["NA"].includes(g))) {
-                console.log('Show admin stuff')
-                $(".admin").show();
-                $(".admin").removeAttr('hidden');
-                $("#reviewRequestsButton").attr("href", "requests.html?region=NA");
-                $("#regionBadge").text('NA');
-            } else if (userInfo.groups.some(g => adminGroups["APAC"].includes(g))) {
-                console.log('Show admin stuff')
-                $(".admin").show();
-                $(".admin").removeAttr('hidden');
-                $("#reviewRequestsButton").attr("href", "requests.html?region=APAC");
-                $("#regionBadge").text('APAC');
-            } else if (userInfo.groups.some(g => adminGroups["LATAM"].includes(g))) {
-                console.log('Show admin stuff')
-                $(".admin").show();
-                $(".admin").removeAttr('hidden');
-                $("#reviewRequestsButton").attr("href", "requests.html?region=LATAM");
-                $("#regionBadge").text('LATAM');
-            } else {
-                console.log('Hide admin stuff')
-                $(".admin").hide();
-                $(".admin").attr('hidden', true);
-                $("#regionBadge").text('');
-                $("#reviewRequestsButton").hide();
-            }
         }
 
         function getUrlParameter(sParam) {
