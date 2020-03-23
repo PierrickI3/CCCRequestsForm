@@ -513,7 +513,6 @@
 
         $("#editModal #existingTelephonyUsage").on('change', () => {
             $("#editModal #existingTelephonyUsageDetails").attr('disabled', !$("#editModal #existingTelephonyUsage").is(":checked"));
-            setTelephonyModel();
         });
 
         function setTelephonyModel() {
