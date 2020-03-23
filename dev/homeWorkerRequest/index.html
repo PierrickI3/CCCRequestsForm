@@ -327,7 +327,7 @@
                         <div class="form-group col-md-12">
                             <input class="form-check-input" type="checkbox" value="" id="promptsAvailable">
                             <label class="form-check-label" for="promptsAvailable">
-                                Are the required announcements (prompts) available as audio files?
+                                Is the customer able to supply audio prompt/announcement files? If these are not available, TTS will be used.
                             </label>
                         </div>
                     </div>
@@ -337,6 +337,46 @@
                         Click <a href="./files/Genesys_PS_Rapid_Response_Questionnaire-V1-withIVR.docx" target="_blank">here</a> to download a copy of the PS Questionnaire. Please inform the customer that this information is essential to complete the deployment of Genesys Cloud.
                         <br>
                         <p>To download the file from the <strong>Genesys Cloud app</strong>, press <span class="bg-warning">SHIFT</span> while clicking on the link.</p>
+                    </div>
+
+                    <!--#endregion -->
+
+                    <!--#region Policies & Processes -->
+
+                    <div class="col-md-12 bg-light shadow">
+                        <hr />
+                        <h3 class="text-center">Policies & Processes</h3>
+                        <hr />
+                    </div>
+
+                    <!-- Terms & Conditions -->
+                    <div class="form-check mr-4">
+                        <div class="form-group col-md-12">
+                            <input class="form-check-input" type="checkbox" value="" id="standardTermsConditions">
+                            <label class="form-check-label" for="standardTermsConditions">
+                                Has the customer agreed to our standard Terms and Conditions and DPA?
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Off-Boarding Policy -->
+                    <div class="form-check mr-4">
+                        <div class="form-group col-md-12">
+                            <input class="form-check-input" type="checkbox" value="" id="offBoardingPolicy">
+                            <label class="form-check-label" for="offBoardingPolicy">
+                                Does the customer understand and agree to our off-boarding policy of Data Deletion or Data Download as per the standard Terms and Conditions?
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Change Management Process Delays -->
+                    <div class="form-check mr-4">
+                        <div class="form-group col-md-12">
+                            <input class="form-check-input" type="checkbox" value="" id="changeManagementProcessDelays">
+                            <label class="form-check-label" for="changeManagementProcessDelays">
+                                Does the customer accept that Genesys will not be held responsible for any delays caused by the customer change management process?
+                            </label>
+                        </div>
                     </div>
 
                     <!--#endregion -->
@@ -779,6 +819,11 @@
             $("#endUserDevicesRequireVPN").prop('checked', false);
             $("#virtualDesktopSolution").val('');
             $("#emailInfrastructure").val('');
+
+            // Policies & Processes
+            $("#standardTermsConditions").prop('checked', false);
+            $("#offBoardingPolicy").prop('checked', false);
+            $("#changeManagementProcessDelays").prop('checked', false);
 
             // Your Info
             $("#region").val('');

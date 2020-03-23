@@ -33,6 +33,11 @@ async function postRequests() {
     endUserDevicesRequireVPN: $("#endUserDevicesRequireVPN").is(':checked'),
     virtualDesktopSolution: $("#virtualDesktopSolution").val(),
 
+    // Policies & Processes
+    standardTermsConditions: $("#standardTermsConditions").is(':checked'),
+    offBoardingPolicy: $("#offBoardingPolicy").is(':checked'),
+    changeManagementProcessDelays: $("#changeManagementProcessDelays").is(':checked'),
+
     // Your info
     region: $("#region").val(),
     subRegion: $("#subRegion").val(),
@@ -148,6 +153,11 @@ async function putRequest() {
     usersInternetBandwidth: $("#editModal #usersInternetBandwidth").is(':checked'),
     endUserDevicesRequireVPN: $("#editModal #endUserDevicesRequireVPN").is(':checked'),
     virtualDesktopSolution: $("#editModal #virtualDesktopSolution").val(),
+
+    // Policies & Processes
+    standardTermsConditions: $("#editModal #standardTermsConditions").is(':checked'),
+    offBoardingPolicy: $("#editModal #offBoardingPolicy").is(':checked'),
+    changeManagementProcessDelays: $("#editModal #changeManagementProcessDelays").is(':checked'),
 
     // Your info
     region: $("#editModal #region").val(),
