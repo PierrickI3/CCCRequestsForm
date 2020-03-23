@@ -56,7 +56,7 @@
                 <form id="modal-form">
                     <div class="form-row mr-4 ml-2">
                         <div class="form-group col-md-6">
-                            <label for="region">Region</label>
+                            <label for="region">Region <span class="text-danger font-weight-bold">*</span></label>
                             <select id="region" name="region" class="form-control" required>
                                 <option value="" disabled selected>Select a Region</option>
                                 <option value="APAC">APAC</option>
@@ -66,7 +66,7 @@
                             </select>
                         </div>
                         <div class="form-group col-md-6">
-                            <label for="subRegion">Territory</label>
+                            <label for="subRegion">Territory <span class="text-danger font-weight-bold">*</span></label>
                             <select id="subRegion" name="subRegion" class="form-control" required>
                                 <option value="" disabled selected>Select a Territory</option>
                             </select>
@@ -76,7 +76,7 @@
                     <!-- Market Segment & Product -->
                     <div class="form-row mr-4 ml-2">
                         <div class="form-group col-md-6">
-                            <label for="segment">Market Segment</label>
+                            <label for="segment">Market Segment <span class="text-danger font-weight-bold">*</span></label>
                             <select id="segment" name="segment" class="form-control" required>
                                 <option value="" disabled selected>Select a Segment</option>
                                 <option value="Mid-market">Mid-market</option>
@@ -85,7 +85,7 @@
                             </select>
                         </div>
                         <div class="form-group col-md-6">
-                            <label for="product">Product</label>
+                            <label for="product">Product <span class="text-danger font-weight-bold">*</span></label>
                             <select id="product" name="product" class="form-control" required>
                                 <option value="" disabled selected>Select a Product</option>
                                 <option value="Genesys Cloud">Genesys Cloud</option>
@@ -99,8 +99,8 @@
                     <!-- Tasks -->
                     <div class="border border-black mr-3">
                         <div class="form-row mt-1 mr-4 ml-2">
-                            <div class="form-group col-md-5 text-center">Category</div>
-                            <div class="form-group col-md-5 text-center">Type</div>
+                            <div class="form-group col-md-5 text-center">Category <span class="text-danger font-weight-bold">*</span></div>
+                            <div class="form-group col-md-5 text-center">Type <span class="text-danger font-weight-bold">*</span></div>
                         </div>
                         <div class="form-row mt-2 mr-4 ml-2" id="tasks"></div>
                         <a href="#" id="addTask" class="form-group btn btn-primary mt-1 ml-3"><em class="fa fa-plus"></em> Add New Task</a>
@@ -108,27 +108,27 @@
 
                     <div class="form-row mr-4 ml-2">
                         <div class="form-group col-md-6">
-                            <label for="requesterName">Requester Name</label>
+                            <label for="requesterName">Requester Name <span class="text-danger font-weight-bold">*</span></label>
                             <input type="text" class="form-control" id="requesterName" name="requesterName" placeholder="Your Name" required>
                         </div>
                         <div class="form-group col-md-6">
-                            <label for="requesterEmail">Requester Email</label>
+                            <label for="requesterEmail">Requester Email <span class="text-danger font-weight-bold">*</span></label>
                             <input type="text" class="form-control" id="requesterEmail" name="requesterEmail" placeholder="Your Email Address" required>
                         </div>
                     </div>
                     <div class="form-row mr-4 ml-2">
                         <div class="form-group col-md-6">
-                            <label for="requesterPhoneNumber">Requester Phone #</label>
+                            <label for="requesterPhoneNumber">Requester Phone # <span class="text-danger font-weight-bold">*</span></label>
                             <input type="text" class="form-control" id="requesterPhoneNumber" name="requesterPhoneNumber" placeholder="Your Phone Number" required>
                         </div>
                         <div class="form-group col-md-6">
-                            <label for="datepicker">Need Completed By</label>
+                            <label for="datepicker">Need Completed By <span class="text-danger font-weight-bold">*</span></label>
                             <input type="text" id="datepicker" class="form-control" required placeholder="Click to set a date" autocomplete="off" />
                         </div>
                     </div>
                     <div class="form-row mr-4 ml-2">
                         <div class="form-group col-md-12">
-                            <label for="description">Description</label>
+                            <label for="description">Description <span class="text-danger font-weight-bold">*</span></label>
                             <textarea class="form-control" id="description" name="description" placeholder="Describe your request" required></textarea>
                         </div>
                     </div>
