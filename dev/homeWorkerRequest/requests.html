@@ -1090,6 +1090,11 @@
             $("#editModal #virtualDesktopSolution").val(request.virtualDesktopSolution);
             $("#editModal #emailInfrastructure").val(request.emailInfrastructure);
 
+            // Policies & Processes
+            $("#editModal #standardTermsConditions").prop('checked', request.standardTermsConditions);
+            $("#editModal #offBoardingPolicy").prop('checked', request.offBoardingPolicy);
+            $("#editModal #changeManagementProcessDelays").prop('checked', request.changeManagementProcessDelays);
+
             // Requester Info
             $("#editModal #region").val(request.region);
             $("#editModal #region").change();
