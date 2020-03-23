@@ -751,16 +751,24 @@
         function cleanForm() {
 
             // Telephony
+            $("#countriesAgents").val('');
+            $("#countriesAgents").selectpicker('refresh');
+            $("#countriesOperation").val('');
+            $("#countriesOperation").selectpicker('refresh');
+
             $("#existingTelephonyUsage").prop('checked', false);
             $("#existingTelephonyUsageDetails").val('');
             $("#telephonyModel")[0].selectedIndex = 0;
-            $("#relationshipWithCarrier").prop('checked', false);
+            $("#telephonyModel").change();
+            countriesAndCarriers = [];
+            $("#byocCloudCarriers").empty();
             $("#phoneNumbersDeployment").val('');
-            $("#nonGeographicNumbersReRouting").val('');
-            $("#newNumbers").val('');
+            $("#relationshipWithCarrier").prop('checked', false);
             $("#customerResourceCommitted").prop('checked', false);
+            $("#hyperVEnvironment").prop('checked', false);
 
-            // Common Questions
+            // General Configuration
+            $("#numberConcurrentCalls").val('');
             $("#callFlowsDocumented").prop('checked', false);
             $("#emailFlowDocumented").prop('checked', false);
             $("#promptsAvailable").prop('checked', false);
@@ -771,23 +779,17 @@
             $("#virtualDesktopSolution").val('');
             $("#emailInfrastructure").val('');
 
-            // Populate user info
+            // Your Info
+            $("#region").val('');
+            $("#subRegion").empty();
+            $("<option selected disabled />", { value: "Select a Sub-Region" }).text("Select a Sub-Region").appendTo("#subRegion");
             $("#requesterName").val(userInfo.name);
             $("#requesterEmail").val(userInfo.mail);
             $("#requesterPhoneNumber").val(userInfo.phone);
-            countriesAndCarriers = [];
-            $("#byocCloudCarriers").empty();
-            //addNewTask(false);
-            $("#subRegion").empty();
-            $("<option selected disabled />", { value: "Select a Sub-Region" }).text("Select a Sub-Region").appendTo("#subRegion");
-            $("#segment").val('');
-            $("#region").val('');
-            $("#product").val('');
             $("#datepicker").val('');
-            $("#description").val('');
+            $("#notes").val('');
             $("#partnerCustomerName").val('');
             $("#salesforceAccountOpportunity").val('');
-
         }
 
     </script>
