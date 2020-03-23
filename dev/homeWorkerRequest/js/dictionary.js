@@ -22,32 +22,84 @@ let adminGroups = {
 let supportedBYOCCloudCarriers = {
     US: [
         {
-            name: "Twillio",
-            url: "https://www.twilio.com/"
+            name: "AT&T",
+            url: "https://www.business.att.com/products/ip-toll-free.html"
+        },
+        {
+            name: "Bandwidth.com",
+            url: "https://www.bandwidth.com/"
+        },
+        {
+            name: "CenturyLink/Level 3",
+            url: "https://www.centurylink.com/business/voice/voice-complete.html"
         },
         {
             name: "Nexmo (Vonage)",
             url: "https://www.nexmo.com/"
+        },
+        {
+            name: "R-Squared",
+            url: "http://www.rsquaredtelecom.com/"
+        },
+        {
+            name: "Twillio",
+            url: "https://www.twilio.com/"
         }
     ],
     EU: [
         {
-            name: "Twillio",
-            url: "https://www.twilio.com/"
+            name: "BT Spain",
+            url: "https://www.bt.com/"
+        },
+        {
+            name: "CenturyLink/Level 3",
+            url: "https://www.centurylink.com/business/voice/voice-complete.html"
         },
         {
             name: "Colt",
             url: "https://www.colt.net/"
+        },
+        {
+            name: "Deutsche Telefon",
+            url: "https://www.deutsche-telefon.de/"
+        },
+        {
+            name: "Dialoga",
+            url: "https://dialogagroup.com/"
+        },
+        {
+            name: "Telefonica Spain",
+            url: "https://www.telefonica.com/en/"
+        },
+        {
+            name: "Telenor",
+            url: "https://www.telenor.com/"
+        },
+        {
+            name: "Tenios",
+            url: "https://www.tenios.de/en/sip-trunk"
+        },
+        {
+            name: "Twillio",
+            url: "https://www.twilio.com/"
+        },
+        {
+            name: "Voxbone",
+            url: "https://www.voxbone.com/"
+        },
+        {
+            name: "Voxogo",
+            url: "https://voxogo.com/"
+        },
+        {
+            name: "Voz.com",
+            url: "https://voz.com"
         }
     ],
     AP: [
         {
-            name: "Telstra",
-            url: "https://www.telstra.com.au/"
-        },
-        {
-            name: "Nexmo (Vonage)",
-            url: "https://www.nexmo.com/"
+            name: "Summit IT",
+            url: "https://summitinternet.com.au/voice/voip-sip-trunks/"
         }
     ]
 };
