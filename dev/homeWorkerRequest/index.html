@@ -58,10 +58,11 @@
             <div class="form-group">
                 <H3 class="text-center">Welcome to the Homeworker Request Form</H3>
                 <hr>
-                <p /c>This is designed to be a 90 day Emergency Solution. <em>It is not designed to be a replication of what customers or prospects have today</em></p>
-                <p class="text-muted">Genesys Cloud Voice is the <strong>recommended</strong> deployment model. WebRTC is to be used unless there are special circumstances preventing this. User bandwidth is expected to be in high demand due to additional family members consuming services, e.g. Video on Demand, Gaming, etc.</p>
-                <p class="text-muted">Customers should perform "spot-tests" on as many home workers as possible using the Genesys Network Assessment Tool. IVRs will be limited to simple call handling trees for routing and skill identification will be included. CRM integration, as well as other back integrations, will not be part of this deployment</p>
-                <p class="text-muted">Number porting is not possible within our 48 hour go live target. Corporate VPN’s may require additional technical investigation and configuration.</p>
+                <p /c>This is designed to be a 90 day Emergency Solution. <em>It is not designed to be a replication of what existing customers have today</em></p>
+
+                <p>Our 3 months of free COVID-19 offer is only for <span class="bg-warning">existing customers</span> in good standing* (Direct or Indirect). Direct existing customer will get free PS services as per our defined package. Indirect existing customers, Partners will get benefit of COVID-19 commercial benefit, but they will have to deliver PS services on their own. (Exceptions for PS requires approval)</p>
+                <p>WebRTC should be used unless there are special circumstances preventing this. User bandwidth is expected to be in high demand due to additional family members consuming services, e.g. Video on Demand, Gaming, etc. Customers should perform "spot-tests" on as many home workers as possible using the Genesys Network Assessment Tool. IVRs will be limited to simple call handling trees for routing and skill identification will be included. CRM integration, as well as other back integrations, will not be part of this deployment</p>
+                <p>Number porting is not possible within our 48 hour go live target. Corporate VPN’s may require additional technical investigation and configuration.</p>
 
                 <form id="mainform">
 
@@ -76,12 +77,12 @@
                     <!-- Countries & Languages -->
                     <div class="form-row mr-4 ml-2">
                         <div class="form-group col-md-6">
-                            <label for="countriesAgents">In which countries are the prospect's agents located?</label>
+                            <label for="countriesAgents">In which countries are the customer's agents located?</label>
                             <select class="selectpicker" id="countriesAgents" name="countriesAgents" class="form-control" required multiple data-live-search="true">
                             </select>
                         </div>
                         <div class="form-group col-md-6">
-                            <label for="countriesOperation">In which countries does the prospect operate and require (or have existing) phone numbers?</label>
+                            <label for="countriesOperation">In which countries does the customer operate and require (or have existing) phone numbers?</label>
                             <select class="selectpicker" id="countriesOperation" name="countriesOperation" class="form-control" required multiple data-live-search="true">
                             </select>
                         </div>
@@ -108,7 +109,7 @@
                         <div class="form-row mr-4 ml-2">
                             <div class="form-group col-md-12">
                                 <label for="phoneNumbersDeployment">Phone Numbers Deployment</label>
-                                <textarea class="form-control" id="phoneNumbersDeployment" name="phoneNumbersDeployment" placeholder="Will the prospect deploy new customer facing numbers from GCV, re-route non-geographic numbers to GCV or forward calls to GCV numbers?"></textarea>
+                                <textarea class="form-control" id="phoneNumbersDeployment" name="phoneNumbersDeployment" placeholder="Will the customer deploy new customer-facing numbers from GCV, re-route non-geographic numbers to GCV or forward calls to GCV numbers?"></textarea>
                                 <small>Genesys supports:
                                     <ul>
                                         <li>Forwarding of existing numbers to Genesys Cloud Voice</li>
@@ -147,7 +148,7 @@
                             <div class="form-group col-md-12">
                                 <input class="form-check-input" type="checkbox" value="" id="relationshipWithCarrier">
                                 <label class="form-check-label" for="relationshipWithCarrier">
-                                    Does the prospect already have a relationship with the carrier and access to technical resources?
+                                    Does the customer already have a relationship with the carrier and access to technical resources?
                                 </label>
                             </div>
                         </div>
@@ -160,7 +161,7 @@
                             <div class="form-group col-md-12">
                                 <input class="form-check-input" type="checkbox" value="" id="existingTelephonyUsage">
                                 <label class="form-check-label" for="existingTelephonyUsage">
-                                    Is the prospect connecting to a PBX, SBC or intending to have a direct carrier connection?
+                                    Is the customer connecting to a PBX, SBC or intending to have a direct carrier connection?
                                 </label>
                                 <br>
                             </div>
@@ -177,7 +178,7 @@
                             </ul>
                         </p>
                         <p class="form-group ml-2">
-                            The prospect must acknowledge that failing to comply with the requirements and warnings will result in:
+                            The customer must acknowledge that failing to comply with the requirements and warnings will result in:
                             <ul>
                                 <li>Possibly audio quality issues.</li>
                                 <li>No Care support.</li>
@@ -193,7 +194,7 @@
                             <div class="form-group col-md-12">
                                 <input class="form-check-input" type="checkbox" value="" id="hyperVEnvironment">
                                 <label class="form-check-label" for="hyperVEnvironment">
-                                    Does the prospect have a Hyper-V environment available?
+                                    Does the customer have a Hyper-V environment available?
                                 </label>
                                 <br>
                             </div>
@@ -241,11 +242,11 @@
 
                     <!--#endregion Customer Engagement -->
 
-                    <!--#region Common Questions -->
+                    <!--#region Configuration -->
 
                     <div class="col-md-12 bg-light shadow">
                         <hr />
-                        <h3 class="text-center">Common questions</h3>
+                        <h3 class="text-center">General Configuration</h3>
                         <hr />
                     </div>
 
@@ -254,6 +255,14 @@
                         <div class="form-group col-md-12">
                             <label for="regulatoryConsiderations">Key Regulatory Considerations</label>
                             <textarea class="form-control" id="regulatoryConsiderations" name="regulatoryConsiderations" placeholder="Are there any key regulatory to consider, for example: Call Recording? Do country specific regulations prevent telephony being delivered from another country?" required></textarea>
+                        </div>
+                    </div>
+
+                    <!-- Concurrent Calls -->
+                    <div class="form-row mr-4 ml-2">
+                        <div class="form-group col-md-12">
+                            <label for="numberConcurrentCalls">What is the expected number of concurrent calls?</label>
+                            <textarea class="form-control" id="numberConcurrentCalls" name="numberConcurrentCalls" placeholder="" required></textarea>
                         </div>
                     </div>
 
@@ -317,7 +326,7 @@
                     <div class="form-row mr-4 ml-2">
                         <div class="form-group col-md-12">
                             <label for="virtualDesktopSolution">Virtual Desktop Solution</label>
-                            <textarea class="form-control" id="virtualDesktopSolution" name="virtualDesktopSolution" placeholder="Does the prospect use a Virtual Desktop solution, e.g. Citrix, thin-clients, etc.?" required></textarea>
+                            <textarea class="form-control" id="virtualDesktopSolution" name="virtualDesktopSolution" placeholder="Does the customer use a Virtual Desktop solution, e.g. Citrix, thin-clients, etc.?" required></textarea>
                         </div>
                     </div>
 
@@ -329,7 +338,7 @@
                         </div>
                     </div>
 
-                    <!--#endregion Common Questions-->
+                    <!--#endregion -->
 
                     <!--#region Your Info -->
 
@@ -530,6 +539,7 @@
                 case 'BYOCCloud':
                     if (!$("#countriesOperation").val() || $("#countriesOperation").val().length === 0) {
                         $("#telephonyModel").val('');
+                        showMessage('Please select at least one country where the customer operates first', true);
                         return;
                     }
                     refreshBYOCCloudCountryCarriers();
