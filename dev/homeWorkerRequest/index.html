@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no">
-    <title>CCC Homeworker Request Form</title>
+    <title>CC Rapid Response Request Form</title>
     <link rel="shortcut icon" href="/favicon.ico">
     <!-- Bootstrap -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
@@ -26,7 +26,7 @@
     <nav class="navbar navbar-dark bg-dark">
         <a class="navbar-brand" href="#">
             <img src="images/genesys.png" width="30" height="30" class="d-inline-block align-top" alt="">
-            <span class="badge badge-warning">#homeworker</span> Request Form <small><span class="badge badge-pill badge-warning" id="regionBadge"></span></small>
+            <span class="badge badge-warning">#rapidresponse</span> Request Form <small><span class="badge badge-pill badge-warning" id="regionBadge"></span></small>
         </a>
 
         <ul class="mb-0">
@@ -56,13 +56,21 @@
         <br>
         <div class="form-row">
             <div class="form-group">
-                <H3 class="text-center">Welcome to the Homeworker Request Form</H3>
+                <H3 class="text-center">Welcome to the Rapid Response Request Form</H3>
                 <hr>
                 <p>This is designed to be a 90 day Emergency Solution. <em>It is not designed to be a replication of what existing customers have today</em></p>
 
                 <p>Our 3 months of free COVID-19 offer is only for <span class="bg-warning">existing customers</span> in good standing (Direct or Indirect). Direct existing customer will get free PS services as per our defined package. Indirect existing customers via partners will get benefit of COVID-19 commercial offer, but they will have to deliver PS services on their own (exceptions require approval).</p>
                 <p>WebRTC should be used unless there are special circumstances preventing this. User bandwidth is expected to be in high demand due to additional family members consuming services, e.g. Video on Demand, Gaming, etc. Customers should perform "spot-tests" on as many home workers as possible using the Genesys Network Assessment Tool. IVRs will be limited to simple call handling trees for routing and skill identification will be included. CRM integration, as well as other back integrations, will not be part of this deployment</p>
                 <p>Number porting is not possible with this offer. Corporate VPN’s may require additional technical investigation and configuration.</p>
+                <p>Genesys supports:
+                    <ul>
+                        <li>Forwarding of existing numbers to Genesys Cloud Voice</li>
+                        <li>Provisioning of new numbers with Genesys Cloud Voice</li>
+                        <li>SIP trunk connections to existing infrastructure (BYOC Cloud)</li>
+                        <li>SIP trunks direct to carriers (BYOC Cloud)</li>
+                    </ul>
+                </p>
 
                 <form id="mainform">
 
@@ -91,7 +99,7 @@
                     <!-- Telephony Model -->
 
                     <div class="text-muted form-group ml-3">
-                        <small>Where a SIP trunk cannot be easily established, it is recommended to use Genesys Cloud Voice and forwarding of calls. Number porting is a longer-term option which is <strong>NOT</strong> recommended for speed of deployment.</small>
+                        <small>Where a SIP trunk cannot be easily established, it is recommended to use Genesys Cloud Voice and forwarding of calls.</small>
                     </div>
 
                     <div class="form-group col-md-6">
@@ -111,15 +119,6 @@
                                 <label for="phoneNumbersDeployment">Phone Numbers Deployment</label>
                                 <textarea class="form-control" id="phoneNumbersDeployment" name="phoneNumbersDeployment" placeholder="Will the customer deploy new customer-facing numbers from GCV, re-route non-geographic numbers to GCV or forward calls to GCV numbers?"></textarea>
                                 Genesys Cloud Voice (Resource Center): <a href="https://help.mypurecloud.com/articles/about-purecloud-voice/" target="_blank">https://help.mypurecloud.com/articles/about-purecloud-voice/</a>
-                                <br>
-                                <small>Genesys supports:
-                                    <ul>
-                                        <li>Forwarding of existing numbers to Genesys Cloud Voice</li>
-                                        <li>Provisioning of new numbers with Genesys Cloud Voice</li>
-                                        <li>SIP trunk connections to existing infrastructure (BYOC Cloud)</li>
-                                        <li>SIP trunks direct to carriers (BYOC Cloud)</li>
-                                    </ul>
-                                </small>
                             </div>
                         </div>
 
@@ -154,23 +153,25 @@
                                 </label>
                             </div>
                         </div>
-                    </div>
 
+                        <!-- Phone Numbers Deployment -->
+                        <div class="form-check mr-4">
+                            <div class="form-group col-md-12">
+                                <input class="form-check-input" type="checkbox" value="" id="existingTelephonyUsage">
+                                <label class="form-check-label" for="existingTelephonyUsage">
+                                    Is the customer connecting to a PBX, SBC or intending to have a direct carrier connection?
+                                </label>
+                                <br>
+                            </div>
+                        </div>
 
-                    <!-- Phone Numbers Deployment -->
-
-                    <div class="form-check mr-4 mt-2 ml-2">
-                        <input class="form-check-input" type="checkbox" value="" id="existingTelephonyUsage">
-                        <label class="form-check-label" for="existingTelephonyUsage">
-                            Is the customer connecting to a PBX, SBC or intending to have a direct carrier connection?
-                        </label>
-                        <br>
-                    </div>
-                    <div class="form-row mr-4 ml-2 mt-2">
-                        <div class="form-group col-md-12">
-                            <textarea class="form-control" id="existingTelephonyUsageDetails" name="existingTelephonyUsageDetails" placeholder="Please provide more details..." disabled></textarea>
+                        <div class="form-row col-md-12">
+                            <div class="form-group col-md-12">
+                                <textarea class="form-control" id="existingTelephonyUsageDetails" name="existingTelephonyUsageDetails" placeholder="Please provide more details..." disabled></textarea>
+                            </div>
                         </div>
                     </div>
+
 
                     <!-- BYOC Cloud Questions -->
                     <div id="BYOCCloudQuestions" style="display:none;">
@@ -212,44 +213,6 @@
 
                     <!--#endregion Telephony -->
 
-                    <!--#region Customer Engagement -->
-
-                    <div class="col-md-12 bg-light shadow">
-                        <hr />
-                        <h3 class="text-center">Customer Engagement</h3>
-                        <hr />
-                    </div>
-
-                    <!-- Commmitted Customer Resource -->
-                    <div class="form-check mr-4">
-                        <div class="form-group col-md-12">
-                            <input class="form-check-input" type="checkbox" value="" id="customerResourceCommitted">
-                            <label class="form-check-label" for="customerResourceCommitted">
-                                Has customer resource been committed?
-                            </label>
-                        </div>
-                    </div>
-
-                    <!-- Project Sponsor -->
-                    <div class="form-check mr-4">
-                        <div class="form-group col-md-12">
-                            <input class="form-check-input" type="checkbox" value="" id="projectSponsorAssigned">
-                            <label class="form-check-label" for="projectSponsorAssigned">
-                                Has a project sponsor been assigned?
-                            </label>
-                        </div>
-                    </div>
-
-                    <!-- Change Management Process -->
-                    <div class="form-row mr-4 ml-2">
-                        <div class="form-group col-md-12">
-                            <label for="changeManagementProcess">Change Management Process</label>
-                            <textarea class="form-control" id="changeManagementProcess" name="changeManagementProcess" placeholder="Is there a change management process that needs to be followed?"></textarea>
-                        </div>
-                    </div>
-
-                    <!--#endregion Customer Engagement -->
-
                     <!--#region Configuration -->
 
                     <div class="col-md-12 bg-light shadow">
@@ -258,39 +221,11 @@
                         <hr />
                     </div>
 
-                    <!-- Regulatory Considerations -->
-                    <div class="form-row mr-4 ml-2">
-                        <div class="form-group col-md-12">
-                            <label for="regulatoryConsiderations">Key Regulatory Considerations</label>
-                            <textarea class="form-control" id="regulatoryConsiderations" name="regulatoryConsiderations" placeholder="Are there any key regulatory to consider, for example: Call Recording? Do country specific regulations prevent telephony being delivered from another country?" required></textarea>
-                        </div>
-                    </div>
-
                     <!-- Concurrent Calls -->
                     <div class="form-row mr-4 ml-2">
                         <div class="form-group col-md-12">
                             <label for="numberConcurrentCalls">What is the expected number of concurrent calls?</label>
                             <textarea class="form-control" id="numberConcurrentCalls" name="numberConcurrentCalls" placeholder="" required></textarea>
-                        </div>
-                    </div>
-
-                    <!-- Call Flows -->
-                    <div class="form-check mr-4">
-                        <div class="form-group col-md-12">
-                            <input class="form-check-input" type="checkbox" value="" id="callFlowsDocumented">
-                            <label class="form-check-label" for="callFlowsDocumented">
-                                Are the required call flows documented?
-                            </label>
-                        </div>
-                    </div>
-
-                    <!-- Prompts -->
-                    <div class="form-check mr-4">
-                        <div class="form-group col-md-12">
-                            <input class="form-check-input" type="checkbox" value="" id="promptsAvailable">
-                            <label class="form-check-label" for="promptsAvailable">
-                                Are the required announcements (prompts) available as audio files?
-                            </label>
                         </div>
                     </div>
 
@@ -346,6 +281,47 @@
                         </div>
                     </div>
 
+                    <!--#endregion -->
+
+                    <!--#region PS Engagement -->
+
+                    <div class="col-md-12 bg-light shadow">
+                        <hr />
+                        <h3 class="text-center">PS Engagement</h3>
+                        <hr />
+                    </div>
+
+                    <!-- Commmitted Customer Resource -->
+                    <div class="form-check mr-4">
+                        <div class="form-group col-md-12">
+                            <input class="form-check-input" type="checkbox" value="" id="customerResourceCommitted">
+                            <label class="form-check-label" for="customerResourceCommitted">
+                                Have customer resources been committed (e.g. Project Manager, Project Sponsor, Business Champion and/or IT/Operations Manager, etc.)?
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Call Flows -->
+                    <div class="form-check mr-4">
+                        <div class="form-group col-md-12">
+                            <input class="form-check-input" type="checkbox" value="" id="callFlowsDocumented">
+                            <label class="form-check-label" for="callFlowsDocumented">
+                                Are the required call flows documented?
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Prompts -->
+                    <div class="form-check mr-4">
+                        <div class="form-group col-md-12">
+                            <input class="form-check-input" type="checkbox" value="" id="promptsAvailable">
+                            <label class="form-check-label" for="promptsAvailable">
+                                Are the required announcements (prompts) available as audio files?
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- PS File -->
                     <div class="mr-4 ml-2 mb-5">
                         Click <a href="./files/Genesys_PS_Rapid_Response_Questionnaire-V1-withIVR.docx" target="_blank">here</a> to download a copy of the PS Questionnaire. Please inform the customer that this information is essential to complete the deployment of Genesys Cloud.
                         <br>
@@ -750,7 +726,7 @@
                 let detailedInfo = "\n```no-highlight\n region:\t\t" + $("#region").val() + "\n sub-region:\t\t" + $("#subRegion").val() + "\n req name:\t\t" + $("#requesterName").val() + "\n req email:\t\t" + $("#requesterEmail").val() + "\n req phone:\t\t" + $("#requesterPhoneNumber").val() +
                     "\n completed by:\t\t" + needCompletedBy + "\n notes:\t\t" + $("#notes").val() + "\n p/c name:\t\t" + $("#partnerCustomerName").val() + "\n sf/acc opp:\t\t" + $("#salesforceAccountOpportunity").val() + "\n ```\n";
                 if (!window.location.href.includes('localhost'))
-                    sendNotification(`:loudspeaker: New CC Homeworker Request from [@${userInfo.name}](#/person/${userInfo.id}) ${detailedInfo}`, region, subRegion, segment, product);
+                    sendNotification(`:loudspeaker: New CC Rapid Response Request from [@${userInfo.name}](#/person/${userInfo.id}) ${detailedInfo}`, region, subRegion, segment, product);
             } catch (error) {
                 console.error(error);
                 showMessage(error.hasOwnProperty('message') ? error.message : JSON.stringify(error, null, 2), true);
@@ -774,11 +750,8 @@
             $("#nonGeographicNumbersReRouting").val('');
             $("#newNumbers").val('');
             $("#customerResourceCommitted").prop('checked', false);
-            $("#projectSponsorAssigned").prop('checked', false);
-            $("#changeManagementProcess").val('');
 
             // Common Questions
-            $("#regulatoryConsiderations").val('');
             $("#callFlowsDocumented").prop('checked', false);
             $("#promptsAvailable").prop('checked', false);
             $("#identificationAndVerificationProcesses").val('');

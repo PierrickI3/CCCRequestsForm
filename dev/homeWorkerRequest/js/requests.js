@@ -23,12 +23,9 @@ async function postRequests() {
 
     //nonGeographicNumbersReRouting: $("#nonGeographicNumbersReRouting").val(),
     customerResourceCommitted: $("#customerResourceCommitted").is(':checked'),
-    projectSponsorAssigned: $("#projectSponsorAssigned").is(':checked'),
-    changeManagementProcess: $("#changeManagementProcess").val(),
     hyperVEnvironment: $("#hyperVEnvironment").is(':checked'),
 
     // Common Questions
-    regulatoryConsiderations: $("#regulatoryConsiderations").val(),
     numberConcurrentCalls: $("#numberConcurrentCalls").val(),
     callFlowsDocumented: $("#callFlowsDocumented").is(':checked'),
     promptsAvailable: $("#promptsAvailable").is(':checked'),
@@ -141,12 +138,9 @@ async function putRequest() {
 
     //nonGeographicNumbersReRouting: $("#nonGeographicNumbersReRouting").val(),
     customerResourceCommitted: $("#editModal #customerResourceCommitted").is(':checked'),
-    projectSponsorAssigned: $("#editModal #projectSponsorAssigned").is(':checked'),
-    changeManagementProcess: $("#editModal #changeManagementProcess").val(),
     hyperVEnvironment: $("#editModal #hyperVEnvironment").is(':checked'),
 
     // Common Questions
-    regulatoryConsiderations: $("#editModal #regulatoryConsiderations").val(),
     numberConcurrentCalls: $("#editModal #numberConcurrentCalls").val(),
     callFlowsDocumented: $("#editModal #callFlowsDocumented").is(':checked'),
     promptsAvailable: $("#editModal #promptsAvailable").is(':checked'),
