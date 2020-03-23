@@ -56,6 +56,10 @@ let supportedBYOCCloudCarriers = {
             url: "https://www.centurylink.com/business/voice/voice-complete.html"
         },
         {
+            name: "Cheapnet",
+            url: "https://www.cheapnet.it/"
+        },
+        {
             name: "Colt",
             url: "https://www.colt.net/"
         },
