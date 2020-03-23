@@ -37,7 +37,6 @@ async function postRequests() {
     usersInternetBandwidth: $("#usersInternetBandwidth").is(':checked'),
     endUserDevicesRequireVPN: $("#endUserDevicesRequireVPN").is(':checked'),
     virtualDesktopSolution: $("#virtualDesktopSolution").val(),
-    emailInfrastructure: $("#emailInfrastructure").val(),
 
     // Your info
     region: $("#region").val(),
@@ -79,6 +78,11 @@ async function postRequests() {
   if ($("#existingTelephonyUsageDetails").val().length > 0) {
       data.existingTelephonyUsageDetails = $("#existingTelephonyUsageDetails").val();
   }
+
+  if ($("#emailInfrastructure").val().length > 0) {
+      data.emailInfrastructure = $("#emailInfrastructure").val();
+  }
+
 
   //#endregion
 
@@ -151,7 +155,6 @@ async function putRequest() {
     usersInternetBandwidth: $("#editModal #usersInternetBandwidth").is(':checked'),
     endUserDevicesRequireVPN: $("#editModal #endUserDevicesRequireVPN").is(':checked'),
     virtualDesktopSolution: $("#editModal #virtualDesktopSolution").val(),
-    emailInfrastructure: $("#editModal #emailInfrastructure").val(),
 
     // Your info
     region: $("#editModal #region").val(),
@@ -202,6 +205,10 @@ async function putRequest() {
 
   if ($("#editModal #newNumbers").val().length > 0) {
     data.newNumbers = $("#editModal #newNumbers").val();
+  }
+
+  if ($("#editModal #emailInfrastructure").val().length > 0) {
+    data.emailInfrastructure = $("#emailInfrastructure").val();
   }
 
   if ($("#editModal #teamMembers").val().length > 0) {
