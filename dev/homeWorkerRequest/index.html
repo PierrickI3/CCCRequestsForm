@@ -257,6 +257,14 @@
                         </div>
                     </div>
 
+                    <!-- Concurrent Calls -->
+                    <div class="form-row mr-4 ml-2">
+                        <div class="form-group col-md-12">
+                            <label for="numberConcurrentCalls">What is the expected number of concurrent calls?</label>
+                            <textarea class="form-control" id="numberConcurrentCalls" name="numberConcurrentCalls" placeholder="" required></textarea>
+                        </div>
+                    </div>
+
                     <!-- Call Flows -->
                     <div class="form-check mr-4">
                         <div class="form-group col-md-12">
@@ -530,6 +538,7 @@
                 case 'BYOCCloud':
                     if (!$("#countriesOperation").val() || $("#countriesOperation").val().length === 0) {
                         $("#telephonyModel").val('');
+                        showMessage('Please select at least one country where the prospect operates first', true);
                         return;
                     }
                     refreshBYOCCloudCountryCarriers();
