@@ -461,7 +461,7 @@
         let tasksControls = [], taskId = 10000;
 
         let region = getUrlParameter("region");
-        $("#editModal #region").text(region);
+        $("#region").text(region);
 
         // SetLink for Dashboard
         document.getElementById("dashboardLink").setAttribute("href", `./dashboard.html?region=${$("#region").text()}`);
