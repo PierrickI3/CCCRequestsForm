@@ -33,3 +33,8 @@
 .bootstrap-select .dropdown-toggle.bs-placeholder {
   color: #555555;
 }
+
+.card-header {
+    background-color:white;
+    border: none;
+}
