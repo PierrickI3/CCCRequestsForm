@@ -39,7 +39,7 @@
     <nav class="navbar navbar-dark bg-dark">
         <a class="navbar-brand" href="#">
             <img src="images/genesys.png" width="30" height="30" class="d-inline-block align-top" alt="">
-            <span class="badge badge-warning">#homeworker</span> Request Form <small><span class="badge badge-pill badge-warning" id="regionBadge"></span></small>
+            <span class="badge badge-warning">#rapidresponse</span> Request Form <small><span class="badge badge-pill badge-warning" id="regionBadge"></span></small>
 
         </a>
         <a href="./requests.html" id="reviewRequestsButton" class="admin btn btn-primary btn-sm">Review Requests</a>
@@ -367,7 +367,7 @@
                     singleRow.countriesAgents = aItem.countriesAgents.join(", ");
                     singleRow.countriesOperation = aItem.countriesOperation.join(", ");
                     singleRow.telephonyModel = telephonyModel[aItem.telephonyModel];
-                
+
                     if (singleRow.mailDistibution) delete singleRow.mailDistibution;
                     singleRow.createdAt = moment.utc(singleRow.createdAt)
                     singleRow.updatedAt = moment.utc(singleRow.updatedAt)

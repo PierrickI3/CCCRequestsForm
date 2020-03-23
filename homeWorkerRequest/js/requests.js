@@ -18,25 +18,25 @@ async function postRequests() {
     existingTelephonyUsage: $("#existingTelephonyUsage").is(':checked'),
     telephonyModel: $("#telephonyModel").val(),
     byocCloudCarriers: countriesAndCarriers,
-    //byocPremiseWithVirtualEdges: getBYOCWithVirtualEdges(),
     relationshipWithCarrier: $("#relationshipWithCarrier").is(':checked'),
-
-    //nonGeographicNumbersReRouting: $("#nonGeographicNumbersReRouting").val(),
     customerResourceCommitted: $("#customerResourceCommitted").is(':checked'),
-    projectSponsorAssigned: $("#projectSponsorAssigned").is(':checked'),
-    changeManagementProcess: $("#changeManagementProcess").val(),
     hyperVEnvironment: $("#hyperVEnvironment").is(':checked'),
 
     // Common Questions
-    regulatoryConsiderations: $("#regulatoryConsiderations").val(),
     numberConcurrentCalls: $("#numberConcurrentCalls").val(),
     callFlowsDocumented: $("#callFlowsDocumented").is(':checked'),
+    emailFlowDocumented: $("#emailFlowDocumented").is(':checked'),
     promptsAvailable: $("#promptsAvailable").is(':checked'),
     identificationAndVerificationProcesses: $("#identificationAndVerificationProcesses").val(),
     itInfrastructure: $("#itInfrastructure").val(),
     usersInternetBandwidth: $("#usersInternetBandwidth").is(':checked'),
     endUserDevicesRequireVPN: $("#endUserDevicesRequireVPN").is(':checked'),
     virtualDesktopSolution: $("#virtualDesktopSolution").val(),
+
+    // Policies & Processes
+    standardTermsConditions: $("#standardTermsConditions").is(':checked'),
+    offBoardingPolicy: $("#offBoardingPolicy").is(':checked'),
+    changeManagementProcessDelays: $("#changeManagementProcessDelays").is(':checked'),
 
     // Your info
     region: $("#region").val(),
@@ -76,11 +76,11 @@ async function postRequests() {
   }
 
   if ($("#existingTelephonyUsageDetails").val().length > 0) {
-      data.existingTelephonyUsageDetails = $("#existingTelephonyUsageDetails").val();
+    data.existingTelephonyUsageDetails = $("#existingTelephonyUsageDetails").val();
   }
 
   if ($("#emailInfrastructure").val().length > 0) {
-      data.emailInfrastructure = $("#emailInfrastructure").val();
+    data.emailInfrastructure = $("#emailInfrastructure").val();
   }
 
 
@@ -141,20 +141,23 @@ async function putRequest() {
 
     //nonGeographicNumbersReRouting: $("#nonGeographicNumbersReRouting").val(),
     customerResourceCommitted: $("#editModal #customerResourceCommitted").is(':checked'),
-    projectSponsorAssigned: $("#editModal #projectSponsorAssigned").is(':checked'),
-    changeManagementProcess: $("#editModal #changeManagementProcess").val(),
     hyperVEnvironment: $("#editModal #hyperVEnvironment").is(':checked'),
 
     // Common Questions
-    regulatoryConsiderations: $("#editModal #regulatoryConsiderations").val(),
     numberConcurrentCalls: $("#editModal #numberConcurrentCalls").val(),
     callFlowsDocumented: $("#editModal #callFlowsDocumented").is(':checked'),
+    emailFlowDocumented: $("#editModal #emailFlowDocumented").is(':checked'),
     promptsAvailable: $("#editModal #promptsAvailable").is(':checked'),
     identificationAndVerificationProcesses: $("#editModal #identificationAndVerificationProcesses").val(),
     itInfrastructure: $("#editModal #itInfrastructure").val(),
     usersInternetBandwidth: $("#editModal #usersInternetBandwidth").is(':checked'),
     endUserDevicesRequireVPN: $("#editModal #endUserDevicesRequireVPN").is(':checked'),
     virtualDesktopSolution: $("#editModal #virtualDesktopSolution").val(),
+
+    // Policies & Processes
+    standardTermsConditions: $("#editModal #standardTermsConditions").is(':checked'),
+    offBoardingPolicy: $("#editModal #offBoardingPolicy").is(':checked'),
+    changeManagementProcessDelays: $("#editModal #changeManagementProcessDelays").is(':checked'),
 
     // Your info
     region: $("#editModal #region").val(),
@@ -175,10 +178,9 @@ async function putRequest() {
   else
     data.status = $("#editModal #status").val();
 
-  if ($("#editModal #bAcceptedRequest").val() == '') {
-    data.acceptedRejected = "not handled";
-  } else
+  if ($("#editModal #bAcceptedRequest").val() !== '') {
     data.acceptedRejected = $("#editModal #bAcceptedRequest").val()
+  }
 
 
   //#region Optional fields
@@ -200,7 +202,7 @@ async function putRequest() {
   }
 
   if ($("#editModal #existingTelephonyUsageDetails").val().length > 0) {
-      data.existingTelephonyUsageDetails = $("#editModal #existingTelephonyUsageDetails").val();
+    data.existingTelephonyUsageDetails = $("#editModal #existingTelephonyUsageDetails").val();
   }
 
   if ($("#editModal #newNumbers").val().length > 0) {

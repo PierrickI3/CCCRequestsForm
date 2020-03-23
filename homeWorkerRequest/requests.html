@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no">
-    <title>CCC Request Form</title>
+    <title>CC Rapid Response Request Form</title>
     <link rel="shortcut icon" href="/favicon.ico">
     <!-- Bootstrap -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
@@ -28,7 +28,7 @@
     <nav class="navbar navbar-dark bg-dark navbar-fixed-top">
         <a class="navbar-brand" href="#">
             <img src="images/genesys.png" width="30" height="30" class="d-inline-block align-top" alt="">
-            <span class="badge badge-warning">#homeworker</span> Request Form <small><span class="badge badge-pill badge-warning" id="region"></span></small>
+            <span class="badge badge-warning">#rapidresponse</span> Request Form <small><span class="badge badge-pill badge-warning" id="region"></span></small>
         </a>
 
         <ul class="mb-0">
@@ -196,32 +196,6 @@
                                 </div>
                             </div>
 
-                            <!-- Project Sponsor -->
-                            <div class="form-check mr-4">
-                                <div class="form-group col-md-12">
-                                    <input class="form-check-input" type="checkbox" value="" id="projectSponsorAssigned">
-                                    <label class="form-check-label" for="projectSponsorAssigned">
-                                        Has a project sponsor been assigned?
-                                    </label>
-                                </div>
-                            </div>
-
-                            <!-- Change Management Process -->
-                            <div class="form-row mr-4">
-                                <div class="form-group col-md-12">
-                                    <label for="changeManagementProcess">Change Management Process</label>
-                                    <textarea class="form-control" id="changeManagementProcess" name="changeManagementProcess" placeholder="Is there a change management process that needs to be followed?"></textarea>
-                                </div>
-                            </div>
-
-                            <!-- Regulatory Considerations -->
-                            <div class="form-row mr-4">
-                                <div class="form-group col-md-12">
-                                    <label for="regulatoryConsiderations">Key Regulatory Considerations</label>
-                                    <textarea class="form-control" id="regulatoryConsiderations" name="regulatoryConsiderations" placeholder="Are there any key regulatory to consider, for example: Call Recording? Do country specific regulations prevent telephony being delivered from another country?" required></textarea>
-                                </div>
-                            </div>
-
                             <!-- Concurrent Calls -->
                             <div class="form-row mr-4">
                                 <div class="form-group col-md-12">
@@ -240,12 +214,22 @@
                                 </div>
                             </div>
 
+                            <!-- Email Flow -->
+                            <div class="form-check mr-4">
+                                <div class="form-group col-md-12">
+                                    <input class="form-check-input" type="checkbox" value="" id="emailFlowDocumented">
+                                    <label class="form-check-label" for="emailFlowDocumented">
+                                        Is the email flow documented? (optional)
+                                    </label>
+                                </div>
+                            </div>
+
                             <!-- Prompts -->
                             <div class="form-check mr-4">
                                 <div class="form-group col-md-12">
                                     <input class="form-check-input" type="checkbox" value="" id="promptsAvailable">
                                     <label class="form-check-label" for="promptsAvailable">
-                                        Are the required announcements (prompts) available as audio files?
+                                        Is the customer able to supply audio prompt/announcement files? If these are not available, TTS will be used.
                                     </label>
                                 </div>
                             </div>
@@ -299,6 +283,36 @@
                                 <div class="form-group col-md-12">
                                     <label for="emailInfrastructure">Email Infrastructure</label>
                                     <textarea class="form-control" id="emailInfrastructure" name="emailInfrastructure" placeholder="What is the existing email infrastructure and can it be modified to use a company domain email address?"></textarea>
+                                </div>
+                            </div>
+
+                            <!-- Terms & Conditions -->
+                            <div class="form-check mr-4">
+                                <div class="form-group col-md-12">
+                                    <input class="form-check-input" type="checkbox" value="" id="standardTermsConditions">
+                                    <label class="form-check-label" for="standardTermsConditions">
+                                        Has the customer agreed to our standard Terms and Conditions and DPA?
+                                    </label>
+                                </div>
+                            </div>
+
+                            <!-- Off-Boarding Policy -->
+                            <div class="form-check mr-4">
+                                <div class="form-group col-md-12">
+                                    <input class="form-check-input" type="checkbox" value="" id="offBoardingPolicy">
+                                    <label class="form-check-label" for="offBoardingPolicy">
+                                        Does the customer understand and agree to our off-boarding policy of Data Deletion or Data Download as per the standard Terms and Conditions?
+                                    </label>
+                                </div>
+                            </div>
+
+                            <!-- Change Management Process Delays -->
+                            <div class="form-check mr-4">
+                                <div class="form-group col-md-12">
+                                    <input class="form-check-input" type="checkbox" value="" id="changeManagementProcessDelays">
+                                    <label class="form-check-label" for="changeManagementProcessDelays">
+                                        Does the customer accept that Genesys will not be held responsible for any delays caused by the customer change management process?
+                                    </label>
                                 </div>
                             </div>
 
@@ -487,7 +501,7 @@
         let tasksControls = [], taskId = 10000;
 
         let region = getUrlParameter("region");
-        $("#editModal #region").text(region);
+        $("#region").text(region);
 
         // SetLink for Dashboard
         document.getElementById("dashboardLink").setAttribute("href", `./dashboard.html?region=${$("#region").text()}`);
@@ -529,7 +543,6 @@
 
         $("#editModal #existingTelephonyUsage").on('change', () => {
             $("#editModal #existingTelephonyUsageDetails").attr('disabled', !$("#editModal #existingTelephonyUsage").is(":checked"));
-            setTelephonyModel();
         });
 
         function setTelephonyModel() {
@@ -646,11 +659,9 @@
 
             // Common Questions
             $("#editModal #customerResourceCommitted").attr('checked', false);
-            $("#editModal #projectSponsorAssigned").attr('checked', false);
-            $("#editModal #changeManagementProcess").val("");
-            $("#editModal #regulatoryConsiderations").val("");
             $("#editModal #numberConcurrentCalls").val("");
             $("#editModal #callFlowsDocumented").attr('checked', false);
+            $("#editModal #emailFlowDocumented").attr('checked', false);
             $("#editModal #promptsAvailable").attr('checked', false);
             $("#editModal #identificationAndVerificationProcesses").val("");
             $("#editModal #itInfrastructure").val("");
@@ -658,6 +669,11 @@
             $("#editModal #endUserDevicesRequireVPN").attr('checked', false);
             $("#editModal #virtualDesktopSolution").val("");
             $("#editModal #emailInfrastructure").val("");
+
+            // Policies & Processes
+            $("#editModal #standardTermsConditions").prop('checked', false);
+            $("#editModal #offBoardingPolicy").prop('checked', false);
+            $("#editModal #changeManagementProcessDelays").prop('checked', false);
 
             // Requester Info
             $("#editModal #region").val("");
@@ -1063,11 +1079,9 @@
 
             // Common Questions
             $("#editModal #customerResourceCommitted").attr('checked', request.customerResourceCommitted);
-            $("#editModal #projectSponsorAssigned").attr('checked', request.projectSponsorAssigned);
-            $("#editModal #changeManagementProcess").val(request.changeManagementProcess);
-            $("#editModal #regulatoryConsiderations").val(request.regulatoryConsiderations);
             $("#editModal #numberConcurrentCalls").val(request.numberConcurrentCalls || "");
             $("#editModal #callFlowsDocumented").attr('checked', request.callFlowsDocumented);
+            $("#editModal #emailFlowDocumented").attr('checked', request.emailFlowDocumented || false);
             $("#editModal #promptsAvailable").attr('checked', request.promptsAvailable);
             $("#editModal #identificationAndVerificationProcesses").val(request.identificationAndVerificationProcesses);
             $("#editModal #itInfrastructure").val(request.itInfrastructure);
@@ -1075,6 +1089,11 @@
             $("#editModal #endUserDevicesRequireVPN").attr('checked', request.endUserDevicesRequireVPN);
             $("#editModal #virtualDesktopSolution").val(request.virtualDesktopSolution);
             $("#editModal #emailInfrastructure").val(request.emailInfrastructure);
+
+            // Policies & Processes
+            $("#editModal #standardTermsConditions").prop('checked', request.standardTermsConditions);
+            $("#editModal #offBoardingPolicy").prop('checked', request.offBoardingPolicy);
+            $("#editModal #changeManagementProcessDelays").prop('checked', request.changeManagementProcessDelays);
 
             // Requester Info
             $("#editModal #region").val(request.region);
