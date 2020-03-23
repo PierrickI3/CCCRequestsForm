@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no">
+    <title>CCC Request Form</title>
+    <link rel="shortcut icon" href="/favicon.ico">
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/alasql"></script>
+    <script src="https://chartjs-plugin-datalabels.netlify.com/chartjs-plugin-datalabels.js"></script>
+    <script src="js/requests.js"></script>
+    <link type="text/css" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jsgrid/1.5.3/jsgrid.min.css" />
+    <link type="text/css" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jsgrid/1.5.3/jsgrid-theme.min.css" />
+
+
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <!-- Bootstrap core JavaScript-->
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <!-- Moment.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js" integrity="sha256-4iQZ6BVL4qNKlQ27TExEhBN1HFPvAvAMbFavKKosSWQ=" crossorigin="anonymous"></script>
+    <!-- Bootbox -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/5.4.0/bootbox.min.js"></script>
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="./css/custom.css">
+</head>
+
+<body>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jsgrid/1.5.3/jsgrid.min.js"></script>
+    <img class="overlay" src="./images/devmode.png" id="devModeImage" hidden />
+    <nav class="navbar navbar-dark bg-dark">
+        <a class="navbar-brand" href="#">
+            <img src="images/genesys.png" width="30" height="30" class="d-inline-block align-top" alt="">
+            <span class="badge badge-warning">#homeworker</span> Request Form <small><span class="badge badge-pill badge-warning" id="regionBadge"></span></small>
+
+        </a>
+        <a href="./requests.html" id="reviewRequestsButton" class="admin btn btn-primary btn-sm">Review Requests</a>
+
+    </nav>
+
+    <div class="alert alert-danger fade show" role="alert" id="alert" hidden>
+        <strong>Maintenance Alert</strong> This site is being updated. Please wait.
+        <a class="btn btn-light" href="#" onclick="location.reload();"><i class="fa fa-refresh"></i> Refresh</a>
+    </div>
+
+    <div class="container-fluid" id="dashboard">
+        <br>
+        <div class="form-row">
+            <div class="form-group col-sm-12">
+                <div class="form-row">
+                    <div class="form-group col-md-3">
+                        <label for="region">Region</label>
+                        <select id="region" name="region" class="form-control">
+                            <option value="" selected>All regions</option>
+                            <option value="APAC">APAC</option>
+                            <option value="EMEA">EMEA</option>
+                            <option value="LATAM">LATAM</option>
+                            <option value="NA">North America</option>
+                        </select>
+                    </div>
+                    <div class="form-group col-md-3">
+                        <label for="subRegion">Territory</label>
+                        <select id="subRegion" name="subRegion" class="form-control" required>
+                            <option value="" selected>All</option>
+                        </select>
+                    </div>
+
+                </div>
+                <center>
+                    <div id="spinner" class="justify-content-center">
+                        <div class="spinner-grow text-secondary" role="status">
+                        </div>
+                        <br>
+                        <p class="text-secondary">Refreshing Dashboard...</p>
+                    </div>
+                </center>
+                <div class="form-row">
+                    <div class="form-group col-md-5">
+                        <div class="chart-container" style="width:50vw" id="chart_region_container" name="region">
+                            <canvas id="chart_region"></canvas>
+                        </div>
+                    </div>
+                    <div class="form-group col-md-5">
+                        <div class="chart-container" style="width:50vw" id="chart_subRegion_container" name="subRegion">
+                            <canvas id="chart_subRegion"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="form-row">
+                    <div class="form-group col-md-5">
+                        <div class="chart-container" style="width:50vw" id="chart_status_container" name="status">
+                            <canvas id="chart_status"></canvas>
+                        </div>
+                    </div>
+                    <div class="form-group col-md-5">
+                        <div class="chart-container" style="width:50vw" id="chart_acceptedRejected_container" name="acceptedRejected">
+                            <canvas id="chart_acceptedRejected"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+
+        </div>
+        <button onclick="exportData();" class="admin btn btn-dark" style="float: right;">Export to CSV</button>
+        <br><br><br>
+    </div>
+
+    <!-- Dictionary -->
+    <script src="js/dictionary.js"></script>
+
+    <script>
+        if (window.location.href.includes('dev'))
+            $("#devModeImage").removeAttr('hidden');
+
+
+        let task_parsed = [], filter = "";
+
+
+        let gcToken = localStorage.getItem("gcToken");
+        if (!gcToken)
+            window.open('./index.html', "_self");
+        console.log(`continue with gcToken: ${gcToken}`);
+
+        let data;
+        let region = getUrlParameter("region");
+        if (region == 'super-user')
+            $("#region").val()
+        else
+            $("#region").val(region);
+
+        $("#regionBadge").text(region);
+
+        if (maintenanceMode) {
+            $("#alert").attr("hidden", false);
+            $("#dashboard :input").attr("disabled", true);
+        } else {
+            init();
+        }
+
+        // SetLink for review Requests
+        document.getElementById("reviewRequestsButton").setAttribute("href", `./requests.html?region=${region}`);
+
+        function graphClick_taskType(event, array) {
+            if (array && array.length > 0 && array[0]._model) {
+                console.log(array[0]._model.label);
+                filter = array[0]._model.label;
+                //document.getElementById('selectedTaskType').innerHTML = `TaskType: ${array[0]._model.label}`;
+                //refreshGrid();
+            }
+
+
+        }
+        function prepareDataForSQL(_sql, _data) {
+            //console.log(`prepareDataForSQL: ${_sql}`);
+            let res = alasql(_sql, [_data]);
+
+            let labels = [];
+            let values = [];
+            res.forEach(element => {
+                if (!element.label)
+                    labels.push("Not Handled")
+                else
+                    labels.push(element.label);
+
+                values.push(element.val);
+            });
+
+            let myData = {
+                labels: labels,
+                datasets: [{
+                    data: values,
+                    label: "All",
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 206, 86, 1)',
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(153, 102, 255, 1)',
+                        'rgba(255, 100, 64, 1)',
+                        'rgba(200, 109, 164, 1)',
+                        'rgba(255, 50, 99, 1)',
+                        'rgba(100, 30, 164, 1)',
+                        'rgba(200, 159, 255, 1)',
+                        'rgba(50, 100, 200, 1)',
+                        'rgba(70, 150, 76, 1)',
+                        'rgba(20, 255, 150, 1)',
+                        'rgba(250, 50, 40, 1)',
+                        'rgba(175, 55, 55, 1)',
+                        'rgba(240, 140, 40, 1)',
+                        'rgba(66, 66, 166, 1)'
+                    ]
+                }]
+            };
+
+            return myData
+        }
+
+        $("#region").on("change", () => {
+            $("#subRegion").empty();
+            $("<option/>", { value: "" }).text("All").appendTo("#subRegion");
+            console.log("Regions:", regions);
+            console.log("Selected Region:", $("#region").val());
+            if (regions[$("#region").val()]) {
+                for (let subregion of regions[$("#region").val()]) {
+                    $("<option/>", { value: subregion }).text(subregion).appendTo("#subRegion");
+                }
+            }
+
+            init();
+
+        });
+        $("#subRegion").on("change", () => {
+            init();
+        });
+
+
+        function buildFilter(_sql, _isWHERE) {
+            var filter = "";
+            var bAND = false;
+            var bEmpty = true;
+
+            if (!_isWHERE)
+                filter = "WHERE ("
+            else
+                filter = " AND "
+
+            if ($('#region').val() != "" || $('#subRegion').val() != "") {
+                if ($('#region').val() != "") {
+                    filter = filter + ` region = '${$('#region').val()}' `
+                    bAND = true;
+                    bEmpty = false;
+                }
+
+                if ($('#subRegion').val() != "") {
+                    if (bAND) filter = filter + " AND ";
+                    filter = filter + `subRegion = '${$('#subRegion').val()}' `;
+                    bEmpty = false;
+                }
+
+
+            }
+            if (!_isWHERE) filter = filter + ")";
+            if (bEmpty) {
+                _sql = _sql.replace('##', "");
+            } else
+                _sql = _sql.replace('##', filter);
+
+            return _sql
+        }
+
+        function makeChart(_sql, _isWHERE, _chartName, _chartType, _chartTitle, _data, _functionOnClick) {
+
+            let sql = buildFilter(_sql, _isWHERE);
+            console.log(sql);
+
+            $(`#chart_${_chartName}`).remove();
+            $(`#chart_${_chartName}_container`).append(`<canvas id="chart_${_chartName}"><canvas>`);
+
+            let scales;
+            if (_chartType == "bar" || _chartType == "horizontalBar") {
+                scales = {
+                    yAxes: [{
+                        ticks: {
+                            min: 0
+                        }
+                    }],
+                    xAxes: [{
+                        ticks: {
+                            min: 0
+                        }
+                    }]
+                }
+            }
+
+            var ctx = document.getElementById(`chart_${_chartName}`)
+            var myDoughnutChart = new Chart(ctx, {
+                type: _chartType,
+                data: prepareDataForSQL(sql, _data),
+                options: {
+                    onClick: _functionOnClick,
+                    title: {
+                        display: true,
+                        text: _chartTitle
+                    }, plugins: {
+                        datalabels: {
+                            color: 'black',
+                            align: 'center',
+                            clamp: true
+                        }
+                    }, scales: scales,
+                    legend: {
+                        position: 'bottom'
+                    }
+                }
+            });
+        }
+
+        //showRequests();
+
+        async function init() {
+            document.getElementById("spinner").style.display = "block";
+            try {
+                data = await getDashboard(gcToken);
+            } catch (error) {
+                if (error.status == 401) {
+                    window.open('./index.html', "_self");
+                }
+            }
+            document.getElementById("spinner").style.display = "none";
+            // Parse Tasks
+            let task_filter = buildFilter('SELECT tasks FROM ? ##', false);
+            let task_raw = alasql(task_filter, [data]);
+            task_parsed = []; // Tasks with Time
+            task_raw.forEach(function (aItem) {
+                if (aItem.tasks && aItem.tasks.length > 0) {
+                    aItem.tasks.forEach(function (aTask) {
+                        task_parsed.push(aTask);
+                    })
+                }
+            });
+
+            //filter = undefined;
+            //document.getElementById('selectedTaskType').innerHTML = "Task Type: Not Selected";
+            //refreshGrid();
+
+            // By Region
+            makeChart('SELECT count(*) as val, region as label FROM ? ## GROUP BY region', false, 'region', 'doughnut', 'By Region', data);
+
+            // By Teritory
+            makeChart(`SELECT count(*) as val, subRegion as label FROM ? ## GROUP BY subRegion`, false, 'subRegion', 'doughnut', 'By Territory', data);
+
+
+            // By Status for Active and not deleted
+            makeChart("SELECT count(*) as val, status as label FROM ? WHERE (isDeleted = false ##) GROUP BY status", true, 'status', 'doughnut', 'By Status for Active Requests', data);
+
+            // By Handled Status for Active
+            makeChart("SELECT count(*) as val, acceptedRejected as label FROM ? WHERE (isDeleted = false ##) GROUP BY acceptedRejected", true, 'acceptedRejected', 'doughnut', 'By Accepted/Rejected Status', data);
+
+
+        }
+
+        async function exportData() {
+            let myExportData;
+            try {
+                myExportData = await getExport();
+                if (myExportData.length == 0) {
+                    bootbox.alert("Nothing to export...");
+                    return
+                }
+
+                var flatData = [];
+                myExportData.forEach(function (aItem) {
+
+                    var singleRow = $.extend(true, {}, aItem);
+                    singleRow.countriesAgents = aItem.countriesAgents.join(", ");
+                    singleRow.countriesOperation = aItem.countriesOperation.join(", ");
+                    singleRow.telephonyModel = telephonyModel[aItem.telephonyModel];
+                
+                    if (singleRow.mailDistibution) delete singleRow.mailDistibution;
+                    singleRow.createdAt = moment.utc(singleRow.createdAt)
+                    singleRow.updatedAt = moment.utc(singleRow.updatedAt)
+                    flatData.push(singleRow);
+
+                })
+
+                myExportData = {};
+
+                const replacer = (key, value) => value === null ? '' : value // specify how you want to handle null values here
+                const header = Object.keys(flatData[0])
+                let csv = flatData.map(row => header.map(fieldName => JSON.stringify(row[fieldName], replacer)).join(';'))
+                csv.unshift(header.join(';'))
+                csv = csv.join('\r\n')
+
+                download(csv, 'export.csv');
+            } catch (error) {
+                console.log(error);
+                if (error.status == 401) {
+                    window.open('./index.html', "_self");
+                }
+
+            }
+
+        }
+
+        // Function to download data to a file
+        function download(data, filename, type) {
+            var file = new Blob([data], { type: type });
+            if (window.navigator.msSaveOrOpenBlob) // IE10+
+                window.navigator.msSaveOrOpenBlob(file, filename);
+            else { // Others
+                var a = document.createElement("a"),
+                    url = URL.createObjectURL(file);
+                a.href = url;
+                a.download = filename;
+                document.body.appendChild(a);
+                a.click();
+                setTimeout(function () {
+                    document.body.removeChild(a);
+                    window.URL.revokeObjectURL(url);
+                }, 0);
+            }
+        }
+
+        function getUrlParameter(sParam) {
+            var sPageURL = window.location.search.substring(1),
+                sURLVariables = sPageURL.split('&'),
+                sParameterName,
+                i;
+
+            for (i = 0; i < sURLVariables.length; i++) {
+                sParameterName = sURLVariables[i].split('=');
+
+                if (sParameterName[0] === sParam) {
+                    return sParameterName[1] === undefined ? true : decodeURIComponent(sParameterName[1]);
+                }
+            }
+        };
+
+
+    </script>
+
+    <!--Coollabs -->
+    <script async defer src="https://cdn.coollabs.io/save.js"></script>
+
+</body>
+
+</html>
