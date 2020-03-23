@@ -71,11 +71,11 @@ async function postRequests() {
   }
 
   if ($("#existingTelephonyUsageDetails").val().length > 0) {
-      data.existingTelephonyUsageDetails = $("#existingTelephonyUsageDetails").val();
+    data.existingTelephonyUsageDetails = $("#existingTelephonyUsageDetails").val();
   }
 
   if ($("#emailInfrastructure").val().length > 0) {
-      data.emailInfrastructure = $("#emailInfrastructure").val();
+    data.emailInfrastructure = $("#emailInfrastructure").val();
   }
 
 
@@ -168,10 +168,9 @@ async function putRequest() {
   else
     data.status = $("#editModal #status").val();
 
-  if ($("#editModal #bAcceptedRequest").val() == '') {
-    data.acceptedRejected = "not handled";
-  } else
+  if ($("#editModal #bAcceptedRequest").val() !== '') {
     data.acceptedRejected = $("#editModal #bAcceptedRequest").val()
+  }
 
 
   //#region Optional fields
@@ -193,7 +192,7 @@ async function putRequest() {
   }
 
   if ($("#editModal #existingTelephonyUsageDetails").val().length > 0) {
-      data.existingTelephonyUsageDetails = $("#editModal #existingTelephonyUsageDetails").val();
+    data.existingTelephonyUsageDetails = $("#editModal #existingTelephonyUsageDetails").val();
   }
 
   if ($("#editModal #newNumbers").val().length > 0) {
