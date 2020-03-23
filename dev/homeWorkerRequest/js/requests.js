@@ -20,7 +20,7 @@ async function postRequests() {
     byocCloudCarriers: countriesAndCarriers,
     //byocPremiseWithVirtualEdges: getBYOCWithVirtualEdges(),
     relationshipWithCarrier: $("#relationshipWithCarrier").is(':checked'),
-    
+
     //nonGeographicNumbersReRouting: $("#nonGeographicNumbersReRouting").val(),
     customerResourceCommitted: $("#customerResourceCommitted").is(':checked'),
     projectSponsorAssigned: $("#projectSponsorAssigned").is(':checked'),
@@ -59,7 +59,7 @@ async function postRequests() {
   let needCompletedBy = "Not Set";
   let needCompletedByDate = moment($("#datepicker").datepicker('getDate')).format("YYYY-MM-DDT00:00:00.000");
   if (needCompletedByDate != "Invalid date") {
-      needCompletedBy = moment($("#datepicker").datepicker('getDate')).format("YYYY-MM-DDT00:00:00.000") + "Z";
+    needCompletedBy = moment($("#datepicker").datepicker('getDate')).format("YYYY-MM-DDT00:00:00.000") + "Z";
   }
   data.needCompletedBy = needCompletedBy;
 
@@ -72,7 +72,7 @@ async function postRequests() {
   }
 
   if ($("#newNumbers").val().length > 0) {
-     data. newNumbers = $("#newNumbers").val();
+    data.newNumbers = $("#newNumbers").val();
   }
 
   //#endregion
@@ -86,7 +86,7 @@ async function postRequests() {
   }
 
   //#endregion
-  
+
   return await $.ajax({
     url: `${apiBasePath}/homeworkerrequests`,
     method: "POST",
@@ -111,19 +111,12 @@ async function postRequests() {
     .always(() => {
       console.log("postRequests completed");
     });
-    
+
 
 }
 
 async function putRequest() {
 
-  //TODO Not sure how to handle this
-  //if (!isDeleted) isDeleted = false;
-  // if (acceptedRejected == "Rejected")
-  //   status = "Closed"
-  // else
-  //   status = $("#editModal #status").val();
-  // if (!acceptedRejected) acceptedRejected = "not handled";
 
   let id = $("#editModal #id").text();
 
@@ -136,7 +129,7 @@ async function putRequest() {
     telephonyModel: $("#editModal #telephonyModel").val(),
     byocCloudCarriers: countriesAndCarriers,
     relationshipWithCarrier: $("#editModal #relationshipWithCarrier").is(':checked'),
-    
+
     //nonGeographicNumbersReRouting: $("#nonGeographicNumbersReRouting").val(),
     customerResourceCommitted: $("#editModal #customerResourceCommitted").is(':checked'),
     projectSponsorAssigned: $("#editModal #projectSponsorAssigned").is(':checked'),
@@ -161,14 +154,23 @@ async function putRequest() {
     requesterEmail: $("#editModal #requesterEmail").val(),
     requesterPhoneNumber: $("#editModal #requesterPhoneNumber").val(),
     notes: $("#editModal #notes").val(),
-    partnerCustomerName: $("#editModal #partnerCustomerName").val(),
 
-    status: status,
-    acceptedRejected: acceptedRejected,
-    isDeleted: isDeleted,
-    mailDistribution: mailDistribution[product][$("#editModal #region").val()],
-    token: _token
+
+    isDeleted: false,
+    mailDistribution: mailDistribution['Genesys Cloud'][$("#editModal #region").val()],
+    token: gcToken
   };
+
+  if ($("#editModal #bAcceptedRequest").val() == 'Rejected')
+    data.status = "Closed"
+  else
+    data.status = $("#editModal #status").val();
+
+  if ($("#editModal #bAcceptedRequest").val() == '') {
+    data.acceptedRejected = "not handled";
+  } else
+    data.acceptedRejected = $("#editModal #bAcceptedRequest").val()
+
 
   //#region Optional fields
 
@@ -176,7 +178,7 @@ async function putRequest() {
   let needCompletedBy = "Not Set";
   let needCompletedByDate = moment($("#editModal #datepicker").datepicker('getDate')).format("YYYY-MM-DDT00:00:00.000");
   if (needCompletedByDate != "Invalid date") {
-      needCompletedBy = moment($("#editModal #datepicker").datepicker('getDate')).format("YYYY-MM-DDT00:00:00.000") + "Z";
+    needCompletedBy = moment($("#editModal #datepicker").datepicker('getDate')).format("YYYY-MM-DDT00:00:00.000") + "Z";
   }
   data.needCompletedBy = needCompletedBy;
 
@@ -189,32 +191,33 @@ async function putRequest() {
   }
 
   if ($("#editModal #newNumbers").val().length > 0) {
-     data. newNumbers = $("#editModal #newNumbers").val();
+    data.newNumbers = $("#editModal #newNumbers").val();
   }
 
-  if (teamMembers && teamMembers.length > 0) {
-    data.teamMembers = teamMembers;
+  if ($("#editModal #teamMembers").val().length > 0) {
+    data.teamMembers = $("#editModal #teamMembers").val();
   }
 
-  if (acceptedRejectedNotes && acceptedRejectedNotes.length > 0) {
-    data.acceptedRejectedNotes = acceptedRejectedNotes;
+  if ($("#editModal #txtAcceptedRejectedNotes").val().length > 0) {
+    data.acceptedRejectedNotes = $("#editModal #txtAcceptedRejectedNotes").val();
   }
 
-  if (programManager && programManager.length > 0) {
-    data.programManager = programManager;
+  if ($("#editModal #programManager").val().length > 0) {
+    data.programManager = $("#editModal #programManager").val();
   }
 
-  if (partnerCustomerName && partnerCustomerName.length > 0) {
-    data.partnerCustomerName = partnerCustomerName
+  if ($("#editModal #partnerCustomerName").val().length > 0) {
+    data.partnerCustomerName = $("#editModal #partnerCustomerName").val();
   }
 
-  if (salesforceAccountOpportunity && salesforceAccountOpportunity.length > 0) {
-    data.salesforceAccountOpportunity = salesforceAccountOpportunity
+  if ($("#editModal #priority").val() && $("#editModal #priority").val().length > 0) {
+    data.priority = $("#editModal #priority").val();
   }
 
-  if (priority && priority.length > 0) {
-    data.priority = priority
-  }
+  if ($("#editModal #time").val() && $("#editModal #time").val().length > 0) {
+    data.time = $("#editModal #time").val()
+  } else
+    data.time = "0"
 
   console.log(data);
 
@@ -227,7 +230,7 @@ async function putRequest() {
   //#endregion
 
   return await $.ajax({
-    url: `${apiBasePath}/requests/${id}`,
+    url: `${apiBasePath}/homeworkerrequests/${id}`,
     method: "PUT",
     contentType: 'application/json',
     dataType: "json",
@@ -291,13 +294,13 @@ async function getRequests(region = "", _token) {
     });
 }
 
-async function deleteRequest(requestId, _token) {
+async function deleteRequest(requestId) {
 
   console.log('Deleting request:', requestId);
 
   let data = {
     "isDeleted": true,
-    "token": _token
+    "token": gcToken
   }
 
   return await $.ajax({

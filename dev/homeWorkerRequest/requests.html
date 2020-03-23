@@ -391,7 +391,7 @@
                                 <div class="form-group col-md-10">
                                     <label id="lblAcceptedRejectedNotes" for="txtAcceptedRejectedNotes">Accepted / Rejected
                                         Notes</label>
-                                    <textarea class="form-control" id="txtAcceptedRejectedNotes" name="txtAcceptedRejectedNotes" placeholder="Notes" required> </textarea>
+                                    <textarea class="form-control" id="txtAcceptedRejectedNotes" name="txtAcceptedRejectedNotes" placeholder="Notes"> </textarea>
                                 </div>
                             </div>
                             <div class="form-row">
@@ -667,7 +667,7 @@
                                 if (result) {
                                     console.log('Deleting:', deletingRequest);
                                     try {
-                                        await deleteRequest(deletingRequest.id, gcToken);
+                                        await deleteRequest(deletingRequest.id);
                                         refreshGrid();
                                         showMessage("Request deleted", false);
                                     } catch (error) {
