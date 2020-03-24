@@ -293,7 +293,6 @@
         let gcToken, id, request, caItem;
         id = getUrlParameter("id");
 
-
         init();
 
         async function init() {
@@ -388,7 +387,6 @@
                 $('#companyName').val(caItem.organizationSetup.companyName);
                 $('#genesysCloudRegion').val(caItem.organizationSetup.genesysCloudRegion);
                 $('#numberOfUsers').val(caItem.organizationSetup.numberOfUsers);
-
             }
         }
 
@@ -442,7 +440,6 @@
             return json
         }
 
-
         //#region JSGrid
 
         let validator = $("#editModal #modal-form").validate({
@@ -451,9 +448,8 @@
         });
 
         var db = {
-
             loadData: function (filter) {
-                return $.grep(this.locations, function (location) {
+                return $.grep(caItem.locations, function (location) {
                     return (!filter.Name || location.Name.indexOf(filter.Name) > -1)
                         && (filter.Age === undefined || location.Age === filter.Age)
                         && (!filter.Address || location.Address.indexOf(filter.Address) > -1)
@@ -472,7 +468,6 @@
                 var locationIndex = $.inArray(deletingLocation, this.locations);
                 this.locations.splice(locationIndex, 1);
             }
-
         };
 
         window.db = db;
@@ -499,55 +494,46 @@
             showMessage("Draft updated", false);
         }
 
-        db.locations = [
-            {
-                "locationName": "Some location name",
-                "streetAddress": "555 North St.",
-                "city": "Indianapolis",
-                "state": "Indiana",
-                "zipCode": "433377",
-                "countryAbbreviation": "US",
-                "country": "United States",
-                "notes": "Main HQ",
-                "emergencyNumber": "+13174444444"
-            }
-        ];
+        function populateLocations() {
+            console.log('caItem locations:', caItem.locations);
+            db.locations = caItem.locations;
 
-        $("#jsGrid").jsGrid({
-            height: "100vh",
-            width: "100%",
-            editing: true,
-            autoload: true,
-            paging: false,
-            deleteConfirm: function (item) {
-                return "The location \"" + item.locationName + "\" will be removed. Are you sure?";
-            },
-            rowClick: function (args) {
-                showDetailsDialog("Edit", args.item);
-            },
-            controller: db,
-            fields: [
-                { name: "locationName", title: "Name", type: "text", width: 150 },
-                { name: "streetAddress", title: "Street Address", type: "text" },
-                { name: "city", title: "City", type: "text", width: 200 },
-                { name: "state", title: "State", type: "text", width: 100 },
-                { name: "zipCode", title: "Zip Code", type: "text", width: 100 },
-                { name: "country", title: "Country", type: "text", width: 100 },
-                { name: "notes", title: "Notes", type: "text", width: 100 },
-                { name: "emergencyNumber", title: "Emergency Number", type: "text", width: 100 },
-                {
-                    type: "control",
-                    modeSwitchButton: false,
-                    editButton: false,
-                    headerTemplate: function () {
-                        return $("<button>", { class: "btn btn-primary", type: "button" }).html("<i class='fa fa-plus'></i> Add")
-                            .on("click", function () {
-                                showDetailsDialog("Add", {});
-                            });
+            $("#jsGrid").jsGrid({
+                height: "100vh",
+                width: "100%",
+                editing: true,
+                autoload: true,
+                paging: false,
+                deleteConfirm: function (item) {
+                    return "The location \"" + item.locationName + "\" will be removed. Are you sure?";
+                },
+                rowClick: function (args) {
+                    showDetailsDialog("Edit", args.item);
+                },
+                controller: db,
+                fields: [
+                    { name: "locationName", title: "Name", type: "text", width: 150 },
+                    { name: "streetAddress", title: "Street Address", type: "text" },
+                    { name: "city", title: "City", type: "text", width: 200 },
+                    { name: "state", title: "State", type: "text", width: 100 },
+                    { name: "zipCode", title: "Zip Code", type: "text", width: 100 },
+                    { name: "country", title: "Country", type: "text", width: 100 },
+                    { name: "notes", title: "Notes", type: "text", width: 100 },
+                    { name: "emergencyNumber", title: "Emergency Number", type: "text", width: 100 },
+                    {
+                        type: "control",
+                        modeSwitchButton: false,
+                        editButton: false,
+                        headerTemplate: function () {
+                            return $("<button>", { class: "btn btn-primary", type: "button" }).html("<i class='fa fa-plus'></i> Add")
+                                .on("click", function () {
+                                    showDetailsDialog("Add", {});
+                                });
+                        }
                     }
-                }
-            ]
-        });
+                ]
+            });
+        }
 
         var formSubmitHandler = $.noop;
 
