@@ -490,7 +490,7 @@
             db.locations = caItem.locations;
 
             $("#jsGrid").jsGrid({
-                height: "100vh",
+                height: "auto",
                 width: "100%",
                 editing: true,
                 autoload: true,
@@ -550,6 +550,7 @@
                         name: "locationName",
                         title: "Name",
                         type: "text",
+                        align: "center",
                         filterTemplate: function () {
                             let input = $("<input/>", { type: "text" });
                             input.on('keyup', () => {
@@ -561,8 +562,9 @@
                     },
                     {
                         name: "streetAddress",
-                        title: "Street Address",
+                        title: "Address",
                         type: "text",
+                        align: "center",
                         filterTemplate: function () {
                             let input = $("<input/>", { type: "text" });
                             input.on('keyup', () => {
@@ -576,6 +578,7 @@
                         name: "city",
                         title: "City",
                         type: "text",
+                        align: "center",
                         filterTemplate: function () {
                             let input = $("<input/>", { type: "text" });
                             input.on('keyup', () => {
@@ -589,6 +592,7 @@
                         name: "state",
                         title: "State",
                         type: "text",
+                        align: "center",
                         filterTemplate: function () {
                             let input = $("<input/>", { type: "text" });
                             input.on('keyup', () => {
@@ -602,6 +606,7 @@
                         name: "zipCode",
                         title: "Zip Code",
                         type: "text",
+                        align: "center",
                         filterTemplate: function () {
                             let input = $("<input/>", { type: "text" });
                             input.on('keyup', () => {
@@ -615,6 +620,7 @@
                         name: "country",
                         title: "Country",
                         type: "text",
+                        align: "center",
                         filterTemplate: function () {
                             let input = $("<input/>", { type: "text" });
                             input.on('keyup', () => {
@@ -628,6 +634,7 @@
                         name: "notes",
                         title: "Notes",
                         type: "text",
+                        align: "center",
                         filterTemplate: function () {
                             let input = $("<input/>", { type: "text" });
                             input.on('keyup', () => {
@@ -642,6 +649,7 @@
                         title: "Emergency #",
                         type: "text",
                         width: 120,
+                        align: "center",
                         filterTemplate: function () {
                             let input = $("<input/>", { type: "text" });
                             input.on('keyup', () => {
@@ -655,7 +663,11 @@
                         type: "control",
                         modeSwitchButton: false,
                         editButton: false,
-                        width: 68
+                        width: 68,
+                        align: "center",
+                        headerTemplate: function () {
+                            return "Actions";
+                        }
                     }
                 ]
             });
