@@ -445,7 +445,10 @@
 
         let validator = $("#editModal #modal-form").validate({
             errorClass: "text-danger",
-            successClass: "test-success"
+            successClass: "test-success",
+            submitHandler: function () {
+                formSubmitHandler();
+            }
         });
 
         var db = {
@@ -497,7 +500,7 @@
 
         $("#addLocation").on('click', (e) => {
             e.preventDefault();
-            showDetailsDialog();
+            showDetailsDialog("Add", {});
         });
 
         function populateLocations() {
@@ -514,7 +517,7 @@
                     return "The location \"" + item.locationName + "\" will be removed. Are you sure?";
                 },
                 rowClick: function (args) {
-                    showDetailsDialog(args.item);
+                    showDetailsDialog("Edit", args.item);
                 },
                 controller: db,
                 fields: [
@@ -531,49 +534,42 @@
             });
         }
 
-        var formSubmitHandler = $.noop;
-
-        var showDetailsDialog = function (item) {
-            if (item) {
-                $("#editModal #locationName").val(item.locationName);
-                $("#editModal #streetAddress").val(item.streetAddress);
-                $("#editModal #city").val(item.city);
-                $("#editModal #state").val(item.state);
-                $("#editModal #zipCode").val(item.zipCode);
-                $("#editModal #country").val(item.country);
-                $("#editModal #country").selectpicker('refresh');
-                $("#editModal #notes").val(item.notes);
-                $("#editModal #emergencyNumber").val(item.emergencyNumber);
-                $("#editModal #submit").html("<i class='fa fa-floppy-o'></i> Save");
-                $("#editModal #modal-form").on('submit', (e) => {
-                    e.preventDefault();
-                    if (!$("#modal-form").valid()) { return; }
-                    saveItem(item, false);
-                    $("#editModal").modal('hide');
-                });
-            } else {
-                $("#editModal #modal-form").on('submit', (e) => {
-                    e.preventDefault();
-                    if (!$("#modal-form").valid()) { return; }
-                    saveItem(item, true);
-                    $("#editModal").modal('hide');
-                });
-            }
+        var showDetailsDialog = function (dialogType, item) {
+            console.log('Showing details for:', item);
+            $("#editModal #locationName").val(item.locationName);
+            $("#editModal #streetAddress").val(item.streetAddress);
+            $("#editModal #city").val(item.city);
+            $("#editModal #state").val(item.state);
+            $("#editModal #zipCode").val(item.zipCode);
+            $("#editModal #country").val(item.country);
+            $("#editModal #country").selectpicker('refresh');
+            $("#editModal #notes").val(item.notes);
+            $("#editModal #emergencyNumber").val(item.emergencyNumber);
+            $("#editModal #submit").html("<i class='fa fa-floppy-o'></i> Save");
+            formSubmitHandler = function () {
+                saveItem(item, dialogType === "Add");
+            };
             $("#editModal").modal('show');
         };
 
+        var formSubmitHandler = $.noop;
+
         var saveItem = function (item, isNew) {
+            console.log('Extending item:', item);
             $.extend(item, {
                 locationName: $("#editModal #locationName").val(),
                 streetAddress: $("#editModal #streetAddress").val(),
                 city: $("#editModal #city").val(),
-                state: $("#editModal #state").val() || "N/A",
+                state: $("#editModal #state").val(),
                 zipCode: $("#editModal #zipCode").val(),
                 country: $("#editModal #country").val(),
-                notes: $("#editModal #notes").val() || "N/A",
+                notes: $("#editModal #notes").val(),
                 emergencyNumber: $("#editModal #emergencyNumber").val(),
             });
+            console.log('Extended Item:', item);
+            console.log('IsNew?', isNew)
             $("#jsGrid").jsGrid(isNew ? "insertItem" : "updateItem", item);
+            $("#editModal").modal('hide');
         };
 
         //#region Modal
