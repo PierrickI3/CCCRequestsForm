@@ -26,7 +26,7 @@
     <nav class="navbar navbar-dark bg-dark">
         <a class="navbar-brand" href="#">
             <img src="images/genesys.png" width="30" height="30" class="d-inline-block align-top" alt="">
-            <span class="badge badge-info">#ps</span> Questionnaire
+            <span class="badge badge-info mr-2">#ps</span>Rapid Response Questionnaire <small><span id="badgePill" class="badge badge-pill badge-warning"></span></small>
         </a>
         <ul class="mb-0">
 
@@ -48,11 +48,10 @@
         <a class="btn btn-light" href="#" onclick="location.reload();"><i class="fa fa-refresh"></i> Refresh</a>
     </div>
 
-    <div class="container-fluid mt-2">
+    <div class="container-fluid mt-4">
         <div class="form-row">
             <div class="form-group col-md-12">
-                <H3 class="text-center">Rapid Response Questionnaire <span id="badgePill" class="badge badge-pill badge-warning"></span></H3>
-                <hr>
+
                 <div id="status">
 
                 </div>
@@ -63,30 +62,30 @@
                         <br>
                         <p id="spinner_message" class="text-secondary">validating request...</p>
                     </div>
-                </center>
 
 
-                <div id="accordion">
-                    <div class="card" id="divRequestDetails" hidden>
-                        <div class="card-header card-header-top" id="headingOne">
-                            <h5 class="mb-0">
-                                <button class="btn btn-outline-success collapsed" data-toggle="collapse" data-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
-                                    Request details
-                                </button>
-                            </h5>
-                        </div>
 
-                        <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
-                            <div class="card-body">
-                                <label id="requestDetails"></label>
+                    <div id="accordion">
+                        <div class="card" id="divRequestDetails" hidden>
+                            <div class="card-header card-header-top" id="headingOne">
+                                <h5 class="mb-0">
+                                    <button class="btn btn-outline-success collapsed" data-toggle="collapse" data-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+                                        Request details
+                                    </button>
+                                </h5>
+                            </div>
+
+                            <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
+                                <div class="card-body">
+                                    <label id="requestDetails"></label>
 
 
+                                </div>
                             </div>
                         </div>
+
                     </div>
-
-                </div>
-
+                </center>
 
                 <section id="mainForm" hidden>
                     <div class="row">
@@ -372,7 +371,7 @@
                             console.log('requestId not found in #homeworker db, check for separate questionarre');
                             caItem = await ca_getItem(id);
                             console.log(caItem);
-                            $('#badgePill')[0].innerHTML = "separate"
+                            $('#badgePill')[0].innerHTML = "unconnected"
                             loadDraftConfiguration();
                             enableForm(true);
                         } catch (error) {
@@ -414,20 +413,28 @@
         async function saveDraft() {
             console.log('saveDraft()');
 
-            let json = {
-                organization: {
-                    companyName: $('#companyName').val()
-                }
-            };
+            try {
+                let json = {
+                    organization: {
+                        companyName: $('#companyName').val()
+                    }
+                };
 
-            if (id && caItem) {
-                await ca_updateItem(id, json);
-            } else {
-                let draftItem = await ca_createItem(json);
-                console.log(`responseId created on CA db: ${draftItem.id}`);
-                //TODO: Update URL to include new ID
+                if (caItem) {
+                    await ca_updateItem(caItem.id, json);
+                } else {
+                    caItem = await ca_createItem(json);
+                    console.log(`responseId created on CA db: ${caItem.id}`);
+                    window.history.pushState('', 'CC Rapid Response Request Form', `${window.location.href}?id=${caItem.id}`);
+
+                }
+            } catch (error) {
+                console.error(error);
+                showMessage("Failed to update draft item", JSON.stringify(error));
+                return
             }
-            
+
+            showMessage("Draft updated", false);
 
         }
 
