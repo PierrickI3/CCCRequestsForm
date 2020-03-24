@@ -162,6 +162,7 @@
 
                                         <div id="collapseLocations" class="collapse" role="tabpanel" aria-labelledby="headingLocations" aria-expanded="false">
                                             <div class="card-block">
+                                                <button id="addLocation" class="btn btn-primary" type="button"><i class="fa fa-plus"></i> Add</button>
                                                 <div id="jsGrid"></div>
 
                                                 <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-hidden="true">
@@ -485,6 +486,11 @@
             showMessage("Draft updated", false);
         }
 
+        $("#addLocation").on('click', (e) => {
+            e.preventDefault();
+            showDetailsDialog();
+        });
+
         function populateLocations() {
             console.log('caItem locations:', caItem.locations);
             db.locations = caItem.locations;
@@ -499,69 +505,67 @@
                     return "The location \"" + item.locationName + "\" will be removed. Are you sure?";
                 },
                 rowClick: function (args) {
-                    showDetailsDialog("Edit", args.item);
+                    showDetailsDialog(args.item);
                 },
                 controller: db,
                 fields: [
-                    { name: "locationName", title: "Name", type: "text", width: 150 },
+                    { name: "locationName", title: "Name", type: "text" },
                     { name: "streetAddress", title: "Street Address", type: "text" },
-                    { name: "city", title: "City", type: "text", width: 200 },
-                    { name: "state", title: "State", type: "text", width: 100 },
-                    { name: "zipCode", title: "Zip Code", type: "text", width: 100 },
-                    { name: "country", title: "Country", type: "text", width: 100 },
-                    { name: "notes", title: "Notes", type: "text", width: 100 },
-                    { name: "emergencyNumber", title: "Emergency Number", type: "text", width: 100 },
-                    {
-                        type: "control",
-                        modeSwitchButton: false,
-                        editButton: false,
-                        headerTemplate: function () {
-                            return $("<button>", { class: "btn btn-primary", type: "button" }).html("<i class='fa fa-plus'></i> Add")
-                                .on("click", function () {
-                                    showDetailsDialog("Add", {});
-                                });
-                        }
-                    }
+                    { name: "city", title: "City", type: "text" },
+                    { name: "state", title: "State", type: "text" },
+                    { name: "zipCode", title: "Zip Code", type: "text" },
+                    { name: "country", title: "Country", type: "text" },
+                    { name: "notes", title: "Notes", type: "text" },
+                    { name: "emergencyNumber", title: "Emergency #", type: "text", width: 120 },
+                    { type: "control", modeSwitchButton: false, editButton: false, width: 68 }
                 ]
             });
         }
 
         var formSubmitHandler = $.noop;
 
-        var showDetailsDialog = function (dialogType, item) {
-            $("#editModal #locationName").val(item.locationName);
-            $("#editModal #streetAddress").val(item.streetAddress);
-            $("#editModal #city").val(item.city);
-            $("#editModal #state").val(item.state);
-            $("#editModal #zipCode").val(item.zipCode);
-            $("#editModal #country").val(item.country);
-            $("#editModal #country").selectpicker('refresh');
-            $("#editModal #notes").val(item.notes);
-            $("#editModal #emergencyNumber").val(item.emergencyNumber);
-
-            // formSubmitHandler = function () {
-            //     saveItem(item, dialogType === "Add");
-            // };
-
+        var showDetailsDialog = function (item) {
+            if (item) {
+                $("#editModal #locationName").val(item.locationName);
+                $("#editModal #streetAddress").val(item.streetAddress);
+                $("#editModal #city").val(item.city);
+                $("#editModal #state").val(item.state);
+                $("#editModal #zipCode").val(item.zipCode);
+                $("#editModal #country").val(item.country);
+                $("#editModal #country").selectpicker('refresh');
+                $("#editModal #notes").val(item.notes);
+                $("#editModal #emergencyNumber").val(item.emergencyNumber);
+                $("#editModal #submit").html("<i class='fa fa-floppy-o'></i> Save");
+                $("#editModal #modal-form").on('submit', (e) => {
+                    e.preventDefault();
+                    if (!$("#modal-form").valid()) { return; }
+                    saveItem(item, false);
+                    $("#editModal").modal('hide');
+                });
+            } else {
+                $("#editModal #modal-form").on('submit', (e) => {
+                    e.preventDefault();
+                    if (!$("#modal-form").valid()) { return; }
+                    saveItem(item, true);
+                    $("#editModal").modal('hide');
+                });
+            }
             $("#editModal").modal('show');
         };
 
-        // var saveItem = function (item, isNew) {
-        //     $.extend(client, {
-        //         locationName: $("#editModal #locationName").val(),
-        //         streetAddress: $("#editModal #streetAddress").val(),
-        //         city: $("#editModal #city").val(),
-        //         state: $("#editModal #state").val() || "N/A",
-        //         zipCode: $("#editModal #zipCode").val(),
-        //         country: $("#editModal #country").val(),
-        //         notes: $("#editModal #notes").val() || "N/A",
-        //         emergencyNumber: $("#editModal #emergencyNumber").val(),
-        //     });
-
-        //     $("#jsGrid").jsGrid(isNew ? "insertItem" : "updateItem", client);
-
-        //     $("#detailsDialog").dialog("close");
-        // };
+        var saveItem = function (item, isNew) {
+            $.extend(item, {
+                locationName: $("#editModal #locationName").val(),
+                streetAddress: $("#editModal #streetAddress").val(),
+                city: $("#editModal #city").val(),
+                state: $("#editModal #state").val() || "N/A",
+                zipCode: $("#editModal #zipCode").val(),
+                country: $("#editModal #country").val(),
+                notes: $("#editModal #notes").val() || "N/A",
+                emergencyNumber: $("#editModal #emergencyNumber").val(),
+            });
+            $("#jsGrid").jsGrid(isNew ? "insertItem" : "updateItem", item);
+        };
 
         //#region Modal
 
@@ -574,11 +578,12 @@
             $("#editModal #streetAddress").val("");
             $("#editModal #city").val("");
             $("#editModal #state").val("");
-            $("#editModal #zipCode").change();
+            $("#editModal #zipCode").val("");
             $("#editModal #country").val("");
             $("#editModal #country").selectpicker('refresh');
             $("#editModal #notes").val("");
             $("#editModal #emergencyNumber").val("");
+            $("#editModal #submit").html("<i class='fa fa-plus'></i> Add");
 
             validator.resetForm(); // Reset validation errors
         }
