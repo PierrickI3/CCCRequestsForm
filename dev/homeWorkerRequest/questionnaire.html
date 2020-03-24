@@ -31,16 +31,16 @@
     <nav class="navbar navbar-dark bg-dark">
         <a class="navbar-brand" href="#">
             <img src="images/genesys.png" width="30" height="30" class="d-inline-block align-top" alt="">
-            <span class="badge badge-info">#ps</span> Questionnaire
+            <span class="badge badge-info mr-2">#ps</span>Rapid Response Questionnaire <small><span id="badgePill" class="badge badge-pill badge-warning"></span></small>
         </a>
         <ul class="mb-0">
 
             <ul class="nav navbar-nav" style="float: right;">
-                <li><a href="#" class="btn btn-success btn-sm ml-2">Generate CSVs</a></li>
+                <li><button id="exportCSV" href="#" class="btn btn-dark btn-sm ml-2" disabled>Generate CSV</button></li>
             </ul>
 
             <ul class="nav navbar-nav" style="float: right;">
-                <li><a href="#" class="btn btn-primary btn-sm ml-2">Save Draft</a></li>
+                <li><button id="saveDraft" href="#" onclick="saveDraft();" class="btn btn-primary btn-sm ml-2" disabled>Save draft</button></li>
             </ul>
 
 
@@ -53,23 +53,45 @@
         <a class="btn btn-light" href="#" onclick="location.reload();"><i class="fa fa-refresh"></i> Refresh</a>
     </div>
 
-    <div class="container-fluid mt-2">
+    <div class="container-fluid mt-4">
         <div class="form-row">
             <div class="form-group col-md-12">
-                <H3 class="text-center">Rapid Response PS Questionnaire <span id="badgePill" class="badge badge-pill badge-warning"></span></H3>
-                <hr>
                 <div id="status">
-                    <center>
-                        <div id="spinner" class="justify-content-center">
-                            <div class="spinner-grow text-secondary" role="status">
-                            </div>
-                            <br>
-                            <p class="text-secondary">validating request...</p>
-                        </div>
-                    </center>
-                </div>
 
-                <section>
+                </div>
+                <center>
+                    <div id="spinner" class="justify-content-center">
+                        <div class="spinner-grow text-secondary" role="status">
+                        </div>
+                        <br>
+                        <p id="spinner_message" class="text-secondary">loading...</p>
+                    </div>
+
+
+
+                    <div id="accordion">
+                        <div class="card" id="divRequestDetails" hidden>
+                            <div class="card-header card-header-top" id="headingOne">
+                                <h5 class="mb-0">
+                                    <button class="btn btn-outline-success collapsed" data-toggle="collapse" data-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+                                        Request details
+                                    </button>
+                                </h5>
+                            </div>
+
+                            <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
+                                <div class="card-body">
+                                    <label id="requestDetails"></label>
+
+
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </center>
+
+                <section id="mainForm" hidden>
                     <div class="row">
                         <div class="col-md-8 offset-md-2">
                             <div class="bd-example" data-example-id="">
@@ -268,23 +290,25 @@
     <!--#endregion -->
 
     <script>
-        let gcToken, requestId;
-        requestId = getUrlParameter("requestId");
+        let gcToken, id, request, caItem;
+        id = getUrlParameter("id");
 
+
+        init();
         async function init() {
+            $('#spinner_message')[0].innerHTML = "login to Genesys Cloud...";
 
             $.each(countries, (i, country) => {
                 $("<option/>", { value: country.name }).text(country.name).appendTo("#country");
             });
 
             document.getElementById("spinner").style.display = "block";
-            //$("#accordion :input").attr("disabled", true);
+
             try {
                 await getMe();
                 if (!maintenanceMode) $("#submit").attr('disabled', false);
             } catch (error) {
                 showMessage(error.hasOwnProperty('message') ? error.message : `Unable to login to Genesys Cloud ${JSON.stringify(error)}`, true);
-                $("#submit").attr('disabled', true);
                 return
             } finally {
                 document.getElementById("spinner").style.display = "none";
@@ -294,28 +318,162 @@
             localStorage.setItem("gcToken", gcToken);
             localStorage.setItem("userName", userInfo.name);
 
-
-            if (requestId) {
+            if (id) {
+                // Try to load #rapidresponse request
+                /*
                 try {
-                    let request;
-                    document.getElementById("spinner").style.display = "block";
-                    request = await getRequest(requestId);
+                    $('#spinner_message')[0].innerHTML = "validate requestId...";
+                    request = await getRequest(id);
+                    console.log(request);
                     $('#badgePill')[0].innerHTML = "1"
                     console.log(request);
-                    showDetails();
                     $('#requestDetails')[0].innerHTML = `Related to Parnter/Customer Name <B>${request.partnerCustomerName}</B> requested by <em>${request.requesterName}</em>`;
 
                 } catch (error) {
                     console.log(error);
-                    if (error.status == 404)
-                        $('#status')[0].innerHTML = '<p class="text-danger text-center">RequestId not found</p>'
+                    if (error.status !== 404) {
+                        showMessage(JSON.stringify(error), true);
+                        return
+                    }
+
+                }
+
+
+
+                return
+                // Try to load latest draft
+                try {
+                    $('#spinner_message')[0].innerHTML = "check for latest draft...";
+                    console.log('check for separate questionarre');
+                    caItem = await ca_getItem(id);
+                    console.log(caItem);
+                    loadDraftConfiguration();
+                    enableForm(true);
+                } catch (error) {
+                    console.log(error);
+                    if (error.status !== 404) {
+                        showMessage(JSON.stringify(error), true);
+                        return
+                    }
+                }
+
+                */
+                try {
+                    $('#spinner_message')[0].innerHTML = "validate requestId...";
+                    document.getElementById("spinner").style.display = "block";
+                    request = await getRequest(id);
+                    $('#badgePill')[0].innerHTML = "1"
+                    console.log(request);
+                    $('#requestDetails')[0].innerHTML = `Related to Parnter/Customer Name <B>${request.partnerCustomerName}</B> requested by <em>${request.requesterName}</em>`;
+                    try {
+                        $('#spinner_message')[0].innerHTML = "check for latest draft...";
+                        caItem = await ca_getItem(id);
+                        console.log(caItem);
+                        loadDraftConfiguration();
+                        enableForm(true);
+
+                    } catch (error) {
+                        console.log(error);
+                    }
+
+                } catch (error) {
+                    console.log(error);
+                    if (error.status == 404) {
+                        try {
+                            console.log('requestId not found in #homeworker db, check for separate questionarre');
+                            caItem = await ca_getItem(id);
+                            console.log(caItem);
+                            loadDraftConfiguration();
+                            enableForm(true);
+                        } catch (error) {
+                            console.log(error);
+                            showMessage("Provided requestId doesn't exist", true);
+                            $("#accordion2 :input").attr("disabled", true);
+
+                        }
+
+                    }
+
+
                 } finally {
                     document.getElementById("spinner").style.display = "none";
                 }
             } else {
                 // New not related RequestForm                
-                $('#badgePill')[0].innerHTML = "NEW"
+                $('#badgePill')[0].innerHTML = "NEW";
+                enableForm(true);
+
             }
+
+        }
+
+        function enableForm(_bool) {
+            $("#saveDraft").prop('disabled', !_bool);
+            $("#exportCSV").prop('disabled', !_bool);
+            $("#mainForm").attr("hidden", !_bool);
+            if (request)
+                $("#divRequestDetails").attr("hidden", !_bool);
+        }
+
+        function loadDraftConfiguration() {
+            console.log('function loadDraftConfiguration');
+            if (caItem) {
+                // organization
+                $('#companyName').val(caItem.organizationSetup.companyName);
+                $('#genesysCloudRegion').val(caItem.organizationSetup.genesysCloudRegion);
+                $('#numberOfUsers').val(caItem.organizationSetup.numberOfUsers);
+
+            }
+        }
+
+        function buildJSON() {
+            console.log('function buildJSON');
+            let json = {
+                organization: {},
+                locations: []
+            };
+
+            if ($('#companyName').val())
+                json.organization.companyName = $('#companyName').val();
+            if ($('#genesysCloudRegion').val())
+                json.organization.genesysCloudRegion = $('#genesysCloudRegion').val();
+            if ($('#numberOfUsers').val())
+                json.organization.numberOfUsers = $('#numberOfUsers').val();
+            console.log(json);
+
+            // Test Obj
+            json = {
+                organizationSetup: {
+                    companyName: "Test Company",
+                    genesysCloudRegion: "mypurecloud.ie",
+                    numberOfUsers: 500
+                },
+                locations: [
+                    {
+                        locationName: "Some location name",
+                        streetAddress: "555 North St.",
+                        city: "Indianapolis",
+                        state: "Indiana",
+                        zipCode: "433377",
+                        countryAbbreviation: "US",
+                        country: "United States",
+                        notes: "Main HQ",
+                        emergencyNumber: "+13174444444"
+                    },
+                    {
+                        locationName: "Some location name #2",
+                        streetAddress: "555 North St. #2",
+                        city: "Indianapolis #2",
+                        state: "Indiana #2",
+                        zipCode: "433377 #2",
+                        countryAbbreviation: "US #2",
+                        country: "United States #2",
+                        notes: "Main HQ #2",
+                        emergencyNumber: "+13174444444 #2"
+                    }
+                ]
+            }
+            return json
         }
 
         init();
@@ -354,36 +512,26 @@
 
         window.db = db;
 
-        var testItem = {
-            organizationSetup: {
-                companyName: "Test Company",
-                genesysCloudRegion: "mypurecloud.ie",
-                numberOfUsers: 500
-            },
-            locations: [
-                {
-                    locationName: "Some location name",
-                    streetAddress: "555 North St.",
-                    city: "Indianapolis",
-                    state: "Indiana",
-                    zipCode: "433377",
-                    countryAbbreviation: "US",
-                    country: "United States",
-                    notes: "Main HQ",
-                    emergencyNumber: "+13174444444"
-                },
-                {
-                    locationName: "Some location name #2",
-                    streetAddress: "555 North St. #2",
-                    city: "Indianapolis #2",
-                    state: "Indiana #2",
-                    zipCode: "433377 #2",
-                    countryAbbreviation: "US #2",
-                    country: "United States #2",
-                    notes: "Main HQ #2",
-                    emergencyNumber: "+13174444444 #2"
+        async function saveDraft() {
+            console.log('saveDraft()');
+
+            try {
+                let json = buildJSON();
+                if (caItem) {
+                    await ca_updateItem(caItem.id, json);
+                } else {
+                    caItem = await ca_createItem(json);
+                    console.log(`responseId created on CA db: ${caItem.id}`);
+                    window.history.pushState('', 'CC Rapid Response Request Form', `${window.location.href}?id=${caItem.id}`);
+
                 }
-            ]
+            } catch (error) {
+                console.error(error);
+                showMessage("Failed to update draft item", JSON.stringify(error));
+                return
+            }
+
+            showMessage("Draft updated", false);
         }
 
         db.locations = [

@@ -6,7 +6,7 @@ if (window.location.href.includes('localhost'))
 else
   apiBasePath = "https://drbojb15ma.execute-api.eu-central-1.amazonaws.com/dev";
 
-// Homeworker create newRequest
+//#region Homeworker reuqests
 async function postRequests() {
   console.log('postRequests()');
 
@@ -312,7 +312,7 @@ async function getRequests(region = "", _token) {
 
 
 async function getRequest(_requestId) {
-
+  console.log('getRequest', _requestId);
   return await $.ajax({
     url: `${apiBasePath}/homeworkerrequests/${_requestId}?token=${gcToken}`,
     method: "GET",
@@ -440,3 +440,102 @@ async function getExport() {
     });
 }
 
+//#endregion /homeworker requests
+
+//#region cloudAutomation requests
+
+
+//#region Homeworker reuqests
+async function ca_createItem(_json) {
+  console.log('ca_createItem()');
+  _json.token = gcToken;
+  
+  return await $.ajax({
+    url: `${apiBasePath}/cloudautomation/items`,
+    method: "POST",
+    contentType: 'application/json',
+    dataType: "json",
+    data: JSON.stringify(_json)
+  })
+    .done((data, textStatus, jqXHR) => {
+      try {
+        if (jqXHR.status === 201) {
+          console.log(jqXHR);
+          return data;
+        } else {
+          showMessage("Unexpected error: " + textStatus, true);
+          reject(textStatus);
+        }
+      } catch (error) {
+        console.error(error);
+        reject(error);
+      }
+    })
+    .always(() => {
+      console.log("postRequests completed");
+    });
+
+
+}
+
+
+async function ca_getItem(_id) {
+
+  return await $.ajax({
+    url: `${apiBasePath}/cloudautomation/items/${_id}?token=${gcToken}`,
+    method: "GET",
+    contentType: 'application/json',
+    dataType: "json"
+  })
+    .done((data, textStatus, jqXHR) => {
+      try {
+        if (jqXHR.status === 200) {
+          console.log(jqXHR);
+          return data;
+        } else {
+          showMessage("Unexpected error: " + textStatus, true);
+          reject(textStatus);
+        }
+      } catch (error) {
+        console.error(error);
+        reject(error);
+      }
+    })
+    .always(() => {
+      console.log("getRequest completed");
+    });
+}
+
+async function ca_updateItem(_id, _json) {
+  console.log('ca_updateItem()');
+  
+  _json.token = gcToken;
+  return await $.ajax({
+    url: `${apiBasePath}/cloudautomation/items/${_id}`,
+    method: "PUT",
+    contentType: 'application/json',
+    dataType: "json",
+    data: JSON.stringify(_json)
+  })
+    .done((data, textStatus, jqXHR) => {
+      try {
+        if (jqXHR.status === 200) {
+          console.log(jqXHR);
+          return data;
+        } else {
+          showMessage("Unexpected error: " + textStatus, true);
+          reject(textStatus);
+        }
+      } catch (error) {
+        console.error(error);
+        reject(error);
+      }
+    })
+    .always(() => {
+      console.log("postRequests completed");
+    });
+
+
+}
+
+//#endregion /cloudAutomation requests

@@ -3,16 +3,17 @@ function showMessage(message, error = false) {
     $.toast({
       heading: "Success",
       text: message,
-      position: "top-right",
+      position: "bottom-right",
       icon: "success",
       hideAfter: 5000,
       stack: 6
+      
     });
   } else {
     $.toast({
       heading: "Error",
       text: message,
-      position: "top-right",
+      position: "bottom-right",
       icon: "error",
       hideAfter: 5000,
       stack: 6
