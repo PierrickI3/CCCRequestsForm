@@ -242,6 +242,16 @@
                         </div>
                     </div>
 
+                    <!-- Network Assessment Tool -->
+                    <div class="form-check mr-4">
+                        <div class="form-group col-md-12">
+                            <input class="form-check-input" type="checkbox" value="" id="networkAssessmentTool">
+                            <label class="form-check-label" for="networkAssessmentTool">
+                                Has the customer run the network assessment tool on multiple home workers to ensure they can connect successfully to Genesys Cloud?
+                            </label>
+                        </div>
+                    </div>
+
                     <!-- Internet Bandwidth -->
                     <div class="form-check mr-4">
                         <div class="form-group col-md-12">
@@ -778,6 +788,8 @@
                     "\n completed by:\t\t" + needCompletedBy + "\n notes:\t\t" + $("#notes").val() + "\n p/c name:\t\t" + $("#partnerCustomerName").val() + "\n sf/acc opp:\t\t" + $("#salesforceAccountOpportunity").val() + "\n ```\n";
                 if (!window.location.href.includes('localhost'))
                     sendNotification(`:loudspeaker: New CC Rapid Response Request from [@${userInfo.name}](#/person/${userInfo.id}) ${detailedInfo}`, region, subRegion);
+
+                cleanForm();
             } catch (error) {
                 console.error(error);
                 showMessage(error.hasOwnProperty('message') ? error.message : JSON.stringify(error, null, 2), true);
@@ -785,7 +797,6 @@
                 // Enable button
                 $("#submit").prop('disabled', false);
                 $("#submit").html('Submit');
-                cleanForm();
             }
 
         });
@@ -816,6 +827,7 @@
             $("#promptsAvailable").prop('checked', false);
             $("#identificationAndVerificationProcesses").val('');
             $("#itInfrastructure").val('');
+            $("#networkAssessmentTool").val('');
             $("#usersInternetBandwidth").prop('checked', false);
             $("#endUserDevicesRequireVPN").prop('checked', false);
             $("#virtualDesktopSolution").val('');
