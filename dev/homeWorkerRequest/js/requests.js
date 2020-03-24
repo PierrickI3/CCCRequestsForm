@@ -449,7 +449,7 @@ async function getExport() {
 async function ca_createItem(_json) {
   console.log('ca_createItem()');
   _json.token = gcToken;
-  
+
   return await $.ajax({
     url: `${apiBasePath}/cloudautomation/items`,
     method: "POST",
@@ -472,7 +472,7 @@ async function ca_createItem(_json) {
       }
     })
     .always(() => {
-      console.log("postRequests completed");
+      console.log("ca_createItem completed");
     });
 
 
@@ -480,7 +480,7 @@ async function ca_createItem(_json) {
 
 
 async function ca_getItem(_id) {
-
+  console.log(`function ca_getItem(${_id})`);
   return await $.ajax({
     url: `${apiBasePath}/cloudautomation/items/${_id}?token=${gcToken}`,
     method: "GET",
@@ -502,12 +502,12 @@ async function ca_getItem(_id) {
       }
     })
     .always(() => {
-      console.log("getRequest completed");
+      console.log("ca_getItem completed");
     });
 }
 
 async function ca_updateItem(_id, _json) {
-  console.log('ca_updateItem()');
+  console.log(`ca_updateItem(${_id})`);
   
   _json.token = gcToken;
   return await $.ajax({
@@ -532,7 +532,7 @@ async function ca_updateItem(_id, _json) {
       }
     })
     .always(() => {
-      console.log("postRequests completed");
+      console.log("ca_updateItem completed");
     });
 
 
