@@ -31,11 +31,11 @@
         <ul class="mb-0">
 
             <ul class="nav navbar-nav" style="float: right;">
-                <li><a href="#" class="btn btn-dark btn-sm ml-2">Generate CSV</a></li>
+                <li><button id="exportCSV" href="#" class="btn btn-dark btn-sm ml-2" disabled>Generate CSV</button></li>
             </ul>
 
             <ul class="nav navbar-nav" style="float: right;">
-                <li><a href="#" class="btn btn-primary btn-sm ml-2">Save draft</a></li>
+                <li><button id="saveDraft" href="#" onclick="saveDraft();" class="btn btn-primary btn-sm ml-2" disabled>Save draft</button></li>
             </ul>
 
 
@@ -54,15 +54,16 @@
                 <H3 class="text-center">Rapid Response Questionnaire <span id="badgePill" class="badge badge-pill badge-warning"></span></H3>
                 <hr>
                 <div id="status">
-                    <center>
-                        <div id="spinner" class="justify-content-center">
-                            <div class="spinner-grow text-secondary" role="status">
-                            </div>
-                            <br>
-                            <p class="text-secondary">validating request...</p>
-                        </div>
-                    </center>
+
                 </div>
+                <center>
+                    <div id="spinner" class="justify-content-center">
+                        <div class="spinner-grow text-secondary" role="status">
+                        </div>
+                        <br>
+                        <p id="spinner_message" class="text-secondary">validating request...</p>
+                    </div>
+                </center>
 
 
                 <div id="accordion">
@@ -87,7 +88,7 @@
                 </div>
 
 
-                <section>
+                <section id="mainForm" hidden>
                     <div class="row">
                         <div class="col-md-8 offset-md-2">
                             <div class="bd-example" data-example-id="">
@@ -324,27 +325,19 @@
     <!--#endregion -->
 
     <script>
-        let gcToken, requestId;
-        requestId = getUrlParameter("requestId");
+        let gcToken, id, request, caItem;
+        id = getUrlParameter("id");
 
-        function showDetails() {
-            if ($("#divRequestDetails").attr("hidden"))
-                $("#divRequestDetails").attr("hidden", false)
-            else
-                $("#divRequestDetails").attr("hidden", true)
-        }
 
         init();
         async function init() {
 
             document.getElementById("spinner").style.display = "block";
-            //$("#accordion :input").attr("disabled", true);
             try {
                 await getMe();
                 if (!maintenanceMode) $("#submit").attr('disabled', false);
             } catch (error) {
                 showMessage(error.hasOwnProperty('message') ? error.message : `Unable to login to Genesys Cloud ${JSON.stringify(error)}`, true);
-                $("#submit").attr('disabled', true);
                 return
             } finally {
                 document.getElementById("spinner").style.display = "none";
@@ -354,29 +347,87 @@
             localStorage.setItem("gcToken", gcToken);
             localStorage.setItem("userName", userInfo.name);
 
-            if (requestId) {
+            if (id) {
                 try {
-                    let request;
+                    $('#spinner_message')[0].innerHTML = "check for saved draft...";
                     document.getElementById("spinner").style.display = "block";
-                    request = await getRequest(requestId);
+                    request = await getRequest(id);
                     $('#badgePill')[0].innerHTML = "1"
                     console.log(request);
-                    showDetails();
                     $('#requestDetails')[0].innerHTML = `Related to Parnter/Customer Name <B>${request.partnerCustomerName}</B> requested by <em>${request.requesterName}</em>`;
+                    try {
+                        caItem = await ca_getItem(id);
+                        console.log(caItem);
+                        loadDraftConfiguration();
+                        enableForm(true);
+
+                    } catch (error) {
+                        console.log(error);
+                    }
 
                 } catch (error) {
                     console.log(error);
-                    if (error.status == 404)
-                        $('#status')[0].innerHTML = '<p class="text-danger text-center">RequestId not found</p>'
+                    if (error.status == 404) {
+                        try {
+                            console.log('requestId not found in #homeworker db, check for separate questionarre');
+                            caItem = await ca_getItem(id);
+                            console.log(caItem);
+                            $('#badgePill')[0].innerHTML = "separate"
+                            loadDraftConfiguration();
+                            enableForm(true);
+                        } catch (error) {
+                            console.log(error);
+                            showMessage("Provided requestId doesn't exist", true);
+                            $("#accordion2 :input").attr("disabled", true);
+
+                        }
+
+                    }
+
+
                 } finally {
                     document.getElementById("spinner").style.display = "none";
                 }
             } else {
                 // New not related RequestForm                
-                $('#badgePill')[0].innerHTML = "NEW"
+                $('#badgePill')[0].innerHTML = "NEW";
+                enableForm(true);
+
             }
 
+        }
 
+        function enableForm(_bool) {
+            $("#saveDraft").prop('disabled', !_bool);
+            $("#exportCSV").prop('disabled', !_bool);
+            $("#mainForm").attr("hidden", !_bool);
+            if (request)
+                $("#divRequestDetails").attr("hidden", !_bool);
+        }
+
+        function loadDraftConfiguration() {
+            if (caItem) {
+                $('#companyName').val(caItem.organization.companyName);
+            }
+        }
+
+        async function saveDraft() {
+            console.log('saveDraft()');
+
+            let json = {
+                organization: {
+                    companyName: $('#companyName').val()
+                }
+            };
+
+            if (id && caItem) {
+                await ca_updateItem(id, json);
+            } else {
+                let draftItem = await ca_createItem(json);
+                console.log(`responseId created on CA db: ${draftItem.id}`);
+                //TODO: Update URL to include new ID
+            }
+            
 
         }
 
