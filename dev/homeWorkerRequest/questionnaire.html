@@ -315,7 +315,7 @@
             } finally {
                 document.getElementById("spinner").style.display = "none";
             }
-  
+
             gcToken = userInfo.token
             localStorage.setItem("gcToken", gcToken);
             localStorage.setItem("userName", userInfo.name);
@@ -325,13 +325,12 @@
                 document.getElementById("spinner").style.display = "block";
                 // Try to load #rapidresponse request
                 try {
-                    $('#spinner_message')[0].innerHTML = "validate requestId...";
+                    $('#spinner_message')[0].innerHTML = "Validating Id...";
                     request = await getRequest(id);
                     console.log(request);
                     $('#badgePill')[0].innerHTML = "1"
                     console.log(request);
-                    $('#requestDetails')[0].innerHTML = `Related to Parnter/Customer Name <B>${request.partnerCustomerName}</B> requested by <em>${request.requesterName}</em>`;
-
+                    $('#requestDetails')[0].innerHTML = `Related to Partner/Customer Name <B>${request.partnerCustomerName}</B> requested by <em>${request.requesterName}</em>`;
                 } catch (error) {
                     console.error(error);
                     if (error.status !== 404) {
@@ -344,7 +343,7 @@
                 // Try to load latest draft
                 try {
                     $('#spinner_message')[0].innerHTML = "check for latest draft...";
-                    console.log('check for draft questionarre...');
+                    console.log('check for draft questionnaire...');
                     caItem = await ca_getItem(id);
                     console.log(caItem);
                 } catch (error) {
@@ -360,12 +359,12 @@
                 if (!request && !caItem) {
                     showMessage("Provided requestId doesn't exist", true);
                     return
-                }                    
+                }
                 if (request || caItem) {
                     loadDraftConfiguration();
                     enableForm(true);
                 }
-               
+
             } else {
                 // New not related RequestForm                
                 $('#badgePill')[0].innerHTML = "NEW";
