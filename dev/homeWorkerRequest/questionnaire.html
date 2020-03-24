@@ -67,8 +67,6 @@
                         <p id="spinner_message" class="text-secondary">loading...</p>
                     </div>
 
-
-
                     <div id="accordion">
                         <div class="card" id="divRequestDetails" hidden>
                             <div class="card-header card-header-top" id="headingOne">
@@ -96,6 +94,8 @@
                         <div class="col-md-8 offset-md-2">
                             <div class="bd-example" data-example-id="">
                                 <div id="accordion" role="tablist" aria-multiselectable="true">
+
+                                    <!-- Organization Setup -->
                                     <div class="card">
                                         <div class="card-header shadow-lg" role="tab" id="headingOrgSetup">
                                             <div class="mb-0">
@@ -148,6 +148,8 @@
                                             </div>
                                         </div>
                                     </div>
+
+                                    <!-- Locations -->
                                     <div class="card">
                                         <div class="card-header shadow-lg" role="tab" id="headingLocations">
                                             <div class="mb-0">
@@ -163,13 +165,13 @@
                                         <div id="collapseLocations" class="collapse" role="tabpanel" aria-labelledby="headingLocations" aria-expanded="false">
                                             <div class="card-block">
                                                 <button id="addLocation" class="btn btn-primary mb-2" type="button"><i class="fa fa-plus"></i> Add</button>
-                                                <div id="jsGrid"></div>
+                                                <div id="jsGridLocations"></div>
 
-                                                <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-hidden="true">
+                                                <div class="modal fade" id="editModalLocations" tabindex="-1" role="dialog" aria-hidden="true">
                                                     <div class="modal-dialog modal-lg" role="document">
                                                         <div class="modal-content">
                                                             <div class="modal-header" id="modal-header">
-                                                                <h5 id="title" class="modal-title">New Location</h5>
+                                                                <h5 id="title" class="modal-title">Location</h5>
                                                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                                     <span aria-hidden="true">&times;</span>
                                                                 </button>
@@ -245,6 +247,91 @@
                                             </div>
                                         </div>
                                     </div>
+
+                                    <!-- Schedules -->
+                                    <div class="card">
+                                        <div class="card-header shadow-lg" role="tab" id="headingSchedules">
+                                            <div class="mb-0">
+                                                <a data-toggle="collapse" data-parent="#accordion" href="#collapseSchedules" aria-expanded="false" aria-controls="collapseSchedules" class="collapsed">
+                                                    <i class="fa fa-calendar" aria-hidden="true" style="color: #FF4F1F;"></i>
+                                                    <h3>Schedules</h3>
+                                                    <p>Set up schedules</p>
+                                                </a>
+                                                <i class="fa fa-angle-right" aria-hidden="true" style="color: #FF4F1F;"></i>
+                                            </div>
+                                        </div>
+
+                                        <div id="collapseSchedules" class="collapse" role="tabpanel" aria-labelledby="headingSchedules" aria-expanded="false">
+                                            <div class="card-block">
+                                                <button id="addSchedule" class="btn btn-primary mb-2" type="button"><i class="fa fa-plus"></i> Add</button>
+                                                <div id="jsGridSchedules"></div>
+
+                                                <div class="modal fade" id="editModalSchedules" tabindex="-1" role="dialog" aria-hidden="true">
+                                                    <div class="modal-dialog modal-lg" role="document">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header" id="modal-header">
+                                                                <h5 id="title" class="modal-title">Schedule</h5>
+                                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                    <span aria-hidden="true">&times;</span>
+                                                                </button>
+                                                            </div>
+                                                            <form class="modal-body form-horizontal" id="modal-form">
+                                                                <div class="form-group">
+
+                                                                    <div class="form-group row">
+                                                                        <label for="scheduleName" class="col-sm-3 col-form-label">Schedule Name</label>
+                                                                        <div class="col-sm-9">
+                                                                            <input type="text" class="form-control" id="scheduleName" name="scheduleName" placeholder="Enter the name of this schedule (e.g. Open Hours Weekday)" required>
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <div class="form-group row">
+                                                                        <label for="startTime" class="col-sm-3 col-form-label">Start Time</label>
+                                                                        <div class="col-sm-9">
+                                                                            <input type="text" class="form-control" id="startTime" name="startTime" placeholder="Enter the start time for this schedule" required>
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <div class="form-group row">
+                                                                        <label for="endTime" class="col-sm-3 col-form-label">End Time</label>
+                                                                        <div class="col-sm-9">
+                                                                            <input type="text" class="form-control" id="endTime" name="endTime" placeholder="Enter the end time for this schedule" required>
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <div class="form-group row">
+                                                                        <label for="recurrence" class="col-sm-3 col-form-label">Recurrence</label>
+                                                                        <div class="col-sm-9">
+                                                                            <select id="recurrence" name="recurrence" class="form-control" required>
+                                                                                <option value="" disabled>Select a recurrence</option>
+                                                                                <option value="Daily">Daily</option>
+                                                                                <option value="Weekly">Weekly</option>
+                                                                                <option value="Monthly">Monthly</option>
+                                                                                <option value="Yearly">Yearly</option>
+                                                                            </select>
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <!-- TODO Changes depending on the recurrence (daily, weekly, monthly, yearly). See https://apps.mypurecloud.ie/directory/#/admin/routing/scheduling/schedules/d1bc9809-4438-4712-98f7-358f6d53e165 for an example -->
+                                                                    <div class="form-group row">
+                                                                        <label for="daysHours" class="col-sm-3 col-form-label">Days/Hours</label>
+                                                                        <div class="col-sm-9">
+                                                                            <input type="text" class="form-control" id="daysHours" name="daysHours" placeholder="Set the recurrence period" required>
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <div class="modal-footer">
+                                                                        <button id="btnClose" type="button" class="btn btn-link pull-right" data-dismiss="modal">Close</button>
+                                                                        <button id="submit" type="submit" class="btn btn-primary pull-left"><i class="fa fa-plus"></i> Add</button>
+                                                                    </div>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
                                 </div>
                             </div>
                         </div>
@@ -414,47 +501,10 @@
                     genesysCloudRegion: "mypurecloud.ie",
                     numberOfUsers: 500
                 },
-                locations: $("#jsGrid").jsGrid("option", "data")
+                locations: $("#jsGridLocations").jsGrid("option", "data")
             }
             return json;
         }
-
-        //#region JSGrid
-
-        let validator = $("#editModal #modal-form").validate({
-            errorClass: "text-danger",
-            successClass: "test-success",
-            submitHandler: function () {
-                formSubmitHandler();
-            }
-        });
-
-        var db = {
-            loadData: function (filter) {
-                return $.grep(this.locations, function (location) {
-                    return (!filter.locationName || location.locationName.toLowerCase().indexOf(filter.locationName.toLowerCase()) > -1)
-                        && (!filter.streetAddress || location.streetAddress.toLowerCase().indexOf(filter.streetAddress.toLowerCase()) > -1)
-                        && (!filter.city || location.city.toLowerCase().indexOf(filter.city.toLowerCase()) > -1)
-                        && (!filter.state || location.state.toLowerCase().indexOf(filter.state.toLowerCase()) > -1)
-                        && (!filter.zipCode || location.zipCode.toLowerCase().indexOf(filter.zipCode.toLowerCase()) > -1)
-                        && (!filter.country || location.country.toLowerCase().indexOf(filter.country.toLowerCase()) > -1)
-                        && (!filter.notes || location.notes.toLowerCase().indexOf(filter.notes.toLowerCase()) > -1)
-                        && (!filter.emergencyNumber || location.emergencyNumber.toLowerCase().indexOf(filter.emergencyNumber.toLowerCase()) > -1);
-                });
-            },
-
-            insertItem: function (insertingLocation) {
-                this.locations.push(insertingLocation);
-            },
-
-            updateItem: function (updatingLocation) { },
-
-            deleteItem: function (deletingLocation) {
-
-            }
-        };
-
-        window.db = db;
 
         async function saveDraft() {
             console.log('saveDraft()');
@@ -478,18 +528,56 @@
             showMessage("Draft updated", false);
         }
 
+        //#region JSGrid
+
         jsGrid.setDefaults({ tableClass: "jsgrid-table table table-striped table-hover" });
+
+        //TODO Duplicate for schedules
+
+        //#region Locations
+
+        var dbLocations = {
+            loadData: function (filter) {
+                return $.grep(this.locations, function (location) {
+                    return (!filter.locationName || location.locationName.toLowerCase().indexOf(filter.locationName.toLowerCase()) > -1)
+                        && (!filter.streetAddress || location.streetAddress.toLowerCase().indexOf(filter.streetAddress.toLowerCase()) > -1)
+                        && (!filter.city || location.city.toLowerCase().indexOf(filter.city.toLowerCase()) > -1)
+                        && (!filter.state || location.state.toLowerCase().indexOf(filter.state.toLowerCase()) > -1)
+                        && (!filter.zipCode || location.zipCode.toLowerCase().indexOf(filter.zipCode.toLowerCase()) > -1)
+                        && (!filter.country || location.country.toLowerCase().indexOf(filter.country.toLowerCase()) > -1)
+                        && (!filter.notes || location.notes.toLowerCase().indexOf(filter.notes.toLowerCase()) > -1)
+                        && (!filter.emergencyNumber || location.emergencyNumber.toLowerCase().indexOf(filter.emergencyNumber.toLowerCase()) > -1);
+                });
+            },
+            insertItem: function (insertingLocation) {
+                this.locations.push(insertingLocation);
+            },
+            updateItem: function (updatingLocation) { },
+            deleteItem: function (deletingLocation) { }
+        };
+
+        window.dbLocations = dbLocations;
+
+        var formSubmitHandlerLocations = $.noop;
+
+        let validatorLocations = $("#editModalLocations #modal-form").validate({
+            errorClass: "text-danger",
+            successClass: "test-success",
+            submitHandler: function () {
+                formSubmitHandlerLocations();
+            }
+        });
 
         $("#addLocation").on('click', (e) => {
             e.preventDefault();
-            showModal("Add", {});
+            showLocationsModal("Add", {});
         });
 
         function populateLocations() {
             console.log('caItem locations:', caItem.locations);
-            db.locations = caItem.locations;
+            dbLocations.locations = caItem.locations;
 
-            $("#jsGrid").jsGrid({
+            $("#jsGridLocations").jsGrid({
                 height: "auto",
                 width: "100%",
                 editing: true,
@@ -504,23 +592,23 @@
                     showMessage("An error occurred while loading your data", true);
                 },
                 rowClick: function (args) {
-                    showModal("Edit", args.item);
+                    showLocationsModal("Edit", args.item);
                 },
                 onDataLoaded: function (args) {
-                    $("#addLocation").attr('disabled', $("#jsGrid").jsGrid("option", "data").length >= 2);
+                    $("#addLocation").attr('disabled', $("#jsGridLocations").jsGrid("option", "data").length >= 2);
                 },
                 onItemInserted: function (args) {
-                    $("#addLocation").attr('disabled', $("#jsGrid").jsGrid("option", "data").length >= 2);
+                    $("#addLocation").attr('disabled', $("#jsGridLocations").jsGrid("option", "data").length >= 2);
                 },
                 onItemUpdated: function (args) {
-                    $("#addLocation").attr('disabled', $("#jsGrid").jsGrid("option", "data").length >= 2);
+                    $("#addLocation").attr('disabled', $("#jsGridLocations").jsGrid("option", "data").length >= 2);
                 },
                 onItemDeleting: function (args) {
                     console.log("onItemDeleting");
                     if (!args.item.deleteConfirmed) { // custom property for confirmation
                         args.cancel = true; // cancel deleting
                         bootbox.confirm({
-                            message: 'Do you really want to delete this request?',
+                            message: 'Do you really want to delete this location?',
                             buttons: {
                                 confirm: {
                                     label: "Delete!",
@@ -534,17 +622,17 @@
                             callback: async function (result) {
                                 if (result) {
                                     args.item.deleteConfirmed = true;
-                                    $("#jsGrid").jsGrid('deleteItem', args.item); //call deleting once more in callback
-                                    showMessage("Item deleted from the grid", false);
+                                    $("#jsGridLocations").jsGrid('deleteItem', args.item); //call deleting once more in callback
+                                    showMessage("Location deleted", false);
                                 }
                             }
                         });
                     }
                 },
                 onItemDeleted: function (args) {
-                    $("#addLocation").attr('disabled', $("#jsGrid").jsGrid("option", "data").length >= 2);
+                    $("#addLocation").attr('disabled', $("#jsGridLocations").jsGrid("option", "data").length >= 2);
                 },
-                controller: db,
+                controller: dbLocations,
                 fields: [
                     {
                         name: "locationName",
@@ -555,7 +643,7 @@
                             let input = $("<input/>", { type: "text" });
                             input.on('keyup', () => {
                                 searches.locationName = input.val();
-                                $("#jsGrid").data('JSGrid').search(searches);
+                                $("#jsGridLocations").data('JSGrid').search(searches);
                             });
                             return this.filterControl = input;
                         }
@@ -569,7 +657,7 @@
                             let input = $("<input/>", { type: "text" });
                             input.on('keyup', () => {
                                 searches.streetAddress = input.val();
-                                $("#jsGrid").data('JSGrid').search(searches);
+                                $("#jsGridLocations").data('JSGrid').search(searches);
                             });
                             return this.filterControl = input;
                         }
@@ -583,7 +671,7 @@
                             let input = $("<input/>", { type: "text" });
                             input.on('keyup', () => {
                                 searches.city = input.val();
-                                $("#jsGrid").data('JSGrid').search(searches);
+                                $("#jsGridLocations").data('JSGrid').search(searches);
                             });
                             return this.filterControl = input;
                         }
@@ -597,7 +685,7 @@
                             let input = $("<input/>", { type: "text" });
                             input.on('keyup', () => {
                                 searches.state = input.val();
-                                $("#jsGrid").data('JSGrid').search(searches);
+                                $("#jsGridLocations").data('JSGrid').search(searches);
                             });
                             return this.filterControl = input;
                         }
@@ -611,7 +699,7 @@
                             let input = $("<input/>", { type: "text" });
                             input.on('keyup', () => {
                                 searches.zipCode = input.val();
-                                $("#jsGrid").data('JSGrid').search(searches);
+                                $("#jsGridLocations").data('JSGrid').search(searches);
                             });
                             return this.filterControl = input;
                         }
@@ -625,7 +713,7 @@
                             let input = $("<input/>", { type: "text" });
                             input.on('keyup', () => {
                                 searches.country = input.val();
-                                $("#jsGrid").data('JSGrid').search(searches);
+                                $("#jsGridLocations").data('JSGrid').search(searches);
                             });
                             return this.filterControl = input;
                         }
@@ -639,7 +727,7 @@
                             let input = $("<input/>", { type: "text" });
                             input.on('keyup', () => {
                                 searches.notes = input.val();
-                                $("#jsGrid").data('JSGrid').search(searches);
+                                $("#jsGridLocations").data('JSGrid').search(searches);
                             });
                             return this.filterControl = input;
                         }
@@ -654,7 +742,7 @@
                             let input = $("<input/>", { type: "text" });
                             input.on('keyup', () => {
                                 searches.emergencyNumber = input.val();
-                                $("#jsGrid").data('JSGrid').search(searches);
+                                $("#jsGridLocations").data('JSGrid').search(searches);
                             });
                             return this.filterControl = input;
                         }
@@ -673,63 +761,59 @@
             });
         }
 
-        var showModal = function (dialogType, item) {
+        var showLocationsModal = function (dialogType, item) {
             console.log('Showing details for:', item);
-            $("#editModal #locationName").val(item.locationName);
-            $("#editModal #streetAddress").val(item.streetAddress);
-            $("#editModal #city").val(item.city);
-            $("#editModal #state").val(item.state);
-            $("#editModal #zipCode").val(item.zipCode);
-            $("#editModal #country").val(item.country);
-            $("#editModal #country").selectpicker('refresh');
-            $("#editModal #notes").val(item.notes);
-            $("#editModal #emergencyNumber").val(item.emergencyNumber);
-            $("#editModal #submit").html("<i class='fa fa-floppy-o'></i> Save");
-            formSubmitHandler = function () {
-                saveItem(item, dialogType === "Add");
+            $("#editModalLocations #locationName").val(item.locationName);
+            $("#editModalLocations #streetAddress").val(item.streetAddress);
+            $("#editModalLocations #city").val(item.city);
+            $("#editModalLocations #state").val(item.state);
+            $("#editModalLocations #zipCode").val(item.zipCode);
+            $("#editModalLocations #country").val(item.country);
+            $("#editModalLocations #country").selectpicker('refresh');
+            $("#editModalLocations #notes").val(item.notes);
+            $("#editModalLocations #emergencyNumber").val(item.emergencyNumber);
+            $("#editModalLocations #submit").html("<i class='fa fa-floppy-o'></i> Save");
+            formSubmitHandlerLocations = function () {
+                saveLocation(item, dialogType === "Add");
             };
-            $("#editModal").modal('show');
+            $("#editModalLocations").modal('show');
         };
 
-        var formSubmitHandler = $.noop;
-
-        var saveItem = function (item, isNew) {
+        var saveLocation = function (item, isNew) {
             console.log('Extending item:', item);
             $.extend(item, {
-                locationName: $("#editModal #locationName").val(),
-                streetAddress: $("#editModal #streetAddress").val(),
-                city: $("#editModal #city").val(),
-                state: $("#editModal #state").val(),
-                zipCode: $("#editModal #zipCode").val(),
-                country: $("#editModal #country").val(),
-                notes: $("#editModal #notes").val(),
-                emergencyNumber: $("#editModal #emergencyNumber").val(),
+                locationName: $("#editModalLocations #locationName").val(),
+                streetAddress: $("#editModalLocations #streetAddress").val(),
+                city: $("#editModalLocations #city").val(),
+                state: $("#editModalLocations #state").val(),
+                zipCode: $("#editModalLocations #zipCode").val(),
+                country: $("#editModalLocations #country").val(),
+                notes: $("#editModalLocations #notes").val(),
+                emergencyNumber: $("#editModalLocations #emergencyNumber").val(),
             });
             console.log('Extended Item:', item);
             console.log('IsNew?', isNew)
-            $("#jsGrid").jsGrid(isNew ? "insertItem" : "updateItem", item);
-            $("#editModal").modal('hide');
+            $("#jsGridLocations").jsGrid(isNew ? "insertItem" : "updateItem", item);
+            $("#editModalLocations").modal('hide');
         };
 
-        //#region Modal
-
-        $('#editModal').on('hidden.bs.modal', async () => {
-            initModal();
+        $('#editModalLocations').on('hidden.bs.modal', async () => {
+            initLocationsModal();
         });
 
-        function initModal() {
-            $("#editModal #locationName").val("");
-            $("#editModal #streetAddress").val("");
-            $("#editModal #city").val("");
-            $("#editModal #state").val("");
-            $("#editModal #zipCode").val("");
-            $("#editModal #country").val("");
-            $("#editModal #country").selectpicker('refresh');
-            $("#editModal #notes").val("");
-            $("#editModal #emergencyNumber").val("");
-            $("#editModal #submit").html("<i class='fa fa-plus'></i> Add");
+        function initLocationsModal() {
+            $("#editModalLocations #locationName").val("");
+            $("#editModalLocations #streetAddress").val("");
+            $("#editModalLocations #city").val("");
+            $("#editModalLocations #state").val("");
+            $("#editModalLocations #zipCode").val("");
+            $("#editModalLocations #country").val("");
+            $("#editModalLocations #country").selectpicker('refresh');
+            $("#editModalLocations #notes").val("");
+            $("#editModalLocations #emergencyNumber").val("");
+            $("#editModalLocations #submit").html("<i class='fa fa-plus'></i> Add");
 
-            validator.resetForm(); // Reset validation errors
+            validatorLocations.resetForm(); // Reset validation errors
         }
 
         //#endregion
