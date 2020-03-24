@@ -60,7 +60,7 @@
                         <div class="spinner-grow text-secondary" role="status">
                         </div>
                         <br>
-                        <p id="spinner_message" class="text-secondary">validating request...</p>
+                        <p id="spinner_message" class="text-secondary">loading...</p>
                     </div>
 
 
@@ -330,7 +330,7 @@
 
         init();
         async function init() {
-
+            $('#spinner_message')[0].innerHTML = "login to Genesys Cloud...";
             document.getElementById("spinner").style.display = "block";
             try {
                 await getMe();
@@ -347,14 +347,54 @@
             localStorage.setItem("userName", userInfo.name);
 
             if (id) {
+                // Try to load #rapidresponse request
+                /*
                 try {
-                    $('#spinner_message')[0].innerHTML = "check for saved draft...";
+                    $('#spinner_message')[0].innerHTML = "validate requestId...";
+                    request = await getRequest(id);
+                    console.log(request);
+                    $('#badgePill')[0].innerHTML = "1"
+                    console.log(request);
+                    $('#requestDetails')[0].innerHTML = `Related to Parnter/Customer Name <B>${request.partnerCustomerName}</B> requested by <em>${request.requesterName}</em>`;
+
+                } catch (error) {
+                    console.log(error);
+                    if (error.status !== 404) {
+                        showMessage(JSON.stringify(error), true);
+                        return
+                    }
+
+                }
+
+
+
+                return
+                // Try to load latest draft
+                try {
+                    $('#spinner_message')[0].innerHTML = "check for latest draft...";
+                    console.log('check for separate questionarre');
+                    caItem = await ca_getItem(id);
+                    console.log(caItem);
+                    loadDraftConfiguration();
+                    enableForm(true);
+                } catch (error) {
+                    console.log(error);
+                    if (error.status !== 404) {
+                        showMessage(JSON.stringify(error), true);
+                        return
+                    }
+                }
+
+                */
+                try {
+                    $('#spinner_message')[0].innerHTML = "validate requestId...";
                     document.getElementById("spinner").style.display = "block";
                     request = await getRequest(id);
                     $('#badgePill')[0].innerHTML = "1"
                     console.log(request);
                     $('#requestDetails')[0].innerHTML = `Related to Parnter/Customer Name <B>${request.partnerCustomerName}</B> requested by <em>${request.requesterName}</em>`;
                     try {
+                        $('#spinner_message')[0].innerHTML = "check for latest draft...";
                         caItem = await ca_getItem(id);
                         console.log(caItem);
                         loadDraftConfiguration();
@@ -371,7 +411,6 @@
                             console.log('requestId not found in #homeworker db, check for separate questionarre');
                             caItem = await ca_getItem(id);
                             console.log(caItem);
-                            $('#badgePill')[0].innerHTML = "unconnected"
                             loadDraftConfiguration();
                             enableForm(true);
                         } catch (error) {
@@ -405,21 +444,71 @@
         }
 
         function loadDraftConfiguration() {
+            console.log('function loadDraftConfiguration');
             if (caItem) {
-                $('#companyName').val(caItem.organization.companyName);
+                // organization
+                $('#companyName').val(caItem.organizationSetup.companyName);
+                $('#genesysCloudRegion').val(caItem.organizationSetup.genesysCloudRegion);
+                $('#numberOfUsers').val(caItem.organizationSetup.numberOfUsers);
+
             }
+        }
+
+        function buildJSON() {
+            console.log('function buildJSON');
+            let json = {
+                organization: {},
+                locations: []
+            };
+
+            if ($('#companyName').val())
+                json.organization.companyName = $('#companyName').val();
+            if ($('#genesysCloudRegion').val())
+                json.organization.genesysCloudRegion = $('#genesysCloudRegion').val();
+            if ($('#numberOfUsers').val())
+                json.organization.numberOfUsers = $('#numberOfUsers').val();
+            console.log(json);
+
+            // Test Obj
+            json = {
+                organizationSetup: {
+                    companyName: "Test Company",
+                    genesysCloudRegion: "mypurecloud.ie",
+                    numberOfUsers: 500
+                },
+                locations: [
+                    {
+                        locationName: "Some location name",
+                        streetAddress: "555 North St.",
+                        city: "Indianapolis",
+                        state: "Indiana",
+                        zipCode: "433377",
+                        countryAbbreviation: "US",
+                        country: "United States",
+                        notes: "Main HQ",
+                        emergencyNumber: "+13174444444"
+                    },
+                    {
+                        locationName: "Some location name #2",
+                        streetAddress: "555 North St. #2",
+                        city: "Indianapolis #2",
+                        state: "Indiana #2",
+                        zipCode: "433377 #2",
+                        countryAbbreviation: "US #2",
+                        country: "United States #2",
+                        notes: "Main HQ #2",
+                        emergencyNumber: "+13174444444 #2"
+                    }
+                ]
+            }
+            return json
         }
 
         async function saveDraft() {
             console.log('saveDraft()');
 
             try {
-                let json = {
-                    organization: {
-                        companyName: $('#companyName').val()
-                    }
-                };
-
+                let json = buildJSON();
                 if (caItem) {
                     await ca_updateItem(caItem.id, json);
                 } else {
