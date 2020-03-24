@@ -499,6 +499,10 @@
                 paging: false,
                 noDataContent: "No Locations",
                 confirmDeleting: false,
+                onError: function (args) {
+                    console.error('Failed to load grid data:', args);
+                    showMessage("An error occurred while loading your data", true);
+                },
                 rowClick: function (args) {
                     showModal("Edit", args.item);
                 },
@@ -543,7 +547,9 @@
                 controller: db,
                 fields: [
                     {
-                        name: "locationName", title: "Name", type: "text",
+                        name: "locationName",
+                        title: "Name",
+                        type: "text",
                         filterTemplate: function () {
                             let input = $("<input/>", { type: "text" });
                             input.on('keyup', () => {
@@ -553,14 +559,104 @@
                             return this.filterControl = input;
                         }
                     },
-                    { name: "streetAddress", title: "Street Address", type: "text" },
-                    { name: "city", title: "City", type: "text" },
-                    { name: "state", title: "State", type: "text" },
-                    { name: "zipCode", title: "Zip Code", type: "text" },
-                    { name: "country", title: "Country", type: "text" },
-                    { name: "notes", title: "Notes", type: "text" },
-                    { name: "emergencyNumber", title: "Emergency #", type: "text", width: 120 },
-                    { type: "control", modeSwitchButton: false, editButton: false, width: 68 }
+                    {
+                        name: "streetAddress",
+                        title: "Street Address",
+                        type: "text",
+                        filterTemplate: function () {
+                            let input = $("<input/>", { type: "text" });
+                            input.on('keyup', () => {
+                                searches.streetAddress = input.val();
+                                $("#jsGrid").data('JSGrid').search(searches);
+                            });
+                            return this.filterControl = input;
+                        }
+                    },
+                    {
+                        name: "city",
+                        title: "City",
+                        type: "text",
+                        filterTemplate: function () {
+                            let input = $("<input/>", { type: "text" });
+                            input.on('keyup', () => {
+                                searches.city = input.val();
+                                $("#jsGrid").data('JSGrid').search(searches);
+                            });
+                            return this.filterControl = input;
+                        }
+                    },
+                    {
+                        name: "state",
+                        title: "State",
+                        type: "text",
+                        filterTemplate: function () {
+                            let input = $("<input/>", { type: "text" });
+                            input.on('keyup', () => {
+                                searches.state = input.val();
+                                $("#jsGrid").data('JSGrid').search(searches);
+                            });
+                            return this.filterControl = input;
+                        }
+                    },
+                    {
+                        name: "zipCode",
+                        title: "Zip Code",
+                        type: "text",
+                        filterTemplate: function () {
+                            let input = $("<input/>", { type: "text" });
+                            input.on('keyup', () => {
+                                searches.zipCode = input.val();
+                                $("#jsGrid").data('JSGrid').search(searches);
+                            });
+                            return this.filterControl = input;
+                        }
+                    },
+                    {
+                        name: "country",
+                        title: "Country",
+                        type: "text",
+                        filterTemplate: function () {
+                            let input = $("<input/>", { type: "text" });
+                            input.on('keyup', () => {
+                                searches.country = input.val();
+                                $("#jsGrid").data('JSGrid').search(searches);
+                            });
+                            return this.filterControl = input;
+                        }
+                    },
+                    {
+                        name: "notes",
+                        title: "Notes",
+                        type: "text",
+                        filterTemplate: function () {
+                            let input = $("<input/>", { type: "text" });
+                            input.on('keyup', () => {
+                                searches.notes = input.val();
+                                $("#jsGrid").data('JSGrid').search(searches);
+                            });
+                            return this.filterControl = input;
+                        }
+                    },
+                    {
+                        name: "emergencyNumber",
+                        title: "Emergency #",
+                        type: "text",
+                        width: 120,
+                        filterTemplate: function () {
+                            let input = $("<input/>", { type: "text" });
+                            input.on('keyup', () => {
+                                searches.emergencyNumber = input.val();
+                                $("#jsGrid").data('JSGrid').search(searches);
+                            });
+                            return this.filterControl = input;
+                        }
+                    },
+                    {
+                        type: "control",
+                        modeSwitchButton: false,
+                        editButton: false,
+                        width: 68
+                    }
                 ]
             });
         }
