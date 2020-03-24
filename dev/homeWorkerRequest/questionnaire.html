@@ -336,7 +336,7 @@
                     if (error.status !== 404) {
                         document.getElementById("spinner").style.display = "none";
                         showMessage(JSON.stringify(error), true);
-                        return
+                        return;
                     }
                 }
 
@@ -345,20 +345,21 @@
                     $('#spinner_message')[0].innerHTML = "check for latest draft...";
                     console.log('check for draft questionnaire...');
                     caItem = await ca_getItem(id);
+                    populateLocations();
                     console.log(caItem);
                 } catch (error) {
                     console.log(error);
                     if (error.status !== 404) {
                         document.getElementById("spinner").style.display = "none";
                         showMessage(JSON.stringify(error), true);
-                        return
+                        return;
                     }
                 }
                 document.getElementById("spinner").style.display = "none";
 
                 if (!request && !caItem) {
                     showMessage("Provided requestId doesn't exist", true);
-                    return
+                    return;
                 }
                 if (request || caItem) {
                     loadDraftConfiguration();
