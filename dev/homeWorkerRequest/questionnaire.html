@@ -295,7 +295,9 @@
 
 
         init();
+
         async function init() {
+            console.log('function init');
             $('#spinner_message')[0].innerHTML = "login to Genesys Cloud...";
 
             $.each(countries, (i, country) => {
@@ -303,24 +305,25 @@
             });
 
             document.getElementById("spinner").style.display = "block";
-
             try {
                 await getMe();
                 if (!maintenanceMode) $("#submit").attr('disabled', false);
             } catch (error) {
+                console.error(error);
                 showMessage(error.hasOwnProperty('message') ? error.message : `Unable to login to Genesys Cloud ${JSON.stringify(error)}`, true);
                 return
             } finally {
                 document.getElementById("spinner").style.display = "none";
             }
-
+  
             gcToken = userInfo.token
             localStorage.setItem("gcToken", gcToken);
             localStorage.setItem("userName", userInfo.name);
 
             if (id) {
+                console.log(`found id ${id} in path, check for rapidRequest and draft version...`);
+                document.getElementById("spinner").style.display = "block";
                 // Try to load #rapidresponse request
-                /*
                 try {
                     $('#spinner_message')[0].innerHTML = "validate requestId...";
                     request = await getRequest(id);
@@ -330,81 +333,44 @@
                     $('#requestDetails')[0].innerHTML = `Related to Parnter/Customer Name <B>${request.partnerCustomerName}</B> requested by <em>${request.requesterName}</em>`;
 
                 } catch (error) {
-                    console.log(error);
+                    console.error(error);
                     if (error.status !== 404) {
+                        document.getElementById("spinner").style.display = "none";
                         showMessage(JSON.stringify(error), true);
                         return
                     }
-
                 }
 
-
-
-                return
                 // Try to load latest draft
                 try {
                     $('#spinner_message')[0].innerHTML = "check for latest draft...";
-                    console.log('check for separate questionarre');
+                    console.log('check for draft questionarre...');
                     caItem = await ca_getItem(id);
                     console.log(caItem);
-                    loadDraftConfiguration();
-                    enableForm(true);
                 } catch (error) {
                     console.log(error);
                     if (error.status !== 404) {
+                        document.getElementById("spinner").style.display = "none";
                         showMessage(JSON.stringify(error), true);
                         return
                     }
                 }
+                document.getElementById("spinner").style.display = "none";
 
-                */
-                try {
-                    $('#spinner_message')[0].innerHTML = "validate requestId...";
-                    document.getElementById("spinner").style.display = "block";
-                    request = await getRequest(id);
-                    $('#badgePill')[0].innerHTML = "1"
-                    console.log(request);
-                    $('#requestDetails')[0].innerHTML = `Related to Parnter/Customer Name <B>${request.partnerCustomerName}</B> requested by <em>${request.requesterName}</em>`;
-                    try {
-                        $('#spinner_message')[0].innerHTML = "check for latest draft...";
-                        caItem = await ca_getItem(id);
-                        console.log(caItem);
-                        loadDraftConfiguration();
-                        enableForm(true);
-
-                    } catch (error) {
-                        console.log(error);
-                    }
-
-                } catch (error) {
-                    console.log(error);
-                    if (error.status == 404) {
-                        try {
-                            console.log('requestId not found in #homeworker db, check for separate questionarre');
-                            caItem = await ca_getItem(id);
-                            console.log(caItem);
-                            loadDraftConfiguration();
-                            enableForm(true);
-                        } catch (error) {
-                            console.log(error);
-                            showMessage("Provided requestId doesn't exist", true);
-                            $("#accordion2 :input").attr("disabled", true);
-
-                        }
-
-                    }
-
-
-                } finally {
-                    document.getElementById("spinner").style.display = "none";
+                if (!request && !caItem) {
+                    showMessage("Provided requestId doesn't exist", true);
+                    return
+                }                    
+                if (request || caItem) {
+                    loadDraftConfiguration();
+                    enableForm(true);
                 }
+               
             } else {
                 // New not related RequestForm                
                 $('#badgePill')[0].innerHTML = "NEW";
                 enableForm(true);
-
             }
-
         }
 
         function enableForm(_bool) {
@@ -476,7 +442,6 @@
             return json
         }
 
-        init();
 
         //#region JSGrid
 
