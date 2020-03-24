@@ -28,21 +28,14 @@
             <img src="images/genesys.png" width="30" height="30" class="d-inline-block align-top" alt="">
             <span class="badge badge-info">#ps</span> Questionnaire
         </a>
-
-        <ul class="mb-0">
-
-        </ul>
-
     </nav>
-
 
     <div class="alert alert-danger fade show" role="alert" id="alert" hidden>
         <strong>Maintenance Alert</strong> This site is being updated. Please wait.
         <a class="btn btn-light" href="#" onclick="location.reload();"><i class="fa fa-refresh"></i> Refresh</a>
     </div>
 
-    <div class="container-fluid">
-        <br>
+    <div class="container-fluid mt-2">        
         <div class="form-row">
             <div class="form-group col-md-12">
                 <H3 class="text-center">Rapid Response Questionnaire <span id="badgePill" class="badge badge-pill badge-warning"></span></H3>
@@ -58,83 +51,26 @@
                     </center>
                 </div>
 
-
-                <div id="details" class="card mb-8" style="height: 80px;">
-                    <div id="requestDetails" class="card-body">
-                    </div>
-                </div>
-
-
+               
                 <div id="accordion">
-                    <div class="card">
-                        <div class="card-header" id="headingOne">
+                    <div class="card" id="divRequestDetails" hidden>
+                        <div class="card-header card-header-top" id="headingOne">
                             <h5 class="mb-0">
                                 <button class="btn btn-outline-success collapsed" data-toggle="collapse" data-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
-                                    Locations
+                                    Request details 
                                 </button>
                             </h5>
                         </div>
 
                         <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
                             <div class="card-body">
-                                <!-- Regulatory Considerations -->
-                                <div class="form-row mr-4 ml-2">
-                                    <div class="form-group col-md-12">
-                                        <label for="regulatoryConsiderations">Queues</label>
-                                        <textarea class="form-control" id="regulatoryConsiderations" name="regulatoryConsiderations" placeholder="Are there any key regulatory to consider, for example: Call Recording? Do country specific regulations prevent telephony being delivered from another country?"></textarea>
-                                    </div>
-                                </div>
+                                <label id="requestDetails"></label>
+
 
                             </div>
                         </div>
                     </div>
-                    <div class="card">
-                        <div class="card-header" id="headingTwo">
-                            <h5 class="mb-0">
-                                <button class="btn btn-outline-info collapsed" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                                    Queues
-                                </button>
-                            </h5>
-                        </div>
-                        <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
-                            <div class="card-body">
-                                <!-- Telephony Model -->
 
-                                <div class="text-muted form-group ml-3">
-                                    <small>Where a SIP trunk cannot be easily established, it is recommended to use Genesys Cloud Voice and forwarding of calls. Number porting is a longer-term option which is <strong>NOT</strong> recommended for speed of deployment.</small>
-                                </div>
-
-                                <!-- Regulatory Considerations -->
-                                <div class="form-row mr-4 ml-2">
-                                    <div class="form-group col-md-12">
-                                        <label for="regulatoryConsiderations">Key Regulatory Considerations</label>
-                                        <textarea class="form-control" id="regulatoryConsiderations" name="regulatoryConsiderations" placeholder="Are there any key regulatory to consider, for example: Call Recording? Do country specific regulations prevent telephony being delivered from another country?" required></textarea>
-                                    </div>
-                                </div>
-                                <!-- Concurrent Calls -->
-                                <div class="form-row mr-4 ml-2">
-                                    <div class="form-group col-md-12">
-                                        <label for="numberConcurrentCalls">What is the expected number of concurrent calls?</label>
-                                        <textarea class="form-control" id="numberConcurrentCalls" name="numberConcurrentCalls" placeholder="" required></textarea>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card">
-                        <div class="card-header" id="headingThree">
-                            <h5 class="mb-0">
-                                <button class="btn btn-outline-info collapsed" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                                    Other
-                                </button>
-                            </h5>
-                        </div>
-                        <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordion">
-                            <div class="card-body">
-                                Something else
-                            </div>
-                        </div>
-                    </div>
                 </div>
 
 
@@ -325,21 +261,19 @@
     <script>
         let gcToken, requestId;
         requestId = getUrlParameter("requestId");
-        /*
+   
         function showDetails() {
-            if ($("#details").attr("hidden"))
-                $("#details").attr("hidden", false)
+            if ($("#divRequestDetails").attr("hidden"))
+                $("#divRequestDetails").attr("hidden", false)
             else
-                $("#details").attr("hidden", true)
-        }
-        */
-
+                $("#divRequestDetails").attr("hidden", true)
+        }        
 
         init();
         async function init() {
 
             document.getElementById("spinner").style.display = "block";
-            $("#accordion :input").attr("disabled", true);
+            //$("#accordion :input").attr("disabled", true);
             try {
                 await getMe();
                 if (!maintenanceMode) $("#submit").attr('disabled', false);
@@ -359,10 +293,10 @@
                 try {
                     let request;
                     document.getElementById("spinner").style.display = "block";
-                    request = await getRequest(requestId);
-                    $("#accordion :input").attr("disabled", false);
+                    request = await getRequest(requestId);                    
                     $('#badgePill')[0].innerHTML = "1"
                     console.log(request);
+                    showDetails();
                     $('#requestDetails')[0].innerHTML = `Related to Parnter/Customer Name <B>${request.partnerCustomerName}</B> requested by <em>${request.requesterName}</em>`;
 
                 } catch (error) {
@@ -375,8 +309,6 @@
             } else {
                 // New not related RequestForm                
                 $('#badgePill')[0].innerHTML = "NEW"
-
-                $("#accordion :input").attr("disabled", false);
             }
 
 
