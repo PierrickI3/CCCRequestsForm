@@ -162,7 +162,7 @@
 
                                         <div id="collapseLocations" class="collapse" role="tabpanel" aria-labelledby="headingLocations" aria-expanded="false">
                                             <div class="card-block">
-                                                <button id="addLocation" class="btn btn-primary" type="button"><i class="fa fa-plus"></i> Add</button>
+                                                <button id="addLocation" class="btn btn-primary mb-2" type="button"><i class="fa fa-plus"></i> Add</button>
                                                 <div id="jsGrid"></div>
 
                                                 <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-hidden="true">
@@ -275,6 +275,8 @@
     <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.1/dist/additional-methods.min.js"></script>
     <!-- jQuery Toast -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-toast-plugin/1.3.2/jquery.toast.min.js"></script>
+    <!-- Bootbox -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/5.4.0/bootbox.min.js"></script>
     <!-- jQuery UI -->
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
     <!-- Bootstrap Select -->
@@ -291,8 +293,7 @@
     <!--#endregion -->
 
     <script>
-        let gcToken, id, request, caItem;
-        id = getUrlParameter("id");
+        let gcToken, id = getUrlParameter("id"), request, caItem, searches = {};
 
         init();
 
@@ -413,32 +414,9 @@
                     genesysCloudRegion: "mypurecloud.ie",
                     numberOfUsers: 500
                 },
-                locations: [
-                    {
-                        locationName: "Some location name",
-                        streetAddress: "555 North St.",
-                        city: "Indianapolis",
-                        state: "Indiana",
-                        zipCode: "433377",
-                        countryAbbreviation: "US",
-                        country: "United States",
-                        notes: "Main HQ",
-                        emergencyNumber: "+13174444444"
-                    },
-                    {
-                        locationName: "Some location name #2",
-                        streetAddress: "555 North St. #2",
-                        city: "Indianapolis #2",
-                        state: "Indiana #2",
-                        zipCode: "433377 #2",
-                        countryAbbreviation: "US #2",
-                        country: "United States #2",
-                        notes: "Main HQ #2",
-                        emergencyNumber: "+13174444444 #2"
-                    }
-                ]
+                locations: $("#jsGrid").jsGrid("option", "data")
             }
-            return json
+            return json;
         }
 
         //#region JSGrid
@@ -453,12 +431,15 @@
 
         var db = {
             loadData: function (filter) {
-                return $.grep(caItem.locations, function (location) {
-                    return (!filter.Name || location.Name.indexOf(filter.Name) > -1)
-                        && (filter.Age === undefined || location.Age === filter.Age)
-                        && (!filter.Address || location.Address.indexOf(filter.Address) > -1)
-                        && (!filter.Country || location.Country === filter.Country)
-                        && (filter.Married === undefined || location.Married === filter.Married);
+                return $.grep(this.locations, function (location) {
+                    return (!filter.locationName || location.locationName.toLowerCase().indexOf(filter.locationName.toLowerCase()) > -1)
+                        && (!filter.streetAddress || location.streetAddress.toLowerCase().indexOf(filter.streetAddress.toLowerCase()) > -1)
+                        && (!filter.city || location.city.toLowerCase().indexOf(filter.city.toLowerCase()) > -1)
+                        && (!filter.state || location.state.toLowerCase().indexOf(filter.state.toLowerCase()) > -1)
+                        && (!filter.zipCode || location.zipCode.toLowerCase().indexOf(filter.zipCode.toLowerCase()) > -1)
+                        && (!filter.country || location.country.toLowerCase().indexOf(filter.country.toLowerCase()) > -1)
+                        && (!filter.notes || location.notes.toLowerCase().indexOf(filter.notes.toLowerCase()) > -1)
+                        && (!filter.emergencyNumber || location.emergencyNumber.toLowerCase().indexOf(filter.emergencyNumber.toLowerCase()) > -1);
                 });
             },
 
@@ -469,8 +450,7 @@
             updateItem: function (updatingLocation) { },
 
             deleteItem: function (deletingLocation) {
-                var locationIndex = $.inArray(deletingLocation, this.locations);
-                this.locations.splice(locationIndex, 1);
+
             }
         };
 
@@ -498,9 +478,11 @@
             showMessage("Draft updated", false);
         }
 
+        jsGrid.setDefaults({ tableClass: "jsgrid-table table table-striped table-hover" });
+
         $("#addLocation").on('click', (e) => {
             e.preventDefault();
-            showDetailsDialog("Add", {});
+            showModal("Add", {});
         });
 
         function populateLocations() {
@@ -512,16 +494,65 @@
                 width: "100%",
                 editing: true,
                 autoload: true,
+                sorting: true,
+                filtering: true,
                 paging: false,
-                deleteConfirm: function (item) {
-                    return "The location \"" + item.locationName + "\" will be removed. Are you sure?";
-                },
+                noDataContent: "No Locations",
+                confirmDeleting: false,
                 rowClick: function (args) {
-                    showDetailsDialog("Edit", args.item);
+                    showModal("Edit", args.item);
+                },
+                onDataLoaded: function (args) {
+                    $("#addLocation").attr('disabled', $("#jsGrid").jsGrid("option", "data").length >= 2);
+                },
+                onItemInserted: function (args) {
+                    $("#addLocation").attr('disabled', $("#jsGrid").jsGrid("option", "data").length >= 2);
+                },
+                onItemUpdated: function (args) {
+                    $("#addLocation").attr('disabled', $("#jsGrid").jsGrid("option", "data").length >= 2);
+                },
+                onItemDeleting: function (args) {
+                    console.log("onItemDeleting");
+                    if (!args.item.deleteConfirmed) { // custom property for confirmation
+                        args.cancel = true; // cancel deleting
+                        bootbox.confirm({
+                            message: 'Do you really want to delete this request?',
+                            buttons: {
+                                confirm: {
+                                    label: "Delete!",
+                                    className: "btn-danger"
+                                },
+                                cancel: {
+                                    label: "No",
+                                    className: "btn-secondary"
+                                }
+                            },
+                            callback: async function (result) {
+                                if (result) {
+                                    args.item.deleteConfirmed = true;
+                                    $("#jsGrid").jsGrid('deleteItem', args.item); //call deleting once more in callback
+                                    showMessage("Item deleted from the grid", false);
+                                }
+                            }
+                        });
+                    }
+                },
+                onItemDeleted: function (args) {
+                    $("#addLocation").attr('disabled', $("#jsGrid").jsGrid("option", "data").length >= 2);
                 },
                 controller: db,
                 fields: [
-                    { name: "locationName", title: "Name", type: "text" },
+                    {
+                        name: "locationName", title: "Name", type: "text",
+                        filterTemplate: function () {
+                            let input = $("<input/>", { type: "text" });
+                            input.on('keyup', () => {
+                                searches.locationName = input.val();
+                                $("#jsGrid").data('JSGrid').search(searches);
+                            });
+                            return this.filterControl = input;
+                        }
+                    },
                     { name: "streetAddress", title: "Street Address", type: "text" },
                     { name: "city", title: "City", type: "text" },
                     { name: "state", title: "State", type: "text" },
@@ -534,7 +565,7 @@
             });
         }
 
-        var showDetailsDialog = function (dialogType, item) {
+        var showModal = function (dialogType, item) {
             console.log('Showing details for:', item);
             $("#editModal #locationName").val(item.locationName);
             $("#editModal #streetAddress").val(item.streetAddress);
