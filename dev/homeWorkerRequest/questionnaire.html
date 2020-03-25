@@ -36,7 +36,7 @@
         <ul class="mb-0">
 
             <ul class="nav navbar-nav" style="float: right;">
-                <li><button id="exportCSV" href="#" class="btn btn-dark btn-sm ml-2" disabled>Generate CSV</button></li>
+                <li><button id="exportCSV" onclick="exportCSV();" href="#" class="btn btn-dark btn-sm ml-2" disabled>Generate CSV</button></li>
             </ul>
 
             <ul class="nav navbar-nav" style="float: right;">
@@ -503,6 +503,7 @@
                 },
                 locations: $("#jsGridLocations").jsGrid("option", "data")
             }
+            console.log(json);
             return json;
         }
 
@@ -526,6 +527,31 @@
             }
 
             showMessage("Draft updated", false);
+        }
+
+        function exportCSV() {
+            console.log('function exportCSV()');
+            let data = buildJSON();
+            const replacer = (key, value) => value === null ? '' : value // specify how you want to handle null values here
+            let header, csv_locations;
+
+            // Locations
+            if (data.locations && data.locations.length > 0) {
+                console.log('build locations csv...');
+                header = Object.keys(data.locations[0]);
+                csv_locations = data.locations.map(row => header.map(fieldName => JSON.stringify(row[fieldName], replacer)).join(';'))
+                csv_locations.unshift(header.join(';'))
+                csv_locations = csv_locations.join('\r\n')
+            } else {
+                console.log('locations are empty, skip csv build...');
+            }
+
+
+            console.log(csv_locations)
+
+            //download(csv, 'export.csv');
+
+
         }
 
         //#region JSGrid
