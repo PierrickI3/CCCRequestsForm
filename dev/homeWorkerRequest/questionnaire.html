@@ -365,7 +365,7 @@
                                                                     <div class="form-group row">
                                                                         <label for="locationName" class="col-sm-3 col-form-label">Skill Name</label>
                                                                         <div class="col-sm-9">
-                                                                            <input type="text" class="form-control" id="skillName" name="skillName" placeholder="Enter the name of the Skill" required>
+                                                                            <input type="text" class="form-control" id="skillName" tabindex="-1" name="skillName" placeholder="Enter the name of the Skill" required>
                                                                         </div>
                                                                     </div>
 
@@ -1065,6 +1065,7 @@
                 saveSkill(item, dialogType === "Add");
             };
             $("#editModalSkills").modal('show');
+
         };
 
         var saveSkill = function (item, isNew) {
@@ -1077,6 +1078,10 @@
             $("#jsGridSkills").jsGrid(isNew ? "insertItem" : "updateItem", item);
             $("#editModalSkills").modal('hide');
         };
+
+        $("#editModalSkills").on('shown.bs.modal', function () {
+            $("#skillName").focus();
+        });
 
         $('#editModalSkills').on('hidden.bs.modal', async () => {
             initSkillsModal();
