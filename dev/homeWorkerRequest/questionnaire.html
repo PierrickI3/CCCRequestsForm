@@ -253,7 +253,7 @@
                                         <div class="card-header shadow-lg" role="tab" id="headingSchedules">
                                             <div class="mb-0">
                                                 <a data-toggle="collapse" data-parent="#accordion" href="#collapseSchedules" aria-expanded="false" aria-controls="collapseSchedules" class="collapsed">
-                                                    <i class="fa fa-calendar" aria-hidden="true" style="color: #FF4F1F;"></i>
+                                                    <i class="fa fa-calendar-o" aria-hidden="true" style="color: #FF4F1F;"></i>
                                                     <h3>Schedules</h3>
                                                     <p>Set up schedules</p>
                                                 </a>
@@ -337,7 +337,7 @@
                                         <div class="card-header shadow-lg" role="tab" id="headingSkils">
                                             <div class="mb-0">
                                                 <a data-toggle="collapse" data-parent="#accordion" href="#collapseSkills" aria-expanded="false" aria-controls="collapseSkills" class="collapsed">
-                                                    <i class="fa fa-globe" aria-hidden="true" style="color: #FF4F1F;"></i>
+                                                    <i class="fa fa-vcard-o" aria-hidden="true" style="color: #FF4F1F;"></i>
                                                     <h3>ACD Skills</h3>
                                                     <p>Information about ACD Skills</p>
                                                 </a>
@@ -535,27 +535,24 @@
         function buildJSON() {
             console.log('function buildJSON');
             let json = {
-                organization: {},
-                locations: []
+                organizationSetup: {},
+                locations: [],
+                skills: []
             };
 
             if ($('#companyName').val())
-                json.organization.companyName = $('#companyName').val();
+                json.organizationSetup.companyName = $('#companyName').val();
             if ($('#genesysCloudRegion').val())
-                json.organization.genesysCloudRegion = $('#genesysCloudRegion').val();
+                json.organizationSetup.genesysCloudRegion = $('#genesysCloudRegion').val();
             if ($('#numberOfUsers').val())
-                json.organization.numberOfUsers = $('#numberOfUsers').val();
-            console.log(json);
+                json.organizationSetup.numberOfUsers = $('#numberOfUsers').val();
 
-            // Test Obj
-            json = {
-                organizationSetup: {
-                    companyName: "Test Company",
-                    genesysCloudRegion: "mypurecloud.ie",
-                    numberOfUsers: 500
-                },
-                locations: $("#jsGridLocations").jsGrid("option", "data")
-            }
+            if ($("#jsGridLocations").jsGrid("option", "data").length > 0)
+                json.locations = $("#jsGridLocations").jsGrid("option", "data")
+            if ($("#jsGridSkills").jsGrid("option", "data").length > 0)
+                json.skills = $("#jsGridSkills").jsGrid("option", "data")
+
+
             console.log(json);
             return json;
         }
@@ -599,13 +596,44 @@
                 console.log('locations are empty, skip csv build...');
             }
 
+            //$("#jsGridSkills").jsGrid("option", "fields") -> fields names
+            // Skills
+            if (data.skills && data.skills.length > 0) {
+                console.log('build skills csv...');
+                header = Object.keys(data.skills[0]);
+                csv_skills = data.skills.map(row => header.map(fieldName => JSON.stringify(row[fieldName], replacer)).join(';'))
+                csv_skills.unshift(header.join(';'))
+                csv_skills = csv_skills.join('\r\n')
+            } else {
+                console.log('skills are empty, skip csv build...');
+            }
 
-            console.log(csv_locations)
 
-            //download(csv, 'export.csv');
+            console.log(csv_locations);
+            console.log(csv_skills);
 
+            //download(csv_locations, 'locations.csv');
 
         }
+
+        function download(data, filename, type) {
+            var file = new Blob([data], { type: type });
+            if (window.navigator.msSaveOrOpenBlob) // IE10+
+                window.navigator.msSaveOrOpenBlob(file, filename);
+            else { // Others
+                var a = document.createElement("a"),
+                    url = URL.createObjectURL(file);
+                a.href = url;
+                a.download = filename;
+                document.body.appendChild(a);
+                a.click();
+                setTimeout(function () {
+                    document.body.removeChild(a);
+                    window.URL.revokeObjectURL(url);
+                }, 0);
+            }
+        }
+
 
         //#region JSGrid
 
@@ -928,7 +956,7 @@
             showSkillsModal("Add", {});
         });
 
-        function initSkillsGrid() {   
+        function initSkillsGrid() {
             const maxSkills = 10;
 
             dbSkills.skills = caItem.hasOwnProperty('skills') ? caItem.skills : [];
@@ -993,7 +1021,7 @@
                 fields: [
                     {
                         name: "skillName",
-                        title: "Name",
+                        title: "name",
                         type: "text",
                         align: "center",
                         filterTemplate: function () {
@@ -1021,7 +1049,7 @@
 
         var showSkillsModal = function (dialogType, item) {
             console.log('Showing details for:', item);
-            $("#editModalSkills #skillName").val(item.skillName);           
+            $("#editModalSkills #skillName").val(item.skillName);
             $("#editModalSkills #submit").html("<i class='fa fa-floppy-o'></i> Save");
             formSubmitHandlerSkills = function () {
                 saveSkill(item, dialogType === "Add");
