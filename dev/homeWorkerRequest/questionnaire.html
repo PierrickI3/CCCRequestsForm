@@ -433,7 +433,6 @@
                     $('#spinner_message')[0].innerHTML = "check for latest draft...";
                     console.log('check for draft questionnaire...');
                     caItem = await ca_getItem(id);
-                    populateLocations();
                     console.log(caItem);
                 } catch (error) {
                     console.log(error);
@@ -458,7 +457,7 @@
                 // New not related RequestForm                
                 $('#badgePill')[0].innerHTML = "NEW";
                 enableForm(true);
-                populateLocations();
+                initLocationsGrid();
             }
         }
 
@@ -477,6 +476,8 @@
                 $('#companyName').val(caItem.organizationSetup.companyName);
                 $('#genesysCloudRegion').val(caItem.organizationSetup.genesysCloudRegion);
                 $('#numberOfUsers').val(caItem.organizationSetup.numberOfUsers);
+
+                initLocationsGrid();
             }
         }
 
@@ -598,7 +599,7 @@
             showLocationsModal("Add", {});
         });
 
-        function populateLocations() {
+        function initLocationsGrid() {
             //console.log('caItem locations:', caItem.locations);
             dbLocations.locations = caItem.hasOwnProperty('locations') ? caItem.locations : [];
 
