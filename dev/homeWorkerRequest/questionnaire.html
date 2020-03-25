@@ -355,7 +355,7 @@
                                                                         </div>
 
                                                                         <!-- All Day -->
-                                                                        <div class="form-check row">
+                                                                        <div class="form-check row date-row">
                                                                             <div class="form-group col-md-12">
                                                                                 <input class="form-check-input" type="checkbox" value="" id="repeatingEventAllDay">
                                                                                 <label class="form-check-label" for="repeatingEventAllDay">
@@ -364,74 +364,38 @@
                                                                             </div>
                                                                         </div>
 
-                                                                        <!-- Start Time -->
-                                                                        <div class="form-group row time-row">
-                                                                            <label class="col-sm-3 col-form-label">Start Time</label>
-                                                                            <div class="input-group date col-md-3 time-only" id="repeatingEventStartTime" data-target-input="nearest">
-                                                                                <input type="text" class="form-control datetimepicker-input" data-target="#repeatingEventStartTime" />
-                                                                                <div class="input-group-append" data-target="#repeatingEventStartTime" data-toggle="datetimepicker">
-                                                                                    <div class="input-group-text"><i class="fa fa-clock-o"></i></div>
+                                                                        <!-- Start Date -->
+                                                                        <div class="form-group row date-row">
+                                                                            <label class="col-sm-3 col-form-label">Start Date</label>
+                                                                            <div class="input-group date col-md-3 date-only" id="repeatingEventDayStart" data-target-input="nearest">
+                                                                                <input type="text" class="form-control datetimepicker-input" data-target="#repeatingEventDayStart" />
+                                                                                <div class="input-group-append" data-target="#repeatingEventDayStart" data-toggle="datetimepicker">
+                                                                                    <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                                                                                 </div>
                                                                             </div>
                                                                         </div>
 
-                                                                        <!-- End Time -->
-                                                                        <div class="form-group row time-row">
-                                                                            <label class="col-sm-3 col-form-label">End Time</label>
-                                                                            <div class="input-group date col-md-3 time-only" id="repeatingEventEndTime" data-target-input="nearest">
-                                                                                <input type="text" class="form-control datetimepicker-input" data-target="#repeatingEventEndTime" />
-                                                                                <div class="input-group-append" data-target="#repeatingEventEndTime" data-toggle="datetimepicker">
-                                                                                    <div class="input-group-text"><i class="fa fa-clock-o"></i></div>
+                                                                        <!-- End Date -->
+                                                                        <div class="form-group row date-row">
+                                                                            <label class="col-sm-3 col-form-label">End Date</label>
+                                                                            <div class="input-group date col-md-3 date-only" id="repeatingEventDayEnd" data-target-input="nearest">
+                                                                                <input type="text" class="form-control datetimepicker-input" data-target="#repeatingEventDayEnd" />
+                                                                                <div class="input-group-append" data-target="#repeatingEventDayEnd" data-toggle="datetimepicker">
+                                                                                    <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                                                                                 </div>
                                                                             </div>
                                                                         </div>
+
                                                                     </div>
 
                                                                     <!-- Single Event -->
                                                                     <div id="singleEventDiv">
-                                                                        <div class="form-check row">
+                                                                        <div class="form-check row date-row">
                                                                             <div class="form-group col-md-12">
                                                                                 <input class="form-check-input" type="checkbox" value="" id="singleEventAllDay">
                                                                                 <label class="form-check-label" for="singleEventAllDay">
                                                                                     All Day
                                                                                 </label>
-                                                                            </div>
-                                                                        </div>
-
-                                                                        <div class="form-group row">
-                                                                            <label class="col-sm-3 col-form-label">Start Date</label>
-                                                                            <div class="input-group date col-md-3 date-only" id="singleEventDayStart" data-target-input="nearest">
-                                                                                <input type="text" class="form-control datetimepicker-input" data-target="#singleEventDayStart" />
-                                                                                <div class="input-group-append" data-target="#singleEventDayStart" data-toggle="datetimepicker">
-                                                                                    <div class="input-group-text"><i class="fa fa-calendar"></i></div>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="form-group row time-row">
-                                                                            <label class="col-sm-3 col-form-label">Start Time</label>
-                                                                            <div class="input-group date col-md-3 time-only" id="singleEventStartTime" data-target-input="nearest">
-                                                                                <input type="text" class="form-control datetimepicker-input" data-target="#singleEventStartTime" />
-                                                                                <div class="input-group-append" data-target="#singleEventStartTime" data-toggle="datetimepicker">
-                                                                                    <div class="input-group-text"><i class="fa fa-clock-o"></i></div>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="form-group row time-row">
-                                                                            <label class="col-sm-3 col-form-label">End Time</label>
-                                                                            <div class="input-group date col-md-3 time-only" id="singleEventEndTime" data-target-input="nearest">
-                                                                                <input type="text" class="form-control datetimepicker-input" data-target="#singleEventEndTime" />
-                                                                                <div class="input-group-append" data-target="#singleEventEndTime" data-toggle="datetimepicker">
-                                                                                    <div class="input-group-text"><i class="fa fa-clock-o"></i></div>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="form-group row">
-                                                                            <label class="col-sm-3 col-form-label">End Date</label>
-                                                                            <div class="input-group date col-md-3 date-only" id="singleEventDayEnd" data-target-input="nearest">
-                                                                                <input type="text" class="form-control datetimepicker-input" data-target="#singleEventDayEnd" />
-                                                                                <div class="input-group-append" data-target="#singleEventDayEnd" data-toggle="datetimepicker">
-                                                                                    <div class="input-group-text"><i class="fa fa-calendar"></i></div>
-                                                                                </div>
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -1187,9 +1151,9 @@
 
         $("#repeatingEventAllDay").on('change', () => {
             if ($("#repeatingEventAllDay").is(':checked')) {
-                $(".time-row").hide();
+                $(".date-row").show();
             } else {
-                $(".time-row").show();
+                $(".date-row").hide();
             }
         });
 
@@ -1398,8 +1362,7 @@
 
             // Set default values
             let freq, byWeekDay = [], bySetPos, byMonth, byMonthDay, tzId, byNMonthDay, wkst;
-            let dtStart = new Date(), until = new Date();
-            until.setFullYear(until.getFullYear() + 1); // 1 year from now to until date TODO Is this correct?
+            let dtStart = $("#repeatingEventDayStart").datetimepicker('viewDate').toDate(), until;
             let count = 3; // We don't really care about this. It's only to generate dates for the next events in the schedule.
             let interval = $("#editModalSchedules #interval").val();
             let recurrenceType = $("#editModalSchedules #recurrenceType").val();
@@ -1408,12 +1371,12 @@
             if ($("#repeatingEvent").is(':checked')) {
                 switch (recurrenceType) {
                     case "Daily":
-                        freq = rrule.RRULE.DAILY;
+                        freq = rrule.RRule.DAILY;
                         bWeekDay = [];
                         byMonthDay = undefined;
                         break;
                     case "Weekly":
-                        freq = rrule.RRULE.WEEKLY;
+                        freq = rrule.RRule.WEEKLY;
                         //TODO Find a better way to do this
                         if ($("#weeklyControlsDiv #chkMonday").is(':checked')) { bWeekDay.push(rrule.RRule.MO); }
                         if ($("#weeklyControlsDiv #chkTuesday").is(':checked')) { bWeekDay.push(rrule.RRule.TU); }
@@ -1425,7 +1388,7 @@
                         byMonthDay = undefined;
                         break;
                     case "Monthly":
-                        freq = rrule.RRULE.MONTHLY;
+                        freq = rrule.RRule.MONTHLY;
                         if ($("#monthlyControlsDiv").is(':visible')) {
                             if ($("#monthlyRecurrenceType").val() === "On") {
                                 byMonthDay = $("#byMonthDay").val();
@@ -1442,7 +1405,7 @@
                         }
                         break;
                     case "Yearly":
-                        freq = rrule.RRULE.YEARLY;
+                        freq = rrule.RRule.YEARLY;
 
                         bWeekDay = [];
                         byMonthDay = undefined;
@@ -1453,7 +1416,10 @@
                 }
 
                 // Build RRule
-                let currentRRule = buildRRule(freq, interval, byWeeDay, dtstart, until, wkst, count, tzId, bySetPos, byMonth, byMonthDay, byNMonthDay, byYearDay);
+                let currentRRule = buildRRule(freq, interval, byWeekDay, dtStart, until, wkst, count, tzId, bySetPos, byMonth, byMonthDay);
+                console.log(currentRRule);
+                console.log(currentRRule.toString());
+
             }
             $.extend(item, {
                 scheduleName: $("#editModalSchedules #scheduleName").val(),
