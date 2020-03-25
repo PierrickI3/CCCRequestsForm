@@ -381,6 +381,71 @@
                                         </div>
                                     </div>
 
+                                    <!-- Queues -->
+                                    <div class="card">
+                                        <div class="card-header shadow-lg" role="tab" id="headingSkils">
+                                            <div class="mb-0">
+                                                <a data-toggle="collapse" data-parent="#accordion" href="#collapseQueues" aria-expanded="false" aria-controls="collapseQueues" class="collapsed">
+                                                    <i class="fa fa-group" aria-hidden="true" style="color: #FF4F1F;"></i>
+                                                    <h3>Queues</h3>
+                                                    <p>Information about Queues</p>
+                                                </a>
+                                                <i class="fa fa-angle-right" aria-hidden="true" style="color: #FF4F1F;"></i>
+                                            </div>
+                                        </div>
+
+                                        <div id="collapseQueues" class="collapse" role="tabpanel" aria-labelledby="headingQueues" aria-expanded="false">
+                                            <div class="card-block">
+                                                <button id="addQueue" class="btn btn-primary mb-2" type="button"><i class="fa fa-plus"></i> Add</button>
+                                                <div id="jsGridQueues"></div>
+
+                                                <div class="modal fade" id="editModalQueues" tabindex="-1" role="dialog" aria-hidden="true">
+                                                    <div class="modal-dialog modal-lg" role="document">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header" id="modal-header">
+                                                                <h5 id="title" class="modal-title">Queue</h5>
+                                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                    <span aria-hidden="true">&times;</span>
+                                                                </button>
+                                                            </div>
+                                                            <form class="modal-body form-horizontal" id="modal-form">
+                                                                <div class="form-group">
+
+                                                                    <div class="form-group row">
+                                                                        <label for="queueName" class="col-sm-3 col-form-label">Queue Name</label>
+                                                                        <div class="col-sm-8">
+                                                                            <input type="text" class="form-control" id="queueName" name="queuelName" placeholder="Enter the name of the Queue" required>
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <div class="form-group row">
+                                                                        <label class="col-sm-3 col-form-label" for="enableCallbacks">Supports Callbacks?</label>
+                                                                        <div class="col-sm-6 ml-3">
+                                                                            <input class="form-check-input" type="checkbox" value="" id="enableCallbacks">
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <div class="form-group row">
+                                                                        <label class="col-sm-3 col-form-label" for="enableCallbacks">Supports Emails?</label>
+                                                                        <div class="col-sm-6 ml-3">
+                                                                            <input class="form-check-input" type="checkbox" value="" id="enableEmails">
+                                                                        </div>
+                                                                    </div>
+
+
+
+                                                                    <div class="modal-footer">
+                                                                        <button id="btnClose" type="button" class="btn btn-link pull-right" data-dismiss="modal">Close</button>
+                                                                        <button id="submit" type="submit" class="btn btn-primary pull-left"><i class="fa fa-plus"></i> Add</button>
+                                                                    </div>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
                                 </div>
                             </div>
                         </div>
@@ -508,6 +573,7 @@
                 enableForm(true);
                 initLocationsGrid();
                 initSkillsGrid();
+                initQueuesGrid();
             }
         }
 
@@ -529,6 +595,7 @@
 
                 initLocationsGrid();
                 initSkillsGrid();
+                initQueuesGrid();
             }
         }
 
@@ -537,7 +604,8 @@
             let json = {
                 organizationSetup: {},
                 locations: [],
-                skills: []
+                skills: [],
+                queues: []
             };
 
             if ($('#companyName').val())
@@ -551,7 +619,8 @@
                 json.locations = $("#jsGridLocations").jsGrid("option", "data")
             if ($("#jsGridSkills").jsGrid("option", "data").length > 0)
                 json.skills = $("#jsGridSkills").jsGrid("option", "data")
-
+            if ($("#jsGridQueues").jsGrid("option", "data").length > 0)
+                json.queues = $("#jsGridQueues").jsGrid("option", "data")
 
             console.log(json);
             return json;
@@ -618,9 +687,20 @@
                 console.log('skills are empty, skip csv build...');
             }
 
+            // Queues
+            if (data.queues && data.queues.length > 0) {
+                console.log('build queues csv...');
+                header = Object.keys(data.queues[0]);
+                csv_queues = data.queues.map(row => header.map(fieldName => JSON.stringify(row[fieldName], replacer)).join(';'))
+                csv_queues.unshift(header.join(';'))
+                csv_queues = csv_queues.join('\r\n')
+            } else {
+                console.log('queues are empty, skip csv build...');
+            }
 
             console.log(csv_locations);
             console.log(csv_skills);
+            console.log(csv_queues);
 
             //download(csv_locations, 'locations.csv');
 
@@ -1033,15 +1113,7 @@
                         name: "skillName",
                         title: "name",
                         type: "text",
-                        align: "center",
-                        filterTemplate: function () {
-                            let input = $("<input/>", { type: "text" });
-                            input.on('keyup', () => {
-                                searches.skillName = input.val();
-                                $("#jsGridSkills").data('JSGrid').search(searches);
-                            });
-                            return this.filterControl = input;
-                        }
+                        align: "center"
                     },
                     {
                         type: "control",
@@ -1095,6 +1167,186 @@
         }
 
         //#endregion
+
+
+        //#region Queues
+
+        var dbQueues = {
+            loadData: function (filter) {
+                return $.grep(this.queues, function (queue) {
+                    return (!filter.queues || queue.queueName.toLowerCase().indexOf(filter.queueName.toLowerCase()) > -1);
+                });
+            },
+            insertItem: function (insertingQueue) {
+                this.queues.push(insertingQueue);
+            },
+            updateItem: function (updatingQueue) { },
+            deleteItem: function (deletingQueue) { }
+        };
+
+        window.dbQueues = dbQueues;
+
+        var formSubmitHandlerQueues = $.noop;
+
+        let validatorQueues = $("#editModalQueues #modal-form").validate({
+            errorClass: "text-danger",
+            successClass: "test-success",
+            submitHandler: function () {
+                formSubmitHandlerQueues();
+            }
+        });
+
+        $("#addQueue").on('click', (e) => {
+            e.preventDefault();
+            showQueuesModal("Add", {});
+        });
+
+        function initQueuesGrid() {
+            const maxItems = 3;
+
+            dbQueues.queues = caItem.hasOwnProperty('queues') ? caItem.queues : [];
+
+            $("#jsGridQueues").jsGrid({
+                height: "auto",
+                width: "100%",
+                editing: true,
+                autoload: true,
+                sorting: false,
+                filtering: false,
+                paging: false,
+                noDataContent: "No Queues",
+                confirmDeleting: false,
+                onError: function (args) {
+                    console.error('Failed to load grid data:', args);
+                    showMessage("An error occurred while loading your data", true);
+                },
+                rowClick: function (args) {
+                    showQueuesModal("Edit", args.item);
+                },
+                onDataLoaded: function (args) {
+                    $("#addQueue").attr('disabled', $("#jsGridQueues").jsGrid("option", "data").length >= maxItems);
+                },
+                onItemInserted: function (args) {
+                    $("#addQueue").attr('disabled', $("#jsGridQueues").jsGrid("option", "data").length >= maxItems);
+                },
+                onItemUpdated: function (args) {
+                    $("#addQueue").attr('disabled', $("#jsGridQueues").jsGrid("option", "data").length >= maxItems);
+                },
+                onItemDeleting: function (args) {
+                    console.log("onItemDeleting");
+                    if (!args.item.deleteConfirmed) { // custom property for confirmation
+                        args.cancel = true; // cancel deleting
+                        bootbox.confirm({
+                            message: 'Do you really want to delete this Queue?',
+                            buttons: {
+                                confirm: {
+                                    label: "Delete!",
+                                    className: "btn-danger"
+                                },
+                                cancel: {
+                                    label: "No",
+                                    className: "btn-secondary"
+                                }
+                            },
+                            callback: async function (result) {
+                                if (result) {
+                                    args.item.deleteConfirmed = true;
+                                    $("#jsGridQueues").jsGrid('deleteItem', args.item); // Remove item from grid
+                                    removeFromArray(dbQueues.queues, args.item); // Remove item from db
+                                    showMessage("Queue deleted", false);
+                                }
+                            }
+                        });
+                    }
+                },
+                onItemDeleted: function (args) {
+                    $("#addQueue").attr('disabled', $("#jsGridQueues").jsGrid("option", "data").length >= maxItems);
+                },
+                controller: dbQueues,
+                fields: [
+                    {
+                        name: "queueName",
+                        title: "Queue Name",
+                        type: "text",
+                        align: "center"
+                    },
+                    {
+                        name: "enableCallbacks",
+                        title: "Supports Callbacks",
+                        type: "text",
+                        align: "center",
+                        itemTemplate: function (value, item) {
+                            return value ? '<span class="fa fa-check text-success"></span>' : ''
+                        }
+                    },
+                    {
+                        name: "enableEmails",
+                        title: "Supports Emails",
+                        type: "text",
+                        align: "center",
+                        itemTemplate: function (value, item) {
+                            return value ? '<span class="fa fa-check text-success"></span>' : ''
+                        }
+                    },
+                    {
+                        type: "control",
+                        modeSwitchButton: false,
+                        editButton: false,
+                        width: 68,
+                        align: "center",
+                        headerTemplate: function () {
+                            return "Actions";
+                        }
+                    }
+                ]
+            });
+        }
+
+        var showQueuesModal = function (dialogType, item) {
+            console.log('Showing details for:', item);
+            $("#editModalQueues #queueName").val(item.queueName);
+            $("#editModalQueues #enableCallbacks").prop('checked', item.enableCallbacks);
+            $("#editModalQueues #enableEmails").prop('checked', item.enableEmails);
+            $("#editModalQueues #submit").html("<i class='fa fa-floppy-o'></i> Save");
+            formSubmitHandlerQueues = function () {
+                saveQueue(item, dialogType === "Add");
+            };
+            $("#editModalQueues").modal('show');
+
+        };
+
+        var saveQueue = function (item, isNew) {
+            console.log('Extending item:', item);
+            $.extend(item, {
+                queueName: $("#editModalQueues #queueName").val(),
+                enableCallbacks: $("#editModalQueues #enableCallbacks").is(":checked"),
+                enableEmails: $("#editModalQueues #enableEmails").is(":checked")
+            });
+            console.log('Extended Item:', item);
+            console.log('IsNew?', isNew)
+            $("#jsGridQueues").jsGrid(isNew ? "insertItem" : "updateItem", item);
+            $("#editModalQueues").modal('hide');
+        };
+
+        $("#editModalQueues").on('shown.bs.modal', function () {
+            $("#queueName").focus();
+        });
+
+        $('#editModalQueues').on('hidden.bs.modal', async () => {
+            initQueuesModal();
+        });
+
+        function initQueuesModal() {
+            $("#editModalQueues #queueName").val("");
+            $("#editModalQueues #enableCallbacks").prop('checked', false);
+            $("#editModalQueues #enableEmails").prop('checked', false);
+            $("#editModalQueues #submit").html("<i class='fa fa-plus'></i> Add");
+
+            validatorQueues.resetForm(); // Reset validation errors
+        }
+
+        //#endregion
+
 
 
         //#endregion
