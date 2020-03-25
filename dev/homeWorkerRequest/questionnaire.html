@@ -623,7 +623,8 @@
                             callback: async function (result) {
                                 if (result) {
                                     args.item.deleteConfirmed = true;
-                                    $("#jsGridLocations").jsGrid('deleteItem', args.item); //call deleting once more in callback
+                                    $("#jsGridLocations").jsGrid('deleteItem', args.item); // Remove item from grid
+                                    removeFromArray(dbLocations.locations, args.item); // Remove item from db
                                     showMessage("Location deleted", false);
                                 }
                             }
@@ -760,6 +761,14 @@
                     }
                 ]
             });
+        }
+
+        function removeFromArray(array, value) {
+            let idx = array.indexOf(value);
+            if (idx !== -1) {
+                array.splice(idx, 1);
+            }
+            return array;
         }
 
         var showLocationsModal = function (dialogType, item) {
