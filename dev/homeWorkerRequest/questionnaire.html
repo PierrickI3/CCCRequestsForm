@@ -332,6 +332,55 @@
                                         </div>
                                     </div>
 
+                                    <!-- ACD Skills -->
+                                    <div class="card">
+                                        <div class="card-header shadow-lg" role="tab" id="headingSkils">
+                                            <div class="mb-0">
+                                                <a data-toggle="collapse" data-parent="#accordion" href="#collapseSkills" aria-expanded="false" aria-controls="collapseSkills" class="collapsed">
+                                                    <i class="fa fa-globe" aria-hidden="true" style="color: #FF4F1F;"></i>
+                                                    <h3>ACD Skills</h3>
+                                                    <p>Information about ACD Skills</p>
+                                                </a>
+                                                <i class="fa fa-angle-right" aria-hidden="true" style="color: #FF4F1F;"></i>
+                                            </div>
+                                        </div>
+
+                                        <div id="collapseSkills" class="collapse" role="tabpanel" aria-labelledby="headingSkills" aria-expanded="false">
+                                            <div class="card-block">
+                                                <button id="addSkill" class="btn btn-primary mb-2" type="button"><i class="fa fa-plus"></i> Add</button>
+                                                <div id="jsGridSkills"></div>
+
+                                                <div class="modal fade" id="editModalSkills" tabindex="-1" role="dialog" aria-hidden="true">
+                                                    <div class="modal-dialog modal-lg" role="document">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header" id="modal-header">
+                                                                <h5 id="title" class="modal-title">ACD Skill</h5>
+                                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                    <span aria-hidden="true">&times;</span>
+                                                                </button>
+                                                            </div>
+                                                            <form class="modal-body form-horizontal" id="modal-form">
+                                                                <div class="form-group">
+
+                                                                    <div class="form-group row">
+                                                                        <label for="locationName" class="col-sm-3 col-form-label">Skill Name</label>
+                                                                        <div class="col-sm-9">
+                                                                            <input type="text" class="form-control" id="skillName" name="skillName" placeholder="Enter the name of the Skill" required>
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <div class="modal-footer">
+                                                                        <button id="btnClose" type="button" class="btn btn-link pull-right" data-dismiss="modal">Close</button>
+                                                                        <button id="submit" type="submit" class="btn btn-primary pull-left"><i class="fa fa-plus"></i> Add</button>
+                                                                    </div>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
                                 </div>
                             </div>
                         </div>
@@ -458,6 +507,7 @@
                 $('#badgePill')[0].innerHTML = "NEW";
                 enableForm(true);
                 initLocationsGrid();
+                initSkillsGrid();
             }
         }
 
@@ -478,6 +528,7 @@
                 $('#numberOfUsers').val(caItem.organizationSetup.numberOfUsers);
 
                 initLocationsGrid();
+                initSkillsGrid();
             }
         }
 
@@ -844,6 +895,164 @@
         }
 
         //#endregion
+
+        //#region ACD Skills
+
+        var dbSkills = {
+            loadData: function (filter) {
+                return $.grep(this.skills, function (skill) {
+                    return (!filter.skillName || skill.skillName.toLowerCase().indexOf(filter.skillName.toLowerCase()) > -1);
+                });
+            },
+            insertItem: function (insertingSkill) {
+                this.skills.push(insertingSkill);
+            },
+            updateItem: function (updatingSkill) { },
+            deleteItem: function (deletingSkill) { }
+        };
+
+        window.dbSkills = dbSkills;
+
+        var formSubmitHandlerSkills = $.noop;
+
+        let validatorSkills = $("#editModalSkills #modal-form").validate({
+            errorClass: "text-danger",
+            successClass: "test-success",
+            submitHandler: function () {
+                formSubmitHandlerSkills();
+            }
+        });
+
+        $("#addSkill").on('click', (e) => {
+            e.preventDefault();
+            showSkillsModal("Add", {});
+        });
+
+        function initSkillsGrid() {   
+            const maxSkills = 10;
+
+            dbSkills.skills = caItem.hasOwnProperty('skills') ? caItem.skills : [];
+
+            $("#jsGridSkills").jsGrid({
+                height: "auto",
+                width: "100%",
+                editing: true,
+                autoload: true,
+                sorting: false,
+                filtering: false,
+                paging: false,
+                noDataContent: "No Skills",
+                confirmDeleting: false,
+                onError: function (args) {
+                    console.error('Failed to load grid data:', args);
+                    showMessage("An error occurred while loading your data", true);
+                },
+                rowClick: function (args) {
+                    showSkillsModal("Edit", args.item);
+                },
+                onDataLoaded: function (args) {
+                    $("#addSkill").attr('disabled', $("#jsGridSkills").jsGrid("option", "data").length >= maxSkills);
+                },
+                onItemInserted: function (args) {
+                    $("#addSkill").attr('disabled', $("#jsGridSkills").jsGrid("option", "data").length >= maxSkills);
+                },
+                onItemUpdated: function (args) {
+                    $("#addSkill").attr('disabled', $("#jsGridSkills").jsGrid("option", "data").length >= maxSkills);
+                },
+                onItemDeleting: function (args) {
+                    console.log("onItemDeleting");
+                    if (!args.item.deleteConfirmed) { // custom property for confirmation
+                        args.cancel = true; // cancel deleting
+                        bootbox.confirm({
+                            message: 'Do you really want to delete this Skill?',
+                            buttons: {
+                                confirm: {
+                                    label: "Delete!",
+                                    className: "btn-danger"
+                                },
+                                cancel: {
+                                    label: "No",
+                                    className: "btn-secondary"
+                                }
+                            },
+                            callback: async function (result) {
+                                if (result) {
+                                    args.item.deleteConfirmed = true;
+                                    $("#jsGridSkills").jsGrid('deleteItem', args.item); // Remove item from grid
+                                    removeFromArray(dbSkills.skills, args.item); // Remove item from db
+                                    showMessage("Skill deleted", false);
+                                }
+                            }
+                        });
+                    }
+                },
+                onItemDeleted: function (args) {
+                    $("#addSkill").attr('disabled', $("#jsGridSkills").jsGrid("option", "data").length >= maxSkills);
+                },
+                controller: dbSkills,
+                fields: [
+                    {
+                        name: "skillName",
+                        title: "Name",
+                        type: "text",
+                        align: "center",
+                        filterTemplate: function () {
+                            let input = $("<input/>", { type: "text" });
+                            input.on('keyup', () => {
+                                searches.skillName = input.val();
+                                $("#jsGridSkills").data('JSGrid').search(searches);
+                            });
+                            return this.filterControl = input;
+                        }
+                    },
+                    {
+                        type: "control",
+                        modeSwitchButton: false,
+                        editButton: false,
+                        width: 68,
+                        align: "center",
+                        headerTemplate: function () {
+                            return "Actions";
+                        }
+                    }
+                ]
+            });
+        }
+
+        var showSkillsModal = function (dialogType, item) {
+            console.log('Showing details for:', item);
+            $("#editModalSkills #skillName").val(item.skillName);           
+            $("#editModalSkills #submit").html("<i class='fa fa-floppy-o'></i> Save");
+            formSubmitHandlerSkills = function () {
+                saveSkill(item, dialogType === "Add");
+            };
+            $("#editModalSkills").modal('show');
+        };
+
+        var saveSkill = function (item, isNew) {
+            console.log('Extending item:', item);
+            $.extend(item, {
+                skillName: $("#editModalSkills #skillName").val()
+            });
+            console.log('Extended Item:', item);
+            console.log('IsNew?', isNew)
+            $("#jsGridSkills").jsGrid(isNew ? "insertItem" : "updateItem", item);
+            $("#editModalSkills").modal('hide');
+        };
+
+        $('#editModalSkills').on('hidden.bs.modal', async () => {
+            initSkillsModal();
+        });
+
+        function initSkillsModal() {
+            $("#editModalSkills #skillName").val("");
+            $("#editModalSkills #submit").html("<i class='fa fa-plus'></i> Add");
+
+            validatorSkills.resetForm(); // Reset validation errors
+        }
+
+        //#endregion
+
 
         //#endregion
 
