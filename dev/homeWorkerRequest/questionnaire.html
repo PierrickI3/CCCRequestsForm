@@ -462,7 +462,7 @@
                 document.getElementById("spinner").style.display = "block";
                 // Try to load #rapidresponse request
                 try {
-                    $('#spinner_message')[0].innerHTML = "Validating Id...";
+                    $('#spinner_message')[0].innerHTML = "validating Id...";
                     request = await getRequest(id);
                     console.log(request);
                     $('#badgePill')[0].innerHTML = "1"
@@ -560,6 +560,12 @@
         async function saveDraft() {
             console.log('saveDraft()');
 
+            // Disable button
+            $("#saveDraft").prop('disabled', true);
+            $("#saveDraft").html(
+                `<span class="spinner-border-sm text-light" role="status" aria-hidden="true"></span> Please wait...`
+            )
+
             try {
                 let json = buildJSON();
                 if (caItem) {
@@ -574,6 +580,10 @@
                 console.error(error);
                 showMessage("Failed to update draft item", JSON.stringify(error));
                 return
+            } finally {
+                // Enable button
+                $("#saveDraft").prop('disabled', false);
+                $("#saveDraft").html('Save draft');
             }
 
             showMessage("Draft updated", false);
