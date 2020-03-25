@@ -559,8 +559,6 @@
 
         jsGrid.setDefaults({ tableClass: "jsgrid-table table table-striped table-hover" });
 
-        //TODO Duplicate for schedules after fixing 2 issues
-
         //#region Locations
 
         var dbLocations = {
@@ -789,14 +787,6 @@
             });
         }
 
-        function removeFromArray(array, value) {
-            let idx = array.indexOf(value);
-            if (idx !== -1) {
-                array.splice(idx, 1);
-            }
-            return array;
-        }
-
         var showLocationsModal = function (dialogType, item) {
             console.log('Showing details for:', item);
             $("#editModalLocations #locationName").val(item.locationName);
@@ -855,6 +845,14 @@
         //#endregion
 
         //#endregion
+
+        function removeFromArray(array, value) {
+            let idx = array.indexOf(value);
+            if (idx !== -1) {
+                array.splice(idx, 1);
+            }
+            return array;
+        }
 
         function getUrlParameter(sParam) {
             var sPageURL = window.location.search.substring(1),
