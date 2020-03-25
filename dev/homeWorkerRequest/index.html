@@ -787,7 +787,7 @@
                 let detailedInfo = "\n```no-highlight\n region:\t\t" + $("#region").val() + "\n sub-region:\t\t" + $("#subRegion").val() + "\n req name:\t\t" + $("#requesterName").val() + "\n req email:\t\t" + $("#requesterEmail").val() + "\n req phone:\t\t" + $("#requesterPhoneNumber").val() +
                     "\n completed by:\t\t" + needCompletedBy + "\n notes:\t\t" + $("#notes").val() + "\n p/c name:\t\t" + $("#partnerCustomerName").val() + "\n sf/acc opp:\t\t" + $("#salesforceAccountOpportunity").val() + "\n ```\n";
                 if (!window.location.href.includes('localhost'))
-                    sendNotification(`:loudspeaker: New CC Rapid Response Request from [@${userInfo.name}](#/person/${userInfo.id}) ${detailedInfo}`, region, subRegion);
+                    sendNotification(`:loudspeaker: New CC Rapid Response Request from [@${userInfo.name}](#/person/${userInfo.id}) ${detailedInfo}`, $("#region").val(), $("#subRegion").val());
 
                 cleanForm();
             } catch (error) {
