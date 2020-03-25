@@ -380,7 +380,7 @@
     <!--#endregion -->
 
     <script>
-        let gcToken, id = getUrlParameter("id"), request, caItem, searches = {};
+        let gcToken, id = getUrlParameter("id"), request, caItem = {}, searches = {};
 
         init();
 
@@ -458,6 +458,7 @@
                 // New not related RequestForm                
                 $('#badgePill')[0].innerHTML = "NEW";
                 enableForm(true);
+                populateLocations();
             }
         }
 
@@ -532,7 +533,7 @@
 
         jsGrid.setDefaults({ tableClass: "jsgrid-table table table-striped table-hover" });
 
-        //TODO Duplicate for schedules
+        //TODO Duplicate for schedules after fixing 2 issues
 
         //#region Locations
 
@@ -574,8 +575,8 @@
         });
 
         function populateLocations() {
-            console.log('caItem locations:', caItem.locations);
-            dbLocations.locations = caItem.locations;
+            //console.log('caItem locations:', caItem.locations);
+            dbLocations.locations = caItem.hasOwnProperty('locations') ? caItem.locations : [];
 
             $("#jsGridLocations").jsGrid({
                 height: "auto",
