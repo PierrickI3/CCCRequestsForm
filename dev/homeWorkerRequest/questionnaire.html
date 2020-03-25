@@ -10,8 +10,8 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-    <!-- Bootstrap DatePicker -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker3.min.css" integrity="sha256-FAOaXTpl90/K8cXmSdsskbQN3nKYulhCpPbcFzGTWKI=" crossorigin="anonymous" />
+    <!-- Tempus Dominus -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.1/css/tempusdominus-bootstrap-4.min.css" />
     <!-- jQuery Toast -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/jquery-toast-plugin/1.3.2/jquery.toast.min.css" rel="stylesheet">
     <!-- Bootstrap Select -->
@@ -285,41 +285,158 @@
                                                                         </div>
                                                                     </div>
 
-                                                                    <div class="form-group row">
-                                                                        <label for="startTime" class="col-sm-3 col-form-label">Start Time</label>
-                                                                        <div class="col-sm-9">
-                                                                            <input type="text" class="form-control" id="startTime" name="startTime" placeholder="Enter the start time for this schedule" required>
+                                                                    <div class="form-check row">
+                                                                        <div class="form-group col-md-12">
+                                                                            <input class="form-check-input" type="checkbox" value="" id="repeatingEvent">
+                                                                            <label class="form-check-label" for="repeatingEvent">
+                                                                                Repeating event
+                                                                            </label>
                                                                         </div>
                                                                     </div>
 
-                                                                    <div class="form-group row">
-                                                                        <label for="endTime" class="col-sm-3 col-form-label">End Time</label>
-                                                                        <div class="col-sm-9">
-                                                                            <input type="text" class="form-control" id="endTime" name="endTime" placeholder="Enter the end time for this schedule" required>
+                                                                    <!-- Repeating Event -->
+                                                                    <div id="repeatingEventDiv" style="display: none;">
+                                                                        <div class="form-group row">
+                                                                            <label for="interval" class="col-sm-3 col-form-label">Repeats every</label>
+                                                                            <div class="col-sm-9 row">
+                                                                                <input type="number" class="form-control col-md-3" id="interval" name="interval" value="1" min="1" required>
+                                                                                <select id="recurrenceType" name="recurrenceType" class="form-control col-md-3 ml-1" required>
+                                                                                    <option value="" disabled>Frequency</option>
+                                                                                    <option value="Daily">Day</option>
+                                                                                    <option value="Weekly">Week</option>
+                                                                                    <option value="Monthly">Month</option>
+                                                                                    <option value="Yearly">Year</option>
+                                                                                </select>
+                                                                            </div>
                                                                         </div>
-                                                                    </div>
 
-                                                                    <div class="form-group row">
-                                                                        <label for="recurrence" class="col-sm-3 col-form-label">Recurrence</label>
-                                                                        <div class="col-sm-9">
-                                                                            <select id="recurrence" name="recurrence" class="form-control" required>
-                                                                                <option value="" disabled>Select a recurrence</option>
-                                                                                <option value="Daily">Daily</option>
-                                                                                <option value="Weekly">Weekly</option>
-                                                                                <option value="Monthly">Monthly</option>
-                                                                                <option value="Yearly">Yearly</option>
+                                                                        <!-- Weekly -->
+                                                                        <div class="btn-group" data-toggle="buttons" id="weeklyControlsDiv" style="display: none;">
+                                                                            <label class="btn btn-primary active"><input type="checkbox" id="chkMonday" checked> Mo</label>
+                                                                            <label class="btn btn-primary"><input type="checkbox" id="chkTuesday"> Tu</label>
+                                                                            <label class="btn btn-primary"><input type="checkbox" id="chkWednesday"> We</label>
+                                                                            <label class="btn btn-primary"><input type="checkbox" id="chkThursday"> Th</label>
+                                                                            <label class="btn btn-primary"><input type="checkbox" id="chkFriday"> Fr</label>
+                                                                            <label class="btn btn-primary"><input type="checkbox" id="chkSaturday"> Sa</label>
+                                                                            <label class="btn btn-primary"><input type="checkbox" id="chkSunday"> Su</label>
+                                                                        </div>
+
+                                                                        <!-- Monthly -->
+                                                                        <div class="form-group row" id="monthlyControlsDiv" style="display: none;">
+                                                                            <div class="col-md-3"></div>
+                                                                            <select name="monthlyRecurrenceType" id="monthlyRecurrenceType" class="form-control col-md-2 mr-1" required>
+                                                                                <optgroup label="Date">
+                                                                                    <option value="On" selected>On</option>
+                                                                                </optgroup>
+                                                                                <optgroup label="Day of the Week">
+                                                                                    <option value="IfDayIs">If Day is</option>
+                                                                                    <option value="First">First</option>
+                                                                                    <option value="Second">Second</option>
+                                                                                    <option value="Third">Third</option>
+                                                                                    <option value="Fourth">Fourth</option>
+                                                                                    <option value="Last">Last</option>
+                                                                                </optgroup>
                                                                             </select>
+
+                                                                            <div class="col-md-6 row" id="byMonthDayDiv">
+                                                                                <input type="text" class="form-control col-md-3" id="byMonthDay" name="byMonthDay" value="30" required data-toggle="tooltip" data-placement="top" title="Add a single day (e.g. 24) or mutliple days (e.g. 24,25,26)">
+                                                                            </div>
+                                                                            <div class="col-md-6 row" id="byDayDiv" style="display: none;">
+                                                                                <div class="btn-group" data-toggle="buttons" id="byDay">
+                                                                                    <label class="btn btn-primary active"><input type="checkbox" id="chkMonday" checked> Mo</label>
+                                                                                    <label class="btn btn-primary"><input type="checkbox" id="chkTuesday"> Tu</label>
+                                                                                    <label class="btn btn-primary"><input type="checkbox" id="chkWednesday"> We</label>
+                                                                                    <label class="btn btn-primary"><input type="checkbox" id="chkThursday"> Th</label>
+                                                                                    <label class="btn btn-primary"><input type="checkbox" id="chkFriday"> Fr</label>
+                                                                                    <label class="btn btn-primary"><input type="checkbox" id="chkSaturday"> Sa</label>
+                                                                                    <label class="btn btn-primary"><input type="checkbox" id="chkSunday"> Su</label>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+
+                                                                        <!-- All Day -->
+                                                                        <div class="form-check row">
+                                                                            <div class="form-group col-md-12">
+                                                                                <input class="form-check-input" type="checkbox" value="" id="repeatingEventAllDay">
+                                                                                <label class="form-check-label" for="repeatingEventAllDay">
+                                                                                    All Day
+                                                                                </label>
+                                                                            </div>
+                                                                        </div>
+
+                                                                        <!-- Start Time -->
+                                                                        <div class="form-group row time-row">
+                                                                            <label class="col-sm-3 col-form-label">Start Time</label>
+                                                                            <div class="input-group date col-md-3 time-only" id="repeatingEventStartTime" data-target-input="nearest">
+                                                                                <input type="text" class="form-control datetimepicker-input" data-target="#repeatingEventStartTime" />
+                                                                                <div class="input-group-append" data-target="#repeatingEventStartTime" data-toggle="datetimepicker">
+                                                                                    <div class="input-group-text"><i class="fa fa-clock-o"></i></div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+
+                                                                        <!-- End Time -->
+                                                                        <div class="form-group row time-row">
+                                                                            <label class="col-sm-3 col-form-label">End Time</label>
+                                                                            <div class="input-group date col-md-3 time-only" id="repeatingEventEndTime" data-target-input="nearest">
+                                                                                <input type="text" class="form-control datetimepicker-input" data-target="#repeatingEventEndTime" />
+                                                                                <div class="input-group-append" data-target="#repeatingEventEndTime" data-toggle="datetimepicker">
+                                                                                    <div class="input-group-text"><i class="fa fa-clock-o"></i></div>
+                                                                                </div>
+                                                                            </div>
                                                                         </div>
                                                                     </div>
 
-                                                                    <!-- TODO Changes depending on the recurrence (daily, weekly, monthly, yearly). See https://apps.mypurecloud.ie/directory/#/admin/routing/scheduling/schedules/d1bc9809-4438-4712-98f7-358f6d53e165 for an example -->
-                                                                    <div class="form-group row">
-                                                                        <label for="daysHours" class="col-sm-3 col-form-label">Days/Hours</label>
-                                                                        <div class="col-sm-9">
-                                                                            <input type="text" class="form-control" id="daysHours" name="daysHours" placeholder="Set the recurrence period" required>
+                                                                    <!-- Single Event -->
+                                                                    <div id="singleEventDiv">
+                                                                        <div class="form-check row">
+                                                                            <div class="form-group col-md-12">
+                                                                                <input class="form-check-input" type="checkbox" value="" id="singleEventAllDay">
+                                                                                <label class="form-check-label" for="singleEventAllDay">
+                                                                                    All Day
+                                                                                </label>
+                                                                            </div>
+                                                                        </div>
+
+                                                                        <div class="form-group row">
+                                                                            <label class="col-sm-3 col-form-label">Start Date</label>
+                                                                            <div class="input-group date col-md-3 date-only" id="singleEventDayStart" data-target-input="nearest">
+                                                                                <input type="text" class="form-control datetimepicker-input" data-target="#singleEventDayStart" />
+                                                                                <div class="input-group-append" data-target="#singleEventDayStart" data-toggle="datetimepicker">
+                                                                                    <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="form-group row time-row">
+                                                                            <label class="col-sm-3 col-form-label">Start Time</label>
+                                                                            <div class="input-group date col-md-3 time-only" id="singleEventStartTime" data-target-input="nearest">
+                                                                                <input type="text" class="form-control datetimepicker-input" data-target="#singleEventStartTime" />
+                                                                                <div class="input-group-append" data-target="#singleEventStartTime" data-toggle="datetimepicker">
+                                                                                    <div class="input-group-text"><i class="fa fa-clock-o"></i></div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="form-group row time-row">
+                                                                            <label class="col-sm-3 col-form-label">End Time</label>
+                                                                            <div class="input-group date col-md-3 time-only" id="singleEventEndTime" data-target-input="nearest">
+                                                                                <input type="text" class="form-control datetimepicker-input" data-target="#singleEventEndTime" />
+                                                                                <div class="input-group-append" data-target="#singleEventEndTime" data-toggle="datetimepicker">
+                                                                                    <div class="input-group-text"><i class="fa fa-clock-o"></i></div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="form-group row">
+                                                                            <label class="col-sm-3 col-form-label">End Date</label>
+                                                                            <div class="input-group date col-md-3 date-only" id="singleEventDayEnd" data-target-input="nearest">
+                                                                                <input type="text" class="form-control datetimepicker-input" data-target="#singleEventDayEnd" />
+                                                                                <div class="input-group-append" data-target="#singleEventDayEnd" data-toggle="datetimepicker">
+                                                                                    <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                                                                </div>
+                                                                            </div>
                                                                         </div>
                                                                     </div>
 
+                                                                    <!-- Footer -->
                                                                     <div class="modal-footer">
                                                                         <button id="btnClose" type="button" class="btn btn-link pull-right" data-dismiss="modal">Close</button>
                                                                         <button id="submit" type="submit" class="btn btn-primary pull-left"><i class="fa fa-plus"></i> Add</button>
@@ -353,8 +470,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"></script>
     <!-- Moment.js -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js" integrity="sha256-4iQZ6BVL4qNKlQ27TExEhBN1HFPvAvAMbFavKKosSWQ=" crossorigin="anonymous"></script>
-    <!-- Bootstrap DatePicker -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js" integrity="sha256-bqVeqGdJ7h/lYPq6xrPv/YGzMEb6dNxlfiTUHSgRCp8=" crossorigin="anonymous"></script>
+    <!-- Tempus Dominus -->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.1/js/tempusdominus-bootstrap-4.min.js"></script>
     <!-- Genesys Cloud -->
     <script src="https://sdk-cdn.mypurecloud.com/javascript/61.0.0/purecloud-platform-client-v2.min.js"></script>
     <!-- JQuery Validate -->
@@ -370,6 +487,8 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.9/dist/js/bootstrap-select.min.js"></script>
     <!-- JSGrid -->
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jsgrid/1.5.3/jsgrid.min.js"></script>
+    <!-- RRule Generator -->
+    <script src="./js/rrule.min.js"></script>
     <!-- Our Scripts -->
     <script src="js/gc.js"></script>
     <script src="js/requests.js"></script>
@@ -380,13 +499,24 @@
     <!--#endregion -->
 
     <script>
-        let gcToken, id = getUrlParameter("id"), request, caItem = {}, searches = {};
+        let gcToken, id = getUrlParameter("id"), request, caItem = {}, searches = {}, searchesSchedules = {};
 
         init();
 
         async function init() {
             console.log('function init');
             $('#spinner_message')[0].innerHTML = "login to Genesys Cloud...";
+
+            // Init Date/Time Pickers
+            $('.date-only').datetimepicker({
+                format: 'L'
+            });
+            $('.time-only').datetimepicker({
+                format: 'LT'
+            });
+
+            // Enable tooltips
+            $('[data-toggle="tooltip"]').tooltip();
 
             $.each(countries, (i, country) => {
                 $("<option/>", { value: country.name }).text(country.name).appendTo("#country");
@@ -458,6 +588,7 @@
                 $('#badgePill')[0].innerHTML = "NEW";
                 enableForm(true);
                 initLocationsGrid();
+                initSchedulesGrid();
             }
         }
 
@@ -478,6 +609,7 @@
                 $('#numberOfUsers').val(caItem.organizationSetup.numberOfUsers);
 
                 initLocationsGrid();
+                initSchedulesGrid();
             }
         }
 
@@ -841,6 +973,408 @@
             $("#editModalLocations #submit").html("<i class='fa fa-plus'></i> Add");
 
             validatorLocations.resetForm(); // Reset validation errors
+        }
+
+        //#endregion
+
+        //#region Schedules
+
+        var dbSchedules = {
+            loadData: function (filter) {
+                return $.grep(this.schedules, function (schedule) {
+                    return (!filter.scheduleName || schedule.scheduleName.toLowerCase().indexOf(filter.scheduleName.toLowerCase()) > -1)
+                        && (!filter.start || schedule.start.toLowerCase().indexOf(filter.start.toLowerCase()) > -1)
+                        && (!filter.end || schedule.end.toLowerCase().indexOf(filter.end.toLowerCase()) > -1)
+                        && (!filter.rrule || schedule.rrule.toLowerCase().indexOf(filter.rrule.toLowerCase()) > -1);
+                });
+            },
+            insertItem: function (insertingItem) {
+                this.schedules.push(insertingItem);
+            },
+            updateItem: function (updatingItem) { },
+            deleteItem: function (deletingItem) { }
+        };
+
+        window.dbSchedules = dbSchedules;
+
+        var formSubmitHandlerSchedules = $.noop;
+
+        let validatorSchedules = $("#editModalSchedules #modal-form").validate({
+            errorClass: "text-danger",
+            successClass: "test-success",
+            submitHandler: function () {
+                formSubmitHandlerSchedules();
+            }
+        });
+
+        $("#repeatingEvent").on('change', () => {
+            if ($("#repeatingEvent").is(':checked')) {
+                $("#repeatingEventDiv").show();
+                $("#singleEventDiv").hide();
+            } else {
+                $("#repeatingEventDiv").hide();
+                $("#singleEventDiv").show();
+            }
+        });
+
+        $("#repeatingEventAllDay").on('change', () => {
+            if ($("#repeatingEventAllDay").is(':checked')) {
+                $(".time-row").hide();
+            } else {
+                $(".time-row").show();
+            }
+        });
+
+        $("#recurrenceType").on('change', () => {
+            let recurrenceType = $("#recurrenceType").val();
+            switch (recurrenceType) {
+                case "Daily":
+                    $("#weeklyControlsDiv").hide();
+                    $("#monthlyControlsDiv").hide();
+                    $("#yearlyControlsDiv").hide();
+                    break;
+                case "Weekly":
+                    $("#weeklyControlsDiv").show();
+                    $("#monthlyControlsDiv").hide();
+                    $("#yearlyControlsDiv").hide();
+                    break;
+                case "Monthly":
+                    $("#weeklyControlsDiv").hide();
+                    $("#monthlyControlsDiv").show();
+                    $("#yearlyControlsDiv").hide();
+                    break;
+                case "Yearly":
+                    $("#weeklyControlsDiv").hide();
+                    $("#monthlyControlsDiv").hide();
+                    $("#yearlyControlsDiv").show();
+                    break;
+
+                default:
+                    break;
+            }
+        });
+
+        $("#monthlyRecurrenceType").on('change', () => {
+            let monthlyRecurrenceType = $("#monthlyRecurrenceType").val();
+            switch (monthlyRecurrenceType) {
+                case "On":
+                    $("#byMonthDayDiv").show();
+                    $("#byDayDiv").hide();
+                    break;
+                default:
+                    $("#byMonthDayDiv").hide();
+                    $("#byDayDiv").show();
+                    break;
+            }
+        });
+
+        $("#singleEventAllDay").on('change', () => {
+            if ($("#singleEventAllDay").is(':checked')) {
+                $(".time-row").hide();
+            } else {
+                $(".time-row").show();
+            }
+        });
+
+        $("#addSchedule").on('click', (e) => {
+            e.preventDefault();
+            showSchedulesModal("Add", {});
+        });
+
+        function initSchedulesGrid() {
+            dbSchedules.schedules = caItem.hasOwnProperty('schedules') ? caItem.schedules : [];
+
+            $("#jsGridSchedules").jsGrid({
+                height: "auto",
+                width: "100%",
+                editing: true,
+                autoload: true,
+                sorting: true,
+                filtering: false,
+                paging: false,
+                noDataContent: "No Schedules",
+                confirmDeleting: false,
+                onError: function (args) {
+                    console.error('Failed to load grid data:', args);
+                    showMessage("An error occurred while loading your data", true);
+                },
+                rowClick: function (args) {
+                    showSchedulesModal("Edit", args.item);
+                },
+                onDataLoaded: function (args) {
+                    $("#addSchedule").attr('disabled', $("#jsGridSchedules").jsGrid("option", "data").length >= 2);
+                },
+                onItemInserted: function (args) {
+                    $("#addSchedule").attr('disabled', $("#jsGridSchedules").jsGrid("option", "data").length >= 2);
+                },
+                onItemUpdated: function (args) {
+                    $("#addSchedule").attr('disabled', $("#jsGridSchedules").jsGrid("option", "data").length >= 2);
+                },
+                onItemDeleting: function (args) {
+                    console.log("onItemDeleting");
+                    if (!args.item.deleteConfirmed) { // custom property for confirmation
+                        args.cancel = true; // cancel deleting
+                        bootbox.confirm({
+                            message: 'Do you really want to delete this schedule?',
+                            buttons: {
+                                confirm: {
+                                    label: "Delete!",
+                                    className: "btn-danger"
+                                },
+                                cancel: {
+                                    label: "No",
+                                    className: "btn-secondary"
+                                }
+                            },
+                            callback: async function (result) {
+                                if (result) {
+                                    args.item.deleteConfirmed = true;
+                                    $("#jsGridSchedules").jsGrid('deleteItem', args.item); // Remove item from grid
+                                    removeFromArray(dbSchedules.schedules, args.item); // Remove item from db
+                                    showMessage("Schedule deleted", false);
+                                }
+                            }
+                        });
+                    }
+                },
+                onItemDeleted: function (args) {
+                    $("#addSchedule").attr('disabled', $("#jsGridSchedules").jsGrid("option", "data").length >= 2);
+                },
+                controller: dbSchedules,
+                fields: [
+                    {
+                        name: "scheduleName",
+                        title: "Name",
+                        type: "text",
+                        align: "center",
+                        filterTemplate: function () {
+                            let input = $("<input/>", { type: "text" });
+                            input.on('keyup', () => {
+                                searchesSchedules.scheduleName = input.val();
+                                $("#jsGridSchedules").data('JSGrid').search(searchesSchedules);
+                            });
+                            return this.filterControl = input;
+                        }
+                    },
+                    {
+                        name: "start",
+                        title: "Start Date/Time",
+                        type: "text",
+                        align: "center",
+                        filterTemplate: function () {
+                            let input = $("<input/>", { type: "text" });
+                            input.on('keyup', () => {
+                                searchesSchedules.start = input.val();
+                                $("#jsGridSchedules").data('JSGrid').search(searchesSchedules);
+                            });
+                            return this.filterControl = input;
+                        }
+                    },
+                    {
+                        name: "end",
+                        title: "Until",
+                        type: "text",
+                        align: "center",
+                        filterTemplate: function () {
+                            let input = $("<input/>", { type: "text" });
+                            input.on('keyup', () => {
+                                searchesSchedules.end = input.val();
+                                $("#jsGridSchedules").data('JSGrid').search(searchesSchedules);
+                            });
+                            return this.filterControl = input;
+                        }
+                    },
+                    {
+                        name: "rrule",
+                        title: "Recurrence Rule",
+                        type: "text",
+                        align: "center",
+                        filterTemplate: function () {
+                            let input = $("<input/>", { type: "text" });
+                            input.on('keyup', () => {
+                                searchesSchedules.rrule = input.val();
+                                $("#jsGridSchedules").data('JSGrid').search(searchesSchedules);
+                            });
+                            return this.filterControl = input;
+                        }
+                    },
+                    {
+                        type: "control",
+                        modeSwitchButton: false,
+                        editButton: false,
+                        width: 68,
+                        align: "center",
+                        headerTemplate: function () {
+                            return "Actions";
+                        }
+                    }
+                ]
+            });
+        }
+
+        var showSchedulesModal = function (dialogType, item) {
+            console.log('Showing details for:', item);
+            $("#editModalSchedules #scheduleName").val(item.scheduleName);
+            $("#editModalSchedules #start").val(item.start);
+            $("#editModalSchedules #end").val(item.end);
+            //TODO Use rrule to populate fields and checkboxes
+            $("#editModalSchedules #submit").html("<i class='fa fa-floppy-o'></i> Save");
+            formSubmitHandlerSchedules = function () {
+                saveSchedule(item, dialogType === "Add");
+            };
+            $("#editModalSchedules").modal('show');
+        };
+
+        var saveSchedule = function (item, isNew) {
+            console.log('Extending item:', item);
+
+            // Set default values
+            let freq, byWeekDay = [], bySetPos, byMonth, byMonthDay, tzId, byNMonthDay, wkst;
+            let dtStart = new Date(), until = new Date();
+            until.setFullYear(until.getFullYear() + 1); // 1 year from now to until date TODO Is this correct?
+            let count = 3; // We don't really care about this. It's only to generate dates for the next events in the schedule.
+            let interval = $("#editModalSchedules #interval").val();
+            let recurrenceType = $("#editModalSchedules #recurrenceType").val();
+
+            // Is this a repeating schedule?
+            if ($("#repeatingEvent").is(':checked')) {
+                switch (recurrenceType) {
+                    case "Daily":
+                        freq = rrule.RRULE.DAILY;
+                        bWeekDay = [];
+                        byMonthDay = undefined;
+                        break;
+                    case "Weekly":
+                        freq = rrule.RRULE.WEEKLY;
+                        //TODO Find a better way to do this
+                        if ($("#weeklyControlsDiv #chkMonday").is(':checked')) { bWeekDay.push(rrule.RRule.MO); }
+                        if ($("#weeklyControlsDiv #chkTuesday").is(':checked')) { bWeekDay.push(rrule.RRule.TU); }
+                        if ($("#weeklyControlsDiv #chkWednesday").is(':checked')) { bWeekDay.push(rrule.RRule.WE); }
+                        if ($("#weeklyControlsDiv #chkThursday").is(':checked')) { bWeekDay.push(rrule.RRule.TH); }
+                        if ($("#weeklyControlsDiv #chkFriday").is(':checked')) { bWeekDay.push(rrule.RRule.FR); }
+                        if ($("#weeklyControlsDiv #chkSaturday").is(':checked')) { bWeekDay.push(rrule.RRule.SA); }
+                        if ($("#weeklyControlsDiv #chkSunday").is(':checked')) { bWeekDay.push(rrule.RRule.SU); }
+                        byMonthDay = undefined;
+                        break;
+                    case "Monthly":
+                        freq = rrule.RRULE.MONTHLY;
+                        if ($("#monthlyControlsDiv").is(':visible')) {
+                            if ($("#monthlyRecurrenceType").val() === "On") {
+                                byMonthDay = $("#byMonthDay").val();
+                            } else {
+                                //TODO Find a better way to do this
+                                if ($("#byDayDiv #chkMonday").is(':checked')) { bWeekDay.push(rrule.RRule.TU); }
+                                if ($("#byDayDiv #chkTuesday").is(':checked')) { bWeekDay.push(rrule.RRule.TU); }
+                                if ($("#byDayDiv #chkWednesday").is(':checked')) { bWeekDay.push(rrule.RRule.WE); }
+                                if ($("#byDayDiv #chkThursday").is(':checked')) { bWeekDay.push(rrule.RRule.TH); }
+                                if ($("#byDayDiv #chkFriday").is(':checked')) { bWeekDay.push(rrule.RRule.FR); }
+                                if ($("#byDayDiv #chkSaturday").is(':checked')) { bWeekDay.push(rrule.RRule.SA); }
+                                if ($("#byDayDiv #chkSunday").is(':checked')) { bWeekDay.push(rrule.RRule.SU); }
+                            }
+                        }
+                        break;
+                    case "Yearly":
+                        freq = rrule.RRULE.YEARLY;
+
+                        bWeekDay = [];
+                        byMonthDay = undefined;
+                        break;
+                    default:
+                        console.error('Unsupported recurrence:', recurrenceType)
+                        break;
+                }
+
+                // Build RRule
+                let currentRRule = buildRRule(freq, interval, byWeeDay, dtstart, until, wkst, count, tzId, bySetPos, byMonth, byMonthDay, byNMonthDay, byYearDay);
+            }
+            $.extend(item, {
+                scheduleName: $("#editModalSchedules #scheduleName").val(),
+                start: "" || new Date(),
+                end: "",
+                rrule: ""
+            });
+            console.log('Extended Item:', item);
+            console.log('IsNew?', isNew)
+            $("#jsGridSchedules").jsGrid(isNew ? "insertItem" : "updateItem", item);
+            $("#editModalSchedules").modal('hide');
+        };
+
+        $('#editModalSchedules').on('hidden.bs.modal', async () => {
+            initSchedulesModal();
+        });
+
+        //#region RRule
+
+        function getAllEventsFromRRuleString(rruleString) {
+            return new rrule.rrulestr(rruleString).all();
+        }
+
+        function buildRRule(freq, interval, byWeekDay, dtStart, until, wkst, count, tzId, bySetPos, byMonth, byMonthDay, byNMonthDay, byYearDay, byWeekNo, byNWeekDay, byHour, byMinute, bySecond, byEaster) {
+            return new rrule.RRule({
+                freq: freq,
+                interval: interval,
+                byweekday: byWeekDay,
+                dtstart: dtStart,
+                until: until,
+                wkst: wkst,
+                count: count,
+                tzid: tzId,
+                bysetpos: bySetPos,
+                bymonth: byMonth,
+                bymonthday: byMonthDay,
+                bynmonthday: byNMonthDay,
+                byyearday: byYearDay,
+                byweekno: byWeekNo,
+                bynweekday: byNWeekDay,
+                byhour: byHour,
+                byminute: byMinute,
+                bysecond: bySecond,
+                byeaster: byEaster
+            });
+        }
+
+        //#endregion
+
+        function initSchedulesModal() {
+            $("#editModalSchedules #scheduleName").val("");
+
+            // Repeating Event
+            $("#editModalSchedules #repeatingEvent").prop('checked', false);
+            $("#editModalSchedules #repeatingEvent").change();
+            $("#editModalSchedules #interval").val(1);
+            $("#editModalSchedules #recurrenceType").val('Day');
+            $("#editModalSchedules #repeatingEventAllDay").prop('checked', false);
+            $("#editModalSchedules #repeatingEventAllDay").change();
+            $("#editModalSchedules #repeatingEventStartTime").datetimepicker('clear');
+            $("#editModalSchedules #repeatingEventEndTime").datetimepicker('clear');
+
+            $("#weeklyControlsDiv #chkMonday").prop(':checked', true);
+            $("#weeklyControlsDiv #chkTuesday").prop(':checked', false);
+            $("#weeklyControlsDiv #chkWednesday").prop(':checked', false);
+            $("#weeklyControlsDiv #chkThursday").prop(':checked', false);
+            $("#weeklyControlsDiv #chkFriday").prop(':checked', false);
+            $("#weeklyControlsDiv #chkSaturday").prop(':checked', false);
+            $("#weeklyControlsDiv #chkSunday").prop(':checked', false);
+
+            $("#byDayDiv #chkMonday").prop(':checked', true);
+            $("#byDayDiv #chkTuesday").prop(':checked', false);
+            $("#byDayDiv #chkWednesday").prop(':checked', false);
+            $("#byDayDiv #chkThursday").prop(':checked', false);
+            $("#byDayDiv #chkFriday").prop(':checked', false);
+            $("#byDayDiv #chkSaturday").prop(':checked', false);
+            $("#byDayDiv #chkSunday").prop(':checked', false);
+
+            // Single Event
+            $("#editModalSchedules #singleEventAllDay").prop('checked', false);
+            $("#editModalSchedules #singleEventAllDay").change();
+            $("#editModalSchedules #singleEventDayStart").datetimepicker('clear');
+            $("#editModalSchedules #singleEventStartTime").datetimepicker('clear');
+            $("#editModalSchedules #singleEventEndTime").datetimepicker('clear');
+            $("#editModalSchedules #singleEventDayEnd").datetimepicker('clear');
+
+            $("#editModalSchedules #submit").html("<i class='fa fa-plus'></i> Add");
+
+            validatorSchedules.resetForm(); // Reset validation errors
         }
 
         //#endregion
