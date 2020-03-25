@@ -549,8 +549,6 @@
                                                                         </div>
                                                                     </div>
 
-
-
                                                                     <div class="modal-footer">
                                                                         <button id="btnClose" type="button" class="btn btn-link pull-right" data-dismiss="modal">Close</button>
                                                                         <button id="submit" type="submit" class="btn btn-primary pull-left"><i class="fa fa-plus"></i> Add</button>
@@ -562,7 +560,6 @@
                                             </div>
                                         </div>
                                     </div>
-
                                 </div>
                             </div>
                         </div>
@@ -575,7 +572,9 @@
 
 
     <noscript>You need to enable JavaScript to run this app.</noscript>
+
     <!--#region Imports -->
+
     <!-- Bootstrap core JavaScript-->
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
@@ -736,6 +735,7 @@
             console.log('function buildJSON');
             let json = {
                 organizationSetup: {},
+                schedules: [],
                 locations: [],
                 skills: [],
                 queues: []
@@ -749,11 +749,13 @@
                 json.organizationSetup.numberOfUsers = $('#numberOfUsers').val();
 
             if ($("#jsGridLocations").jsGrid("option", "data").length > 0)
-                json.locations = $("#jsGridLocations").jsGrid("option", "data")
+                json.locations = $("#jsGridLocations").jsGrid("option", "data");
+            if ($("#jsGridSchedules").jsGrid("option", "data").length > 0)
+                json.schedules = $("#jsGridSchedules").jsGrid("option", "data");
             if ($("#jsGridSkills").jsGrid("option", "data").length > 0)
-                json.skills = $("#jsGridSkills").jsGrid("option", "data")
+                json.skills = $("#jsGridSkills").jsGrid("option", "data");
             if ($("#jsGridQueues").jsGrid("option", "data").length > 0)
-                json.queues = $("#jsGridQueues").jsGrid("option", "data")
+                json.queues = $("#jsGridQueues").jsGrid("option", "data");
 
             console.log(json);
             return json;
@@ -776,7 +778,6 @@
                     caItem = await ca_createItem(json);
                     console.log(`responseId created on CA db: ${caItem.id}`);
                     window.history.pushState('', 'CC Rapid Response Request Form', `${window.location.href}?id=${caItem.id}`);
-
                 }
             } catch (error) {
                 console.error(error);
