@@ -307,18 +307,38 @@
                                                                                     <option value="Monthly">Month</option>
                                                                                     <option value="Yearly">Year</option>
                                                                                 </select>
+                                                                                <div id="yearMonth" class="col-md-3" style="display: none;">
+                                                                                    <select name="yearMonthSelect" id="yearMonthSelect" class="form-control" required>
+                                                                                        <option value="" selected>Month</option>
+                                                                                        <option value="1">January</option>
+                                                                                        <option value="2">February</option>
+                                                                                        <option value="3">March</option>
+                                                                                        <option value="4">April</option>
+                                                                                        <option value="5">May</option>
+                                                                                        <option value="6">June</option>
+                                                                                        <option value="7">July</option>
+                                                                                        <option value="8">August</option>
+                                                                                        <option value="9">September</option>
+                                                                                        <option value="10">October</option>
+                                                                                        <option value="11">November</option>
+                                                                                        <option value="12">December</option>
+                                                                                    </select>
+                                                                                </div>
                                                                             </div>
                                                                         </div>
 
                                                                         <!-- Weekly -->
-                                                                        <div class="btn-group" data-toggle="buttons" id="weeklyControlsDiv" style="display: none;">
-                                                                            <label class="btn btn-primary active"><input type="checkbox" id="chkMonday" checked> Mo</label>
-                                                                            <label class="btn btn-primary"><input type="checkbox" id="chkTuesday"> Tu</label>
-                                                                            <label class="btn btn-primary"><input type="checkbox" id="chkWednesday"> We</label>
-                                                                            <label class="btn btn-primary"><input type="checkbox" id="chkThursday"> Th</label>
-                                                                            <label class="btn btn-primary"><input type="checkbox" id="chkFriday"> Fr</label>
-                                                                            <label class="btn btn-primary"><input type="checkbox" id="chkSaturday"> Sa</label>
-                                                                            <label class="btn btn-primary"><input type="checkbox" id="chkSunday"> Su</label>
+                                                                        <div class="form-group row" id="weeklyControlsDiv" style="display: none;">
+                                                                            <label for="interval" class="col-sm-2 offset-sm-3 col-form-label">Every</label>
+                                                                            <div class="btn-group" data-toggle="buttons">
+                                                                                <label class="btn btn-primary active"><input type="checkbox" id="chkMonday" checked> Mo</label>
+                                                                                <label class="btn btn-primary"><input type="checkbox" id="chkTuesday"> Tu</label>
+                                                                                <label class="btn btn-primary"><input type="checkbox" id="chkWednesday"> We</label>
+                                                                                <label class="btn btn-primary"><input type="checkbox" id="chkThursday"> Th</label>
+                                                                                <label class="btn btn-primary"><input type="checkbox" id="chkFriday"> Fr</label>
+                                                                                <label class="btn btn-primary"><input type="checkbox" id="chkSaturday"> Sa</label>
+                                                                                <label class="btn btn-primary"><input type="checkbox" id="chkSunday"> Su</label>
+                                                                            </div>
                                                                         </div>
 
                                                                         <!-- Monthly -->
@@ -343,6 +363,39 @@
                                                                             </div>
                                                                             <div class="col-md-6 row" id="byDayDiv" style="display: none;">
                                                                                 <div class="btn-group" data-toggle="buttons" id="byDay">
+                                                                                    <label class="btn btn-primary active"><input type="checkbox" id="chkMonday" checked> Mo</label>
+                                                                                    <label class="btn btn-primary"><input type="checkbox" id="chkTuesday"> Tu</label>
+                                                                                    <label class="btn btn-primary"><input type="checkbox" id="chkWednesday"> We</label>
+                                                                                    <label class="btn btn-primary"><input type="checkbox" id="chkThursday"> Th</label>
+                                                                                    <label class="btn btn-primary"><input type="checkbox" id="chkFriday"> Fr</label>
+                                                                                    <label class="btn btn-primary"><input type="checkbox" id="chkSaturday"> Sa</label>
+                                                                                    <label class="btn btn-primary"><input type="checkbox" id="chkSunday"> Su</label>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+
+                                                                        <!-- Yearly -->
+                                                                        <div class="form-group row" id="yearlyControlsDiv" style="display: none;">
+                                                                            <div class="col-md-3"></div>
+                                                                            <select name="yearlyRecurrenceType" id="yearlyRecurrenceType" class="form-control col-md-2 mr-1" required>
+                                                                                <optgroup label="Date">
+                                                                                    <option value="On" selected>On</option>
+                                                                                </optgroup>
+                                                                                <optgroup label="Day of the Week">
+                                                                                    <option value="IfDayIs">If Day is</option>
+                                                                                    <option value="First">First</option>
+                                                                                    <option value="Second">Second</option>
+                                                                                    <option value="Third">Third</option>
+                                                                                    <option value="Fourth">Fourth</option>
+                                                                                    <option value="Last">Last</option>
+                                                                                </optgroup>
+                                                                            </select>
+
+                                                                            <div class="col-md-6 row" id="byYearDayDiv">
+                                                                                <input type="text" class="form-control col-md-3" id="byYearDay" name="byYearDay" value="30" required data-toggle="tooltip" data-placement="top" title="Add a single day (e.g. 24) or mutliple days (e.g. 24,25,26)">
+                                                                            </div>
+                                                                            <div class="col-md-6 row" id="byDayDiv" style="display: none;">
+                                                                                <div class="btn-group" data-toggle="buttons" id="byYearDay">
                                                                                     <label class="btn btn-primary active"><input type="checkbox" id="chkMonday" checked> Mo</label>
                                                                                     <label class="btn btn-primary"><input type="checkbox" id="chkTuesday"> Tu</label>
                                                                                     <label class="btn btn-primary"><input type="checkbox" id="chkWednesday"> We</label>
@@ -1127,6 +1180,8 @@
         // TODO
         //
         // Recurring
+        //  
+        //      Hide start/end date
         //      Weekly
         //          All day, when NOT checked, should show start/end time
         //      Monthly
@@ -1134,8 +1189,6 @@
         //      Yearly
         //          Should show list of months
         //          Should show same select than weekly (with "On" and "If day is", etc.)
-        //      All
-        //          All day, when NOT checked, should show start/end time
         //
         // Check if rrule is set correctly
         //
@@ -1195,21 +1248,25 @@
                     $("#weeklyControlsDiv").hide();
                     $("#monthlyControlsDiv").hide();
                     $("#yearlyControlsDiv").hide();
+                    $("#yearMonth").hide();
                     break;
                 case "Weekly":
                     $("#weeklyControlsDiv").show();
                     $("#monthlyControlsDiv").hide();
                     $("#yearlyControlsDiv").hide();
+                    $("#yearMonth").hide();
                     break;
                 case "Monthly":
                     $("#weeklyControlsDiv").hide();
                     $("#monthlyControlsDiv").show();
                     $("#yearlyControlsDiv").hide();
+                    $("#yearMonth").hide();
                     break;
                 case "Yearly":
                     $("#weeklyControlsDiv").hide();
                     $("#monthlyControlsDiv").hide();
                     $("#yearlyControlsDiv").show();
+                    $("#yearMonth").show();
                     break;
 
                 default:
@@ -1227,6 +1284,20 @@
                 default:
                     $("#byMonthDayDiv").hide();
                     $("#byDayDiv").show();
+                    break;
+            }
+        });
+
+        $("#yearlyRecurrenceType").on('change', () => {
+            let yearlyRecurrenceType = $("#yearlyControlsDiv #yearlyRecurrenceType").val();
+            switch (yearlyRecurrenceType) {
+                case "On":
+                    $("#yearlyControlsDiv #byYearDayDiv").show();
+                    $("#yearlyControlsDiv #byDayDiv").hide();
+                    break;
+                default:
+                    $("#yearlyControlsDiv #byYearDayDiv").hide();
+                    $("#yearlyControlsDiv #byDayDiv").show();
                     break;
             }
         });
