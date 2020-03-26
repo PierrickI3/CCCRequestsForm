@@ -71,7 +71,6 @@
                         <li>SIP trunks direct to carriers (BYOC Cloud)</li>
                     </ul>
                 </p>
-
                 <form id="mainform">
 
                     <!--#region Telephony -->
@@ -464,7 +463,7 @@
 
                 <br>
                 <button type="submit" id="submit" class="btn btn-primary ml-3" disabled>Submit</button>
-
+                <span class="text-muted"><small>This form is automatically saved every 10 seconds.</small></span>
             </div>
         </div>
     </div>
@@ -653,6 +652,8 @@
             $("#requesterEmail").val(userInfo.mail);
             $("#requesterPhoneNumber").val(userInfo.phone);
 
+            loadDraft();
+
             // Show Admin fields?
 
             if (userInfo.groups.some(g => adminGroups["super"].includes(g))) {
@@ -698,53 +699,99 @@
             let currentCountryCarrierId = countryCarrierId++;
 
             $("#byocCloudCarriers").empty();
-            $.each($("#countriesOperation").val(), (i, country) => {
+            if (countriesAndCarriers.length == 0) {
 
-                // Country
-                let countryDiv = $("<div/>", { class: "form-group col-md-5" }).appendTo("#byocCloudCarriers");
-                $("<label/>", { id: "country_" + country }).text(country).appendTo(countryDiv);
+                $.each($("#countriesOperation").val(), (i, country) => {
 
-                // Carriers
-                let carriersDiv = $("<div/>", { class: "form-group col-md-5" }).appendTo("#byocCloudCarriers");
-                let carriersSelect = $("<select/>", { class: "selectpicker form-control", id: "carriers_" + country, name: "carriers_" + country, ["data-live-search"]: true, required: true, multiple: true }).appendTo(carriersDiv);
-                //$("<option/>", { value: "", disabled: true }).text("Select a Carrier").appendTo(carriersSelect);
-                $.each(supportedBYOCCloudCarriers, (region, regionalSupportedBYOCCloudCarriers) => {
-                    let optGroup = $("<optgroup/>", { label: region }).appendTo(carriersSelect);
-                    $.each(regionalSupportedBYOCCloudCarriers, (i, regionalSupportedBYOCCloudCarrier) => {
-                        $("<option/>", { value: regionalSupportedBYOCCloudCarrier.name }).text(regionalSupportedBYOCCloudCarrier.name).appendTo(optGroup);
+                    // Country
+                    let countryDiv = $("<div/>", { class: "form-group col-md-5" }).appendTo("#byocCloudCarriers");
+                    $("<label/>", { id: "country_" + country }).text(country).appendTo(countryDiv);
+
+                    // Carriers
+                    let carriersDiv = $("<div/>", { class: "form-group col-md-5" }).appendTo("#byocCloudCarriers");
+                    let carriersSelect = $("<select/>", { class: "selectpicker form-control", id: "carriers_" + country, name: "carriers_" + country, ["data-live-search"]: true, required: true, multiple: true }).appendTo(carriersDiv);
+                    //$("<option/>", { value: "", disabled: true }).text("Select a Carrier").appendTo(carriersSelect);
+                    $.each(supportedBYOCCloudCarriers, (region, regionalSupportedBYOCCloudCarriers) => {
+                        let optGroup = $("<optgroup/>", { label: region }).appendTo(carriersSelect);
+                        $.each(regionalSupportedBYOCCloudCarriers, (i, regionalSupportedBYOCCloudCarrier) => {
+                            $("<option/>", { value: regionalSupportedBYOCCloudCarrier.name }).text(regionalSupportedBYOCCloudCarrier.name).appendTo(optGroup);
+                        });
+                    });
+                    $("<option/>", { value: "Other" }).text("Other").appendTo(carriersSelect);
+                    carriersSelect.selectpicker({
+                        title: "Select one or more carriers"
+                    });
+                    carriersSelect.on('change', (e) => {
+                        if (carriersSelect.val().includes("Other")) {
+                            $("otherNote").show();
+                        } else {
+                            $("otherNote").hide();
+                        }
+
+                        let bFound = false;
+                        for (var i in countriesAndCarriers) {
+                            if (countriesAndCarriers[i].hasOwnProperty(country)) {
+                                countriesAndCarriers[i] = {
+                                    [country]: carriersSelect.val().join(',')
+                                }
+                                bFound = true;
+                                break;
+                            }
+                        }
+                        if (!bFound) {
+                            // Add to array
+                            countriesAndCarriers.push({
+                                [country]: carriersSelect.val().join(',')
+                            });
+                        }
+
                     });
                 });
-                $("<option/>", { value: "Other" }).text("Other").appendTo(carriersSelect);
-                carriersSelect.selectpicker({
-                    title: "Select one or more carriers"
-                });
-                carriersSelect.on('change', (e) => {
-                    if (carriersSelect.val().includes("Other")) {
-                        $("otherNote").show();
-                    } else {
-                        $("otherNote").hide();
-                    }
+            } else {
+                $.each(countriesAndCarriers, (i, byocCloudCarrier) => {
+                    console.log(i, byocCloudCarrier);
+                    let country = Object.keys(byocCloudCarrier)[0];
+                    let carriers = Object.values(byocCloudCarrier)[0].split(',');
 
-                    let bFound = false;
-                    for (var i in countriesAndCarriers) {
-                        if (countriesAndCarriers[i].hasOwnProperty(country)) {
-                            countriesAndCarriers[i] = {
-                                [country]: carriersSelect.val().join(',')
-                            }
-                            bFound = true;
-                            break;
-                        }
-                    }
-                    if (!bFound) {
-                        // Add to array
-                        countriesAndCarriers.push({
-                            [country]: carriersSelect.val().join(',')
+                    // Country
+                    let countryDiv = $("<div/>", { class: "form-group col-md-6" }).appendTo("#byocCloudCarriers");
+                    $("<label/>", { id: "country_" + country }).text(country).appendTo(countryDiv);
+
+                    // Carriers
+                    let carriersDiv = $("<div/>", { class: "form-group col-md-6" }).appendTo("#byocCloudCarriers");
+                    let carriersSelect = $("<select/>", { class: "selectpicker form-control", id: "carriers_" + country, name: "carriers_" + country, ["data-live-search"]: true, required: true, multiple: true }).appendTo(carriersDiv);
+                    //$("<option/>", { value: "", disabled: true }).text("Select a Carrier").appendTo(carriersSelect);
+                    $.each(supportedBYOCCloudCarriers, (region, regionalSupportedBYOCCloudCarriers) => {
+                        let optGroup = $("<optgroup/>", { label: region }).appendTo(carriersSelect);
+                        $.each(regionalSupportedBYOCCloudCarriers, (i, regionalSupportedBYOCCloudCarrier) => {
+                            $("<option/>", { value: regionalSupportedBYOCCloudCarrier.name, selected: carriers.includes(regionalSupportedBYOCCloudCarrier.name) }).text(regionalSupportedBYOCCloudCarrier.name).appendTo(optGroup);
                         });
-                    }
+                    });
+                    $("<option/>", { value: "Other", selected: carriers.includes('Other') }).text("Other").appendTo(carriersSelect);
+                    carriersSelect.selectpicker({
+                        title: "Select one or more carriers"
+                    });
+                    carriersSelect.on('change', (e) => {
+                        let bFound = false;
+                        for (var i in countriesAndCarriers) {
+                            if (countriesAndCarriers[i].hasOwnProperty(country)) {
+                                countriesAndCarriers[i] = {
+                                    [country]: carriersSelect.val().join(',')
+                                }
+                                bFound = true;
+                                break;
+                            }
+                        }
+                        if (!bFound) {
+                            // Add to array
+                            countriesAndCarriers.push({
+                                [country]: carriersSelect.val().join(',')
+                            });
+                        }
 
+                    });
                 });
-            });
-
+            }
         }
 
         $("#region").on("change", () => {
@@ -787,7 +834,7 @@
                 let detailedInfo = "\n```no-highlight\n region:\t\t" + $("#region").val() + "\n sub-region:\t\t" + $("#subRegion").val() + "\n req name:\t\t" + $("#requesterName").val() + "\n req email:\t\t" + $("#requesterEmail").val() + "\n req phone:\t\t" + $("#requesterPhoneNumber").val() +
                     "\n completed by:\t\t" + needCompletedBy + "\n notes:\t\t" + $("#notes").val() + "\n p/c name:\t\t" + $("#partnerCustomerName").val() + "\n sf/acc opp:\t\t" + $("#salesforceAccountOpportunity").val() + "\n ```\n";
                 if (!window.location.href.includes('localhost'))
-                sendNotification(`:loudspeaker: New CC Rapid Response Request from [@${userInfo.name}](#/person/${userInfo.id}) ${detailedInfo}`, $("#region").val(), $("#subRegion").val());
+                    sendNotification(`:loudspeaker: New CC Rapid Response Request from [@${userInfo.name}](#/person/${userInfo.id}) ${detailedInfo}`, $("#region").val(), $("#subRegion").val());
 
                 cleanForm();
             } catch (error) {
@@ -827,7 +874,7 @@
             $("#promptsAvailable").prop('checked', false);
             $("#identificationAndVerificationProcesses").val('');
             $("#itInfrastructure").val('');
-            $("#networkAssessmentTool").val('');
+            $("#networkAssessmentTool").prop('checked', false);
             $("#usersInternetBandwidth").prop('checked', false);
             $("#endUserDevicesRequireVPN").prop('checked', false);
             $("#virtualDesktopSolution").val('');
@@ -849,6 +896,142 @@
             $("#notes").val('');
             $("#partnerCustomerName").val('');
             $("#salesforceAccountOpportunity").val('');
+
+            localStorage.removeItem("rapidForm_draft");
+        }
+
+        setInterval(() => {
+            try {
+                let data = {
+                    countriesAgents: $("#countriesAgents").val(),
+                    countriesOperation: $("#countriesOperation").val(),
+
+                    // Telephony
+                    existingTelephonyUsage: $("#existingTelephonyUsage").is(':checked'),
+                    telephonyModel: $("#telephonyModel").val(),
+                    byocCloudCarriers: countriesAndCarriers,
+                    relationshipWithCarrier: $("#relationshipWithCarrier").is(':checked'),
+                    customerResourceCommitted: $("#customerResourceCommitted").is(':checked'),
+                    hyperVEnvironment: $("#hyperVEnvironment").is(':checked'),
+
+                    // Common Questions
+                    numberConcurrentCalls: $("#numberConcurrentCalls").val(),
+                    callFlowsDocumented: $("#callFlowsDocumented").is(':checked'),
+                    emailFlowDocumented: $("#emailFlowDocumented").is(':checked'),
+                    promptsAvailable: $("#promptsAvailable").is(':checked'),
+                    identificationAndVerificationProcesses: $("#identificationAndVerificationProcesses").val(),
+                    itInfrastructure: $("#itInfrastructure").val(),
+                    networkAssessmentTool: $("#networkAssessmentTool").is(':checked'),
+                    usersInternetBandwidth: $("#usersInternetBandwidth").is(':checked'),
+                    endUserDevicesRequireVPN: $("#endUserDevicesRequireVPN").is(':checked'),
+                    virtualDesktopSolution: $("#virtualDesktopSolution").val(),
+
+                    // Policies & Processes
+                    standardTermsConditions: $("#standardTermsConditions").is(':checked'),
+                    offBoardingPolicy: $("#offBoardingPolicy").is(':checked'),
+                    changeManagementProcessDelays: $("#changeManagementProcessDelays").is(':checked'),
+
+                    // Your info
+                    region: $("#region").val(),
+                    subRegion: $("#subRegion").val(),
+                    requesterName: $("#requesterName").val(),
+                    requesterEmail: $("#requesterEmail").val(),
+                    requesterPhoneNumber: $("#requesterPhoneNumber").val(),
+                    notes: $("#notes").val(),
+                    partnerCustomerName: $("#partnerCustomerName").val(),
+
+                    // Optional Fields
+                    salesforceAccountOpportunity: $("#salesforceAccountOpportunity").val(),
+                    phoneNumbersDeployment: $("#phoneNumbersDeployment").val(),
+                    newNumbers: $("#newNumbers").val(),
+                    existingTelephonyUsageDetails: $("#existingTelephonyUsageDetails").val(),
+                    emailInfrastructure: $("#emailInfrastructure").val()
+
+                }
+
+                let needCompletedByDate = moment($("#datepicker").datepicker('getDate')).format("YYYY-MM-DDT00:00:00.000") + "Z";
+                if (needCompletedByDate != "Invalid date") {
+                    data.needCompletedBy = needCompletedByDate;
+                }
+                localStorage.setItem("rapidForm_draft", JSON.stringify(data));
+            } catch (error) {
+                console.error(error);
+            }
+        }, 10000
+        );
+
+        function loadDraft() {
+            console.log('loadDraft()');
+            try {
+                let data = JSON.parse(localStorage.getItem("rapidForm_draft"));
+                if (!data) {
+                    console.log('no draft found.');
+                    return
+                }
+
+                // Telephony
+                if (data.countriesAgents) {
+                    $("#countriesAgents").val(data.countriesAgents);
+                    $("#countriesAgents").selectpicker('refresh');
+                }
+                if (data.countriesOperation) {
+                    $("#countriesOperation").val(data.countriesOperation);
+                    $("#countriesOperation").selectpicker('refresh');
+                }
+
+                $("#existingTelephonyUsage").attr('checked', data.existingTelephonyUsage);
+                $("#existingTelephonyUsageDetails").attr('disabled', !data.existingTelephonyUsage);
+                $("#existingTelephonyUsageDetails").val(data.existingTelephonyUsageDetails);
+                countriesAndCarriers = data.byocCloudCarriers;
+                if (data.telephonyModel) {
+                    $("#telephonyModel").val(data.telephonyModel);
+                    $("#telephonyModel").change();
+                }
+
+                $("#phoneNumbersDeployment").val(data.phoneNumbersDeployment);
+                $("#relationshipWithCarrier").prop('checked', data.relationshipWithCarrier);
+                $("#customerResourceCommitted").prop('checked', data.customerResourceCommitted);
+                $("#hyperVEnvironment").prop('checked', data.hyperVEnvironment);
+
+                // General Configuration
+                $("#numberConcurrentCalls").val(data.numberConcurrentCalls);
+                $("#callFlowsDocumented").prop('checked', data.callFlowsDocumented);
+                $("#emailFlowDocumented").prop('checked', data.emailFlowDocumented);
+                $("#promptsAvailable").prop('checked', data.promptsAvailable);
+                $("#identificationAndVerificationProcesses").val(data.identificationAndVerificationProcesses);
+                $("#itInfrastructure").val(data.itInfrastructure);
+                $("#networkAssessmentTool").prop('checked', data.networkAssessmentTool);
+                $("#usersInternetBandwidth").prop('checked', data.usersInternetBandwidth);
+                $("#endUserDevicesRequireVPN").prop('checked', data.endUserDevicesRequireVPN);
+                $("#virtualDesktopSolution").val(data.virtualDesktopSolution);
+                $("#emailInfrastructure").val(data.emailInfrastructure);
+
+                // Policies & Processes
+                $("#standardTermsConditions").prop('checked', data.standardTermsConditions);
+                $("#offBoardingPolicy").prop('checked', data.offBoardingPolicy);
+                $("#changeManagementProcessDelays").prop('checked', data.changeManagementProcessDelays);
+
+                // Your Info
+                if (data.region) {
+                    $("#region").val(data.region);
+                    $("#region").change();
+                }
+                if (data.subRegion)
+                    $("#subRegion").val(data.subRegion);
+
+                // Optional
+                $("#requesterName").val(data.requesterName);
+                $("#requesterEmail").val(data.requesterEmail);
+                $("#requesterPhoneNumber").val(data.requesterPhoneNumber);
+                $("#datepicker").datepicker('update', new Date(data.needCompletedBy));
+                $("#notes").val(data.notes);
+                $("#partnerCustomerName").val(data.partnerCustomerName);
+                $("#salesforceAccountOpportunity").val(data.salesforceAccountOpportunity);
+                $("#newNumbers").val(data.newNumbers);
+
+            } catch (error) {
+                console.error(error);
+            }
         }
 
     </script>

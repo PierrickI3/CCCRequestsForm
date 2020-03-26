@@ -10,14 +10,19 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-    <!-- Bootstrap DatePicker -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker3.min.css" integrity="sha256-FAOaXTpl90/K8cXmSdsskbQN3nKYulhCpPbcFzGTWKI=" crossorigin="anonymous" />
+    <!-- Tempus Dominus -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.1/css/tempusdominus-bootstrap-4.min.css" />
     <!-- jQuery Toast -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/jquery-toast-plugin/1.3.2/jquery.toast.min.css" rel="stylesheet">
     <!-- Bootstrap Select -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.9/dist/css/bootstrap-select.min.css">
+    <!-- jQuery UI Theme -->
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/flick/jquery-ui.css">
+    <!-- JSGrid -->
+    <link type="text/css" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jsgrid/1.5.3/jsgrid.min.css" />
+    <link type="text/css" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jsgrid/1.5.3/jsgrid-theme.min.css" />
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="./css/custom.css">
+    <link rel="stylesheet" href="./css/ps_questionnaire.css">
 
 </head>
 
@@ -26,121 +31,504 @@
     <nav class="navbar navbar-dark bg-dark">
         <a class="navbar-brand" href="#">
             <img src="images/genesys.png" width="30" height="30" class="d-inline-block align-top" alt="">
-            <span class="badge badge-info">#ps</span> Questionnaire
+            <span class="badge badge-info mr-2">#ps</span>Rapid Response Questionnaire <small><span id="badgePill" class="badge badge-pill badge-warning"></span></small>
         </a>
-
         <ul class="mb-0">
+
+            <ul class="nav navbar-nav" style="float: right;">
+                <li><button id="exportCSV" onclick="exportCSV();" href="#" class="btn btn-dark btn-sm ml-2" disabled>Generate CSV</button></li>
+            </ul>
+
+            <ul class="nav navbar-nav" style="float: right;">
+                <li><button id="saveDraft" href="#" onclick="saveDraft();" class="btn btn-primary btn-sm ml-2" disabled>Save draft</button></li>
+            </ul>
+
 
         </ul>
 
     </nav>
-
 
     <div class="alert alert-danger fade show" role="alert" id="alert" hidden>
         <strong>Maintenance Alert</strong> This site is being updated. Please wait.
         <a class="btn btn-light" href="#" onclick="location.reload();"><i class="fa fa-refresh"></i> Refresh</a>
     </div>
 
-    <div class="container-fluid">
-        <br>
+    <div class="container-fluid mt-4">
         <div class="form-row">
             <div class="form-group col-md-12">
-                <H3 class="text-center">Rapid Response Questionnaire <span id="badgePill" class="badge badge-pill badge-warning"></span></H3>
-                <hr>
                 <div id="status">
-                    <center>
-                        <div id="spinner" class="justify-content-center">
-                            <div class="spinner-grow text-secondary" role="status">
-                            </div>
-                            <br>
-                            <p class="text-secondary">validating request...</p>
-                        </div>
-                    </center>
+
                 </div>
+                <center>
+                    <div id="spinner" class="justify-content-center">
+                        <div class="spinner-grow text-secondary" role="status">
+                        </div>
+                        <br>
+                        <p id="spinner_message" class="text-secondary">loading...</p>
+                    </div>
+
+                    <div id="accordion">
+                        <div class="card" id="divRequestDetails" hidden>
+                            <div class="card-header card-header-top" id="headingOne">
+                                <h5 class="mb-0">
+                                    <button class="btn btn-outline-success collapsed" data-toggle="collapse" data-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+                                        Request details
+                                    </button>
+                                </h5>
+                            </div>
+
+                            <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
+                                <div class="card-body">
+                                    <label id="requestDetails"></label>
 
 
-                <div id="details" class="card mb-8" style="height: 80px;">
-                    <div id="requestDetails" class="card-body">
-
-
+                                </div>
+                            </div>
+                        </div>
 
                     </div>
-                </div>
+                </center>
 
+                <section id="mainForm" hidden>
+                    <div class="row">
+                        <div class="col-md-8 offset-md-2">
+                            <div class="bd-example" data-example-id="">
+                                <div id="accordion" role="tablist" aria-multiselectable="true">
 
-                <div id="accordion">
-                    <div class="card">
-                        <div class="card-header" id="headingOne">
-                            <h5 class="mb-0">
-                                <button class="btn btn-outline-success collapsed" data-toggle="collapse" data-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
-                                    Locations
-                                </button>
-                            </h5>
-                        </div>
+                                    <!-- Organization Setup -->
+                                    <div class="card">
+                                        <div class="card-header shadow-lg" role="tab" id="headingOrgSetup">
+                                            <div class="mb-0">
+                                                <a data-toggle="collapse" data-parent="#accordion" href="#collapseOrg" aria-expanded="false" aria-controls="collapseOrg" class="collapsed">
+                                                    <i class="fa fa-sitemap" aria-hidden="true" style="color: #FF4F1F;"></i>
+                                                    <h3>Organization Setup</h3>
+                                                    <p>First things first, let's define some basic information about the customer</p>
+                                                </a>
+                                                <i class="fa fa-angle-right" aria-hidden="true" style="color: #FF4F1F;"></i>
+                                            </div>
+                                        </div>
 
-                        <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
-                            <div class="card-body">
-                                <!-- Regulatory Considerations -->
-                                <div class="form-row mr-4 ml-2">
-                                    <div class="form-group col-md-12">
-                                        <label for="regulatoryConsiderations">Queues</label>
-                                        <textarea class="form-control" id="regulatoryConsiderations" name="regulatoryConsiderations" placeholder="Are there any key regulatory to consider, for example: Call Recording? Do country specific regulations prevent telephony being delivered from another country?"></textarea>
+                                        <div id="collapseOrg" class="collapse" role="tabpanel" aria-labelledby="headingOrgSetup" aria-expanded="false">
+                                            <div class="card-block">
+                                                <div class="form-group row">
+                                                    <label for="companyName" class="col-sm-2 col-form-label">Company Name</label>
+                                                    <div class="col-sm-10">
+                                                        <input type="text" class="form-control" id="companyName" name="companyName" placeholder="Enter the name of the company">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row">
+                                                    <label for="genesysCloudRegion" class="col-sm-2 col-form-label">Genesys Cloud Region</label>
+                                                    <div class="col-sm-10">
+                                                        <select class="custom-select" id="genesysCloudRegion" name="genesysCloudRegion">
+                                                            <option selected disabled>Select a Genesys Cloud Region</option>
+                                                            <optgroup label="North America">
+                                                                <option value="cac1.pure.cloud" disabled>cac1.pure.cloud - Canada</option>
+                                                                <option value="mypurecloud.com">mypurecloud.com - East</option>
+                                                                <option value="usw2.pure.cloud">usw2.pure.cloud - West</option>
+                                                            </optgroup>
+                                                            <optgroup label="EMEA">
+                                                                <option value="euw2.pure.cloud" disabled>euw2.pure.cloud - UK</option>
+                                                                <option value="mypurecloud.de">mypurecloud.de - Frankfurt</option>
+                                                                <option value="mypurecloud.ie">mypurecloud.ie - Ireland</option>
+                                                            </optgroup>
+                                                            <optgroup label="APAC">
+                                                                <option value="apne2.pure.cloud" disabled>apne2.pure.cloud - Seoul </option>
+                                                                <option value="mypurecloud.com.au">mypurecloud.com.au - Australia/New Zealand </option>
+                                                                <option value="mypurecloud.jp">mypurecloud.jp - Japan </option>
+                                                            </optgroup>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row">
+                                                    <label for="numberOfUsers" class="col-sm-2 col-form-label">Number of Users</label>
+                                                    <div class="col-sm-10">
+                                                        <input type="number" class="form-control" id="numberOfUsers" name="numberOfUsers" placeholder="Enter the number of users">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Locations -->
+                                    <div class="card">
+                                        <div class="card-header shadow-lg" role="tab" id="headingLocations">
+                                            <div class="mb-0">
+                                                <a data-toggle="collapse" data-parent="#accordion" href="#collapseLocations" aria-expanded="false" aria-controls="collapseLocations" class="collapsed">
+                                                    <i class="fa fa-globe" aria-hidden="true" style="color: #FF4F1F;"></i>
+                                                    <h3>Locations</h3>
+                                                    <p>Information about each location</p>
+                                                </a>
+                                                <i class="fa fa-angle-right" aria-hidden="true" style="color: #FF4F1F;"></i>
+                                            </div>
+                                        </div>
+
+                                        <div id="collapseLocations" class="collapse" role="tabpanel" aria-labelledby="headingLocations" aria-expanded="false">
+                                            <div class="card-block">
+                                                <button id="addLocation" class="btn btn-primary mb-2" type="button"><i class="fa fa-plus"></i> Add</button>
+                                                <div id="jsGridLocations"></div>
+
+                                                <div class="modal fade" id="editModalLocations" tabindex="-1" role="dialog" aria-hidden="true">
+                                                    <div class="modal-dialog modal-lg" role="document">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header" id="modal-header">
+                                                                <h5 id="title" class="modal-title">Location</h5>
+                                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                    <span aria-hidden="true">&times;</span>
+                                                                </button>
+                                                            </div>
+                                                            <form class="modal-body form-horizontal" id="modal-form">
+                                                                <div class="form-group">
+
+                                                                    <div class="form-group row">
+                                                                        <label for="locationName" class="col-sm-3 col-form-label">Location Name</label>
+                                                                        <div class="col-sm-9">
+                                                                            <input type="text" class="form-control" id="locationName" name="locationName" placeholder="Enter the name of this location" required>
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <div class="form-group row">
+                                                                        <label for="streetAddress" class="col-sm-3 col-form-label">Street Address</label>
+                                                                        <div class="col-sm-9">
+                                                                            <input type="text" class="form-control" id="streetAddress" name="streetAddress" placeholder="Enter the street address" required>
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <div class="form-group row">
+                                                                        <label for="city" class="col-sm-3 col-form-label">City</label>
+                                                                        <div class="col-sm-9">
+                                                                            <input type="text" class="form-control" id="city" name="city" placeholder="Enter the name of the city for this location" required>
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <div class="form-group row">
+                                                                        <label for="state" class="col-sm-3 col-form-label">State</label>
+                                                                        <div class="col-sm-9">
+                                                                            <input type="text" class="form-control" id="state" name="state" placeholder="(optional) Enter the name of the state for this location">
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <div class="form-group row">
+                                                                        <label for="zipCode" class="col-sm-3 col-form-label">Zip Code</label>
+                                                                        <div class="col-sm-9">
+                                                                            <input type="text" class="form-control" id="zipCode" name="zipCode" placeholder="Enter the zip code for this location" required>
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <div class="form-group row">
+                                                                        <label for="country" class="col-sm-3 col-form-label">Country</label>
+                                                                        <div class="col-sm-9">
+                                                                            <select class="selectpicker" id="country" name="country" class="form-control" required data-live-search="true">
+                                                                            </select>
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <div class="form-group row">
+                                                                        <label for="notes" class="col-sm-3 col-form-label">Notes</label>
+                                                                        <div class="col-sm-9">
+                                                                            <input type="text" class="form-control" id="notes" name="notes" placeholder="(optional) Describe the location (e.g. Main HQ)">
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <div class="form-group row">
+                                                                        <label for="emergencyNumber" class="col-sm-3 col-form-label">Emergency Number</label>
+                                                                        <div class="col-sm-9">
+                                                                            <input type="text" class="form-control" id="emergencyNumber" name="emergencyNumber" placeholder="Enter the emergency phone number for this location" required>
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <div class="modal-footer">
+                                                                        <button id="btnClose" type="button" class="btn btn-link pull-right" data-dismiss="modal">Close</button>
+                                                                        <button id="submit" type="submit" class="btn btn-primary pull-left"><i class="fa fa-plus"></i> Add</button>
+                                                                    </div>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Schedules -->
+                                    <div class="card">
+                                        <div class="card-header shadow-lg" role="tab" id="headingSchedules">
+                                            <div class="mb-0">
+                                                <a data-toggle="collapse" data-parent="#accordion" href="#collapseSchedules" aria-expanded="false" aria-controls="collapseSchedules" class="collapsed">
+                                                    <i class="fa fa-calendar-o" aria-hidden="true" style="color: #FF4F1F;"></i>
+                                                    <h3>Schedules</h3>
+                                                    <p>Set up schedules</p>
+                                                </a>
+                                                <i class="fa fa-angle-right" aria-hidden="true" style="color: #FF4F1F;"></i>
+                                            </div>
+                                        </div>
+
+                                        <div id="collapseSchedules" class="collapse" role="tabpanel" aria-labelledby="headingSchedules" aria-expanded="false">
+                                            <div class="card-block">
+                                                <button id="addSchedule" class="btn btn-primary mb-2" type="button"><i class="fa fa-plus"></i> Add</button>
+                                                <div id="jsGridSchedules"></div>
+
+                                                <div class="modal fade" id="editModalSchedules" tabindex="-1" role="dialog" aria-hidden="true">
+                                                    <div class="modal-dialog modal-lg" role="document">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header" id="modal-header">
+                                                                <h5 id="title" class="modal-title">Schedule</h5>
+                                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                    <span aria-hidden="true">&times;</span>
+                                                                </button>
+                                                            </div>
+                                                            <form class="modal-body form-horizontal" id="modal-form">
+                                                                <div class="form-group">
+
+                                                                    <div class="form-group row">
+                                                                        <label for="scheduleName" class="col-sm-3 col-form-label">Schedule Name</label>
+                                                                        <div class="col-sm-9">
+                                                                            <input type="text" class="form-control" id="scheduleName" name="scheduleName" placeholder="Enter the name of this schedule (e.g. Open Hours Weekday)" required>
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <div class="form-check row">
+                                                                        <div class="form-group col-md-12">
+                                                                            <input class="form-check-input" type="checkbox" value="" id="repeatingEvent">
+                                                                            <label class="form-check-label" for="repeatingEvent">
+                                                                                Repeating event
+                                                                            </label>
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <!-- Repeating Event -->
+                                                                    <div id="repeatingEventDiv" style="display: none;">
+                                                                        <div class="form-group row">
+                                                                            <label for="interval" class="col-sm-3 col-form-label">Repeats every</label>
+                                                                            <div class="col-sm-9 row">
+                                                                                <input type="number" class="form-control col-md-3" id="interval" name="interval" value="1" min="1" required>
+                                                                                <select id="recurrenceType" name="recurrenceType" class="form-control col-md-3 ml-1" required>
+                                                                                    <option value="" disabled>Frequency</option>
+                                                                                    <option value="Daily">Day</option>
+                                                                                    <option value="Weekly">Week</option>
+                                                                                    <option value="Monthly">Month</option>
+                                                                                    <option value="Yearly">Year</option>
+                                                                                </select>
+                                                                            </div>
+                                                                        </div>
+
+                                                                        <!-- Weekly -->
+                                                                        <div class="btn-group" data-toggle="buttons" id="weeklyControlsDiv" style="display: none;">
+                                                                            <label class="btn btn-primary active"><input type="checkbox" id="chkMonday" checked> Mo</label>
+                                                                            <label class="btn btn-primary"><input type="checkbox" id="chkTuesday"> Tu</label>
+                                                                            <label class="btn btn-primary"><input type="checkbox" id="chkWednesday"> We</label>
+                                                                            <label class="btn btn-primary"><input type="checkbox" id="chkThursday"> Th</label>
+                                                                            <label class="btn btn-primary"><input type="checkbox" id="chkFriday"> Fr</label>
+                                                                            <label class="btn btn-primary"><input type="checkbox" id="chkSaturday"> Sa</label>
+                                                                            <label class="btn btn-primary"><input type="checkbox" id="chkSunday"> Su</label>
+                                                                        </div>
+
+                                                                        <!-- Monthly -->
+                                                                        <div class="form-group row" id="monthlyControlsDiv" style="display: none;">
+                                                                            <div class="col-md-3"></div>
+                                                                            <select name="monthlyRecurrenceType" id="monthlyRecurrenceType" class="form-control col-md-2 mr-1" required>
+                                                                                <optgroup label="Date">
+                                                                                    <option value="On" selected>On</option>
+                                                                                </optgroup>
+                                                                                <optgroup label="Day of the Week">
+                                                                                    <option value="IfDayIs">If Day is</option>
+                                                                                    <option value="First">First</option>
+                                                                                    <option value="Second">Second</option>
+                                                                                    <option value="Third">Third</option>
+                                                                                    <option value="Fourth">Fourth</option>
+                                                                                    <option value="Last">Last</option>
+                                                                                </optgroup>
+                                                                            </select>
+
+                                                                            <div class="col-md-6 row" id="byMonthDayDiv">
+                                                                                <input type="text" class="form-control col-md-3" id="byMonthDay" name="byMonthDay" value="30" required data-toggle="tooltip" data-placement="top" title="Add a single day (e.g. 24) or mutliple days (e.g. 24,25,26)">
+                                                                            </div>
+                                                                            <div class="col-md-6 row" id="byDayDiv" style="display: none;">
+                                                                                <div class="btn-group" data-toggle="buttons" id="byDay">
+                                                                                    <label class="btn btn-primary active"><input type="checkbox" id="chkMonday" checked> Mo</label>
+                                                                                    <label class="btn btn-primary"><input type="checkbox" id="chkTuesday"> Tu</label>
+                                                                                    <label class="btn btn-primary"><input type="checkbox" id="chkWednesday"> We</label>
+                                                                                    <label class="btn btn-primary"><input type="checkbox" id="chkThursday"> Th</label>
+                                                                                    <label class="btn btn-primary"><input type="checkbox" id="chkFriday"> Fr</label>
+                                                                                    <label class="btn btn-primary"><input type="checkbox" id="chkSaturday"> Sa</label>
+                                                                                    <label class="btn btn-primary"><input type="checkbox" id="chkSunday"> Su</label>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+
+                                                                        <!-- All Day -->
+                                                                        <div class="form-check row date-row">
+                                                                            <div class="form-group col-md-12">
+                                                                                <input class="form-check-input" type="checkbox" value="" id="repeatingEventAllDay">
+                                                                                <label class="form-check-label" for="repeatingEventAllDay">
+                                                                                    All Day
+                                                                                </label>
+                                                                            </div>
+                                                                        </div>
+
+                                                                        <!-- Start Date -->
+                                                                        <div class="form-group row date-row">
+                                                                            <label class="col-sm-3 col-form-label">Start Date</label>
+                                                                            <div class="input-group date col-md-3 date-only" id="repeatingEventDayStart" data-target-input="nearest">
+                                                                                <input type="text" class="form-control datetimepicker-input" data-target="#repeatingEventDayStart" required />
+                                                                                <div class="input-group-append" data-target="#repeatingEventDayStart" data-toggle="datetimepicker">
+                                                                                    <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+
+                                                                        <!-- End Date -->
+                                                                        <div class="form-group row date-row">
+                                                                            <label class="col-sm-3 col-form-label">End Date</label>
+                                                                            <div class="input-group date col-md-3 date-only" id="repeatingEventDayEnd" data-target-input="nearest">
+                                                                                <input type="text" class="form-control datetimepicker-input" data-target="#repeatingEventDayEnd" />
+                                                                                <div class="input-group-append" data-target="#repeatingEventDayEnd" data-toggle="datetimepicker">
+                                                                                    <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+
+                                                                    </div>
+
+                                                                    <!-- Single Event -->
+                                                                    <div id="singleEventDiv">
+                                                                        <div class="form-check row date-row">
+                                                                            <div class="form-group col-md-12">
+                                                                                <input class="form-check-input" type="checkbox" value="" id="singleEventAllDay">
+                                                                                <label class="form-check-label" for="singleEventAllDay">
+                                                                                    All Day
+                                                                                </label>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <!-- Footer -->
+                                                                    <div class="modal-footer">
+                                                                        <button id="btnClose" type="button" class="btn btn-link pull-right" data-dismiss="modal">Close</button>
+                                                                        <button id="submit" type="submit" class="btn btn-primary pull-left"><i class="fa fa-plus"></i> Add</button>
+                                                                    </div>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- ACD Skills -->
+                                    <div class="card">
+                                        <div class="card-header shadow-lg" role="tab" id="headingSkils">
+                                            <div class="mb-0">
+                                                <a data-toggle="collapse" data-parent="#accordion" href="#collapseSkills" aria-expanded="false" aria-controls="collapseSkills" class="collapsed">
+                                                    <i class="fa fa-vcard-o" aria-hidden="true" style="color: #FF4F1F;"></i>
+                                                    <h3>ACD Skills</h3>
+                                                    <p>Information about ACD Skills</p>
+                                                </a>
+                                                <i class="fa fa-angle-right" aria-hidden="true" style="color: #FF4F1F;"></i>
+                                            </div>
+                                        </div>
+
+                                        <div id="collapseSkills" class="collapse" role="tabpanel" aria-labelledby="headingSkills" aria-expanded="false">
+                                            <div class="card-block">
+                                                <button id="addSkill" class="btn btn-primary mb-2" type="button"><i class="fa fa-plus"></i> Add</button>
+                                                <div id="jsGridSkills"></div>
+
+                                                <div class="modal fade" id="editModalSkills" tabindex="-1" role="dialog" aria-hidden="true">
+                                                    <div class="modal-dialog modal-lg" role="document">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header" id="modal-header">
+                                                                <h5 id="title" class="modal-title">ACD Skill</h5>
+                                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                    <span aria-hidden="true">&times;</span>
+                                                                </button>
+                                                            </div>
+                                                            <form class="modal-body form-horizontal" id="modal-form">
+                                                                <div class="form-group">
+
+                                                                    <div class="form-group row">
+                                                                        <label for="locationName" class="col-sm-3 col-form-label">Skill Name</label>
+                                                                        <div class="col-sm-9">
+                                                                            <input type="text" class="form-control" id="skillName" tabindex="-1" name="skillName" placeholder="Enter the name of the Skill" required>
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <div class="modal-footer">
+                                                                        <button id="btnClose" type="button" class="btn btn-link pull-right" data-dismiss="modal">Close</button>
+                                                                        <button id="submit" type="submit" class="btn btn-primary pull-left"><i class="fa fa-plus"></i> Add</button>
+                                                                    </div>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Queues -->
+                                    <div class="card">
+                                        <div class="card-header shadow-lg" role="tab" id="headingSkils">
+                                            <div class="mb-0">
+                                                <a data-toggle="collapse" data-parent="#accordion" href="#collapseQueues" aria-expanded="false" aria-controls="collapseQueues" class="collapsed">
+                                                    <i class="fa fa-group" aria-hidden="true" style="color: #FF4F1F;"></i>
+                                                    <h3>Queues</h3>
+                                                    <p>Information about Queues</p>
+                                                </a>
+                                                <i class="fa fa-angle-right" aria-hidden="true" style="color: #FF4F1F;"></i>
+                                            </div>
+                                        </div>
+
+                                        <div id="collapseQueues" class="collapse" role="tabpanel" aria-labelledby="headingQueues" aria-expanded="false">
+                                            <div class="card-block">
+                                                <button id="addQueue" class="btn btn-primary mb-2" type="button"><i class="fa fa-plus"></i> Add</button>
+                                                <div id="jsGridQueues"></div>
+
+                                                <div class="modal fade" id="editModalQueues" tabindex="-1" role="dialog" aria-hidden="true">
+                                                    <div class="modal-dialog modal-lg" role="document">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header" id="modal-header">
+                                                                <h5 id="title" class="modal-title">Queue</h5>
+                                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                    <span aria-hidden="true">&times;</span>
+                                                                </button>
+                                                            </div>
+                                                            <form class="modal-body form-horizontal" id="modal-form">
+                                                                <div class="form-group">
+
+                                                                    <div class="form-group row">
+                                                                        <label for="queueName" class="col-sm-3 col-form-label">Queue Name</label>
+                                                                        <div class="col-sm-8">
+                                                                            <input type="text" class="form-control" id="queueName" name="queuelName" placeholder="Enter the name of the Queue" required>
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <div class="form-group row">
+                                                                        <label class="col-sm-3 col-form-label" for="enableCallbacks">Supports Callbacks?</label>
+                                                                        <div class="col-sm-6 ml-3">
+                                                                            <input class="form-check-input" type="checkbox" value="" id="enableCallbacks">
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <div class="form-group row">
+                                                                        <label class="col-sm-3 col-form-label" for="enableCallbacks">Supports Emails?</label>
+                                                                        <div class="col-sm-6 ml-3">
+                                                                            <input class="form-check-input" type="checkbox" value="" id="enableEmails">
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <div class="modal-footer">
+                                                                        <button id="btnClose" type="button" class="btn btn-link pull-right" data-dismiss="modal">Close</button>
+                                                                        <button id="submit" type="submit" class="btn btn-primary pull-left"><i class="fa fa-plus"></i> Add</button>
+                                                                    </div>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
-
                             </div>
                         </div>
                     </div>
-                    <div class="card">
-                        <div class="card-header" id="headingTwo">
-                            <h5 class="mb-0">
-                                <button class="btn btn-outline-info collapsed" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                                    Queues
-                                </button>
-                            </h5>
-                        </div>
-                        <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
-                            <div class="card-body">
-                                <!-- Telephony Model -->
-
-                                <div class="text-muted form-group ml-3">
-                                    <small>Where a SIP trunk cannot be easily established, it is recommended to use Genesys Cloud Voice and forwarding of calls. Number porting is a longer-term option which is <strong>NOT</strong> recommended for speed of deployment.</small>
-                                </div>
-
-                                <!-- Regulatory Considerations -->
-                                <div class="form-row mr-4 ml-2">
-                                    <div class="form-group col-md-12">
-                                        <label for="regulatoryConsiderations">Key Regulatory Considerations</label>
-                                        <textarea class="form-control" id="regulatoryConsiderations" name="regulatoryConsiderations" placeholder="Are there any key regulatory to consider, for example: Call Recording? Do country specific regulations prevent telephony being delivered from another country?" required></textarea>
-                                    </div>
-                                </div>
-                                <!-- Concurrent Calls -->
-                                <div class="form-row mr-4 ml-2">
-                                    <div class="form-group col-md-12">
-                                        <label for="numberConcurrentCalls">What is the expected number of concurrent calls?</label>
-                                        <textarea class="form-control" id="numberConcurrentCalls" name="numberConcurrentCalls" placeholder="" required></textarea>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card">
-                        <div class="card-header" id="headingThree">
-                            <h5 class="mb-0">
-                                <button class="btn btn-outline-info collapsed" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                                    Other
-                                </button>
-                            </h5>
-                        </div>
-                        <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordion">
-                            <div class="card-body">
-                                Something else
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-
+                </section>
             </div>
         </div>
     </div>
@@ -148,7 +536,9 @@
 
 
     <noscript>You need to enable JavaScript to run this app.</noscript>
+
     <!--#region Imports -->
+
     <!-- Bootstrap core JavaScript-->
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
@@ -157,8 +547,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"></script>
     <!-- Moment.js -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js" integrity="sha256-4iQZ6BVL4qNKlQ27TExEhBN1HFPvAvAMbFavKKosSWQ=" crossorigin="anonymous"></script>
-    <!-- Bootstrap DatePicker -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js" integrity="sha256-bqVeqGdJ7h/lYPq6xrPv/YGzMEb6dNxlfiTUHSgRCp8=" crossorigin="anonymous"></script>
+    <!-- Tempus Dominus -->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.1/js/tempusdominus-bootstrap-4.min.js"></script>
     <!-- Genesys Cloud -->
     <script src="https://sdk-cdn.mypurecloud.com/javascript/61.0.0/purecloud-platform-client-v2.min.js"></script>
     <!-- JQuery Validate -->
@@ -166,8 +556,16 @@
     <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.1/dist/additional-methods.min.js"></script>
     <!-- jQuery Toast -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-toast-plugin/1.3.2/jquery.toast.min.js"></script>
+    <!-- Bootbox -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/5.4.0/bootbox.min.js"></script>
+    <!-- jQuery UI -->
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
     <!-- Bootstrap Select -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.9/dist/js/bootstrap-select.min.js"></script>
+    <!-- JSGrid -->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jsgrid/1.5.3/jsgrid.min.js"></script>
+    <!-- RRule Generator -->
+    <script src="./js/rrule.min.js"></script>
     <!-- Our Scripts -->
     <script src="js/gc.js"></script>
     <script src="js/requests.js"></script>
@@ -178,29 +576,36 @@
     <!--#endregion -->
 
     <script>
-        let gcToken, requestId;
-        requestId = getUrlParameter("requestId");
-        /*
-        function showDetails() {
-            if ($("#details").attr("hidden"))
-                $("#details").attr("hidden", false)
-            else
-                $("#details").attr("hidden", true)
-        }
-        */
-
+        let gcToken, id = getUrlParameter("id"), request, caItem = {}, searches = {}, searchesSchedules = {};
 
         init();
+
         async function init() {
+            console.log('function init');
+            $('#spinner_message')[0].innerHTML = "login to Genesys Cloud...";
+
+            // Init Date/Time Pickers
+            $('.date-only').datetimepicker({
+                format: 'L'
+            });
+            $('.time-only').datetimepicker({
+                format: 'LT'
+            });
+
+            // Enable tooltips
+            $('[data-toggle="tooltip"]').tooltip();
+
+            $.each(countries, (i, country) => {
+                $("<option/>", { value: country.name }).text(country.name).appendTo("#country");
+            });
 
             document.getElementById("spinner").style.display = "block";
-            $("#accordion :input").attr("disabled", true);
             try {
                 await getMe();
                 if (!maintenanceMode) $("#submit").attr('disabled', false);
             } catch (error) {
+                console.error(error);
                 showMessage(error.hasOwnProperty('message') ? error.message : `Unable to login to Genesys Cloud ${JSON.stringify(error)}`, true);
-                $("#submit").attr('disabled', true);
                 return
             } finally {
                 document.getElementById("spinner").style.display = "none";
@@ -210,32 +615,1231 @@
             localStorage.setItem("gcToken", gcToken);
             localStorage.setItem("userName", userInfo.name);
 
-            if (requestId) {
+            if (id) {
+                console.log(`found id ${id} in path, check for rapidRequest and draft version...`);
+                document.getElementById("spinner").style.display = "block";
+                // Try to load #rapidresponse request
                 try {
-                    let request;
-                    document.getElementById("spinner").style.display = "block";
-                    request = await getRequest(requestId);
-                    $("#accordion :input").attr("disabled", false);
+                    $('#spinner_message')[0].innerHTML = "validating Id...";
+                    request = await getRequest(id);
+                    console.log(request);
                     $('#badgePill')[0].innerHTML = "1"
                     console.log(request);
-                    $('#requestDetails')[0].innerHTML = `Related to Parnter/Customer Name <B>${request.partnerCustomerName}</B> requested by <em>${request.requesterName}</em>`;
+                    $('#requestDetails')[0].innerHTML = `Related to Partner/Customer Name <B>${request.partnerCustomerName}</B> requested by <em>${request.requesterName}</em>`;
+                } catch (error) {
+                    console.error(error);
+                    if (error.status !== 404) {
+                        document.getElementById("spinner").style.display = "none";
+                        showMessage(JSON.stringify(error), true);
+                        return;
+                    }
+                }
 
+                // Try to load latest draft
+                try {
+                    $('#spinner_message')[0].innerHTML = "check for latest draft...";
+                    console.log('check for draft questionnaire...');
+                    caItem = await ca_getItem(id);
+                    console.log(caItem);
                 } catch (error) {
                     console.log(error);
-                    if (error.status == 404)
-                        $('#status')[0].innerHTML = '<p class="text-danger text-center">RequestId not found</p>'
-                } finally {
-                    document.getElementById("spinner").style.display = "none";
+                    if (error.status !== 404) {
+                        document.getElementById("spinner").style.display = "none";
+                        showMessage(JSON.stringify(error), true);
+                        return;
+                    }
                 }
+                document.getElementById("spinner").style.display = "none";
+
+                if (!request && !caItem) {
+                    showMessage("Provided requestId doesn't exist", true);
+                    return;
+                }
+                if (request || caItem) {
+                    loadDraftConfiguration();
+                    enableForm(true);
+                }
+
             } else {
                 // New not related RequestForm                
-                $('#badgePill')[0].innerHTML = "NEW"
+                $('#badgePill')[0].innerHTML = "NEW";
+                enableForm(true);
 
-                $("#accordion :input").attr("disabled", false);
+                initLocationsGrid();
+                initSchedulesGrid();
+                initSkillsGrid();
+                initQueuesGrid();
+            }
+        }
+
+        function enableForm(_bool) {
+            $("#saveDraft").prop('disabled', !_bool);
+            $("#exportCSV").prop('disabled', !_bool);
+            $("#mainForm").attr("hidden", !_bool);
+            if (request)
+                $("#divRequestDetails").attr("hidden", !_bool);
+        }
+
+        function loadDraftConfiguration() {
+            console.log('function loadDraftConfiguration');
+            if (caItem) {
+                // organization
+                $('#companyName').val(caItem.organizationSetup.companyName);
+                $('#genesysCloudRegion').val(caItem.organizationSetup.genesysCloudRegion);
+                $('#numberOfUsers').val(caItem.organizationSetup.numberOfUsers);
+
+                initLocationsGrid();
+                initSchedulesGrid();
+                initSkillsGrid();
+                initQueuesGrid();
+            }
+        }
+
+        function buildJSON() {
+            console.log('function buildJSON');
+            let json = {
+                organizationSetup: {},
+                schedules: [],
+                locations: [],
+                skills: [],
+                queues: []
+            };
+
+            if ($('#companyName').val())
+                json.organizationSetup.companyName = $('#companyName').val();
+            if ($('#genesysCloudRegion').val())
+                json.organizationSetup.genesysCloudRegion = $('#genesysCloudRegion').val();
+            if ($('#numberOfUsers').val())
+                json.organizationSetup.numberOfUsers = $('#numberOfUsers').val();
+
+            if ($("#jsGridLocations").jsGrid("option", "data").length > 0)
+                json.locations = $("#jsGridLocations").jsGrid("option", "data");
+            if ($("#jsGridSchedules").jsGrid("option", "data").length > 0)
+                json.schedules = $("#jsGridSchedules").jsGrid("option", "data");
+            if ($("#jsGridSkills").jsGrid("option", "data").length > 0)
+                json.skills = $("#jsGridSkills").jsGrid("option", "data");
+            if ($("#jsGridQueues").jsGrid("option", "data").length > 0)
+                json.queues = $("#jsGridQueues").jsGrid("option", "data");
+
+            console.log(json);
+            return json;
+        }
+
+        async function saveDraft() {
+            console.log('saveDraft()');
+
+            // Disable button
+            $("#saveDraft").prop('disabled', true);
+            $("#saveDraft").html(
+                `<span class="spinner-border-sm text-light" role="status" aria-hidden="true"></span> Please wait...`
+            )
+
+            try {
+                let json = buildJSON();
+                if (caItem) {
+                    await ca_updateItem(caItem.id, json);
+                } else {
+                    caItem = await ca_createItem(json);
+                    console.log(`responseId created on CA db: ${caItem.id}`);
+                    window.history.pushState('', 'CC Rapid Response Request Form', `${window.location.href}?id=${caItem.id}`);
+                }
+            } catch (error) {
+                console.error(error);
+                showMessage("Failed to update draft item", JSON.stringify(error));
+                return
+            } finally {
+                // Enable button
+                $("#saveDraft").prop('disabled', false);
+                $("#saveDraft").html('Save draft');
             }
 
+            showMessage("Draft updated", false);
+        }
 
+        function exportCSV() {
+            console.log('function exportCSV()');
+            let data = buildJSON();
+            const replacer = (key, value) => value === null ? '' : value // specify how you want to handle null values here
+            let header, csv_locations;
 
+            // Locations
+            if (data.locations && data.locations.length > 0) {
+                console.log('build locations csv...');
+                header = Object.keys(data.locations[0]);
+                csv_locations = data.locations.map(row => header.map(fieldName => JSON.stringify(row[fieldName], replacer)).join(';'))
+                csv_locations.unshift(header.join(';'))
+                csv_locations = csv_locations.join('\r\n')
+            } else {
+                console.log('locations are empty, skip csv build...');
+            }
+
+            //$("#jsGridSkills").jsGrid("option", "fields") -> fields names
+            // Skills
+            if (data.skills && data.skills.length > 0) {
+                console.log('build skills csv...');
+                header = Object.keys(data.skills[0]);
+                csv_skills = data.skills.map(row => header.map(fieldName => JSON.stringify(row[fieldName], replacer)).join(';'))
+                csv_skills.unshift(header.join(';'))
+                csv_skills = csv_skills.join('\r\n')
+            } else {
+                console.log('skills are empty, skip csv build...');
+            }
+
+            // Queues
+            if (data.queues && data.queues.length > 0) {
+                console.log('build queues csv...');
+                header = Object.keys(data.queues[0]);
+                csv_queues = data.queues.map(row => header.map(fieldName => JSON.stringify(row[fieldName], replacer)).join(';'))
+                csv_queues.unshift(header.join(';'))
+                csv_queues = csv_queues.join('\r\n')
+            } else {
+                console.log('queues are empty, skip csv build...');
+            }
+
+            console.log(csv_locations);
+            console.log(csv_skills);
+            console.log(csv_queues);
+
+            //download(csv_locations, 'locations.csv');
+
+        }
+
+        function download(data, filename, type) {
+            var file = new Blob([data], { type: type });
+            if (window.navigator.msSaveOrOpenBlob) // IE10+
+                window.navigator.msSaveOrOpenBlob(file, filename);
+            else { // Others
+                var a = document.createElement("a"),
+                    url = URL.createObjectURL(file);
+                a.href = url;
+                a.download = filename;
+                document.body.appendChild(a);
+                a.click();
+                setTimeout(function () {
+                    document.body.removeChild(a);
+                    window.URL.revokeObjectURL(url);
+                }, 0);
+            }
+        }
+
+        jsGrid.setDefaults({ tableClass: "jsgrid-table table table-striped table-hover" });
+
+        //#region Locations
+
+        var dbLocations = {
+            loadData: function (filter) {
+                return $.grep(this.locations, function (location) {
+                    return (!filter.locationName || location.locationName.toLowerCase().indexOf(filter.locationName.toLowerCase()) > -1)
+                        && (!filter.streetAddress || location.streetAddress.toLowerCase().indexOf(filter.streetAddress.toLowerCase()) > -1)
+                        && (!filter.city || location.city.toLowerCase().indexOf(filter.city.toLowerCase()) > -1)
+                        && (!filter.state || location.state.toLowerCase().indexOf(filter.state.toLowerCase()) > -1)
+                        && (!filter.zipCode || location.zipCode.toLowerCase().indexOf(filter.zipCode.toLowerCase()) > -1)
+                        && (!filter.country || location.country.toLowerCase().indexOf(filter.country.toLowerCase()) > -1)
+                        && (!filter.notes || location.notes.toLowerCase().indexOf(filter.notes.toLowerCase()) > -1)
+                        && (!filter.emergencyNumber || location.emergencyNumber.toLowerCase().indexOf(filter.emergencyNumber.toLowerCase()) > -1);
+                });
+            },
+            insertItem: function (insertingLocation) {
+                this.locations.push(insertingLocation);
+            },
+            updateItem: function (updatingLocation) { },
+            deleteItem: function (deletingLocation) { }
+        };
+
+        window.dbLocations = dbLocations;
+
+        var formSubmitHandlerLocations = $.noop;
+
+        let validatorLocations = $("#editModalLocations #modal-form").validate({
+            errorClass: "text-danger",
+            successClass: "test-success",
+            submitHandler: function () {
+                formSubmitHandlerLocations();
+            }
+        });
+
+        $("#addLocation").on('click', (e) => {
+            e.preventDefault();
+            showLocationsModal("Add", {});
+        });
+
+        function initLocationsGrid() {
+            //console.log('caItem locations:', caItem.locations);
+            dbLocations.locations = caItem.hasOwnProperty('locations') ? caItem.locations : [];
+
+            $("#jsGridLocations").jsGrid({
+                height: "auto",
+                width: "100%",
+                editing: true,
+                autoload: true,
+                sorting: true,
+                filtering: true,
+                paging: false,
+                noDataContent: "No Locations",
+                confirmDeleting: false,
+                onError: function (args) {
+                    console.error('Failed to load grid data:', args);
+                    showMessage("An error occurred while loading your data", true);
+                },
+                rowClick: function (args) {
+                    showLocationsModal("Edit", args.item);
+                },
+                onDataLoaded: function (args) {
+                    $("#addLocation").attr('disabled', $("#jsGridLocations").jsGrid("option", "data").length >= 2);
+                },
+                onItemInserted: function (args) {
+                    $("#addLocation").attr('disabled', $("#jsGridLocations").jsGrid("option", "data").length >= 2);
+                },
+                onItemUpdated: function (args) {
+                    $("#addLocation").attr('disabled', $("#jsGridLocations").jsGrid("option", "data").length >= 2);
+                },
+                onItemDeleting: function (args) {
+                    console.log("onItemDeleting");
+                    if (!args.item.deleteConfirmed) { // custom property for confirmation
+                        args.cancel = true; // cancel deleting
+                        bootbox.confirm({
+                            message: 'Do you really want to delete this location?',
+                            buttons: {
+                                confirm: {
+                                    label: "Delete!",
+                                    className: "btn-danger"
+                                },
+                                cancel: {
+                                    label: "No",
+                                    className: "btn-secondary"
+                                }
+                            },
+                            callback: async function (result) {
+                                if (result) {
+                                    args.item.deleteConfirmed = true;
+                                    $("#jsGridLocations").jsGrid('deleteItem', args.item); // Remove item from grid
+                                    removeFromArray(dbLocations.locations, args.item); // Remove item from db
+                                    showMessage("Location deleted", false);
+                                }
+                            }
+                        });
+                    }
+                },
+                onItemDeleted: function (args) {
+                    $("#addLocation").attr('disabled', $("#jsGridLocations").jsGrid("option", "data").length >= 2);
+                },
+                controller: dbLocations,
+                fields: [
+                    {
+                        name: "locationName",
+                        title: "Name",
+                        type: "text",
+                        align: "center",
+                        filterTemplate: function () {
+                            let input = $("<input/>", { type: "text" });
+                            input.on('keyup', () => {
+                                searches.locationName = input.val();
+                                $("#jsGridLocations").data('JSGrid').search(searches);
+                            });
+                            return this.filterControl = input;
+                        }
+                    },
+                    {
+                        name: "streetAddress",
+                        title: "Address",
+                        type: "text",
+                        align: "center",
+                        filterTemplate: function () {
+                            let input = $("<input/>", { type: "text" });
+                            input.on('keyup', () => {
+                                searches.streetAddress = input.val();
+                                $("#jsGridLocations").data('JSGrid').search(searches);
+                            });
+                            return this.filterControl = input;
+                        }
+                    },
+                    {
+                        name: "city",
+                        title: "City",
+                        type: "text",
+                        align: "center",
+                        filterTemplate: function () {
+                            let input = $("<input/>", { type: "text" });
+                            input.on('keyup', () => {
+                                searches.city = input.val();
+                                $("#jsGridLocations").data('JSGrid').search(searches);
+                            });
+                            return this.filterControl = input;
+                        }
+                    },
+                    {
+                        name: "state",
+                        title: "State",
+                        type: "text",
+                        align: "center",
+                        filterTemplate: function () {
+                            let input = $("<input/>", { type: "text" });
+                            input.on('keyup', () => {
+                                searches.state = input.val();
+                                $("#jsGridLocations").data('JSGrid').search(searches);
+                            });
+                            return this.filterControl = input;
+                        }
+                    },
+                    {
+                        name: "zipCode",
+                        title: "Zip Code",
+                        type: "text",
+                        align: "center",
+                        filterTemplate: function () {
+                            let input = $("<input/>", { type: "text" });
+                            input.on('keyup', () => {
+                                searches.zipCode = input.val();
+                                $("#jsGridLocations").data('JSGrid').search(searches);
+                            });
+                            return this.filterControl = input;
+                        }
+                    },
+                    {
+                        name: "country",
+                        title: "Country",
+                        type: "text",
+                        align: "center",
+                        filterTemplate: function () {
+                            let input = $("<input/>", { type: "text" });
+                            input.on('keyup', () => {
+                                searches.country = input.val();
+                                $("#jsGridLocations").data('JSGrid').search(searches);
+                            });
+                            return this.filterControl = input;
+                        }
+                    },
+                    {
+                        name: "notes",
+                        title: "Notes",
+                        type: "text",
+                        align: "center",
+                        filterTemplate: function () {
+                            let input = $("<input/>", { type: "text" });
+                            input.on('keyup', () => {
+                                searches.notes = input.val();
+                                $("#jsGridLocations").data('JSGrid').search(searches);
+                            });
+                            return this.filterControl = input;
+                        }
+                    },
+                    {
+                        name: "emergencyNumber",
+                        title: "Emergency #",
+                        type: "text",
+                        width: 120,
+                        align: "center",
+                        filterTemplate: function () {
+                            let input = $("<input/>", { type: "text" });
+                            input.on('keyup', () => {
+                                searches.emergencyNumber = input.val();
+                                $("#jsGridLocations").data('JSGrid').search(searches);
+                            });
+                            return this.filterControl = input;
+                        }
+                    },
+                    {
+                        type: "control",
+                        modeSwitchButton: false,
+                        editButton: false,
+                        width: 68,
+                        align: "center",
+                        headerTemplate: function () {
+                            return "Actions";
+                        }
+                    }
+                ]
+            });
+        }
+
+        var showLocationsModal = function (dialogType, item) {
+            console.log('Showing details for:', item);
+            $("#editModalLocations #locationName").val(item.locationName);
+            $("#editModalLocations #streetAddress").val(item.streetAddress);
+            $("#editModalLocations #city").val(item.city);
+            $("#editModalLocations #state").val(item.state);
+            $("#editModalLocations #zipCode").val(item.zipCode);
+            $("#editModalLocations #country").val(item.country);
+            $("#editModalLocations #country").selectpicker('refresh');
+            $("#editModalLocations #notes").val(item.notes);
+            $("#editModalLocations #emergencyNumber").val(item.emergencyNumber);
+            $("#editModalLocations #submit").html("<i class='fa fa-floppy-o'></i> Save");
+            formSubmitHandlerLocations = function () {
+                saveLocation(item, dialogType === "Add");
+            };
+            $("#editModalLocations").modal('show');
+        };
+
+        var saveLocation = function (item, isNew) {
+            console.log('Extending item:', item);
+            $.extend(item, {
+                locationName: $("#editModalLocations #locationName").val(),
+                streetAddress: $("#editModalLocations #streetAddress").val(),
+                city: $("#editModalLocations #city").val(),
+                state: $("#editModalLocations #state").val(),
+                zipCode: $("#editModalLocations #zipCode").val(),
+                country: $("#editModalLocations #country").val(),
+                notes: $("#editModalLocations #notes").val(),
+                emergencyNumber: $("#editModalLocations #emergencyNumber").val(),
+            });
+            console.log('Extended Item:', item);
+            console.log('IsNew?', isNew)
+            $("#jsGridLocations").jsGrid(isNew ? "insertItem" : "updateItem", item);
+            $("#editModalLocations").modal('hide');
+        };
+
+        $('#editModalLocations').on('hidden.bs.modal', async () => {
+            initLocationsModal();
+        });
+
+        function initLocationsModal() {
+            $("#editModalLocations #locationName").val("");
+            $("#editModalLocations #streetAddress").val("");
+            $("#editModalLocations #city").val("");
+            $("#editModalLocations #state").val("");
+            $("#editModalLocations #zipCode").val("");
+            $("#editModalLocations #country").val("");
+            $("#editModalLocations #country").selectpicker('refresh');
+            $("#editModalLocations #notes").val("");
+            $("#editModalLocations #emergencyNumber").val("");
+            $("#editModalLocations #submit").html("<i class='fa fa-plus'></i> Add");
+
+            validatorLocations.resetForm(); // Reset validation errors
+        }
+
+        //#endregion
+
+        // TODO
+        //
+        // Recurring
+        //      Weekly
+        //          All day, when NOT checked, should show start/end time
+        //      Monthly
+        //          Looks ok. Is the rrule ok with "On" and other options?
+        //      Yearly
+        //          Should show list of months
+        //          Should show same select than weekly (with "On" and "If day is", etc.)
+        //      All
+        //          All day, when NOT checked, should show start/end time
+        //
+        // Single
+        //      Should show start and end date
+        //      All day, when NOT checked, should show start/end time
+        //
+        // Check if rrule is set correctly
+        //
+
+        //#region Schedules
+
+        var dbSchedules = {
+            loadData: function (filter) {
+                return $.grep(this.schedules, function (schedule) {
+                    return (!filter.scheduleName || schedule.scheduleName.toLowerCase().indexOf(filter.scheduleName.toLowerCase()) > -1)
+                        && (!filter.start || schedule.start.toLowerCase().indexOf(filter.start.toLowerCase()) > -1)
+                        && (!filter.end || schedule.end.toLowerCase().indexOf(filter.end.toLowerCase()) > -1)
+                        && (!filter.rrule || schedule.rrule.toLowerCase().indexOf(filter.rrule.toLowerCase()) > -1);
+                });
+            },
+            insertItem: function (insertingItem) {
+                this.schedules.push(insertingItem);
+            },
+            updateItem: function (updatingItem) { },
+            deleteItem: function (deletingItem) { }
+        };
+
+        window.dbSchedules = dbSchedules;
+
+        var formSubmitHandlerSchedules = $.noop;
+
+        let validatorSchedules = $("#editModalSchedules #modal-form").validate({
+            errorClass: "text-danger",
+            successClass: "test-success",
+            submitHandler: function () {
+                formSubmitHandlerSchedules();
+            }
+        });
+
+        $("#repeatingEvent").on('change', () => {
+            if ($("#repeatingEvent").is(':checked')) {
+                $("#repeatingEventDiv").show();
+                $("#singleEventDiv").hide();
+            } else {
+                $("#repeatingEventDiv").hide();
+                $("#singleEventDiv").show();
+            }
+        });
+
+        // $("#repeatingEventAllDay").on('change', () => {
+        //     if ($("#repeatingEventAllDay").is(':checked')) {
+        //         $(".date-row").show();
+        //     } else {
+        //         $(".date-row").hide();
+        //     }
+        // });
+
+        $("#recurrenceType").on('change', () => {
+            let recurrenceType = $("#recurrenceType").val();
+            switch (recurrenceType) {
+                case "Daily":
+                    $("#weeklyControlsDiv").hide();
+                    $("#monthlyControlsDiv").hide();
+                    $("#yearlyControlsDiv").hide();
+                    break;
+                case "Weekly":
+                    $("#weeklyControlsDiv").show();
+                    $("#monthlyControlsDiv").hide();
+                    $("#yearlyControlsDiv").hide();
+                    break;
+                case "Monthly":
+                    $("#weeklyControlsDiv").hide();
+                    $("#monthlyControlsDiv").show();
+                    $("#yearlyControlsDiv").hide();
+                    break;
+                case "Yearly":
+                    $("#weeklyControlsDiv").hide();
+                    $("#monthlyControlsDiv").hide();
+                    $("#yearlyControlsDiv").show();
+                    break;
+
+                default:
+                    break;
+            }
+        });
+
+        $("#monthlyRecurrenceType").on('change', () => {
+            let monthlyRecurrenceType = $("#monthlyRecurrenceType").val();
+            switch (monthlyRecurrenceType) {
+                case "On":
+                    $("#byMonthDayDiv").show();
+                    $("#byDayDiv").hide();
+                    break;
+                default:
+                    $("#byMonthDayDiv").hide();
+                    $("#byDayDiv").show();
+                    break;
+            }
+        });
+
+        $("#singleEventAllDay").on('change', () => {
+            if ($("#singleEventAllDay").is(':checked')) {
+                $(".time-row").hide();
+            } else {
+                $(".time-row").show();
+            }
+        });
+
+        $("#addSchedule").on('click', (e) => {
+            e.preventDefault();
+            showSchedulesModal("Add", {});
+        });
+
+        function initSchedulesGrid() {
+            dbSchedules.schedules = caItem.hasOwnProperty('schedules') ? caItem.schedules : [];
+
+            $("#jsGridSchedules").jsGrid({
+                height: "auto",
+                width: "100%",
+                editing: true,
+                autoload: true,
+                sorting: true,
+                filtering: false,
+                paging: false,
+                noDataContent: "No Schedules",
+                confirmDeleting: false,
+                onError: function (args) {
+                    console.error('Failed to load grid data:', args);
+                    showMessage("An error occurred while loading your data", true);
+                },
+                rowClick: function (args) {
+                    showSchedulesModal("Edit", args.item);
+                },
+                onDataLoaded: function (args) {
+                    $("#addSchedule").attr('disabled', $("#jsGridSchedules").jsGrid("option", "data").length >= 2);
+                },
+                onItemInserted: function (args) {
+                    $("#addSchedule").attr('disabled', $("#jsGridSchedules").jsGrid("option", "data").length >= 2);
+                },
+                onItemUpdated: function (args) {
+                    $("#addSchedule").attr('disabled', $("#jsGridSchedules").jsGrid("option", "data").length >= 2);
+                },
+                onItemDeleting: function (args) {
+                    console.log("onItemDeleting");
+                    if (!args.item.deleteConfirmed) { // custom property for confirmation
+                        args.cancel = true; // cancel deleting
+                        bootbox.confirm({
+                            message: 'Do you really want to delete this schedule?',
+                            buttons: {
+                                confirm: {
+                                    label: "Delete!",
+                                    className: "btn-danger"
+                                },
+                                cancel: {
+                                    label: "No",
+                                    className: "btn-secondary"
+                                }
+                            },
+                            callback: async function (result) {
+                                if (result) {
+                                    args.item.deleteConfirmed = true;
+                                    $("#jsGridSchedules").jsGrid('deleteItem', args.item); // Remove item from grid
+                                    removeFromArray(dbSchedules.schedules, args.item); // Remove item from db
+                                    showMessage("Schedule deleted", false);
+                                }
+                            }
+                        });
+                    }
+                },
+                onItemDeleted: function (args) {
+                    $("#addSchedule").attr('disabled', $("#jsGridSchedules").jsGrid("option", "data").length >= 2);
+                },
+                controller: dbSchedules,
+                fields: [
+                    {
+                        name: "scheduleName",
+                        title: "Name",
+                        type: "text",
+                        align: "center",
+                        filterTemplate: function () {
+                            let input = $("<input/>", { type: "text" });
+                            input.on('keyup', () => {
+                                searchesSchedules.scheduleName = input.val();
+                                $("#jsGridSchedules").data('JSGrid').search(searchesSchedules);
+                            });
+                            return this.filterControl = input;
+                        }
+                    },
+                    {
+                        name: "start",
+                        title: "Start Date/Time",
+                        type: "text",
+                        align: "center",
+                        filterTemplate: function () {
+                            let input = $("<input/>", { type: "text" });
+                            input.on('keyup', () => {
+                                searchesSchedules.start = input.val();
+                                $("#jsGridSchedules").data('JSGrid').search(searchesSchedules);
+                            });
+                            return this.filterControl = input;
+                        }
+                    },
+                    {
+                        name: "end",
+                        title: "Until",
+                        type: "text",
+                        align: "center",
+                        filterTemplate: function () {
+                            let input = $("<input/>", { type: "text" });
+                            input.on('keyup', () => {
+                                searchesSchedules.end = input.val();
+                                $("#jsGridSchedules").data('JSGrid').search(searchesSchedules);
+                            });
+                            return this.filterControl = input;
+                        }
+                    },
+                    {
+                        name: "rrule",
+                        title: "Recurrence Rule",
+                        type: "text",
+                        align: "center",
+                        filterTemplate: function () {
+                            let input = $("<input/>", { type: "text" });
+                            input.on('keyup', () => {
+                                searchesSchedules.rrule = input.val();
+                                $("#jsGridSchedules").data('JSGrid').search(searchesSchedules);
+                            });
+                            return this.filterControl = input;
+                        }
+                    },
+                    {
+                        type: "control",
+                        modeSwitchButton: false,
+                        editButton: false,
+                        width: 68,
+                        align: "center",
+                        headerTemplate: function () {
+                            return "Actions";
+                        }
+                    }
+                ]
+            });
+        }
+
+        var showSchedulesModal = function (dialogType, item) {
+            console.log('Showing details for:', item);
+            $("#editModalSchedules #scheduleName").val(item.scheduleName);
+            $("#editModalSchedules #start").val(item.start);
+            $("#editModalSchedules #end").val(item.end);
+            //TODO Use rrule to populate fields and checkboxes
+            $("#editModalSchedules #submit").html("<i class='fa fa-floppy-o'></i> Save");
+            formSubmitHandlerSchedules = function () {
+                saveSchedule(item, dialogType === "Add");
+            };
+            $("#editModalSchedules").modal('show');
+        };
+
+        var saveSchedule = function (item, isNew) {
+
+            try {
+                console.log('Extending item:', item);
+
+                // Set default values
+                let freq, byWeekDay = [], bySetPos, byMonth, byMonthDay, tzId, byNMonthDay, wkst;
+                let dtStart = $("#repeatingEventDayStart").datetimepicker('date').toDate();
+                let until = $("#repeatingEventDayEnd").datetimepicker('date') ? $("#repeatingEventDayEnd").datetimepicker('date').toDate() : null;
+                let count = 3; // We don't really care about this. It's only to generate dates for the next events in the schedule.
+                let interval = $("#editModalSchedules #interval").val();
+                let recurrenceType = $("#editModalSchedules #recurrenceType").val();
+                let currentRRuleString;
+
+                // Is this a repeating schedule?
+                if ($("#repeatingEvent").is(':checked')) {
+                    switch (recurrenceType) {
+                        case "Daily":
+                            freq = rrule.RRule.DAILY;
+                            bWeekDay = [];
+                            byMonthDay = undefined;
+                            break;
+                        case "Weekly":
+                            freq = rrule.RRule.WEEKLY;
+                            //TODO Find a better way to do this
+                            if ($("#weeklyControlsDiv #chkMonday").is(':checked')) { bWeekDay.push(rrule.RRule.MO); }
+                            if ($("#weeklyControlsDiv #chkTuesday").is(':checked')) { bWeekDay.push(rrule.RRule.TU); }
+                            if ($("#weeklyControlsDiv #chkWednesday").is(':checked')) { bWeekDay.push(rrule.RRule.WE); }
+                            if ($("#weeklyControlsDiv #chkThursday").is(':checked')) { bWeekDay.push(rrule.RRule.TH); }
+                            if ($("#weeklyControlsDiv #chkFriday").is(':checked')) { bWeekDay.push(rrule.RRule.FR); }
+                            if ($("#weeklyControlsDiv #chkSaturday").is(':checked')) { bWeekDay.push(rrule.RRule.SA); }
+                            if ($("#weeklyControlsDiv #chkSunday").is(':checked')) { bWeekDay.push(rrule.RRule.SU); }
+                            byMonthDay = undefined;
+                            break;
+                        case "Monthly":
+                            freq = rrule.RRule.MONTHLY;
+                            if ($("#monthlyControlsDiv").is(':visible')) {
+                                if ($("#monthlyRecurrenceType").val() === "On") {
+                                    byMonthDay = $("#byMonthDay").val();
+                                } else {
+                                    //TODO Find a better way to do this
+                                    if ($("#byDayDiv #chkMonday").is(':checked')) { bWeekDay.push(rrule.RRule.TU); }
+                                    if ($("#byDayDiv #chkTuesday").is(':checked')) { bWeekDay.push(rrule.RRule.TU); }
+                                    if ($("#byDayDiv #chkWednesday").is(':checked')) { bWeekDay.push(rrule.RRule.WE); }
+                                    if ($("#byDayDiv #chkThursday").is(':checked')) { bWeekDay.push(rrule.RRule.TH); }
+                                    if ($("#byDayDiv #chkFriday").is(':checked')) { bWeekDay.push(rrule.RRule.FR); }
+                                    if ($("#byDayDiv #chkSaturday").is(':checked')) { bWeekDay.push(rrule.RRule.SA); }
+                                    if ($("#byDayDiv #chkSunday").is(':checked')) { bWeekDay.push(rrule.RRule.SU); }
+                                }
+                            }
+                            break;
+                        case "Yearly":
+                            freq = rrule.RRule.YEARLY;
+
+                            bWeekDay = [];
+                            byMonthDay = undefined;
+                            break;
+                        default:
+                            console.error('Unsupported recurrence:', recurrenceType)
+                            break;
+                    }
+
+                    // Build RRule
+                    currentRRule = buildRRule(freq, interval, byWeekDay, dtStart, until, wkst, count, tzId, bySetPos, byMonth, byMonthDay);
+                    console.log(currentRRule);
+                    currentRRuleString = currentRRule.toString();
+                    console.log(currentRRuleString);
+                }
+                $.extend(item, {
+                    scheduleName: $("#editModalSchedules #scheduleName").val(),
+                    start: dtStart,
+                    end: until,
+                    rrule: currentRRuleString
+                });
+                console.log('Extended Item:', item);
+                console.log('IsNew?', isNew)
+                $("#jsGridSchedules").jsGrid(isNew ? "insertItem" : "updateItem", item);
+                $("#editModalSchedules").modal('hide');
+            } catch (error) {
+                console.error(error);
+                showMessage(error, true);
+            }
+        };
+
+        $('#editModalSchedules').on('hidden.bs.modal', async () => {
+            initSchedulesModal();
+        });
+
+        function initSchedulesModal() {
+            $("#editModalSchedules #scheduleName").val("");
+
+            // Repeating Event
+            $("#editModalSchedules #repeatingEvent").prop('checked', false);
+            $("#editModalSchedules #repeatingEvent").change();
+            $("#editModalSchedules #interval").val(1);
+            $("#editModalSchedules #recurrenceType").val('Daily');
+            $("#editModalSchedules #repeatingEventAllDay").prop('checked', false);
+            $("#editModalSchedules #repeatingEventAllDay").change();
+            $("#editModalSchedules #repeatingEventStartTime").datetimepicker('clear');
+            $("#editModalSchedules #repeatingEventEndTime").datetimepicker('clear');
+
+            $("#weeklyControlsDiv #chkMonday").prop(':checked', true);
+            $("#weeklyControlsDiv #chkTuesday").prop(':checked', false);
+            $("#weeklyControlsDiv #chkWednesday").prop(':checked', false);
+            $("#weeklyControlsDiv #chkThursday").prop(':checked', false);
+            $("#weeklyControlsDiv #chkFriday").prop(':checked', false);
+            $("#weeklyControlsDiv #chkSaturday").prop(':checked', false);
+            $("#weeklyControlsDiv #chkSunday").prop(':checked', false);
+
+            $("#byDayDiv #chkMonday").prop(':checked', true);
+            $("#byDayDiv #chkTuesday").prop(':checked', false);
+            $("#byDayDiv #chkWednesday").prop(':checked', false);
+            $("#byDayDiv #chkThursday").prop(':checked', false);
+            $("#byDayDiv #chkFriday").prop(':checked', false);
+            $("#byDayDiv #chkSaturday").prop(':checked', false);
+            $("#byDayDiv #chkSunday").prop(':checked', false);
+
+            // Single Event
+            $("#editModalSchedules #singleEventAllDay").prop('checked', false);
+            $("#editModalSchedules #singleEventAllDay").change();
+            $("#editModalSchedules #singleEventDayStart").datetimepicker('clear');
+            $("#editModalSchedules #singleEventStartTime").datetimepicker('clear');
+            $("#editModalSchedules #singleEventEndTime").datetimepicker('clear');
+            $("#editModalSchedules #singleEventDayEnd").datetimepicker('clear');
+
+            $("#editModalSchedules #submit").html("<i class='fa fa-plus'></i> Add");
+
+            validatorSchedules.resetForm(); // Reset validation errors
+        }
+
+        //#region RRule
+
+        function getAllEventsFromRRuleString(rruleString) {
+            return new rrule.rrulestr(rruleString).all();
+        }
+
+        function buildRRule(freq, interval, byWeekDay, dtStart, until, wkst, count, tzId, bySetPos, byMonth, byMonthDay, byNMonthDay, byYearDay, byWeekNo, byNWeekDay, byHour, byMinute, bySecond, byEaster) {
+            return new rrule.RRule({
+                freq: freq,
+                interval: interval,
+                byweekday: byWeekDay,
+                dtstart: dtStart,
+                until: until,
+                wkst: wkst,
+                count: count,
+                tzid: tzId,
+                bysetpos: bySetPos,
+                bymonth: byMonth,
+                bymonthday: byMonthDay,
+                bynmonthday: byNMonthDay,
+                byyearday: byYearDay,
+                byweekno: byWeekNo,
+                bynweekday: byNWeekDay,
+                byhour: byHour,
+                byminute: byMinute,
+                bysecond: bySecond,
+                byeaster: byEaster
+            });
+        }
+
+        //#endregion
+
+        //#endregion
+
+        //#region ACD Skills
+
+        var dbSkills = {
+            loadData: function (filter) {
+                return $.grep(this.skills, function (skill) {
+                    return (!filter.skillName || skill.skillName.toLowerCase().indexOf(filter.skillName.toLowerCase()) > -1);
+                });
+            },
+            insertItem: function (insertingSkill) {
+                this.skills.push(insertingSkill);
+            },
+            updateItem: function (updatingSkill) { },
+            deleteItem: function (deletingSkill) { }
+        };
+
+        window.dbSkills = dbSkills;
+
+        var formSubmitHandlerSkills = $.noop;
+
+        let validatorSkills = $("#editModalSkills #modal-form").validate({
+            errorClass: "text-danger",
+            successClass: "test-success",
+            submitHandler: function () {
+                formSubmitHandlerSkills();
+            }
+        });
+
+        $("#addSkill").on('click', (e) => {
+            e.preventDefault();
+            showSkillsModal("Add", {});
+        });
+
+        function initSkillsGrid() {
+            const maxSkills = 10;
+
+            dbSkills.skills = caItem.hasOwnProperty('skills') ? caItem.skills : [];
+
+            $("#jsGridSkills").jsGrid({
+                height: "auto",
+                width: "100%",
+                editing: true,
+                autoload: true,
+                sorting: false,
+                filtering: false,
+                paging: false,
+                noDataContent: "No Skills",
+                confirmDeleting: false,
+                onError: function (args) {
+                    console.error('Failed to load grid data:', args);
+                    showMessage("An error occurred while loading your data", true);
+                },
+                rowClick: function (args) {
+                    showSkillsModal("Edit", args.item);
+                },
+                onDataLoaded: function (args) {
+                    $("#addSkill").attr('disabled', $("#jsGridSkills").jsGrid("option", "data").length >= maxSkills);
+                },
+                onItemInserted: function (args) {
+                    $("#addSkill").attr('disabled', $("#jsGridSkills").jsGrid("option", "data").length >= maxSkills);
+                },
+                onItemUpdated: function (args) {
+                    $("#addSkill").attr('disabled', $("#jsGridSkills").jsGrid("option", "data").length >= maxSkills);
+                },
+                onItemDeleting: function (args) {
+                    console.log("onItemDeleting");
+                    if (!args.item.deleteConfirmed) { // custom property for confirmation
+                        args.cancel = true; // cancel deleting
+                        bootbox.confirm({
+                            message: 'Do you really want to delete this Skill?',
+                            buttons: {
+                                confirm: {
+                                    label: "Delete!",
+                                    className: "btn-danger"
+                                },
+                                cancel: {
+                                    label: "No",
+                                    className: "btn-secondary"
+                                }
+                            },
+                            callback: async function (result) {
+                                if (result) {
+                                    args.item.deleteConfirmed = true;
+                                    $("#jsGridSkills").jsGrid('deleteItem', args.item); // Remove item from grid
+                                    removeFromArray(dbSkills.skills, args.item); // Remove item from db
+                                    showMessage("Skill deleted", false);
+                                }
+                            }
+                        });
+                    }
+                },
+                onItemDeleted: function (args) {
+                    $("#addSkill").attr('disabled', $("#jsGridSkills").jsGrid("option", "data").length >= maxSkills);
+                },
+                controller: dbSkills,
+                fields: [
+                    {
+                        name: "skillName",
+                        title: "name",
+                        type: "text",
+                        align: "center"
+                    },
+                    {
+                        type: "control",
+                        modeSwitchButton: false,
+                        editButton: false,
+                        width: 68,
+                        align: "center",
+                        headerTemplate: function () {
+                            return "Actions";
+                        }
+                    }
+                ]
+            });
+        }
+
+        var showSkillsModal = function (dialogType, item) {
+            console.log('Showing details for:', item);
+            $("#editModalSkills #skillName").val(item.skillName);
+            $("#editModalSkills #submit").html("<i class='fa fa-floppy-o'></i> Save");
+            formSubmitHandlerSkills = function () {
+                saveSkill(item, dialogType === "Add");
+            };
+            $("#editModalSkills").modal('show');
+
+        };
+
+        var saveSkill = function (item, isNew) {
+            console.log('Extending item:', item);
+            $.extend(item, {
+                skillName: $("#editModalSkills #skillName").val()
+            });
+            console.log('Extended Item:', item);
+            console.log('IsNew?', isNew)
+            $("#jsGridSkills").jsGrid(isNew ? "insertItem" : "updateItem", item);
+            $("#editModalSkills").modal('hide');
+        };
+
+        $("#editModalSkills").on('shown.bs.modal', function () {
+            $("#skillName").focus();
+        });
+
+        $('#editModalSkills').on('hidden.bs.modal', async () => {
+            initSkillsModal();
+        });
+
+        function initSkillsModal() {
+            $("#editModalSkills #skillName").val("");
+            $("#editModalSkills #submit").html("<i class='fa fa-plus'></i> Add");
+
+            validatorSkills.resetForm(); // Reset validation errors
+        }
+
+        //#endregion
+
+        //#region Queues
+
+        var dbQueues = {
+            loadData: function (filter) {
+                return $.grep(this.queues, function (queue) {
+                    return (!filter.queues || queue.queueName.toLowerCase().indexOf(filter.queueName.toLowerCase()) > -1);
+                });
+            },
+            insertItem: function (insertingQueue) {
+                this.queues.push(insertingQueue);
+            },
+            updateItem: function (updatingQueue) { },
+            deleteItem: function (deletingQueue) { }
+        };
+
+        window.dbQueues = dbQueues;
+
+        var formSubmitHandlerQueues = $.noop;
+
+        let validatorQueues = $("#editModalQueues #modal-form").validate({
+            errorClass: "text-danger",
+            successClass: "test-success",
+            submitHandler: function () {
+                formSubmitHandlerQueues();
+            }
+        });
+
+        $("#addQueue").on('click', (e) => {
+            e.preventDefault();
+            showQueuesModal("Add", {});
+        });
+
+        function initQueuesGrid() {
+            const maxItems = 3;
+
+            dbQueues.queues = caItem.hasOwnProperty('queues') ? caItem.queues : [];
+
+            $("#jsGridQueues").jsGrid({
+                height: "auto",
+                width: "100%",
+                editing: true,
+                autoload: true,
+
+                sorting: false,
+                filtering: false,
+                paging: false,
+                noDataContent: "No Queues",
+                confirmDeleting: false,
+                onError: function (args) {
+                    console.error('Failed to load grid data:', args);
+                    showMessage("An error occurred while loading your data", true);
+                },
+                rowClick: function (args) {
+
+                    showQueuesModal("Edit", args.item);
+                },
+                onDataLoaded: function (args) {
+                    $("#addQueue").attr('disabled', $("#jsGridQueues").jsGrid("option", "data").length >= maxItems);
+                },
+                onItemInserted: function (args) {
+                    $("#addQueue").attr('disabled', $("#jsGridQueues").jsGrid("option", "data").length >= maxItems);
+                },
+                onItemUpdated: function (args) {
+                    $("#addQueue").attr('disabled', $("#jsGridQueues").jsGrid("option", "data").length >= maxItems);
+                },
+                onItemDeleting: function (args) {
+                    console.log("onItemDeleting");
+                    if (!args.item.deleteConfirmed) { // custom property for confirmation
+                        args.cancel = true; // cancel deleting
+                        bootbox.confirm({
+                            message: 'Do you really want to delete this Queue?',
+                            buttons: {
+                                confirm: {
+                                    label: "Delete!",
+                                    className: "btn-danger"
+                                },
+                                cancel: {
+                                    label: "No",
+                                    className: "btn-secondary"
+                                }
+                            },
+                            callback: async function (result) {
+                                if (result) {
+                                    args.item.deleteConfirmed = true;
+                                    $("#jsGridQueues").jsGrid('deleteItem', args.item); // Remove item from grid
+                                    removeFromArray(dbQueues.queues, args.item); // Remove item from db
+                                    showMessage("Queue deleted", false);
+                                }
+                            }
+                        });
+                    }
+                },
+                onItemDeleted: function (args) {
+                    $("#addQueue").attr('disabled', $("#jsGridQueues").jsGrid("option", "data").length >= maxItems);
+                },
+                controller: dbQueues,
+                fields: [
+                    {
+                        name: "queueName",
+                        title: "Queue Name",
+                        type: "text",
+                        align: "center"
+                    },
+                    {
+                        name: "enableCallbacks",
+                        title: "Supports Callbacks",
+                        type: "text",
+                        align: "center",
+                        itemTemplate: function (value, item) {
+                            return value ? '<span class="fa fa-check text-success"></span>' : ''
+                        }
+                    },
+                    {
+                        name: "enableEmails",
+                        title: "Supports Emails",
+                        type: "text",
+                        align: "center",
+                        itemTemplate: function (value, item) {
+                            return value ? '<span class="fa fa-check text-success"></span>' : ''
+                        }
+                    },
+                    {
+                        type: "control",
+                        modeSwitchButton: false,
+                        editButton: false,
+                        width: 68,
+                        align: "center",
+                        headerTemplate: function () {
+                            return "Actions";
+                        }
+                    }
+                ]
+            });
+        }
+
+        //#endregion
+
+        //#region Other Useful Functions
+
+        function removeFromArray(array, value) {
+            let idx = array.indexOf(value);
+            if (idx !== -1) {
+                array.splice(idx, 1);
+            }
+            return array;
         }
 
         function getUrlParameter(sParam) {
@@ -253,6 +1857,7 @@
             }
         };
 
+        //#endregion
 
     </script>
 
