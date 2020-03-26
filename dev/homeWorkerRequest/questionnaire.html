@@ -354,57 +354,72 @@
                                                                             </div>
                                                                         </div>
 
-                                                                        <!-- All Day -->
-                                                                        <div class="form-check row date-row">
-                                                                            <div class="form-group col-md-12">
-                                                                                <input class="form-check-input" type="checkbox" value="" id="repeatingEventAllDay">
-                                                                                <label class="form-check-label" for="repeatingEventAllDay">
-                                                                                    All Day
-                                                                                </label>
-                                                                            </div>
-                                                                        </div>
-
-                                                                        <!-- Start Date -->
-                                                                        <div class="form-group row date-row">
-                                                                            <label class="col-sm-3 col-form-label">Start Date</label>
-                                                                            <div class="input-group date col-md-3 date-only" id="repeatingEventDayStart" data-target-input="nearest">
-                                                                                <input type="text" class="form-control datetimepicker-input" data-target="#repeatingEventDayStart" required />
-                                                                                <div class="input-group-append" data-target="#repeatingEventDayStart" data-toggle="datetimepicker">
-                                                                                    <div class="input-group-text"><i class="fa fa-calendar"></i></div>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-
-                                                                        <!-- End Date -->
-                                                                        <div class="form-group row date-row">
-                                                                            <label class="col-sm-3 col-form-label">End Date</label>
-                                                                            <div class="input-group date col-md-3 date-only" id="repeatingEventDayEnd" data-target-input="nearest">
-                                                                                <input type="text" class="form-control datetimepicker-input" data-target="#repeatingEventDayEnd" />
-                                                                                <div class="input-group-append" data-target="#repeatingEventDayEnd" data-toggle="datetimepicker">
-                                                                                    <div class="input-group-text"><i class="fa fa-calendar"></i></div>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-
                                                                     </div>
 
                                                                     <!-- Single Event -->
                                                                     <div id="singleEventDiv">
-                                                                        <div class="form-check row date-row">
-                                                                            <div class="form-group col-md-12">
-                                                                                <input class="form-check-input" type="checkbox" value="" id="singleEventAllDay">
-                                                                                <label class="form-check-label" for="singleEventAllDay">
-                                                                                    All Day
-                                                                                </label>
+                                                                    </div>
+
+                                                                    <!-- All Day -->
+                                                                    <div class="form-check row">
+                                                                        <div class="form-group col-md-12">
+                                                                            <input class="form-check-input" type="checkbox" value="" id="allDay">
+                                                                            <label class="form-check-label" for="allDay">
+                                                                                All Day
+                                                                            </label>
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <!-- Start Date -->
+                                                                    <div class="form-group row date-row">
+                                                                        <label class="col-sm-3 col-form-label">Start Date</label>
+                                                                        <div class="input-group date col-md-3 date-only" id="startDate" data-target-input="nearest">
+                                                                            <input type="text" class="form-control datetimepicker-input" data-target="#startDate" required />
+                                                                            <div class="input-group-append" data-target="#startDate" data-toggle="datetimepicker">
+                                                                                <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                                                                             </div>
                                                                         </div>
                                                                     </div>
 
-                                                                    <!-- Footer -->
-                                                                    <div class="modal-footer">
-                                                                        <button id="btnClose" type="button" class="btn btn-link pull-right" data-dismiss="modal">Close</button>
-                                                                        <button id="submit" type="submit" class="btn btn-primary pull-left"><i class="fa fa-plus"></i> Add</button>
+                                                                    <!-- Start Time -->
+                                                                    <div class="form-group row time-row">
+                                                                        <label class="col-sm-3 col-form-label">Start Time</label>
+                                                                        <div class="input-group date col-md-3 time-only" id="repeatingEventStartTime" data-target-input="nearest">
+                                                                            <input type="text" class="form-control datetimepicker-input" data-target="#repeatingEventStartTime" />
+                                                                            <div class="input-group-append" data-target="#repeatingEventStartTime" data-toggle="datetimepicker">
+                                                                                <div class="input-group-text"><i class="fa fa-clock-o"></i></div>
+                                                                            </div>
+                                                                        </div>
                                                                     </div>
+
+                                                                    <!-- End Time -->
+                                                                    <div class="form-group row time-row">
+                                                                        <label class="col-sm-3 col-form-label">End Time</label>
+                                                                        <div class="input-group date col-md-3 time-only" id="repeatingEventEndTime" data-target-input="nearest">
+                                                                            <input type="text" class="form-control datetimepicker-input" data-target="#repeatingEventEndTime" />
+                                                                            <div class="input-group-append" data-target="#repeatingEventEndTime" data-toggle="datetimepicker">
+                                                                                <div class="input-group-text"><i class="fa fa-clock-o"></i></div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <!-- End Date -->
+                                                                    <div class="form-group row date-row">
+                                                                        <label class="col-sm-3 col-form-label">End Date</label>
+                                                                        <div class="input-group date col-md-3 date-only" id="repeatingEventDayEnd" data-target-input="nearest">
+                                                                            <input type="text" class="form-control datetimepicker-input" data-target="#repeatingEventDayEnd" />
+                                                                            <div class="input-group-append" data-target="#repeatingEventDayEnd" data-toggle="datetimepicker">
+                                                                                <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+
+                                                                <!-- Footer -->
+                                                                <div class="modal-footer">
+                                                                    <button id="btnClose" type="button" class="btn btn-link pull-right" data-dismiss="modal">Close</button>
+                                                                    <button id="submit" type="submit" class="btn btn-primary pull-left"><i class="fa fa-plus"></i> Add</button>
+                                                                </div>
                                                             </form>
                                                         </div>
                                                     </div>
@@ -1188,10 +1203,6 @@
         //      All
         //          All day, when NOT checked, should show start/end time
         //
-        // Single
-        //      Should show start and end date
-        //      All day, when NOT checked, should show start/end time
-        //
         // Check if rrule is set correctly
         //
 
@@ -1235,13 +1246,13 @@
             }
         });
 
-        // $("#repeatingEventAllDay").on('change', () => {
-        //     if ($("#repeatingEventAllDay").is(':checked')) {
-        //         $(".date-row").show();
-        //     } else {
-        //         $(".date-row").hide();
-        //     }
-        // });
+        $("#allDay").on('change', () => {
+            if ($("#allDay").is(':checked')) {
+                $(".time-row").hide();
+            } else {
+                $(".time-row").show();
+            }
+        });
 
         $("#recurrenceType").on('change', () => {
             let recurrenceType = $("#recurrenceType").val();
@@ -1435,7 +1446,6 @@
             $("#editModalSchedules #scheduleName").val(item.scheduleName);
             $("#editModalSchedules #start").val(item.start);
             $("#editModalSchedules #end").val(item.end);
-            //TODO Use rrule to populate fields and checkboxes
             $("#editModalSchedules #submit").html("<i class='fa fa-floppy-o'></i> Save");
             formSubmitHandlerSchedules = function () {
                 saveSchedule(item, dialogType === "Add");

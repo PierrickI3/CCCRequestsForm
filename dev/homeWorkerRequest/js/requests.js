@@ -21,8 +21,11 @@ async function postRequests() {
     relationshipWithCarrier: $("#relationshipWithCarrier").is(':checked'),
     customerResourceCommitted: $("#customerResourceCommitted").is(':checked'),
     hyperVEnvironment: $("#hyperVEnvironment").is(':checked'),
+    estimatedVolumeMinsPerMonth: $("#estimatedVolumeMinsPerMonth").val(),
+    genesysCloudRegion: $("#genesysCloudRegion").val(),
 
-    // Common Questions
+    // General Configuration
+    numberAgents: $("#numberAgents").val(),
     numberConcurrentCalls: $("#numberConcurrentCalls").val(),
     callFlowsDocumented: $("#callFlowsDocumented").is(':checked'),
     emailFlowDocumented: $("#emailFlowDocumented").is(':checked'),
@@ -143,8 +146,11 @@ async function putRequest() {
     //nonGeographicNumbersReRouting: $("#nonGeographicNumbersReRouting").val(),
     customerResourceCommitted: $("#editModal #customerResourceCommitted").is(':checked'),
     hyperVEnvironment: $("#editModal #hyperVEnvironment").is(':checked'),
+    estimatedVolumeMinsPerMonth: $("#editModal #estimatedVolumeMinsPerMonth").val(),
+    genesysCloudRegion: $("#editModal #genesysCloudRegion").val(),
 
-    // Common Questions
+    // General Configuration
+    numberAgents: $("#editModal #numberAgents").val(),
     numberConcurrentCalls: $("#editModal #numberConcurrentCalls").val(),
     callFlowsDocumented: $("#editModal #callFlowsDocumented").is(':checked'),
     emailFlowDocumented: $("#editModal #emailFlowDocumented").is(':checked'),
