@@ -136,6 +136,38 @@
                                         <textarea class="form-control" id="newNumbers" name="newNumbers" placeholder="If using new numbers, how many of each number type and which area codes are required?"></textarea>
                                     </div>
                                 </div>
+
+                                <div class="form-row mr-4">
+                                    <div class="form-group col-md-12">
+                                        <label for="genesysCloudRegion">Genesys Cloud Region</label>
+                                        <select class="custom-select" id="genesysCloudRegion" name="genesysCloudRegion" required>
+                                            <option selected disabled>Select a Genesys Cloud Region</option>
+                                            <optgroup label="North America">
+                                                <option value="cac1.pure.cloud" disabled>cac1.pure.cloud - Canada</option>
+                                                <option value="mypurecloud.com">mypurecloud.com - East</option>
+                                                <option value="usw2.pure.cloud">usw2.pure.cloud - West</option>
+                                            </optgroup>
+                                            <optgroup label="EMEA">
+                                                <option value="euw2.pure.cloud" disabled>euw2.pure.cloud - UK</option>
+                                                <option value="mypurecloud.de">mypurecloud.de - Frankfurt</option>
+                                                <option value="mypurecloud.ie">mypurecloud.ie - Ireland</option>
+                                            </optgroup>
+                                            <optgroup label="APAC">
+                                                <option value="apne2.pure.cloud" disabled>apne2.pure.cloud - Seoul </option>
+                                                <option value="mypurecloud.com.au">mypurecloud.com.au - Australia/New Zealand </option>
+                                                <option value="mypurecloud.jp">mypurecloud.jp - Japan </option>
+                                            </optgroup>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <!-- Estimated Volume of Minutes Per Month -->
+                                <div class="form-row mr-4">
+                                    <div class="form-group col-md-12">
+                                        <label for="estimatedVolumeMinsPerMonth">Estimated Volumes of GCV Minutes per Month</label>
+                                        <textarea class="form-control" id="estimatedVolumeMinsPerMonth" name="estimatedVolumeMinsPerMonth" placeholder="What is the estimated volumes of minutes per month?" required></textarea>
+                                    </div>
+                                </div>
                             </div>
 
                             <!-- BYOC Cloud Carriers -->
@@ -193,6 +225,14 @@
                                     <label class="form-check-label" for="customerResourceCommitted">
                                         Has customer resource been committed?
                                     </label>
+                                </div>
+                            </div>
+
+                            <!-- Number of Agents -->
+                            <div class="form-row mr-4">
+                                <div class="form-group col-md-12">
+                                    <label for="numberAgents">What is the expected number of agents?</label>
+                                    <textarea class="form-control" id="numberAgents" name="numberAgents" placeholder="" required></textarea>
                                 </div>
                             </div>
 
@@ -660,6 +700,8 @@
             // GCV
             $("#editModal #phoneNumbersDeployment").val("");
             $("#editModal #newNumbers").val("");
+            $("#editModal #estimatedVolumeMinsPerMonth").val("");
+            $("#editModal #genesysCloudRegion").val("");
 
             // BYOC Cloud
             $("#editModal #relationshipWithCarrier").attr('checked', false)
@@ -1077,6 +1119,8 @@
             $("#editModal #countriesOperation").selectpicker('refresh');
             $("#editModal #existingTelephonyUsage").attr('checked', request.existingTelephonyUsage);
             $("#editModal #existingTelephonyUsageDetails").val(request.existingTelephonyUsageDetails || "");
+            $("#editModal #estimatedVolumeMinsPerMonth").val(request.estimatedVolumeMinsPerMonth);
+            $("#editModal #genesysCloudRegion").val(request.genesysCloudRegion);
 
             // GCV
             $("#editModal #phoneNumbersDeployment").val(request.phoneNumbersDeployment);
@@ -1088,7 +1132,8 @@
             // BYOC Premise
             $("#editModal #hyperVEnvironment").val(request.hyperVEnvironment);
 
-            // Common Questions
+            // General Configuration
+            $("#editModal #numberAgents").val(request.numberAgents);
             $("#editModal #customerResourceCommitted").attr('checked', request.customerResourceCommitted);
             $("#editModal #numberConcurrentCalls").val(request.numberConcurrentCalls || "");
             $("#editModal #callFlowsDocumented").attr('checked', request.callFlowsDocumented);

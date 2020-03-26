@@ -129,6 +129,39 @@
                                 <textarea class="form-control" id="newNumbers" name="newNumbers" placeholder="If using new numbers, how many of each number type and which area codes are required?"></textarea>
                             </div>
                         </div>
+
+                        <div class="form-row mr-4 ml-2">
+                            <div class="form-group col-md-12">
+                                <label for="genesysCloudRegion">Genesys Cloud Region <span class="text-danger font-weight-bold">*</span></label>
+                                <select class="custom-select" id="genesysCloudRegion" name="genesysCloudRegion" required>
+                                    <option selected disabled>Select a Genesys Cloud Region</option>
+                                    <optgroup label="North America">
+                                        <option value="cac1.pure.cloud" disabled>cac1.pure.cloud - Canada</option>
+                                        <option value="mypurecloud.com">mypurecloud.com - East</option>
+                                        <option value="usw2.pure.cloud">usw2.pure.cloud - West</option>
+                                    </optgroup>
+                                    <optgroup label="EMEA">
+                                        <option value="euw2.pure.cloud" disabled>euw2.pure.cloud - UK</option>
+                                        <option value="mypurecloud.de">mypurecloud.de - Frankfurt</option>
+                                        <option value="mypurecloud.ie">mypurecloud.ie - Ireland</option>
+                                    </optgroup>
+                                    <optgroup label="APAC">
+                                        <option value="apne2.pure.cloud" disabled>apne2.pure.cloud - Seoul </option>
+                                        <option value="mypurecloud.com.au">mypurecloud.com.au - Australia/New Zealand </option>
+                                        <option value="mypurecloud.jp">mypurecloud.jp - Japan </option>
+                                    </optgroup>
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- Estimated Volume of Minutes Per Month -->
+                        <div class="form-row mr-4 ml-2">
+                            <div class="form-group col-md-12">
+                                <label for="estimatedVolumeMinsPerMonth">Estimated Volumes of GCV Minutes per Month <span class="text-danger font-weight-bold">*</span></label>
+                                <textarea class="form-control" id="estimatedVolumeMinsPerMonth" name="estimatedVolumeMinsPerMonth" placeholder="What is the estimated volumes of minutes per month?" required></textarea>
+                            </div>
+                        </div>
+
                     </div>
 
                     <!-- BYOC Cloud Carriers -->
@@ -215,6 +248,14 @@
                         <hr />
                         <h3 class="text-center">General Configuration</h3>
                         <hr />
+                    </div>
+
+                    <!-- Number of Agents -->
+                    <div class="form-row mr-4 ml-2">
+                        <div class="form-group col-md-12">
+                            <label for="numberAgents">What is the expected number of agents? <span class="text-danger font-weight-bold">*</span></label>
+                            <textarea class="form-control" id="numberAgents" name="numberAgents" placeholder="" required></textarea>
+                        </div>
                     </div>
 
                     <!-- Concurrent Calls -->
@@ -866,8 +907,11 @@
             $("#relationshipWithCarrier").prop('checked', false);
             $("#customerResourceCommitted").prop('checked', false);
             $("#hyperVEnvironment").prop('checked', false);
+            $("#estimatedVolumeMinsPerMonth").val('');
+            $("#genesysCloudRegion").val('');
 
             // General Configuration
+            $("#numberAgents").val('');
             $("#numberConcurrentCalls").val('');
             $("#callFlowsDocumented").prop('checked', false);
             $("#emailFlowDocumented").prop('checked', false);
@@ -913,8 +957,11 @@
                     relationshipWithCarrier: $("#relationshipWithCarrier").is(':checked'),
                     customerResourceCommitted: $("#customerResourceCommitted").is(':checked'),
                     hyperVEnvironment: $("#hyperVEnvironment").is(':checked'),
+                    estimatedVolumeMinsPerMonth: $("#estimatedVolumeMinsPerMonth").val(),
+                    genesysCloudRegion: $("#genesysCloudRegion").val(),
 
-                    // Common Questions
+                    // General Configuration
+                    numberAgents: $("#numberAgents").val(),
                     numberConcurrentCalls: $("#numberConcurrentCalls").val(),
                     callFlowsDocumented: $("#callFlowsDocumented").is(':checked'),
                     emailFlowDocumented: $("#emailFlowDocumented").is(':checked'),
@@ -946,7 +993,6 @@
                     newNumbers: $("#newNumbers").val(),
                     existingTelephonyUsageDetails: $("#existingTelephonyUsageDetails").val(),
                     emailInfrastructure: $("#emailInfrastructure").val()
-
                 }
 
                 let needCompletedByDate = moment($("#datepicker").datepicker('getDate')).format("YYYY-MM-DDT00:00:00.000") + "Z";
@@ -992,8 +1038,11 @@
                 $("#relationshipWithCarrier").prop('checked', data.relationshipWithCarrier);
                 $("#customerResourceCommitted").prop('checked', data.customerResourceCommitted);
                 $("#hyperVEnvironment").prop('checked', data.hyperVEnvironment);
+                $("#estimatedVolumeMinsPerMonth").val(data.estimatedVolumeMinsPerMonth);
+                $("#genesysCloudRegion").val(data.genesysCloudRegion);
 
                 // General Configuration
+                $("#numberAgents").val(data.numberAgents);
                 $("#numberConcurrentCalls").val(data.numberConcurrentCalls);
                 $("#callFlowsDocumented").prop('checked', data.callFlowsDocumented);
                 $("#emailFlowDocumented").prop('checked', data.emailFlowDocumented);
