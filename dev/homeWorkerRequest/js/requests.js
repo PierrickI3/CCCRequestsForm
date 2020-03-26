@@ -76,7 +76,7 @@ async function postRequests() {
     data.newNumbers = $("#newNumbers").val();
   }
 
-  if ($("#existingTelephonyUsageDetails").val().length > 0) {
+  if ($("#existingTelephonyUsage").is(':checked') && $("#existingTelephonyUsageDetails").val().length > 0) {
     data.existingTelephonyUsageDetails = $("#existingTelephonyUsageDetails").val();
   }
 
