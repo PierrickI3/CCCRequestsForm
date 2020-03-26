@@ -307,18 +307,38 @@
                                                                                     <option value="Monthly">Month</option>
                                                                                     <option value="Yearly">Year</option>
                                                                                 </select>
+                                                                                <div id="yearMonth" class="col-md-3" style="display: none;">
+                                                                                    <select name="yearMonthSelect" id="yearMonthSelect" class="form-control" required>
+                                                                                        <option value="" selected>Month</option>
+                                                                                        <option value="1">January</option>
+                                                                                        <option value="2">February</option>
+                                                                                        <option value="3">March</option>
+                                                                                        <option value="4">April</option>
+                                                                                        <option value="5">May</option>
+                                                                                        <option value="6">June</option>
+                                                                                        <option value="7">July</option>
+                                                                                        <option value="8">August</option>
+                                                                                        <option value="9">September</option>
+                                                                                        <option value="10">October</option>
+                                                                                        <option value="11">November</option>
+                                                                                        <option value="12">December</option>
+                                                                                    </select>
+                                                                                </div>
                                                                             </div>
                                                                         </div>
 
                                                                         <!-- Weekly -->
-                                                                        <div class="btn-group" data-toggle="buttons" id="weeklyControlsDiv" style="display: none;">
-                                                                            <label class="btn btn-primary active"><input type="checkbox" id="chkMonday" checked> Mo</label>
-                                                                            <label class="btn btn-primary"><input type="checkbox" id="chkTuesday"> Tu</label>
-                                                                            <label class="btn btn-primary"><input type="checkbox" id="chkWednesday"> We</label>
-                                                                            <label class="btn btn-primary"><input type="checkbox" id="chkThursday"> Th</label>
-                                                                            <label class="btn btn-primary"><input type="checkbox" id="chkFriday"> Fr</label>
-                                                                            <label class="btn btn-primary"><input type="checkbox" id="chkSaturday"> Sa</label>
-                                                                            <label class="btn btn-primary"><input type="checkbox" id="chkSunday"> Su</label>
+                                                                        <div class="form-group row" id="weeklyControlsDiv" style="display: none;">
+                                                                            <label for="interval" class="col-sm-2 offset-sm-3 col-form-label">Every</label>
+                                                                            <div class="btn-group" data-toggle="buttons">
+                                                                                <label class="btn btn-primary active"><input type="checkbox" id="chkMonday" checked> Mo</label>
+                                                                                <label class="btn btn-primary"><input type="checkbox" id="chkTuesday"> Tu</label>
+                                                                                <label class="btn btn-primary"><input type="checkbox" id="chkWednesday"> We</label>
+                                                                                <label class="btn btn-primary"><input type="checkbox" id="chkThursday"> Th</label>
+                                                                                <label class="btn btn-primary"><input type="checkbox" id="chkFriday"> Fr</label>
+                                                                                <label class="btn btn-primary"><input type="checkbox" id="chkSaturday"> Sa</label>
+                                                                                <label class="btn btn-primary"><input type="checkbox" id="chkSunday"> Su</label>
+                                                                            </div>
                                                                         </div>
 
                                                                         <!-- Monthly -->
@@ -354,34 +374,35 @@
                                                                             </div>
                                                                         </div>
 
-                                                                        <!-- All Day -->
-                                                                        <div class="form-check row date-row">
-                                                                            <div class="form-group col-md-12">
-                                                                                <input class="form-check-input" type="checkbox" value="" id="repeatingEventAllDay">
-                                                                                <label class="form-check-label" for="repeatingEventAllDay">
-                                                                                    All Day
-                                                                                </label>
-                                                                            </div>
-                                                                        </div>
+                                                                        <!-- Yearly -->
+                                                                        <div class="form-group row" id="yearlyControlsDiv" style="display: none;">
+                                                                            <div class="col-md-3"></div>
+                                                                            <select name="yearlyRecurrenceType" id="yearlyRecurrenceType" class="form-control col-md-2 mr-1" required>
+                                                                                <optgroup label="Date">
+                                                                                    <option value="On" selected>On</option>
+                                                                                </optgroup>
+                                                                                <optgroup label="Day of the Week">
+                                                                                    <option value="IfDayIs">If Day is</option>
+                                                                                    <option value="First">First</option>
+                                                                                    <option value="Second">Second</option>
+                                                                                    <option value="Third">Third</option>
+                                                                                    <option value="Fourth">Fourth</option>
+                                                                                    <option value="Last">Last</option>
+                                                                                </optgroup>
+                                                                            </select>
 
-                                                                        <!-- Start Date -->
-                                                                        <div class="form-group row date-row">
-                                                                            <label class="col-sm-3 col-form-label">Start Date</label>
-                                                                            <div class="input-group date col-md-3 date-only" id="repeatingEventDayStart" data-target-input="nearest">
-                                                                                <input type="text" class="form-control datetimepicker-input" data-target="#repeatingEventDayStart" required />
-                                                                                <div class="input-group-append" data-target="#repeatingEventDayStart" data-toggle="datetimepicker">
-                                                                                    <div class="input-group-text"><i class="fa fa-calendar"></i></div>
-                                                                                </div>
+                                                                            <div class="col-md-6 row" id="byYearDayDiv">
+                                                                                <input type="text" class="form-control col-md-3" id="byYearDay" name="byYearDay" value="30" required data-toggle="tooltip" data-placement="top" title="Add a single day (e.g. 24) or mutliple days (e.g. 24,25,26)">
                                                                             </div>
-                                                                        </div>
-
-                                                                        <!-- End Date -->
-                                                                        <div class="form-group row date-row">
-                                                                            <label class="col-sm-3 col-form-label">End Date</label>
-                                                                            <div class="input-group date col-md-3 date-only" id="repeatingEventDayEnd" data-target-input="nearest">
-                                                                                <input type="text" class="form-control datetimepicker-input" data-target="#repeatingEventDayEnd" />
-                                                                                <div class="input-group-append" data-target="#repeatingEventDayEnd" data-toggle="datetimepicker">
-                                                                                    <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                                                            <div class="col-md-6 row" id="byDayDiv" style="display: none;">
+                                                                                <div class="btn-group" data-toggle="buttons" id="byYearDay">
+                                                                                    <label class="btn btn-primary active"><input type="checkbox" id="chkMonday" checked> Mo</label>
+                                                                                    <label class="btn btn-primary"><input type="checkbox" id="chkTuesday"> Tu</label>
+                                                                                    <label class="btn btn-primary"><input type="checkbox" id="chkWednesday"> We</label>
+                                                                                    <label class="btn btn-primary"><input type="checkbox" id="chkThursday"> Th</label>
+                                                                                    <label class="btn btn-primary"><input type="checkbox" id="chkFriday"> Fr</label>
+                                                                                    <label class="btn btn-primary"><input type="checkbox" id="chkSaturday"> Sa</label>
+                                                                                    <label class="btn btn-primary"><input type="checkbox" id="chkSunday"> Su</label>
                                                                                 </div>
                                                                             </div>
                                                                         </div>
@@ -390,21 +411,68 @@
 
                                                                     <!-- Single Event -->
                                                                     <div id="singleEventDiv">
-                                                                        <div class="form-check row date-row">
-                                                                            <div class="form-group col-md-12">
-                                                                                <input class="form-check-input" type="checkbox" value="" id="singleEventAllDay">
-                                                                                <label class="form-check-label" for="singleEventAllDay">
-                                                                                    All Day
-                                                                                </label>
+                                                                    </div>
+
+                                                                    <!-- All Day -->
+                                                                    <div class="form-check row">
+                                                                        <div class="form-group col-md-12">
+                                                                            <input class="form-check-input" type="checkbox" value="" id="allDay">
+                                                                            <label class="form-check-label" for="allDay">
+                                                                                All Day
+                                                                            </label>
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <!-- Start Date -->
+                                                                    <div class="form-group row date-row">
+                                                                        <label class="col-sm-3 col-form-label">Start Date</label>
+                                                                        <div class="input-group date col-md-3 date-only" id="startDate" data-target-input="nearest">
+                                                                            <input type="text" class="form-control datetimepicker-input" data-target="#startDate" required />
+                                                                            <div class="input-group-append" data-target="#startDate" data-toggle="datetimepicker">
+                                                                                <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                                                                             </div>
                                                                         </div>
                                                                     </div>
 
-                                                                    <!-- Footer -->
-                                                                    <div class="modal-footer">
-                                                                        <button id="btnClose" type="button" class="btn btn-link pull-right" data-dismiss="modal">Close</button>
-                                                                        <button id="submit" type="submit" class="btn btn-primary pull-left"><i class="fa fa-plus"></i> Add</button>
+                                                                    <!-- Start Time -->
+                                                                    <div class="form-group row time-row">
+                                                                        <label class="col-sm-3 col-form-label">Start Time</label>
+                                                                        <div class="input-group date col-md-3 time-only" id="repeatingEventStartTime" data-target-input="nearest">
+                                                                            <input type="text" class="form-control datetimepicker-input" data-target="#repeatingEventStartTime" />
+                                                                            <div class="input-group-append" data-target="#repeatingEventStartTime" data-toggle="datetimepicker">
+                                                                                <div class="input-group-text"><i class="fa fa-clock-o"></i></div>
+                                                                            </div>
+                                                                        </div>
                                                                     </div>
+
+                                                                    <!-- End Time -->
+                                                                    <div class="form-group row time-row">
+                                                                        <label class="col-sm-3 col-form-label">End Time</label>
+                                                                        <div class="input-group date col-md-3 time-only" id="repeatingEventEndTime" data-target-input="nearest">
+                                                                            <input type="text" class="form-control datetimepicker-input" data-target="#repeatingEventEndTime" />
+                                                                            <div class="input-group-append" data-target="#repeatingEventEndTime" data-toggle="datetimepicker">
+                                                                                <div class="input-group-text"><i class="fa fa-clock-o"></i></div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <!-- End Date -->
+                                                                    <div class="form-group row date-row">
+                                                                        <label class="col-sm-3 col-form-label">End Date</label>
+                                                                        <div class="input-group date col-md-3 date-only" id="repeatingEventDayEnd" data-target-input="nearest">
+                                                                            <input type="text" class="form-control datetimepicker-input" data-target="#repeatingEventDayEnd" />
+                                                                            <div class="input-group-append" data-target="#repeatingEventDayEnd" data-toggle="datetimepicker">
+                                                                                <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+
+                                                                <!-- Footer -->
+                                                                <div class="modal-footer">
+                                                                    <button id="btnClose" type="button" class="btn btn-link pull-right" data-dismiss="modal">Close</button>
+                                                                    <button id="submit" type="submit" class="btn btn-primary pull-left"><i class="fa fa-plus"></i> Add</button>
+                                                                </div>
                                                             </form>
                                                         </div>
                                                     </div>
@@ -444,9 +512,58 @@
                                                                 <div class="form-group">
 
                                                                     <div class="form-group row">
-                                                                        <label for="locationName" class="col-sm-3 col-form-label">Skill Name</label>
+                                                                        <label for="skillName" class="col-sm-3 col-form-label">Skill Name</label>
                                                                         <div class="col-sm-9">
                                                                             <input type="text" class="form-control" id="skillName" tabindex="-1" name="skillName" placeholder="Enter the name of the Skill" required>
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <div class="modal-footer">
+                                                                        <button id="btnClose" type="button" class="btn btn-link pull-right" data-dismiss="modal">Close</button>
+                                                                        <button id="submit" type="submit" class="btn btn-primary pull-left"><i class="fa fa-plus"></i> Add</button>
+                                                                    </div>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- WrapUp Codes -->
+                                    <div class="card">
+                                        <div class="card-header shadow-lg" role="tab" id="headingWrapUpCodes">
+                                            <div class="mb-0">
+                                                <a data-toggle="collapse" data-parent="#accordion" href="#collapseWrapUpCodes" aria-expanded="false" aria-controls="collapseWrapUpCodes" class="collapsed">
+                                                    <i class="fa fa-sticky-note-o" aria-hidden="true" style="color: #FF4F1F;"></i>
+                                                    <h3>WrapUp Codes</h3>
+                                                    <p>Information about WrapUp Codes</p>
+                                                </a>
+                                                <i class="fa fa-angle-right" aria-hidden="true" style="color: #FF4F1F;"></i>
+                                            </div>
+                                        </div>
+
+                                        <div id="collapseWrapUpCodes" class="collapse" role="tabpanel" aria-labelledby="headingWrapUpCodes" aria-expanded="false">
+                                            <div class="card-block">
+                                                <button id="addWrapUpCode" class="btn btn-primary mb-2" type="button"><i class="fa fa-plus"></i> Add</button>
+                                                <div id="jsGridWrapUpCodes"></div>
+
+                                                <div class="modal fade" id="editModalWrapUpCodes" tabindex="-1" role="dialog" aria-hidden="true">
+                                                    <div class="modal-dialog modal-lg" role="document">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header" id="modal-header">
+                                                                <h5 id="title" class="modal-title">WrapUp Code Name</h5>
+                                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                    <span aria-hidden="true">&times;</span>
+                                                                </button>
+                                                            </div>
+                                                            <form class="modal-body form-horizontal" id="modal-form">
+                                                                <div class="form-group">
+
+                                                                    <div class="form-group row">
+                                                                        <label for="wrapUpCode" class="col-sm-3 col-form-label">WrapUp Code Name</label>
+                                                                        <div class="col-sm-9">
+                                                                            <input type="text" class="form-control" id="wrapUpCode" tabindex="-1" name="wrapUpCode" placeholder="Enter the name of the WrapUp Code" required>
                                                                         </div>
                                                                     </div>
 
@@ -668,6 +785,7 @@
                 initLocationsGrid();
                 initSchedulesGrid();
                 initSkillsGrid();
+                initWrapUpCodesGrid();
                 initQueuesGrid();
             }
         }
@@ -691,6 +809,7 @@
                 initLocationsGrid();
                 initSchedulesGrid();
                 initSkillsGrid();
+                initWrapUpCodesGrid();
                 initQueuesGrid();
             }
         }
@@ -702,6 +821,7 @@
                 schedules: [],
                 locations: [],
                 skills: [],
+                wrapUpCodes: [],
                 queues: []
             };
 
@@ -720,6 +840,8 @@
                 json.skills = $("#jsGridSkills").jsGrid("option", "data");
             if ($("#jsGridQueues").jsGrid("option", "data").length > 0)
                 json.queues = $("#jsGridQueues").jsGrid("option", "data");
+            if ($("#jsGridWrapUpCodes").jsGrid("option", "data").length > 0)
+                json.wrapUpCodes = $("#jsGridWrapUpCodes").jsGrid("option", "data");
 
             console.log(json);
             return json;
@@ -760,7 +882,7 @@
             console.log('function exportCSV()');
             let data = buildJSON();
             const replacer = (key, value) => value === null ? '' : value // specify how you want to handle null values here
-            let header, csv_locations;
+            let header, csv_locations, csv_skills, csv_wrapUpCodes, csv_queues;
 
             // Locations
             if (data.locations && data.locations.length > 0) {
@@ -785,6 +907,17 @@
                 console.log('skills are empty, skip csv build...');
             }
 
+            // WrapUpCodes
+            if (data.wrapUpCodes && data.wrapUpCodes.length > 0) {
+                console.log('build wrapup-codes csv...');
+                header = Object.keys(data.wrapUpCodes[0]);
+                csv_wrapUpCodes = data.wrapUpCodes.map(row => header.map(fieldName => JSON.stringify(row[fieldName], replacer)).join(';'))
+                csv_wrapUpCodes.unshift(header.join(';'))
+                csv_wrapUpCodes = csv_wrapUpCodes.join('\r\n')
+            } else {
+                console.log('wrapUp Codes are empty, skip csv build...');
+            }
+
             // Queues
             if (data.queues && data.queues.length > 0) {
                 console.log('build queues csv...');
@@ -796,9 +929,10 @@
                 console.log('queues are empty, skip csv build...');
             }
 
-            console.log(csv_locations);
-            console.log(csv_skills);
-            console.log(csv_queues);
+            console.log(`CSV: locations\n===================\n ${csv_locations}\n===================\n`);
+            console.log(`CSV: skills\n===================\n ${csv_skills}\n===================\n`);
+            console.log(`CSV: wrapUpCodes\n===================\n ${csv_wrapUpCodes}\n===================\n`);
+            console.log(`CSV: queues\n===================\n ${csv_queues}\n===================\n`);
 
             //download(csv_locations, 'locations.csv');
 
@@ -1109,26 +1243,6 @@
 
         //#endregion
 
-        // TODO
-        //
-        // Recurring
-        //      Weekly
-        //          All day, when NOT checked, should show start/end time
-        //      Monthly
-        //          Looks ok. Is the rrule ok with "On" and other options?
-        //      Yearly
-        //          Should show list of months
-        //          Should show same select than weekly (with "On" and "If day is", etc.)
-        //      All
-        //          All day, when NOT checked, should show start/end time
-        //
-        // Single
-        //      Should show start and end date
-        //      All day, when NOT checked, should show start/end time
-        //
-        // Check if rrule is set correctly
-        //
-
         //#region Schedules
 
         var dbSchedules = {
@@ -1169,13 +1283,13 @@
             }
         });
 
-        // $("#repeatingEventAllDay").on('change', () => {
-        //     if ($("#repeatingEventAllDay").is(':checked')) {
-        //         $(".date-row").show();
-        //     } else {
-        //         $(".date-row").hide();
-        //     }
-        // });
+        $("#allDay").on('change', () => {
+            if ($("#allDay").is(':checked')) {
+                $(".time-row").hide();
+            } else {
+                $(".time-row").show();
+            }
+        });
 
         $("#recurrenceType").on('change', () => {
             let recurrenceType = $("#recurrenceType").val();
@@ -1184,21 +1298,25 @@
                     $("#weeklyControlsDiv").hide();
                     $("#monthlyControlsDiv").hide();
                     $("#yearlyControlsDiv").hide();
+                    $("#yearMonth").hide();
                     break;
                 case "Weekly":
                     $("#weeklyControlsDiv").show();
                     $("#monthlyControlsDiv").hide();
                     $("#yearlyControlsDiv").hide();
+                    $("#yearMonth").hide();
                     break;
                 case "Monthly":
                     $("#weeklyControlsDiv").hide();
                     $("#monthlyControlsDiv").show();
                     $("#yearlyControlsDiv").hide();
+                    $("#yearMonth").hide();
                     break;
                 case "Yearly":
                     $("#weeklyControlsDiv").hide();
                     $("#monthlyControlsDiv").hide();
                     $("#yearlyControlsDiv").show();
+                    $("#yearMonth").show();
                     break;
 
                 default:
@@ -1216,6 +1334,20 @@
                 default:
                     $("#byMonthDayDiv").hide();
                     $("#byDayDiv").show();
+                    break;
+            }
+        });
+
+        $("#yearlyRecurrenceType").on('change', () => {
+            let yearlyRecurrenceType = $("#yearlyControlsDiv #yearlyRecurrenceType").val();
+            switch (yearlyRecurrenceType) {
+                case "On":
+                    $("#yearlyControlsDiv #byYearDayDiv").show();
+                    $("#yearlyControlsDiv #byDayDiv").hide();
+                    break;
+                default:
+                    $("#yearlyControlsDiv #byYearDayDiv").hide();
+                    $("#yearlyControlsDiv #byDayDiv").show();
                     break;
             }
         });
@@ -1369,7 +1501,6 @@
             $("#editModalSchedules #scheduleName").val(item.scheduleName);
             $("#editModalSchedules #start").val(item.start);
             $("#editModalSchedules #end").val(item.end);
-            //TODO Use rrule to populate fields and checkboxes
             $("#editModalSchedules #submit").html("<i class='fa fa-floppy-o'></i> Save");
             formSubmitHandlerSchedules = function () {
                 saveSchedule(item, dialogType === "Add");
@@ -1638,7 +1769,7 @@
                 fields: [
                     {
                         name: "skillName",
-                        title: "name",
+                        title: "Name",
                         type: "text",
                         align: "center"
                     },
@@ -1694,6 +1825,161 @@
         }
 
         //#endregion
+
+        //#region WrapUp Codes
+
+        var dbWrapUpCodes = {
+            loadData: function (filter) {
+                return $.grep(this.wrapUpCodes, function (code) {
+                    return (!filter.wrapUpCode || code.wrapUpCode.toLowerCase().indexOf(filter.wrapUpCode.toLowerCase()) > -1);
+                });
+            },
+            insertItem: function (insertingWrapUpCode) {
+                this.wrapUpCodes.push(insertingWrapUpCode);
+            },
+            updateItem: function (updatingWrapUpCode) { },
+            deleteItem: function (deletingWrapUpCode) { }
+        };
+
+        window.dbWrapUpCodes = dbWrapUpCodes;
+
+        var formSubmitHandlerWrapUpCodes = $.noop;
+
+        let validatorWrapUpCodes = $("#editModalWrapUpCodes #modal-form").validate({
+            errorClass: "text-danger",
+            successClass: "test-success",
+            submitHandler: function () {
+                formSubmitHandlerWrapUpCodes();
+            }
+        });
+
+        $("#addWrapUpCode").on('click', (e) => {
+            e.preventDefault();
+            showWrapUpCodesModal("Add", {});
+        });
+
+        function initWrapUpCodesGrid() {
+            const maxItems = 10;
+
+            dbWrapUpCodes.wrapUpCodes = caItem.hasOwnProperty('wrapUpCodes') ? caItem.wrapUpCodes : [];
+
+            $("#jsGridWrapUpCodes").jsGrid({
+                height: "auto",
+                width: "100%",
+                editing: true,
+                autoload: true,
+                sorting: false,
+                filtering: false,
+                paging: false,
+                noDataContent: "No WrapUp Codes",
+                confirmDeleting: false,
+                onError: function (args) {
+                    console.error('Failed to load grid data:', args);
+                    showMessage("An error occurred while loading your data", true);
+                },
+                rowClick: function (args) {
+                    showWrapUpCodesModal("Edit", args.item);
+                },
+                onDataLoaded: function (args) {
+                    $("#addWrapUpCode").attr('disabled', $("#jsGridWrapUpCodes").jsGrid("option", "data").length >= maxItems);
+                },
+                onItemInserted: function (args) {
+                    $("#addWrapUpCode").attr('disabled', $("#jsGridWrapUpCodes").jsGrid("option", "data").length >= maxItems);
+                },
+                onItemUpdated: function (args) {
+                    $("#addWrapUpCode").attr('disabled', $("#jsGridWrapUpCodes").jsGrid("option", "data").length >= maxItems);
+                },
+                onItemDeleting: function (args) {
+                    console.log("onItemDeleting");
+                    if (!args.item.deleteConfirmed) { // custom property for confirmation
+                        args.cancel = true; // cancel deleting
+                        bootbox.confirm({
+                            message: 'Do you really want to delete this WrapUp Code?',
+                            buttons: {
+                                confirm: {
+                                    label: "Delete!",
+                                    className: "btn-danger"
+                                },
+                                cancel: {
+                                    label: "No",
+                                    className: "btn-secondary"
+                                }
+                            },
+                            callback: async function (result) {
+                                if (result) {
+                                    args.item.deleteConfirmed = true;
+                                    $("#jsGridWrapUpCodes").jsGrid('deleteItem', args.item); // Remove item from grid
+                                    removeFromArray(dbWrapUpCodes.wrapUpCodes, args.item); // Remove item from db
+                                    showMessage("WrapUp Code deleted", false);
+                                }
+                            }
+                        });
+                    }
+                },
+                onItemDeleted: function (args) {
+                    $("#addWrapUpCode").attr('disabled', $("#jsGridWrapUpCodes").jsGrid("option", "data").length >= maxItems);
+                },
+                controller: dbWrapUpCodes,
+                fields: [
+                    {
+                        name: "wrapUpCode",
+                        title: "Name",
+                        type: "text",
+                        align: "center"
+                    },
+                    {
+                        type: "control",
+                        modeSwitchButton: false,
+                        editButton: false,
+                        width: 68,
+                        align: "center",
+                        headerTemplate: function () {
+                            return "Actions";
+                        }
+                    }
+                ]
+            });
+        }
+
+        var showWrapUpCodesModal = function (dialogType, item) {
+            console.log('Showing details for:', item);
+            $("#editModalWrapUpCodes #wrapUpCode").val(item.wrapUpCode);
+            $("#editModalWrapUpCodes #submit").html("<i class='fa fa-floppy-o'></i> Save");
+            formSubmitHandlerWrapUpCodes = function () {
+                saveWrapUpCode(item, dialogType === "Add");
+            };
+            $("#editModalWrapUpCodes").modal('show');
+
+        };
+
+        var saveWrapUpCode = function (item, isNew) {
+            console.log('Extending item:', item);
+            $.extend(item, {
+                wrapUpCode: $("#editModalWrapUpCodes #wrapUpCode").val()
+            });
+            console.log('Extended Item:', item);
+            console.log('IsNew?', isNew)
+            $("#jsGridWrapUpCodes").jsGrid(isNew ? "insertItem" : "updateItem", item);
+            $("#editModalWrapUpCodes").modal('hide');
+        };
+
+        $("#editModalWrapUpCodes").on('shown.bs.modal', function () {
+            $("#wrapUpCode").focus();
+        });
+
+        $('#editModalWrapUpCodes').on('hidden.bs.modal', async () => {
+            initWrapUpCodesModal();
+        });
+
+        function initWrapUpCodesModal() {
+            $("#editModalWrapUpCodes #wrapUpCode").val("");
+            $("#editModalWrapUpCodes #submit").html("<i class='fa fa-plus'></i> Add");
+
+            validatorWrapUpCodes.resetForm(); // Reset validation errors
+        }
+
+        //#endregion
+
 
         //#region Queues
 
@@ -1828,6 +2114,49 @@
                     }
                 ]
             });
+        }
+
+        var showQueuesModal = function (dialogType, item) {
+            console.log('Showing details for:', item);
+            $("#editModalQueues #queueName").val(item.queueName);
+            $("#editModalQueues #enableCallbacks").prop('checked', item.enableCallbacks);
+            $("#editModalQueues #enableEmails").prop('checked', item.enableEmails);
+            $("#editModalQueues #submit").html("<i class='fa fa-floppy-o'></i> Save");
+            formSubmitHandlerQueues = function () {
+                saveQueue(item, dialogType === "Add");
+            };
+            $("#editModalQueues").modal('show');
+
+        };
+
+        var saveQueue = function (item, isNew) {
+            console.log('Extending item:', item);
+            $.extend(item, {
+                queueName: $("#editModalQueues #queueName").val(),
+                enableCallbacks: $("#editModalQueues #enableCallbacks").is(":checked"),
+                enableEmails: $("#editModalQueues #enableEmails").is(":checked")
+            });
+            console.log('Extended Item:', item);
+            console.log('IsNew?', isNew)
+            $("#jsGridQueues").jsGrid(isNew ? "insertItem" : "updateItem", item);
+            $("#editModalQueues").modal('hide');
+        };
+
+        $("#editModalQueues").on('shown.bs.modal', function () {
+            $("#queueName").focus();
+        });
+
+        $('#editModalQueues').on('hidden.bs.modal', async () => {
+            initQueuesModal();
+        });
+
+        function initQueuesModal() {
+            $("#editModalQueues #queueName").val("");
+            $("#editModalQueues #enableCallbacks").prop('checked', false);
+            $("#editModalQueues #enableEmails").prop('checked', false);
+            $("#editModalQueues #submit").html("<i class='fa fa-plus'></i> Add");
+
+            validatorQueues.resetForm(); // Reset validation errors
         }
 
         //#endregion
