@@ -829,7 +829,7 @@
                     $('#spinner_message')[0].innerHTML = "validating Id...";
                     request = await getRequest(id);
                     console.log(request);
-                    $('#badgePill')[0].innerHTML = "1"
+                    $('#badgePill')[0].innerHTML = "1";
                     console.log(request);
                     $('#requestDetails')[0].innerHTML = `Related to Partner/Customer Name <B>${request.partnerCustomerName}</B> requested by <em>${request.requesterName}</em>`;
                 } catch (error) {
@@ -982,12 +982,13 @@
 
             try {
                 let json = buildJSON();
-                if (caItem) {
+                if (caItem && caItem.id) {
                     await ca_updateItem(caItem.id, json);
                 } else {
                     caItem = await ca_createItem(json);
                     console.log(`responseId created on CA db: ${caItem.id}`);
                     window.history.pushState('', 'CC Rapid Response Request Form', `${window.location.href}?id=${caItem.id}`);
+                    $('#badgePill')[0].innerHTML = "";
                 }
             } catch (error) {
                 console.error(error);
