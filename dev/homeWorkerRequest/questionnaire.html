@@ -975,7 +975,7 @@
         function exportCSV() {
             console.log('function exportCSV()');
             let data = $.extend(true, {}, buildJSON());
-            
+
 
             const replacer = (key, value) => value === null ? '' : value // specify how you want to handle null values here
             let header, csv_locations, csv_skills, csv_wrapUpCodes, csv_queues;
@@ -1022,7 +1022,7 @@
                     delete item.enableCallbacks;
                     delete item.enableEmails;
                 });
-                
+
                 header = Object.keys(data.queues[0]);
                 csv_queues = data.queues.map(row => header.map(fieldName => JSON.stringify(row[fieldName], replacer)).join(';'))
                 csv_queues.unshift(header.join(';'))
@@ -2276,7 +2276,7 @@
                 $("#editModalQueues #acwTimeout").attr('disabled', true);
 
             $("#editModalQueues #evaluationMethod").val(item.evaluationMethod ? item.evaluationMethod : 'NONE');
-            $("#editModalQueues #alertingTimeout").val(item.aleringTimeout && item.alertingTimeout !== 'n/a' ? item.alertingTimeout : '15');
+            $("#editModalQueues #alertingTimeout").val((item.alertingTimeout && item.alertingTimeout !== 'n/a') ? item.alertingTimeout : '15');
             $("#editModalQueues #slPercentage").val((item.slPercentage && item.slPercentage !== 'n/a') ? item.slPercentage : '80');
             $("#editModalQueues #slDuration").val(item.slDuration ? item.slDuration : '20');
             $("#editModalQueues #callingPartyName").val((item.callingPartyName && item.callingPartyName !== 'n/a') ? item.callingPartyName : undefined);
@@ -2284,6 +2284,7 @@
             $("#editModalQueues #queueWrapUpCode").val(item.queueWrapUpCodes ? item.queueWrapUpCodes : undefined);
             $("#editModalQueues #queueWrapUpCode").selectpicker('refresh');
 
+           
 
             $("#editModalQueues #submit").html("<i class='fa fa-floppy-o'></i> Save");
             formSubmitHandlerQueues = function () {
