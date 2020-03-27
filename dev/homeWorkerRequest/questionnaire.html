@@ -180,21 +180,21 @@
                                                                 <div class="form-group">
 
                                                                     <div class="form-group row">
-                                                                        <label for="locationName" class="col-sm-3 col-form-label">Location Name</label>
+                                                                        <label for="locationName" class="col-sm-3 col-form-label">Location Name <span class="text-danger font-weight-bold">*</span></label>
                                                                         <div class="col-sm-9">
                                                                             <input type="text" class="form-control" id="locationName" name="locationName" placeholder="Enter the name of this location" required>
                                                                         </div>
                                                                     </div>
 
                                                                     <div class="form-group row">
-                                                                        <label for="streetAddress" class="col-sm-3 col-form-label">Street Address</label>
+                                                                        <label for="streetAddress" class="col-sm-3 col-form-label">Street Address <span class="text-danger font-weight-bold">*</span></label>
                                                                         <div class="col-sm-9">
                                                                             <input type="text" class="form-control" id="streetAddress" name="streetAddress" placeholder="Enter the street address" required>
                                                                         </div>
                                                                     </div>
 
                                                                     <div class="form-group row">
-                                                                        <label for="city" class="col-sm-3 col-form-label">City</label>
+                                                                        <label for="city" class="col-sm-3 col-form-label">City <span class="text-danger font-weight-bold">*</span></label>
                                                                         <div class="col-sm-9">
                                                                             <input type="text" class="form-control" id="city" name="city" placeholder="Enter the name of the city for this location" required>
                                                                         </div>
@@ -208,14 +208,14 @@
                                                                     </div>
 
                                                                     <div class="form-group row">
-                                                                        <label for="zipCode" class="col-sm-3 col-form-label">Zip Code</label>
+                                                                        <label for="zipCode" class="col-sm-3 col-form-label">Zip Code <span class="text-danger font-weight-bold">*</span></label>
                                                                         <div class="col-sm-9">
                                                                             <input type="text" class="form-control" id="zipCode" name="zipCode" placeholder="Enter the zip code for this location" required>
                                                                         </div>
                                                                     </div>
 
                                                                     <div class="form-group row">
-                                                                        <label for="country" class="col-sm-3 col-form-label">Country</label>
+                                                                        <label for="country" class="col-sm-3 col-form-label">Country <span class="text-danger font-weight-bold">*</span></label>
                                                                         <div class="col-sm-9">
                                                                             <select class="selectpicker" id="country" name="country" class="form-control" required data-live-search="true">
                                                                             </select>
@@ -230,7 +230,7 @@
                                                                     </div>
 
                                                                     <div class="form-group row">
-                                                                        <label for="emergencyNumber" class="col-sm-3 col-form-label">Emergency Number</label>
+                                                                        <label for="emergencyNumber" class="col-sm-3 col-form-label">Emergency Number <span class="text-danger font-weight-bold">*</span></label>
                                                                         <div class="col-sm-9">
                                                                             <input type="text" class="form-control" id="emergencyNumber" name="emergencyNumber" placeholder="Enter the emergency phone number for this location" required>
                                                                         </div>
@@ -1101,13 +1101,7 @@
             loadData: function (filter) {
                 return $.grep(this.locations, function (location) {
                     return (!filter.locationName || location.locationName.toLowerCase().indexOf(filter.locationName.toLowerCase()) > -1)
-                        && (!filter.streetAddress || location.streetAddress.toLowerCase().indexOf(filter.streetAddress.toLowerCase()) > -1)
-                        && (!filter.city || location.city.toLowerCase().indexOf(filter.city.toLowerCase()) > -1)
-                        && (!filter.state || location.state.toLowerCase().indexOf(filter.state.toLowerCase()) > -1)
-                        && (!filter.zipCode || location.zipCode.toLowerCase().indexOf(filter.zipCode.toLowerCase()) > -1)
-                        && (!filter.country || location.country.toLowerCase().indexOf(filter.country.toLowerCase()) > -1)
-                        && (!filter.notes || location.notes.toLowerCase().indexOf(filter.notes.toLowerCase()) > -1)
-                        && (!filter.emergencyNumber || location.emergencyNumber.toLowerCase().indexOf(filter.emergencyNumber.toLowerCase()) > -1);
+                      
                 });
             },
             insertItem: function (insertingLocation) {
@@ -1143,8 +1137,8 @@
                 width: "100%",
                 editing: true,
                 autoload: true,
-                sorting: true,
-                filtering: true,
+                sorting: false,
+                filtering: false,
                 paging: false,
                 noDataContent: "No Locations",
                 confirmDeleting: false,
@@ -1209,109 +1203,27 @@
                             });
                             return this.filterControl = input;
                         }
-                    },
-                    {
-                        name: "streetAddress",
-                        title: "Address",
-                        type: "text",
-                        align: "center",
-                        filterTemplate: function () {
-                            let input = $("<input/>", { type: "text" });
-                            input.on('keyup', () => {
-                                searches.streetAddress = input.val();
-                                $("#jsGridLocations").data('JSGrid').search(searches);
-                            });
-                            return this.filterControl = input;
-                        },
-                        visible: false
-                    },
+                    },                    
                     {
                         name: "city",
                         title: "City",
                         type: "text",
-                        align: "center",
-                        filterTemplate: function () {
-                            let input = $("<input/>", { type: "text" });
-                            input.on('keyup', () => {
-                                searches.city = input.val();
-                                $("#jsGridLocations").data('JSGrid').search(searches);
-                            });
-                            return this.filterControl = input;
-                        }
+                        align: "center"
                     },
                     {
                         name: "state",
                         title: "State",
                         type: "text",
                         align: "center",
-                        filterTemplate: function () {
-                            let input = $("<input/>", { type: "text" });
-                            input.on('keyup', () => {
-                                searches.state = input.val();
-                                $("#jsGridLocations").data('JSGrid').search(searches);
-                            });
-                            return this.filterControl = input;
+                        itemTemplate: function (value, item) {
+                            return value === 'n/a' ? '' : value
                         }
-                    },
-                    {
-                        name: "zipCode",
-                        title: "Zip Code",
-                        type: "text",
-                        align: "center",
-                        filterTemplate: function () {
-                            let input = $("<input/>", { type: "text" });
-                            input.on('keyup', () => {
-                                searches.zipCode = input.val();
-                                $("#jsGridLocations").data('JSGrid').search(searches);
-                            });
-                            return this.filterControl = input;
-                        },
-                        visible: false
                     },
                     {
                         name: "country",
                         title: "Country",
                         type: "text",
-                        align: "center",
-                        filterTemplate: function () {
-                            let input = $("<input/>", { type: "text" });
-                            input.on('keyup', () => {
-                                searches.country = input.val();
-                                $("#jsGridLocations").data('JSGrid').search(searches);
-                            });
-                            return this.filterControl = input;
-                        }
-                    },
-                    {
-                        name: "notes",
-                        title: "Notes",
-                        type: "text",
-                        align: "center",
-                        filterTemplate: function () {
-                            let input = $("<input/>", { type: "text" });
-                            input.on('keyup', () => {
-                                searches.notes = input.val();
-                                $("#jsGridLocations").data('JSGrid').search(searches);
-                            });
-                            return this.filterControl = input;
-                        },
-                        visible: false
-                    },
-                    {
-                        name: "emergencyNumber",
-                        title: "Emergency #",
-                        type: "text",
-                        width: 120,
-                        align: "center",
-                        filterTemplate: function () {
-                            let input = $("<input/>", { type: "text" });
-                            input.on('keyup', () => {
-                                searches.emergencyNumber = input.val();
-                                $("#jsGridLocations").data('JSGrid').search(searches);
-                            });
-                            return this.filterControl = input;
-                        },
-                        visible: false
+                        align: "center"
                     },
                     {
                         type: "control",
@@ -1332,11 +1244,11 @@
             $("#editModalLocations #locationName").val(item.locationName);
             $("#editModalLocations #streetAddress").val(item.streetAddress);
             $("#editModalLocations #city").val(item.city);
-            $("#editModalLocations #state").val(item.state);
+            $("#editModalLocations #state").val((item.state && item.state !== 'n/a') ? item.state : '');
             $("#editModalLocations #zipCode").val(item.zipCode);
             $("#editModalLocations #country").val(item.country);
             $("#editModalLocations #country").selectpicker('refresh');
-            $("#editModalLocations #notes").val(item.notes);
+            $("#editModalLocations #notes").val((item.notes && item.notes !== 'n/a') ? item.notes : '');
             $("#editModalLocations #emergencyNumber").val(item.emergencyNumber);
             $("#editModalLocations #submit").html("<i class='fa fa-floppy-o'></i> Save");
             formSubmitHandlerLocations = function () {
@@ -1351,10 +1263,10 @@
                 locationName: $("#editModalLocations #locationName").val(),
                 streetAddress: $("#editModalLocations #streetAddress").val(),
                 city: $("#editModalLocations #city").val(),
-                state: $("#editModalLocations #state").val(),
+                state: $("#editModalLocations #state").val() == "" ? 'n/a' : $("#editModalLocations #state").val(),                
                 zipCode: $("#editModalLocations #zipCode").val(),
                 country: $("#editModalLocations #country").val(),
-                notes: $("#editModalLocations #notes").val(),
+                notes: $("#editModalLocations #notes").val()  == "" ? 'n/a' : $("#editModalLocations #notes").val(),                
                 emergencyNumber: $("#editModalLocations #emergencyNumber").val(),
             });
             console.log('Extended Item:', item);
