@@ -483,6 +483,66 @@
                                         </div>
                                     </div>
 
+                                    <!-- Holidays -->
+                                    <div class="card">
+                                        <div class="card-header shadow-lg" role="tab" id="headingHolidays">
+                                            <div class="mb-0">
+                                                <a data-toggle="collapse" data-parent="#accordion" href="#collapseHolidays" aria-expanded="false" aria-controls="collapseHolidays" class="collapsed">
+                                                    <i class="fa fa-sun-o" aria-hidden="true" style="color: #FF4F1F;"></i>
+                                                    <h3>Holidays</h3>
+                                                    <p>List of Holidays</p>
+                                                </a>
+                                                <i class="fa fa-angle-right" aria-hidden="true" style="color: #FF4F1F;"></i>
+                                            </div>
+                                        </div>
+
+                                        <div id="collapseHolidays" class="collapse" role="tabpanel" aria-labelledby="headingHolidays" aria-expanded="false">
+                                            <div class="card-block">
+                                                <button id="addHoliday" class="btn btn-primary mb-2" type="button"><i class="fa fa-plus"></i> Add</button>
+                                                <div id="jsGridHolidays"></div>
+
+                                                <div class="modal fade" id="editModalHolidays" tabindex="-1" role="dialog" aria-hidden="true">
+                                                    <div class="modal-dialog modal-lg" role="document">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header" id="modal-header">
+                                                                <h5 id="title" class="modal-title">Holiday</h5>
+                                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                    <span aria-hidden="true">&times;</span>
+                                                                </button>
+                                                            </div>
+                                                            <form class="modal-body form-horizontal" id="modal-form">
+                                                                <div class="form-group">
+
+                                                                    <div class="form-group row">
+                                                                        <label for="holidayName" class="col-sm-3 col-form-label">Holiday Name</label>
+                                                                        <div class="col-sm-9">
+                                                                            <input type="text" class="form-control" id="holidayName" tabindex="-1" name="holidayName" placeholder="Enter the name of the Holiday" required>
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <div class="form-group row date-row">
+                                                                        <label class="col-sm-3 col-form-label">Date</label>
+                                                                        <div class="input-group date col-md-3 date-only" id="holidayDate" data-target-input="nearest">
+                                                                            <input type="text" class="form-control datetimepicker-input" data-target="#holidayDate" required />
+                                                                            <div class="input-group-append" data-target="#holidayDate" data-toggle="datetimepicker">
+                                                                                <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="modal-footer">
+                                                                    <button id="btnClose" type="button" class="btn btn-link pull-right" data-dismiss="modal">Close</button>
+                                                                    <button id="submit" type="submit" class="btn btn-primary pull-left"><i class="fa fa-plus"></i> Add</button>
+                                                                </div>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
                                     <!-- ACD Skills -->
                                     <div class="card">
                                         <div class="card-header shadow-lg" role="tab" id="headingSkils">
@@ -870,6 +930,7 @@
                 enableForm(true);
 
                 initLocationsGrid();
+                initHolidaysGrid();
                 initSchedulesGrid();
                 initSkillsGrid();
                 initWrapUpCodesGrid();
@@ -893,15 +954,14 @@
                 $('#genesysCloudRegion').val(caItem.organizationSetup.genesysCloudRegion);
                 $('#numberOfUsers').val(caItem.organizationSetup.numberOfUsers);
 
-
                 initLocationsGrid();
+                initHolidaysGrid();
                 initSchedulesGrid();
                 initSkillsGrid();
                 initWrapUpCodesGrid();
                 initQueuesGrid();
 
                 refreshWrapUpCodesDropDownForQueues();
-
             }
         }
 
@@ -910,6 +970,7 @@
             let json = {
                 organizationSetup: {},
                 schedules: [],
+                holidays: [],
                 locations: [],
                 skills: [],
                 wrapUpCodes: [],
@@ -941,7 +1002,8 @@
                 //TODO: Keep the order !
                 json.schedules = $("#jsGridSchedules").jsGrid("option", "data");
             }
-
+            if ($("#jsGridHolidays").jsGrid("option", "data").length > 0)
+                json.holidays = $("#jsGridHolidays").jsGrid("option", "data");
             if ($("#jsGridSkills").jsGrid("option", "data").length > 0)
                 json.skills = $("#jsGridSkills").jsGrid("option", "data");
             if ($("#jsGridWrapUpCodes").jsGrid("option", "data").length > 0)
@@ -1020,7 +1082,28 @@
                 console.log('locations are empty, skip csv build...');
             }
 
-            //$("#jsGridSkills").jsGrid("option", "fields") -> fields names
+            // Schedules
+            if (data.schedules && data.schedules.length > 0) {
+                console.log('build schedules csv...');
+                header = Object.keys(data.schedules[0]);
+                csv_schedules = data.schedules.map(row => header.map(fieldName => JSON.stringify(row[fieldName], replacer)).join(';'))
+                csv_schedules.unshift(header.join(';'))
+                csv_schedules = csv_schedules.join('\r\n')
+            } else {
+                console.log('schedules are empty, skip csv build...');
+            }
+
+            // Holidays
+            if (data.holidays && data.holidays.length > 0) {
+                console.log('build holidays csv...');
+                header = Object.keys(data.holidays[0]);
+                csv_holidays = data.holidays.map(row => header.map(fieldName => JSON.stringify(row[fieldName], replacer)).join(';'))
+                csv_holidays.unshift(header.join(';'))
+                csv_holidays = holidays.join('\r\n')
+            } else {
+                console.log('holidays are empty, skip csv build...');
+            }
+
             // Skills
             if (data.skills && data.skills.length > 0) {
                 console.log('build skills csv...');
@@ -1066,6 +1149,8 @@
             }
 
             console.log(`CSV: locations\n===================\n ${csv_locations}\n===================\n`);
+            console.log(`CSV: schedules\n===================\n ${csv_schedules}\n===================\n`);
+            console.log(`CSV: holidays\n===================\n ${csv_holidays}\n===================\n`);
             console.log(`CSV: skills\n===================\n ${csv_skills}\n===================\n`);
             console.log(`CSV: wrapUpCodes\n===================\n ${csv_wrapUpCodes}\n===================\n`);
             console.log(`CSV: queues\n===================\n ${csv_queues}\n===================\n`);
@@ -2059,6 +2144,178 @@
         });
 
         //#endregion
+
+        //#endregion
+
+        //#region Holidays
+
+        var dbHolidays = {
+            loadData: function (filter) {
+                return $.grep(this.holidays, function (holiday) {
+                    return (!filter.holidayName || holiday.holidayName.toLowerCase().indexOf(filter.holidayName.toLowerCase()) > -1)
+                        && (!filter.holidayDate || holiday.holidayDate.toLowerCase().indexOf(filter.holidayDate.toLowerCase()) > -1);
+                });
+            },
+            insertItem: function (insertingHoliday) {
+                this.holidays.push(insertingHoliday);
+            },
+            updateItem: function (updatingHoliday) { },
+            deleteItem: function (deletingHoliday) { }
+        };
+
+        window.dbHolidays = dbHolidays;
+
+        var formSubmitHandlerHolidays = $.noop;
+
+        let validatorHolidays = $("#editModalHolidays #modal-form").validate({
+            errorClass: "text-danger",
+            successClass: "test-success",
+            submitHandler: function () {
+                formSubmitHandlerHolidays();
+            }
+        });
+
+        $("#addHoliday").on('click', (e) => {
+            e.preventDefault();
+            showHolidaysModal("Add", {});
+        });
+
+        function initHolidaysGrid() {
+            const maxHolidays = 99;
+
+            dbHolidays.holidays = caItem.hasOwnProperty('holidays') ? caItem.holidays : [];
+
+            $("#jsGridHolidays").jsGrid({
+                height: "auto",
+                width: "100%",
+                editing: true,
+                autoload: true,
+                sorting: false,
+                filtering: false,
+                paging: false,
+                noDataContent: "No Holidays",
+                confirmDeleting: false,
+                onError: function (args) {
+                    console.error('Failed to load grid data:', args);
+                    showMessage("An error occurred while loading your data", true);
+                },
+                rowClick: function (args) {
+                    showHolidaysModal("Edit", args.item);
+                },
+                onDataLoaded: function (args) {
+                    $("#addHoliday").attr('disabled', $("#jsGridHolidays").jsGrid("option", "data").length >= maxHolidays);
+                },
+                onItemInserted: function (args) {
+                    $("#addHoliday").attr('disabled', $("#jsGridHolidays").jsGrid("option", "data").length >= maxHolidays);
+                },
+                onItemUpdated: function (args) {
+                    $("#addHoliday").attr('disabled', $("#jsGridHolidays").jsGrid("option", "data").length >= maxHolidays);
+                },
+                onItemDeleting: function (args) {
+                    console.log("onItemDeleting");
+                    if (!args.item.deleteConfirmed) { // custom property for confirmation
+                        args.cancel = true; // cancel deleting
+                        bootbox.confirm({
+                            message: 'Do you really want to delete this holiday?',
+                            buttons: {
+                                confirm: {
+                                    label: "Delete!",
+                                    className: "btn-danger"
+                                },
+                                cancel: {
+                                    label: "No",
+                                    className: "btn-secondary"
+                                }
+                            },
+                            callback: async function (result) {
+                                if (result) {
+                                    args.item.deleteConfirmed = true;
+                                    $("#jsGridHolidays").jsGrid('deleteItem', args.item); // Remove item from grid
+                                    removeFromArray(dbHolidays.holidays, args.item); // Remove item from db
+                                    showMessage("Holiday deleted", false);
+                                }
+                            }
+                        });
+                    }
+                },
+                onItemDeleted: function (args) {
+                    $("#addHoliday").attr('disabled', $("#jsGridHolidays").jsGrid("option", "data").length >= maxHolidays);
+                },
+                controller: dbHolidays,
+                fields: [
+                    {
+                        name: "holidayName",
+                        title: "Name",
+                        type: "text",
+                        align: "center"
+                    },
+                    {
+                        name: "holidayDate",
+                        title: "Date",
+                        type: "text",
+                        align: "center",
+                        itemTemplate: function (value, item) {
+                            if (value) {
+                                return moment(value).format('L');
+                            } else {
+                                return value;
+                            }
+                        }
+                    },
+                    {
+                        type: "control",
+                        modeSwitchButton: false,
+                        editButton: false,
+                        width: 68,
+                        align: "center",
+                        headerTemplate: function () {
+                            return "Actions";
+                        }
+                    }
+                ]
+            });
+        }
+
+        var showHolidaysModal = function (dialogType, item) {
+            console.log('Showing details for:', item);
+
+            $("#editModalHolidays #holidayName").val(item.holidayName)
+            if (item.holidayDate) $("#editModalHolidays #holidayDate").datetimepicker('date', moment(item.holidayDate));
+            $("#editModalHolidays #submit").html("<i class='fa fa-floppy-o'></i> Save");
+            formSubmitHandlerHolidays = function () {
+                saveHoliday(item, dialogType === "Add");
+            };
+            $("#editModalHolidays").modal('show');
+        };
+
+        var saveHoliday = function (item, isNew) {
+            console.log('Extending item:', item);
+            $.extend(item, {
+                holidayName: $("#editModalHolidays #holidayName").val(),
+                holidayDate: $("#editModalHolidays #holidayDate").datetimepicker('date').toDate()
+            });
+            console.log('Extended Item:', item);
+            console.log('IsNew?', isNew)
+            $("#jsGridHolidays").jsGrid(isNew ? "insertItem" : "updateItem", item);
+            $("#editModalHolidays").modal('hide');
+        };
+
+        $("#editModalHolidays").on('shown.bs.modal', function () {
+            $("#holidayName").focus();
+        });
+
+        $('#editModalHolidays').on('hidden.bs.modal', async () => {
+            console.log('Clearing holidays modal')
+            initHolidaysModal();
+        });
+
+        function initHolidaysModal() {
+            $("#editModalHolidays #holidayName").val("");
+            $("#editModalHolidays #holidayDate").datetimepicker('clear');
+            $("#editModalHolidays #submit").html("<i class='fa fa-plus'></i> Add");
+
+            validatorHolidays.resetForm(); // Reset validation errors
+        }
 
         //#endregion
 
