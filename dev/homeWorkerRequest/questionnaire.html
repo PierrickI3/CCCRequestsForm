@@ -1350,6 +1350,8 @@
 
         //#region Schedules
 
+        let maxSchedules = 10;
+
         var dbSchedules = {
             loadData: function (filter) {
                 return $.grep(this.schedules, function (schedule) {
@@ -1491,13 +1493,13 @@
                     showSchedulesModal("Edit", args.item);
                 },
                 onDataLoaded: function (args) {
-                    $("#addSchedule").attr('disabled', $("#jsGridSchedules").jsGrid("option", "data").length >= 2);
+                    $("#addSchedule").attr('disabled', $("#jsGridSchedules").jsGrid("option", "data").length >= maxSchedules);
                 },
                 onItemInserted: function (args) {
-                    $("#addSchedule").attr('disabled', $("#jsGridSchedules").jsGrid("option", "data").length >= 2);
+                    $("#addSchedule").attr('disabled', $("#jsGridSchedules").jsGrid("option", "data").length >= maxSchedules);
                 },
                 onItemUpdated: function (args) {
-                    $("#addSchedule").attr('disabled', $("#jsGridSchedules").jsGrid("option", "data").length >= 2);
+                    $("#addSchedule").attr('disabled', $("#jsGridSchedules").jsGrid("option", "data").length >= maxSchedules);
                 },
                 onItemDeleting: function (args) {
                     console.log("onItemDeleting");
@@ -1527,7 +1529,7 @@
                     }
                 },
                 onItemDeleted: function (args) {
-                    $("#addSchedule").attr('disabled', $("#jsGridSchedules").jsGrid("option", "data").length >= 2);
+                    $("#addSchedule").attr('disabled', $("#jsGridSchedules").jsGrid("option", "data").length >= maxSchedules);
                 },
                 controller: dbSchedules,
                 fields: [
@@ -1603,10 +1605,173 @@
 
         var showSchedulesModal = function (dialogType, item) {
             console.log('Showing details for:', item);
-            $("#editModalSchedules #scheduleName").val(item.scheduleName);
-            $("#editModalSchedules #start").val(item.start);
-            $("#editModalSchedules #end").val(item.end);
-            $("#editModalSchedules #submit").html("<i class='fa fa-floppy-o'></i> Save");
+
+            if (Object.keys(item).length > 0) {
+                $("#editModalSchedules #scheduleName").val(item.scheduleName);
+
+                // Start/End Date/Time
+                let startDate = moment(item.start);
+                let endDate = moment(item.end);
+
+                $("#editModalSchedules #startDate").datetimepicker('date', startDate);
+                $("#editModalSchedules #endDate").datetimepicker('date', endDate);
+
+                // All day or is start/end time set?
+                if (startDate.hour() === 0 && startDate.minute() === 0 && startDate.second() === 0
+                    && endDate.hour() === 23 && endDate.minute() === 59 && endDate.second() === 59) {
+                    $("#editModalSchedules #allDay").prop('checked', true);
+                    $("#editModalSchedules #allDay").change();
+                } else {
+                    $("#editModalSchedules #startTime").datetimepicker('date', startDate);
+                    $("#editModalSchedules #endTime").datetimepicker('date', endDate);
+                }
+
+                // Recurrence
+                let currentRRule = new rrule.rrulestr(item.rrule.replace("\n", " ").replace("↵", " "));
+                console.log('Current RRule:', currentRRule);
+                console.log('Current RRule options:', currentRRule.options);
+
+                switch (currentRRule.origOptions.freq) {
+                    case rrule.RRule.DAILY:
+                        $("#editModalSchedules #repeatingEvent").prop('checked', true);
+                        $("#editModalSchedules #repeatingEvent").change();
+                        $("#editModalSchedules #recurrenceType").val('Daily');
+                        $("#editModalSchedules #recurrenceType").change();
+                        $("#editModalSchedules #interval").val(currentRRule.options.interval || 1);
+                        break;
+                    case rrule.RRule.WEEKLY:
+                        $("#editModalSchedules #repeatingEvent").prop('checked', true);
+                        $("#editModalSchedules #repeatingEvent").change();
+                        $("#editModalSchedules #recurrenceType").val('Weekly');
+                        $("#editModalSchedules #recurrenceType").change();
+                        $("#editModalSchedules #interval").val(currentRRule.options.interval || 1);
+                        if (currentRRule.origOptions.hasOwnProperty('byweekday') && currentRRule.origOptions.byweekday.length > 0) {
+                            let byWeekDayArray = currentRRule.origOptions.byweekday;
+                            $.each(byWeekDayArray, (i, byWeekDay) => {
+                                switch (byWeekDay) {
+                                    case rrule.RRule.MO:
+                                        $("#editModalSchedules #weeklyControlsDiv #chkMonday").prop('checked', true);
+                                        break;
+                                    case rrule.RRule.TU:
+                                        $("#editModalSchedules #weeklyControlsDiv #chkTuesday").prop('checked', true);
+                                        break;
+                                    case rrule.RRule.WE:
+                                        $("#editModalSchedules #weeklyControlsDiv #chkWednesday").prop('checked', true);
+                                        break;
+                                    case rrule.RRule.TH:
+                                        $("#editModalSchedules #weeklyControlsDiv #chkThursday").prop('checked', true);
+                                        break;
+                                    case rrule.RRule.FR:
+                                        $("#editModalSchedules #weeklyControlsDiv #chkFriday").prop('checked', true);
+                                        break;
+                                    case rrule.RRule.SA:
+                                        $("#editModalSchedules #weeklyControlsDiv #chkSaturday").prop('checked', true);
+                                        break;
+                                    case rrule.RRule.SU:
+                                        $("#editModalSchedules #weeklyControlsDiv #chkSunday").prop('checked', true);
+                                        break;
+                                    default:
+                                        console.error('Unknown week day:', byWeekDay);
+                                        break;
+                                }
+                            });
+                        }
+                        break;
+                    case rrule.RRule.MONTHLY:
+                        $("#editModalSchedules #repeatingEvent").prop('checked', true);
+                        $("#editModalSchedules #repeatingEvent").change();
+                        $("#editModalSchedules #recurrenceType").val('Monthly');
+                        $("#editModalSchedules #recurrenceType").change();
+                        $("#editModalSchedules #interval").val(currentRRule.options.interval || 1);
+
+                        if (currentRRule.origOptions.hasOwnProperty('bymonthday') && currentRRule.origOptions.bymonthday.length > 0) {
+                            $("#editModalSchedules #monthlyRecurrenceType").val("On");
+                            $("#editModalSchedules #monthlyRecurrenceType").change();
+                            $("#editModalSchedules #byMonthDay").val(currentRRule.origOptions.bymonthday.join(','));
+                        } else if (currentRRule.origOptions.hasOwnProperty('byweekday') && currentRRule.origOptions.byweekday.length > 0) {
+                            console.log('currentRRule:', currentRRule);
+                            if (currentRRule.origOptions.hasOwnProperty('bysetpos')) {
+                                console.log('By Set Pos:', currentRRule.origOptions.bysetpos);
+                                switch (currentRRule.origOptions.bysetpos) {
+                                    case 1:
+                                        $("#editModalSchedules #monthlyControlsDiv #monthlyRecurrenceType").val("First");
+                                        $("#editModalSchedules #monthlyControlsDiv #monthlyRecurrenceType").change();
+                                        break;
+                                    case 2:
+                                        $("#editModalSchedules #monthlyControlsDiv #monthlyRecurrenceType").val("Second");
+                                        $("#editModalSchedules #monthlyControlsDiv #monthlyRecurrenceType").change();
+                                        break;
+                                    case 3:
+                                        $("#editModalSchedules #monthlyControlsDiv #monthlyRecurrenceType").val("Third");
+                                        $("#editModalSchedules #monthlyControlsDiv #monthlyRecurrenceType").change();
+                                        break;
+                                    case 4:
+                                        $("#editModalSchedules #monthlyControlsDiv# monthlyRecurrenceType").val("Fourth");
+                                        $("#editModalSchedules #monthlyControlsDiv# monthlyRecurrenceType").change();
+                                        break;
+                                    case -1:
+                                        $("#editModalSchedules #monthlyControlsDiv #monthlyRecurrenceType").val("Last");
+                                        $("#editModalSchedules #monthlyControlsDiv #monthlyRecurrenceType").change();
+                                        break;
+                                    default:
+                                        consol.error('Unknown bySetPos:', currentRRule.origOptions.bysetpos)
+                                        break;
+                                }
+                            } else {
+                                $("#editModalSchedules #monthlyRecurrenceType").val("IfDayIs");
+                                $("#editModalSchedules #monthlyRecurrenceType").change();
+                            }
+                            let byWeekDayArray = currentRRule.origOptions.byweekday;
+                            $.each(byWeekDayArray, (i, byWeekDay) => {
+                                switch (byWeekDay) {
+                                    case rrule.RRule.MO:
+                                        $("#editModalSchedules #monthlyControlsDiv #chkMonday").prop('checked', true);
+                                        break;
+                                    case rrule.RRule.TU:
+                                        $("#editModalSchedules #monthlyControlsDiv #chkTuesday").prop('checked', true);
+                                        break;
+                                    case rrule.RRule.WE:
+                                        $("#editModalSchedules #monthlyControlsDiv #chkWednesday").prop('checked', true);
+                                        break;
+                                    case rrule.RRule.TH:
+                                        $("#editModalSchedules #monthlyControlsDiv #chkThursday").prop('checked', true);
+                                        break;
+                                    case rrule.RRule.FR:
+                                        $("#editModalSchedules #monthlyControlsDiv #chkFriday").prop('checked', true);
+                                        break;
+                                    case rrule.RRule.SA:
+                                        $("#editModalSchedules #monthlyControlsDiv #chkSaturday").prop('checked', true);
+                                        break;
+                                    case rrule.RRule.SU:
+                                        $("#editModalSchedules #monthlyControlsDiv #chkSunday").prop('checked', true);
+                                        break;
+                                    default:
+                                        console.error('Unknown week day:', byWeekDay);
+                                        break;
+                                }
+                            });
+                            if (!byWeekDayArray.includes(rrule.RRule.MO)) {
+                                // Monday is checked by default so if it's not set, uncheck Mo
+                                $("#editModalSchedules #monthlyControlsDiv #chkMonday").prop('checked', false);
+                            }
+                        }
+
+                        break;
+                    case rrule.RRule.YEARLY:
+                        $("#editModalSchedules #repeatingEvent").prop('checked', true);
+                        $("#editModalSchedules #repeatingEvent").change();
+                        $("#editModalSchedules #recurrenceType").val('Yearly');
+                        $("#editModalSchedules #recurrenceType").change();
+                        $("#editModalSchedules #interval").val(currentRRule.origOptions.interval || 1);
+                        break;
+                    default:
+                        console.log('No Recurrence');
+                        break;
+                }
+
+                $("#editModalSchedules #submit").html("<i class='fa fa-floppy-o'></i> Save");
+            }
+
             formSubmitHandlerSchedules = function () {
                 saveSchedule(item, dialogType === "Add");
             };
@@ -1652,6 +1817,7 @@
             $("#editModalSchedules #repeatingEvent").change();
             $("#editModalSchedules #interval").val(1);
             $("#editModalSchedules #recurrenceType").val('Daily');
+            $("#editModalSchedules #recurrenceType").change();
             $("#editModalSchedules #yearMonth").val('');
 
             // Weekly
@@ -1665,6 +1831,7 @@
 
             // Monthly
             $("#editModalSchedules #monthlyControlsDiv #monthlyRecurrenceType").val('On');
+            $("#editModalSchedules #monthlyControlsDiv #monthlyRecurrenceType").change();
             $("#editModalSchedules #monthlyControlsDiv #byMonthDay").val('');
             $("#editModalSchedules #monthlyControlsDiv #byDayDiv #chkMonday").prop('checked', true);
             $("#editModalSchedules #monthlyControlsDiv #byDayDiv #chkTuesday").prop('checked', false);
@@ -1676,6 +1843,7 @@
 
             // Yearly
             $("#editModalSchedules #yearlyControlsDiv #yearlyRecurrenceType").val('On');
+            $("#editModalSchedules #yearlyControlsDiv #yearlyRecurrenceType").change();
             $("#editModalSchedules #yearlyControlsDiv #byMonthDay").val('');
             $("#editModalSchedules #yearlyControlsDiv #byYearDayDiv #chkMonday").prop('checked', true);
             $("#editModalSchedules #yearlyControlsDiv #byYearDayDiv #chkTuesday").prop('checked', false);
@@ -1763,19 +1931,11 @@
                 // Set start time to 00:00:00
                 console.log('Set start time to 12:00:00.000 AM');
                 dtStart = dtStart.startOf('day');
-                // dtStart.setHours(0);
-                // dtStart.setMinutes(0);
-                // dtStart.setSeconds(0);
-                // dtStart.setMilliseconds(0);
 
                 if (until) {
                     // Set until time to 23:59:59
                     console.log('Set end time to 23:59:59.999');
                     until = until.endOf('day');
-                    // until.setHours(23);
-                    // until.setMinutes(59);
-                    // until.setSeconds(59);
-                    // until.setMilliseconds(999);
                 }
             } else {
                 if ($('input[data-target="#startTime"]').val().length > 0) {
@@ -2281,7 +2441,6 @@
         }
 
         //#endregion
-
 
         //#region Queues
 
