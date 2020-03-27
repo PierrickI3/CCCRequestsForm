@@ -974,7 +974,7 @@
         function exportCSV() {
             console.log('function exportCSV()');
             let data = $.extend(true, {}, buildJSON());
-            
+
 
             const replacer = (key, value) => value === null ? '' : value // specify how you want to handle null values here
             let header, csv_locations, csv_skills, csv_wrapUpCodes, csv_queues;
@@ -1021,7 +1021,7 @@
                     delete item.enableCallbacks;
                     delete item.enableEmails;
                 });
-                
+
                 header = Object.keys(data.queues[0]);
                 csv_queues = data.queues.map(row => header.map(fieldName => JSON.stringify(row[fieldName], replacer)).join(';'))
                 csv_queues.unshift(header.join(';'))
@@ -1620,12 +1620,16 @@
                 let currentRRule = buildRRule(newRRule);
                 let currentRRuleString = currentRRule.toString();
 
+                console.log('New RRule:', newRRule);
+                console.log('Current RRule:', currentRRule);
+                console.log('Current RRule String:', currentRRuleString);
+
                 console.log('Extending item:', item);
 
                 $.extend(item, {
                     scheduleName: $("#editModalSchedules #scheduleName").val(),
-                    start: dtStart,
-                    end: until,
+                    start: currentRRule.options.dtstart,
+                    end: currentRRule.options.until,
                     rrule: currentRRuleString
                 });
                 console.log('Extended Item:', item);
@@ -1916,10 +1920,8 @@
                 bySetPos: bySetPos,
                 byMonth: byMonth
             };
-            console.log('Generated rule:', rule);
-
             let newRRule = buildRRule(rule);
-            console.log('rrule:', newRRule);
+            console.log('Generated RRule:', newRRule);
 
             return newRRule;
         }
@@ -1927,7 +1929,7 @@
         $("#generateRRule").on('click', (e) => {
             e.preventDefault();
             let generatedRRuleCode = generateRRule().toString();
-            console.log(generatedRRuleCode);
+            console.log('Display RRule:', generatedRRuleCode);
             $("#generatedRRuleCode").text(generatedRRuleCode.toString());
         });
 
