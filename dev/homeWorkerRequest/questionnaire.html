@@ -1749,43 +1749,53 @@
 
             // Is Start Date set?
             if ($('input[data-target="#startDate"]').val().length > 0) {
-                dtStart = $("#startDate").datetimepicker('date').toDate();
+                dtStart = $("#startDate").datetimepicker('date');
             } else {
                 dtStart = new Date(); // Today
             }
 
             // Is End Date set?
             if ($('input[data-target="#endDate"]').val().length > 0) {
-                until = $("#endDate").datetimepicker('date') ? $("#endDate").datetimepicker('date').toDate() : null;
+                until = $("#endDate").datetimepicker('date') || null;
             }
 
             if ($("#allDay").is(':checked')) {
                 // Set start time to 00:00:00
-                dtStart.setHours(0);
-                dtStart.setMinutes(0);
-                dtStart.setSeconds(0);
+                console.log('Set start time to 12:00:00.000 AM');
+                dtStart = dtStart.startOf('day');
+                // dtStart.setHours(0);
+                // dtStart.setMinutes(0);
+                // dtStart.setSeconds(0);
+                // dtStart.setMilliseconds(0);
 
                 if (until) {
                     // Set until time to 23:59:59
-                    until.setHours(23);
-                    until.setMinutes(59);
-                    until.setSeconds(59);
+                    console.log('Set end time to 23:59:59.999');
+                    until = until.endOf('day');
+                    // until.setHours(23);
+                    // until.setMinutes(59);
+                    // until.setSeconds(59);
+                    // until.setMilliseconds(999);
                 }
             } else {
                 if ($('input[data-target="#startTime"]').val().length > 0) {
                     // Set start time with startTime field value
+                    console.log("Set start time with startTime field value");
                     let startTime = $("#startTime").datetimepicker('date').toDate();
-                    dtStart.setHours(startTime.getHours());
-                    dtStart.setMinutes(startTime.getMinutes());
-                    dtStart.setSeconds(startTime.getSeconds());
+                    dtStart.hours(startTime.getHours());
+                    dtStart.minutes(startTime.getMinutes());
+                    dtStart.seconds(0);
+                    dtStart.milliseconds(0);
                 }
 
                 if ($('input[data-target="#endTime"]').val().length > 0 && until) {
                     // Set end time with endTime field value
+                    console.log("Set end time with endTime field value");
                     let endTime = $("#endTime").datetimepicker('date').toDate();
-                    until.setHours(endTime.getHours());
-                    until.setMinutes(endTime.getMinutes());
-                    until.setSeconds(endTime.getSeconds());
+                    until.hours(endTime.getHours());
+                    until.minutes(endTime.getMinutes());
+                    until.seconds(0);
+                    until.milliseconds(0);
                 }
             }
 
@@ -1908,20 +1918,30 @@
 
             //#endregion
 
-            let rule = {
+            let rule = new rrule.RRule({
                 freq: freq,
                 interval: interval,
-                dtStart: dtStart,
-                until: until,
-                byWeekDay: byWeekDay,
-                byMonthDay: byMonthDay,
-                bySetPos: bySetPos,
-                byMonth: byMonth
-            };
-            let newRRule = buildRRule(rule);
-            console.log('Generated RRule:', newRRule);
+                dtstart: dtStart.toDate(),
+                until: until.toDate(),
+                byweekday: byWeekDay,
+                bymonthday: byMonthDay,
+                bysetpos: bySetPos,
+                bymonth: byMonth
+                //wkst: wkst,
+                //count: count,
+                //tzid: tzId,
+                //bynmonthday: byNMonthDay,
+                //byyearday: byYearDay,
+                //byweekno: byWeekNo,
+                //bynweekday: byNWeekDay,
+                //byhour: byHour,
+                //byminute: byMinute,
+                //bysecond: bySecond,
+                //byeaster: byEaster
+            });
+            console.log('Generated RRule:', rule);
 
-            return newRRule;
+            return rule;
         }
 
         $("#generateRRule").on('click', (e) => {
@@ -1930,30 +1950,6 @@
             console.log('Display RRule:', generatedRRuleCode);
             $("#generatedRRuleCode").text(generatedRRuleCode.toString());
         });
-
-        function buildRRule(rule) {
-            return new rrule.RRule({
-                freq: rule.freq,
-                interval: rule.interval,
-                byweekday: rule.byWeekDay,
-                dtstart: rule.dtStart,
-                until: rule.until,
-                wkst: rule.wkst,
-                count: rule.count,
-                tzid: rule.tzId,
-                bysetpos: rule.bySetPos,
-                bymonth: rule.byMonth,
-                bymonthday: rule.byMonthDay,
-                bynmonthday: rule.byNMonthDay,
-                byyearday: rule.byYearDay,
-                byweekno: rule.byWeekNo,
-                bynweekday: rule.byNWeekDay,
-                byhour: rule.byHour,
-                byminute: rule.byMinute,
-                bysecond: rule.bySecond,
-                byeaster: rule.byEaster
-            });
-        }
 
         //#endregion
 
