@@ -926,16 +926,47 @@
             if ($('#numberOfUsers').val())
                 json.organizationSetup.numberOfUsers = $('#numberOfUsers').val();
 
-            if ($("#jsGridLocations").jsGrid("option", "data").length > 0)
-                json.locations = $("#jsGridLocations").jsGrid("option", "data");
-            if ($("#jsGridSchedules").jsGrid("option", "data").length > 0)
+            if ($("#jsGridLocations").jsGrid("option", "data").length > 0) {
+                $.each($("#jsGridLocations").jsGrid("option", "data"), (key, item) => {
+                    json.locations.push({
+                        locationName: item.locationName,
+                        streetAddress: item.streetAddress,
+                        city: item.city,
+                        state: item.state,
+                        zipCode: item.zipCode,
+                        country: item.country,
+                        notes: item.notes,
+                        emergencyNumber: item.emergencyNumber
+                    })
+                });
+            }
+            if ($("#jsGridSchedules").jsGrid("option", "data").length > 0) {
+                //TODO: Keep the order !
                 json.schedules = $("#jsGridSchedules").jsGrid("option", "data");
+            }
+
             if ($("#jsGridSkills").jsGrid("option", "data").length > 0)
                 json.skills = $("#jsGridSkills").jsGrid("option", "data");
             if ($("#jsGridWrapUpCodes").jsGrid("option", "data").length > 0)
                 json.wrapUpCodes = $("#jsGridWrapUpCodes").jsGrid("option", "data");
-            if ($("#jsGridQueues").jsGrid("option", "data").length > 0)
-                json.queues = $("#jsGridQueues").jsGrid("option", "data");
+            if ($("#jsGridQueues").jsGrid("option", "data").length > 0) {
+                $.each($("#jsGridQueues").jsGrid("option", "data"), (key, item) => {
+                    json.queues.push({
+                        queueName: item.queueName,
+                        enableCallbacks: item.enableCallbacks,
+                        enableEmails: item.enableEmails,
+                        acw: item.acw,
+                        acwTimeout: item.acwTimeout,
+                        evaluationMethod: item.evaluationMethod,
+                        alertingTimeout: item.alertingTimeout,
+                        slPercentage: item.slPercentage,
+                        slDuration: item.slDuration,
+                        callingPartyName: item.callingPartyName,
+                        callingPartyNumber: item.callingPartyNumber,
+                        wrapUpCodes: item.wrapUpCodes
+                    })
+                });
+            }
 
             console.log(json);
             return json;
@@ -977,7 +1008,7 @@
             let data = $.extend(true, {}, buildJSON());
 
 
-            const replacer = (key, value) => value === null ? '' : value // specify how you want to handle null values here
+            const replacer = (key, value) => (value === null || value === 'n/a') ? '' : value // specify how you want to handle null values here
             let header, csv_locations, csv_skills, csv_wrapUpCodes, csv_queues;
 
             // Locations
@@ -1019,8 +1050,13 @@
                 console.log('build queues csv...');
                 // tune queue columns
                 data.queues.forEach(function (item) {
+                    console.log(item);
                     delete item.enableCallbacks;
                     delete item.enableEmails;
+                    if (item.wrapUpCodes && item.wrapUpCodes.length > 0)
+                        item.wrapUpCodes = item.wrapUpCodes.join('|')
+                    else
+                        item.wrapUpCodes = "";
                 });
 
                 header = Object.keys(data.queues[0]);
@@ -2167,8 +2203,7 @@
                 width: "100%",
                 editing: true,
                 autoload: true,
-
-                sorting: false,
+                sorting: true,
                 filtering: false,
                 paging: false,
                 noDataContent: "No Queues",
@@ -2220,6 +2255,7 @@
                 onItemDeleted: function (args) {
                     $("#addQueue").attr('disabled', $("#jsGridQueues").jsGrid("option", "data").length >= maxItems);
                 },
+
                 controller: dbQueues,
                 fields: [
                     {
@@ -2281,10 +2317,8 @@
             $("#editModalQueues #slDuration").val(item.slDuration ? item.slDuration : '20');
             $("#editModalQueues #callingPartyName").val((item.callingPartyName && item.callingPartyName !== 'n/a') ? item.callingPartyName : undefined);
             $("#editModalQueues #callingPartyNumber").val((item.callingPartyNumber && item.callingPartyNumber !== 'n/a') ? item.callingPartyNumber : undefined);
-            $("#editModalQueues #queueWrapUpCode").val(item.queueWrapUpCodes ? item.queueWrapUpCodes : undefined);
+            $("#editModalQueues #queueWrapUpCode").val(item.wrapUpCodes ? item.wrapUpCodes : undefined);
             $("#editModalQueues #queueWrapUpCode").selectpicker('refresh');
-
-           
 
             $("#editModalQueues #submit").html("<i class='fa fa-floppy-o'></i> Save");
             formSubmitHandlerQueues = function () {
@@ -2308,7 +2342,7 @@
                 slDuration: $("#editModalQueues #slDuration").val() == "" ? '20' : $("#editModalQueues #slDuration").val(),
                 callingPartyName: $("#editModalQueues #callingPartyName").val() == "" ? 'n/a' : $("#editModalQueues #callingPartyName").val(),
                 callingPartyNumber: $("#editModalQueues #callingPartyNumber").val() == "" ? 'n/a' : $("#editModalQueues #callingPartyNumber").val(),
-                queueWrapUpCodes: $("#editModalQueues #queueWrapUpCode").val()
+                wrapUpCodes: $("#editModalQueues #queueWrapUpCode").val()
             });
             console.log('Extended Item:', item);
             console.log('IsNew?', isNew)
