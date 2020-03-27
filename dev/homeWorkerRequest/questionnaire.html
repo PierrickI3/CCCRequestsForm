@@ -45,10 +45,7 @@
             <ul class="nav navbar-nav" style="float: right;">
                 <li><button id="saveDraft" href="#" onclick="saveDraft();" class="btn btn-primary btn-sm ml-2" disabled>Save draft</button></li>
             </ul>
-
-
         </ul>
-
     </nav>
 
     <div class="alert alert-danger fade show" role="alert" id="alert" hidden>
@@ -332,8 +329,8 @@
 
                                                                         <!-- Weekly -->
                                                                         <div class="form-group row" id="weeklyControlsDiv" style="display: none;">
-                                                                            <label for="interval" class="col-sm-2 offset-sm-3 col-form-label">Every</label>
-                                                                            <div class="btn-group" data-toggle="buttons">
+                                                                            <label for="weeklyDays" class="col-sm-2 offset-sm-3 col-form-label">Every</label>
+                                                                            <div class="btn-group" data-toggle="buttons" id="weeklyDays">
                                                                                 <label class="btn btn-primary active"><input type="checkbox" id="chkMonday" checked> Mo</label>
                                                                                 <label class="btn btn-primary"><input type="checkbox" id="chkTuesday"> Tu</label>
                                                                                 <label class="btn btn-primary"><input type="checkbox" id="chkWednesday"> We</label>
@@ -440,9 +437,9 @@
                                                                     <!-- Start Time -->
                                                                     <div class="form-group row time-row">
                                                                         <label class="col-sm-3 col-form-label">Start Time</label>
-                                                                        <div class="input-group date col-md-3 time-only" id="repeatingEventStartTime" data-target-input="nearest">
-                                                                            <input type="text" class="form-control datetimepicker-input" data-target="#repeatingEventStartTime" />
-                                                                            <div class="input-group-append" data-target="#repeatingEventStartTime" data-toggle="datetimepicker">
+                                                                        <div class="input-group date col-md-3 time-only" id="startTime" data-target-input="nearest">
+                                                                            <input type="text" class="form-control datetimepicker-input" data-target="#startTime" />
+                                                                            <div class="input-group-append" data-target="#startTime" data-toggle="datetimepicker">
                                                                                 <div class="input-group-text"><i class="fa fa-clock-o"></i></div>
                                                                             </div>
                                                                         </div>
@@ -451,9 +448,9 @@
                                                                     <!-- End Time -->
                                                                     <div class="form-group row time-row">
                                                                         <label class="col-sm-3 col-form-label">End Time</label>
-                                                                        <div class="input-group date col-md-3 time-only" id="repeatingEventEndTime" data-target-input="nearest">
-                                                                            <input type="text" class="form-control datetimepicker-input" data-target="#repeatingEventEndTime" />
-                                                                            <div class="input-group-append" data-target="#repeatingEventEndTime" data-toggle="datetimepicker">
+                                                                        <div class="input-group date col-md-3 time-only" id="endTime" data-target-input="nearest">
+                                                                            <input type="text" class="form-control datetimepicker-input" data-target="#endTime" />
+                                                                            <div class="input-group-append" data-target="#endTime" data-toggle="datetimepicker">
                                                                                 <div class="input-group-text"><i class="fa fa-clock-o"></i></div>
                                                                             </div>
                                                                         </div>
@@ -462,9 +459,9 @@
                                                                     <!-- End Date -->
                                                                     <div class="form-group row date-row">
                                                                         <label class="col-sm-3 col-form-label">End Date</label>
-                                                                        <div class="input-group date col-md-3 date-only" id="repeatingEventDayEnd" data-target-input="nearest">
-                                                                            <input type="text" class="form-control datetimepicker-input" data-target="#repeatingEventDayEnd" />
-                                                                            <div class="input-group-append" data-target="#repeatingEventDayEnd" data-toggle="datetimepicker">
+                                                                        <div class="input-group date col-md-3 date-only" id="endDate" data-target-input="nearest">
+                                                                            <input type="text" class="form-control datetimepicker-input" data-target="#endDate" />
+                                                                            <div class="input-group-append" data-target="#endDate" data-toggle="datetimepicker">
                                                                                 <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                                                                             </div>
                                                                         </div>
@@ -473,6 +470,8 @@
 
                                                                 <!-- Footer -->
                                                                 <div class="modal-footer">
+                                                                    <code id="generatedRRuleCode"></code>
+                                                                    <button id="generateRRule" type="button" class="btn btn-dark">Generate Rule</button>
                                                                     <button id="btnClose" type="button" class="btn btn-link pull-right" data-dismiss="modal">Close</button>
                                                                     <button id="submit" type="submit" class="btn btn-primary pull-left"><i class="fa fa-plus"></i> Add</button>
                                                                 </div>
@@ -1651,78 +1650,21 @@
         };
 
         var saveSchedule = function (item, isNew) {
-
             try {
+
+                let newRRule = generateRRule();
+                let newRRuleString = newRRule.toString();
+
+                console.log('New RRule:', newRRule);
+                console.log('New RRule String:', newRRuleString);
+
                 console.log('Extending item:', item);
 
-                // Set default values
-                let freq, byWeekDay = [], bySetPos, byMonth, byMonthDay, tzId, byNMonthDay, wkst;
-                let dtStart = $("#repeatingEventDayStart").datetimepicker('date').toDate();
-                let until = $("#repeatingEventDayEnd").datetimepicker('date') ? $("#repeatingEventDayEnd").datetimepicker('date').toDate() : null;
-                let count = 3; // We don't really care about this. It's only to generate dates for the next events in the schedule.
-                let interval = $("#editModalSchedules #interval").val();
-                let recurrenceType = $("#editModalSchedules #recurrenceType").val();
-                let currentRRuleString;
-
-                // Is this a repeating schedule?
-                if ($("#repeatingEvent").is(':checked')) {
-                    switch (recurrenceType) {
-                        case "Daily":
-                            freq = rrule.RRule.DAILY;
-                            bWeekDay = [];
-                            byMonthDay = undefined;
-                            break;
-                        case "Weekly":
-                            freq = rrule.RRule.WEEKLY;
-                            //TODO Find a better way to do this
-                            if ($("#weeklyControlsDiv #chkMonday").is(':checked')) { bWeekDay.push(rrule.RRule.MO); }
-                            if ($("#weeklyControlsDiv #chkTuesday").is(':checked')) { bWeekDay.push(rrule.RRule.TU); }
-                            if ($("#weeklyControlsDiv #chkWednesday").is(':checked')) { bWeekDay.push(rrule.RRule.WE); }
-                            if ($("#weeklyControlsDiv #chkThursday").is(':checked')) { bWeekDay.push(rrule.RRule.TH); }
-                            if ($("#weeklyControlsDiv #chkFriday").is(':checked')) { bWeekDay.push(rrule.RRule.FR); }
-                            if ($("#weeklyControlsDiv #chkSaturday").is(':checked')) { bWeekDay.push(rrule.RRule.SA); }
-                            if ($("#weeklyControlsDiv #chkSunday").is(':checked')) { bWeekDay.push(rrule.RRule.SU); }
-                            byMonthDay = undefined;
-                            break;
-                        case "Monthly":
-                            freq = rrule.RRule.MONTHLY;
-                            if ($("#monthlyControlsDiv").is(':visible')) {
-                                if ($("#monthlyRecurrenceType").val() === "On") {
-                                    byMonthDay = $("#byMonthDay").val();
-                                } else {
-                                    //TODO Find a better way to do this
-                                    if ($("#byDayDiv #chkMonday").is(':checked')) { bWeekDay.push(rrule.RRule.TU); }
-                                    if ($("#byDayDiv #chkTuesday").is(':checked')) { bWeekDay.push(rrule.RRule.TU); }
-                                    if ($("#byDayDiv #chkWednesday").is(':checked')) { bWeekDay.push(rrule.RRule.WE); }
-                                    if ($("#byDayDiv #chkThursday").is(':checked')) { bWeekDay.push(rrule.RRule.TH); }
-                                    if ($("#byDayDiv #chkFriday").is(':checked')) { bWeekDay.push(rrule.RRule.FR); }
-                                    if ($("#byDayDiv #chkSaturday").is(':checked')) { bWeekDay.push(rrule.RRule.SA); }
-                                    if ($("#byDayDiv #chkSunday").is(':checked')) { bWeekDay.push(rrule.RRule.SU); }
-                                }
-                            }
-                            break;
-                        case "Yearly":
-                            freq = rrule.RRule.YEARLY;
-
-                            bWeekDay = [];
-                            byMonthDay = undefined;
-                            break;
-                        default:
-                            console.error('Unsupported recurrence:', recurrenceType)
-                            break;
-                    }
-
-                    // Build RRule
-                    currentRRule = buildRRule(freq, interval, byWeekDay, dtStart, until, wkst, count, tzId, bySetPos, byMonth, byMonthDay);
-                    console.log(currentRRule);
-                    currentRRuleString = currentRRule.toString();
-                    console.log(currentRRuleString);
-                }
                 $.extend(item, {
                     scheduleName: $("#editModalSchedules #scheduleName").val(),
-                    start: dtStart,
-                    end: until,
-                    rrule: currentRRuleString
+                    start: newRRule.options.dtstart,
+                    end: newRRule.options.until,
+                    rrule: newRRuleString
                 });
                 console.log('Extended Item:', item);
                 console.log('IsNew?', isNew)
@@ -1746,34 +1688,46 @@
             $("#editModalSchedules #repeatingEvent").change();
             $("#editModalSchedules #interval").val(1);
             $("#editModalSchedules #recurrenceType").val('Daily');
-            $("#editModalSchedules #repeatingEventAllDay").prop('checked', false);
-            $("#editModalSchedules #repeatingEventAllDay").change();
-            $("#editModalSchedules #repeatingEventStartTime").datetimepicker('clear');
-            $("#editModalSchedules #repeatingEventEndTime").datetimepicker('clear');
+            $("#editModalSchedules #yearMonth").val('');
 
-            $("#weeklyControlsDiv #chkMonday").prop(':checked', true);
-            $("#weeklyControlsDiv #chkTuesday").prop(':checked', false);
-            $("#weeklyControlsDiv #chkWednesday").prop(':checked', false);
-            $("#weeklyControlsDiv #chkThursday").prop(':checked', false);
-            $("#weeklyControlsDiv #chkFriday").prop(':checked', false);
-            $("#weeklyControlsDiv #chkSaturday").prop(':checked', false);
-            $("#weeklyControlsDiv #chkSunday").prop(':checked', false);
+            // Weekly
+            $("#editModalSchedules #weeklyControlsDiv #chkMonday").prop('checked', true);
+            $("#editModalSchedules #weeklyControlsDiv #chkTuesday").prop('checked', false);
+            $("#editModalSchedules #weeklyControlsDiv #chkWednesday").prop('checked', false);
+            $("#editModalSchedules #weeklyControlsDiv #chkThursday").prop('checked', false);
+            $("#editModalSchedules #weeklyControlsDiv #chkFriday").prop('checked', false);
+            $("#editModalSchedules #weeklyControlsDiv #chkSaturday").prop('checked', false);
+            $("#editModalSchedules #weeklyControlsDiv #chkSunday").prop('checked', false);
 
-            $("#byDayDiv #chkMonday").prop(':checked', true);
-            $("#byDayDiv #chkTuesday").prop(':checked', false);
-            $("#byDayDiv #chkWednesday").prop(':checked', false);
-            $("#byDayDiv #chkThursday").prop(':checked', false);
-            $("#byDayDiv #chkFriday").prop(':checked', false);
-            $("#byDayDiv #chkSaturday").prop(':checked', false);
-            $("#byDayDiv #chkSunday").prop(':checked', false);
+            // Monthly
+            $("#editModalSchedules #monthlyControlsDiv #monthlyRecurrenceType").val('On');
+            $("#editModalSchedules #monthlyControlsDiv #byMonthDay").val('');
+            $("#editModalSchedules #monthlyControlsDiv #byDayDiv #chkMonday").prop('checked', true);
+            $("#editModalSchedules #monthlyControlsDiv #byDayDiv #chkTuesday").prop('checked', false);
+            $("#editModalSchedules #monthlyControlsDiv #byDayDiv #chkWednesday").prop('checked', false);
+            $("#editModalSchedules #monthlyControlsDiv #byDayDiv #chkThursday").prop('checked', false);
+            $("#editModalSchedules #monthlyControlsDiv #byDayDiv #chkFriday").prop('checked', false);
+            $("#editModalSchedules #monthlyControlsDiv #byDayDiv #chkSaturday").prop('checked', false);
+            $("#editModalSchedules #monthlyControlsDiv #byDayDiv #chkSunday").prop('checked', false);
 
-            // Single Event
-            $("#editModalSchedules #singleEventAllDay").prop('checked', false);
-            $("#editModalSchedules #singleEventAllDay").change();
-            $("#editModalSchedules #singleEventDayStart").datetimepicker('clear');
-            $("#editModalSchedules #singleEventStartTime").datetimepicker('clear');
-            $("#editModalSchedules #singleEventEndTime").datetimepicker('clear');
-            $("#editModalSchedules #singleEventDayEnd").datetimepicker('clear');
+            // Yearly
+            $("#editModalSchedules #yearlyControlsDiv #yearlyRecurrenceType").val('On');
+            $("#editModalSchedules #yearlyControlsDiv #byMonthDay").val('');
+            $("#editModalSchedules #yearlyControlsDiv #byYearDayDiv #chkMonday").prop('checked', true);
+            $("#editModalSchedules #yearlyControlsDiv #byYearDayDiv #chkTuesday").prop('checked', false);
+            $("#editModalSchedules #yearlyControlsDiv #byYearDayDiv #chkWednesday").prop('checked', false);
+            $("#editModalSchedules #yearlyControlsDiv #byYearDayDiv #chkThursday").prop('checked', false);
+            $("#editModalSchedules #yearlyControlsDiv #byYearDayDiv #chkFriday").prop('checked', false);
+            $("#editModalSchedules #yearlyControlsDiv #byYearDayDiv #chkSaturday").prop('checked', false);
+            $("#editModalSchedules #yearlyControlsDiv #byYearDayDiv #chkSunday").prop('checked', false);
+
+            // All Day
+            $("#editModalSchedules #allDay").prop('checked', false);
+            $("#editModalSchedules #allDay").change();
+            $("#editModalSchedules #startDate").datetimepicker('clear');
+            $("#editModalSchedules #startTime").datetimepicker('clear');
+            $("#editModalSchedules #endTime").datetimepicker('clear');
+            $("#editModalSchedules #endDate").datetimepicker('clear');
 
             $("#editModalSchedules #submit").html("<i class='fa fa-plus'></i> Add");
 
@@ -1786,29 +1740,252 @@
             return new rrule.rrulestr(rruleString).all();
         }
 
-        function buildRRule(freq, interval, byWeekDay, dtStart, until, wkst, count, tzId, bySetPos, byMonth, byMonthDay, byNMonthDay, byYearDay, byWeekNo, byNWeekDay, byHour, byMinute, bySecond, byEaster) {
-            return new rrule.RRule({
+        function generateRRule() {
+
+            let recurrenceType = $("#editModalSchedules #recurrenceType").val();
+
+            //#region Frequency
+
+            let freq;
+            if ($("#repeatingEvent").is(':checked')) {
+                switch (recurrenceType) {
+                    case "Daily":
+                        freq = rrule.RRule.DAILY;
+                        break;
+                    case "Weekly":
+                        freq = rrule.RRule.WEEKLY;
+                        break;
+                    case "Monthly":
+                        freq = rrule.RRule.MONTHLY;
+                        break;
+                    case "Yearly":
+                        freq = rrule.RRule.YEARLY;
+                        break;
+                    default:
+                        console.error('Unsupported recurrence:', recurrenceType);
+                        showMessage("Unsupported Recurrence: " + recurrenceType, true);
+                        break;
+                }
+            }
+
+            //#endregion
+
+            //#region Interval
+
+            let interval;
+            if ($("#repeatingEvent").is(':checked')) {
+                interval = $("#editModalSchedules #interval").val();
+            }
+
+            //#endregion
+
+            //#region Date/Time Start/End
+
+            let dtStart, until;
+
+            // Is Start Date set?
+            if ($('input[data-target="#startDate"]').val().length > 0) {
+                dtStart = $("#startDate").datetimepicker('date');
+            } else {
+                dtStart = new Date(); // Today
+            }
+
+            // Is End Date set?
+            if ($('input[data-target="#endDate"]').val().length > 0) {
+                until = $("#endDate").datetimepicker('date') || null;
+            }
+
+            if ($("#allDay").is(':checked')) {
+                // Set start time to 00:00:00
+                console.log('Set start time to 12:00:00.000 AM');
+                dtStart = dtStart.startOf('day');
+                // dtStart.setHours(0);
+                // dtStart.setMinutes(0);
+                // dtStart.setSeconds(0);
+                // dtStart.setMilliseconds(0);
+
+                if (until) {
+                    // Set until time to 23:59:59
+                    console.log('Set end time to 23:59:59.999');
+                    until = until.endOf('day');
+                    // until.setHours(23);
+                    // until.setMinutes(59);
+                    // until.setSeconds(59);
+                    // until.setMilliseconds(999);
+                }
+            } else {
+                if ($('input[data-target="#startTime"]').val().length > 0) {
+                    // Set start time with startTime field value
+                    console.log("Set start time with startTime field value");
+                    let startTime = $("#startTime").datetimepicker('date').toDate();
+                    dtStart.hours(startTime.getHours());
+                    dtStart.minutes(startTime.getMinutes());
+                    dtStart.seconds(0);
+                    dtStart.milliseconds(0);
+                }
+
+                if ($('input[data-target="#endTime"]').val().length > 0 && until) {
+                    // Set end time with endTime field value
+                    console.log("Set end time with endTime field value");
+                    let endTime = $("#endTime").datetimepicker('date').toDate();
+                    until.hours(endTime.getHours());
+                    until.minutes(endTime.getMinutes());
+                    until.seconds(0);
+                    until.milliseconds(0);
+                }
+            }
+
+            //#endregion
+
+            //#region Weekly
+
+            let byWeekDay = [];
+            if (recurrenceType === "Weekly") {
+                console.log('Weekly recurrence');
+                if ($("#editModalSchedules #weeklyControlsDiv #chkMonday").is(':checked')) { byWeekDay.push(rrule.RRule.MO); }
+                if ($("#editModalSchedules #weeklyControlsDiv #chkTuesday").is(':checked')) { byWeekDay.push(rrule.RRule.TU); }
+                if ($("#editModalSchedules #weeklyControlsDiv #chkWednesday").is(':checked')) { byWeekDay.push(rrule.RRule.WE); }
+                if ($("#editModalSchedules #weeklyControlsDiv #chkThursday").is(':checked')) { byWeekDay.push(rrule.RRule.TH); }
+                if ($("#editModalSchedules #weeklyControlsDiv #chkFriday").is(':checked')) { byWeekDay.push(rrule.RRule.FR); }
+                if ($("#editModalSchedules #weeklyControlsDiv #chkSaturday").is(':checked')) { byWeekDay.push(rrule.RRule.SA); }
+                if ($("#editModalSchedules #weeklyControlsDiv #chkSunday").is(':checked')) { byWeekDay.push(rrule.RRule.SU); }
+            }
+            console.log('By Week Day:', byWeekDay);
+
+            //#endregion
+
+            //#region Monthly
+
+            let byMonthDay = [], bySetPos;
+            if (recurrenceType === "Monthly") {
+                console.log('Monthly recurrence');
+                let monthlyRecurrenceType = $("#editModalSchedules #monthlyControlsDiv #monthlyRecurrenceType").val();
+                if (monthlyRecurrenceType === "On") {
+                    byMonthDay.push($("#byMonthDay").val());
+                } else {
+                    console.log('Monthly Recurrence Type:', monthlyRecurrenceType);
+                    switch (monthlyRecurrenceType) {
+                        case "IfDayIs":
+                            // Nothing to do here
+                            break;
+                        case "First":
+                            bySetPos = [1]
+                            break;
+                        case "Second":
+                            bySetPos = [2];
+                            break;
+                        case "Third":
+                            bySetPos = [3];
+                            break;
+                        case "Fourth":
+                            bySetPos = [4];
+                            break;
+                        case "Last":
+                            bySetPos = [-1];
+                            break;
+                        default:
+                            console.error("Unsupported monthly recurrence type:", monthlyRecurrenceType);
+                            showMessage("Unsupported monthly recurrence type: " + monthlyRecurrenceType, true);
+                            break;
+                    }
+                    if ($("#editModalSchedules #monthlyControlsDiv #chkMonday").is(':checked')) { byWeekDay.push(rrule.RRule.MO); }
+                    if ($("#editModalSchedules #monthlyControlsDiv #chkTuesday").is(':checked')) { byWeekDay.push(rrule.RRule.TU); }
+                    if ($("#editModalSchedules #monthlyControlsDiv #chkWednesday").is(':checked')) { byWeekDay.push(rrule.RRule.WE); }
+                    if ($("#editModalSchedules #monthlyControlsDiv #chkThursday").is(':checked')) { byWeekDay.push(rrule.RRule.TH); }
+                    if ($("#editModalSchedules #monthlyControlsDiv #chkFriday").is(':checked')) { byWeekDay.push(rrule.RRule.FR); }
+                    if ($("#editModalSchedules #monthlyControlsDiv #chkSaturday").is(':checked')) { byWeekDay.push(rrule.RRule.SA); }
+                    if ($("#editModalSchedules #monthlyControlsDiv #chkSunday").is(':checked')) { byWeekDay.push(rrule.RRule.SU); }
+                }
+            }
+
+            //#endregion
+
+            //#region Yearly
+
+            let byMonth = [];
+            if (recurrenceType === "Yearly") {
+                console.log('Yearly recurrence');
+
+                // Got a month?
+                let yearMonthSelect = $("#editModalSchedules #yearMonthSelect").val();
+                if (yearMonthSelect.length > 0) {
+                    byMonth.push(parseInt(yearMonthSelect));
+                }
+
+                // Recurrence
+                let yearlyRecurrenceType = $("#editModalSchedules #yearlyControlsDiv #yearlyRecurrenceType").val();
+                if (yearlyRecurrenceType === "On") {
+                    byMonthDay.push($("#byYearDay").val());
+                } else {
+                    console.log('Yearly Recurrence Type:', yearlyRecurrenceType);
+                    switch (yearlyRecurrenceType) {
+                        case "IfDayIs":
+                            // Nothing to do here
+                            break;
+                        case "First":
+                            bySetPos = [1]
+                            break;
+                        case "Second":
+                            bySetPos = [2];
+                            break;
+                        case "Third":
+                            bySetPos = [3];
+                            break;
+                        case "Fourth":
+                            bySetPos = [4];
+                            break;
+                        case "Last":
+                            bySetPos = [-1];
+                            break;
+                        default:
+                            console.error("Unsupported monthly recurrence type:", monthlyRecurrenceType);
+                            showMessage("Unsupported monthly recurrence type: " + monthlyRecurrenceType, true);
+                            break;
+                    }
+                    if ($("#editModalSchedules #yearlyControlsDiv #chkMonday").is(':checked')) { byWeekDay.push(rrule.RRule.MO); }
+                    if ($("#editModalSchedules #yearlyControlsDiv #chkTuesday").is(':checked')) { byWeekDay.push(rrule.RRule.TU); }
+                    if ($("#editModalSchedules #yearlyControlsDiv #chkWednesday").is(':checked')) { byWeekDay.push(rrule.RRule.WE); }
+                    if ($("#editModalSchedules #yearlyControlsDiv #chkThursday").is(':checked')) { byWeekDay.push(rrule.RRule.TH); }
+                    if ($("#editModalSchedules #yearlyControlsDiv #chkFriday").is(':checked')) { byWeekDay.push(rrule.RRule.FR); }
+                    if ($("#editModalSchedules #yearlyControlsDiv #chkSaturday").is(':checked')) { byWeekDay.push(rrule.RRule.SA); }
+                    if ($("#editModalSchedules #yearlyControlsDiv #chkSunday").is(':checked')) { byWeekDay.push(rrule.RRule.SU); }
+                }
+            }
+
+            //#endregion
+
+            let rule = new rrule.RRule({
                 freq: freq,
                 interval: interval,
+                dtstart: dtStart.toDate(),
+                until: until.toDate(),
                 byweekday: byWeekDay,
-                dtstart: dtStart,
-                until: until,
-                wkst: wkst,
-                count: count,
-                tzid: tzId,
-                bysetpos: bySetPos,
-                bymonth: byMonth,
                 bymonthday: byMonthDay,
-                bynmonthday: byNMonthDay,
-                byyearday: byYearDay,
-                byweekno: byWeekNo,
-                bynweekday: byNWeekDay,
-                byhour: byHour,
-                byminute: byMinute,
-                bysecond: bySecond,
-                byeaster: byEaster
+                bysetpos: bySetPos,
+                bymonth: byMonth
+                //wkst: wkst,
+                //count: count,
+                //tzid: tzId,
+                //bynmonthday: byNMonthDay,
+                //byyearday: byYearDay,
+                //byweekno: byWeekNo,
+                //bynweekday: byNWeekDay,
+                //byhour: byHour,
+                //byminute: byMinute,
+                //bysecond: bySecond,
+                //byeaster: byEaster
             });
+            console.log('Generated RRule:', rule);
+
+            return rule;
         }
+
+        $("#generateRRule").on('click', (e) => {
+            e.preventDefault();
+            let generatedRRuleCode = generateRRule().toString();
+            console.log('Display RRule:', generatedRRuleCode);
+            $("#generatedRRuleCode").text(generatedRRuleCode.toString());
+        });
 
         //#endregion
 
