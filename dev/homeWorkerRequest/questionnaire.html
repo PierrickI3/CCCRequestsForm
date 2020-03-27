@@ -736,8 +736,6 @@
         </div>
     </div>
 
-
-
     <noscript>You need to enable JavaScript to run this app.</noscript>
 
     <!--#region Imports -->
@@ -1102,7 +1100,7 @@
             loadData: function (filter) {
                 return $.grep(this.locations, function (location) {
                     return (!filter.locationName || location.locationName.toLowerCase().indexOf(filter.locationName.toLowerCase()) > -1)
-                      
+
                 });
             },
             insertItem: function (insertingLocation) {
@@ -1204,7 +1202,7 @@
                             });
                             return this.filterControl = input;
                         }
-                    },                    
+                    },
                     {
                         name: "city",
                         title: "City",
@@ -1264,10 +1262,10 @@
                 locationName: $("#editModalLocations #locationName").val(),
                 streetAddress: $("#editModalLocations #streetAddress").val(),
                 city: $("#editModalLocations #city").val(),
-                state: $("#editModalLocations #state").val() == "" ? 'n/a' : $("#editModalLocations #state").val(),                
+                state: $("#editModalLocations #state").val() == "" ? 'n/a' : $("#editModalLocations #state").val(),
                 zipCode: $("#editModalLocations #zipCode").val(),
                 country: $("#editModalLocations #country").val(),
-                notes: $("#editModalLocations #notes").val()  == "" ? 'n/a' : $("#editModalLocations #notes").val(),                
+                notes: $("#editModalLocations #notes").val() == "" ? 'n/a' : $("#editModalLocations #notes").val(),
                 emergencyNumber: $("#editModalLocations #emergencyNumber").val(),
             });
             console.log('Extended Item:', item);
@@ -1299,7 +1297,7 @@
 
         //#region Schedules
 
-        let maxSchedules = 10;
+        let maxSchedules = 2;
 
         var dbSchedules = {
             loadData: function (filter) {
