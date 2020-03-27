@@ -848,6 +848,9 @@
             console.log('function init');
             $('#spinner_message')[0].innerHTML = "login to Genesys Cloud...";
 
+            // Set jsGrid defaults
+            jsGrid.setDefaults({ tableClass: "jsgrid-table table table-striped table-hover" });
+
             // Init Date/Time Pickers
             $('.date-only').datetimepicker({
                 format: 'L'
@@ -1156,7 +1159,6 @@
             console.log(`CSV: queues\n===================\n ${csv_queues}\n===================\n`);
 
             //download(csv_locations, 'locations.csv');
-
         }
 
         function download(data, filename, type) {
@@ -1176,8 +1178,6 @@
                 }, 0);
             }
         }
-
-        jsGrid.setDefaults({ tableClass: "jsgrid-table table table-striped table-hover" });
 
         //#region Locations
 
