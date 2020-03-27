@@ -1617,20 +1617,18 @@
             try {
 
                 let newRRule = generateRRule();
-                let currentRRule = buildRRule(newRRule);
-                let currentRRuleString = currentRRule.toString();
+                let newRRuleString = newRRule.toString();
 
                 console.log('New RRule:', newRRule);
-                console.log('Current RRule:', currentRRule);
-                console.log('Current RRule String:', currentRRuleString);
+                console.log('New RRule String:', newRRuleString);
 
                 console.log('Extending item:', item);
 
                 $.extend(item, {
                     scheduleName: $("#editModalSchedules #scheduleName").val(),
-                    start: currentRRule.options.dtstart,
-                    end: currentRRule.options.until,
-                    rrule: currentRRuleString
+                    start: newRRule.options.dtstart,
+                    end: newRRule.options.until,
+                    rrule: newRRuleString
                 });
                 console.log('Extended Item:', item);
                 console.log('IsNew?', isNew)
@@ -2466,8 +2464,6 @@
             $("#editModalQueues #callingPartyNumber").val((item.callingPartyNumber && item.callingPartyNumber !== 'n/a') ? item.callingPartyNumber : undefined);
             $("#editModalQueues #queueWrapUpCode").val(item.queueWrapUpCodes ? item.queueWrapUpCodes : undefined);
             $("#editModalQueues #queueWrapUpCode").selectpicker('refresh');
-
-           
 
             $("#editModalQueues #submit").html("<i class='fa fa-floppy-o'></i> Save");
             formSubmitHandlerQueues = function () {
