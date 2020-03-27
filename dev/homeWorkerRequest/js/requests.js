@@ -146,11 +146,11 @@ async function putRequest() {
     //nonGeographicNumbersReRouting: $("#nonGeographicNumbersReRouting").val(),
     customerResourceCommitted: $("#editModal #customerResourceCommitted").is(':checked'),
     hyperVEnvironment: $("#editModal #hyperVEnvironment").is(':checked'),
-    estimatedVolumeMinsPerMonth: $("#editModal #estimatedVolumeMinsPerMonth").val(),
-    genesysCloudRegion: $("#editModal #genesysCloudRegion").val(),
+    estimatedVolumeMinsPerMonth: $("#editModal #estimatedVolumeMinsPerMonth").val() || "n/a",
+    genesysCloudRegion: $("#editModal #genesysCloudRegion").val() || "n/a",
 
     // General Configuration
-    numberAgents: $("#editModal #numberAgents").val(),
+    numberAgents: $("#editModal #numberAgents").val() || "n/a",
     numberConcurrentCalls: $("#editModal #numberConcurrentCalls").val(),
     callFlowsDocumented: $("#editModal #callFlowsDocumented").is(':checked'),
     emailFlowDocumented: $("#editModal #emailFlowDocumented").is(':checked'),
