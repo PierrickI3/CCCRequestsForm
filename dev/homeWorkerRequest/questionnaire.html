@@ -810,14 +810,14 @@
                                                                     <div class="num-pad">
                                                                         <div class="span4">
                                                                             <div class="num">
-                                                                                <div class="txt">
+                                                                                <div class="txt digit" data-digit="1">
                                                                                     1
                                                                                 </div>
                                                                             </div>
                                                                         </div>
                                                                         <div class="span4">
                                                                             <div class="num">
-                                                                                <div class="txt">
+                                                                                <div class="txt digit" data-digit="2">
                                                                                     2 <span class="phone-small">
                                                                                         <p class="phone-p">
                                                                                             ABC</p>
@@ -827,7 +827,7 @@
                                                                         </div>
                                                                         <div class="span4">
                                                                             <div class="num">
-                                                                                <div class="txt">
+                                                                                <div class="txt digit" data-digit="3">
                                                                                     3 <span class="phone-small">
                                                                                         <p class="phone-p">
                                                                                             DEF</p>
@@ -837,7 +837,7 @@
                                                                         </div>
                                                                         <div class="span4">
                                                                             <div class="num">
-                                                                                <div class="txt">
+                                                                                <div class="txt digit" data-digit="4">
                                                                                     4 <span class="phone-small">
                                                                                         <p class="phone-p">
                                                                                             GHI</p>
@@ -847,7 +847,7 @@
                                                                         </div>
                                                                         <div class="span4">
                                                                             <div class="num">
-                                                                                <div class="txt">
+                                                                                <div class="txt digit" data-digit="5">
                                                                                     5 <span class="phone-small">
                                                                                         <p class="phone-p">
                                                                                             JKL</p>
@@ -857,7 +857,7 @@
                                                                         </div>
                                                                         <div class="span4">
                                                                             <div class="num">
-                                                                                <div class="txt">
+                                                                                <div class="txt digit" data-digit="6">
                                                                                     6 <span class="phone-small">
                                                                                         <p class="phone-p">
                                                                                             MNO</p>
@@ -867,7 +867,7 @@
                                                                         </div>
                                                                         <div class="span4">
                                                                             <div class="num">
-                                                                                <div class="txt">
+                                                                                <div class="txt digit" data-digit="7">
                                                                                     7 <span class="phone-small">
                                                                                         <p class="phone-p">
                                                                                             PQRS</p>
@@ -877,7 +877,7 @@
                                                                         </div>
                                                                         <div class="span4">
                                                                             <div class="num">
-                                                                                <div class="txt">
+                                                                                <div class="txt digit" data-digit="8">
                                                                                     8 <span class="phone-small">
                                                                                         <p class="phone-p">
                                                                                             TUV</p>
@@ -887,7 +887,7 @@
                                                                         </div>
                                                                         <div class="span4">
                                                                             <div class="num">
-                                                                                <div class="txt">
+                                                                                <div class="txt digit" data-digit="8">
                                                                                     9 <span class="phone-small">
                                                                                         <p class="phone-p">
                                                                                             WXYZ</p>
@@ -897,14 +897,14 @@
                                                                         </div>
                                                                         <div class="span4">
                                                                             <div class="">
-                                                                                <div class="txt text-muted">
+                                                                                <div class="txt text-muted digit" data-digit="*">
                                                                                     *
                                                                                 </div>
                                                                             </div>
                                                                         </div>
                                                                         <div class="span4">
                                                                             <div class="num">
-                                                                                <div class="txt">
+                                                                                <div class="txt digit" data-digit="#">
                                                                                     0 <span class="phone-small">
                                                                                         <p class="phone-p">
                                                                                             +</p>
@@ -3093,12 +3093,30 @@
 
         //#region Call Flow Experience
 
-        //TODO Show modal when clicked on
+        let callFlowExperience = {
+            default: "",
+            "1": {},
+            "2": {},
+            "3": {},
+            "4": {},
+            "5": {},
+            "6": {},
+            "7": {},
+            "8": {},
+            "9": {},
+            "0": {}
+        };
+
         $('.num').click(function () {
-            var num = $(this);
-            var text = $.trim(num.find('.txt').clone().children().remove().end().text());
-            console.log(text);
-            showCallFlowExperienceModal("Add", { menuDigit: text });
+            var menuDigit = $.trim($(this).find('.txt').clone().children().remove().end().text());
+            console.log(menuDigit);
+            if (Object.keys(callFlowExperience[menuDigit]).length > 0) {
+                console.log(`Edit ${callFlowExperience[menuDigit]} for digit: ${menuDigit}`);
+                showCallFlowExperienceModal("Edit", menuDigit, callFlowExperience[menuDigit]);
+            } else {
+                console.log(`Adding new call flow experience for digit: ${menuDigit}`);
+                showCallFlowExperienceModal("Add", menuDigit, {});
+            }
         });
 
         var dbCallFlowExperience = {
@@ -3241,11 +3259,13 @@
             });
         }
 
-        var showCallFlowExperienceModal = function (dialogType, item) {
+        var showCallFlowExperienceModal = function (dialogType, menuDigit, item) {
             console.log('Showing details for:', item);
 
+            if (!item.hasOwnProperty('menuDigit')) { item.menuDigit = menuDigit; }
+
             $("#editModalCallFlowExperience #title").text(`Option ${item.menuDigit}`);
-            $("#editModalCallFlowExperience #default").prop('checked', item.default);
+            $("#editModalCallFlowExperience #default").prop('checked', callFlowExperience.default === item.menuDigit);
             $("#editModalCallFlowExperience #behavior").val(item.behavior);
             $("#editModalCallFlowExperience #queueName").val(item.queueName);
             $("#editModalCallFlowExperience #skill").val(item.skill);
@@ -3260,15 +3280,33 @@
         var saveCallFlowExperience = function (item, isNew) {
             console.log('Extending item:', item);
             $.extend(item, {
-                menuDigit: $("#editModalCallFlowExperience #menuDigit").val(),
-                default: $("#editModalCallFlowExperience #default").is(":checked"),
                 behavior: $("#editModalCallFlowExperience #behavior").val(),
                 queueName: $("#editModalCallFlowExperience #queueName").val(),
                 skill: $("#editModalCallFlowExperience #skill").val()
             });
+            if ($("#editModalCallFlowExperience #default").is(":checked")) {
+                callFlowExperience.default = item.menuDigit;
+            }
             console.log('Extended Item:', item);
-            console.log('IsNew?', isNew)
-            $("#jsGridCallFlowExperience").jsGrid(isNew ? "insertItem" : "updateItem", item);
+            console.log('IsNew?', isNew);
+            let newItem = {};
+            Object.assign(newItem, item); // Copy object
+            delete newItem.menuDigit;
+            callFlowExperience[item.menuDigit] = newItem;
+            console.log('Call Flow Experience:', callFlowExperience);
+
+            // Remove colors from all digits
+            $("*[data-digit]").removeClass('text-success');
+
+            // Set color for default digit
+            if (callFlowExperience.default.length > 0) {
+                let defaultDigit = callFlowExperience.default;
+
+                // Find default digit on pad
+                let digitControl = $(`*[data-digit='${defaultDigit}']`).eq(0);
+                digitControl.removeClass('text-success').addClass('text-success'); // Making sure it's not added twice
+            }
+
             $("#editModalCallFlowExperience").modal('hide');
         };
 
