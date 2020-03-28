@@ -3278,36 +3278,54 @@
         };
 
         var saveCallFlowExperience = function (item, isNew) {
-            console.log('Extending item:', item);
-            $.extend(item, {
-                behavior: $("#editModalCallFlowExperience #behavior").val(),
-                queueName: $("#editModalCallFlowExperience #queueName").val(),
-                skill: $("#editModalCallFlowExperience #skill").val()
-            });
-            if ($("#editModalCallFlowExperience #default").is(":checked")) {
-                callFlowExperience.default = item.menuDigit;
+            try {
+                console.log('Extending item:', item);
+                $.extend(item, {
+                    behavior: $("#editModalCallFlowExperience #behavior").val(),
+                    queueName: $("#editModalCallFlowExperience #queueName").val(),
+                    skill: $("#editModalCallFlowExperience #skill").val()
+                });
+                if ($("#editModalCallFlowExperience #default").is(":checked")) {
+                    callFlowExperience.default = item.menuDigit;
+                }
+                console.log('Extended Item:', item);
+                console.log('IsNew?', isNew);
+                let newItem = {};
+                Object.assign(newItem, item); // Copy object
+                delete newItem.menuDigit;
+                callFlowExperience[item.menuDigit] = newItem;
+                console.log('Call Flow Experience:', callFlowExperience);
+
+                // Clear existing colors
+                $.each($("[data-digit]"), (i, item) => {
+                    item.classList.remove('text-success');
+                    item.parentNode.classList.remove('bg-secondary');
+                });
+
+                // Set text colors if digit has fields set
+                $.each(callFlowExperience, (i, callFlowExperienceItem) => {
+                    let digitControl = $(`*[data-digit='${i}']`).eq(0);
+                    if (callFlowExperienceItem.hasOwnProperty('behavior') && callFlowExperienceItem.behavior.length > 0) {
+                        digitControl.removeClass('text-success').addClass('text-success'); // Making sure it's not added twice
+                    } else {
+                        digitControl.removeClass('text-success');
+                    }
+                });
+
+                // Set background color for default digit
+                if (callFlowExperience.default.length > 0) {
+                    let defaultDigitControl = $(`*[data-digit='${callFlowExperience.default}']`).eq(0);
+
+                    // Set round circle color
+                    let parentDiv = defaultDigitControl.parent(); // Round item is parent of the digit text
+                    parentDiv.removeClass('bg-secondary').addClass('bg-secondary'); // Making sure it's not added twice
+                }
+
+                $("#editModalCallFlowExperience").modal('hide');
+            } catch (error) {
+                console.error(error);
+                showMessage(error, true);
             }
-            console.log('Extended Item:', item);
-            console.log('IsNew?', isNew);
-            let newItem = {};
-            Object.assign(newItem, item); // Copy object
-            delete newItem.menuDigit;
-            callFlowExperience[item.menuDigit] = newItem;
-            console.log('Call Flow Experience:', callFlowExperience);
-
-            // Remove colors from all digits
-            $("*[data-digit]").removeClass('text-success');
-
-            // Set color for default digit
-            if (callFlowExperience.default.length > 0) {
-                let defaultDigit = callFlowExperience.default;
-
-                // Find default digit on pad
-                let digitControl = $(`*[data-digit='${defaultDigit}']`).eq(0);
-                digitControl.removeClass('text-success').addClass('text-success'); // Making sure it's not added twice
-            }
-
-            $("#editModalCallFlowExperience").modal('hide');
         };
 
         $("#editModalCallFlowExperience").on('shown.bs.modal', function () {
