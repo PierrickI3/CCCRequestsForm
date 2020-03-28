@@ -24,9 +24,7 @@
     <link type="text/css" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jsgrid/1.5.3/jsgrid-theme.min.css" />
     <!-- Custom CSS -->
     <link rel="stylesheet" href="./css/ps_questionnaire.css">
-
-
-
+    <link href="https://fonts.googleapis.com/css?family=Exo" rel="stylesheet">
 </head>
 
 <body>
@@ -545,7 +543,7 @@
 
                                     <!-- ACD Skills -->
                                     <div class="card">
-                                        <div class="card-header shadow-lg" role="tab" id="headingSkils">
+                                        <div class="card-header shadow-lg" role="tab" id="headingSkills">
                                             <div class="mb-0">
                                                 <a data-toggle="collapse" data-parent="#accordion" href="#collapseSkills" aria-expanded="false" aria-controls="collapseSkills" class="collapsed">
                                                     <i class="fa fa-vcard-o" aria-hidden="true" style="color: #FF4F1F;"></i>
@@ -734,6 +732,7 @@
                                                                                             <input type="number" class="form-control" id="alertingTimeout" name="alertingTimeout" placeholder="Alerting Timeout" value="15">
                                                                                         </div>
                                                                                     </div>
+
                                                                                     <div class="form-group row">
                                                                                         <div class="form-group col-md-6">
                                                                                             <label for="slPercentage">Service Level Percentage</label>
@@ -764,17 +763,11 @@
                                                                                             </select>
 
                                                                                         </div>
-
                                                                                     </div>
-
-
-
                                                                                 </div>
                                                                             </div>
                                                                         </div>
                                                                     </div>
-
-
 
                                                                     <div class="modal-footer">
                                                                         <button id="btnClose" type="button" class="btn btn-link pull-right" data-dismiss="modal">Close</button>
@@ -787,6 +780,204 @@
                                             </div>
                                         </div>
                                     </div>
+
+                                    <!-- Call Flow Experience -->
+                                    <div class="card">
+                                        <div class="card-header shadow-lg" role="tab" id="headingCallFlowExperience">
+                                            <div class="mb-0">
+                                                <a data-toggle="collapse" data-parent="#accordion" href="#collapseCallFlowExperience" aria-expanded="false" aria-controls="collapseCallFlowExperience" class="collapsed">
+                                                    <i class="fa fa-phone" aria-hidden="true" style="color: #FF4F1F;"></i>
+                                                    <h3>Call Flow</h3>
+                                                    <p>Design your Call Flow Experience</p>
+                                                </a>
+                                                <i class="fa fa-angle-right" aria-hidden="true" style="color: #FF4F1F;"></i>
+                                            </div>
+                                        </div>
+
+                                        <div id="collapseCallFlowExperience" class="collapse" role="tabpanel" aria-labelledby="headingCallFlowExperience" aria-expanded="false">
+                                            <div class="card-block">
+                                                <!-- <button id="addCallFlowExperience" class="btn btn-primary mb-2" type="button"><i class="fa fa-plus"></i> Add</button> -->
+                                                <!-- <div id="jsGridCallFlowExperience"></div> -->
+                                                <div class="ml-4 text-muted">
+                                                    <p>Click on a digit to set the corresponding action. <span class="text-primary">*</span> will repeat the current menu. <span class="text-primary">#</span> will go back to the previous menu.</p>
+                                                </div>
+
+                                                <div class="container phone-body">
+                                                    <div class="row">
+                                                        <div class="col-md-4 col-md-offset-4 phone">
+                                                            <div class="row1">
+                                                                <div class="col-md-12">
+                                                                    <div class="num-pad">
+                                                                        <div class="span4">
+                                                                            <div class="num">
+                                                                                <div class="txt">
+                                                                                    1
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="span4">
+                                                                            <div class="num">
+                                                                                <div class="txt">
+                                                                                    2 <span class="phone-small">
+                                                                                        <p class="phone-p">
+                                                                                            ABC</p>
+                                                                                    </span>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="span4">
+                                                                            <div class="num">
+                                                                                <div class="txt">
+                                                                                    3 <span class="phone-small">
+                                                                                        <p class="phone-p">
+                                                                                            DEF</p>
+                                                                                    </span>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="span4">
+                                                                            <div class="num">
+                                                                                <div class="txt">
+                                                                                    4 <span class="phone-small">
+                                                                                        <p class="phone-p">
+                                                                                            GHI</p>
+                                                                                    </span>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="span4">
+                                                                            <div class="num">
+                                                                                <div class="txt">
+                                                                                    5 <span class="phone-small">
+                                                                                        <p class="phone-p">
+                                                                                            JKL</p>
+                                                                                    </span>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="span4">
+                                                                            <div class="num">
+                                                                                <div class="txt">
+                                                                                    6 <span class="phone-small">
+                                                                                        <p class="phone-p">
+                                                                                            MNO</p>
+                                                                                    </span>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="span4">
+                                                                            <div class="num">
+                                                                                <div class="txt">
+                                                                                    7 <span class="phone-small">
+                                                                                        <p class="phone-p">
+                                                                                            PQRS</p>
+                                                                                    </span>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="span4">
+                                                                            <div class="num">
+                                                                                <div class="txt">
+                                                                                    8 <span class="phone-small">
+                                                                                        <p class="phone-p">
+                                                                                            TUV</p>
+                                                                                    </span>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="span4">
+                                                                            <div class="num">
+                                                                                <div class="txt">
+                                                                                    9 <span class="phone-small">
+                                                                                        <p class="phone-p">
+                                                                                            WXYZ</p>
+                                                                                    </span>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="span4">
+                                                                            <div class="">
+                                                                                <div class="txt text-muted">
+                                                                                    *
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="span4">
+                                                                            <div class="num">
+                                                                                <div class="txt">
+                                                                                    0 <span class="phone-small">
+                                                                                        <p class="phone-p">
+                                                                                            +</p>
+                                                                                    </span>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="span4">
+                                                                            <div class="">
+                                                                                <div class="txt text-muted">
+                                                                                    #
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="clearfix">
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="clearfix">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="modal fade" id="editModalCallFlowExperience" tabindex="-1" role="dialog" aria-hidden="true">
+                                                    <div class="modal-dialog modal-lg" role="document">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header" id="modal-header">
+                                                                <h5 id="title" class="modal-title"></h5>
+                                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                    <span aria-hidden="true">&times;</span>
+                                                                </button>
+                                                            </div>
+                                                            <form class="modal-body form-horizontal" id="modal-form">
+                                                                <div class="form-group">
+
+                                                                    <div class="form-group row">
+                                                                        <label for="default" class="col-sm-3 col-form-label">Default Option?</label>
+                                                                        <div class="col-sm-9 col-form-label">
+                                                                            <input class="" type="checkbox" value="" id="default">
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <div class="form-group row">
+                                                                        <label for="behavior" class="col-sm-3 col-form-label">Behavior</label>
+                                                                        <div class="col-sm-9">
+                                                                            <select id="behavior" name="behavior" class="form-control" required>
+                                                                                <option value="" disabled selected>Select a Behavior</option>
+                                                                                <option value="transferToQueue">Transfer to Queue</option>
+                                                                                <option value="playMessageAndDisconnect">Play a Message and Disconnect</option>
+                                                                                <option value="repeatMenu">Repeat Menu</option>
+                                                                            </select>
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <!-- TODO Add logic to not select the same digit twice -->
+                                                                    <!-- TODO Move all digits selection to same modal? -->
+                                                                    <!-- TODO Add list of queues -->
+                                                                    <!-- TODO Add list of skills -->
+
+                                                                    <div class="modal-footer">
+                                                                        <button id="btnClose" type="button" class="btn btn-link pull-right" data-dismiss="modal">Close</button>
+                                                                        <button id="submit" type="submit" class="btn btn-primary pull-left"><i class="fa fa-plus"></i> Add</button>
+                                                                    </div>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
                                 </div>
                             </div>
                         </div>
@@ -938,6 +1129,7 @@
                 initSkillsGrid();
                 initWrapUpCodesGrid();
                 initQueuesGrid();
+                initCallFlowExperienceGrid();
             }
         }
 
@@ -963,6 +1155,7 @@
                 initSkillsGrid();
                 initWrapUpCodesGrid();
                 initQueuesGrid();
+                initCallFlowExperienceGrid();
 
                 refreshWrapUpCodesDropDownForQueues();
             }
@@ -977,7 +1170,8 @@
                 locations: [],
                 skills: [],
                 wrapUpCodes: [],
-                queues: []
+                queues: [],
+                callFlowExperience: []
             };
 
             if ($('#companyName').val())
@@ -1029,6 +1223,17 @@
                     })
                 });
             }
+            if ($("#jsGridCallFlowExperience").jsGrid("option", "data").length > 0) {
+                $.each($("#jsGridCallFlowExperience").jsGrid("option", "data"), (key, item) => {
+                    json.callFlowExperience.push({
+                        menuDigit: item.menuDigit,
+                        default: item.default,
+                        behavior: item.behavior,
+                        queueName: item.queueName,
+                        skill: item.skill
+                    })
+                });
+            }
 
             console.log(json);
             return json;
@@ -1072,7 +1277,7 @@
 
 
             const replacer = (key, value) => (value === null || value === 'n/a') ? '' : value // specify how you want to handle null values here
-            let header, csv_locations, csv_skills, csv_wrapUpCodes, csv_queues;
+            let header, csv_locations, csv_schedules, csv_holidays, csv_skills, csv_wrapUpCodes, csv_queues, csv_callFlowExperience;
 
             // Locations
             if (data.locations && data.locations.length > 0) {
@@ -1151,12 +1356,25 @@
                 console.log('queues are empty, skip csv build...');
             }
 
+            // Call Flow Experience
+            if (data.callFlowExperience && data.callFlowExperience.length > 0) {
+                console.log('build call flow experience csv...');
+                // tune queue columns
+                header = Object.keys(data.callFlowExperience[0]);
+                csv_callFlowExperience = data.callFlowExperience.map(row => header.map(fieldName => JSON.stringify(row[fieldName], replacer)).join(';'))
+                csv_callFlowExperience.unshift(header.join(';'))
+                csv_callFlowExperience = csv_callFlowExperience.join('\r\n')
+            } else {
+                console.log('queues are empty, skip csv build...');
+            }
+
             console.log(`CSV: locations\n===================\n ${csv_locations}\n===================\n`);
             console.log(`CSV: schedules\n===================\n ${csv_schedules}\n===================\n`);
             console.log(`CSV: holidays\n===================\n ${csv_holidays}\n===================\n`);
             console.log(`CSV: skills\n===================\n ${csv_skills}\n===================\n`);
             console.log(`CSV: wrapUpCodes\n===================\n ${csv_wrapUpCodes}\n===================\n`);
             console.log(`CSV: queues\n===================\n ${csv_queues}\n===================\n`);
+            console.log(`CSV: callFlowExperience\n===================\n ${csv_callFlowExperience}\n===================\n`);
 
             //download(csv_locations, 'locations.csv');
         }
@@ -2869,6 +3087,208 @@
             $("#editModalQueues #submit").html("<i class='fa fa-plus'></i> Add");
 
             validatorQueues.resetForm(); // Reset validation errors
+        }
+
+        //#endregion
+
+        //#region Call Flow Experience
+
+        //TODO Show modal when clicked on
+        $('.num').click(function () {
+            var num = $(this);
+            var text = $.trim(num.find('.txt').clone().children().remove().end().text());
+            console.log(text);
+            showCallFlowExperienceModal("Add", { menuDigit: text });
+        });
+
+        var dbCallFlowExperience = {
+            loadData: function (filter) {
+                return $.grep(this.callFlowExperience, function (callFlowExperience) {
+                    return (!filter.menuDigit || callFlowExperience.menuDigit.toLowerCase().indexOf(filter.menuDigit.toLowerCase()) > -1)
+                        && (!filter.default || callFlowExperience.default.toLowerCase().indexOf(filter.default.toLowerCase()) > -1)
+                        && (!filter.behavior || callFlowExperience.behavior.toLowerCase().indexOf(filter.behavior.toLowerCase()) > -1)
+                        && (!filter.queueName || callFlowExperience.queueName.toLowerCase().indexOf(filter.queueName.toLowerCase()) > -1)
+                        && (!filter.skill || callFlowExperience.skill.toLowerCase().indexOf(filter.skill.toLowerCase()) > -1);
+                });
+            },
+            insertItem: function (insertingItem) {
+                this.callFlowExperience.push(insertingItem);
+            },
+            updateItem: function (updatingItem) { },
+            deleteItem: function (deletingItem) { }
+        };
+
+        window.dbCallFlowExperience = dbCallFlowExperience;
+
+        var formSubmitHandlerCallFlowExperience = $.noop;
+
+        let validatorCallFlowExperience = $("#editModalCallFlowExperience #modal-form").validate({
+            errorClass: "text-danger",
+            successClass: "test-success",
+            submitHandler: function () {
+                formSubmitHandlerCallFlowExperience();
+            }
+        });
+
+        function initCallFlowExperienceGrid() {
+            const maxItems = 10;
+
+            dbCallFlowExperience.callFlowExperience = caItem.hasOwnProperty('callFlowExperience') ? caItem.callFlowExperience : [];
+
+            $("#jsGridCallFlowExperience").jsGrid({
+                height: "auto",
+                width: "100%",
+                editing: true,
+                autoload: true,
+                sorting: true,
+                filtering: false,
+                paging: false,
+                noDataContent: "No Call Flow Experience",
+                confirmDeleting: false,
+                onError: function (args) {
+                    console.error('Failed to load grid data:', args);
+                    showMessage("An error occurred while loading your data", true);
+                },
+                rowClick: function (args) {
+                    showCallFlowExperienceModal("Edit", args.item);
+                },
+                onDataLoaded: function (args) {
+                    $("#addCallFlowExperience").attr('disabled', $("#jsGridCallFlowExperience").jsGrid("option", "data").length >= maxItems);
+                },
+                onItemInserted: function (args) {
+                    $("#addCallFlowExperience").attr('disabled', $("#jsGridCallFlowExperience").jsGrid("option", "data").length >= maxItems);
+                },
+                onItemUpdated: function (args) {
+                    $("#addCallFlowExperience").attr('disabled', $("#jsGridCallFlowExperience").jsGrid("option", "data").length >= maxItems);
+                },
+                onItemDeleting: function (args) {
+                    console.log("onItemDeleting");
+                    if (!args.item.deleteConfirmed) { // custom property for confirmation
+                        args.cancel = true; // cancel deleting
+                        bootbox.confirm({
+                            message: 'Do you really want to delete this Call Flow Experience?',
+                            buttons: {
+                                confirm: {
+                                    label: "Delete!",
+                                    className: "btn-danger"
+                                },
+                                cancel: {
+                                    label: "No",
+                                    className: "btn-secondary"
+                                }
+                            },
+                            callback: async function (result) {
+                                if (result) {
+                                    args.item.deleteConfirmed = true;
+                                    $("#jsGridCallFlowExperience").jsGrid('deleteItem', args.item); // Remove item from grid
+                                    removeFromArray(dbCallFlowExperience.callFlowExperience, args.item); // Remove item from db
+                                    showMessage("Call Flow Experience deleted", false);
+                                }
+                            }
+                        });
+                    }
+                },
+                onItemDeleted: function (args) {
+                    $("#addCallFlowExperience").attr('disabled', $("#jsGridCallFlowExperience").jsGrid("option", "data").length >= maxItems);
+                },
+
+                controller: dbCallFlowExperience,
+                fields: [
+                    {
+                        name: "menuDigit",
+                        title: "Menu Digit",
+                        type: "number",
+                        align: "center"
+                    },
+                    {
+                        name: "default",
+                        title: "Default?",
+                        type: "checkbox",
+                        align: "center",
+                        itemTemplate: function (value, item) {
+                            return value ? '<span class="fa fa-check text-success"></span>' : ''
+                        }
+                    },
+                    {
+                        name: "behavior",
+                        title: "Behavior",
+                        type: "text",
+                        align: "center"
+                    },
+                    {
+                        name: "queueName",
+                        title: "Queue Name",
+                        type: "text",
+                        align: "center"
+                    },
+                    {
+                        name: "skill",
+                        title: "Skill",
+                        type: "text",
+                        align: "center"
+                    },
+                    {
+                        type: "control",
+                        modeSwitchButton: false,
+                        editButton: false,
+                        width: 68,
+                        align: "center",
+                        headerTemplate: function () {
+                            return "Actions";
+                        }
+                    }
+                ]
+            });
+        }
+
+        var showCallFlowExperienceModal = function (dialogType, item) {
+            console.log('Showing details for:', item);
+
+            $("#editModalCallFlowExperience #title").text(`Option ${item.menuDigit}`);
+            $("#editModalCallFlowExperience #default").prop('checked', item.default);
+            $("#editModalCallFlowExperience #behavior").val(item.behavior);
+            $("#editModalCallFlowExperience #queueName").val(item.queueName);
+            $("#editModalCallFlowExperience #skill").val(item.skill);
+
+            $("#editModalCallFlowExperience #submit").html("<i class='fa fa-floppy-o'></i> Save");
+            formSubmitHandlerCallFlowExperience = function () {
+                saveCallFlowExperience(item, dialogType === "Add");
+            };
+            $("#editModalCallFlowExperience").modal('show');
+        };
+
+        var saveCallFlowExperience = function (item, isNew) {
+            console.log('Extending item:', item);
+            $.extend(item, {
+                menuDigit: $("#editModalCallFlowExperience #menuDigit").val(),
+                default: $("#editModalCallFlowExperience #default").is(":checked"),
+                behavior: $("#editModalCallFlowExperience #behavior").val(),
+                queueName: $("#editModalCallFlowExperience #queueName").val(),
+                skill: $("#editModalCallFlowExperience #skill").val()
+            });
+            console.log('Extended Item:', item);
+            console.log('IsNew?', isNew)
+            $("#jsGridCallFlowExperience").jsGrid(isNew ? "insertItem" : "updateItem", item);
+            $("#editModalCallFlowExperience").modal('hide');
+        };
+
+        $("#editModalCallFlowExperience").on('shown.bs.modal', function () {
+            $("#editModalCallFlowExperience #menuDigit").focus();
+        });
+
+        $('#editModalCallFlowExperience').on('hidden.bs.modal', async () => {
+            initCallFlowExperienceModal();
+        });
+
+        function initCallFlowExperienceModal() {
+            $("#editModalCallFlowExperience #menuDigit").val("");
+            $("#editModalCallFlowExperience #default").prop('checked', false);
+            $("#editModalCallFlowExperience #behavior").val("");
+            $("#editModalCallFlowExperience #queueName").val("");
+            $("#editModalCallFlowExperience #skill").val("");
+            $("#editModalCallFlowExperience #submit").html("<i class='fa fa-plus'></i> Add");
+
+            validatorCallFlowExperience.resetForm(); // Reset validation errors
         }
 
         //#endregion
