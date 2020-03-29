@@ -961,10 +961,29 @@
                                                                         </div>
                                                                     </div>
 
-                                                                    <!-- TODO Add logic to not select the same digit twice -->
-                                                                    <!-- TODO Move all digits selection to same modal? -->
-                                                                    <!-- TODO Add list of queues -->
-                                                                    <!-- TODO Add list of skills -->
+                                                                    <div class="form-group row" id="queuesDiv" style="display: none;">
+                                                                        <label for="queues" class="col-sm-3 col-form-label">Queue</label>
+                                                                        <div class="col-sm-9">
+                                                                            <select id="queues" name="queues" class="form-control" required>
+                                                                            </select>
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <div class="form-group row" id="skillsDiv" style="display: none;">
+                                                                        <label for="skills" class="col-sm-3 col-form-label">Skill</label>
+                                                                        <div class="col-sm-9">
+                                                                            <select id="skills" name="skills" class="form-control">
+                                                                            </select>
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <div class="form-group row" id="promptsDiv" style="display: none;">
+                                                                        <label for="prompts" class="col-sm-3 col-form-label">Prompt</label>
+                                                                        <div class="col-sm-9">
+                                                                            <select id="prompts" name="prompts" class="form-control" required>
+                                                                            </select>
+                                                                        </div>
+                                                                    </div>
 
                                                                     <div class="modal-footer">
                                                                         <button id="btnClose" type="button" class="btn btn-link pull-right" data-dismiss="modal">Close</button>
@@ -1129,7 +1148,6 @@
                 initSkillsGrid();
                 initWrapUpCodesGrid();
                 initQueuesGrid();
-                initCallFlowExperienceGrid();
             }
         }
 
@@ -1155,7 +1173,7 @@
                 initSkillsGrid();
                 initWrapUpCodesGrid();
                 initQueuesGrid();
-                initCallFlowExperienceGrid();
+                initCallFlowExperience(caItem.callFlowExperience);
 
                 refreshWrapUpCodesDropDownForQueues();
             }
@@ -1223,17 +1241,7 @@
                     })
                 });
             }
-            if ($("#jsGridCallFlowExperience").jsGrid("option", "data").length > 0) {
-                $.each($("#jsGridCallFlowExperience").jsGrid("option", "data"), (key, item) => {
-                    json.callFlowExperience.push({
-                        menuDigit: item.menuDigit,
-                        default: item.default,
-                        behavior: item.behavior,
-                        queueName: item.queueName,
-                        skill: item.skill
-                    })
-                });
-            }
+            json.callFlowExperience = callFlowExperience;
 
             console.log(json);
             return json;
@@ -1267,7 +1275,6 @@
                 $("#saveDraft").prop('disabled', false);
                 $("#saveDraft").html('Save draft');
             }
-
             showMessage("Draft updated", false);
         }
 
@@ -3119,25 +3126,6 @@
             }
         });
 
-        var dbCallFlowExperience = {
-            loadData: function (filter) {
-                return $.grep(this.callFlowExperience, function (callFlowExperience) {
-                    return (!filter.menuDigit || callFlowExperience.menuDigit.toLowerCase().indexOf(filter.menuDigit.toLowerCase()) > -1)
-                        && (!filter.default || callFlowExperience.default.toLowerCase().indexOf(filter.default.toLowerCase()) > -1)
-                        && (!filter.behavior || callFlowExperience.behavior.toLowerCase().indexOf(filter.behavior.toLowerCase()) > -1)
-                        && (!filter.queueName || callFlowExperience.queueName.toLowerCase().indexOf(filter.queueName.toLowerCase()) > -1)
-                        && (!filter.skill || callFlowExperience.skill.toLowerCase().indexOf(filter.skill.toLowerCase()) > -1);
-                });
-            },
-            insertItem: function (insertingItem) {
-                this.callFlowExperience.push(insertingItem);
-            },
-            updateItem: function (updatingItem) { },
-            deleteItem: function (deletingItem) { }
-        };
-
-        window.dbCallFlowExperience = dbCallFlowExperience;
-
         var formSubmitHandlerCallFlowExperience = $.noop;
 
         let validatorCallFlowExperience = $("#editModalCallFlowExperience #modal-form").validate({
@@ -3148,127 +3136,43 @@
             }
         });
 
-        function initCallFlowExperienceGrid() {
-            const maxItems = 10;
-
-            dbCallFlowExperience.callFlowExperience = caItem.hasOwnProperty('callFlowExperience') ? caItem.callFlowExperience : [];
-
-            $("#jsGridCallFlowExperience").jsGrid({
-                height: "auto",
-                width: "100%",
-                editing: true,
-                autoload: true,
-                sorting: true,
-                filtering: false,
-                paging: false,
-                noDataContent: "No Call Flow Experience",
-                confirmDeleting: false,
-                onError: function (args) {
-                    console.error('Failed to load grid data:', args);
-                    showMessage("An error occurred while loading your data", true);
-                },
-                rowClick: function (args) {
-                    showCallFlowExperienceModal("Edit", args.item);
-                },
-                onDataLoaded: function (args) {
-                    $("#addCallFlowExperience").attr('disabled', $("#jsGridCallFlowExperience").jsGrid("option", "data").length >= maxItems);
-                },
-                onItemInserted: function (args) {
-                    $("#addCallFlowExperience").attr('disabled', $("#jsGridCallFlowExperience").jsGrid("option", "data").length >= maxItems);
-                },
-                onItemUpdated: function (args) {
-                    $("#addCallFlowExperience").attr('disabled', $("#jsGridCallFlowExperience").jsGrid("option", "data").length >= maxItems);
-                },
-                onItemDeleting: function (args) {
-                    console.log("onItemDeleting");
-                    if (!args.item.deleteConfirmed) { // custom property for confirmation
-                        args.cancel = true; // cancel deleting
-                        bootbox.confirm({
-                            message: 'Do you really want to delete this Call Flow Experience?',
-                            buttons: {
-                                confirm: {
-                                    label: "Delete!",
-                                    className: "btn-danger"
-                                },
-                                cancel: {
-                                    label: "No",
-                                    className: "btn-secondary"
-                                }
-                            },
-                            callback: async function (result) {
-                                if (result) {
-                                    args.item.deleteConfirmed = true;
-                                    $("#jsGridCallFlowExperience").jsGrid('deleteItem', args.item); // Remove item from grid
-                                    removeFromArray(dbCallFlowExperience.callFlowExperience, args.item); // Remove item from db
-                                    showMessage("Call Flow Experience deleted", false);
-                                }
-                            }
-                        });
-                    }
-                },
-                onItemDeleted: function (args) {
-                    $("#addCallFlowExperience").attr('disabled', $("#jsGridCallFlowExperience").jsGrid("option", "data").length >= maxItems);
-                },
-
-                controller: dbCallFlowExperience,
-                fields: [
-                    {
-                        name: "menuDigit",
-                        title: "Menu Digit",
-                        type: "number",
-                        align: "center"
-                    },
-                    {
-                        name: "default",
-                        title: "Default?",
-                        type: "checkbox",
-                        align: "center",
-                        itemTemplate: function (value, item) {
-                            return value ? '<span class="fa fa-check text-success"></span>' : ''
-                        }
-                    },
-                    {
-                        name: "behavior",
-                        title: "Behavior",
-                        type: "text",
-                        align: "center"
-                    },
-                    {
-                        name: "queueName",
-                        title: "Queue Name",
-                        type: "text",
-                        align: "center"
-                    },
-                    {
-                        name: "skill",
-                        title: "Skill",
-                        type: "text",
-                        align: "center"
-                    },
-                    {
-                        type: "control",
-                        modeSwitchButton: false,
-                        editButton: false,
-                        width: 68,
-                        align: "center",
-                        headerTemplate: function () {
-                            return "Actions";
-                        }
-                    }
-                ]
-            });
-        }
+        //TODO Add Play message and disconnect
+        //TODO Add Repeat Menu
+        //TODO Save to JSON object (need a getCallFlowExperience() function?)
 
         var showCallFlowExperienceModal = function (dialogType, menuDigit, item) {
             console.log('Showing details for:', item);
+
+            // Populate queues
+            $("#editModalCallFlowExperience #queues").empty();
+            $("<option/>", { value: "", disabled: true, selected: true }).text("Select a Queue").appendTo("#queues");
+            $.each($("#jsGridQueues").jsGrid("option", "data"), (key, item) => {
+                $("<option/>", { value: item.queueName }).text(item.queueName).appendTo("#queues");
+            });
+
+            // Populate skills
+            $("#editModalCallFlowExperience #skills").empty();
+            $("<option/>", { value: "", disabled: true, selected: true }).text("Select a Skill").appendTo("#skills");
+            $.each($("#jsGridSkills").jsGrid("option", "data"), (key, item) => {
+                $("<option/>", { value: item.skillName }).text(item.skillName).appendTo("#skills");
+            });
+
+            // Populate prompts
+            $("#editModalCallFlowExperience #prompts").empty();
+            $("<option/>", { value: "", disabled: true, selected: true }).text("Select a Prompt").appendTo("#prompts");
+            $.each($("#jsGridPrompts").jsGrid("option", "data"), (key, item) => {
+                $("<option/>", { value: item.promptName }).text(item.promptName).appendTo("#prompts");
+            });
 
             if (!item.hasOwnProperty('menuDigit')) { item.menuDigit = menuDigit; }
 
             $("#editModalCallFlowExperience #title").text(`Option ${item.menuDigit}`);
             $("#editModalCallFlowExperience #default").prop('checked', callFlowExperience.default === item.menuDigit);
             $("#editModalCallFlowExperience #behavior").val(item.behavior);
-            $("#editModalCallFlowExperience #queueName").val(item.queueName);
-            $("#editModalCallFlowExperience #skill").val(item.skill);
+            $("#editModalCallFlowExperience #behavior").change();
+            $("#editModalCallFlowExperience #queues").val(item.queueName);
+            $("#editModalCallFlowExperience #skills").val(item.skill);
+            $("#editModalCallFlowExperience #prompts").val(item.prompt);
 
             $("#editModalCallFlowExperience #submit").html("<i class='fa fa-floppy-o'></i> Save");
             formSubmitHandlerCallFlowExperience = function () {
@@ -3277,13 +3181,39 @@
             $("#editModalCallFlowExperience").modal('show');
         };
 
+        $("#editModalCallFlowExperience #behavior").on('change', () => {
+            let behavior = $("#editModalCallFlowExperience #behavior").val();
+            switch (behavior) {
+                case "transferToQueue":
+                    $("#editModalCallFlowExperience #queuesDiv").show();
+                    $("#editModalCallFlowExperience #skillsDiv").show();
+                    $("#editModalCallFlowExperience #promptsDiv").hide();
+                    break;
+                case "playMessageAndDisconnect":
+                    $("#editModalCallFlowExperience #queuesDiv").hide();
+                    $("#editModalCallFlowExperience #skillsDiv").hide();
+                    $("#editModalCallFlowExperience #promptsDiv").show();
+                    break;
+                case "repeatMenu":
+                    $("#editModalCallFlowExperience #queuesDiv").hide();
+                    $("#editModalCallFlowExperience #skillsDiv").hide();
+                    $("#editModalCallFlowExperience #promptsDiv").hide();
+                    break;
+                default:
+                    $("#editModalCallFlowExperience #queuesDiv").hide();
+                    $("#editModalCallFlowExperience #skillsDiv").hide();
+                    $("#editModalCallFlowExperience #promptsDiv").hide();
+                    break;
+            }
+        });
+
         var saveCallFlowExperience = function (item, isNew) {
             try {
                 console.log('Extending item:', item);
                 $.extend(item, {
                     behavior: $("#editModalCallFlowExperience #behavior").val(),
-                    queueName: $("#editModalCallFlowExperience #queueName").val(),
-                    skill: $("#editModalCallFlowExperience #skill").val()
+                    queueName: $("#editModalCallFlowExperience #queues").val(),
+                    skill: $("#editModalCallFlowExperience #skills").val()
                 });
                 if ($("#editModalCallFlowExperience #default").is(":checked")) {
                     callFlowExperience.default = item.menuDigit;
@@ -3328,6 +3258,11 @@
             }
         };
 
+        //TODO Load call flow experience on phone pad
+        var initCallFlowExperience = function (callFlowExperience) {
+
+        }
+
         $("#editModalCallFlowExperience").on('shown.bs.modal', function () {
             $("#editModalCallFlowExperience #menuDigit").focus();
         });
@@ -3337,11 +3272,12 @@
         });
 
         function initCallFlowExperienceModal() {
-            $("#editModalCallFlowExperience #menuDigit").val("");
             $("#editModalCallFlowExperience #default").prop('checked', false);
             $("#editModalCallFlowExperience #behavior").val("");
-            $("#editModalCallFlowExperience #queueName").val("");
-            $("#editModalCallFlowExperience #skill").val("");
+            $("#editModalCallFlowExperience #behavior").change();
+            $("#editModalCallFlowExperience #queues").val("");
+            $("#editModalCallFlowExperience #skills").val("");
+            $("#editModalCallFlowExperience #prompts").val("");
             $("#editModalCallFlowExperience #submit").html("<i class='fa fa-plus'></i> Add");
 
             validatorCallFlowExperience.resetForm(); // Reset validation errors
