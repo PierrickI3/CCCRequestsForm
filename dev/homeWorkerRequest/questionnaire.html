@@ -1394,8 +1394,8 @@
                 json.skills = $("#jsGridSkills").jsGrid("option", "data");
             if ($("#jsGridWrapUpCodes").jsGrid("option", "data").length > 0)
                 json.wrapUpCodes = $("#jsGridWrapUpCodes").jsGrid("option", "data");
-            if ($("#jsPrompts").jsGrid("option", "data").length > 0)
-                json.prompts = $("#jsPrompts").jsGrid("option", "data");
+            if ($("#jsGridPrompts").jsGrid("option", "data").length > 0)
+                json.prompts = $("#jsGridPrompts").jsGrid("option", "data");
             if ($("#jsGridQueues").jsGrid("option", "data").length > 0) {
                 $.each($("#jsGridQueues").jsGrid("option", "data"), (key, item) => {
                     json.queues.push({
@@ -1604,6 +1604,7 @@
             zip.file("au-skills-import.csv", csv_skills);
             zip.file("au-wrapup-codes-import.csv", csv_wrapUpCodes);
             zip.file("au-queues-full-import.csv", csv_queues);
+            zip.file("prompts.csv", csv_prompts);
             zip.file("call-flow.csv", csv_callFlowExperience);
             zip.file("au-dids-import.csv", csv_dids);
 
