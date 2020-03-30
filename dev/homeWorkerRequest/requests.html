@@ -817,7 +817,9 @@
                         if (!window.location.href.includes('localhost') && item.hasOwnProperty('isTest')) {
                             return "task-hidden"
                         }
-                        if (item.acceptedRejected == "Accepted") {
+                        if (item.status == "On Hold" || item.status == "Waiting On Additional Information") {
+                            return "task-wait"
+                        } else if (item.acceptedRejected == "Accepted") {
                             return "task-accepted"
                         } else if (item.acceptedRejected == "Rejected")
                             return "task-rejected"
