@@ -1082,6 +1082,79 @@
                                         </div>
                                     </div>
 
+                                    <!-- DIDs -->
+                                    <div class="card">
+                                        <div class="card-header shadow-lg" role="tab" id="headingDIDs">
+                                            <div class="mb-0">
+                                                <a data-toggle="collapse" data-parent="#accordion" href="#collapseDIDs" aria-expanded="false" aria-controls="collapseDIDs" class="collapsed">
+                                                    <i class="fa fa-th-list " aria-hidden="true" style="color: #FF4F1F;"></i>
+                                                    <h3>DIDs</h3>
+                                                    <p>Number Ranges/DIDs</p>
+                                                </a>
+                                                <i class="fa fa-angle-right" aria-hidden="true" style="color: #FF4F1F;"></i>
+                                            </div>
+                                        </div>
+
+                                        <div id="collapseDIDs" class="collapse" role="tabpanel" aria-labelledby="headingDIDs" aria-expanded="false">
+                                            <div class="card-block">
+                                                <div class="form-group row">
+                                                    <label for="mainInboundNumber" class="col-sm-3 col-form-label">Main Inbound Number</label>
+                                                    <div class="col-sm-8">
+                                                        <input type="text" class="form-control" id="mainInboundNumber" name="mainInboundNumber" placeholder="Enter the Main Inbound Number">
+                                                    </div>
+                                                </div>
+                                                <button id="addDID" class="btn btn-primary mb-2" type="button"><i class="fa fa-plus"></i> Add</button>
+
+
+
+                                                <div id="jsGridDIDs"></div>
+
+                                                <div class="modal fade" id="editModalDIDs" tabindex="-1" role="dialog" aria-hidden="true">
+                                                    <div class="modal-dialog modal-lg" role="document">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header" id="modal-header">
+                                                                <h5 id="title" class="modal-title">DID Number Configuration</h5>
+                                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                    <span aria-hidden="true">&times;</span>
+                                                                </button>
+                                                            </div>
+                                                            <form class="modal-body form-horizontal" id="modal-form">
+                                                                <div class="form-group">
+
+                                                                    <div class="form-group row">
+                                                                        <label for="didStart" class="col-sm-3 col-form-label">DID Start <span class="text-danger font-weight-bold">*</span></label>
+                                                                        <div class="col-sm-9">
+                                                                            <input type="text" class="form-control" id="didStart" tabindex="-1" name="didStart" placeholder="Enter the DID start range" required>
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <div class="form-group row">
+                                                                        <label for="didEnd" class="col-sm-3 col-form-label">DID End <span class="text-danger font-weight-bold">*</span></label>
+                                                                        <div class="col-sm-9">
+                                                                            <input type="text" class="form-control" id="didEnd" name="didEnd" placeholder="Enter the DID end range" required>
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <div class="form-group row">
+                                                                        <label for="didComment" class="col-sm-3 col-form-label">Comments</label>
+                                                                        <div class="col-sm-9">
+                                                                            <input type="text" class="form-control" id="didComment" name="didComment" placeholder="Enter your comment">
+                                                                        </div>
+                                                                    </div>
+
+
+                                                                    <div class="modal-footer">
+                                                                        <button id="btnClose" type="button" class="btn btn-link pull-right" data-dismiss="modal">Close</button>
+                                                                        <button id="submit" type="submit" class="btn btn-primary pull-left"><i class="fa fa-plus"></i> Add</button>
+                                                                    </div>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
                                 </div>
                             </div>
                         </div>
@@ -1234,6 +1307,7 @@
                 initWrapUpCodesGrid();
                 initPromptsGrid();
                 initQueuesGrid();
+                initDIDsGrid();
             }
         }
 
@@ -1261,7 +1335,7 @@
                 initPromptsGrid();
                 initQueuesGrid();
                 initCallFlowExperience(caItem.callFlowExperience);
-
+                initDIDsGrid();
                 refreshWrapUpCodesDropDownForQueues();
             }
         }
@@ -1277,7 +1351,11 @@
                 wrapUpCodes: [],
                 queues: [],
                 prompts: [],
-                callFlowExperience: []
+                callFlowExperience: [],
+                dids: {
+                    mainInboundNumber: 'n/a',
+                    ranges: []
+                }
             };
 
             if ($('#companyName').val())
@@ -1332,6 +1410,19 @@
                 });
             }
             json.callFlowExperience = callFlowExperience;
+            if ($('#mainInboundNumber').val().length > 0)
+                json.dids.mainInboundNumber = $('#mainInboundNumber').val();
+
+            if ($("#jsGridDIDs").jsGrid("option", "data").length > 0) {
+                $.each($("#jsGridDIDs").jsGrid("option", "data"), (key, item) => {
+                    json.dids.ranges.push({
+                        didStart: item.didStart,
+                        didEnd: item.didEnd,
+                        didComment: item.didComment.length > 0 ? item.didComment : 'n/a'
+                    })
+                });
+            }
+
 
             console.log(json);
             return json;
@@ -1374,7 +1465,7 @@
 
 
             const replacer = (key, value) => (value === null || value === 'n/a') ? '' : value // specify how you want to handle null values here
-            let header, csv_locations, csv_schedules, csv_holidays, csv_skills, csv_wrapUpCodes, csv_queues, csv_callFlowExperience;
+            let header, csv_locations, csv_schedules, csv_holidays, csv_skills, csv_wrapUpCodes, csv_queues, csv_callFlowExperience, csv_dids;
 
             // Locations
             if (data.locations && data.locations.length > 0) {
@@ -1404,7 +1495,7 @@
                 header = Object.keys(data.holidays[0]);
                 csv_holidays = data.holidays.map(row => header.map(fieldName => JSON.stringify(row[fieldName], replacer)).join(';'))
                 csv_holidays.unshift(header.join(';'))
-                csv_holidays = holidays.join('\r\n')
+                csv_holidays = csv_holidays.join('\r\n')
             } else {
                 console.log('holidays are empty, skip csv build...');
             }
@@ -1476,6 +1567,19 @@
                 console.log('queues are empty, skip csv build...');
             }
 
+            // Call Flow Experience
+            if (data.dids && data.dids.ranges.length > 0) {
+                console.log('build dids csv...');
+                // tune queue columns
+                header = Object.keys(data.dids.ranges[0]);
+                csv_dids = data.dids.ranges.map(row => header.map(fieldName => JSON.stringify(row[fieldName], replacer)).join(';'))
+                csv_dids.unshift(header.join(';'))
+                csv_dids = csv_dids.join('\r\n')
+            } else {
+                console.log('dids are empty, skip csv build...');
+            }
+
+
             console.log(`CSV: locations\n===================\n ${csv_locations}\n===================\n`);
             console.log(`CSV: schedules\n===================\n ${csv_schedules}\n===================\n`);
             console.log(`CSV: holidays\n===================\n ${csv_holidays}\n===================\n`);
@@ -1484,6 +1588,7 @@
             console.log(`CSV: queues\n===================\n ${csv_queues}\n===================\n`);
             console.log(`CSV: prompts\n===================\n ${csv_prompts}\n===================\n`);
             console.log(`CSV: callFlowExperience\n===================\n ${csv_callFlowExperience}\n===================\n`);
+            console.log(`CSV: dids\n===================\n ${csv_dids}\n===================\n`);
 
             //download(csv_locations, 'locations.csv');
         }
@@ -3652,6 +3757,173 @@
         }
 
         //#endregion
+
+        //#region DIDs
+
+        var dbDIDs = {
+            loadData: function (filter) {
+                return $.grep(this.DIDs, function (DID) {
+                    return (!filter.didStart || DID.didStart.toLowerCase().indexOf(filter.didStart.toLowerCase()) > -1);
+                });
+            },
+            insertItem: function (insertingDID) {
+                this.DIDs.push(insertingDID);
+            },
+            updateItem: function (updatingDID) { },
+            deleteItem: function (deletingDID) { }
+        };
+
+        window.dbDIDs = dbDIDs;
+
+        var formSubmitHandlerDIDs = $.noop;
+
+        let validatorDIDs = $("#editModalDIDs #modal-form").validate({
+            errorClass: "text-danger",
+            successClass: "test-success",
+            submitHandler: function () {
+                formSubmitHandlerDIDs();
+            }
+        });
+
+        $("#addDID").on('click', (e) => {
+            e.preventDefault();
+            showDIDsModal("Add", {});
+        });
+
+        function initDIDsGrid() {
+            const maxItems = 10;
+
+            dbDIDs.DIDs = caItem.hasOwnProperty('DIDs') ? caItem.DIDs : [];
+
+            $("#jsGridDIDs").jsGrid({
+                height: "auto",
+                width: "100%",
+                editing: true,
+                autoload: true,
+                sorting: false,
+                filtering: false,
+                paging: false,
+                noDataContent: "No DID Numbers",
+                confirmDeleting: false,
+                onError: function (args) {
+                    console.error('Failed to load grid data:', args);
+                    showMessage("An error occurred while loading your data", true);
+                },
+                rowClick: function (args) {
+                    showDIDsModal("Edit", args.item);
+                },
+                onDataLoaded: function (args) {
+                    $("#addDID").attr('disabled', $("#jsGridDIDs").jsGrid("option", "data").length >= maxItems);
+                },
+                onItemInserted: function (args) {
+                    $("#addDID").attr('disabled', $("#jsGridDIDs").jsGrid("option", "data").length >= maxItems);
+                },
+                onItemUpdated: function (args) {
+                    $("#addDID").attr('disabled', $("#jsGridDIDs").jsGrid("option", "data").length >= maxItems);
+                },
+                onItemDeleting: function (args) {
+                    console.log("onItemDeleting");
+                    if (!args.item.deleteConfirmed) { // custom property for confirmation
+                        args.cancel = true; // cancel deleting
+                        bootbox.confirm({
+                            message: 'Do you really want to delete this DID Number?',
+                            buttons: {
+                                confirm: {
+                                    label: "Delete!",
+                                    className: "btn-danger"
+                                },
+                                cancel: {
+                                    label: "No",
+                                    className: "btn-secondary"
+                                }
+                            },
+                            callback: async function (result) {
+                                if (result) {
+                                    args.item.deleteConfirmed = true;
+                                    $("#jsGridDIDs").jsGrid('deleteItem', args.item); // Remove item from grid
+                                    removeFromArray(dbDIDs.DIDs, args.item); // Remove item from db
+                                    showMessage("DID deleted", false);
+                                }
+                            }
+                        });
+                    }
+                },
+                onItemDeleted: function (args) {
+                    $("#addDID").attr('disabled', $("#jsGridDIDs").jsGrid("option", "data").length >= maxItems);
+                },
+                controller: dbDIDs,
+                fields: [
+                    {
+                        name: "didStart",
+                        title: "DID Start Range",
+                        type: "text",
+                        align: "center"
+                    },
+                    {
+                        name: "didEnd",
+                        title: "DID End Range",
+                        type: "text",
+                        align: "center"
+                    },
+                    {
+                        type: "control",
+                        modeSwitchButton: false,
+                        editButton: false,
+                        width: 68,
+                        align: "center",
+                        headerTemplate: function () {
+                            return "Actions";
+                        }
+                    }
+                ]
+            });
+        }
+
+        var showDIDsModal = function (dialogType, item) {
+            console.log('Showing details for:', item);
+            $("#editModalDIDs #didStart").val(item.didStart);
+            $("#editModalDIDs #didEnd").val(item.didEnd);
+            $("#editModalDIDs #didComment").val(item.didComment);
+            $("#editModalDIDs #submit").html("<i class='fa fa-floppy-o'></i> Save");
+            formSubmitHandlerDIDs = function () {
+                saveDID(item, dialogType === "Add");
+            };
+            $("#editModalDIDs").modal('show');
+
+        };
+
+        var saveDID = function (item, isNew) {
+            console.log('Extending item:', item);
+            $.extend(item, {
+                didStart: $("#editModalDIDs #didStart").val(),
+                didEnd: $("#editModalDIDs #didEnd").val(),
+                didComment: $("#editModalDIDs #didComment").val()
+            });
+            console.log('Extended Item:', item);
+            console.log('IsNew?', isNew)
+            $("#jsGridDIDs").jsGrid(isNew ? "insertItem" : "updateItem", item);
+            $("#editModalDIDs").modal('hide');
+        };
+
+        $("#editModalDIDs").on('shown.bs.modal', function () {
+            $("#didStart").focus();
+        });
+
+        $('#editModalDIDs').on('hidden.bs.modal', async () => {
+            initDIDsModal();
+        });
+
+        function initDIDsModal() {
+            $("#editModalDIDs #didStart").val("");
+            $("#editModalDIDs #didEnd").val("");
+            $("#editModalDIDs #didComment").val("");
+            $("#editModalDIDs #submit").html("<i class='fa fa-plus'></i> Add");
+
+            validatorDIDs.resetForm(); // Reset validation errors
+        }
+
+        //#endregion
+
 
         //#region Other Useful Functions
 
