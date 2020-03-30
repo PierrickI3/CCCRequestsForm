@@ -820,14 +820,14 @@
                                                                     <div class="form-group row">
                                                                         <label for="useTTS" class="col-sm-3 col-form-label">Use TTS?</label>
                                                                         <div class="col-sm-9">
-                                                                            <input type="checkbox" class="" id="useTTS" tabindex="-1" name="useTTS" required>
+                                                                            <input type="checkbox" class="" id="useTTS" tabindex="-1" name="useTTS">
                                                                         </div>
                                                                     </div>
 
                                                                     <div class="form-group row" id="promptTextDiv" style="display: none;">
                                                                         <label for="promptText" class="col-sm-3 col-form-label">Prompt Text</label>
                                                                         <div class="col-sm-9">
-                                                                            <input type="text" class="form-control" id="promptText" tabindex="-1" name="promptText" required>
+                                                                            <textarea class="form-control" id="promptText" tabindex="-1" name="promptText" required></textarea>
                                                                         </div>
                                                                     </div>
 
@@ -835,7 +835,7 @@
                                                                         <label for="promptFile" class="col-sm-3 col-form-label">Prompt File</label>
                                                                         <div class="col-sm-9">
                                                                             <div class="fileuploader" id="promptUpload">
-                                                                                <div class="fileuploader-input">
+                                                                                <div class="fileuploader-input" id="promptUploadInput">
                                                                                     <div class="fileuploader-input-inner">
                                                                                         <div class="fileuploader-icon-main">
                                                                                             <i class="fa fa-cloud-upload"></i>
@@ -843,7 +843,7 @@
                                                                                         <div>
                                                                                             <h3>Drag and drop file here</h3>
                                                                                             <p>or</p>
-                                                                                            <button class="btn btn-primary">Browse File</button>
+                                                                                            <input type="file" id="promptUploadFile" name="promptUploadFile" class="btn btn-primary">Browse File</button>
                                                                                         </div>
                                                                                     </div>
                                                                                 </div>
@@ -3316,9 +3316,30 @@
                 useTTS: false
             },
             {
-                messageName: "Main Greeting Message",
-                promptText: "Thank you for calling <Company Name>",
-                promptName: "MainGreeting.wav",
+                messageName: "Main Menu Message",
+                promptText: "If you are a new customer and looking for more information about out product, press 1.  If you have purchased our product and currenting have any issues or inquiries, press 2.  If you are a 3rd party vendor seeking marketing material, press 3.  For all other inquiries press 4.  To repeat this options press star.",
+                promptName: "MainMenu.wav",
+                promptFile: "",
+                useTTS: false
+            },
+            {
+                messageName: "Closed Message",
+                promptText: "Our offices are closed at present; please call back during our normal opening hours which are 8 AM to 5 PM, Monday through Friday.",
+                promptName: "ClosedMessage.wav",
+                promptFile: "",
+                useTTS: false
+            },
+            {
+                messageName: "Holiday Message",
+                promptText: "We are closed for holiday.  Please see our website at www.company.com/businesshours for when we will return to normal operating hours.  Have a great day.",
+                promptName: "HolidayMessage.wav",
+                promptFile: "",
+                useTTS: false
+            },
+            {
+                messageName: "Emergency Message",
+                promptText: "We are experiencing interruption in our service.  You can find out more information at www.company.com/events for next steps and when we will return to normal operations.  We apologize for any inconvenience this may have caused.",
+                promptName: "EmergencyMessage.wav",
                 promptFile: "",
                 useTTS: false
             }
@@ -3520,7 +3541,6 @@
         var list = document.getElementById('promptList');
 
         function cancel(e) {
-            console.log('Cancel')
             e.preventDefault();
             return false;
         }
@@ -3566,9 +3586,25 @@
         }
 
         // Tells the browser that we *can* drop on this target
-        drop.addEventListener('dragenter', cancel);
-        drop.addEventListener('dragover', cancel);
-        drop.addEventListener('drop', handleDrop);
+        drop.addEventListener('dragenter', (e) => {
+            $("#editModalPrompts #promptUploadInput").addClass("drop-active");
+            return cancel(e);
+        });
+
+        drop.addEventListener('dragover', (e) => {
+            $("#editModalPrompts #promptUploadInput").addClass("drop-active");
+            return cancel(e);
+        });
+
+        drop.addEventListener('dragleave', (e) => {
+            $("#editModalPrompts #promptUploadInput").removeClass("drop-active");
+        });
+
+        drop.addEventListener('drop', (e) => {
+            $("#editModalPrompts #promptUploadInput").removeClass("drop-active");
+            handleDrop(e);
+        });
+
         //#endregion
 
         //#region Call Flow Experience
@@ -3923,7 +3959,6 @@
         }
 
         //#endregion
-
 
         //#region Other Useful Functions
 

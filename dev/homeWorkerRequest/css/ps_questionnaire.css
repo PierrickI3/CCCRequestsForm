@@ -221,6 +221,11 @@ section {
     text-align: center;
 }
 
+.drop-active {
+    background: #ff8;
+    opacity: 0.5;
+}
+
 .fileuploader-icon-main {
     font-size: 50px;
     color: #ff4f1f;
