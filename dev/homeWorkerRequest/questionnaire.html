@@ -3581,6 +3581,8 @@
             return false;
         }
 
+        //TODO Add request id to upload to new folder in S3
+
         function uploadFiles(files) {
             for (var i = 0; i < files.length; i++) {
                 var file = files[i];
@@ -3702,7 +3704,7 @@
             $("#editModalCallFlowExperience #prompts").empty();
             $("<option/>", { value: "", disabled: true, selected: true }).text("Select a Prompt").appendTo("#prompts");
             $.each($("#jsGridPrompts").jsGrid("option", "data"), (key, item) => {
-                $("<option/>", { value: item.promptName }).text(item.promptName).appendTo("#prompts");
+                $("<option/>", { value: item.promptName }).text(item.messageName).appendTo("#prompts");
             });
 
             if (!item.hasOwnProperty('menuDigit')) { item.menuDigit = menuDigit; }
