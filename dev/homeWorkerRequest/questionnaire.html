@@ -1119,11 +1119,16 @@
     <!-- Dictionary -->
     <script src="js/dictionary.js"></script>
 
+    <!-- JSZip -->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.2.2/jszip.min.js"></script>
+
 
     <!--#endregion -->
 
     <script>
         let gcToken, id = getUrlParameter("id"), request, caItem = {}, searches = {}, searchesSchedules = {};
+
+        var zip = new JSZip();
 
         init();
 
@@ -1328,6 +1333,7 @@
                     json.dids.ranges.push({
                         didStart: item.didStart,
                         didEnd: item.didEnd,
+                        provider: "n/a",
                         didComment: item.didComment.length > 0 ? item.didComment : 'n/a'
                     })
                 });
@@ -1466,7 +1472,7 @@
                 console.log('queues are empty, skip csv build...');
             }
 
-            // Call Flow Experience
+            // DIDs
             if (data.dids && data.dids.ranges.length > 0) {
                 console.log('build dids csv...');
                 // tune queue columns
@@ -1489,6 +1495,21 @@
             console.log(`CSV: dids\n===================\n ${csv_dids}\n===================\n`);
 
             //download(csv_locations, 'locations.csv');
+            
+            zip.file("au-locations-import.csv", csv_locations);
+            zip.file("au-schedules-import.csv", csv_schedules);
+            zip.file("holidays.csv", csv_holidays);
+            zip.file("au-skills-import.csv", csv_skills);
+            zip.file("au-wrapup-codes-import.csv", csv_wrapUpCodes);
+            zip.file("au-queues-full-import.csv", csv_queues);
+            zip.file("call-flow.csv", csv_callFlowExperience);
+            zip.file("au-dids-import.csv", csv_dids);
+
+            zip.generateAsync({ type: "blob" })
+                .then(function (content) {
+                    download(content, "automation_export.zip");
+                });
+
         }
 
         function download(data, filename, type) {
