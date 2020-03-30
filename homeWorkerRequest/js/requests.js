@@ -21,8 +21,6 @@ async function postRequests() {
     relationshipWithCarrier: $("#relationshipWithCarrier").is(':checked'),
     customerResourceCommitted: $("#customerResourceCommitted").is(':checked'),
     hyperVEnvironment: $("#hyperVEnvironment").is(':checked'),
-    estimatedVolumeMinsPerMonth: $("#estimatedVolumeMinsPerMonth").val(),
-    genesysCloudRegion: $("#genesysCloudRegion").val(),
 
     // General Configuration
     numberAgents: $("#numberAgents").val(),
@@ -67,8 +65,13 @@ async function postRequests() {
   }
   data.needCompletedBy = needCompletedBy;
 
-  if ($("#salesforceAccountOpportunity").val().length > 0) {
-    data.salesforceAccountOpportunity = $("#salesforceAccountOpportunity").val()
+
+  if ($("#genesysCloudRegion").val()) {
+    data.genesysCloudRegion = $("#genesysCloudRegion").val()
+  }
+
+  if ($("#estimatedVolumeMinsPerMonth").val().length > 0) {
+    data.estimatedVolumeMinsPerMonth = $("#estimatedVolumeMinsPerMonth").val()
   }
 
   if ($("#phoneNumbersDeployment").val().length > 0) {
@@ -514,7 +517,7 @@ async function ca_getItem(_id) {
 
 async function ca_updateItem(_id, _json) {
   console.log(`ca_updateItem(${_id})`);
-  
+
   _json.token = gcToken;
   return await $.ajax({
     url: `${apiBasePath}/cloudautomation/items/${_id}`,
