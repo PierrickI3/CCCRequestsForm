@@ -843,7 +843,7 @@
                                                                                         <div>
                                                                                             <h3>Drag and drop file here</h3>
                                                                                             <p>or</p>
-                                                                                            <input type="file" id="promptUploadFile" name="promptUploadFile" class="btn btn-primary">Browse File</button>
+                                                                                            <input type="file" id="promptUploadFile" name="promptUploadFile" class="btn btn-primary"></button>
                                                                                         </div>
                                                                                     </div>
                                                                                 </div>
@@ -1597,7 +1597,7 @@
             console.log(`CSV: dids\n===================\n ${csv_dids}\n===================\n`);
 
             //download(csv_locations, 'locations.csv');
-            
+
             zip.file("au-locations-import.csv", csv_locations);
             zip.file("au-schedules-import.csv", csv_schedules);
             zip.file("holidays.csv", csv_holidays);
@@ -3543,6 +3543,7 @@
             $("#editModalPrompts #promptText").val("");
             $("#editModalPrompts #promptName").val("");
             $("#editModalPrompts #promptFile").val("");
+            $("#editModalPrompts #promptUploadFile").val("");
             $("#editModalPrompts #useTTS").attr('checked', false);
             $("#editModalPrompts #submit").html("<i class='fa fa-plus'></i> Add");
 
@@ -3559,6 +3560,11 @@
             }
         });
 
+        $("#editModalPrompts #promptUploadFile").on('change', (e) => {
+            let files = e.target.files;
+            uploadFiles(files);
+        });
+
         var drop = document.getElementById('promptUpload');
         var list = document.getElementById('promptList');
 
@@ -3571,6 +3577,11 @@
             e.preventDefault();
             var dt = e.dataTransfer;
             var files = dt.files;
+            uploadFiles(files);
+            return false;
+        }
+
+        function uploadFiles(files) {
             for (var i = 0; i < files.length; i++) {
                 var file = files[i];
                 var reader = new FileReader();
@@ -3604,7 +3615,6 @@
                 });
                 reader.readAsArrayBuffer(file);
             }
-            return false;
         }
 
         // Tells the browser that we *can* drop on this target
