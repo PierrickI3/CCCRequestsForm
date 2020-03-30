@@ -781,6 +781,91 @@
                                         </div>
                                     </div>
 
+                                    <!-- Prompts -->
+                                    <div class="card">
+                                        <div class="card-header shadow-lg" role="tab" id="headingPrompts">
+                                            <div class="mb-0">
+                                                <a data-toggle="collapse" data-parent="#accordion" href="#collapsePrompts" aria-expanded="false" aria-controls="collapsePrompts" class="collapsed">
+                                                    <i class="fa fa-file-audio-o" aria-hidden="true" style="color: #FF4F1F;"></i>
+                                                    <h3>Prompts</h3>
+                                                    <p>Upload your prompts (or use TTS) here</p>
+                                                </a>
+                                                <i class="fa fa-angle-right" aria-hidden="true" style="color: #FF4F1F;"></i>
+                                            </div>
+                                        </div>
+
+                                        <div id="collapsePrompts" class="collapse" role="tabpanel" aria-labelledby="headingPrompts" aria-expanded="false">
+                                            <div class="card-block">
+                                                <div id="jsGridPrompts"></div>
+
+                                                <div class="modal fade" id="editModalPrompts" tabindex="-1" role="dialog" aria-hidden="true">
+                                                    <div class="modal-dialog modal-lg" role="document">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header" id="modal-header">
+                                                                <h5 id="title" class="modal-title">Prompt</h5>
+                                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                    <span aria-hidden="true">&times;</span>
+                                                                </button>
+                                                            </div>
+                                                            <form class="modal-body form-horizontal" id="modal-form">
+                                                                <div class="form-group">
+
+                                                                    <div class="form-group row">
+                                                                        <label for="messageName" class="col-sm-3 col-form-label">Message Name</label>
+                                                                        <div class="col-sm-9">
+                                                                            <input type="text" class="form-control" id="messageName" tabindex="-1" name="messageName" readonly>
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <div class="form-group row">
+                                                                        <label for="useTTS" class="col-sm-3 col-form-label">Use TTS?</label>
+                                                                        <div class="col-sm-9">
+                                                                            <input type="checkbox" class="" id="useTTS" tabindex="-1" name="useTTS" required>
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <div class="form-group row" id="promptTextDiv" style="display: none;">
+                                                                        <label for="promptText" class="col-sm-3 col-form-label">Prompt Text</label>
+                                                                        <div class="col-sm-9">
+                                                                            <input type="text" class="form-control" id="promptText" tabindex="-1" name="promptText" required>
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <div class="form-group row" id="promptUploadDiv">
+                                                                        <label for="promptFile" class="col-sm-3 col-form-label">Prompt File</label>
+                                                                        <div class="col-sm-9">
+                                                                            <div class="fileuploader" id="promptUpload">
+                                                                                <div class="fileuploader-input">
+                                                                                    <div class="fileuploader-input-inner">
+                                                                                        <div class="fileuploader-icon-main">
+                                                                                            <i class="fa fa-cloud-upload"></i>
+                                                                                        </div>
+                                                                                        <div>
+                                                                                            <h3>Drag and drop file here</h3>
+                                                                                            <p>or</p>
+                                                                                            <button class="btn btn-primary">Browse File</button>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div id="promptList">
+                                                                                <h6>Uploaded File:</h6>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <div class="modal-footer">
+                                                                        <button id="btnClose" type="button" class="btn btn-link pull-right" data-dismiss="modal">Close</button>
+                                                                        <button id="submit" type="submit" class="btn btn-primary pull-left"><i class="fa fa-plus"></i> Add</button>
+                                                                    </div>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
                                     <!-- Call Flow Experience -->
                                     <div class="card">
                                         <div class="card-header shadow-lg" role="tab" id="headingCallFlowExperience">
@@ -1225,6 +1310,7 @@
                 initSchedulesGrid();
                 initSkillsGrid();
                 initWrapUpCodesGrid();
+                initPromptsGrid();
                 initQueuesGrid();
                 initDIDsGrid();
             }
@@ -1251,6 +1337,7 @@
                 initSchedulesGrid();
                 initSkillsGrid();
                 initWrapUpCodesGrid();
+                initPromptsGrid();
                 initQueuesGrid();
                 initCallFlowExperience(caItem.callFlowExperience);
                 initDIDsGrid();
@@ -1268,6 +1355,7 @@
                 skills: [],
                 wrapUpCodes: [],
                 queues: [],
+                prompts: [],
                 callFlowExperience: [],
                 dids: {
                     mainInboundNumber: 'n/a',
@@ -1306,6 +1394,8 @@
                 json.skills = $("#jsGridSkills").jsGrid("option", "data");
             if ($("#jsGridWrapUpCodes").jsGrid("option", "data").length > 0)
                 json.wrapUpCodes = $("#jsGridWrapUpCodes").jsGrid("option", "data");
+            if ($("#jsPrompts").jsGrid("option", "data").length > 0)
+                json.prompts = $("#jsPrompts").jsGrid("option", "data");
             if ($("#jsGridQueues").jsGrid("option", "data").length > 0) {
                 $.each($("#jsGridQueues").jsGrid("option", "data"), (key, item) => {
                     json.queues.push({
@@ -1438,6 +1528,17 @@
                 console.log('wrapUp Codes are empty, skip csv build...');
             }
 
+            // Prompts
+            if (data.prompts && data.prompts.length > 0) {
+                console.log('build prompts csv...');
+                header = Object.keys(data.prompts[0]);
+                csv_prompts = data.prompts.map(row => header.map(fieldName => JSON.stringify(row[fieldName], replacer)).join(';'))
+                csv_prompts.unshift(header.join(';'))
+                csv_prompts = csv_prompts.join('\r\n')
+            } else {
+                console.log('prompts are empty, skip csv build...');
+            }
+
             // Queues
             if (data.queues && data.queues.length > 0) {
                 console.log('build queues csv...');
@@ -1491,6 +1592,7 @@
             console.log(`CSV: skills\n===================\n ${csv_skills}\n===================\n`);
             console.log(`CSV: wrapUpCodes\n===================\n ${csv_wrapUpCodes}\n===================\n`);
             console.log(`CSV: queues\n===================\n ${csv_queues}\n===================\n`);
+            console.log(`CSV: prompts\n===================\n ${csv_prompts}\n===================\n`);
             console.log(`CSV: callFlowExperience\n===================\n ${csv_callFlowExperience}\n===================\n`);
             console.log(`CSV: dids\n===================\n ${csv_dids}\n===================\n`);
 
@@ -3222,6 +3324,272 @@
             validatorQueues.resetForm(); // Reset validation errors
         }
 
+        //#endregion
+
+        //#region Prompts
+
+        let defaultPrompts = [
+            {
+                messageName: "Main Greeting Message",
+                promptText: "Thank you for calling <Company Name>",
+                promptName: "MainGreeting.wav",
+                promptFile: "",
+                useTTS: false
+            },
+            {
+                messageName: "Main Greeting Message",
+                promptText: "Thank you for calling <Company Name>",
+                promptName: "MainGreeting.wav",
+                promptFile: "",
+                useTTS: false
+            }
+        ];
+
+        var dbPrompts = {
+            loadData: function (filter) {
+                return $.grep(this.prompts, function (prompt) {
+                    return (!filter.messageName || prompt.messageName.toLowerCase().indexOf(filter.messageName.toLowerCase()) > -1);
+                });
+            },
+            insertItem: function (insertingItem) {
+                this.prompts.push(insertingItem);
+            },
+            updateItem: function (updatingItem) { },
+            deleteItem: function (deletingItem) { }
+        };
+
+        window.dbPrompts = dbPrompts;
+
+        var formSubmitHandlerPrompts = $.noop;
+
+        let validatorPrompts = $("#editModalPrompts #modal-form").validate({
+            errorClass: "text-danger",
+            successClass: "test-success",
+            submitHandler: function () {
+                formSubmitHandlerPrompts();
+            }
+        });
+
+        function initPromptsGrid() {
+            const maxItems = 5;
+
+            dbPrompts.prompts = caItem.hasOwnProperty('prompts') ? caItem.prompts : [];
+
+            if (dbPrompts.prompts.length === 0) {
+                dbPrompts.prompts = defaultPrompts;
+            }
+
+            $("#jsGridPrompts").jsGrid({
+                height: "auto",
+                width: "100%",
+                editing: true,
+                autoload: true,
+                sorting: false,
+                filtering: false,
+                paging: false,
+                noDataContent: "No Prompts",
+                confirmDeleting: false,
+                onError: function (args) {
+                    console.error('Failed to load grid data:', args);
+                    showMessage("An error occurred while loading your data", true);
+                },
+                rowClick: function (args) {
+                    showPromptModal("Edit", args.item);
+                },
+                onDataLoaded: function (args) {
+                },
+                onItemInserted: function (args) {
+                },
+                onItemUpdated: function (args) {
+                },
+                onItemDeleting: function (args) {
+                    console.log("onItemDeleting");
+                    if (!args.item.deleteConfirmed) { // custom property for confirmation
+                        args.cancel = true; // cancel deleting
+                        bootbox.confirm({
+                            message: 'Do you really want to delete this Prompt?',
+                            buttons: {
+                                confirm: {
+                                    label: "Delete!",
+                                    className: "btn-danger"
+                                },
+                                cancel: {
+                                    label: "No",
+                                    className: "btn-secondary"
+                                }
+                            },
+                            callback: async function (result) {
+                                if (result) {
+                                    args.item.deleteConfirmed = true;
+                                    $("#jsGridPrompts").jsGrid('deleteItem', args.item); // Remove item from grid
+                                    removeFromArray(dbPrompts.prompts, args.item); // Remove item from db
+                                    showMessage("Prompt deleted", false);
+                                }
+                            }
+                        });
+                    }
+                },
+                onItemDeleted: function (args) {
+                },
+                controller: dbPrompts,
+                fields: [
+                    {
+                        name: "messageName",
+                        title: "Message Name",
+                        type: "text",
+                        align: "center"
+                    },
+                    {
+                        name: "promptText",
+                        title: "Prompt Text",
+                        type: "text",
+                        align: "center"
+                    },
+                    {
+                        name: "promptName",
+                        title: "Prompt Name",
+                        type: "text",
+                        align: "center"
+                    },
+                    {
+                        name: "promptFile",
+                        title: "Prompt File",
+                        type: "text",
+                        align: "center"
+                    },
+                    {
+                        name: "useTTS",
+                        title: "useTTS",
+                        type: "text",
+                        align: "center"
+                    },
+                    {
+                        type: "control",
+                        modeSwitchButton: false,
+                        editButton: false,
+                        width: 68,
+                        align: "center",
+                        headerTemplate: function () {
+                            return "Actions";
+                        }
+                    }
+                ]
+            });
+        }
+
+        var showPromptModal = function (dialogType, item) {
+            console.log('Showing details for:', item);
+            $("#editModalPrompts #messageName").val(item.messageName);
+            $("#editModalPrompts #promptText").val(item.promptText);
+            $("#editModalPrompts #promptName").val(item.promptName);
+            $("#editModalPrompts #promptFile").val(item.promptFile);
+            $("#editModalPrompts #useTTS").attr('checked', item.useTTS);
+            $("#editModalPrompts #submit").html("<i class='fa fa-floppy-o'></i> Save");
+            formSubmitHandlerPrompts = function () {
+                savePrompt(item, dialogType === "Add");
+            };
+            $("#editModalPrompts").modal('show');
+
+        };
+
+        var savePrompt = function (item, isNew) {
+            console.log('Extending item:', item);
+            $.extend(item, {
+                messageName: $("#editModalPrompts #messageName").val(),
+                promptText: $("#editModalPrompts #promptText").val(),
+                promptName: $("#editModalPrompts #promptName").val(),
+                promptFile: $("#editModalPrompts #promptFile").val(),
+                useTTS: $("#editModalPrompts #useTTS").is(':checked')
+            });
+            console.log('Extended Item:', item);
+            console.log('IsNew?', isNew);
+
+            $("#jsGridPrompts").jsGrid(isNew ? "insertItem" : "updateItem", item);
+            $("#editModalPrompts").modal('hide');
+        };
+
+        $("#editModalPrompts").on('shown.bs.modal', function () {
+            $("#promptText").focus();
+        });
+
+        $('#editModalPrompts').on('hidden.bs.modal', async () => {
+            initPromptsModal();
+        });
+
+        function initPromptsModal() {
+            $("#editModalPrompts #messageName").val("");
+            $("#editModalPrompts #promptText").val("");
+            $("#editModalPrompts #promptName").val("");
+            $("#editModalPrompts #promptFile").val("");
+            $("#editModalPrompts #useTTS").attr('checked', false);
+            $("#editModalPrompts #submit").html("<i class='fa fa-plus'></i> Add");
+
+            validatorPrompts.resetForm(); // Reset validation errors
+        }
+
+        $("#editModalPrompts #useTTS").on('change', () => {
+            if ($("#editModalPrompts #useTTS").is(':checked')) {
+                $("#editModalPrompts #promptTextDiv").show();
+                $("#editModalPrompts #promptUploadDiv").hide();
+            } else {
+                $("#editModalPrompts #promptTextDiv").hide();
+                $("#editModalPrompts #promptUploadDiv").show();
+            }
+        });
+
+        var drop = document.getElementById('promptUpload');
+        var list = document.getElementById('promptList');
+
+        function cancel(e) {
+            console.log('Cancel')
+            e.preventDefault();
+            return false;
+        }
+
+        function handleDrop(e) {
+            e.preventDefault();
+            var dt = e.dataTransfer;
+            var files = dt.files;
+            for (var i = 0; i < files.length; i++) {
+                var file = files[i];
+                var reader = new FileReader();
+                reader.addEventListener('loadend', function (e) {
+                    fetch(apiBasePath + "/cloudautomation/uploadUrl", {
+                        method: "POST",
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            name: file.name,
+                            type: file.type
+                        })
+                    })
+                        .then(function (response) {
+                            console.log('Response:', response);
+                            return response.json();
+                        })
+                        .then(function (json) {
+                            console.log('Upload Url:', json.uploadUrl);
+                            return fetch(json.uploadUrl, {
+                                method: "PUT",
+                                body: new Blob([reader.result], { type: file.type })
+                            })
+                        })
+                        .then(function () {
+                            var uploadedFileNode = document.createElement('div');
+                            uploadedFileNode.innerHTML = '<a href="//cc-requests-prompts-bucket.s3.eu-central-1.amazonaws.com/' + file.name + '">' + file.name + '</a>';
+                            list.appendChild(uploadedFileNode);
+                        });
+                });
+                reader.readAsArrayBuffer(file);
+            }
+            return false;
+        }
+
+        // Tells the browser that we *can* drop on this target
+        drop.addEventListener('dragenter', cancel);
+        drop.addEventListener('dragover', cancel);
+        drop.addEventListener('drop', handleDrop);
         //#endregion
 
         //#region Call Flow Experience
