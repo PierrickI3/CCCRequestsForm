@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no">
     <title>CC PS Questionnaire</title>
     <link rel="shortcut icon" href="/favicon.ico">
+
     <!-- Bootstrap -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <!-- Font Awesome -->
@@ -23,7 +24,7 @@
     <link type="text/css" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jsgrid/1.5.3/jsgrid-theme.min.css" />
     <!-- Custom CSS -->
     <link rel="stylesheet" href="./css/ps_questionnaire.css">
-
+    <link href="https://fonts.googleapis.com/css?family=Exo" rel="stylesheet">
 </head>
 
 <body>
@@ -42,10 +43,7 @@
             <ul class="nav navbar-nav" style="float: right;">
                 <li><button id="saveDraft" href="#" onclick="saveDraft();" class="btn btn-primary btn-sm ml-2" disabled>Save draft</button></li>
             </ul>
-
-
         </ul>
-
     </nav>
 
     <div class="alert alert-danger fade show" role="alert" id="alert" hidden>
@@ -180,21 +178,21 @@
                                                                 <div class="form-group">
 
                                                                     <div class="form-group row">
-                                                                        <label for="locationName" class="col-sm-3 col-form-label">Location Name</label>
+                                                                        <label for="locationName" class="col-sm-3 col-form-label">Location Name <span class="text-danger font-weight-bold">*</span></label>
                                                                         <div class="col-sm-9">
                                                                             <input type="text" class="form-control" id="locationName" name="locationName" placeholder="Enter the name of this location" required>
                                                                         </div>
                                                                     </div>
 
                                                                     <div class="form-group row">
-                                                                        <label for="streetAddress" class="col-sm-3 col-form-label">Street Address</label>
+                                                                        <label for="streetAddress" class="col-sm-3 col-form-label">Street Address <span class="text-danger font-weight-bold">*</span></label>
                                                                         <div class="col-sm-9">
                                                                             <input type="text" class="form-control" id="streetAddress" name="streetAddress" placeholder="Enter the street address" required>
                                                                         </div>
                                                                     </div>
 
                                                                     <div class="form-group row">
-                                                                        <label for="city" class="col-sm-3 col-form-label">City</label>
+                                                                        <label for="city" class="col-sm-3 col-form-label">City <span class="text-danger font-weight-bold">*</span></label>
                                                                         <div class="col-sm-9">
                                                                             <input type="text" class="form-control" id="city" name="city" placeholder="Enter the name of the city for this location" required>
                                                                         </div>
@@ -208,14 +206,14 @@
                                                                     </div>
 
                                                                     <div class="form-group row">
-                                                                        <label for="zipCode" class="col-sm-3 col-form-label">Zip Code</label>
+                                                                        <label for="zipCode" class="col-sm-3 col-form-label">Zip Code <span class="text-danger font-weight-bold">*</span></label>
                                                                         <div class="col-sm-9">
                                                                             <input type="text" class="form-control" id="zipCode" name="zipCode" placeholder="Enter the zip code for this location" required>
                                                                         </div>
                                                                     </div>
 
                                                                     <div class="form-group row">
-                                                                        <label for="country" class="col-sm-3 col-form-label">Country</label>
+                                                                        <label for="country" class="col-sm-3 col-form-label">Country <span class="text-danger font-weight-bold">*</span></label>
                                                                         <div class="col-sm-9">
                                                                             <select class="selectpicker" id="country" name="country" class="form-control" required data-live-search="true">
                                                                             </select>
@@ -230,7 +228,7 @@
                                                                     </div>
 
                                                                     <div class="form-group row">
-                                                                        <label for="emergencyNumber" class="col-sm-3 col-form-label">Emergency Number</label>
+                                                                        <label for="emergencyNumber" class="col-sm-3 col-form-label">Emergency Number <span class="text-danger font-weight-bold">*</span></label>
                                                                         <div class="col-sm-9">
                                                                             <input type="text" class="form-control" id="emergencyNumber" name="emergencyNumber" placeholder="Enter the emergency phone number for this location" required>
                                                                         </div>
@@ -329,8 +327,8 @@
 
                                                                         <!-- Weekly -->
                                                                         <div class="form-group row" id="weeklyControlsDiv" style="display: none;">
-                                                                            <label for="interval" class="col-sm-2 offset-sm-3 col-form-label">Every</label>
-                                                                            <div class="btn-group" data-toggle="buttons">
+                                                                            <label for="weeklyDays" class="col-sm-2 offset-sm-3 col-form-label">Every</label>
+                                                                            <div class="btn-group" data-toggle="buttons" id="weeklyDays">
                                                                                 <label class="btn btn-primary active"><input type="checkbox" id="chkMonday" checked> Mo</label>
                                                                                 <label class="btn btn-primary"><input type="checkbox" id="chkTuesday"> Tu</label>
                                                                                 <label class="btn btn-primary"><input type="checkbox" id="chkWednesday"> We</label>
@@ -437,9 +435,9 @@
                                                                     <!-- Start Time -->
                                                                     <div class="form-group row time-row">
                                                                         <label class="col-sm-3 col-form-label">Start Time</label>
-                                                                        <div class="input-group date col-md-3 time-only" id="repeatingEventStartTime" data-target-input="nearest">
-                                                                            <input type="text" class="form-control datetimepicker-input" data-target="#repeatingEventStartTime" />
-                                                                            <div class="input-group-append" data-target="#repeatingEventStartTime" data-toggle="datetimepicker">
+                                                                        <div class="input-group date col-md-3 time-only" id="startTime" data-target-input="nearest">
+                                                                            <input type="text" class="form-control datetimepicker-input" data-target="#startTime" />
+                                                                            <div class="input-group-append" data-target="#startTime" data-toggle="datetimepicker">
                                                                                 <div class="input-group-text"><i class="fa fa-clock-o"></i></div>
                                                                             </div>
                                                                         </div>
@@ -448,9 +446,9 @@
                                                                     <!-- End Time -->
                                                                     <div class="form-group row time-row">
                                                                         <label class="col-sm-3 col-form-label">End Time</label>
-                                                                        <div class="input-group date col-md-3 time-only" id="repeatingEventEndTime" data-target-input="nearest">
-                                                                            <input type="text" class="form-control datetimepicker-input" data-target="#repeatingEventEndTime" />
-                                                                            <div class="input-group-append" data-target="#repeatingEventEndTime" data-toggle="datetimepicker">
+                                                                        <div class="input-group date col-md-3 time-only" id="endTime" data-target-input="nearest">
+                                                                            <input type="text" class="form-control datetimepicker-input" data-target="#endTime" />
+                                                                            <div class="input-group-append" data-target="#endTime" data-toggle="datetimepicker">
                                                                                 <div class="input-group-text"><i class="fa fa-clock-o"></i></div>
                                                                             </div>
                                                                         </div>
@@ -459,9 +457,9 @@
                                                                     <!-- End Date -->
                                                                     <div class="form-group row date-row">
                                                                         <label class="col-sm-3 col-form-label">End Date</label>
-                                                                        <div class="input-group date col-md-3 date-only" id="repeatingEventDayEnd" data-target-input="nearest">
-                                                                            <input type="text" class="form-control datetimepicker-input" data-target="#repeatingEventDayEnd" />
-                                                                            <div class="input-group-append" data-target="#repeatingEventDayEnd" data-toggle="datetimepicker">
+                                                                        <div class="input-group date col-md-3 date-only" id="endDate" data-target-input="nearest">
+                                                                            <input type="text" class="form-control datetimepicker-input" data-target="#endDate" />
+                                                                            <div class="input-group-append" data-target="#endDate" data-toggle="datetimepicker">
                                                                                 <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                                                                             </div>
                                                                         </div>
@@ -469,6 +467,68 @@
                                                                 </div>
 
                                                                 <!-- Footer -->
+                                                                <div class="modal-footer">
+                                                                    <code id="generatedRRuleCode"></code>
+                                                                    <button id="generateRRule" type="button" class="btn btn-dark">Generate Rule</button>
+                                                                    <button id="btnClose" type="button" class="btn btn-link pull-right" data-dismiss="modal">Close</button>
+                                                                    <button id="submit" type="submit" class="btn btn-primary pull-left"><i class="fa fa-plus"></i> Add</button>
+                                                                </div>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Holidays -->
+                                    <div class="card">
+                                        <div class="card-header shadow-lg" role="tab" id="headingHolidays">
+                                            <div class="mb-0">
+                                                <a data-toggle="collapse" data-parent="#accordion" href="#collapseHolidays" aria-expanded="false" aria-controls="collapseHolidays" class="collapsed">
+                                                    <i class="fa fa-sun-o" aria-hidden="true" style="color: #FF4F1F;"></i>
+                                                    <h3>Holidays</h3>
+                                                    <p>List of Holidays</p>
+                                                </a>
+                                                <i class="fa fa-angle-right" aria-hidden="true" style="color: #FF4F1F;"></i>
+                                            </div>
+                                        </div>
+
+                                        <div id="collapseHolidays" class="collapse" role="tabpanel" aria-labelledby="headingHolidays" aria-expanded="false">
+                                            <div class="card-block">
+                                                <button id="addHoliday" class="btn btn-primary mb-2" type="button"><i class="fa fa-plus"></i> Add</button>
+                                                <div id="jsGridHolidays"></div>
+
+                                                <div class="modal fade" id="editModalHolidays" tabindex="-1" role="dialog" aria-hidden="true">
+                                                    <div class="modal-dialog modal-lg" role="document">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header" id="modal-header">
+                                                                <h5 id="title" class="modal-title">Holiday</h5>
+                                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                    <span aria-hidden="true">&times;</span>
+                                                                </button>
+                                                            </div>
+                                                            <form class="modal-body form-horizontal" id="modal-form">
+                                                                <div class="form-group">
+
+                                                                    <div class="form-group row">
+                                                                        <label for="holidayName" class="col-sm-3 col-form-label">Holiday Name</label>
+                                                                        <div class="col-sm-9">
+                                                                            <input type="text" class="form-control" id="holidayName" tabindex="-1" name="holidayName" placeholder="Enter the name of the Holiday" required>
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <div class="form-group row date-row">
+                                                                        <label class="col-sm-3 col-form-label">Date</label>
+                                                                        <div class="input-group date col-md-3 date-only" id="holidayDate" data-target-input="nearest">
+                                                                            <input type="text" class="form-control datetimepicker-input" data-target="#holidayDate" required />
+                                                                            <div class="input-group-append" data-target="#holidayDate" data-toggle="datetimepicker">
+                                                                                <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+
                                                                 <div class="modal-footer">
                                                                     <button id="btnClose" type="button" class="btn btn-link pull-right" data-dismiss="modal">Close</button>
                                                                     <button id="submit" type="submit" class="btn btn-primary pull-left"><i class="fa fa-plus"></i> Add</button>
@@ -483,7 +543,7 @@
 
                                     <!-- ACD Skills -->
                                     <div class="card">
-                                        <div class="card-header shadow-lg" role="tab" id="headingSkils">
+                                        <div class="card-header shadow-lg" role="tab" id="headingSkills">
                                             <div class="mb-0">
                                                 <a data-toggle="collapse" data-parent="#accordion" href="#collapseSkills" aria-expanded="false" aria-controls="collapseSkills" class="collapsed">
                                                     <i class="fa fa-vcard-o" aria-hidden="true" style="color: #FF4F1F;"></i>
@@ -601,32 +661,111 @@
                                                     <div class="modal-dialog modal-lg" role="document">
                                                         <div class="modal-content">
                                                             <div class="modal-header" id="modal-header">
-                                                                <h5 id="title" class="modal-title">Queue</h5>
+                                                                <h5 id="title" class="modal-title">Queue setup</h5>
                                                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                                     <span aria-hidden="true">&times;</span>
                                                                 </button>
                                                             </div>
                                                             <form class="modal-body form-horizontal" id="modal-form">
                                                                 <div class="form-group">
-
+                                                                    <!-- QueueName -->
                                                                     <div class="form-group row">
-                                                                        <label for="queueName" class="col-sm-3 col-form-label">Queue Name</label>
-                                                                        <div class="col-sm-8">
-                                                                            <input type="text" class="form-control" id="queueName" name="queuelName" placeholder="Enter the name of the Queue" required>
+                                                                        <div class="form-group col-md-12">
+                                                                            <label for="itInfrastructure">Queue Name <span class="text-danger font-weight-bold">*</span></label>
+                                                                            <input type="text" class="form-control" id="queueName" name="queueName" placeholder="Enter the name of the Queue" required></input>
                                                                         </div>
                                                                     </div>
 
+                                                                    <!-- Support MediaTypes -->
                                                                     <div class="form-group row">
-                                                                        <label class="col-sm-3 col-form-label" for="enableCallbacks">Supports Callbacks?</label>
-                                                                        <div class="col-sm-6 ml-3">
-                                                                            <input class="form-check-input" type="checkbox" value="" id="enableCallbacks">
+                                                                        <div class="form-group col-md-6">
+                                                                            <input class="col-form-input" type="checkbox" value="" id="enableCallbacks">
+                                                                            <label class="form-check-label" for="enableCallbacks">
+                                                                                Supports Callbacks?
+                                                                            </label>
+                                                                        </div>
+                                                                        <div class="form-group col-md-6">
+                                                                            <input class="col-form-input" type="checkbox" value="" id="enableEmails">
+                                                                            <label class="form-check-label" for="enableEmails">
+                                                                                Supports Emails?
+                                                                            </label>
                                                                         </div>
                                                                     </div>
 
-                                                                    <div class="form-group row">
-                                                                        <label class="col-sm-3 col-form-label" for="enableCallbacks">Supports Emails?</label>
-                                                                        <div class="col-sm-6 ml-3">
-                                                                            <input class="form-check-input" type="checkbox" value="" id="enableEmails">
+                                                                    <p>
+                                                                        <center>
+                                                                            <a class="btn btn-dark" data-toggle="collapse" href="#queueAdvancedSettings" role="button" aria-expanded="false" aria-controls="queueAdvancedSettings">Advanced Settings</a>
+                                                                        </center>
+                                                                    </p>
+                                                                    <div class="row">
+                                                                        <div class="col">
+                                                                            <div class="collapse collapse" id="queueAdvancedSettings">
+                                                                                <div class="card card-body">
+
+                                                                                    <!-- Pre-filled values -->
+                                                                                    <div class="form-group row">
+                                                                                        <div class="form-group col-md-6">
+                                                                                            <label for="acw">ACW Type</label>
+                                                                                            <select id="acw" name="acw" class="form-control" required>
+                                                                                                <option value="MANDATORY, OPTIONAL" selected>MANDATORY, OPTIONAL</option>
+                                                                                                <option value="MANDATORY_TIMEOUT">MANDATORY_TIMEOUT</option>
+                                                                                                <option value="MANDATORY_FORCED_TIMEOUT">MANDATORY_FORCED_TIMEOUT</option>
+                                                                                            </select>
+                                                                                        </div>
+                                                                                        <div class="form-group col-md-4">
+                                                                                            <label for="acwTimeout">ACW Timeout</label>
+                                                                                            <input type="number" class="form-control" id="acwTimeout" name="acwTimeout" placeholder="ACW Timeout" disabled>
+                                                                                        </div>
+                                                                                    </div>
+
+                                                                                    <div class="form-group row">
+                                                                                        <div class="form-group col-md-6">
+                                                                                            <label for="evaluationMethod">Evaluation Method</label>
+                                                                                            <select id="evaluationMethod" name="evaluationMethod" class="form-control" required>
+                                                                                                <option value="NONE" selected>NONE</option>
+                                                                                                <option value="BEST">BEST</option>
+                                                                                                <option value="ALL">ALL</option>
+                                                                                            </select>
+                                                                                        </div>
+                                                                                        <div class="form-group col-md-4">
+                                                                                            <label for="alertingTimeout">Alerting Timeout</label>
+                                                                                            <input type="number" class="form-control" id="alertingTimeout" name="alertingTimeout" placeholder="Alerting Timeout" value="15">
+                                                                                        </div>
+                                                                                    </div>
+
+                                                                                    <div class="form-group row">
+                                                                                        <div class="form-group col-md-6">
+                                                                                            <label for="slPercentage">Service Level Percentage</label>
+                                                                                            <input type="number" class="form-control" id="slPercentage" name="slPercentage" placeholder="SL Timeout" value="80">
+                                                                                        </div>
+                                                                                        <div class="form-group col-md-4">
+                                                                                            <label for="slDuration">Service Level Target</label>
+                                                                                            <input type="number" class="form-control" id="slDuration" name="slDuration" placeholder="SL Duration in Seconds" value="20">
+                                                                                        </div>
+                                                                                    </div>
+
+                                                                                    <div class="form-group row">
+                                                                                        <div class="form-group col-md-6">
+                                                                                            <label for="callingPartyName">Calling Party Name</label>
+                                                                                            <input type="text" class="form-control" id="callingPartyName" name="callingPartyName" placeholder="Calling Party Name"></input>
+
+                                                                                        </div>
+                                                                                        <div class="form-group col-md-6">
+                                                                                            <label for="callingPartyNumber">Calling Party Number</label>
+                                                                                            <input type="text" class="form-control" id="callingPartyNumber" name="callingPartyNumber" placeholder="Calling Party Name"></input>
+                                                                                        </div>
+                                                                                    </div>
+
+                                                                                    <div class="form-group row">
+                                                                                        <div class="form-group col-md-12">
+                                                                                            <label for="queueWrapUpCode">WrapUp Code</label>
+                                                                                            <select class="selectpicker" id="queueWrapUpCode" name="queueWrapUpCode" class="form-control" multiple data-live-search="true">
+                                                                                            </select>
+
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
                                                                         </div>
                                                                     </div>
 
@@ -641,6 +780,246 @@
                                             </div>
                                         </div>
                                     </div>
+
+                                    <!-- Prompts -->
+                                    <div class="card">
+                                        <div class="card-header shadow-lg" role="tab" id="headingPrompts">
+                                            <div class="mb-0">
+                                                <a data-toggle="collapse" data-parent="#accordion" href="#collapseCallFlowExperience" aria-expanded="false" aria-controls="collapseCallFlowExperience" class="collapsed">
+                                                    <i class="fa fa-phone" aria-hidden="true" style="color: #FF4F1F;"></i>
+                                                    <h3>Prompts</h3>
+                                                    <p>Upload your prompts (or use TTS) here</p>
+                                                </a>
+                                                <i class="fa fa-angle-right" aria-hidden="true" style="color: #FF4F1F;"></i>
+                                            </div>
+                                        </div>
+
+                                        <div id="collapseCallFlowExperience" class="collapse" role="tabpanel" aria-labelledby="headingCallFlowExperience" aria-expanded="false">
+                                            <div class="card-block">
+                                                <div class="ml-4 text-muted">
+                                                    <p>Click on a digit to set the corresponding action. <span class="text-primary">*</span> will repeat the current menu. <span class="text-primary">#</span> will go back to the previous menu.</p>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Call Flow Experience -->
+                                    <div class="card">
+                                        <div class="card-header shadow-lg" role="tab" id="headingCallFlowExperience">
+                                            <div class="mb-0">
+                                                <a data-toggle="collapse" data-parent="#accordion" href="#collapseCallFlowExperience" aria-expanded="false" aria-controls="collapseCallFlowExperience" class="collapsed">
+                                                    <i class="fa fa-phone" aria-hidden="true" style="color: #FF4F1F;"></i>
+                                                    <h3>Call Flow</h3>
+                                                    <p>Design your Call Flow Experience</p>
+                                                </a>
+                                                <i class="fa fa-angle-right" aria-hidden="true" style="color: #FF4F1F;"></i>
+                                            </div>
+                                        </div>
+
+                                        <div id="collapseCallFlowExperience" class="collapse" role="tabpanel" aria-labelledby="headingCallFlowExperience" aria-expanded="false">
+                                            <div class="card-block">
+                                                <!-- <button id="addCallFlowExperience" class="btn btn-primary mb-2" type="button"><i class="fa fa-plus"></i> Add</button> -->
+                                                <!-- <div id="jsGridCallFlowExperience"></div> -->
+                                                <div class="ml-4 text-muted">
+                                                    <p>Click on a digit to set the corresponding action. <span class="text-primary">*</span> will repeat the current menu. <span class="text-primary">#</span> will go back to the previous menu.</p>
+                                                </div>
+
+                                                <div class="container phone-body">
+                                                    <div class="row">
+                                                        <div class="col-md-4 col-md-offset-4 phone">
+                                                            <div class="row1">
+                                                                <div class="col-md-12">
+                                                                    <div class="num-pad">
+                                                                        <div class="span4">
+                                                                            <div class="num">
+                                                                                <div class="txt digit" data-digit="1">
+                                                                                    1
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="span4">
+                                                                            <div class="num">
+                                                                                <div class="txt digit" data-digit="2">
+                                                                                    2 <span class="phone-small">
+                                                                                        <p class="phone-p">
+                                                                                            ABC</p>
+                                                                                    </span>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="span4">
+                                                                            <div class="num">
+                                                                                <div class="txt digit" data-digit="3">
+                                                                                    3 <span class="phone-small">
+                                                                                        <p class="phone-p">
+                                                                                            DEF</p>
+                                                                                    </span>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="span4">
+                                                                            <div class="num">
+                                                                                <div class="txt digit" data-digit="4">
+                                                                                    4 <span class="phone-small">
+                                                                                        <p class="phone-p">
+                                                                                            GHI</p>
+                                                                                    </span>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="span4">
+                                                                            <div class="num">
+                                                                                <div class="txt digit" data-digit="5">
+                                                                                    5 <span class="phone-small">
+                                                                                        <p class="phone-p">
+                                                                                            JKL</p>
+                                                                                    </span>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="span4">
+                                                                            <div class="num">
+                                                                                <div class="txt digit" data-digit="6">
+                                                                                    6 <span class="phone-small">
+                                                                                        <p class="phone-p">
+                                                                                            MNO</p>
+                                                                                    </span>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="span4">
+                                                                            <div class="num">
+                                                                                <div class="txt digit" data-digit="7">
+                                                                                    7 <span class="phone-small">
+                                                                                        <p class="phone-p">
+                                                                                            PQRS</p>
+                                                                                    </span>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="span4">
+                                                                            <div class="num">
+                                                                                <div class="txt digit" data-digit="8">
+                                                                                    8 <span class="phone-small">
+                                                                                        <p class="phone-p">
+                                                                                            TUV</p>
+                                                                                    </span>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="span4">
+                                                                            <div class="num">
+                                                                                <div class="txt digit" data-digit="8">
+                                                                                    9 <span class="phone-small">
+                                                                                        <p class="phone-p">
+                                                                                            WXYZ</p>
+                                                                                    </span>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="span4">
+                                                                            <div class="">
+                                                                                <div class="txt text-muted digit" data-digit="*">
+                                                                                    *
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="span4">
+                                                                            <div class="num">
+                                                                                <div class="txt digit" data-digit="#">
+                                                                                    0 <span class="phone-small">
+                                                                                        <p class="phone-p">
+                                                                                            +</p>
+                                                                                    </span>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="span4">
+                                                                            <div class="">
+                                                                                <div class="txt text-muted">
+                                                                                    #
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="clearfix">
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="clearfix">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="modal fade" id="editModalCallFlowExperience" tabindex="-1" role="dialog" aria-hidden="true">
+                                                    <div class="modal-dialog modal-lg" role="document">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header" id="modal-header">
+                                                                <h5 id="title" class="modal-title"></h5>
+                                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                    <span aria-hidden="true">&times;</span>
+                                                                </button>
+                                                            </div>
+                                                            <form class="modal-body form-horizontal" id="modal-form">
+                                                                <div class="form-group">
+
+                                                                    <div class="form-group row">
+                                                                        <label for="default" class="col-sm-3 col-form-label">Default Option?</label>
+                                                                        <div class="col-sm-9 col-form-label">
+                                                                            <input class="" type="checkbox" value="" id="default">
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <div class="form-group row">
+                                                                        <label for="behavior" class="col-sm-3 col-form-label">Behavior</label>
+                                                                        <div class="col-sm-9">
+                                                                            <select id="behavior" name="behavior" class="form-control" required>
+                                                                                <option value="" disabled selected>Select a Behavior</option>
+                                                                                <option value="transferToQueue">Transfer to Queue</option>
+                                                                                <option value="playMessageAndDisconnect">Play a Message and Disconnect</option>
+                                                                                <option value="repeatMenu">Repeat Menu</option>
+                                                                            </select>
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <div class="form-group row" id="queuesDiv" style="display: none;">
+                                                                        <label for="queues" class="col-sm-3 col-form-label">Queue</label>
+                                                                        <div class="col-sm-9">
+                                                                            <select id="queues" name="queues" class="form-control" required>
+                                                                            </select>
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <div class="form-group row" id="skillsDiv" style="display: none;">
+                                                                        <label for="skills" class="col-sm-3 col-form-label">Skill</label>
+                                                                        <div class="col-sm-9">
+                                                                            <select id="skills" name="skills" class="form-control">
+                                                                            </select>
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <div class="form-group row" id="promptsDiv" style="display: none;">
+                                                                        <label for="prompts" class="col-sm-3 col-form-label">Prompt</label>
+                                                                        <div class="col-sm-9">
+                                                                            <select id="prompts" name="prompts" class="form-control" required>
+                                                                            </select>
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <div class="modal-footer">
+                                                                        <button id="btnClose" type="button" class="btn btn-link pull-right" data-dismiss="modal">Close</button>
+                                                                        <button id="submit" type="submit" class="btn btn-primary pull-left"><i class="fa fa-plus"></i> Add</button>
+                                                                    </div>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
                                 </div>
                             </div>
                         </div>
@@ -649,8 +1028,6 @@
             </div>
         </div>
     </div>
-
-
 
     <noscript>You need to enable JavaScript to run this app.</noscript>
 
@@ -679,6 +1056,8 @@
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
     <!-- Bootstrap Select -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.9/dist/js/bootstrap-select.min.js"></script>
+    <!-- Bootstrap Select -->
+
     <!-- JSGrid -->
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jsgrid/1.5.3/jsgrid.min.js"></script>
     <!-- RRule Generator -->
@@ -690,6 +1069,7 @@
     <!-- Dictionary -->
     <script src="js/dictionary.js"></script>
 
+
     <!--#endregion -->
 
     <script>
@@ -700,6 +1080,9 @@
         async function init() {
             console.log('function init');
             $('#spinner_message')[0].innerHTML = "login to Genesys Cloud...";
+
+            // Set jsGrid defaults
+            jsGrid.setDefaults({ tableClass: "jsgrid-table table table-striped table-hover" });
 
             // Init Date/Time Pickers
             $('.date-only').datetimepicker({
@@ -740,7 +1123,7 @@
                     $('#spinner_message')[0].innerHTML = "validating Id...";
                     request = await getRequest(id);
                     console.log(request);
-                    $('#badgePill')[0].innerHTML = "1"
+                    $('#badgePill')[0].innerHTML = "1";
                     console.log(request);
                     $('#requestDetails')[0].innerHTML = `Related to Partner/Customer Name <B>${request.partnerCustomerName}</B> requested by <em>${request.requesterName}</em>`;
                 } catch (error) {
@@ -783,6 +1166,7 @@
                 enableForm(true);
 
                 initLocationsGrid();
+                initHolidaysGrid();
                 initSchedulesGrid();
                 initSkillsGrid();
                 initWrapUpCodesGrid();
@@ -807,10 +1191,14 @@
                 $('#numberOfUsers').val(caItem.organizationSetup.numberOfUsers);
 
                 initLocationsGrid();
+                initHolidaysGrid();
                 initSchedulesGrid();
                 initSkillsGrid();
                 initWrapUpCodesGrid();
                 initQueuesGrid();
+                initCallFlowExperience(caItem.callFlowExperience);
+
+                refreshWrapUpCodesDropDownForQueues();
             }
         }
 
@@ -819,10 +1207,12 @@
             let json = {
                 organizationSetup: {},
                 schedules: [],
+                holidays: [],
                 locations: [],
                 skills: [],
                 wrapUpCodes: [],
-                queues: []
+                queues: [],
+                callFlowExperience: []
             };
 
             if ($('#companyName').val())
@@ -832,16 +1222,49 @@
             if ($('#numberOfUsers').val())
                 json.organizationSetup.numberOfUsers = $('#numberOfUsers').val();
 
-            if ($("#jsGridLocations").jsGrid("option", "data").length > 0)
-                json.locations = $("#jsGridLocations").jsGrid("option", "data");
-            if ($("#jsGridSchedules").jsGrid("option", "data").length > 0)
+            if ($("#jsGridLocations").jsGrid("option", "data").length > 0) {
+                $.each($("#jsGridLocations").jsGrid("option", "data"), (key, item) => {
+                    json.locations.push({
+                        locationName: item.locationName,
+                        streetAddress: item.streetAddress,
+                        city: item.city,
+                        state: item.state,
+                        zipCode: item.zipCode,
+                        country: item.country,
+                        notes: item.notes,
+                        emergencyNumber: item.emergencyNumber
+                    })
+                });
+            }
+            if ($("#jsGridSchedules").jsGrid("option", "data").length > 0) {
+                //TODO: Keep the order !
                 json.schedules = $("#jsGridSchedules").jsGrid("option", "data");
+            }
+            if ($("#jsGridHolidays").jsGrid("option", "data").length > 0)
+                json.holidays = $("#jsGridHolidays").jsGrid("option", "data");
             if ($("#jsGridSkills").jsGrid("option", "data").length > 0)
                 json.skills = $("#jsGridSkills").jsGrid("option", "data");
-            if ($("#jsGridQueues").jsGrid("option", "data").length > 0)
-                json.queues = $("#jsGridQueues").jsGrid("option", "data");
             if ($("#jsGridWrapUpCodes").jsGrid("option", "data").length > 0)
                 json.wrapUpCodes = $("#jsGridWrapUpCodes").jsGrid("option", "data");
+            if ($("#jsGridQueues").jsGrid("option", "data").length > 0) {
+                $.each($("#jsGridQueues").jsGrid("option", "data"), (key, item) => {
+                    json.queues.push({
+                        queueName: item.queueName,
+                        enableCallbacks: item.enableCallbacks,
+                        enableEmails: item.enableEmails,
+                        acw: item.acw,
+                        acwTimeout: item.acwTimeout,
+                        evaluationMethod: item.evaluationMethod,
+                        alertingTimeout: item.alertingTimeout,
+                        slPercentage: item.slPercentage,
+                        slDuration: item.slDuration,
+                        callingPartyName: item.callingPartyName,
+                        callingPartyNumber: item.callingPartyNumber,
+                        wrapUpCodes: item.wrapUpCodes
+                    })
+                });
+            }
+            json.callFlowExperience = callFlowExperience;
 
             console.log(json);
             return json;
@@ -858,12 +1281,13 @@
 
             try {
                 let json = buildJSON();
-                if (caItem) {
+                if (caItem && caItem.id) {
                     await ca_updateItem(caItem.id, json);
                 } else {
                     caItem = await ca_createItem(json);
                     console.log(`responseId created on CA db: ${caItem.id}`);
                     window.history.pushState('', 'CC Rapid Response Request Form', `${window.location.href}?id=${caItem.id}`);
+                    $('#badgePill')[0].innerHTML = "";
                 }
             } catch (error) {
                 console.error(error);
@@ -874,15 +1298,16 @@
                 $("#saveDraft").prop('disabled', false);
                 $("#saveDraft").html('Save draft');
             }
-
             showMessage("Draft updated", false);
         }
 
         function exportCSV() {
             console.log('function exportCSV()');
-            let data = buildJSON();
-            const replacer = (key, value) => value === null ? '' : value // specify how you want to handle null values here
-            let header, csv_locations, csv_skills, csv_wrapUpCodes, csv_queues;
+            let data = $.extend(true, {}, buildJSON());
+
+
+            const replacer = (key, value) => (value === null || value === 'n/a') ? '' : value // specify how you want to handle null values here
+            let header, csv_locations, csv_schedules, csv_holidays, csv_skills, csv_wrapUpCodes, csv_queues, csv_callFlowExperience;
 
             // Locations
             if (data.locations && data.locations.length > 0) {
@@ -895,7 +1320,28 @@
                 console.log('locations are empty, skip csv build...');
             }
 
-            //$("#jsGridSkills").jsGrid("option", "fields") -> fields names
+            // Schedules
+            if (data.schedules && data.schedules.length > 0) {
+                console.log('build schedules csv...');
+                header = Object.keys(data.schedules[0]);
+                csv_schedules = data.schedules.map(row => header.map(fieldName => JSON.stringify(row[fieldName], replacer)).join(';'))
+                csv_schedules.unshift(header.join(';'))
+                csv_schedules = csv_schedules.join('\r\n')
+            } else {
+                console.log('schedules are empty, skip csv build...');
+            }
+
+            // Holidays
+            if (data.holidays && data.holidays.length > 0) {
+                console.log('build holidays csv...');
+                header = Object.keys(data.holidays[0]);
+                csv_holidays = data.holidays.map(row => header.map(fieldName => JSON.stringify(row[fieldName], replacer)).join(';'))
+                csv_holidays.unshift(header.join(';'))
+                csv_holidays = holidays.join('\r\n')
+            } else {
+                console.log('holidays are empty, skip csv build...');
+            }
+
             // Skills
             if (data.skills && data.skills.length > 0) {
                 console.log('build skills csv...');
@@ -921,6 +1367,17 @@
             // Queues
             if (data.queues && data.queues.length > 0) {
                 console.log('build queues csv...');
+                // tune queue columns
+                data.queues.forEach(function (item) {
+                    console.log(item);
+                    delete item.enableCallbacks;
+                    delete item.enableEmails;
+                    if (item.wrapUpCodes && item.wrapUpCodes.length > 0)
+                        item.wrapUpCodes = item.wrapUpCodes.join('|')
+                    else
+                        item.wrapUpCodes = "";
+                });
+
                 header = Object.keys(data.queues[0]);
                 csv_queues = data.queues.map(row => header.map(fieldName => JSON.stringify(row[fieldName], replacer)).join(';'))
                 csv_queues.unshift(header.join(';'))
@@ -929,13 +1386,27 @@
                 console.log('queues are empty, skip csv build...');
             }
 
+            // Call Flow Experience
+            if (data.callFlowExperience && data.callFlowExperience.length > 0) {
+                console.log('build call flow experience csv...');
+                // tune queue columns
+                header = Object.keys(data.callFlowExperience[0]);
+                csv_callFlowExperience = data.callFlowExperience.map(row => header.map(fieldName => JSON.stringify(row[fieldName], replacer)).join(';'))
+                csv_callFlowExperience.unshift(header.join(';'))
+                csv_callFlowExperience = csv_callFlowExperience.join('\r\n')
+            } else {
+                console.log('queues are empty, skip csv build...');
+            }
+
             console.log(`CSV: locations\n===================\n ${csv_locations}\n===================\n`);
+            console.log(`CSV: schedules\n===================\n ${csv_schedules}\n===================\n`);
+            console.log(`CSV: holidays\n===================\n ${csv_holidays}\n===================\n`);
             console.log(`CSV: skills\n===================\n ${csv_skills}\n===================\n`);
             console.log(`CSV: wrapUpCodes\n===================\n ${csv_wrapUpCodes}\n===================\n`);
             console.log(`CSV: queues\n===================\n ${csv_queues}\n===================\n`);
+            console.log(`CSV: callFlowExperience\n===================\n ${csv_callFlowExperience}\n===================\n`);
 
             //download(csv_locations, 'locations.csv');
-
         }
 
         function download(data, filename, type) {
@@ -956,21 +1427,13 @@
             }
         }
 
-        jsGrid.setDefaults({ tableClass: "jsgrid-table table table-striped table-hover" });
-
         //#region Locations
 
         var dbLocations = {
             loadData: function (filter) {
                 return $.grep(this.locations, function (location) {
                     return (!filter.locationName || location.locationName.toLowerCase().indexOf(filter.locationName.toLowerCase()) > -1)
-                        && (!filter.streetAddress || location.streetAddress.toLowerCase().indexOf(filter.streetAddress.toLowerCase()) > -1)
-                        && (!filter.city || location.city.toLowerCase().indexOf(filter.city.toLowerCase()) > -1)
-                        && (!filter.state || location.state.toLowerCase().indexOf(filter.state.toLowerCase()) > -1)
-                        && (!filter.zipCode || location.zipCode.toLowerCase().indexOf(filter.zipCode.toLowerCase()) > -1)
-                        && (!filter.country || location.country.toLowerCase().indexOf(filter.country.toLowerCase()) > -1)
-                        && (!filter.notes || location.notes.toLowerCase().indexOf(filter.notes.toLowerCase()) > -1)
-                        && (!filter.emergencyNumber || location.emergencyNumber.toLowerCase().indexOf(filter.emergencyNumber.toLowerCase()) > -1);
+
                 });
             },
             insertItem: function (insertingLocation) {
@@ -1006,8 +1469,8 @@
                 width: "100%",
                 editing: true,
                 autoload: true,
-                sorting: true,
-                filtering: true,
+                sorting: false,
+                filtering: false,
                 paging: false,
                 noDataContent: "No Locations",
                 confirmDeleting: false,
@@ -1074,103 +1537,25 @@
                         }
                     },
                     {
-                        name: "streetAddress",
-                        title: "Address",
-                        type: "text",
-                        align: "center",
-                        filterTemplate: function () {
-                            let input = $("<input/>", { type: "text" });
-                            input.on('keyup', () => {
-                                searches.streetAddress = input.val();
-                                $("#jsGridLocations").data('JSGrid').search(searches);
-                            });
-                            return this.filterControl = input;
-                        }
-                    },
-                    {
                         name: "city",
                         title: "City",
                         type: "text",
-                        align: "center",
-                        filterTemplate: function () {
-                            let input = $("<input/>", { type: "text" });
-                            input.on('keyup', () => {
-                                searches.city = input.val();
-                                $("#jsGridLocations").data('JSGrid').search(searches);
-                            });
-                            return this.filterControl = input;
-                        }
+                        align: "center"
                     },
                     {
                         name: "state",
                         title: "State",
                         type: "text",
                         align: "center",
-                        filterTemplate: function () {
-                            let input = $("<input/>", { type: "text" });
-                            input.on('keyup', () => {
-                                searches.state = input.val();
-                                $("#jsGridLocations").data('JSGrid').search(searches);
-                            });
-                            return this.filterControl = input;
-                        }
-                    },
-                    {
-                        name: "zipCode",
-                        title: "Zip Code",
-                        type: "text",
-                        align: "center",
-                        filterTemplate: function () {
-                            let input = $("<input/>", { type: "text" });
-                            input.on('keyup', () => {
-                                searches.zipCode = input.val();
-                                $("#jsGridLocations").data('JSGrid').search(searches);
-                            });
-                            return this.filterControl = input;
+                        itemTemplate: function (value, item) {
+                            return value === 'n/a' ? '' : value
                         }
                     },
                     {
                         name: "country",
                         title: "Country",
                         type: "text",
-                        align: "center",
-                        filterTemplate: function () {
-                            let input = $("<input/>", { type: "text" });
-                            input.on('keyup', () => {
-                                searches.country = input.val();
-                                $("#jsGridLocations").data('JSGrid').search(searches);
-                            });
-                            return this.filterControl = input;
-                        }
-                    },
-                    {
-                        name: "notes",
-                        title: "Notes",
-                        type: "text",
-                        align: "center",
-                        filterTemplate: function () {
-                            let input = $("<input/>", { type: "text" });
-                            input.on('keyup', () => {
-                                searches.notes = input.val();
-                                $("#jsGridLocations").data('JSGrid').search(searches);
-                            });
-                            return this.filterControl = input;
-                        }
-                    },
-                    {
-                        name: "emergencyNumber",
-                        title: "Emergency #",
-                        type: "text",
-                        width: 120,
-                        align: "center",
-                        filterTemplate: function () {
-                            let input = $("<input/>", { type: "text" });
-                            input.on('keyup', () => {
-                                searches.emergencyNumber = input.val();
-                                $("#jsGridLocations").data('JSGrid').search(searches);
-                            });
-                            return this.filterControl = input;
-                        }
+                        align: "center"
                     },
                     {
                         type: "control",
@@ -1191,11 +1576,11 @@
             $("#editModalLocations #locationName").val(item.locationName);
             $("#editModalLocations #streetAddress").val(item.streetAddress);
             $("#editModalLocations #city").val(item.city);
-            $("#editModalLocations #state").val(item.state);
+            $("#editModalLocations #state").val((item.state && item.state !== 'n/a') ? item.state : '');
             $("#editModalLocations #zipCode").val(item.zipCode);
             $("#editModalLocations #country").val(item.country);
             $("#editModalLocations #country").selectpicker('refresh');
-            $("#editModalLocations #notes").val(item.notes);
+            $("#editModalLocations #notes").val((item.notes && item.notes !== 'n/a') ? item.notes : '');
             $("#editModalLocations #emergencyNumber").val(item.emergencyNumber);
             $("#editModalLocations #submit").html("<i class='fa fa-floppy-o'></i> Save");
             formSubmitHandlerLocations = function () {
@@ -1210,10 +1595,10 @@
                 locationName: $("#editModalLocations #locationName").val(),
                 streetAddress: $("#editModalLocations #streetAddress").val(),
                 city: $("#editModalLocations #city").val(),
-                state: $("#editModalLocations #state").val(),
+                state: $("#editModalLocations #state").val() == "" ? 'n/a' : $("#editModalLocations #state").val(),
                 zipCode: $("#editModalLocations #zipCode").val(),
                 country: $("#editModalLocations #country").val(),
-                notes: $("#editModalLocations #notes").val(),
+                notes: $("#editModalLocations #notes").val() == "" ? 'n/a' : $("#editModalLocations #notes").val(),
                 emergencyNumber: $("#editModalLocations #emergencyNumber").val(),
             });
             console.log('Extended Item:', item);
@@ -1244,6 +1629,8 @@
         //#endregion
 
         //#region Schedules
+
+        let maxSchedules = 2;
 
         var dbSchedules = {
             loadData: function (filter) {
@@ -1386,13 +1773,13 @@
                     showSchedulesModal("Edit", args.item);
                 },
                 onDataLoaded: function (args) {
-                    $("#addSchedule").attr('disabled', $("#jsGridSchedules").jsGrid("option", "data").length >= 2);
+                    $("#addSchedule").attr('disabled', $("#jsGridSchedules").jsGrid("option", "data").length >= maxSchedules);
                 },
                 onItemInserted: function (args) {
-                    $("#addSchedule").attr('disabled', $("#jsGridSchedules").jsGrid("option", "data").length >= 2);
+                    $("#addSchedule").attr('disabled', $("#jsGridSchedules").jsGrid("option", "data").length >= maxSchedules);
                 },
                 onItemUpdated: function (args) {
-                    $("#addSchedule").attr('disabled', $("#jsGridSchedules").jsGrid("option", "data").length >= 2);
+                    $("#addSchedule").attr('disabled', $("#jsGridSchedules").jsGrid("option", "data").length >= maxSchedules);
                 },
                 onItemDeleting: function (args) {
                     console.log("onItemDeleting");
@@ -1422,7 +1809,7 @@
                     }
                 },
                 onItemDeleted: function (args) {
-                    $("#addSchedule").attr('disabled', $("#jsGridSchedules").jsGrid("option", "data").length >= 2);
+                    $("#addSchedule").attr('disabled', $("#jsGridSchedules").jsGrid("option", "data").length >= maxSchedules);
                 },
                 controller: dbSchedules,
                 fields: [
@@ -1498,10 +1885,173 @@
 
         var showSchedulesModal = function (dialogType, item) {
             console.log('Showing details for:', item);
-            $("#editModalSchedules #scheduleName").val(item.scheduleName);
-            $("#editModalSchedules #start").val(item.start);
-            $("#editModalSchedules #end").val(item.end);
-            $("#editModalSchedules #submit").html("<i class='fa fa-floppy-o'></i> Save");
+
+            if (Object.keys(item).length > 0) {
+                $("#editModalSchedules #scheduleName").val(item.scheduleName);
+
+                // Start/End Date/Time
+                let startDate = moment(item.start);
+                let endDate = moment(item.end);
+
+                $("#editModalSchedules #startDate").datetimepicker('date', startDate);
+                $("#editModalSchedules #endDate").datetimepicker('date', endDate);
+
+                // All day or is start/end time set?
+                if (startDate.hour() === 0 && startDate.minute() === 0 && startDate.second() === 0
+                    && endDate.hour() === 23 && endDate.minute() === 59 && endDate.second() === 59) {
+                    $("#editModalSchedules #allDay").prop('checked', true);
+                    $("#editModalSchedules #allDay").change();
+                } else {
+                    $("#editModalSchedules #startTime").datetimepicker('date', startDate);
+                    $("#editModalSchedules #endTime").datetimepicker('date', endDate);
+                }
+
+                // Recurrence
+                let currentRRule = new rrule.rrulestr(item.rrule.replace("\n", " ").replace("↵", " "));
+                console.log('Current RRule:', currentRRule);
+                console.log('Current RRule options:', currentRRule.options);
+
+                switch (currentRRule.origOptions.freq) {
+                    case rrule.RRule.DAILY:
+                        $("#editModalSchedules #repeatingEvent").prop('checked', true);
+                        $("#editModalSchedules #repeatingEvent").change();
+                        $("#editModalSchedules #recurrenceType").val('Daily');
+                        $("#editModalSchedules #recurrenceType").change();
+                        $("#editModalSchedules #interval").val(currentRRule.options.interval || 1);
+                        break;
+                    case rrule.RRule.WEEKLY:
+                        $("#editModalSchedules #repeatingEvent").prop('checked', true);
+                        $("#editModalSchedules #repeatingEvent").change();
+                        $("#editModalSchedules #recurrenceType").val('Weekly');
+                        $("#editModalSchedules #recurrenceType").change();
+                        $("#editModalSchedules #interval").val(currentRRule.options.interval || 1);
+                        if (currentRRule.origOptions.hasOwnProperty('byweekday') && currentRRule.origOptions.byweekday.length > 0) {
+                            let byWeekDayArray = currentRRule.origOptions.byweekday;
+                            $.each(byWeekDayArray, (i, byWeekDay) => {
+                                switch (byWeekDay) {
+                                    case rrule.RRule.MO:
+                                        $("#editModalSchedules #weeklyControlsDiv #chkMonday").prop('checked', true);
+                                        break;
+                                    case rrule.RRule.TU:
+                                        $("#editModalSchedules #weeklyControlsDiv #chkTuesday").prop('checked', true);
+                                        break;
+                                    case rrule.RRule.WE:
+                                        $("#editModalSchedules #weeklyControlsDiv #chkWednesday").prop('checked', true);
+                                        break;
+                                    case rrule.RRule.TH:
+                                        $("#editModalSchedules #weeklyControlsDiv #chkThursday").prop('checked', true);
+                                        break;
+                                    case rrule.RRule.FR:
+                                        $("#editModalSchedules #weeklyControlsDiv #chkFriday").prop('checked', true);
+                                        break;
+                                    case rrule.RRule.SA:
+                                        $("#editModalSchedules #weeklyControlsDiv #chkSaturday").prop('checked', true);
+                                        break;
+                                    case rrule.RRule.SU:
+                                        $("#editModalSchedules #weeklyControlsDiv #chkSunday").prop('checked', true);
+                                        break;
+                                    default:
+                                        console.error('Unknown week day:', byWeekDay);
+                                        break;
+                                }
+                            });
+                        }
+                        break;
+                    case rrule.RRule.MONTHLY:
+                        $("#editModalSchedules #repeatingEvent").prop('checked', true);
+                        $("#editModalSchedules #repeatingEvent").change();
+                        $("#editModalSchedules #recurrenceType").val('Monthly');
+                        $("#editModalSchedules #recurrenceType").change();
+                        $("#editModalSchedules #interval").val(currentRRule.options.interval || 1);
+
+                        if (currentRRule.origOptions.hasOwnProperty('bymonthday') && currentRRule.origOptions.bymonthday.length > 0) {
+                            $("#editModalSchedules #monthlyRecurrenceType").val("On");
+                            $("#editModalSchedules #monthlyRecurrenceType").change();
+                            $("#editModalSchedules #byMonthDay").val(currentRRule.origOptions.bymonthday.join(','));
+                        } else if (currentRRule.origOptions.hasOwnProperty('byweekday') && currentRRule.origOptions.byweekday.length > 0) {
+                            console.log('currentRRule:', currentRRule);
+                            if (currentRRule.origOptions.hasOwnProperty('bysetpos')) {
+                                console.log('By Set Pos:', currentRRule.origOptions.bysetpos);
+                                switch (currentRRule.origOptions.bysetpos) {
+                                    case 1:
+                                        $("#editModalSchedules #monthlyControlsDiv #monthlyRecurrenceType").val("First");
+                                        $("#editModalSchedules #monthlyControlsDiv #monthlyRecurrenceType").change();
+                                        break;
+                                    case 2:
+                                        $("#editModalSchedules #monthlyControlsDiv #monthlyRecurrenceType").val("Second");
+                                        $("#editModalSchedules #monthlyControlsDiv #monthlyRecurrenceType").change();
+                                        break;
+                                    case 3:
+                                        $("#editModalSchedules #monthlyControlsDiv #monthlyRecurrenceType").val("Third");
+                                        $("#editModalSchedules #monthlyControlsDiv #monthlyRecurrenceType").change();
+                                        break;
+                                    case 4:
+                                        $("#editModalSchedules #monthlyControlsDiv# monthlyRecurrenceType").val("Fourth");
+                                        $("#editModalSchedules #monthlyControlsDiv# monthlyRecurrenceType").change();
+                                        break;
+                                    case -1:
+                                        $("#editModalSchedules #monthlyControlsDiv #monthlyRecurrenceType").val("Last");
+                                        $("#editModalSchedules #monthlyControlsDiv #monthlyRecurrenceType").change();
+                                        break;
+                                    default:
+                                        consol.error('Unknown bySetPos:', currentRRule.origOptions.bysetpos)
+                                        break;
+                                }
+                            } else {
+                                $("#editModalSchedules #monthlyRecurrenceType").val("IfDayIs");
+                                $("#editModalSchedules #monthlyRecurrenceType").change();
+                            }
+                            let byWeekDayArray = currentRRule.origOptions.byweekday;
+                            $.each(byWeekDayArray, (i, byWeekDay) => {
+                                switch (byWeekDay) {
+                                    case rrule.RRule.MO:
+                                        $("#editModalSchedules #monthlyControlsDiv #chkMonday").prop('checked', true);
+                                        break;
+                                    case rrule.RRule.TU:
+                                        $("#editModalSchedules #monthlyControlsDiv #chkTuesday").prop('checked', true);
+                                        break;
+                                    case rrule.RRule.WE:
+                                        $("#editModalSchedules #monthlyControlsDiv #chkWednesday").prop('checked', true);
+                                        break;
+                                    case rrule.RRule.TH:
+                                        $("#editModalSchedules #monthlyControlsDiv #chkThursday").prop('checked', true);
+                                        break;
+                                    case rrule.RRule.FR:
+                                        $("#editModalSchedules #monthlyControlsDiv #chkFriday").prop('checked', true);
+                                        break;
+                                    case rrule.RRule.SA:
+                                        $("#editModalSchedules #monthlyControlsDiv #chkSaturday").prop('checked', true);
+                                        break;
+                                    case rrule.RRule.SU:
+                                        $("#editModalSchedules #monthlyControlsDiv #chkSunday").prop('checked', true);
+                                        break;
+                                    default:
+                                        console.error('Unknown week day:', byWeekDay);
+                                        break;
+                                }
+                            });
+                            if (!byWeekDayArray.includes(rrule.RRule.MO)) {
+                                // Monday is checked by default so if it's not set, uncheck Mo
+                                $("#editModalSchedules #monthlyControlsDiv #chkMonday").prop('checked', false);
+                            }
+                        }
+
+                        break;
+                    case rrule.RRule.YEARLY:
+                        $("#editModalSchedules #repeatingEvent").prop('checked', true);
+                        $("#editModalSchedules #repeatingEvent").change();
+                        $("#editModalSchedules #recurrenceType").val('Yearly');
+                        $("#editModalSchedules #recurrenceType").change();
+                        $("#editModalSchedules #interval").val(currentRRule.origOptions.interval || 1);
+                        break;
+                    default:
+                        console.log('No Recurrence');
+                        break;
+                }
+
+                $("#editModalSchedules #submit").html("<i class='fa fa-floppy-o'></i> Save");
+            }
+
             formSubmitHandlerSchedules = function () {
                 saveSchedule(item, dialogType === "Add");
             };
@@ -1509,78 +2059,21 @@
         };
 
         var saveSchedule = function (item, isNew) {
-
             try {
+
+                let newRRule = generateRRule();
+                let newRRuleString = newRRule.toString();
+
+                console.log('New RRule:', newRRule);
+                console.log('New RRule String:', newRRuleString);
+
                 console.log('Extending item:', item);
 
-                // Set default values
-                let freq, byWeekDay = [], bySetPos, byMonth, byMonthDay, tzId, byNMonthDay, wkst;
-                let dtStart = $("#repeatingEventDayStart").datetimepicker('date').toDate();
-                let until = $("#repeatingEventDayEnd").datetimepicker('date') ? $("#repeatingEventDayEnd").datetimepicker('date').toDate() : null;
-                let count = 3; // We don't really care about this. It's only to generate dates for the next events in the schedule.
-                let interval = $("#editModalSchedules #interval").val();
-                let recurrenceType = $("#editModalSchedules #recurrenceType").val();
-                let currentRRuleString;
-
-                // Is this a repeating schedule?
-                if ($("#repeatingEvent").is(':checked')) {
-                    switch (recurrenceType) {
-                        case "Daily":
-                            freq = rrule.RRule.DAILY;
-                            bWeekDay = [];
-                            byMonthDay = undefined;
-                            break;
-                        case "Weekly":
-                            freq = rrule.RRule.WEEKLY;
-                            //TODO Find a better way to do this
-                            if ($("#weeklyControlsDiv #chkMonday").is(':checked')) { bWeekDay.push(rrule.RRule.MO); }
-                            if ($("#weeklyControlsDiv #chkTuesday").is(':checked')) { bWeekDay.push(rrule.RRule.TU); }
-                            if ($("#weeklyControlsDiv #chkWednesday").is(':checked')) { bWeekDay.push(rrule.RRule.WE); }
-                            if ($("#weeklyControlsDiv #chkThursday").is(':checked')) { bWeekDay.push(rrule.RRule.TH); }
-                            if ($("#weeklyControlsDiv #chkFriday").is(':checked')) { bWeekDay.push(rrule.RRule.FR); }
-                            if ($("#weeklyControlsDiv #chkSaturday").is(':checked')) { bWeekDay.push(rrule.RRule.SA); }
-                            if ($("#weeklyControlsDiv #chkSunday").is(':checked')) { bWeekDay.push(rrule.RRule.SU); }
-                            byMonthDay = undefined;
-                            break;
-                        case "Monthly":
-                            freq = rrule.RRule.MONTHLY;
-                            if ($("#monthlyControlsDiv").is(':visible')) {
-                                if ($("#monthlyRecurrenceType").val() === "On") {
-                                    byMonthDay = $("#byMonthDay").val();
-                                } else {
-                                    //TODO Find a better way to do this
-                                    if ($("#byDayDiv #chkMonday").is(':checked')) { bWeekDay.push(rrule.RRule.TU); }
-                                    if ($("#byDayDiv #chkTuesday").is(':checked')) { bWeekDay.push(rrule.RRule.TU); }
-                                    if ($("#byDayDiv #chkWednesday").is(':checked')) { bWeekDay.push(rrule.RRule.WE); }
-                                    if ($("#byDayDiv #chkThursday").is(':checked')) { bWeekDay.push(rrule.RRule.TH); }
-                                    if ($("#byDayDiv #chkFriday").is(':checked')) { bWeekDay.push(rrule.RRule.FR); }
-                                    if ($("#byDayDiv #chkSaturday").is(':checked')) { bWeekDay.push(rrule.RRule.SA); }
-                                    if ($("#byDayDiv #chkSunday").is(':checked')) { bWeekDay.push(rrule.RRule.SU); }
-                                }
-                            }
-                            break;
-                        case "Yearly":
-                            freq = rrule.RRule.YEARLY;
-
-                            bWeekDay = [];
-                            byMonthDay = undefined;
-                            break;
-                        default:
-                            console.error('Unsupported recurrence:', recurrenceType)
-                            break;
-                    }
-
-                    // Build RRule
-                    currentRRule = buildRRule(freq, interval, byWeekDay, dtStart, until, wkst, count, tzId, bySetPos, byMonth, byMonthDay);
-                    console.log(currentRRule);
-                    currentRRuleString = currentRRule.toString();
-                    console.log(currentRRuleString);
-                }
                 $.extend(item, {
                     scheduleName: $("#editModalSchedules #scheduleName").val(),
-                    start: dtStart,
-                    end: until,
-                    rrule: currentRRuleString
+                    start: newRRule.options.dtstart,
+                    end: newRRule.options.until,
+                    rrule: newRRuleString
                 });
                 console.log('Extended Item:', item);
                 console.log('IsNew?', isNew)
@@ -1604,34 +2097,49 @@
             $("#editModalSchedules #repeatingEvent").change();
             $("#editModalSchedules #interval").val(1);
             $("#editModalSchedules #recurrenceType").val('Daily');
-            $("#editModalSchedules #repeatingEventAllDay").prop('checked', false);
-            $("#editModalSchedules #repeatingEventAllDay").change();
-            $("#editModalSchedules #repeatingEventStartTime").datetimepicker('clear');
-            $("#editModalSchedules #repeatingEventEndTime").datetimepicker('clear');
+            $("#editModalSchedules #recurrenceType").change();
+            $("#editModalSchedules #yearMonth").val('');
 
-            $("#weeklyControlsDiv #chkMonday").prop(':checked', true);
-            $("#weeklyControlsDiv #chkTuesday").prop(':checked', false);
-            $("#weeklyControlsDiv #chkWednesday").prop(':checked', false);
-            $("#weeklyControlsDiv #chkThursday").prop(':checked', false);
-            $("#weeklyControlsDiv #chkFriday").prop(':checked', false);
-            $("#weeklyControlsDiv #chkSaturday").prop(':checked', false);
-            $("#weeklyControlsDiv #chkSunday").prop(':checked', false);
+            // Weekly
+            $("#editModalSchedules #weeklyControlsDiv #chkMonday").prop('checked', true);
+            $("#editModalSchedules #weeklyControlsDiv #chkTuesday").prop('checked', false);
+            $("#editModalSchedules #weeklyControlsDiv #chkWednesday").prop('checked', false);
+            $("#editModalSchedules #weeklyControlsDiv #chkThursday").prop('checked', false);
+            $("#editModalSchedules #weeklyControlsDiv #chkFriday").prop('checked', false);
+            $("#editModalSchedules #weeklyControlsDiv #chkSaturday").prop('checked', false);
+            $("#editModalSchedules #weeklyControlsDiv #chkSunday").prop('checked', false);
 
-            $("#byDayDiv #chkMonday").prop(':checked', true);
-            $("#byDayDiv #chkTuesday").prop(':checked', false);
-            $("#byDayDiv #chkWednesday").prop(':checked', false);
-            $("#byDayDiv #chkThursday").prop(':checked', false);
-            $("#byDayDiv #chkFriday").prop(':checked', false);
-            $("#byDayDiv #chkSaturday").prop(':checked', false);
-            $("#byDayDiv #chkSunday").prop(':checked', false);
+            // Monthly
+            $("#editModalSchedules #monthlyControlsDiv #monthlyRecurrenceType").val('On');
+            $("#editModalSchedules #monthlyControlsDiv #monthlyRecurrenceType").change();
+            $("#editModalSchedules #monthlyControlsDiv #byMonthDay").val('');
+            $("#editModalSchedules #monthlyControlsDiv #byDayDiv #chkMonday").prop('checked', true);
+            $("#editModalSchedules #monthlyControlsDiv #byDayDiv #chkTuesday").prop('checked', false);
+            $("#editModalSchedules #monthlyControlsDiv #byDayDiv #chkWednesday").prop('checked', false);
+            $("#editModalSchedules #monthlyControlsDiv #byDayDiv #chkThursday").prop('checked', false);
+            $("#editModalSchedules #monthlyControlsDiv #byDayDiv #chkFriday").prop('checked', false);
+            $("#editModalSchedules #monthlyControlsDiv #byDayDiv #chkSaturday").prop('checked', false);
+            $("#editModalSchedules #monthlyControlsDiv #byDayDiv #chkSunday").prop('checked', false);
 
-            // Single Event
-            $("#editModalSchedules #singleEventAllDay").prop('checked', false);
-            $("#editModalSchedules #singleEventAllDay").change();
-            $("#editModalSchedules #singleEventDayStart").datetimepicker('clear');
-            $("#editModalSchedules #singleEventStartTime").datetimepicker('clear');
-            $("#editModalSchedules #singleEventEndTime").datetimepicker('clear');
-            $("#editModalSchedules #singleEventDayEnd").datetimepicker('clear');
+            // Yearly
+            $("#editModalSchedules #yearlyControlsDiv #yearlyRecurrenceType").val('On');
+            $("#editModalSchedules #yearlyControlsDiv #yearlyRecurrenceType").change();
+            $("#editModalSchedules #yearlyControlsDiv #byMonthDay").val('');
+            $("#editModalSchedules #yearlyControlsDiv #byYearDayDiv #chkMonday").prop('checked', true);
+            $("#editModalSchedules #yearlyControlsDiv #byYearDayDiv #chkTuesday").prop('checked', false);
+            $("#editModalSchedules #yearlyControlsDiv #byYearDayDiv #chkWednesday").prop('checked', false);
+            $("#editModalSchedules #yearlyControlsDiv #byYearDayDiv #chkThursday").prop('checked', false);
+            $("#editModalSchedules #yearlyControlsDiv #byYearDayDiv #chkFriday").prop('checked', false);
+            $("#editModalSchedules #yearlyControlsDiv #byYearDayDiv #chkSaturday").prop('checked', false);
+            $("#editModalSchedules #yearlyControlsDiv #byYearDayDiv #chkSunday").prop('checked', false);
+
+            // All Day
+            $("#editModalSchedules #allDay").prop('checked', false);
+            $("#editModalSchedules #allDay").change();
+            $("#editModalSchedules #startDate").datetimepicker('clear');
+            $("#editModalSchedules #startTime").datetimepicker('clear');
+            $("#editModalSchedules #endTime").datetimepicker('clear');
+            $("#editModalSchedules #endDate").datetimepicker('clear');
 
             $("#editModalSchedules #submit").html("<i class='fa fa-plus'></i> Add");
 
@@ -1644,31 +2152,418 @@
             return new rrule.rrulestr(rruleString).all();
         }
 
-        function buildRRule(freq, interval, byWeekDay, dtStart, until, wkst, count, tzId, bySetPos, byMonth, byMonthDay, byNMonthDay, byYearDay, byWeekNo, byNWeekDay, byHour, byMinute, bySecond, byEaster) {
-            return new rrule.RRule({
+        function generateRRule() {
+
+            let recurrenceType = $("#editModalSchedules #recurrenceType").val();
+
+            //#region Frequency
+
+            let freq;
+            if ($("#repeatingEvent").is(':checked')) {
+                switch (recurrenceType) {
+                    case "Daily":
+                        freq = rrule.RRule.DAILY;
+                        break;
+                    case "Weekly":
+                        freq = rrule.RRule.WEEKLY;
+                        break;
+                    case "Monthly":
+                        freq = rrule.RRule.MONTHLY;
+                        break;
+                    case "Yearly":
+                        freq = rrule.RRule.YEARLY;
+                        break;
+                    default:
+                        console.error('Unsupported recurrence:', recurrenceType);
+                        showMessage("Unsupported Recurrence: " + recurrenceType, true);
+                        break;
+                }
+            }
+
+            //#endregion
+
+            //#region Interval
+
+            let interval;
+            if ($("#repeatingEvent").is(':checked')) {
+                interval = $("#editModalSchedules #interval").val();
+            }
+
+            //#endregion
+
+            //#region Date/Time Start/End
+
+            let dtStart, until;
+
+            // Is Start Date set?
+            if ($('input[data-target="#startDate"]').val().length > 0) {
+                dtStart = $("#startDate").datetimepicker('date');
+            } else {
+                dtStart = new Date(); // Today
+            }
+
+            // Is End Date set?
+            if ($('input[data-target="#endDate"]').val().length > 0) {
+                until = $("#endDate").datetimepicker('date') || null;
+            }
+
+            if ($("#allDay").is(':checked')) {
+                // Set start time to 00:00:00
+                console.log('Set start time to 12:00:00.000 AM');
+                dtStart = dtStart.startOf('day');
+
+                if (until) {
+                    // Set until time to 23:59:59
+                    console.log('Set end time to 23:59:59.999');
+                    until = until.endOf('day');
+                }
+            } else {
+                if ($('input[data-target="#startTime"]').val().length > 0) {
+                    // Set start time with startTime field value
+                    console.log("Set start time with startTime field value");
+                    let startTime = $("#startTime").datetimepicker('date').toDate();
+                    dtStart.hours(startTime.getHours());
+                    dtStart.minutes(startTime.getMinutes());
+                    dtStart.seconds(0);
+                    dtStart.milliseconds(0);
+                }
+
+                if ($('input[data-target="#endTime"]').val().length > 0 && until) {
+                    // Set end time with endTime field value
+                    console.log("Set end time with endTime field value");
+                    let endTime = $("#endTime").datetimepicker('date').toDate();
+                    until.hours(endTime.getHours());
+                    until.minutes(endTime.getMinutes());
+                    until.seconds(0);
+                    until.milliseconds(0);
+                }
+            }
+
+            //#endregion
+
+            //#region Weekly
+
+            let byWeekDay = [];
+            if (recurrenceType === "Weekly") {
+                console.log('Weekly recurrence');
+                if ($("#editModalSchedules #weeklyControlsDiv #chkMonday").is(':checked')) { byWeekDay.push(rrule.RRule.MO); }
+                if ($("#editModalSchedules #weeklyControlsDiv #chkTuesday").is(':checked')) { byWeekDay.push(rrule.RRule.TU); }
+                if ($("#editModalSchedules #weeklyControlsDiv #chkWednesday").is(':checked')) { byWeekDay.push(rrule.RRule.WE); }
+                if ($("#editModalSchedules #weeklyControlsDiv #chkThursday").is(':checked')) { byWeekDay.push(rrule.RRule.TH); }
+                if ($("#editModalSchedules #weeklyControlsDiv #chkFriday").is(':checked')) { byWeekDay.push(rrule.RRule.FR); }
+                if ($("#editModalSchedules #weeklyControlsDiv #chkSaturday").is(':checked')) { byWeekDay.push(rrule.RRule.SA); }
+                if ($("#editModalSchedules #weeklyControlsDiv #chkSunday").is(':checked')) { byWeekDay.push(rrule.RRule.SU); }
+            }
+            console.log('By Week Day:', byWeekDay);
+
+            //#endregion
+
+            //#region Monthly
+
+            let byMonthDay = [], bySetPos;
+            if (recurrenceType === "Monthly") {
+                console.log('Monthly recurrence');
+                let monthlyRecurrenceType = $("#editModalSchedules #monthlyControlsDiv #monthlyRecurrenceType").val();
+                if (monthlyRecurrenceType === "On") {
+                    byMonthDay.push($("#byMonthDay").val());
+                } else {
+                    console.log('Monthly Recurrence Type:', monthlyRecurrenceType);
+                    switch (monthlyRecurrenceType) {
+                        case "IfDayIs":
+                            // Nothing to do here
+                            break;
+                        case "First":
+                            bySetPos = [1]
+                            break;
+                        case "Second":
+                            bySetPos = [2];
+                            break;
+                        case "Third":
+                            bySetPos = [3];
+                            break;
+                        case "Fourth":
+                            bySetPos = [4];
+                            break;
+                        case "Last":
+                            bySetPos = [-1];
+                            break;
+                        default:
+                            console.error("Unsupported monthly recurrence type:", monthlyRecurrenceType);
+                            showMessage("Unsupported monthly recurrence type: " + monthlyRecurrenceType, true);
+                            break;
+                    }
+                    if ($("#editModalSchedules #monthlyControlsDiv #chkMonday").is(':checked')) { byWeekDay.push(rrule.RRule.MO); }
+                    if ($("#editModalSchedules #monthlyControlsDiv #chkTuesday").is(':checked')) { byWeekDay.push(rrule.RRule.TU); }
+                    if ($("#editModalSchedules #monthlyControlsDiv #chkWednesday").is(':checked')) { byWeekDay.push(rrule.RRule.WE); }
+                    if ($("#editModalSchedules #monthlyControlsDiv #chkThursday").is(':checked')) { byWeekDay.push(rrule.RRule.TH); }
+                    if ($("#editModalSchedules #monthlyControlsDiv #chkFriday").is(':checked')) { byWeekDay.push(rrule.RRule.FR); }
+                    if ($("#editModalSchedules #monthlyControlsDiv #chkSaturday").is(':checked')) { byWeekDay.push(rrule.RRule.SA); }
+                    if ($("#editModalSchedules #monthlyControlsDiv #chkSunday").is(':checked')) { byWeekDay.push(rrule.RRule.SU); }
+                }
+            }
+
+            //#endregion
+
+            //#region Yearly
+
+            let byMonth = [];
+            if (recurrenceType === "Yearly") {
+                console.log('Yearly recurrence');
+
+                // Got a month?
+                let yearMonthSelect = $("#editModalSchedules #yearMonthSelect").val();
+                if (yearMonthSelect.length > 0) {
+                    byMonth.push(parseInt(yearMonthSelect));
+                }
+
+                // Recurrence
+                let yearlyRecurrenceType = $("#editModalSchedules #yearlyControlsDiv #yearlyRecurrenceType").val();
+                if (yearlyRecurrenceType === "On") {
+                    byMonthDay.push($("#byYearDay").val());
+                } else {
+                    console.log('Yearly Recurrence Type:', yearlyRecurrenceType);
+                    switch (yearlyRecurrenceType) {
+                        case "IfDayIs":
+                            // Nothing to do here
+                            break;
+                        case "First":
+                            bySetPos = [1]
+                            break;
+                        case "Second":
+                            bySetPos = [2];
+                            break;
+                        case "Third":
+                            bySetPos = [3];
+                            break;
+                        case "Fourth":
+                            bySetPos = [4];
+                            break;
+                        case "Last":
+                            bySetPos = [-1];
+                            break;
+                        default:
+                            console.error("Unsupported monthly recurrence type:", monthlyRecurrenceType);
+                            showMessage("Unsupported monthly recurrence type: " + monthlyRecurrenceType, true);
+                            break;
+                    }
+                    if ($("#editModalSchedules #yearlyControlsDiv #chkMonday").is(':checked')) { byWeekDay.push(rrule.RRule.MO); }
+                    if ($("#editModalSchedules #yearlyControlsDiv #chkTuesday").is(':checked')) { byWeekDay.push(rrule.RRule.TU); }
+                    if ($("#editModalSchedules #yearlyControlsDiv #chkWednesday").is(':checked')) { byWeekDay.push(rrule.RRule.WE); }
+                    if ($("#editModalSchedules #yearlyControlsDiv #chkThursday").is(':checked')) { byWeekDay.push(rrule.RRule.TH); }
+                    if ($("#editModalSchedules #yearlyControlsDiv #chkFriday").is(':checked')) { byWeekDay.push(rrule.RRule.FR); }
+                    if ($("#editModalSchedules #yearlyControlsDiv #chkSaturday").is(':checked')) { byWeekDay.push(rrule.RRule.SA); }
+                    if ($("#editModalSchedules #yearlyControlsDiv #chkSunday").is(':checked')) { byWeekDay.push(rrule.RRule.SU); }
+                }
+            }
+
+            //#endregion
+
+            let rule = new rrule.RRule({
                 freq: freq,
                 interval: interval,
+                dtstart: dtStart.toDate(),
+                until: until.toDate(),
                 byweekday: byWeekDay,
-                dtstart: dtStart,
-                until: until,
-                wkst: wkst,
-                count: count,
-                tzid: tzId,
-                bysetpos: bySetPos,
-                bymonth: byMonth,
                 bymonthday: byMonthDay,
-                bynmonthday: byNMonthDay,
-                byyearday: byYearDay,
-                byweekno: byWeekNo,
-                bynweekday: byNWeekDay,
-                byhour: byHour,
-                byminute: byMinute,
-                bysecond: bySecond,
-                byeaster: byEaster
+                bysetpos: bySetPos,
+                bymonth: byMonth
+                //wkst: wkst,
+                //count: count,
+                //tzid: tzId,
+                //bynmonthday: byNMonthDay,
+                //byyearday: byYearDay,
+                //byweekno: byWeekNo,
+                //bynweekday: byNWeekDay,
+                //byhour: byHour,
+                //byminute: byMinute,
+                //bysecond: bySecond,
+                //byeaster: byEaster
+            });
+            console.log('Generated RRule:', rule);
+
+            return rule;
+        }
+
+        $("#generateRRule").on('click', (e) => {
+            e.preventDefault();
+            let generatedRRuleCode = generateRRule().toString();
+            console.log('Display RRule:', generatedRRuleCode);
+            $("#generatedRRuleCode").text(generatedRRuleCode.toString());
+        });
+
+        //#endregion
+
+        //#endregion
+
+        //#region Holidays
+
+        var dbHolidays = {
+            loadData: function (filter) {
+                return $.grep(this.holidays, function (holiday) {
+                    return (!filter.holidayName || holiday.holidayName.toLowerCase().indexOf(filter.holidayName.toLowerCase()) > -1)
+                        && (!filter.holidayDate || holiday.holidayDate.toLowerCase().indexOf(filter.holidayDate.toLowerCase()) > -1);
+                });
+            },
+            insertItem: function (insertingHoliday) {
+                this.holidays.push(insertingHoliday);
+            },
+            updateItem: function (updatingHoliday) { },
+            deleteItem: function (deletingHoliday) { }
+        };
+
+        window.dbHolidays = dbHolidays;
+
+        var formSubmitHandlerHolidays = $.noop;
+
+        let validatorHolidays = $("#editModalHolidays #modal-form").validate({
+            errorClass: "text-danger",
+            successClass: "test-success",
+            submitHandler: function () {
+                formSubmitHandlerHolidays();
+            }
+        });
+
+        $("#addHoliday").on('click', (e) => {
+            e.preventDefault();
+            showHolidaysModal("Add", {});
+        });
+
+        function initHolidaysGrid() {
+            const maxHolidays = 99;
+
+            dbHolidays.holidays = caItem.hasOwnProperty('holidays') ? caItem.holidays : [];
+
+            $("#jsGridHolidays").jsGrid({
+                height: "auto",
+                width: "100%",
+                editing: true,
+                autoload: true,
+                sorting: false,
+                filtering: false,
+                paging: false,
+                noDataContent: "No Holidays",
+                confirmDeleting: false,
+                onError: function (args) {
+                    console.error('Failed to load grid data:', args);
+                    showMessage("An error occurred while loading your data", true);
+                },
+                rowClick: function (args) {
+                    showHolidaysModal("Edit", args.item);
+                },
+                onDataLoaded: function (args) {
+                    $("#addHoliday").attr('disabled', $("#jsGridHolidays").jsGrid("option", "data").length >= maxHolidays);
+                },
+                onItemInserted: function (args) {
+                    $("#addHoliday").attr('disabled', $("#jsGridHolidays").jsGrid("option", "data").length >= maxHolidays);
+                },
+                onItemUpdated: function (args) {
+                    $("#addHoliday").attr('disabled', $("#jsGridHolidays").jsGrid("option", "data").length >= maxHolidays);
+                },
+                onItemDeleting: function (args) {
+                    console.log("onItemDeleting");
+                    if (!args.item.deleteConfirmed) { // custom property for confirmation
+                        args.cancel = true; // cancel deleting
+                        bootbox.confirm({
+                            message: 'Do you really want to delete this holiday?',
+                            buttons: {
+                                confirm: {
+                                    label: "Delete!",
+                                    className: "btn-danger"
+                                },
+                                cancel: {
+                                    label: "No",
+                                    className: "btn-secondary"
+                                }
+                            },
+                            callback: async function (result) {
+                                if (result) {
+                                    args.item.deleteConfirmed = true;
+                                    $("#jsGridHolidays").jsGrid('deleteItem', args.item); // Remove item from grid
+                                    removeFromArray(dbHolidays.holidays, args.item); // Remove item from db
+                                    showMessage("Holiday deleted", false);
+                                }
+                            }
+                        });
+                    }
+                },
+                onItemDeleted: function (args) {
+                    $("#addHoliday").attr('disabled', $("#jsGridHolidays").jsGrid("option", "data").length >= maxHolidays);
+                },
+                controller: dbHolidays,
+                fields: [
+                    {
+                        name: "holidayName",
+                        title: "Name",
+                        type: "text",
+                        align: "center"
+                    },
+                    {
+                        name: "holidayDate",
+                        title: "Date",
+                        type: "text",
+                        align: "center",
+                        itemTemplate: function (value, item) {
+                            if (value) {
+                                return moment(value).format('L');
+                            } else {
+                                return value;
+                            }
+                        }
+                    },
+                    {
+                        type: "control",
+                        modeSwitchButton: false,
+                        editButton: false,
+                        width: 68,
+                        align: "center",
+                        headerTemplate: function () {
+                            return "Actions";
+                        }
+                    }
+                ]
             });
         }
 
-        //#endregion
+        var showHolidaysModal = function (dialogType, item) {
+            console.log('Showing details for:', item);
+
+            $("#editModalHolidays #holidayName").val(item.holidayName)
+            if (item.holidayDate) $("#editModalHolidays #holidayDate").datetimepicker('date', moment(item.holidayDate));
+            $("#editModalHolidays #submit").html("<i class='fa fa-floppy-o'></i> Save");
+            formSubmitHandlerHolidays = function () {
+                saveHoliday(item, dialogType === "Add");
+            };
+            $("#editModalHolidays").modal('show');
+        };
+
+        var saveHoliday = function (item, isNew) {
+            console.log('Extending item:', item);
+            $.extend(item, {
+                holidayName: $("#editModalHolidays #holidayName").val(),
+                holidayDate: $("#editModalHolidays #holidayDate").datetimepicker('date').toDate()
+            });
+            console.log('Extended Item:', item);
+            console.log('IsNew?', isNew)
+            $("#jsGridHolidays").jsGrid(isNew ? "insertItem" : "updateItem", item);
+            $("#editModalHolidays").modal('hide');
+        };
+
+        $("#editModalHolidays").on('shown.bs.modal', function () {
+            $("#holidayName").focus();
+        });
+
+        $('#editModalHolidays').on('hidden.bs.modal', async () => {
+            console.log('Clearing holidays modal')
+            initHolidaysModal();
+        });
+
+        function initHolidaysModal() {
+            $("#editModalHolidays #holidayName").val("");
+            $("#editModalHolidays #holidayDate").datetimepicker('clear');
+            $("#editModalHolidays #submit").html("<i class='fa fa-plus'></i> Add");
+
+            validatorHolidays.resetForm(); // Reset validation errors
+        }
 
         //#endregion
 
@@ -1885,9 +2780,11 @@
                 },
                 onItemInserted: function (args) {
                     $("#addWrapUpCode").attr('disabled', $("#jsGridWrapUpCodes").jsGrid("option", "data").length >= maxItems);
+                    refreshWrapUpCodesDropDownForQueues();
                 },
                 onItemUpdated: function (args) {
                     $("#addWrapUpCode").attr('disabled', $("#jsGridWrapUpCodes").jsGrid("option", "data").length >= maxItems);
+                    refreshWrapUpCodesDropDownForQueues();
                 },
                 onItemDeleting: function (args) {
                     console.log("onItemDeleting");
@@ -1910,6 +2807,7 @@
                                     args.item.deleteConfirmed = true;
                                     $("#jsGridWrapUpCodes").jsGrid('deleteItem', args.item); // Remove item from grid
                                     removeFromArray(dbWrapUpCodes.wrapUpCodes, args.item); // Remove item from db
+                                    refreshWrapUpCodesDropDownForQueues();
                                     showMessage("WrapUp Code deleted", false);
                                 }
                             }
@@ -1958,7 +2856,8 @@
                 wrapUpCode: $("#editModalWrapUpCodes #wrapUpCode").val()
             });
             console.log('Extended Item:', item);
-            console.log('IsNew?', isNew)
+            console.log('IsNew?', isNew);
+
             $("#jsGridWrapUpCodes").jsGrid(isNew ? "insertItem" : "updateItem", item);
             $("#editModalWrapUpCodes").modal('hide');
         };
@@ -1978,10 +2877,31 @@
             validatorWrapUpCodes.resetForm(); // Reset validation errors
         }
 
+        function refreshWrapUpCodesDropDownForQueues() {
+            console.log('refreshWrapUpCodesDropDownForQueues()');
+            $("#editModalQueues #queueWrapUpCode option").remove();
+
+            if (dbWrapUpCodes.wrapUpCodes && dbWrapUpCodes.wrapUpCodes.length > 0) {
+                $.each(dbWrapUpCodes.wrapUpCodes, (i, aItem) => {
+                    console.log('wrapUpCodeName: ', aItem.wrapUpCode);
+                    $("<option/>", { value: aItem.wrapUpCode }).text(aItem.wrapUpCode).appendTo("#editModalQueues #queueWrapUpCode");
+                });
+                $("#editModalQueues #queueWrapUpCode").selectpicker('refresh');
+            } else {
+                console.log('No WrapUp codes found...');
+            }
+        }
+
         //#endregion
 
-
         //#region Queues
+
+        $("#queueWrapUpCode").selectpicker({
+            width: '100%',
+            selectedTextFormat: 'count > 3',
+            title: "Select one or more WrapUp Codes"
+        });
+
 
         var dbQueues = {
             loadData: function (filter) {
@@ -2008,9 +2928,21 @@
             }
         });
 
+
         $("#addQueue").on('click', (e) => {
             e.preventDefault();
             showQueuesModal("Add", {});
+        });
+
+
+        $("#editModalQueues #acw").on('change', (e) => {
+            e.preventDefault();
+            if ($("#editModalQueues #acw").val() !== "MANDATORY, OPTIONAL")
+                $("#editModalQueues #acwTimeout").attr('disabled', false)
+            else {
+                $("#editModalQueues #acwTimeout").attr('disabled', true);
+                $("#editModalQueues #acwTimeout").val('');
+            }
         });
 
         function initQueuesGrid() {
@@ -2023,8 +2955,7 @@
                 width: "100%",
                 editing: true,
                 autoload: true,
-
-                sorting: false,
+                sorting: true,
                 filtering: false,
                 paging: false,
                 noDataContent: "No Queues",
@@ -2076,6 +3007,7 @@
                 onItemDeleted: function (args) {
                     $("#addQueue").attr('disabled', $("#jsGridQueues").jsGrid("option", "data").length >= maxItems);
                 },
+
                 controller: dbQueues,
                 fields: [
                     {
@@ -2118,9 +3050,28 @@
 
         var showQueuesModal = function (dialogType, item) {
             console.log('Showing details for:', item);
+            $('#queueAdvancedSettings').collapse('hide');
+            $("#editModalQueues #queueWrapUpCode").selectpicker('refresh');
+
             $("#editModalQueues #queueName").val(item.queueName);
             $("#editModalQueues #enableCallbacks").prop('checked', item.enableCallbacks);
             $("#editModalQueues #enableEmails").prop('checked', item.enableEmails);
+            $("#editModalQueues #acw").val(item.acw ? item.acw : 'MANDATORY, OPTIONAL');
+            $("#editModalQueues #acwTimeout").val((item.acwTimeout && item.acwTimeout !== 'n/a') ? item.acwTimeout : '');
+            if ($("#editModalQueues #acw").val() !== "MANDATORY, OPTIONAL")
+                $("#editModalQueues #acwTimeout").attr('disabled', false);
+            else
+                $("#editModalQueues #acwTimeout").attr('disabled', true);
+
+            $("#editModalQueues #evaluationMethod").val(item.evaluationMethod ? item.evaluationMethod : 'NONE');
+            $("#editModalQueues #alertingTimeout").val((item.alertingTimeout && item.alertingTimeout !== 'n/a') ? item.alertingTimeout : '15');
+            $("#editModalQueues #slPercentage").val((item.slPercentage && item.slPercentage !== 'n/a') ? item.slPercentage : '80');
+            $("#editModalQueues #slDuration").val(item.slDuration ? item.slDuration : '20');
+            $("#editModalQueues #callingPartyName").val((item.callingPartyName && item.callingPartyName !== 'n/a') ? item.callingPartyName : undefined);
+            $("#editModalQueues #callingPartyNumber").val((item.callingPartyNumber && item.callingPartyNumber !== 'n/a') ? item.callingPartyNumber : undefined);
+            $("#editModalQueues #queueWrapUpCode").val(item.wrapUpCodes ? item.wrapUpCodes : undefined);
+            $("#editModalQueues #queueWrapUpCode").selectpicker('refresh');
+
             $("#editModalQueues #submit").html("<i class='fa fa-floppy-o'></i> Save");
             formSubmitHandlerQueues = function () {
                 saveQueue(item, dialogType === "Add");
@@ -2134,7 +3085,16 @@
             $.extend(item, {
                 queueName: $("#editModalQueues #queueName").val(),
                 enableCallbacks: $("#editModalQueues #enableCallbacks").is(":checked"),
-                enableEmails: $("#editModalQueues #enableEmails").is(":checked")
+                enableEmails: $("#editModalQueues #enableEmails").is(":checked"),
+                acw: $("#editModalQueues #acw").val(),
+                acwTimeout: $("#editModalQueues #acwTimeout").val() == "" ? 'n/a' : $("#editModalQueues #acwTimeout").val(),
+                evaluationMethod: $("#editModalQueues #evaluationMethod").val(),
+                alertingTimeout: $("#editModalQueues #alertingTimeout").val() == "" ? '15' : $("#editModalQueues #alertingTimeout").val(),
+                slPercentage: $("#editModalQueues #slPercentage").val() == "" ? '80' : $("#editModalQueues #slPercentage").val(),
+                slDuration: $("#editModalQueues #slDuration").val() == "" ? '20' : $("#editModalQueues #slDuration").val(),
+                callingPartyName: $("#editModalQueues #callingPartyName").val() == "" ? 'n/a' : $("#editModalQueues #callingPartyName").val(),
+                callingPartyNumber: $("#editModalQueues #callingPartyNumber").val() == "" ? 'n/a' : $("#editModalQueues #callingPartyNumber").val(),
+                wrapUpCodes: $("#editModalQueues #queueWrapUpCode").val()
             });
             console.log('Extended Item:', item);
             console.log('IsNew?', isNew)
@@ -2157,6 +3117,193 @@
             $("#editModalQueues #submit").html("<i class='fa fa-plus'></i> Add");
 
             validatorQueues.resetForm(); // Reset validation errors
+        }
+
+        //#endregion
+
+        //#region Call Flow Experience
+
+        let callFlowExperience = {
+            default: "",
+            "1": {},
+            "2": {},
+            "3": {},
+            "4": {},
+            "5": {},
+            "6": {},
+            "7": {},
+            "8": {},
+            "9": {},
+            "0": {}
+        };
+
+        $('.num').click(function () {
+            var menuDigit = $.trim($(this).find('.txt').clone().children().remove().end().text());
+            console.log(menuDigit);
+            if (Object.keys(callFlowExperience[menuDigit]).length > 0) {
+                console.log(`Edit ${callFlowExperience[menuDigit]} for digit: ${menuDigit}`);
+                showCallFlowExperienceModal("Edit", menuDigit, callFlowExperience[menuDigit]);
+            } else {
+                console.log(`Adding new call flow experience for digit: ${menuDigit}`);
+                showCallFlowExperienceModal("Add", menuDigit, {});
+            }
+        });
+
+        var formSubmitHandlerCallFlowExperience = $.noop;
+
+        let validatorCallFlowExperience = $("#editModalCallFlowExperience #modal-form").validate({
+            errorClass: "text-danger",
+            successClass: "test-success",
+            submitHandler: function () {
+                formSubmitHandlerCallFlowExperience();
+            }
+        });
+
+        //TODO Add Play message and disconnect
+        //TODO Add Repeat Menu
+        //TODO Save to JSON object (need a getCallFlowExperience() function?)
+
+        var showCallFlowExperienceModal = function (dialogType, menuDigit, item) {
+            console.log('Showing details for:', item);
+
+            // Populate queues
+            $("#editModalCallFlowExperience #queues").empty();
+            $("<option/>", { value: "", disabled: true, selected: true }).text("Select a Queue").appendTo("#queues");
+            $.each($("#jsGridQueues").jsGrid("option", "data"), (key, item) => {
+                $("<option/>", { value: item.queueName }).text(item.queueName).appendTo("#queues");
+            });
+
+            // Populate skills
+            $("#editModalCallFlowExperience #skills").empty();
+            $("<option/>", { value: "", disabled: true, selected: true }).text("Select a Skill").appendTo("#skills");
+            $.each($("#jsGridSkills").jsGrid("option", "data"), (key, item) => {
+                $("<option/>", { value: item.skillName }).text(item.skillName).appendTo("#skills");
+            });
+
+            // Populate prompts
+            $("#editModalCallFlowExperience #prompts").empty();
+            $("<option/>", { value: "", disabled: true, selected: true }).text("Select a Prompt").appendTo("#prompts");
+            $.each($("#jsGridPrompts").jsGrid("option", "data"), (key, item) => {
+                $("<option/>", { value: item.promptName }).text(item.promptName).appendTo("#prompts");
+            });
+
+            if (!item.hasOwnProperty('menuDigit')) { item.menuDigit = menuDigit; }
+
+            $("#editModalCallFlowExperience #title").text(`Option ${item.menuDigit}`);
+            $("#editModalCallFlowExperience #default").prop('checked', callFlowExperience.default === item.menuDigit);
+            $("#editModalCallFlowExperience #behavior").val(item.behavior);
+            $("#editModalCallFlowExperience #behavior").change();
+            $("#editModalCallFlowExperience #queues").val(item.queueName);
+            $("#editModalCallFlowExperience #skills").val(item.skill);
+            $("#editModalCallFlowExperience #prompts").val(item.prompt);
+
+            $("#editModalCallFlowExperience #submit").html("<i class='fa fa-floppy-o'></i> Save");
+            formSubmitHandlerCallFlowExperience = function () {
+                saveCallFlowExperience(item, dialogType === "Add");
+            };
+            $("#editModalCallFlowExperience").modal('show');
+        };
+
+        $("#editModalCallFlowExperience #behavior").on('change', () => {
+            let behavior = $("#editModalCallFlowExperience #behavior").val();
+            switch (behavior) {
+                case "transferToQueue":
+                    $("#editModalCallFlowExperience #queuesDiv").show();
+                    $("#editModalCallFlowExperience #skillsDiv").show();
+                    $("#editModalCallFlowExperience #promptsDiv").hide();
+                    break;
+                case "playMessageAndDisconnect":
+                    $("#editModalCallFlowExperience #queuesDiv").hide();
+                    $("#editModalCallFlowExperience #skillsDiv").hide();
+                    $("#editModalCallFlowExperience #promptsDiv").show();
+                    break;
+                case "repeatMenu":
+                    $("#editModalCallFlowExperience #queuesDiv").hide();
+                    $("#editModalCallFlowExperience #skillsDiv").hide();
+                    $("#editModalCallFlowExperience #promptsDiv").hide();
+                    break;
+                default:
+                    $("#editModalCallFlowExperience #queuesDiv").hide();
+                    $("#editModalCallFlowExperience #skillsDiv").hide();
+                    $("#editModalCallFlowExperience #promptsDiv").hide();
+                    break;
+            }
+        });
+
+        var saveCallFlowExperience = function (item, isNew) {
+            try {
+                console.log('Extending item:', item);
+                $.extend(item, {
+                    behavior: $("#editModalCallFlowExperience #behavior").val(),
+                    queueName: $("#editModalCallFlowExperience #queues").val(),
+                    skill: $("#editModalCallFlowExperience #skills").val()
+                });
+                if ($("#editModalCallFlowExperience #default").is(":checked")) {
+                    callFlowExperience.default = item.menuDigit;
+                }
+                console.log('Extended Item:', item);
+                console.log('IsNew?', isNew);
+                let newItem = {};
+                Object.assign(newItem, item); // Copy object
+                delete newItem.menuDigit;
+                callFlowExperience[item.menuDigit] = newItem;
+                console.log('Call Flow Experience:', callFlowExperience);
+
+                // Clear existing colors
+                $.each($("[data-digit]"), (i, item) => {
+                    item.classList.remove('text-success');
+                    item.parentNode.classList.remove('bg-secondary');
+                });
+
+                // Set text colors if digit has fields set
+                $.each(callFlowExperience, (i, callFlowExperienceItem) => {
+                    let digitControl = $(`*[data-digit='${i}']`).eq(0);
+                    if (callFlowExperienceItem.hasOwnProperty('behavior') && callFlowExperienceItem.behavior.length > 0) {
+                        digitControl.removeClass('text-success').addClass('text-success'); // Making sure it's not added twice
+                    } else {
+                        digitControl.removeClass('text-success');
+                    }
+                });
+
+                // Set background color for default digit
+                if (callFlowExperience.default.length > 0) {
+                    let defaultDigitControl = $(`*[data-digit='${callFlowExperience.default}']`).eq(0);
+
+                    // Set round circle color
+                    let parentDiv = defaultDigitControl.parent(); // Round item is parent of the digit text
+                    parentDiv.removeClass('bg-secondary').addClass('bg-secondary'); // Making sure it's not added twice
+                }
+
+                $("#editModalCallFlowExperience").modal('hide');
+            } catch (error) {
+                console.error(error);
+                showMessage(error, true);
+            }
+        };
+
+        //TODO Load call flow experience on phone pad
+        var initCallFlowExperience = function (callFlowExperience) {
+
+        }
+
+        $("#editModalCallFlowExperience").on('shown.bs.modal', function () {
+            $("#editModalCallFlowExperience #menuDigit").focus();
+        });
+
+        $('#editModalCallFlowExperience').on('hidden.bs.modal', async () => {
+            initCallFlowExperienceModal();
+        });
+
+        function initCallFlowExperienceModal() {
+            $("#editModalCallFlowExperience #default").prop('checked', false);
+            $("#editModalCallFlowExperience #behavior").val("");
+            $("#editModalCallFlowExperience #behavior").change();
+            $("#editModalCallFlowExperience #queues").val("");
+            $("#editModalCallFlowExperience #skills").val("");
+            $("#editModalCallFlowExperience #prompts").val("");
+            $("#editModalCallFlowExperience #submit").html("<i class='fa fa-plus'></i> Add");
+
+            validatorCallFlowExperience.resetForm(); // Reset validation errors
         }
 
         //#endregion
