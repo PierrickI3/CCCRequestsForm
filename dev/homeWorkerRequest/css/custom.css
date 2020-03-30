@@ -19,6 +19,11 @@
     opacity: 1.0;
 }
 
+.task-wait td:first-child {
+    background-color: orange !important;
+}
+
+
 .task-hidden td {
     display: none;
 }
