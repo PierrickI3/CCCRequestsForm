@@ -41,7 +41,7 @@
             </ul>
 
             <ul class="nav navbar-nav" style="float: right;">
-                <li><button id="saveDraft" href="#" onclick="saveDraft();" class="btn btn-primary btn-sm ml-2" disabled>Save draft</button></li>
+                <li><button id="saveDraft" href="#" onclick="saveDraft(true);" class="btn btn-primary btn-sm ml-2" disabled>Save draft</button></li>
             </ul>
         </ul>
     </nav>
@@ -70,7 +70,7 @@
                             <div class="card-header card-header-top" id="headingOne">
                                 <h5 class="mb-0">
                                     <button class="btn btn-outline-success collapsed" data-toggle="collapse" data-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
-                                        Request details
+                                        Linked request
                                     </button>
                                 </h5>
                             </div>
@@ -174,7 +174,7 @@
                                                                     <span aria-hidden="true">&times;</span>
                                                                 </button>
                                                             </div>
-                                                            <form class="modal-body form-horizontal" id="modal-form">
+                                                            <form class="modal-body form-horizontal">
                                                                 <div class="form-group">
 
                                                                     <div class="form-group row">
@@ -235,8 +235,8 @@
                                                                     </div>
 
                                                                     <div class="modal-footer">
-                                                                        <button id="btnClose" type="button" class="btn btn-link pull-right" data-dismiss="modal">Close</button>
-                                                                        <button id="submit" type="submit" class="btn btn-primary pull-left"><i class="fa fa-plus"></i> Add</button>
+                                                                        <button type="button" class="btn btn-link pull-right" data-dismiss="modal">Close</button>
+                                                                        <button type="submit" class="btn btn-primary pull-left"><i class="fa fa-plus"></i> Add</button>
                                                                     </div>
                                                             </form>
                                                         </div>
@@ -273,7 +273,7 @@
                                                                     <span aria-hidden="true">&times;</span>
                                                                 </button>
                                                             </div>
-                                                            <form class="modal-body form-horizontal" id="modal-form">
+                                                            <form class="modal-body form-horizontal">
                                                                 <div class="form-group">
 
                                                                     <div class="form-group row">
@@ -470,8 +470,8 @@
                                                                 <div class="modal-footer">
                                                                     <code id="generatedRRuleCode"></code>
                                                                     <button id="generateRRule" type="button" class="btn btn-dark">Generate Rule</button>
-                                                                    <button id="btnClose" type="button" class="btn btn-link pull-right" data-dismiss="modal">Close</button>
-                                                                    <button id="submit" type="submit" class="btn btn-primary pull-left"><i class="fa fa-plus"></i> Add</button>
+                                                                    <button type="button" class="btn btn-link pull-right" data-dismiss="modal">Close</button>
+                                                                    <button type="submit" class="btn btn-primary pull-left"><i class="fa fa-plus"></i> Add</button>
                                                                 </div>
                                                             </form>
                                                         </div>
@@ -508,7 +508,7 @@
                                                                     <span aria-hidden="true">&times;</span>
                                                                 </button>
                                                             </div>
-                                                            <form class="modal-body form-horizontal" id="modal-form">
+                                                            <form class="modal-body form-horizontal">
                                                                 <div class="form-group">
 
                                                                     <div class="form-group row">
@@ -530,8 +530,8 @@
                                                                 </div>
 
                                                                 <div class="modal-footer">
-                                                                    <button id="btnClose" type="button" class="btn btn-link pull-right" data-dismiss="modal">Close</button>
-                                                                    <button id="submit" type="submit" class="btn btn-primary pull-left"><i class="fa fa-plus"></i> Add</button>
+                                                                    <button type="button" class="btn btn-link pull-right" data-dismiss="modal">Close</button>
+                                                                    <button type="submit" class="btn btn-primary pull-left"><i class="fa fa-plus"></i> Add</button>
                                                                 </div>
                                                             </form>
                                                         </div>
@@ -568,7 +568,7 @@
                                                                     <span aria-hidden="true">&times;</span>
                                                                 </button>
                                                             </div>
-                                                            <form class="modal-body form-horizontal" id="modal-form">
+                                                            <form class="modal-body form-horizontal">
                                                                 <div class="form-group">
 
                                                                     <div class="form-group row">
@@ -579,8 +579,8 @@
                                                                     </div>
 
                                                                     <div class="modal-footer">
-                                                                        <button id="btnClose" type="button" class="btn btn-link pull-right" data-dismiss="modal">Close</button>
-                                                                        <button id="submit" type="submit" class="btn btn-primary pull-left"><i class="fa fa-plus"></i> Add</button>
+                                                                        <button type="button" class="btn btn-link pull-right" data-dismiss="modal">Close</button>
+                                                                        <button type="submit" class="btn btn-primary pull-left"><i class="fa fa-plus"></i> Add</button>
                                                                     </div>
                                                             </form>
                                                         </div>
@@ -617,7 +617,7 @@
                                                                     <span aria-hidden="true">&times;</span>
                                                                 </button>
                                                             </div>
-                                                            <form class="modal-body form-horizontal" id="modal-form">
+                                                            <form class="modal-body form-horizontal">
                                                                 <div class="form-group">
 
                                                                     <div class="form-group row">
@@ -628,8 +628,8 @@
                                                                     </div>
 
                                                                     <div class="modal-footer">
-                                                                        <button id="btnClose" type="button" class="btn btn-link pull-right" data-dismiss="modal">Close</button>
-                                                                        <button id="submit" type="submit" class="btn btn-primary pull-left"><i class="fa fa-plus"></i> Add</button>
+                                                                        <button type="button" class="btn btn-link pull-right" data-dismiss="modal">Close</button>
+                                                                        <button type="submit" class="btn btn-primary pull-left"><i class="fa fa-plus"></i> Add</button>
                                                                     </div>
                                                             </form>
                                                         </div>
@@ -666,7 +666,7 @@
                                                                     <span aria-hidden="true">&times;</span>
                                                                 </button>
                                                             </div>
-                                                            <form class="modal-body form-horizontal" id="modal-form">
+                                                            <form class="modal-body form-horizontal">
                                                                 <div class="form-group">
                                                                     <!-- QueueName -->
                                                                     <div class="form-group row">
@@ -770,8 +770,8 @@
                                                                     </div>
 
                                                                     <div class="modal-footer">
-                                                                        <button id="btnClose" type="button" class="btn btn-link pull-right" data-dismiss="modal">Close</button>
-                                                                        <button id="submit" type="submit" class="btn btn-primary pull-left"><i class="fa fa-plus"></i> Add</button>
+                                                                        <button type="button" class="btn btn-link pull-right" data-dismiss="modal">Close</button>
+                                                                        <button type="submit" class="btn btn-primary pull-left"><i class="fa fa-plus"></i> Add</button>
                                                                     </div>
                                                             </form>
                                                         </div>
@@ -807,7 +807,7 @@
                                                                     <span aria-hidden="true">&times;</span>
                                                                 </button>
                                                             </div>
-                                                            <form class="modal-body form-horizontal" id="modal-form">
+                                                            <form class="modal-body form-horizontal">
                                                                 <div class="form-group">
 
                                                                     <div class="form-group row">
@@ -855,8 +855,8 @@
                                                                     </div>
 
                                                                     <div class="modal-footer">
-                                                                        <button id="btnClose" type="button" class="btn btn-link pull-right" data-dismiss="modal">Close</button>
-                                                                        <button id="submit" type="submit" class="btn btn-primary pull-left"><i class="fa fa-plus"></i> Add</button>
+                                                                        <button type="button" class="btn btn-link pull-right" data-dismiss="modal">Close</button>
+                                                                        <button type="submit" class="btn btn-primary pull-left"><i class="fa fa-plus"></i> Add</button>
                                                                     </div>
                                                             </form>
                                                         </div>
@@ -1024,7 +1024,7 @@
                                                                     <span aria-hidden="true">&times;</span>
                                                                 </button>
                                                             </div>
-                                                            <form class="modal-body form-horizontal" id="modal-form">
+                                                            <form class="modal-body form-horizontal">
                                                                 <div class="form-group">
 
                                                                     <div class="form-group row">
@@ -1071,8 +1071,8 @@
                                                                     </div>
 
                                                                     <div class="modal-footer">
-                                                                        <button id="btnClose" type="button" class="btn btn-link pull-right" data-dismiss="modal">Close</button>
-                                                                        <button id="submit" type="submit" class="btn btn-primary pull-left"><i class="fa fa-plus"></i> Add</button>
+                                                                        <button type="button" class="btn btn-link pull-right" data-dismiss="modal">Close</button>
+                                                                        <button type="submit" class="btn btn-primary pull-left"><i class="fa fa-plus"></i> Add</button>
                                                                     </div>
                                                             </form>
                                                         </div>
@@ -1118,7 +1118,7 @@
                                                                     <span aria-hidden="true">&times;</span>
                                                                 </button>
                                                             </div>
-                                                            <form class="modal-body form-horizontal" id="modal-form">
+                                                            <form class="modal-body form-horizontal">
                                                                 <div class="form-group">
 
                                                                     <div class="form-group row">
@@ -1144,8 +1144,8 @@
 
 
                                                                     <div class="modal-footer">
-                                                                        <button id="btnClose" type="button" class="btn btn-link pull-right" data-dismiss="modal">Close</button>
-                                                                        <button id="submit" type="submit" class="btn btn-primary pull-left"><i class="fa fa-plus"></i> Add</button>
+                                                                        <button type="button" class="btn btn-link pull-right" data-dismiss="modal">Close</button>
+                                                                        <button type="submit" class="btn btn-primary pull-left"><i class="fa fa-plus"></i> Add</button>
                                                                     </div>
                                                             </form>
                                                         </div>
@@ -1265,7 +1265,7 @@
                     console.log(request);
                     $('#badgePill')[0].innerHTML = "1";
                     console.log(request);
-                    $('#requestDetails')[0].innerHTML = `Related to Partner/Customer Name <B>${request.partnerCustomerName}</B> requested by <em>${request.requesterName}</em>`;
+                    $('#requestDetails')[0].innerHTML = `Related to Partner/Customer Name: <B>${request.partnerCustomerName}</B> requested by <em>${request.requesterName}</em>`;
                 } catch (error) {
                     console.error(error);
                     if (error.status !== 404) {
@@ -1303,7 +1303,6 @@
             } else {
                 // New not related RequestForm                
                 $('#badgePill')[0].innerHTML = "NEW";
-                enableForm(true);
 
                 initLocationsGrid();
                 initHolidaysGrid();
@@ -1313,6 +1312,10 @@
                 initPromptsGrid();
                 initQueuesGrid();
                 initDIDsGrid();
+
+                await saveDraft(false);
+                enableForm(true);
+
             }
         }
 
@@ -1326,7 +1329,7 @@
 
         function loadDraftConfiguration() {
             console.log('function loadDraftConfiguration');
-            if (caItem) {
+            if (caItem && caItem.hasOwnProperty('organizationSetup')) {
                 // organization
                 $('#companyName').val(caItem.organizationSetup.companyName);
                 $('#genesysCloudRegion').val(caItem.organizationSetup.genesysCloudRegion);
@@ -1340,6 +1343,7 @@
                 initPromptsGrid();
                 initQueuesGrid();
                 initCallFlowExperience(caItem.callFlowExperience);
+                $('#mainInboundNumber').val(caItem.dids.mainInboundNumber == "n/a" ? '' : caItem.dids.mainInboundNumber);
                 initDIDsGrid();
                 refreshWrapUpCodesDropDownForQueues();
             }
@@ -1394,8 +1398,10 @@
                 json.skills = $("#jsGridSkills").jsGrid("option", "data");
             if ($("#jsGridWrapUpCodes").jsGrid("option", "data").length > 0)
                 json.wrapUpCodes = $("#jsGridWrapUpCodes").jsGrid("option", "data");
-            if ($("#jsGridPrompts").jsGrid("option", "data").length > 0)
+            /*  //There are Empty Strings inside
+                if ($("#jsGridPrompts").jsGrid("option", "data").length > 0)
                 json.prompts = $("#jsGridPrompts").jsGrid("option", "data");
+            */
             if ($("#jsGridQueues").jsGrid("option", "data").length > 0) {
                 $.each($("#jsGridQueues").jsGrid("option", "data"), (key, item) => {
                     json.queues.push({
@@ -1414,10 +1420,11 @@
                     })
                 });
             }
+            /* //There are Empty Strings inside
             json.callFlowExperience = callFlowExperience;
             if ($('#mainInboundNumber').val().length > 0)
                 json.dids.mainInboundNumber = $('#mainInboundNumber').val();
-
+            */
             if ($("#jsGridDIDs").jsGrid("option", "data").length > 0) {
                 $.each($("#jsGridDIDs").jsGrid("option", "data"), (key, item) => {
                     json.dids.ranges.push({
@@ -1428,13 +1435,14 @@
                     })
                 });
             }
+            json.dids.mainInboundNumber = $('#mainInboundNumber').val().length > 0 ? $('#mainInboundNumber').val() : 'n/a';
 
 
             console.log(json);
             return json;
         }
 
-        async function saveDraft() {
+        async function saveDraft(_manualSave) {
             console.log('saveDraft()');
 
             // Disable button
@@ -1448,10 +1456,15 @@
                 if (caItem && caItem.id) {
                     await ca_updateItem(caItem.id, json);
                 } else {
+                    if (id)
+                        json.id = id;
                     caItem = await ca_createItem(json);
                     console.log(`responseId created on CA db: ${caItem.id}`);
-                    window.history.pushState('', 'CC Rapid Response Request Form', `${window.location.href}?id=${caItem.id}`);
-                    $('#badgePill')[0].innerHTML = "";
+                    if (!id)
+                        window.history.pushState('', 'CC Rapid Response Request Form', `${window.location.href}?id=${caItem.id}`);
+                    if (_manualSave)
+                        $('#badgePill')[0].innerHTML = "";
+
                 }
             } catch (error) {
                 console.error(error);
@@ -1462,7 +1475,8 @@
                 $("#saveDraft").prop('disabled', false);
                 $("#saveDraft").html('Save draft');
             }
-            showMessage("Draft updated", false);
+            if (_manualSave)
+                showMessage("Draft updated", false);
         }
 
         function exportCSV() {
@@ -3830,12 +3844,12 @@
 
         var dbDIDs = {
             loadData: function (filter) {
-                return $.grep(this.DIDs, function (DID) {
+                return $.grep(this.DIDs.ranges, function (DID) {
                     return (!filter.didStart || DID.didStart.toLowerCase().indexOf(filter.didStart.toLowerCase()) > -1);
                 });
             },
             insertItem: function (insertingDID) {
-                this.DIDs.push(insertingDID);
+                this.DIDs.ranges.push(insertingDID);
             },
             updateItem: function (updatingDID) { },
             deleteItem: function (deletingDID) { }
@@ -3861,7 +3875,7 @@
         function initDIDsGrid() {
             const maxItems = 10;
 
-            dbDIDs.DIDs = caItem.hasOwnProperty('DIDs') ? caItem.DIDs : [];
+            dbDIDs.DIDs = caItem.hasOwnProperty('dids') ? caItem.dids : [];
 
             $("#jsGridDIDs").jsGrid({
                 height: "auto",
