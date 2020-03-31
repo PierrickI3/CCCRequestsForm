@@ -56,7 +56,7 @@
         <div class="form-row">
             <div class="form-group col-sm-12">
                 <div class="form-row">
-                    <div class="form-group col-md-3">
+                    <div class="form-group col-md-2">
                         <label for="region">Region</label>
                         <select id="region" name="region" class="form-control">
                             <option value="" selected>All regions</option>
@@ -66,13 +66,13 @@
                             <option value="NA">North America</option>
                         </select>
                     </div>
-                    <div class="form-group col-md-3">
+                    <div class="form-group col-md-2">
                         <label for="subRegion">Territory</label>
                         <select id="subRegion" name="subRegion" class="form-control" required>
                             <option value="" selected>All</option>
                         </select>
                     </div>
-                    <div class="form-group col-md-3">
+                    <div class="form-group col-md-2">
                         <label for="product">Product</label>
                         <select id="product" name="product" class="form-control">
                             <option value="" selected>All products</option>
@@ -82,13 +82,29 @@
                             <option value="PureConnect">PureConnect</option>
                         </select>
                     </div>
-                    <div class="form-group col-md-3">
+                    <div class="form-group col-md-2">
                         <label for="segment">Market Segment</label>
                         <select id="segment" name="segment" class="form-control">
                             <option value="" selected>All</option>
                             <option value="Mid-market">Mid-market</option>
                             <option value="Commercial">Commercial</option>
                             <option value="Enterprise">Enterprise</option>
+                        </select>
+                    </div>
+                    <div class="form-group col-md-2">
+                        <label for="customerRelationship">Direct/Indirect</label>
+                        <select id="customerRelationship" name="customerRelationship" class="form-control" required>
+                            <option value="" selected>All</option>
+                            <option value="Direct">Direct</option>
+                            <option value="Indirect">Indirect (via Partner)</option>
+                        </select>
+                    </div>
+                    <div class="form-group col-md-2">
+                        <label for="customerType">Customer Type</label>
+                        <select id="customerType" name="customerType" class="form-control" required>
+                            <option value="" selected>All</option>
+                            <option value="ExistingCustomer">Existing Customer</option>
+                            <option value="NewLogo">New Logo</option>
                         </select>
                     </div>
                 </div>
@@ -281,6 +297,14 @@
         $("#segment").on("change", () => {
             init();
         });
+        $("#customerRelationship").on("change", () => {
+            init();
+        });
+
+        $("#customerType").on("change", () => {
+            init();
+        });
+
         /*
                 function refreshGrid() {
                     $("#basicgrid").jsGrid("loadData")
@@ -445,29 +469,39 @@
             else
                 filter = " AND "
 
-            if ($('#region').val() != "" || $('#product').val() != "" || $('#segment').val() != "" || $('#subRegion').val() != "") {
+            if ($('#region').val() != "" || $('#product').val() != "" || $('#segment').val() != "" || $('#subRegion').val() != "" || $('#customerRelationship').val() != "" || $('#customerType').val() != "")  {
                 if ($('#region').val() != "") {
                     filter = filter + ` region = '${$('#region').val()}' `
                     bAND = true;
                     bEmpty = false;
                 }
-
                 if ($('#product').val() != "") {
                     if (bAND) filter = filter + " AND ";
                     filter = filter + `product = '${$('#product').val()}' `;
                     bEmpty = false;
                     bAND = true;
                 }
-
                 if ($('#segment').val() != "") {
                     if (bAND) filter = filter + " AND ";
                     filter = filter + `segment = '${$('#segment').val()}' `;
                     bEmpty = false;
+                    bAND = true;
                 }
-
                 if ($('#subRegion').val() != "") {
                     if (bAND) filter = filter + " AND ";
                     filter = filter + `subRegion = '${$('#subRegion').val()}' `;
+                    bEmpty = false;
+                    bAND = true;
+                }
+                if ($('#customerRelationship').val() != "") {
+                    if (bAND) filter = filter + " AND ";
+                    filter = filter + `customerRelationship = '${$('#customerRelationship').val()}' `;
+                    bAND = true;
+                    bEmpty = false;
+                }
+                if ($('#customerType').val() != "") {
+                    if (bAND) filter = filter + " AND ";
+                    filter = filter + `customerType = '${$('#customerType').val()}' `;
                     bEmpty = false;
                 }
 
