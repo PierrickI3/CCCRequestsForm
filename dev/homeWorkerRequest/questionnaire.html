@@ -1329,23 +1329,26 @@
 
         function loadDraftConfiguration() {
             console.log('function loadDraftConfiguration');
+
+            initLocationsGrid();
+            initHolidaysGrid();
+            initSchedulesGrid();
+            initSkillsGrid();
+            initWrapUpCodesGrid();
+            initPromptsGrid();
+            initQueuesGrid();
+            initDIDsGrid();
+            refreshWrapUpCodesDropDownForQueues();
+
             if (caItem && caItem.hasOwnProperty('organizationSetup')) {
-                // organization
+                // Fill in Data
                 $('#companyName').val(caItem.organizationSetup.companyName);
                 $('#genesysCloudRegion').val(caItem.organizationSetup.genesysCloudRegion);
                 $('#numberOfUsers').val(caItem.organizationSetup.numberOfUsers);
-
-                initLocationsGrid();
-                initHolidaysGrid();
-                initSchedulesGrid();
-                initSkillsGrid();
-                initWrapUpCodesGrid();
-                initPromptsGrid();
-                initQueuesGrid();
                 initCallFlowExperience(caItem.callFlowExperience);
                 $('#mainInboundNumber').val(caItem.dids.mainInboundNumber == "n/a" ? '' : caItem.dids.mainInboundNumber);
-                initDIDsGrid();
-                refreshWrapUpCodesDropDownForQueues();
+               
+               
             }
         }
 
@@ -3876,7 +3879,7 @@
         function initDIDsGrid() {
             const maxItems = 10;
 
-            dbDIDs.DIDs = caItem.hasOwnProperty('dids') ? caItem.dids : { mainInboundNumber: '', ranges:[]};
+            dbDIDs.DIDs = caItem.hasOwnProperty('dids') ? caItem.dids : { mainInboundNumber: '', ranges: [] };
 
             $("#jsGridDIDs").jsGrid({
                 height: "auto",
