@@ -60,7 +60,7 @@
                 <hr>
                 <p>This is designed to be a 90 day Emergency Solution. <em>It is not designed to be a replication of what existing customers have today</em></p>
 
-                <p>Our COVID-19 offer for 3 months free use of Genesys Cloud is only available to <span class="bg-warning">existing customers</span> in good standing (Direct or Indirect). Direct existing customers will get free PS services as per our defined package. Indirect existing customers via partners will get benefit of COVID-19 commercial offer, but they will have to deliver PS services on their own (exceptions require approval).</p>
+                <p>Our COVID-19 offer for 3 months free use of Genesys Cloud is available to existing customers and prospects in good standing (Direct or Indirect). Direct existing customers will get free PS services as per our defined package. Indirect existing customers via partners will get benefit of COVID-19 commercial offer, but they will have to deliver PS services on their own (exceptions require approval).</p>
                 <p>WebRTC should be used unless there are special circumstances preventing this. User bandwidth is expected to be in high demand due to additional family members consuming services, e.g. Video on Demand, Gaming, etc. Customers should perform "spot-tests" on as many home workers as possible using the Genesys Network Assessment Tool. IVRs will be limited to simple call handling trees for routing and skill identification will be included. CRM integration, as well as other back integrations, will not be part of this deployment</p>
                 <p>Number porting is not possible with this offer. Corporate VPN’s may require additional technical investigation and configuration.</p>
                 <p>Genesys supports:
@@ -73,11 +73,11 @@
                 </p>
                 <form id="mainform">
 
-                    <!--#region Telephony -->
+                    <!--#region Deployment Model -->
 
-                    <div class="col-md-12 bg-light shadow">
+                    <div class="col-md-12 bg-light shadow-lg">
                         <hr />
-                        <h3 class="text-center">Telephony</h3>
+                        <h3 class="text-center">Deployment Model</h3>
                         <hr />
                     </div>
 
@@ -187,22 +187,6 @@
                             </div>
                         </div>
 
-                        <!-- Phone Numbers Deployment -->
-                        <div class="form-check mr-4">
-                            <div class="form-group col-md-12">
-                                <input class="form-check-input" type="checkbox" value="" id="existingTelephonyUsage">
-                                <label class="form-check-label" for="existingTelephonyUsage">
-                                    Is the customer connecting to a PBX, SBC or intending to have a direct carrier connection?
-                                </label>
-                                <br>
-                            </div>
-                        </div>
-
-                        <div class="form-row col-md-12">
-                            <div class="form-group col-md-12">
-                                <textarea class="form-control" id="existingTelephonyUsageDetails" name="existingTelephonyUsageDetails" placeholder="Please provide more details..." disabled></textarea>
-                            </div>
-                        </div>
                     </div>
 
 
@@ -240,9 +224,19 @@
 
                     </div>
 
+                    <!-- BYOC Premise with Appliance -->
+                    <div class="border border-black mr-3 ml-2 bg-warning" id="byocPremiseWithApplianceDiv" style="display: none;">
+                        <p class="form-group ml-2">
+                            Choosing BYOC Premise w/ Hardware Appliance assumes the partner or customer already has access to hardware Edges. In most cases this would be from a partner who purchased them in advance.
+                        </p>
+                        <p class="form-group ml-2">
+                            Genesys is not shipping hardware Edges at this time.
+                        </p>
+                    </div>
+
                     <!--#endregion Telephony -->
 
-                    <!--#region Configuration -->
+                    <!--#region General Configuration -->
 
                     <div class="col-md-12 bg-light shadow">
                         <hr />
@@ -263,6 +257,23 @@
                         <div class="form-group col-md-12">
                             <label for="numberConcurrentCalls">What is the expected number of concurrent calls? <span class="text-danger font-weight-bold">*</span></label>
                             <textarea class="form-control" id="numberConcurrentCalls" name="numberConcurrentCalls" placeholder="" required></textarea>
+                        </div>
+                    </div>
+
+                    <!-- Phone Numbers Deployment -->
+                    <div class="form-check mr-4">
+                        <div class="form-group col-md-12">
+                            <input class="form-check-input" type="checkbox" value="" id="existingTelephonyUsage">
+                            <label class="form-check-label" for="existingTelephonyUsage">
+                                Will the customer connect, via a trunk or forwarding of calls, to Genesys Engage, another PBX, an SBC or directly to a carrier? If so, please provide more details below.
+                            </label>
+                            <br>
+                        </div>
+                    </div>
+
+                    <div class="form-row col-md-12">
+                        <div class="form-group col-md-12">
+                            <textarea class="form-control" id="existingTelephonyUsageDetails" name="existingTelephonyUsageDetails" placeholder="Please provide more details about the telephony connection..." disabled></textarea>
                         </div>
                     </div>
 
@@ -380,12 +391,39 @@
 
                     <!-- PS File -->
                     <div class="mr-4 ml-3 mb-5">
-                        Click <a href="./files/PS Discovery Questionnaire RR v1.5.xlsx" target="_blank">here</a> to download a copy of the PS Questionnaire.
-                        <br>
-                        Click <a href="./files/PS DIscovery Questionnaire RR v1.1.docx" target="_blank">here</a> to download instructions on how to use the PS Questionnaire.
-                        <br>
-                        <p>To download the files from the <strong>Genesys Cloud app</strong>, press <span class="bg-warning">SHIFT</span> while clicking on each link.</p>
-                        <em>Please inform the customer that this information is essential to complete the deployment of Genesys Cloud.</em>
+                        <ol>
+                            <li>
+                                Collect the 4 main roles at the customer side: Our Care organization is working to automate the enrollment of our customer into the care and training process and to do so, it is mandatory to have the right contacts identified in SFDC.
+                            </li>
+                            <li>
+                                Introduce the PS Questionnaire to your customer - this makes sure that the customer starts collecting the information required by our PS to deploy the platform without any additional delay.
+                                <em>Please inform the customer that this information is essential to complete the deployment of Genesys Cloud.</em>
+                                <ol>
+                                    <li>
+                                        Click <a href="./files/PS Discovery Questionnaire RR v1.5.xlsx" target="_blank">here</a> to download the latest PS Questionnaire.
+                                    </li>
+                                    <li>
+                                        Click <a href="./files/PS DIscovery Questionnaire RR v1.1.docx" target="_blank">here</a> to download a user guide on how to use the PS Questionnaire.
+                                    </li>
+                                    <small>To download the files below from the <strong>Genesys Cloud app</strong>, press <span class="bg-warning">SHIFT</span> while clicking on each link.</small>
+                                </ol>
+                            </li>
+                            <li>
+                                Make sure that the customer acts on the activation e-mail he receives once the order is processed – any delay in this step may seriously jeopardize the 48 hour deployment time.
+                                <ol>
+                                    <li>
+                                        Raise awareness to the customer that he will receive this e-mail and that before he activates the org, PS cannot start the deployment.
+                                    </li>
+                                    <li>
+                                        Make him aware that he will be asked to provide a name for his org in this process – this name cannot be changed afterwards, so he might not want to refer to Covid 19 in the name – just in case he wants to keep the org.
+                                    </li>
+                                </ol>
+                            </li>
+                            <li>
+                                Assist the customer with his network readiness assessment. PS is currently preparing a short video tutorial on the network readiness assessment, which we will share with you, once it's available.
+                            </li>
+                        </ol>
+                        <p>Please engage PS in each of these deals as for now they will do the deployment – also for indirect customers. Our partner & alliance management teams are currently identifying selected partners who will be enabled to deploy this offer, but as long as these partners are not identified and announced, PS will do the deployment to be sure we deploy within the promised time and within the limit of the scope for this offer. SWAT teams have been created by PS in each region and engagement rules for PS have been defined and communicated on a regional basis. <strong>Please contact your local CSD if in doubt.</strong></p>
                     </div>
 
                     <!--#endregion -->
@@ -405,6 +443,8 @@
                             <label class="form-check-label" for="standardTermsConditions">
                                 Has the customer agreed to our standard Terms and Conditions and DPA?
                             </label>
+                            <br>
+                            <small><a href="https://help.mypurecloud.com/articles/global-purecloud-service-terms-and-conditions/" target="_blank">Access the latest documents here</a> (press <span class="bg-warning">SHIFT</span> while clicking on the link to open the page from the <strong>Genesys Cloud app</strong>)</small>
                         </div>
                     </div>
 
@@ -458,6 +498,27 @@
                         </div>
                     </div>
 
+                    <!-- Region and Territory -->
+                    <div class="form-row mr-4 ml-2">
+                        <div class="form-group col-md-6">
+                            <label for="customerRelationship">Direct/Indirect? <span class="text-danger font-weight-bold">*</span></label>
+                            <select id="customerRelationship" name="customerRelationship" class="form-control" required>
+                                <option value="" disabled selected>Select a Customer Relationship</option>
+                                <option value="Direct">Direct</option>
+                                <option value="Indirect">Indirect (via Partner)</option>
+                            </select>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="customerType">Customer Type <span class="text-danger font-weight-bold">*</span></label>
+                            <select id="customerType" name="customerType" class="form-control" required>
+                                <option value="" disabled selected>Select a Customer Type</option>
+                                <option value="ExistingCustomer">Existing Customer</option>
+                                <option value="NewLogo">New Logo</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Requester -->
                     <div class="form-row mr-4 ml-2">
                         <div class="form-group col-md-6">
                             <label for="requesterName">Requester Name <span class="text-danger font-weight-bold">*</span></label>
@@ -493,8 +554,8 @@
                             <input type="text" class="form-control" id="partnerCustomerName" name="partnerCustomerName" placeholder="Partner and/or Customer Name" required>
                         </div>
                         <div class="form-group col-md-6">
-                            <label for="salesforceAccountOpportunity">SF Account / Opportunity URL</label>
-                            <input type="text" class="form-control" id="salesforceAccountOpportunity" name="salesforceAccountOpportunity" placeholder="Link to Salesforce opportunity or account">
+                            <label for="salesforceAccountOpportunity">Opportunity URL <span class="text-danger font-weight-bold">*</span></label>
+                            <input type="text" class="form-control" id="salesforceAccountOpportunity" name="salesforceAccountOpportunity" placeholder="Link to Salesforce opportunity or account" required>
                         </div>
                     </div>
 
@@ -625,6 +686,7 @@
                     $("#GCVQuestions").show();
                     $("#BYOCCloudQuestions").hide();
                     $("#BYOCPremiseQuestions").hide();
+                    $("#byocPremiseWithApplianceDiv").hide();
                     break;
                 case 'BYOCCloud':
                     if (!$("#countriesOperation").val() || $("#countriesOperation").val().length === 0) {
@@ -637,6 +699,7 @@
                     $("#byocPremiseDiv").hide();
                     $("#GCVQuestions").hide();
                     $("#BYOCPremiseQuestions").hide();
+                    $("#byocPremiseWithApplianceDiv").hide();
                     $("#phoneNumbersDeployment").val('');
                     $("#BYOCCloudQuestions").show();
                     break;
@@ -644,11 +707,23 @@
                     $("#byocCloudCarriersDiv").hide();
                     $("#GCVQuestions").hide();
                     $("#byocPremiseDiv").show();
+                    $("#byocPremiseWithApplianceDiv").hide();
                     countriesAndCarriers = [];
                     $("#GCVQuestions").hide();
                     $("#phoneNumbersDeployment").val('');
                     $("#BYOCCloudQuestions").hide();
                     $("#BYOCPremiseQuestions").show();
+                    break;
+                case 'BYOCPremiseWithAppliance':
+                    $("#byocCloudCarriersDiv").hide();
+                    $("#GCVQuestions").hide();
+                    $("#byocPremiseDiv").hide();
+                    $("#byocPremiseWithApplianceDiv").show();
+                    countriesAndCarriers = [];
+                    $("#GCVQuestions").hide();
+                    $("#phoneNumbersDeployment").val('');
+                    $("#BYOCCloudQuestions").hide();
+                    $("#BYOCPremiseQuestions").hide();
                     break;
                 default:
                     $("#byocCloudCarriersDiv").hide();
@@ -658,6 +733,7 @@
                     $("#phoneNumbersDeployment").val('');
                     $("#BYOCCloudQuestions").hide();
                     $("#BYOCPremiseQuestions").hide();
+                    $("#byocPremiseWithApplianceDiv").hide();
                     break;
             }
         });
@@ -933,6 +1009,8 @@
             $("#region").val('');
             $("#subRegion").empty();
             $("<option selected disabled />", { value: "Select a Sub-Region" }).text("Select a Sub-Region").appendTo("#subRegion");
+            $("#customerRelationship").val('');
+            $("#customerType").empty();
             $("#requesterName").val(userInfo.name);
             $("#requesterEmail").val(userInfo.mail);
             $("#requesterPhoneNumber").val(userInfo.phone);
@@ -981,6 +1059,8 @@
                     // Your info
                     region: $("#region").val(),
                     subRegion: $("#subRegion").val(),
+                    customerRelationship: $("#customerRelationship").val(),
+                    customerType: $("#customerType").val(),
                     requesterName: $("#requesterName").val(),
                     requesterEmail: $("#requesterEmail").val(),
                     requesterPhoneNumber: $("#requesterPhoneNumber").val(),
@@ -1065,8 +1145,16 @@
                     $("#region").val(data.region);
                     $("#region").change();
                 }
-                if (data.subRegion)
+                if (data.subRegion) {
                     $("#subRegion").val(data.subRegion);
+                }
+
+                if (data.customerRelationship) {
+                    $("#customerRelationship").val(data.customerRelationship);
+                }
+                if (data.customerType) {
+                    $("#customerType").val(data.customerType);
+                }
 
                 // Optional
                 $("#requesterName").val(data.requesterName);

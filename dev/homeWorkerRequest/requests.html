@@ -386,6 +386,25 @@
                             </div>
 
                             <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label for="customerRelationship">Direct/Indirect?</label>
+                                    <select id="customerRelationship" name="customerRelationship" class="form-control" required>
+                                        <option value="" disabled selected>Select a Customer Relationship</option>
+                                        <option value="Direct">Direct</option>
+                                        <option value="Indirect">Indirect (via Partner)</option>
+                                    </select>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for="customerType">Customer Type</label>
+                                    <select id="customerType" name="customerType" class="form-control" required>
+                                        <option value="" disabled selected>Select a Customer Type</option>
+                                        <option value="ExistingCustomer">Existing Customer</option>
+                                        <option value="NewLogo">New Logo</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="form-row">
                                 <div class="form-group col-md-5">
                                     <label for="requesterName">Requester Name</label>
                                     <input type="text" class="form-control" id="requesterName" name="requesterName" placeholder="Your Name" required>
@@ -887,6 +906,8 @@
                                         aItem.teamMembers = 'n/a';
                                     if (!aItem.partnerCustomerName)
                                         aItem.partnerCustomerName = 'n/a';
+                                    if (!aItem.programManager)
+                                        aItem.programManager = 'n/a';
                                 });
 
                                 console.log(`filter: ${JSON.stringify(filter)}`);
@@ -897,6 +918,7 @@
                                             && (!filter.subRegion || request.subRegion.toLowerCase().indexOf(filter.subRegion.toLowerCase()) > -1)
                                             && (!filter.requesterName || request.requesterName.toLowerCase().indexOf(filter.requesterName.toLowerCase()) > -1)
                                             && (!filter.partnerCustomerName || request.partnerCustomerName.toLowerCase().indexOf(filter.partnerCustomerName.toLowerCase()) > -1)
+                                            && (!filter.programManager || request.programManager.toLowerCase().indexOf(filter.programManager.toLowerCase()) > -1)
                                             && (!filter.teamMembers || request.teamMembers.toLowerCase().indexOf(filter.teamMembers.toLowerCase()) > -1)
                                             && (!filter.telephonyModel || request.telephonyModel.toLowerCase().indexOf(filter.telephonyModel.toLowerCase()) > -1)
                                             && (!$('#btnOnlyClosed')[0].classList.contains('btn-success') || request.status === "Closed")
@@ -1043,7 +1065,22 @@
                             },
                         },
                         {
-                            name: "teamMembers", // index=6
+                            name: "programManager",
+                            title: "Program Manager",
+                            type: "text",
+                            width: "auto",
+                            visible: true,
+                            align: "center",
+                            filterTemplate: function () {
+                                let input = $("<input/>", { type: "text" });
+                                input.on('keyup', () => {
+                                    searches.programManager = input.val();
+                                    $("#basicgrid").data('JSGrid').search(searches);
+                                });
+                                return this.filterControl = input;
+                            },
+                        }, {
+                            name: "teamMembers",
                             title: "Team Members",
                             type: "text",
                             width: "auto",
@@ -1158,6 +1195,8 @@
             $("#editModal #region").val(request.region);
             $("#editModal #region").change();
             $("#editModal #subRegion").val(request.subRegion);
+            $("#editModal #customerRelationship").val(request.customerRelationship);
+            $("#editModal #customerType").val(request.customerType);
             $("#editModal #requesterName").val(request.requesterName);
             $("#editModal #requesterEmail").val(request.requesterEmail);
             $("#editModal #requesterPhoneNumber").val(request.requesterPhoneNumber);
