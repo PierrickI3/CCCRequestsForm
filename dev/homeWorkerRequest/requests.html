@@ -1386,13 +1386,13 @@
         $("#btnAssignedToMe").on("click", async (e) => {
             if ($('#btnAssignedToMe')[0].classList.contains('btn-success')) {
                 $('#btnAssignedToMe')[0].classList.remove('btn-success');
-                $("#basicgrid").data('JSGrid').fields[6].filterControl[0].value = "";
+                $("#basicgrid").data('JSGrid').fields[7].filterControl[0].value = "";
                 searches.teamMembers = "";
                 $("#basicgrid").data('JSGrid').search(searches);
             }
             else {
                 $('#btnAssignedToMe')[0].classList.add('btn-success');
-                $("#basicgrid").data('JSGrid').fields[6].filterControl[0].value = userName;
+                $("#basicgrid").data('JSGrid').fields[7].filterControl[0].value = userName;
                 searches.teamMembers = userName;
                 $("#basicgrid").data('JSGrid').search(searches);
             }
