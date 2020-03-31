@@ -3844,7 +3844,10 @@
 
         var dbDIDs = {
             loadData: function (filter) {
-                return this.DIDs.ranges
+                console.log(this);
+                return $.grep(this.DIDs.ranges, function (DID) {
+                    return (!filter.didStart || DID.didStart.toLowerCase().indexOf(filter.didStart.toLowerCase()) > -1);
+                });
             },
             insertItem: function (insertingDID) {
                 this.DIDs.ranges.push(insertingDID);

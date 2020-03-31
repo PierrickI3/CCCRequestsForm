@@ -93,6 +93,13 @@ async function postRequests() {
     data.emailInfrastructure = $("#emailInfrastructure").val();
   }
 
+  if ($("#customerRelationship").val().length > 0) {
+    data.customerRelationship = $("#customerRelationship").val();
+  }
+
+  if ($("#customerType").val().length > 0) {
+    data.customerType = $("#customerType").val();
+  }
 
   //#endregion
 
@@ -196,7 +203,6 @@ async function putRequest() {
     data.acceptedRejected = $("#editModal #bAcceptedRequest").val()
   }
 
-
   //#region Optional fields
 
   // Need completed by
@@ -245,6 +251,14 @@ async function putRequest() {
 
   if ($("#editModal #priority").val() && $("#editModal #priority").val().length > 0) {
     data.priority = $("#editModal #priority").val();
+  }
+
+  if ($("#editModal #customerRelationship").val() !== '') {
+    data.customerRelationship = $("#editModal #customerRelationship").val()
+  }
+
+  if ($("#editModal #customerType").val() !== '') {
+    data.customerType = $("#editModal #customerType").val()
   }
 
   console.log(data);

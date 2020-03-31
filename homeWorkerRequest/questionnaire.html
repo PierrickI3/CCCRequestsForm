@@ -41,7 +41,7 @@
             </ul>
 
             <ul class="nav navbar-nav" style="float: right;">
-                <li><button id="saveDraft" href="#" onclick="saveDraft();" class="btn btn-primary btn-sm ml-2" disabled>Save draft</button></li>
+                <li><button id="saveDraft" href="#" onclick="saveDraft(true);" class="btn btn-primary btn-sm ml-2" disabled>Save draft</button></li>
             </ul>
         </ul>
     </nav>
@@ -70,7 +70,7 @@
                             <div class="card-header card-header-top" id="headingOne">
                                 <h5 class="mb-0">
                                     <button class="btn btn-outline-success collapsed" data-toggle="collapse" data-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
-                                        Request details
+                                        Linked request
                                     </button>
                                 </h5>
                             </div>
@@ -174,7 +174,7 @@
                                                                     <span aria-hidden="true">&times;</span>
                                                                 </button>
                                                             </div>
-                                                            <form class="modal-body form-horizontal" id="modal-form">
+                                                            <form class="modal-body form-horizontal">
                                                                 <div class="form-group">
 
                                                                     <div class="form-group row">
@@ -235,8 +235,8 @@
                                                                     </div>
 
                                                                     <div class="modal-footer">
-                                                                        <button id="btnClose" type="button" class="btn btn-link pull-right" data-dismiss="modal">Close</button>
-                                                                        <button id="submit" type="submit" class="btn btn-primary pull-left"><i class="fa fa-plus"></i> Add</button>
+                                                                        <button type="button" class="btn btn-link pull-right" data-dismiss="modal">Close</button>
+                                                                        <button type="submit" class="btn btn-primary pull-left"><i class="fa fa-plus"></i> Add</button>
                                                                     </div>
                                                             </form>
                                                         </div>
@@ -273,7 +273,7 @@
                                                                     <span aria-hidden="true">&times;</span>
                                                                 </button>
                                                             </div>
-                                                            <form class="modal-body form-horizontal" id="modal-form">
+                                                            <form class="modal-body form-horizontal">
                                                                 <div class="form-group">
 
                                                                     <div class="form-group row">
@@ -470,8 +470,8 @@
                                                                 <div class="modal-footer">
                                                                     <code id="generatedRRuleCode"></code>
                                                                     <button id="generateRRule" type="button" class="btn btn-dark">Generate Rule</button>
-                                                                    <button id="btnClose" type="button" class="btn btn-link pull-right" data-dismiss="modal">Close</button>
-                                                                    <button id="submit" type="submit" class="btn btn-primary pull-left"><i class="fa fa-plus"></i> Add</button>
+                                                                    <button type="button" class="btn btn-link pull-right" data-dismiss="modal">Close</button>
+                                                                    <button type="submit" class="btn btn-primary pull-left"><i class="fa fa-plus"></i> Add</button>
                                                                 </div>
                                                             </form>
                                                         </div>
@@ -508,7 +508,7 @@
                                                                     <span aria-hidden="true">&times;</span>
                                                                 </button>
                                                             </div>
-                                                            <form class="modal-body form-horizontal" id="modal-form">
+                                                            <form class="modal-body form-horizontal">
                                                                 <div class="form-group">
 
                                                                     <div class="form-group row">
@@ -530,8 +530,8 @@
                                                                 </div>
 
                                                                 <div class="modal-footer">
-                                                                    <button id="btnClose" type="button" class="btn btn-link pull-right" data-dismiss="modal">Close</button>
-                                                                    <button id="submit" type="submit" class="btn btn-primary pull-left"><i class="fa fa-plus"></i> Add</button>
+                                                                    <button type="button" class="btn btn-link pull-right" data-dismiss="modal">Close</button>
+                                                                    <button type="submit" class="btn btn-primary pull-left"><i class="fa fa-plus"></i> Add</button>
                                                                 </div>
                                                             </form>
                                                         </div>
@@ -568,7 +568,7 @@
                                                                     <span aria-hidden="true">&times;</span>
                                                                 </button>
                                                             </div>
-                                                            <form class="modal-body form-horizontal" id="modal-form">
+                                                            <form class="modal-body form-horizontal">
                                                                 <div class="form-group">
 
                                                                     <div class="form-group row">
@@ -579,8 +579,8 @@
                                                                     </div>
 
                                                                     <div class="modal-footer">
-                                                                        <button id="btnClose" type="button" class="btn btn-link pull-right" data-dismiss="modal">Close</button>
-                                                                        <button id="submit" type="submit" class="btn btn-primary pull-left"><i class="fa fa-plus"></i> Add</button>
+                                                                        <button type="button" class="btn btn-link pull-right" data-dismiss="modal">Close</button>
+                                                                        <button type="submit" class="btn btn-primary pull-left"><i class="fa fa-plus"></i> Add</button>
                                                                     </div>
                                                             </form>
                                                         </div>
@@ -617,7 +617,7 @@
                                                                     <span aria-hidden="true">&times;</span>
                                                                 </button>
                                                             </div>
-                                                            <form class="modal-body form-horizontal" id="modal-form">
+                                                            <form class="modal-body form-horizontal">
                                                                 <div class="form-group">
 
                                                                     <div class="form-group row">
@@ -628,8 +628,8 @@
                                                                     </div>
 
                                                                     <div class="modal-footer">
-                                                                        <button id="btnClose" type="button" class="btn btn-link pull-right" data-dismiss="modal">Close</button>
-                                                                        <button id="submit" type="submit" class="btn btn-primary pull-left"><i class="fa fa-plus"></i> Add</button>
+                                                                        <button type="button" class="btn btn-link pull-right" data-dismiss="modal">Close</button>
+                                                                        <button type="submit" class="btn btn-primary pull-left"><i class="fa fa-plus"></i> Add</button>
                                                                     </div>
                                                             </form>
                                                         </div>
@@ -666,7 +666,7 @@
                                                                     <span aria-hidden="true">&times;</span>
                                                                 </button>
                                                             </div>
-                                                            <form class="modal-body form-horizontal" id="modal-form">
+                                                            <form class="modal-body form-horizontal">
                                                                 <div class="form-group">
                                                                     <!-- QueueName -->
                                                                     <div class="form-group row">
@@ -770,8 +770,8 @@
                                                                     </div>
 
                                                                     <div class="modal-footer">
-                                                                        <button id="btnClose" type="button" class="btn btn-link pull-right" data-dismiss="modal">Close</button>
-                                                                        <button id="submit" type="submit" class="btn btn-primary pull-left"><i class="fa fa-plus"></i> Add</button>
+                                                                        <button type="button" class="btn btn-link pull-right" data-dismiss="modal">Close</button>
+                                                                        <button type="submit" class="btn btn-primary pull-left"><i class="fa fa-plus"></i> Add</button>
                                                                     </div>
                                                             </form>
                                                         </div>
@@ -785,8 +785,8 @@
                                     <div class="card">
                                         <div class="card-header shadow-lg" role="tab" id="headingPrompts">
                                             <div class="mb-0">
-                                                <a data-toggle="collapse" data-parent="#accordion" href="#collapseCallFlowExperience" aria-expanded="false" aria-controls="collapseCallFlowExperience" class="collapsed">
-                                                    <i class="fa fa-phone" aria-hidden="true" style="color: #FF4F1F;"></i>
+                                                <a data-toggle="collapse" data-parent="#accordion" href="#collapsePrompts" aria-expanded="false" aria-controls="collapsePrompts" class="collapsed">
+                                                    <i class="fa fa-file-audio-o" aria-hidden="true" style="color: #FF4F1F;"></i>
                                                     <h3>Prompts</h3>
                                                     <p>Upload your prompts (or use TTS) here</p>
                                                 </a>
@@ -794,12 +794,74 @@
                                             </div>
                                         </div>
 
-                                        <div id="collapseCallFlowExperience" class="collapse" role="tabpanel" aria-labelledby="headingCallFlowExperience" aria-expanded="false">
+                                        <div id="collapsePrompts" class="collapse" role="tabpanel" aria-labelledby="headingPrompts" aria-expanded="false">
                                             <div class="card-block">
-                                                <div class="ml-4 text-muted">
-                                                    <p>Click on a digit to set the corresponding action. <span class="text-primary">*</span> will repeat the current menu. <span class="text-primary">#</span> will go back to the previous menu.</p>
-                                                </div>
+                                                <div id="jsGridPrompts"></div>
 
+                                                <div class="modal fade" id="editModalPrompts" tabindex="-1" role="dialog" aria-hidden="true">
+                                                    <div class="modal-dialog modal-lg" role="document">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header" id="modal-header">
+                                                                <h5 id="title" class="modal-title">Prompt</h5>
+                                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                    <span aria-hidden="true">&times;</span>
+                                                                </button>
+                                                            </div>
+                                                            <form class="modal-body form-horizontal">
+                                                                <div class="form-group">
+
+                                                                    <div class="form-group row">
+                                                                        <label for="messageName" class="col-sm-3 col-form-label">Message Name</label>
+                                                                        <div class="col-sm-9">
+                                                                            <input type="text" class="form-control" id="messageName" tabindex="-1" name="messageName" readonly>
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <div class="form-group row">
+                                                                        <label for="useTTS" class="col-sm-3 col-form-label">Use TTS?</label>
+                                                                        <div class="col-sm-9">
+                                                                            <input type="checkbox" class="" id="useTTS" tabindex="-1" name="useTTS">
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <div class="form-group row" id="promptTextDiv" style="display: none;">
+                                                                        <label for="promptText" class="col-sm-3 col-form-label">Prompt Text</label>
+                                                                        <div class="col-sm-9">
+                                                                            <textarea class="form-control" id="promptText" tabindex="-1" name="promptText" required></textarea>
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <div class="form-group row" id="promptUploadDiv">
+                                                                        <label for="promptFile" class="col-sm-3 col-form-label">Prompt File</label>
+                                                                        <div class="col-sm-9">
+                                                                            <div class="fileuploader" id="promptUpload">
+                                                                                <div class="fileuploader-input" id="promptUploadInput">
+                                                                                    <div class="fileuploader-input-inner">
+                                                                                        <div class="fileuploader-icon-main">
+                                                                                            <i class="fa fa-cloud-upload"></i>
+                                                                                        </div>
+                                                                                        <div>
+                                                                                            <h3>Drag and drop file here</h3>
+                                                                                            <p>or</p>
+                                                                                            <input type="file" id="promptUploadFile" name="promptUploadFile" class="btn btn-primary"></button>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div id="promptList">
+                                                                                <h6>Uploaded File:</h6>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <div class="modal-footer">
+                                                                        <button type="button" class="btn btn-link pull-right" data-dismiss="modal">Close</button>
+                                                                        <button type="submit" class="btn btn-primary pull-left"><i class="fa fa-plus"></i> Add</button>
+                                                                    </div>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -962,7 +1024,7 @@
                                                                     <span aria-hidden="true">&times;</span>
                                                                 </button>
                                                             </div>
-                                                            <form class="modal-body form-horizontal" id="modal-form">
+                                                            <form class="modal-body form-horizontal">
                                                                 <div class="form-group">
 
                                                                     <div class="form-group row">
@@ -1009,8 +1071,81 @@
                                                                     </div>
 
                                                                     <div class="modal-footer">
-                                                                        <button id="btnClose" type="button" class="btn btn-link pull-right" data-dismiss="modal">Close</button>
-                                                                        <button id="submit" type="submit" class="btn btn-primary pull-left"><i class="fa fa-plus"></i> Add</button>
+                                                                        <button type="button" class="btn btn-link pull-right" data-dismiss="modal">Close</button>
+                                                                        <button type="submit" class="btn btn-primary pull-left"><i class="fa fa-plus"></i> Add</button>
+                                                                    </div>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- DIDs -->
+                                    <div class="card">
+                                        <div class="card-header shadow-lg" role="tab" id="headingDIDs">
+                                            <div class="mb-0">
+                                                <a data-toggle="collapse" data-parent="#accordion" href="#collapseDIDs" aria-expanded="false" aria-controls="collapseDIDs" class="collapsed">
+                                                    <i class="fa fa-th-list " aria-hidden="true" style="color: #FF4F1F;"></i>
+                                                    <h3>DIDs</h3>
+                                                    <p>Number Ranges/DIDs</p>
+                                                </a>
+                                                <i class="fa fa-angle-right" aria-hidden="true" style="color: #FF4F1F;"></i>
+                                            </div>
+                                        </div>
+
+                                        <div id="collapseDIDs" class="collapse" role="tabpanel" aria-labelledby="headingDIDs" aria-expanded="false">
+                                            <div class="card-block">
+                                                <div class="form-group row">
+                                                    <label for="mainInboundNumber" class="col-sm-3 col-form-label">Main Inbound Number</label>
+                                                    <div class="col-sm-8">
+                                                        <input type="text" class="form-control" id="mainInboundNumber" name="mainInboundNumber" placeholder="Enter the Main Inbound Number">
+                                                    </div>
+                                                </div>
+                                                <button id="addDID" class="btn btn-primary mb-2" type="button"><i class="fa fa-plus"></i> Add</button>
+
+
+
+                                                <div id="jsGridDIDs"></div>
+
+                                                <div class="modal fade" id="editModalDIDs" tabindex="-1" role="dialog" aria-hidden="true">
+                                                    <div class="modal-dialog modal-lg" role="document">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header" id="modal-header">
+                                                                <h5 id="title" class="modal-title">DID Number Configuration</h5>
+                                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                    <span aria-hidden="true">&times;</span>
+                                                                </button>
+                                                            </div>
+                                                            <form class="modal-body form-horizontal">
+                                                                <div class="form-group">
+
+                                                                    <div class="form-group row">
+                                                                        <label for="didStart" class="col-sm-3 col-form-label">DID Start <span class="text-danger font-weight-bold">*</span></label>
+                                                                        <div class="col-sm-9">
+                                                                            <input type="text" class="form-control" id="didStart" tabindex="-1" name="didStart" placeholder="Enter the DID start range" required>
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <div class="form-group row">
+                                                                        <label for="didEnd" class="col-sm-3 col-form-label">DID End <span class="text-danger font-weight-bold">*</span></label>
+                                                                        <div class="col-sm-9">
+                                                                            <input type="text" class="form-control" id="didEnd" name="didEnd" placeholder="Enter the DID end range" required>
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <div class="form-group row">
+                                                                        <label for="didComment" class="col-sm-3 col-form-label">Comments</label>
+                                                                        <div class="col-sm-9">
+                                                                            <input type="text" class="form-control" id="didComment" name="didComment" placeholder="Enter your comment">
+                                                                        </div>
+                                                                    </div>
+
+
+                                                                    <div class="modal-footer">
+                                                                        <button type="button" class="btn btn-link pull-right" data-dismiss="modal">Close</button>
+                                                                        <button type="submit" class="btn btn-primary pull-left"><i class="fa fa-plus"></i> Add</button>
                                                                     </div>
                                                             </form>
                                                         </div>
@@ -1069,11 +1204,16 @@
     <!-- Dictionary -->
     <script src="js/dictionary.js"></script>
 
+    <!-- JSZip -->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.2.2/jszip.min.js"></script>
+
 
     <!--#endregion -->
 
     <script>
         let gcToken, id = getUrlParameter("id"), request, caItem = {}, searches = {}, searchesSchedules = {};
+
+        var zip = new JSZip();
 
         init();
 
@@ -1125,7 +1265,7 @@
                     console.log(request);
                     $('#badgePill')[0].innerHTML = "1";
                     console.log(request);
-                    $('#requestDetails')[0].innerHTML = `Related to Partner/Customer Name <B>${request.partnerCustomerName}</B> requested by <em>${request.requesterName}</em>`;
+                    $('#requestDetails')[0].innerHTML = `Related to Partner/Customer Name: <B>${request.partnerCustomerName}</B> requested by <em>${request.requesterName}</em>`;
                 } catch (error) {
                     console.error(error);
                     if (error.status !== 404) {
@@ -1163,14 +1303,19 @@
             } else {
                 // New not related RequestForm                
                 $('#badgePill')[0].innerHTML = "NEW";
-                enableForm(true);
 
                 initLocationsGrid();
                 initHolidaysGrid();
                 initSchedulesGrid();
                 initSkillsGrid();
                 initWrapUpCodesGrid();
+                initPromptsGrid();
                 initQueuesGrid();
+                initDIDsGrid();
+
+                await saveDraft(false);
+                enableForm(true);
+
             }
         }
 
@@ -1184,7 +1329,7 @@
 
         function loadDraftConfiguration() {
             console.log('function loadDraftConfiguration');
-            if (caItem) {
+            if (caItem && caItem.hasOwnProperty('organizationSetup')) {
                 // organization
                 $('#companyName').val(caItem.organizationSetup.companyName);
                 $('#genesysCloudRegion').val(caItem.organizationSetup.genesysCloudRegion);
@@ -1195,9 +1340,11 @@
                 initSchedulesGrid();
                 initSkillsGrid();
                 initWrapUpCodesGrid();
+                initPromptsGrid();
                 initQueuesGrid();
                 initCallFlowExperience(caItem.callFlowExperience);
-
+                $('#mainInboundNumber').val(caItem.dids.mainInboundNumber == "n/a" ? '' : caItem.dids.mainInboundNumber);
+                initDIDsGrid();
                 refreshWrapUpCodesDropDownForQueues();
             }
         }
@@ -1212,7 +1359,12 @@
                 skills: [],
                 wrapUpCodes: [],
                 queues: [],
-                callFlowExperience: []
+                prompts: [],
+                callFlowExperience: [],
+                dids: {
+                    mainInboundNumber: 'n/a',
+                    ranges: []
+                }
             };
 
             if ($('#companyName').val())
@@ -1246,6 +1398,10 @@
                 json.skills = $("#jsGridSkills").jsGrid("option", "data");
             if ($("#jsGridWrapUpCodes").jsGrid("option", "data").length > 0)
                 json.wrapUpCodes = $("#jsGridWrapUpCodes").jsGrid("option", "data");
+            /*  //There are Empty Strings inside
+                if ($("#jsGridPrompts").jsGrid("option", "data").length > 0)
+                json.prompts = $("#jsGridPrompts").jsGrid("option", "data");
+            */
             if ($("#jsGridQueues").jsGrid("option", "data").length > 0) {
                 $.each($("#jsGridQueues").jsGrid("option", "data"), (key, item) => {
                     json.queues.push({
@@ -1264,13 +1420,29 @@
                     })
                 });
             }
+            /* //There are Empty Strings inside
             json.callFlowExperience = callFlowExperience;
+            if ($('#mainInboundNumber').val().length > 0)
+                json.dids.mainInboundNumber = $('#mainInboundNumber').val();
+            */
+            if ($("#jsGridDIDs").jsGrid("option", "data").length > 0) {
+                $.each($("#jsGridDIDs").jsGrid("option", "data"), (key, item) => {
+                    json.dids.ranges.push({
+                        didStart: item.didStart,
+                        didEnd: item.didEnd,
+                        provider: "n/a",
+                        didComment: item.didComment.length > 0 ? item.didComment : 'n/a'
+                    })
+                });
+            }
+            json.dids.mainInboundNumber = $('#mainInboundNumber').val().length > 0 ? $('#mainInboundNumber').val() : 'n/a';
+
 
             console.log(json);
             return json;
         }
 
-        async function saveDraft() {
+        async function saveDraft(_manualSave) {
             console.log('saveDraft()');
 
             // Disable button
@@ -1284,10 +1456,15 @@
                 if (caItem && caItem.id) {
                     await ca_updateItem(caItem.id, json);
                 } else {
+                    if (id)
+                        json.id = id;
                     caItem = await ca_createItem(json);
                     console.log(`responseId created on CA db: ${caItem.id}`);
-                    window.history.pushState('', 'CC Rapid Response Request Form', `${window.location.href}?id=${caItem.id}`);
-                    $('#badgePill')[0].innerHTML = "";
+                    if (!id)
+                        window.history.pushState('', 'CC Rapid Response Request Form', `${window.location.href}?id=${caItem.id}`);
+                    if (_manualSave)
+                        $('#badgePill')[0].innerHTML = "";
+
                 }
             } catch (error) {
                 console.error(error);
@@ -1298,7 +1475,8 @@
                 $("#saveDraft").prop('disabled', false);
                 $("#saveDraft").html('Save draft');
             }
-            showMessage("Draft updated", false);
+            if (_manualSave)
+                showMessage("Draft updated", false);
         }
 
         function exportCSV() {
@@ -1307,7 +1485,7 @@
 
 
             const replacer = (key, value) => (value === null || value === 'n/a') ? '' : value // specify how you want to handle null values here
-            let header, csv_locations, csv_schedules, csv_holidays, csv_skills, csv_wrapUpCodes, csv_queues, csv_callFlowExperience;
+            let header, csv_locations, csv_schedules, csv_holidays, csv_skills, csv_wrapUpCodes, csv_queues, csv_callFlowExperience, csv_dids, csv_prompts;
 
             // Locations
             if (data.locations && data.locations.length > 0) {
@@ -1337,7 +1515,7 @@
                 header = Object.keys(data.holidays[0]);
                 csv_holidays = data.holidays.map(row => header.map(fieldName => JSON.stringify(row[fieldName], replacer)).join(';'))
                 csv_holidays.unshift(header.join(';'))
-                csv_holidays = holidays.join('\r\n')
+                csv_holidays = csv_holidays.join('\r\n')
             } else {
                 console.log('holidays are empty, skip csv build...');
             }
@@ -1362,6 +1540,17 @@
                 csv_wrapUpCodes = csv_wrapUpCodes.join('\r\n')
             } else {
                 console.log('wrapUp Codes are empty, skip csv build...');
+            }
+
+            // Prompts
+            if (data.prompts && data.prompts.length > 0) {
+                console.log('build prompts csv...');
+                header = Object.keys(data.prompts[0]);
+                csv_prompts = data.prompts.map(row => header.map(fieldName => JSON.stringify(row[fieldName], replacer)).join(';'))
+                csv_prompts.unshift(header.join(';'))
+                csv_prompts = csv_prompts.join('\r\n')
+            } else {
+                console.log('prompts are empty, skip csv build...');
             }
 
             // Queues
@@ -1398,15 +1587,46 @@
                 console.log('queues are empty, skip csv build...');
             }
 
+            // DIDs
+            if (data.dids && data.dids.ranges.length > 0) {
+                console.log('build dids csv...');
+                // tune queue columns
+                header = Object.keys(data.dids.ranges[0]);
+                csv_dids = data.dids.ranges.map(row => header.map(fieldName => JSON.stringify(row[fieldName], replacer)).join(';'))
+                csv_dids.unshift(header.join(';'))
+                csv_dids = csv_dids.join('\r\n')
+            } else {
+                console.log('dids are empty, skip csv build...');
+            }
+
+
             console.log(`CSV: locations\n===================\n ${csv_locations}\n===================\n`);
             console.log(`CSV: schedules\n===================\n ${csv_schedules}\n===================\n`);
             console.log(`CSV: holidays\n===================\n ${csv_holidays}\n===================\n`);
             console.log(`CSV: skills\n===================\n ${csv_skills}\n===================\n`);
             console.log(`CSV: wrapUpCodes\n===================\n ${csv_wrapUpCodes}\n===================\n`);
             console.log(`CSV: queues\n===================\n ${csv_queues}\n===================\n`);
+            console.log(`CSV: prompts\n===================\n ${csv_prompts}\n===================\n`);
             console.log(`CSV: callFlowExperience\n===================\n ${csv_callFlowExperience}\n===================\n`);
+            console.log(`CSV: dids\n===================\n ${csv_dids}\n===================\n`);
 
             //download(csv_locations, 'locations.csv');
+
+            zip.file("au-locations-import.csv", csv_locations);
+            zip.file("au-schedules-import.csv", csv_schedules);
+            zip.file("holidays.csv", csv_holidays);
+            zip.file("au-skills-import.csv", csv_skills);
+            zip.file("au-wrapup-codes-import.csv", csv_wrapUpCodes);
+            zip.file("au-queues-full-import.csv", csv_queues);
+            zip.file("prompts.csv", csv_prompts);
+            zip.file("call-flow.csv", csv_callFlowExperience);
+            zip.file("au-dids-import.csv", csv_dids);
+
+            zip.generateAsync({ type: "blob" })
+                .then(function (content) {
+                    download(content, "automation_export.zip");
+                });
+
         }
 
         function download(data, filename, type) {
@@ -3121,6 +3341,322 @@
 
         //#endregion
 
+        //#region Prompts
+
+        let defaultPrompts = [
+            {
+                messageName: "Main Greeting Message",
+                promptText: "Thank you for calling <Company Name>",
+                promptName: "MainGreeting.wav",
+                promptFile: "",
+                useTTS: false
+            },
+            {
+                messageName: "Main Menu Message",
+                promptText: "If you are a new customer and looking for more information about out product, press 1.  If you have purchased our product and currenting have any issues or inquiries, press 2.  If you are a 3rd party vendor seeking marketing material, press 3.  For all other inquiries press 4.  To repeat this options press star.",
+                promptName: "MainMenu.wav",
+                promptFile: "",
+                useTTS: false
+            },
+            {
+                messageName: "Closed Message",
+                promptText: "Our offices are closed at present; please call back during our normal opening hours which are 8 AM to 5 PM, Monday through Friday.",
+                promptName: "ClosedMessage.wav",
+                promptFile: "",
+                useTTS: false
+            },
+            {
+                messageName: "Holiday Message",
+                promptText: "We are closed for holiday.  Please see our website at www.company.com/businesshours for when we will return to normal operating hours.  Have a great day.",
+                promptName: "HolidayMessage.wav",
+                promptFile: "",
+                useTTS: false
+            },
+            {
+                messageName: "Emergency Message",
+                promptText: "We are experiencing interruption in our service.  You can find out more information at www.company.com/events for next steps and when we will return to normal operations.  We apologize for any inconvenience this may have caused.",
+                promptName: "EmergencyMessage.wav",
+                promptFile: "",
+                useTTS: false
+            }
+        ];
+
+        var dbPrompts = {
+            loadData: function (filter) {
+                return $.grep(this.prompts, function (prompt) {
+                    return (!filter.messageName || prompt.messageName.toLowerCase().indexOf(filter.messageName.toLowerCase()) > -1);
+                });
+            },
+            insertItem: function (insertingItem) {
+                this.prompts.push(insertingItem);
+            },
+            updateItem: function (updatingItem) { },
+            deleteItem: function (deletingItem) { }
+        };
+
+        window.dbPrompts = dbPrompts;
+
+        var formSubmitHandlerPrompts = $.noop;
+
+        let validatorPrompts = $("#editModalPrompts #modal-form").validate({
+            errorClass: "text-danger",
+            successClass: "test-success",
+            submitHandler: function () {
+                formSubmitHandlerPrompts();
+            }
+        });
+
+        function initPromptsGrid() {
+            const maxItems = 5;
+
+            dbPrompts.prompts = caItem.hasOwnProperty('prompts') ? caItem.prompts : [];
+
+            if (dbPrompts.prompts.length === 0) {
+                dbPrompts.prompts = defaultPrompts;
+            }
+
+            $("#jsGridPrompts").jsGrid({
+                height: "auto",
+                width: "100%",
+                editing: true,
+                autoload: true,
+                sorting: false,
+                filtering: false,
+                paging: false,
+                noDataContent: "No Prompts",
+                confirmDeleting: false,
+                onError: function (args) {
+                    console.error('Failed to load grid data:', args);
+                    showMessage("An error occurred while loading your data", true);
+                },
+                rowClick: function (args) {
+                    showPromptModal("Edit", args.item);
+                },
+                onDataLoaded: function (args) {
+                },
+                onItemInserted: function (args) {
+                },
+                onItemUpdated: function (args) {
+                },
+                onItemDeleting: function (args) {
+                    console.log("onItemDeleting");
+                    if (!args.item.deleteConfirmed) { // custom property for confirmation
+                        args.cancel = true; // cancel deleting
+                        bootbox.confirm({
+                            message: 'Do you really want to delete this Prompt?',
+                            buttons: {
+                                confirm: {
+                                    label: "Delete!",
+                                    className: "btn-danger"
+                                },
+                                cancel: {
+                                    label: "No",
+                                    className: "btn-secondary"
+                                }
+                            },
+                            callback: async function (result) {
+                                if (result) {
+                                    args.item.deleteConfirmed = true;
+                                    $("#jsGridPrompts").jsGrid('deleteItem', args.item); // Remove item from grid
+                                    removeFromArray(dbPrompts.prompts, args.item); // Remove item from db
+                                    showMessage("Prompt deleted", false);
+                                }
+                            }
+                        });
+                    }
+                },
+                onItemDeleted: function (args) {
+                },
+                controller: dbPrompts,
+                fields: [
+                    {
+                        name: "messageName",
+                        title: "Message Name",
+                        type: "text",
+                        align: "center"
+                    },
+                    {
+                        name: "promptText",
+                        title: "Prompt Text",
+                        type: "text",
+                        align: "center"
+                    },
+                    {
+                        name: "promptName",
+                        title: "Prompt Name",
+                        type: "text",
+                        align: "center"
+                    },
+                    {
+                        name: "promptFile",
+                        title: "Prompt File",
+                        type: "text",
+                        align: "center"
+                    },
+                    {
+                        name: "useTTS",
+                        title: "useTTS",
+                        type: "text",
+                        align: "center"
+                    },
+                    {
+                        type: "control",
+                        modeSwitchButton: false,
+                        editButton: false,
+                        width: 68,
+                        align: "center",
+                        headerTemplate: function () {
+                            return "Actions";
+                        }
+                    }
+                ]
+            });
+        }
+
+        var showPromptModal = function (dialogType, item) {
+            console.log('Showing details for:', item);
+            $("#editModalPrompts #messageName").val(item.messageName);
+            $("#editModalPrompts #promptText").val(item.promptText);
+            $("#editModalPrompts #promptName").val(item.promptName);
+            $("#editModalPrompts #promptFile").val(item.promptFile);
+            $("#editModalPrompts #useTTS").attr('checked', item.useTTS);
+            $("#editModalPrompts #submit").html("<i class='fa fa-floppy-o'></i> Save");
+            formSubmitHandlerPrompts = function () {
+                savePrompt(item, dialogType === "Add");
+            };
+            $("#editModalPrompts").modal('show');
+
+        };
+
+        var savePrompt = function (item, isNew) {
+            console.log('Extending item:', item);
+            $.extend(item, {
+                messageName: $("#editModalPrompts #messageName").val(),
+                promptText: $("#editModalPrompts #promptText").val(),
+                promptName: $("#editModalPrompts #promptName").val(),
+                promptFile: $("#editModalPrompts #promptFile").val(),
+                useTTS: $("#editModalPrompts #useTTS").is(':checked')
+            });
+            console.log('Extended Item:', item);
+            console.log('IsNew?', isNew);
+
+            $("#jsGridPrompts").jsGrid(isNew ? "insertItem" : "updateItem", item);
+            $("#editModalPrompts").modal('hide');
+        };
+
+        $("#editModalPrompts").on('shown.bs.modal', function () {
+            $("#promptText").focus();
+        });
+
+        $('#editModalPrompts').on('hidden.bs.modal', async () => {
+            initPromptsModal();
+        });
+
+        function initPromptsModal() {
+            $("#editModalPrompts #messageName").val("");
+            $("#editModalPrompts #promptText").val("");
+            $("#editModalPrompts #promptName").val("");
+            $("#editModalPrompts #promptFile").val("");
+            $("#editModalPrompts #promptUploadFile").val("");
+            $("#editModalPrompts #useTTS").attr('checked', false);
+            $("#editModalPrompts #submit").html("<i class='fa fa-plus'></i> Add");
+
+            validatorPrompts.resetForm(); // Reset validation errors
+        }
+
+        $("#editModalPrompts #useTTS").on('change', () => {
+            if ($("#editModalPrompts #useTTS").is(':checked')) {
+                $("#editModalPrompts #promptTextDiv").show();
+                $("#editModalPrompts #promptUploadDiv").hide();
+            } else {
+                $("#editModalPrompts #promptTextDiv").hide();
+                $("#editModalPrompts #promptUploadDiv").show();
+            }
+        });
+
+        $("#editModalPrompts #promptUploadFile").on('change', (e) => {
+            let files = e.target.files;
+            uploadFiles(files);
+        });
+
+        var drop = document.getElementById('promptUpload');
+        var list = document.getElementById('promptList');
+
+        function cancel(e) {
+            e.preventDefault();
+            return false;
+        }
+
+        function handleDrop(e) {
+            e.preventDefault();
+            var dt = e.dataTransfer;
+            var files = dt.files;
+            uploadFiles(files);
+            return false;
+        }
+
+        //TODO Add request id to upload to new folder in S3
+
+        function uploadFiles(files) {
+            for (var i = 0; i < files.length; i++) {
+                var file = files[i];
+                var reader = new FileReader();
+                reader.addEventListener('loadend', function (e) {
+                    fetch(apiBasePath + "/cloudautomation/uploadUrl", {
+                        method: "POST",
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            name: file.name,
+                            type: file.type,
+                            requestId: id,
+                            token: gcToken
+                        })
+                    })
+                        .then(function (response) {
+                            console.log('Response:', response);
+                            return response.json();
+                        })
+                        .then(function (json) {
+                            console.log('Upload Url:', json.uploadUrl);
+                            return fetch(json.uploadUrl, {
+                                method: "PUT",
+                                body: new Blob([reader.result], { type: file.type })
+                            })
+                        })
+                        .then(function () {
+                            var uploadedFileNode = document.createElement('div');
+                            uploadedFileNode.innerHTML = '<a href="//cc-requests-prompts-bucket.s3.eu-central-1.amazonaws.com/' + file.name + '">' + file.name + '</a>';
+                            list.appendChild(uploadedFileNode);
+                        });
+                });
+                reader.readAsArrayBuffer(file);
+            }
+        }
+
+        // Tells the browser that we *can* drop on this target
+        drop.addEventListener('dragenter', (e) => {
+            $("#editModalPrompts #promptUploadInput").addClass("drop-active");
+            return cancel(e);
+        });
+
+        drop.addEventListener('dragover', (e) => {
+            $("#editModalPrompts #promptUploadInput").addClass("drop-active");
+            return cancel(e);
+        });
+
+        drop.addEventListener('dragleave', (e) => {
+            $("#editModalPrompts #promptUploadInput").removeClass("drop-active");
+        });
+
+        drop.addEventListener('drop', (e) => {
+            $("#editModalPrompts #promptUploadInput").removeClass("drop-active");
+            handleDrop(e);
+        });
+
+        //#endregion
+
         //#region Call Flow Experience
 
         let callFlowExperience = {
@@ -3159,10 +3695,6 @@
             }
         });
 
-        //TODO Add Play message and disconnect
-        //TODO Add Repeat Menu
-        //TODO Save to JSON object (need a getCallFlowExperience() function?)
-
         var showCallFlowExperienceModal = function (dialogType, menuDigit, item) {
             console.log('Showing details for:', item);
 
@@ -3184,7 +3716,7 @@
             $("#editModalCallFlowExperience #prompts").empty();
             $("<option/>", { value: "", disabled: true, selected: true }).text("Select a Prompt").appendTo("#prompts");
             $.each($("#jsGridPrompts").jsGrid("option", "data"), (key, item) => {
-                $("<option/>", { value: item.promptName }).text(item.promptName).appendTo("#prompts");
+                $("<option/>", { value: item.promptName }).text(item.messageName).appendTo("#prompts");
             });
 
             if (!item.hasOwnProperty('menuDigit')) { item.menuDigit = menuDigit; }
@@ -3304,6 +3836,173 @@
             $("#editModalCallFlowExperience #submit").html("<i class='fa fa-plus'></i> Add");
 
             validatorCallFlowExperience.resetForm(); // Reset validation errors
+        }
+
+        //#endregion
+
+        //#region DIDs
+
+        var dbDIDs = {
+            loadData: function (filter) {
+                console.log(this);
+                return $.grep(this.DIDs.ranges, function (DID) {
+                    return (!filter.didStart || DID.didStart.toLowerCase().indexOf(filter.didStart.toLowerCase()) > -1);
+                });
+            },
+            insertItem: function (insertingDID) {
+                this.DIDs.ranges.push(insertingDID);
+            },
+            updateItem: function (updatingDID) { },
+            deleteItem: function (deletingDID) { }
+        };
+
+        window.dbDIDs = dbDIDs;
+
+        var formSubmitHandlerDIDs = $.noop;
+
+        let validatorDIDs = $("#editModalDIDs #modal-form").validate({
+            errorClass: "text-danger",
+            successClass: "test-success",
+            submitHandler: function () {
+                formSubmitHandlerDIDs();
+            }
+        });
+
+        $("#addDID").on('click', (e) => {
+            e.preventDefault();
+            showDIDsModal("Add", {});
+        });
+
+        function initDIDsGrid() {
+            const maxItems = 10;
+
+            dbDIDs.DIDs = caItem.hasOwnProperty('dids') ? caItem.dids : [];
+
+            $("#jsGridDIDs").jsGrid({
+                height: "auto",
+                width: "100%",
+                editing: true,
+                autoload: true,
+                sorting: false,
+                filtering: false,
+                paging: false,
+                noDataContent: "No DID Numbers",
+                confirmDeleting: false,
+                onError: function (args) {
+                    console.error('Failed to load grid data:', args);
+                    showMessage("An error occurred while loading your data", true);
+                },
+                rowClick: function (args) {
+                    showDIDsModal("Edit", args.item);
+                },
+                onDataLoaded: function (args) {
+                    $("#addDID").attr('disabled', $("#jsGridDIDs").jsGrid("option", "data").length >= maxItems);
+                },
+                onItemInserted: function (args) {
+                    $("#addDID").attr('disabled', $("#jsGridDIDs").jsGrid("option", "data").length >= maxItems);
+                },
+                onItemUpdated: function (args) {
+                    $("#addDID").attr('disabled', $("#jsGridDIDs").jsGrid("option", "data").length >= maxItems);
+                },
+                onItemDeleting: function (args) {
+                    console.log("onItemDeleting");
+                    if (!args.item.deleteConfirmed) { // custom property for confirmation
+                        args.cancel = true; // cancel deleting
+                        bootbox.confirm({
+                            message: 'Do you really want to delete this DID Number?',
+                            buttons: {
+                                confirm: {
+                                    label: "Delete!",
+                                    className: "btn-danger"
+                                },
+                                cancel: {
+                                    label: "No",
+                                    className: "btn-secondary"
+                                }
+                            },
+                            callback: async function (result) {
+                                if (result) {
+                                    args.item.deleteConfirmed = true;
+                                    $("#jsGridDIDs").jsGrid('deleteItem', args.item); // Remove item from grid
+                                    removeFromArray(dbDIDs.DIDs, args.item); // Remove item from db
+                                    showMessage("DID deleted", false);
+                                }
+                            }
+                        });
+                    }
+                },
+                onItemDeleted: function (args) {
+                    $("#addDID").attr('disabled', $("#jsGridDIDs").jsGrid("option", "data").length >= maxItems);
+                },
+                controller: dbDIDs,
+                fields: [
+                    {
+                        name: "didStart",
+                        title: "DID Start Range",
+                        type: "text",
+                        align: "center"
+                    },
+                    {
+                        name: "didEnd",
+                        title: "DID End Range",
+                        type: "text",
+                        align: "center"
+                    },
+                    {
+                        type: "control",
+                        modeSwitchButton: false,
+                        editButton: false,
+                        width: 68,
+                        align: "center",
+                        headerTemplate: function () {
+                            return "Actions";
+                        }
+                    }
+                ]
+            });
+        }
+
+        var showDIDsModal = function (dialogType, item) {
+            console.log('Showing details for:', item);
+            $("#editModalDIDs #didStart").val(item.didStart);
+            $("#editModalDIDs #didEnd").val(item.didEnd);
+            $("#editModalDIDs #didComment").val(item.didComment);
+            $("#editModalDIDs #submit").html("<i class='fa fa-floppy-o'></i> Save");
+            formSubmitHandlerDIDs = function () {
+                saveDID(item, dialogType === "Add");
+            };
+            $("#editModalDIDs").modal('show');
+
+        };
+
+        var saveDID = function (item, isNew) {
+            console.log('Extending item:', item);
+            $.extend(item, {
+                didStart: $("#editModalDIDs #didStart").val(),
+                didEnd: $("#editModalDIDs #didEnd").val(),
+                didComment: $("#editModalDIDs #didComment").val()
+            });
+            console.log('Extended Item:', item);
+            console.log('IsNew?', isNew)
+            $("#jsGridDIDs").jsGrid(isNew ? "insertItem" : "updateItem", item);
+            $("#editModalDIDs").modal('hide');
+        };
+
+        $("#editModalDIDs").on('shown.bs.modal', function () {
+            $("#didStart").focus();
+        });
+
+        $('#editModalDIDs').on('hidden.bs.modal', async () => {
+            initDIDsModal();
+        });
+
+        function initDIDsModal() {
+            $("#editModalDIDs #didStart").val("");
+            $("#editModalDIDs #didEnd").val("");
+            $("#editModalDIDs #didComment").val("");
+            $("#editModalDIDs #submit").html("<i class='fa fa-plus'></i> Add");
+
+            validatorDIDs.resetForm(); // Reset validation errors
         }
 
         //#endregion
