@@ -52,6 +52,8 @@
     </div>
 
     <div class="container-fluid mt-4">
+        <div class="text-center" style="display: none;" id="saveUrl">
+        </div>
         <div class="form-row">
             <div class="form-group col-md-12">
                 <div id="status">
@@ -1347,8 +1349,6 @@
                 $('#numberOfUsers').val(caItem.organizationSetup.numberOfUsers);
                 initCallFlowExperience(caItem.callFlowExperience);
                 $('#mainInboundNumber').val(caItem.dids.mainInboundNumber == "n/a" ? '' : caItem.dids.mainInboundNumber);
-               
-               
             }
         }
 
@@ -1463,8 +1463,11 @@
                         json.id = id;
                     caItem = await ca_createItem(json);
                     console.log(`responseId created on CA db: ${caItem.id}`);
-                    if (!id)
+                    if (!id) {
                         window.history.pushState('', 'CC Rapid Response Request Form', `${window.location.href}?id=${caItem.id}`);
+                    }
+                    $("#saveUrl").html(`To get back later on to this questionnaire, use this url: <a href="${window.location.href}">${window.location.href}</a>`);
+                    $("#saveUrl").show();
                     if (_manualSave)
                         $('#badgePill')[0].innerHTML = "";
 
