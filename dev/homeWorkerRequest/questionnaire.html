@@ -174,7 +174,7 @@
                                                                     <span aria-hidden="true">&times;</span>
                                                                 </button>
                                                             </div>
-                                                            <form class="modal-body form-horizontal">
+                                                            <form class="modal-body form-horizontal" id="modal-form">
                                                                 <div class="form-group">
 
                                                                     <div class="form-group row">
@@ -273,7 +273,7 @@
                                                                     <span aria-hidden="true">&times;</span>
                                                                 </button>
                                                             </div>
-                                                            <form class="modal-body form-horizontal">
+                                                            <form class="modal-body form-horizontal" id="modal-form">
                                                                 <div class="form-group">
 
                                                                     <div class="form-group row">
@@ -508,7 +508,7 @@
                                                                     <span aria-hidden="true">&times;</span>
                                                                 </button>
                                                             </div>
-                                                            <form class="modal-body form-horizontal">
+                                                            <form class="modal-body form-horizontal" id="modal-form">
                                                                 <div class="form-group">
 
                                                                     <div class="form-group row">
@@ -568,7 +568,7 @@
                                                                     <span aria-hidden="true">&times;</span>
                                                                 </button>
                                                             </div>
-                                                            <form class="modal-body form-horizontal">
+                                                            <form class="modal-body form-horizontal" id="modal-form">
                                                                 <div class="form-group">
 
                                                                     <div class="form-group row">
@@ -617,7 +617,7 @@
                                                                     <span aria-hidden="true">&times;</span>
                                                                 </button>
                                                             </div>
-                                                            <form class="modal-body form-horizontal">
+                                                            <form class="modal-body form-horizontal" id="modal-form">
                                                                 <div class="form-group">
 
                                                                     <div class="form-group row">
@@ -666,7 +666,7 @@
                                                                     <span aria-hidden="true">&times;</span>
                                                                 </button>
                                                             </div>
-                                                            <form class="modal-body form-horizontal">
+                                                            <form class="modal-body form-horizontal" id="modal-form">
                                                                 <div class="form-group">
                                                                     <!-- QueueName -->
                                                                     <div class="form-group row">
@@ -807,7 +807,7 @@
                                                                     <span aria-hidden="true">&times;</span>
                                                                 </button>
                                                             </div>
-                                                            <form class="modal-body form-horizontal">
+                                                            <form class="modal-body form-horizontal" id="modal-form">
                                                                 <div class="form-group">
 
                                                                     <div class="form-group row">
@@ -1024,7 +1024,7 @@
                                                                     <span aria-hidden="true">&times;</span>
                                                                 </button>
                                                             </div>
-                                                            <form class="modal-body form-horizontal">
+                                                            <form class="modal-body form-horizontal" id="modal-form">
                                                                 <div class="form-group">
 
                                                                     <div class="form-group row">
@@ -1118,7 +1118,7 @@
                                                                     <span aria-hidden="true">&times;</span>
                                                                 </button>
                                                             </div>
-                                                            <form class="modal-body form-horizontal">
+                                                            <form class="modal-body form-horizontal" id="modal-form">
                                                                 <div class="form-group">
 
                                                                     <div class="form-group row">
@@ -3844,9 +3844,7 @@
 
         var dbDIDs = {
             loadData: function (filter) {
-                return $.grep(this.DIDs.ranges, function (DID) {
-                    return (!filter.didStart || DID.didStart.toLowerCase().indexOf(filter.didStart.toLowerCase()) > -1);
-                });
+                return this.DIDs.ranges
             },
             insertItem: function (insertingDID) {
                 this.DIDs.ranges.push(insertingDID);
@@ -3875,7 +3873,7 @@
         function initDIDsGrid() {
             const maxItems = 10;
 
-            dbDIDs.DIDs = caItem.hasOwnProperty('dids') ? caItem.dids : [];
+            dbDIDs.DIDs = caItem.hasOwnProperty('dids') ? caItem.dids : { mainInboundNumber: '', ranges:[]};
 
             $("#jsGridDIDs").jsGrid({
                 height: "auto",
@@ -3923,7 +3921,7 @@
                                 if (result) {
                                     args.item.deleteConfirmed = true;
                                     $("#jsGridDIDs").jsGrid('deleteItem', args.item); // Remove item from grid
-                                    removeFromArray(dbDIDs.DIDs, args.item); // Remove item from db
+                                    removeFromArray(dbDIDs.DIDs.ranges, args.item); // Remove item from db
                                     showMessage("DID deleted", false);
                                 }
                             }
