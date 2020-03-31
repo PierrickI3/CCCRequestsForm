@@ -41,7 +41,7 @@
             </ul>
 
             <ul class="nav navbar-nav" style="float: right;">
-                <li><button id="saveDraft" href="#" onclick="saveDraft();" class="btn btn-primary btn-sm ml-2" disabled>Save draft</button></li>
+                <li><button id="saveDraft" href="#" onclick="saveDraft(true);" class="btn btn-primary btn-sm ml-2" disabled>Save draft</button></li>
             </ul>
         </ul>
     </nav>
@@ -1303,7 +1303,6 @@
             } else {
                 // New not related RequestForm                
                 $('#badgePill')[0].innerHTML = "NEW";
-                enableForm(true);
 
                 initLocationsGrid();
                 initHolidaysGrid();
@@ -1313,6 +1312,10 @@
                 initPromptsGrid();
                 initQueuesGrid();
                 initDIDsGrid();
+
+                await saveDraft(false);
+                enableForm(true);
+
             }
         }
 
@@ -1394,8 +1397,10 @@
                 json.skills = $("#jsGridSkills").jsGrid("option", "data");
             if ($("#jsGridWrapUpCodes").jsGrid("option", "data").length > 0)
                 json.wrapUpCodes = $("#jsGridWrapUpCodes").jsGrid("option", "data");
-            if ($("#jsGridPrompts").jsGrid("option", "data").length > 0)
+            /*  //There are Empty Strings inside
+                if ($("#jsGridPrompts").jsGrid("option", "data").length > 0)
                 json.prompts = $("#jsGridPrompts").jsGrid("option", "data");
+            */
             if ($("#jsGridQueues").jsGrid("option", "data").length > 0) {
                 $.each($("#jsGridQueues").jsGrid("option", "data"), (key, item) => {
                     json.queues.push({
@@ -1414,10 +1419,11 @@
                     })
                 });
             }
+            /* //There are Empty Strings inside
             json.callFlowExperience = callFlowExperience;
             if ($('#mainInboundNumber').val().length > 0)
                 json.dids.mainInboundNumber = $('#mainInboundNumber').val();
-
+            */
             if ($("#jsGridDIDs").jsGrid("option", "data").length > 0) {
                 $.each($("#jsGridDIDs").jsGrid("option", "data"), (key, item) => {
                     json.dids.ranges.push({
@@ -1434,7 +1440,7 @@
             return json;
         }
 
-        async function saveDraft() {
+        async function saveDraft(_manualSave) {
             console.log('saveDraft()');
 
             // Disable button
@@ -1451,7 +1457,9 @@
                     caItem = await ca_createItem(json);
                     console.log(`responseId created on CA db: ${caItem.id}`);
                     window.history.pushState('', 'CC Rapid Response Request Form', `${window.location.href}?id=${caItem.id}`);
-                    $('#badgePill')[0].innerHTML = "";
+                    if (_manualSave)
+                        $('#badgePill')[0].innerHTML = "";
+
                 }
             } catch (error) {
                 console.error(error);
