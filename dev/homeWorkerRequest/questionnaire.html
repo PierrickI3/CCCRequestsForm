@@ -70,7 +70,7 @@
                             <div class="card-header card-header-top" id="headingOne">
                                 <h5 class="mb-0">
                                     <button class="btn btn-outline-success collapsed" data-toggle="collapse" data-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
-                                        Request details
+                                        Linked request
                                     </button>
                                 </h5>
                             </div>
@@ -1265,7 +1265,7 @@
                     console.log(request);
                     $('#badgePill')[0].innerHTML = "1";
                     console.log(request);
-                    $('#requestDetails')[0].innerHTML = `Related to Partner/Customer Name <B>${request.partnerCustomerName}</B> requested by <em>${request.requesterName}</em>`;
+                    $('#requestDetails')[0].innerHTML = `Related to Partner/Customer Name: <B>${request.partnerCustomerName}</B> requested by <em>${request.requesterName}</em>`;
                 } catch (error) {
                     console.error(error);
                     if (error.status !== 404) {
@@ -1329,7 +1329,7 @@
 
         function loadDraftConfiguration() {
             console.log('function loadDraftConfiguration');
-            if (caItem) {
+            if (caItem && caItem.hasOwnProperty('organizationSetup')) {
                 // organization
                 $('#companyName').val(caItem.organizationSetup.companyName);
                 $('#genesysCloudRegion').val(caItem.organizationSetup.genesysCloudRegion);
@@ -1454,9 +1454,12 @@
                 if (caItem && caItem.id) {
                     await ca_updateItem(caItem.id, json);
                 } else {
+                    if (id) 
+                        json.id = id;                        
                     caItem = await ca_createItem(json);
                     console.log(`responseId created on CA db: ${caItem.id}`);
-                    window.history.pushState('', 'CC Rapid Response Request Form', `${window.location.href}?id=${caItem.id}`);
+                    if (!id)
+                        window.history.pushState('', 'CC Rapid Response Request Form', `${window.location.href}?id=${caItem.id}`);
                     if (_manualSave)
                         $('#badgePill')[0].innerHTML = "";
 
@@ -1470,7 +1473,8 @@
                 $("#saveDraft").prop('disabled', false);
                 $("#saveDraft").html('Save draft');
             }
-            showMessage("Draft updated", false);
+            if (_manualSave)
+                showMessage("Draft updated", false);
         }
 
         function exportCSV() {
