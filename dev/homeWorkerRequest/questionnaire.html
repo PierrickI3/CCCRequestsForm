@@ -3595,7 +3595,9 @@
                         },
                         body: JSON.stringify({
                             name: file.name,
-                            type: file.type
+                            type: file.type,
+                            requestId: id,
+                            token: gcToken
                         })
                     })
                         .then(function (response) {
@@ -3678,10 +3680,6 @@
                 formSubmitHandlerCallFlowExperience();
             }
         });
-
-        //TODO Add Play message and disconnect
-        //TODO Add Repeat Menu
-        //TODO Save to JSON object (need a getCallFlowExperience() function?)
 
         var showCallFlowExperienceModal = function (dialogType, menuDigit, item) {
             console.log('Showing details for:', item);
