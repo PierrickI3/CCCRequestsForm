@@ -205,3 +205,28 @@ section {
 {
     color: #3498db;
 }
+
+.fileuploader * {
+    box-sizing: border-box;
+}
+
+.fileuploader-input {
+    display: block;
+    position: relative;
+    cursor: pointer;
+    padding: 60px 0;
+    background: #fff;
+    border: 2px dashed #c2cdda;
+    border-radius: 14px;
+    text-align: center;
+}
+
+.drop-active {
+    background: #ff8;
+    opacity: 0.5;
+}
+
+.fileuploader-icon-main {
+    font-size: 50px;
+    color: #ff4f1f;
+}

@@ -23,3 +23,7 @@
 .task-hidden td {
     display: none;
 }
+
+.task-wait td:first-child {
+    background-color: orange !important;
+}

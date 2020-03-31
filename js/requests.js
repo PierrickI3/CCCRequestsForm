@@ -7,7 +7,7 @@ else
   apiBasePath = "https://drbojb15ma.execute-api.eu-central-1.amazonaws.com/dev";
 
 
-async function postRequests(region, subRegion, segment, product, tasks, requesterName, requesterEmail, requesterPhoneNumber, needCompletedBy, description, partnerCustomerName, salesforceAccountOpportunity, _token) {
+async function postRequests(region, subRegion, segment, product, tasks, requesterName, requesterEmail, requesterPhoneNumber, needCompletedBy, description, partnerCustomerName, salesforceAccountOpportunity, _token, customerRelationship, customerType) {
 
   console.log('Mail Distribution:', mailDistribution[product][$("#region").val()]);
   var data = {
@@ -43,6 +43,14 @@ async function postRequests(region, subRegion, segment, product, tasks, requeste
     data.salesforceAccountOpportunity = salesforceAccountOpportunity
   }
 
+  if (customerRelationship.length > 0) {
+    data.customerRelationship = customerRelationship
+  }
+
+  if (customerType.length > 0) {
+    data.customerType = customerType
+  }
+
   //#endregion
 
   return await $.ajax({
@@ -71,7 +79,7 @@ async function postRequests(region, subRegion, segment, product, tasks, requeste
     });
 }
 
-async function putRequest(id, region, subRegion, segment, product, tasks, requesterName, requesterEmail, requesterPhoneNumber, needCompletedBy, description, partnerCustomerName, salesforceAccountOpportunity, priority, acceptedRejected, status, programManager, acceptedRejectedNotes, teamMembers, _token, isDeleted) {
+async function putRequest(id, region, subRegion, segment, product, tasks, requesterName, requesterEmail, requesterPhoneNumber, needCompletedBy, description, partnerCustomerName, salesforceAccountOpportunity, priority, acceptedRejected, status, programManager, acceptedRejectedNotes, teamMembers, _token, isDeleted, customerRelationship, customerType) {
 
 
   if (!isDeleted) isDeleted = false;
@@ -122,6 +130,13 @@ async function putRequest(id, region, subRegion, segment, product, tasks, reques
     data.priority = priority
   }
 
+  if (customerRelationship && customerRelationship.length > 0) {
+    data.customerRelationship = customerRelationship;
+  }
+
+  if (customerType && customerType.length > 0) {
+    data.customerType = customerType;
+  }
 
   //#endregion
 
