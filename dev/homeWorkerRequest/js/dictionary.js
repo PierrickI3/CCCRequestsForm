@@ -848,7 +848,8 @@ let languages = {
 
 let telephonyModel = {
     GCV: "Genesys Cloud Voice",
-    BYOCCloud: "BYOC Cloud",
+    BYOCCloud: "BYOC Cloud (no GCV)",
+    BYOCCloudAndGCV: "BYOC Cloud & GCV mix",
     BYOCPremiseWithVirtualEdges: "BYOC Premise w/ Virtual Edge",
     BYOCPremiseWithAppliance: "BYOC Premise w/ Appliance"
 }

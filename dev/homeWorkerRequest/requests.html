@@ -655,6 +655,15 @@
                     $("#editModal #byocCloudCarriersDiv").show();
                     $("#editModal #BYOCCloudQuestions").show();
                     break;
+                case 'BYOCCloudAndGCV':
+                    $("#editModal #byocPremiseDiv").hide();
+                    $("#editModal #BYOCPremiseQuestions").hide();
+
+                    refreshBYOCCloudCountryCarriers();
+                    $("#editModal #byocCloudCarriersDiv").show();
+                    $("#editModal #BYOCCloudQuestions").show();
+                    $("#editModal #GCVQuestions").show();
+                    break;
                 case 'BYOCPremiseWithVirtualEdges':
                     $("#editModal #byocCloudCarriersDiv").hide();
                     $("#editModal #GCVQuestions").hide();
