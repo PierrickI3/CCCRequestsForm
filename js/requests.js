@@ -279,38 +279,42 @@ async function getExport(_region, _subRegion, _product, _segment, _token) {
     sFilter = sFilter + `segment=${_segment}&`;
   if (_subRegion)
     sFilter = sFilter + `subRegion=${_subRegion}&`;
+  if ($('#customerRelationship').val() !== "")
+    sFilter = sFilter + `customerRelationship=${$('#customerRelationship').val()}&`;
+  if ($('#customerType').val() !== "")
+    sFilter = sFilter + `customerType=${$('#customerType').val()}&`;
 
 
-// remove last char
-/*
-if (sFilter.length > 0)
-  sFilter = "?"
-else sFilter = sFilter + "&" //+ sFilter.substring(0, sFilter.length - 1);
-*/
-console.log(`getExport with filter: ${sFilter}`);
+  // remove last char
+  /*
+  if (sFilter.length > 0)
+    sFilter = "?"
+  else sFilter = sFilter + "&" //+ sFilter.substring(0, sFilter.length - 1);
+  */
+  console.log(`getExport with filter: ${sFilter}`);
 
-return await $.ajax({
-  url: `${apiBasePath}/export?${sFilter}token=${_token}`,
-  method: "GET",
-  contentType: 'application/json',
-  dataType: "json"
-})
-  .done((data, textStatus, jqXHR) => {
-    try {
-      if (jqXHR.status === 200) {
-        console.log(jqXHR);
-        return data;
-      } else {
-        showMessage("Unexpected error: " + textStatus, true);
-        reject(textStatus);
-      }
-    } catch (error) {
-      console.error(error);
-      reject(error);
-    }
+  return await $.ajax({
+    url: `${apiBasePath}/export?${sFilter}token=${_token}`,
+    method: "GET",
+    contentType: 'application/json',
+    dataType: "json"
   })
-  .always(() => {
-    console.log("getRequests completed");
-  });
+    .done((data, textStatus, jqXHR) => {
+      try {
+        if (jqXHR.status === 200) {
+          console.log(jqXHR);
+          return data;
+        } else {
+          showMessage("Unexpected error: " + textStatus, true);
+          reject(textStatus);
+        }
+      } catch (error) {
+        console.error(error);
+        reject(error);
+      }
+    })
+    .always(() => {
+      console.log("getRequests completed");
+    });
 }
 

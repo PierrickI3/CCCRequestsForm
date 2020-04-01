@@ -20,12 +20,21 @@
 </head>
 
 <body>
+    <div id="video-overlay" class="video-overlay">
+        <a class="video-overlay-close">&times;</a>
+    </div>
+
     <img class="overlay" src="./images/devmode.png" id="devModeImage" hidden alt="devMode" />
     <nav class="navbar navbar-dark bg-dark">
         <a class="navbar-brand" href="#">
             <img src="images/genesys.png" width="30" height="30" class="d-inline-block align-top" alt="">
             Competence Center Request Form <small><span class="badge badge-pill badge-warning" id="regionBadge"></span></small>
         </a>
+
+        <a id="play-video" class="video-play-button" href="#" data-toggle="tooltip" data-placement="top" title="EMEA Introduction Video">
+            <span></span>
+        </a>
+
         <ul class="mb-0">
             <ul class="nav navbar-nav" style="float: right;">
                 <li>
@@ -253,6 +262,30 @@
         } else {
             addNewTask(false);
         }
+
+        $('[data-toggle="tooltip"]').tooltip()
+
+        //#region Videos
+
+        $('#play-video').on('click', function (e) {
+            e.preventDefault();
+            $('#video-overlay').addClass('open');
+            $("#video-overlay").append('<iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/wzvWDjp1PMQ" frameborder="0" allowfullscreen allow="accelerometer; autoplay;" autoplay="1"></iframe>');
+        });
+
+        $('.video-overlay, .video-overlay-close').on('click', function (e) {
+            e.preventDefault();
+            close_video();
+        });
+
+        $(document).keyup(function (e) {
+            if (e.keyCode === 27) { close_video(); }
+        });
+
+        function close_video() {
+            $('.video-overlay.open').removeClass('open').find('iframe').remove();
+        };
+        //#endregion
 
         if (window.location.href.includes('dev'))
             $("#devModeImage").removeAttr('hidden');

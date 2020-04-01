@@ -1074,7 +1074,7 @@
 
                                                                     <div class="modal-footer">
                                                                         <button type="button" class="btn btn-link pull-right" data-dismiss="modal">Close</button>
-                                                                        <button type="submit" class="btn btn-primary pull-left"><i class="fa fa-plus"></i> Add</button>
+                                                                        <button type="submit" class="btn btn-primary pull-left"><i class="fa fa-floppy-o"></i> Save</button>
                                                                     </div>
                                                             </form>
                                                         </div>
@@ -1363,7 +1363,7 @@
                 wrapUpCodes: [],
                 queues: [],
                 prompts: [],
-                callFlowExperience: [],
+                callFlowExperience: {},
                 dids: {
                     mainInboundNumber: 'n/a',
                     ranges: []
@@ -1421,8 +1421,8 @@
                     })
                 });
             }
-            /* //There are Empty Strings inside
             json.callFlowExperience = callFlowExperience;
+            /* //There are Empty Strings inside
             if ($('#mainInboundNumber').val().length > 0)
                 json.dids.mainInboundNumber = $('#mainInboundNumber').val();
             */
@@ -1437,7 +1437,6 @@
                 });
             }
             json.dids.mainInboundNumber = $('#mainInboundNumber').val().length > 0 ? $('#mainInboundNumber').val() : 'n/a';
-
 
             console.log(json);
             return json;
@@ -3679,23 +3678,12 @@
         //#region Call Flow Experience
 
         let callFlowExperience = {
-            default: "",
-            "1": {},
-            "2": {},
-            "3": {},
-            "4": {},
-            "5": {},
-            "6": {},
-            "7": {},
-            "8": {},
-            "9": {},
-            "0": {}
         };
 
         $('.num').click(function () {
             var menuDigit = $.trim($(this).find('.txt').clone().children().remove().end().text());
             console.log(menuDigit);
-            if (Object.keys(callFlowExperience[menuDigit]).length > 0) {
+            if (callFlowExperience.hasOwnProperty(menuDigit)) {
                 console.log(`Edit ${callFlowExperience[menuDigit]} for digit: ${menuDigit}`);
                 showCallFlowExperienceModal("Edit", menuDigit, callFlowExperience[menuDigit]);
             } else {
@@ -3715,7 +3703,6 @@
         });
 
         var showCallFlowExperienceModal = function (dialogType, menuDigit, item) {
-            console.log('Showing details for:', item);
 
             // Populate queues
             $("#editModalCallFlowExperience #queues").empty();
@@ -3738,20 +3725,35 @@
                 $("<option/>", { value: item.promptName }).text(item.messageName).appendTo("#prompts");
             });
 
-            if (!item.hasOwnProperty('menuDigit')) { item.menuDigit = menuDigit; }
+            switch (dialogType) {
+                case "Edit":
+                    console.log('Showing details for:', item);
+                    if (!item.hasOwnProperty('menuDigit')) { item.menuDigit = menuDigit; }
 
-            $("#editModalCallFlowExperience #title").text(`Option ${item.menuDigit}`);
-            $("#editModalCallFlowExperience #default").prop('checked', callFlowExperience.default === item.menuDigit);
-            $("#editModalCallFlowExperience #behavior").val(item.behavior);
-            $("#editModalCallFlowExperience #behavior").change();
-            $("#editModalCallFlowExperience #queues").val(item.queueName);
-            $("#editModalCallFlowExperience #skills").val(item.skill);
-            $("#editModalCallFlowExperience #prompts").val(item.prompt);
+                    $("#editModalCallFlowExperience #title").text(`Option ${item.menuDigit}`);
+                    $("#editModalCallFlowExperience #default").prop('checked', callFlowExperience.default === item.menuDigit);
+                    $("#editModalCallFlowExperience #behavior").val(item.behavior);
+                    $("#editModalCallFlowExperience #behavior").change();
+                    $("#editModalCallFlowExperience #queues").val(item.queueName);
+                    $("#editModalCallFlowExperience #skills").val(item.skill);
+                    $("#editModalCallFlowExperience #prompts").val(item.prompt);
 
-            $("#editModalCallFlowExperience #submit").html("<i class='fa fa-floppy-o'></i> Save");
-            formSubmitHandlerCallFlowExperience = function () {
-                saveCallFlowExperience(item, dialogType === "Add");
-            };
+                    formSubmitHandlerCallFlowExperience = function () {
+                        saveCallFlowExperience(item, dialogType === "Edit");
+                    };
+                    break;
+                case "Add":
+                    console.log('Showing modal for menu digit:', menuDigit);
+                    item.menuDigit = menuDigit;
+                    formSubmitHandlerCallFlowExperience = function () {
+                        saveCallFlowExperience(item, dialogType === "Add");
+                    };
+                    break;
+                default:
+                    console.error('Unknown dialog type:', dialogType);
+                    showMessage('Unknown dialog type: ' + dialogType, true);
+                    break;
+            }
             $("#editModalCallFlowExperience").modal('show');
         };
 
@@ -3787,7 +3789,8 @@
                 $.extend(item, {
                     behavior: $("#editModalCallFlowExperience #behavior").val(),
                     queueName: $("#editModalCallFlowExperience #queues").val(),
-                    skill: $("#editModalCallFlowExperience #skills").val()
+                    skill: $("#editModalCallFlowExperience #skills").val(),
+                    prompt: $("#editModalCallFlowExperience #prompts").val()
                 });
                 if ($("#editModalCallFlowExperience #default").is(":checked")) {
                     callFlowExperience.default = item.menuDigit;
@@ -3797,33 +3800,29 @@
                 let newItem = {};
                 Object.assign(newItem, item); // Copy object
                 delete newItem.menuDigit;
+
+                // Do not try to save queue if it's empty
+                if (!newItem.queueName || newItem.queueName.length === 0) {
+                    delete newItem.queueName;
+                }
+
+                // Do not try to save skill if it's empty
+                if (!newItem.skill || newItem.skill.length === 0) {
+                    delete newItem.skill;
+                }
+
+                // Do not try to save prompt if it's empty
+                if (!newItem.prompt || newItem.prompt.length === 0) {
+                    delete newItem.prompt;
+                }
+
+                // if (!callFlowExperience.hasOwnProperty(item.menuDigit)) {
+                //     callFlowExperience[menuDigit] =: {} });
+                // }
                 callFlowExperience[item.menuDigit] = newItem;
                 console.log('Call Flow Experience:', callFlowExperience);
 
-                // Clear existing colors
-                $.each($("[data-digit]"), (i, item) => {
-                    item.classList.remove('text-success');
-                    item.parentNode.classList.remove('bg-secondary');
-                });
-
-                // Set text colors if digit has fields set
-                $.each(callFlowExperience, (i, callFlowExperienceItem) => {
-                    let digitControl = $(`*[data-digit='${i}']`).eq(0);
-                    if (callFlowExperienceItem.hasOwnProperty('behavior') && callFlowExperienceItem.behavior.length > 0) {
-                        digitControl.removeClass('text-success').addClass('text-success'); // Making sure it's not added twice
-                    } else {
-                        digitControl.removeClass('text-success');
-                    }
-                });
-
-                // Set background color for default digit
-                if (callFlowExperience.default.length > 0) {
-                    let defaultDigitControl = $(`*[data-digit='${callFlowExperience.default}']`).eq(0);
-
-                    // Set round circle color
-                    let parentDiv = defaultDigitControl.parent(); // Round item is parent of the digit text
-                    parentDiv.removeClass('bg-secondary').addClass('bg-secondary'); // Making sure it's not added twice
-                }
+                refreshPhonePad();
 
                 $("#editModalCallFlowExperience").modal('hide');
             } catch (error) {
@@ -3832,9 +3831,37 @@
             }
         };
 
-        //TODO Load call flow experience on phone pad
-        var initCallFlowExperience = function (callFlowExperience) {
+        var refreshPhonePad = function () {
 
+            // Clear existing colors
+            $.each($("[data-digit]"), (i, item) => {
+                item.classList.remove('text-success');
+                item.parentNode.classList.remove('bg-secondary');
+            });
+
+            // Set text colors if digit has fields set
+            $.each(callFlowExperience, (i, callFlowExperienceItem) => {
+                let digitControl = $(`*[data-digit='${i}']`).eq(0);
+                if (callFlowExperienceItem.hasOwnProperty('behavior') && callFlowExperienceItem.behavior.length > 0) {
+                    digitControl.removeClass('text-success').addClass('text-success'); // Making sure it's not added twice
+                } else {
+                    digitControl.removeClass('text-success');
+                }
+            });
+
+            // Set background color for default digit
+            if (callFlowExperience.hasOwnProperty('default') && callFlowExperience.default.length > 0) {
+                let defaultDigitControl = $(`*[data-digit='${callFlowExperience.default}']`).eq(0);
+
+                // Set round circle color
+                let parentDiv = defaultDigitControl.parent(); // Round item is parent of the digit text
+                parentDiv.removeClass('bg-secondary').addClass('bg-secondary'); // Making sure it's not added twice
+            }
+        }
+
+        var initCallFlowExperience = function (savedCallFlowExperience) {
+            callFlowExperience = savedCallFlowExperience;
+            refreshPhonePad();
         }
 
         $("#editModalCallFlowExperience").on('shown.bs.modal', function () {

@@ -3,7 +3,8 @@
 let adminGroups = {
     EMEA: [
         "691fce29-dc11-450a-89f1-73b51226863f", // ECCC Internal
-        "fd3d95a6-0989-4174-b389-252e9bab80cb"  // EMEA Enterprise CC Internal
+        "fd3d95a6-0989-4174-b389-252e9bab80cb", // EMEA Enterprise CC Internal
+        "3263e3a2-c6c9-43d4-b6dd-2dfe01f91ae0"  // PS EMEA RR SWAT (Only for #rapidResponse)
     ],
     NA: [
         "cbc3ff94-f1d1-48aa-9c70-6fe32fe99455"
@@ -848,7 +849,8 @@ let languages = {
 
 let telephonyModel = {
     GCV: "Genesys Cloud Voice",
-    BYOCCloud: "BYOC Cloud",
+    BYOCCloud: "BYOC Cloud (no GCV)",
+    BYOCCloudAndGCV: "BYOC Cloud & GCV mix",
     BYOCPremiseWithVirtualEdges: "BYOC Premise w/ Virtual Edge",
     BYOCPremiseWithAppliance: "BYOC Premise w/ Appliance"
 }

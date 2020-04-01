@@ -72,6 +72,22 @@
                             <option value="" selected>All</option>
                         </select>
                     </div>
+                    <div class="form-group col-md-3">
+                        <label for="customerRelationship">Direct/Indirect</label>
+                        <select id="customerRelationship" name="customerRelationship" class="form-control" required>
+                            <option value="" selected>All</option>
+                            <option value="Direct">Direct</option>
+                            <option value="Indirect">Indirect (via Partner)</option>
+                        </select>
+                    </div>
+                    <div class="form-group col-md-3">
+                        <label for="customerType">Customer Type</label>
+                        <select id="customerType" name="customerType" class="form-control" required>
+                            <option value="" selected>All</option>
+                            <option value="ExistingCustomer">Existing Customer</option>
+                            <option value="NewLogo">New Logo</option>
+                        </select>
+                    </div>
 
                 </div>
                 <center>
@@ -225,6 +241,14 @@
             init();
         });
 
+        $("#customerRelationship").on("change", () => {
+            init();
+        });
+
+        $("#customerType").on("change", () => {
+            init();
+        });
+
 
         function buildFilter(_sql, _isWHERE) {
             var filter = "";
@@ -236,18 +260,30 @@
             else
                 filter = " AND "
 
-            if ($('#region').val() != "" || $('#subRegion').val() != "") {
+            if ($('#region').val() != "" || $('#subRegion').val() != "" || $('#customerRelationship').val() != "" || $('#customerType').val() != "") {
                 if ($('#region').val() != "") {
                     filter = filter + ` region = '${$('#region').val()}' `
                     bAND = true;
                     bEmpty = false;
                 }
-
                 if ($('#subRegion').val() != "") {
                     if (bAND) filter = filter + " AND ";
                     filter = filter + `subRegion = '${$('#subRegion').val()}' `;
+                    bAND = true;
                     bEmpty = false;
                 }
+                if ($('#customerRelationship').val() != "") {
+                    if (bAND) filter = filter + " AND ";
+                    filter = filter + `customerRelationship = '${$('#customerRelationship').val()}' `;
+                    bAND = true;
+                    bEmpty = false;
+                }
+                if ($('#customerType').val() != "") {
+                    if (bAND) filter = filter + " AND ";
+                    filter = filter + `customerType = '${$('#customerType').val()}' `;
+                    bEmpty = false;
+                }
+
 
 
             }

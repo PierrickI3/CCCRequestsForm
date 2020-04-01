@@ -83,12 +83,14 @@
 
                     <!-- Countries & Languages -->
                     <div class="form-row mr-4 ml-2">
-                        <div class="form-group col-md-6">
+                        <div class="form-group col-md-12">
                             <label for="countriesAgents">In which countries are the customer's agents located? <span class="text-danger font-weight-bold">*</span></label>
                             <select class="selectpicker" id="countriesAgents" name="countriesAgents" class="form-control" required multiple data-live-search="true">
                             </select>
                         </div>
-                        <div class="form-group col-md-6">
+                    </div>
+                    <div class="form-row mr-4 ml-2">
+                        <div class="form-group col-md-12">
                             <label for="countriesOperation">In which countries does the customer operate and require (or have existing) phone numbers? <span class="text-danger font-weight-bold">*</span></label>
                             <select class="selectpicker" id="countriesOperation" name="countriesOperation" class="form-control" required multiple data-live-search="true">
                             </select>
@@ -99,9 +101,11 @@
 
                     <div class="text-muted form-group ml-3">
                         <small>Where a SIP trunk cannot be easily established, it is recommended to use Genesys Cloud Voice and forwarding of calls.</small>
+                        <br>
+                        <small>A new option has been added to select BYOC Cloud and Genesys Cloud Voice together.</small>
                     </div>
 
-                    <div class="form-group col-md-6">
+                    <div class="form-group col-md-12">
                         <div class="text-muted" id="recommendation">
                         </div>
                         <label for="telephonyModel">Telephony Model <span class="text-danger font-weight-bold">*</span></label>
@@ -112,6 +116,7 @@
 
                     <!-- GCV Questions -->
                     <div id="GCVQuestions" style="display:none;">
+                        <h3 class="text-center shadow-lg pt-2 pb-2 offset-md-4 col-md-4">Genesys Cloud Voice</h3>
 
                         <!-- Phone Numbers Deployment -->
                         <div class="form-row mr-4 ml-2">
@@ -165,10 +170,12 @@
                     </div>
 
                     <!-- BYOC Cloud Carriers -->
-                    <div class="border border-black mr-3 col-md-6" id="byocCloudCarriersDiv" style="display: none;">
+                    <div class="border border-black mr-3 col-md-12" id="byocCloudCarriersDiv" style="display: none;">
+                        <br>
+                        <h3 class="text-center shadow-lg pt-2 pb-2 offset-md-4 col-md-4">BYOC Cloud Carriers</h3>
                         <div class="form-row mt-1 mr-4 ml-2">
-                            <div class="form-group col-md-5 text-center">Country</div>
-                            <div class="form-group col-md-5 text-center">Select one or more Carriers <span class="text-danger font-weight-bold">*</span></div>
+                            <div class="form-group col-md-5">Country</div>
+                            <div class="form-group col-md-5">Select one or more Carriers <span class="text-danger font-weight-bold">*</span></div>
                         </div>
                         <div class="form-row mt-2 mr-4 ml-2" id="byocCloudCarriers"></div>
                         <small id="otherNote" class="form-group ml-2">
@@ -188,7 +195,6 @@
                         </div>
 
                     </div>
-
 
                     <!-- BYOC Cloud Questions -->
                     <div id="BYOCCloudQuestions" style="display:none;">
@@ -238,7 +244,7 @@
 
                     <!--#region General Configuration -->
 
-                    <div class="col-md-12 bg-light shadow">
+                    <div class="col-md-12 bg-light shadow-lg">
                         <hr />
                         <h3 class="text-center">General Configuration</h3>
                         <hr />
@@ -343,7 +349,7 @@
 
                     <!--#region PS Engagement -->
 
-                    <div class="col-md-12 bg-light shadow">
+                    <div class="col-md-12 bg-light shadow-lg">
                         <hr />
                         <h3 class="text-center">PS Engagement</h3>
                         <hr />
@@ -430,7 +436,7 @@
 
                     <!--#region Policies & Processes -->
 
-                    <div class="col-md-12 bg-light shadow">
+                    <div class="col-md-12 bg-light shadow-lg">
                         <hr />
                         <h3 class="text-center">Policies & Processes</h3>
                         <hr />
@@ -473,7 +479,7 @@
                     <!--#region Your Info -->
 
                     <!-- Requester Info -->
-                    <div class="col-md-12 bg-light shadow">
+                    <div class="col-md-12 bg-light shadow-lg">
                         <h3 class="text-center">Your Info</h3>
                         <hr />
                     </div>
@@ -556,6 +562,24 @@
                         <div class="form-group col-md-6">
                             <label for="salesforceAccountOpportunity">Opportunity URL <span class="text-danger font-weight-bold">*</span></label>
                             <input type="text" class="form-control" id="salesforceAccountOpportunity" name="salesforceAccountOpportunity" placeholder="Link to Salesforce opportunity" required>
+                        </div>
+                    </div>
+
+                    <div class="form-check mr-4">
+                        <div class="form-group col-md-12">
+                            <input class="form-check-input" type="checkbox" value="" id="solutionBusinessConsultingRequired">
+                            <label class="form-check-label" for="solutionBusinessConsultingRequired">
+                                Is Solution Business Consulting required for this opportunity?
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="form-check mr-4">
+                        <div class="form-group col-md-12">
+                            <input class="form-check-input" type="checkbox" value="" id="nonProfitOrganization">
+                            <label class="form-check-label" for="nonProfitOrganization">
+                                Is this a non-profit organisation?
+                            </label>
                         </div>
                     </div>
 
@@ -662,12 +686,12 @@
                     $("#telephonyModel").val('GCV');
                     $("#telephonyModel").change();
                     $("#recommendation").empty();
-                    $("<small/>", { class: "btn-warning" }).html(`Based on your selection of countries, <strong>${$("#telephonyModel option:selected").text()}</strong> is the recommended choice`).appendTo("#recommendation")
+                    $("<small/>", { class: "btn-warning" }).html(`Based on your selection of countries where the customer operates phone numbers, <strong>${$("#telephonyModel option:selected").text()}</strong> is the recommended choice. You may also select the BYOC Cloud & GCV option.`).appendTo("#recommendation")
                 } else {
                     $("#telephonyModel").val('BYOCCloud');
                     $("#telephonyModel").change();
                     $("#recommendation").empty();
-                    $("<small/>", { class: "btn-warning" }).html(`Based on your selection of countries, <strong>${$("#telephonyModel option:selected").text()}</strong> is the recommended choice`).appendTo("#recommendation")
+                    $("<small/>", { class: "btn-warning" }).html(`Based on your selection of countries where the customer operates phone numbers, <strong>${$("#telephonyModel option:selected").text()}</strong> is the recommended choice. You may also select the BYOC Cloud & GCV option.`).appendTo("#recommendation")
                 }
             } else {
                 $("#telephonyModel").val('BYOCCloud');
@@ -698,6 +722,21 @@
                     $("#byocCloudCarriersDiv").show();
                     $("#byocPremiseDiv").hide();
                     $("#GCVQuestions").hide();
+                    $("#BYOCPremiseQuestions").hide();
+                    $("#byocPremiseWithApplianceDiv").hide();
+                    $("#phoneNumbersDeployment").val('');
+                    $("#BYOCCloudQuestions").show();
+                    break;
+                case 'BYOCCloudAndGCV':
+                    if (!$("#countriesOperation").val() || $("#countriesOperation").val().length === 0) {
+                        $("#telephonyModel").val('');
+                        showMessage('Please select at least one country where the customer operates first', true);
+                        return;
+                    }
+                    refreshBYOCCloudCountryCarriers();
+                    $("#byocCloudCarriersDiv").show();
+                    $("#byocPremiseDiv").hide();
+                    $("#GCVQuestions").show();
                     $("#BYOCPremiseQuestions").hide();
                     $("#byocPremiseWithApplianceDiv").hide();
                     $("#phoneNumbersDeployment").val('');
@@ -1018,6 +1057,8 @@
             $("#notes").val('');
             $("#partnerCustomerName").val('');
             $("#salesforceAccountOpportunity").val('');
+            $("#solutionBusinessConsultingRequired").prop('checked', false);
+            $("#nonProfitOrganization").prop('checked', false);
 
             localStorage.removeItem("rapidForm_draft");
         }
@@ -1066,6 +1107,8 @@
                     requesterPhoneNumber: $("#requesterPhoneNumber").val(),
                     notes: $("#notes").val(),
                     partnerCustomerName: $("#partnerCustomerName").val(),
+                    solutionBusinessConsultingRequired: $("#solutionBusinessConsultingRequired").is(':checked'),
+                    nonProfitOrganization: $("#nonProfitOrganization").is(':checked'),
 
                     // Optional Fields
                     salesforceAccountOpportunity: $("#salesforceAccountOpportunity").val(),
@@ -1165,6 +1208,8 @@
                 $("#partnerCustomerName").val(data.partnerCustomerName);
                 $("#salesforceAccountOpportunity").val(data.salesforceAccountOpportunity);
                 $("#newNumbers").val(data.newNumbers);
+                $("#solutionBusinessConsultingRequired").prop('checked', data.solutionBusinessConsultingRequired);
+                $("#nonProfitOrganization").prop('checked', data.nonProfitOrganization);
 
             } catch (error) {
                 console.error(error);
