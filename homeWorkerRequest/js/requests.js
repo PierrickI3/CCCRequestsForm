@@ -72,7 +72,7 @@ async function postRequests() {
   if ($("#estimatedVolumeMinsPerMonth").val().length > 0) {
     data.estimatedVolumeMinsPerMonth = $("#estimatedVolumeMinsPerMonth").val()
   }
-  
+
   if ($("#salesforceAccountOpportunity").val().length > 0) {
     data.salesforceAccountOpportunity = $("#salesforceAccountOpportunity").val()
   }
@@ -99,6 +99,14 @@ async function postRequests() {
 
   if ($("#customerType").val().length > 0) {
     data.customerType = $("#customerType").val();
+  }
+
+  if ($("#solutionBusinessConsultingRequired")) {
+    data.solutionBusinessConsultingRequired = $("#solutionBusinessConsultingRequired").is(':checked');
+  }
+
+  if ($("#nonProfitOrganization")) {
+    data.nonProfitOrganization = $("#nonProfitOrganization").is(':checked');
   }
 
   //#endregion
@@ -142,7 +150,6 @@ async function postRequests() {
 }
 
 async function putRequest() {
-
 
   let id = $("#editModal #id").text();
 
@@ -259,6 +266,14 @@ async function putRequest() {
 
   if ($("#editModal #customerType").val() !== '') {
     data.customerType = $("#editModal #customerType").val()
+  }
+
+  if ($("#editModal #solutionBusinessConsultingRequired")) {
+    data.solutionBusinessConsultingRequired = $("#editModal #solutionBusinessConsultingRequired").is(':checked');
+  }
+
+  if ($("#editModal #nonProfitOrganization")) {
+    data.nonProfitOrganization = $("#editModal #nonProfitOrganization").is(':checked');
   }
 
   console.log(data);
@@ -431,6 +446,8 @@ async function getExport() {
 
   let exportRegion = $('#region').val() == "" ? undefined : $('#region').val();
   let exportSubRegion = $('#subRegion').val() == "" ? undefined : $('#subRegion').val();
+  let exportCustomerRelationship = $('#customerRelationship').val() == "" ? undefined : $('#customerRelationship').val();
+  let exportCustomerType = $('#customerType').val() == "" ? undefined : $('#customerType').val();
 
   var sFilter = "";
 
@@ -438,6 +455,11 @@ async function getExport() {
     sFilter = sFilter + `region=${exportRegion}&`;
   if (exportSubRegion)
     sFilter = sFilter + `subRegion=${exportSubRegion}&`;
+  if (exportCustomerRelationship)
+    sFilter = sFilter + `customerRelationship=${exportCustomerRelationship}&`;
+  if (exportCustomerType)
+    sFilter = sFilter + `customerType=${exportCustomerType}&`;
+
 
   console.log(`getExport with filter: ${sFilter}`);
 
@@ -534,7 +556,7 @@ async function ca_getItem(_id) {
 
 async function ca_updateItem(_id, _json) {
   console.log(`ca_updateItem(${_id})`);
-  
+
   _json.token = gcToken;
   return await $.ajax({
     url: `${apiBasePath}/cloudautomation/items/${_id}`,

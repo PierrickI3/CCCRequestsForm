@@ -52,6 +52,8 @@
     </div>
 
     <div class="container-fluid mt-4">
+        <div class="text-center" style="display: none;" id="saveUrl">
+        </div>
         <div class="form-row">
             <div class="form-group col-md-12">
                 <div id="status">
@@ -174,7 +176,7 @@
                                                                     <span aria-hidden="true">&times;</span>
                                                                 </button>
                                                             </div>
-                                                            <form class="modal-body form-horizontal">
+                                                            <form class="modal-body form-horizontal" id="modal-form">
                                                                 <div class="form-group">
 
                                                                     <div class="form-group row">
@@ -273,7 +275,7 @@
                                                                     <span aria-hidden="true">&times;</span>
                                                                 </button>
                                                             </div>
-                                                            <form class="modal-body form-horizontal">
+                                                            <form class="modal-body form-horizontal" id="modal-form">
                                                                 <div class="form-group">
 
                                                                     <div class="form-group row">
@@ -508,7 +510,7 @@
                                                                     <span aria-hidden="true">&times;</span>
                                                                 </button>
                                                             </div>
-                                                            <form class="modal-body form-horizontal">
+                                                            <form class="modal-body form-horizontal" id="modal-form">
                                                                 <div class="form-group">
 
                                                                     <div class="form-group row">
@@ -568,7 +570,7 @@
                                                                     <span aria-hidden="true">&times;</span>
                                                                 </button>
                                                             </div>
-                                                            <form class="modal-body form-horizontal">
+                                                            <form class="modal-body form-horizontal" id="modal-form">
                                                                 <div class="form-group">
 
                                                                     <div class="form-group row">
@@ -617,7 +619,7 @@
                                                                     <span aria-hidden="true">&times;</span>
                                                                 </button>
                                                             </div>
-                                                            <form class="modal-body form-horizontal">
+                                                            <form class="modal-body form-horizontal" id="modal-form">
                                                                 <div class="form-group">
 
                                                                     <div class="form-group row">
@@ -666,7 +668,7 @@
                                                                     <span aria-hidden="true">&times;</span>
                                                                 </button>
                                                             </div>
-                                                            <form class="modal-body form-horizontal">
+                                                            <form class="modal-body form-horizontal" id="modal-form">
                                                                 <div class="form-group">
                                                                     <!-- QueueName -->
                                                                     <div class="form-group row">
@@ -807,7 +809,7 @@
                                                                     <span aria-hidden="true">&times;</span>
                                                                 </button>
                                                             </div>
-                                                            <form class="modal-body form-horizontal">
+                                                            <form class="modal-body form-horizontal" id="modal-form">
                                                                 <div class="form-group">
 
                                                                     <div class="form-group row">
@@ -849,14 +851,14 @@
                                                                                 </div>
                                                                             </div>
                                                                             <div id="promptList">
-                                                                                <h6>Uploaded File:</h6>
+                                                                                <h6>Uploaded File: <a href="" id="uploadedFile"></a></h6>
                                                                             </div>
                                                                         </div>
                                                                     </div>
 
                                                                     <div class="modal-footer">
                                                                         <button type="button" class="btn btn-link pull-right" data-dismiss="modal">Close</button>
-                                                                        <button type="submit" class="btn btn-primary pull-left"><i class="fa fa-plus"></i> Add</button>
+                                                                        <button type="submit" class="btn btn-primary pull-left"><i class="fa fa-floppy-o"></i> Save</button>
                                                                     </div>
                                                             </form>
                                                         </div>
@@ -1024,7 +1026,7 @@
                                                                     <span aria-hidden="true">&times;</span>
                                                                 </button>
                                                             </div>
-                                                            <form class="modal-body form-horizontal">
+                                                            <form class="modal-body form-horizontal" id="modal-form">
                                                                 <div class="form-group">
 
                                                                     <div class="form-group row">
@@ -1118,7 +1120,7 @@
                                                                     <span aria-hidden="true">&times;</span>
                                                                 </button>
                                                             </div>
-                                                            <form class="modal-body form-horizontal">
+                                                            <form class="modal-body form-horizontal" id="modal-form">
                                                                 <div class="form-group">
 
                                                                     <div class="form-group row">
@@ -1329,23 +1331,24 @@
 
         function loadDraftConfiguration() {
             console.log('function loadDraftConfiguration');
+
+            initLocationsGrid();
+            initHolidaysGrid();
+            initSchedulesGrid();
+            initSkillsGrid();
+            initWrapUpCodesGrid();
+            initPromptsGrid();
+            initQueuesGrid();
+            initDIDsGrid();
+            refreshWrapUpCodesDropDownForQueues();
+
             if (caItem && caItem.hasOwnProperty('organizationSetup')) {
-                // organization
+                // Fill in Data
                 $('#companyName').val(caItem.organizationSetup.companyName);
                 $('#genesysCloudRegion').val(caItem.organizationSetup.genesysCloudRegion);
                 $('#numberOfUsers').val(caItem.organizationSetup.numberOfUsers);
-
-                initLocationsGrid();
-                initHolidaysGrid();
-                initSchedulesGrid();
-                initSkillsGrid();
-                initWrapUpCodesGrid();
-                initPromptsGrid();
-                initQueuesGrid();
                 initCallFlowExperience(caItem.callFlowExperience);
                 $('#mainInboundNumber').val(caItem.dids.mainInboundNumber == "n/a" ? '' : caItem.dids.mainInboundNumber);
-                initDIDsGrid();
-                refreshWrapUpCodesDropDownForQueues();
             }
         }
 
@@ -1389,7 +1392,6 @@
                 });
             }
             if ($("#jsGridSchedules").jsGrid("option", "data").length > 0) {
-                //TODO: Keep the order !
                 json.schedules = $("#jsGridSchedules").jsGrid("option", "data");
             }
             if ($("#jsGridHolidays").jsGrid("option", "data").length > 0)
@@ -1398,10 +1400,9 @@
                 json.skills = $("#jsGridSkills").jsGrid("option", "data");
             if ($("#jsGridWrapUpCodes").jsGrid("option", "data").length > 0)
                 json.wrapUpCodes = $("#jsGridWrapUpCodes").jsGrid("option", "data");
-            /*  //There are Empty Strings inside
-                if ($("#jsGridPrompts").jsGrid("option", "data").length > 0)
+            if ($("#jsGridPrompts").jsGrid("option", "data").length > 0) {
                 json.prompts = $("#jsGridPrompts").jsGrid("option", "data");
-            */
+            }
             if ($("#jsGridQueues").jsGrid("option", "data").length > 0) {
                 $.each($("#jsGridQueues").jsGrid("option", "data"), (key, item) => {
                     json.queues.push({
@@ -1460,8 +1461,11 @@
                         json.id = id;
                     caItem = await ca_createItem(json);
                     console.log(`responseId created on CA db: ${caItem.id}`);
-                    if (!id)
+                    if (!id) {
                         window.history.pushState('', 'CC Rapid Response Request Form', `${window.location.href}?id=${caItem.id}`);
+                    }
+                    $("#saveUrl").html(`To get back later on to this questionnaire, use this url: <a href="${window.location.href}">${window.location.href}</a>`);
+                    $("#saveUrl").show();
                     if (_manualSave)
                         $('#badgePill')[0].innerHTML = "";
 
@@ -3148,12 +3152,10 @@
             }
         });
 
-
         $("#addQueue").on('click', (e) => {
             e.preventDefault();
             showQueuesModal("Add", {});
         });
-
 
         $("#editModalQueues #acw").on('change', (e) => {
             e.preventDefault();
@@ -3343,40 +3345,45 @@
 
         //#region Prompts
 
+        let drop = document.getElementById('promptUpload');
+        let uploadedFileAnchor = $("#editModalPrompts #uploadedFile");
+
+        let s3BucketBasePath = "//cc-requests-prompts-bucket.s3.eu-central-1.amazonaws.com";
+
         let defaultPrompts = [
             {
                 messageName: "Main Greeting Message",
                 promptText: "Thank you for calling <Company Name>",
                 promptName: "MainGreeting.wav",
-                promptFile: "",
+                promptFile: "n/a",
                 useTTS: false
             },
             {
                 messageName: "Main Menu Message",
                 promptText: "If you are a new customer and looking for more information about out product, press 1.  If you have purchased our product and currenting have any issues or inquiries, press 2.  If you are a 3rd party vendor seeking marketing material, press 3.  For all other inquiries press 4.  To repeat this options press star.",
                 promptName: "MainMenu.wav",
-                promptFile: "",
+                promptFile: "n/a",
                 useTTS: false
             },
             {
                 messageName: "Closed Message",
                 promptText: "Our offices are closed at present; please call back during our normal opening hours which are 8 AM to 5 PM, Monday through Friday.",
                 promptName: "ClosedMessage.wav",
-                promptFile: "",
+                promptFile: "n/a",
                 useTTS: false
             },
             {
                 messageName: "Holiday Message",
                 promptText: "We are closed for holiday.  Please see our website at www.company.com/businesshours for when we will return to normal operating hours.  Have a great day.",
                 promptName: "HolidayMessage.wav",
-                promptFile: "",
+                promptFile: "n/a",
                 useTTS: false
             },
             {
                 messageName: "Emergency Message",
                 promptText: "We are experiencing interruption in our service.  You can find out more information at www.company.com/events for next steps and when we will return to normal operations.  We apologize for any inconvenience this may have caused.",
                 promptName: "EmergencyMessage.wav",
-                promptFile: "",
+                promptFile: "n/a",
                 useTTS: false
             }
         ];
@@ -3496,7 +3503,7 @@
                     {
                         name: "useTTS",
                         title: "useTTS",
-                        type: "text",
+                        type: "checkbox",
                         align: "center"
                     },
                     {
@@ -3525,23 +3532,33 @@
                 savePrompt(item, dialogType === "Add");
             };
             $("#editModalPrompts").modal('show');
-
         };
 
         var savePrompt = function (item, isNew) {
-            console.log('Extending item:', item);
-            $.extend(item, {
-                messageName: $("#editModalPrompts #messageName").val(),
-                promptText: $("#editModalPrompts #promptText").val(),
-                promptName: $("#editModalPrompts #promptName").val(),
-                promptFile: $("#editModalPrompts #promptFile").val(),
-                useTTS: $("#editModalPrompts #useTTS").is(':checked')
-            });
-            console.log('Extended Item:', item);
-            console.log('IsNew?', isNew);
+            try {
+                console.log('Extending item:', item);
+                let promptFile = $("#editModalPrompts #uploadedFile").text();
+                if (!promptFile || promptFile.length === 0) {
+                    promptFile = "n/a";
+                }
+                let promptFileLink = $("#editModalPrompts #uploadedFile").attr("href");
 
-            $("#jsGridPrompts").jsGrid(isNew ? "insertItem" : "updateItem", item);
-            $("#editModalPrompts").modal('hide');
+                $.extend(item, {
+                    messageName: $("#editModalPrompts #messageName").val(),
+                    promptText: $("#editModalPrompts #promptText").val(),
+                    promptName: $("#editModalPrompts #promptName").val(),
+                    promptFile: promptFileLink || "n/a",
+                    useTTS: $("#editModalPrompts #useTTS").is(':checked')
+                });
+                console.log('Extended Item:', item);
+                console.log('IsNew?', isNew);
+
+                $("#jsGridPrompts").jsGrid(isNew ? "insertItem" : "updateItem", item);
+                $("#editModalPrompts").modal('hide');
+            } catch (error) {
+                console.error(error);
+                showMessage(error, true);
+            }
         };
 
         $("#editModalPrompts").on('shown.bs.modal', function () {
@@ -3556,10 +3573,12 @@
             $("#editModalPrompts #messageName").val("");
             $("#editModalPrompts #promptText").val("");
             $("#editModalPrompts #promptName").val("");
-            $("#editModalPrompts #promptFile").val("");
+            //$("#editModalPrompts #promptFile").val("");
+            uploadedFileAnchor.attr("href", "");
+            uploadedFileAnchor.text("");
             $("#editModalPrompts #promptUploadFile").val("");
             $("#editModalPrompts #useTTS").attr('checked', false);
-            $("#editModalPrompts #submit").html("<i class='fa fa-plus'></i> Add");
+            $("#editModalPrompts #submit").html("<i class='fa fa-floppy-o'></i> Save");
 
             validatorPrompts.resetForm(); // Reset validation errors
         }
@@ -3574,13 +3593,15 @@
             }
         });
 
+        //TODO Set promptFile value in grid
+        //TODO Add validator for uploaded file label
+
+        //#region Upload Prompt
+
         $("#editModalPrompts #promptUploadFile").on('change', (e) => {
             let files = e.target.files;
             uploadFiles(files);
         });
-
-        var drop = document.getElementById('promptUpload');
-        var list = document.getElementById('promptList');
 
         function cancel(e) {
             e.preventDefault();
@@ -3594,8 +3615,6 @@
             uploadFiles(files);
             return false;
         }
-
-        //TODO Add request id to upload to new folder in S3
 
         function uploadFiles(files) {
             for (var i = 0; i < files.length; i++) {
@@ -3615,20 +3634,18 @@
                         })
                     })
                         .then(function (response) {
-                            console.log('Response:', response);
                             return response.json();
                         })
                         .then(function (json) {
-                            console.log('Upload Url:', json.uploadUrl);
                             return fetch(json.uploadUrl, {
                                 method: "PUT",
                                 body: new Blob([reader.result], { type: file.type })
                             })
                         })
-                        .then(function () {
-                            var uploadedFileNode = document.createElement('div');
-                            uploadedFileNode.innerHTML = '<a href="//cc-requests-prompts-bucket.s3.eu-central-1.amazonaws.com/' + file.name + '">' + file.name + '</a>';
-                            list.appendChild(uploadedFileNode);
+                        .then(function (putResponse) {
+                            let link = `${s3BucketBasePath}/${id}/${file.name}`;
+                            uploadedFileAnchor.attr("href", link);
+                            uploadedFileAnchor.text(file.name);
                         });
                 });
                 reader.readAsArrayBuffer(file);
@@ -3654,6 +3671,8 @@
             $("#editModalPrompts #promptUploadInput").removeClass("drop-active");
             handleDrop(e);
         });
+
+        //#endregion
 
         //#endregion
 
@@ -3876,7 +3895,7 @@
         function initDIDsGrid() {
             const maxItems = 10;
 
-            dbDIDs.DIDs = caItem.hasOwnProperty('dids') ? caItem.dids : [];
+            dbDIDs.DIDs = caItem.hasOwnProperty('dids') ? caItem.dids : { mainInboundNumber: '', ranges: [] };
 
             $("#jsGridDIDs").jsGrid({
                 height: "auto",
@@ -3924,7 +3943,7 @@
                                 if (result) {
                                     args.item.deleteConfirmed = true;
                                     $("#jsGridDIDs").jsGrid('deleteItem', args.item); // Remove item from grid
-                                    removeFromArray(dbDIDs.DIDs, args.item); // Remove item from db
+                                    removeFromArray(dbDIDs.DIDs.ranges, args.item); // Remove item from db
                                     showMessage("DID deleted", false);
                                 }
                             }
