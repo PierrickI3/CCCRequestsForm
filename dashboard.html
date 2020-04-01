@@ -110,7 +110,7 @@
                 </div>
                 <center>
                     <div id="spinner" class="justify-content-center">
-                        <div class="spinner-grow text-secondary" role="status">                           
+                        <div class="spinner-grow text-secondary" role="status">
                         </div>
                         <br>
                         <p class="text-secondary">Refreshing Dashboard...</p>
@@ -184,13 +184,19 @@
         <br><br><br>
     </div>
 
+    <p class="text-right" id="version"></p>
+
     <!-- Dictionary -->
     <script src="js/dictionary.js"></script>
+    <script src="js/version.js"></script>
 
     <script>
         if (window.location.href.includes('dev'))
             $("#devModeImage").removeAttr('hidden');
 
+        if (version && version.hasOwnProperty('version')) {
+            $("#version").text(`v${version.version}`);
+        }
 
         let task_parsed = [], filter = "";
 
@@ -469,7 +475,7 @@
             else
                 filter = " AND "
 
-            if ($('#region').val() != "" || $('#product').val() != "" || $('#segment').val() != "" || $('#subRegion').val() != "" || $('#customerRelationship').val() != "" || $('#customerType').val() != "")  {
+            if ($('#region').val() != "" || $('#product').val() != "" || $('#segment').val() != "" || $('#subRegion').val() != "" || $('#customerRelationship').val() != "" || $('#customerType').val() != "") {
                 if ($('#region').val() != "") {
                     filter = filter + ` region = '${$('#region').val()}' `
                     bAND = true;

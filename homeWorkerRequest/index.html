@@ -589,11 +589,12 @@
 
                 <br>
                 <button type="submit" id="submit" class="btn btn-primary ml-3" disabled>Submit</button>
-                <span class="text-muted"><small>This form is automatically saved every 10 seconds.<p class="text-right">v1.1</p></small></span>
+                <span class="text-muted"><small>This form is automatically saved every 10 seconds.</small></span>
             </div>
         </div>
     </div>
 
+    <p class="text-right" id="version"></p>
 
     <noscript>You need to enable JavaScript to run this app.</noscript>
     <!--#region Imports -->
@@ -622,6 +623,7 @@
     <script src="js/tools.js"></script>
     <!-- Dictionary -->
     <script src="js/dictionary.js"></script>
+    <script src="../js/version.js"></script>
 
     <!--#endregion -->
 
@@ -634,6 +636,10 @@
             $("#form :button").attr("disabled", true);
         } else {
             //addNewTask(false);
+        }
+
+        if (version && version.hasOwnProperty('version')) {
+            $("#version").text(`v${version.version}`);
         }
 
         if (window.location.href.includes('dev')) {

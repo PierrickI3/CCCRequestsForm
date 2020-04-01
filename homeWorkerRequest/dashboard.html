@@ -14,8 +14,6 @@
     <link type="text/css" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jsgrid/1.5.3/jsgrid.min.css" />
     <link type="text/css" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jsgrid/1.5.3/jsgrid-theme.min.css" />
 
-
-
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <!-- Bootstrap core JavaScript-->
@@ -131,15 +129,21 @@
         </div>
         <button onclick="exportData();" class="admin btn btn-dark" style="float: right;">Export to CSV</button>
         <br><br><br>
+        <p class="text-right" id="version"></p>
+
     </div>
 
     <!-- Dictionary -->
     <script src="js/dictionary.js"></script>
+    <script src="../js/version.js"></script>
 
     <script>
         if (window.location.href.includes('dev'))
             $("#devModeImage").removeAttr('hidden');
 
+        if (version && version.hasOwnProperty('version')) {
+            $("#version").text(`v${version.version}`);
+        }
 
         let task_parsed = [], filter = "";
 
