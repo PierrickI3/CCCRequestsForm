@@ -799,7 +799,18 @@
         }
 
         function refreshGrid() {
-            $("#basicgrid").jsGrid("loadData");
+            $("#basicgrid").jsGrid("loadData").done(() => {
+                applySorting();
+            });
+        }
+
+        function applySorting() {
+            // Re-apply sorting (if any)
+            let sorting = $("#basicgrid").jsGrid("getSorting");
+            if (sorting && sorting.field) {
+                console.log('Re-applying sorting:', sorting);
+                $("#basicgrid").jsGrid("sort", sorting);
+            }
         }
 
         $("#refresh").on("click", (e) => {
