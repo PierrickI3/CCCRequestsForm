@@ -1486,7 +1486,6 @@
             console.log('function exportCSV()');
             let data = $.extend(true, {}, buildJSON());
 
-
             const replacer = (key, value) => (value === null || value === 'n/a') ? '' : value // specify how you want to handle null values here
             let header, csv_locations, csv_schedules, csv_holidays, csv_skills, csv_wrapUpCodes, csv_queues, csv_callFlowExperience, csv_dids, csv_prompts;
 
@@ -1579,15 +1578,17 @@
             }
 
             // Call Flow Experience
-            if (data.callFlowExperience && data.callFlowExperience.length > 0) {
+            if (data.callFlowExperience && Object.keys(data.callFlowExperience).length > 0) {
                 console.log('build call flow experience csv...');
-                // tune queue columns
-                header = Object.keys(data.callFlowExperience[0]);
+                // tune columns
+                console.log('call flow experience:', data.callFlowExperience);
+                header = Object.keys(data.callFlowExperience);
+                console.log('header:', header);
                 csv_callFlowExperience = data.callFlowExperience.map(row => header.map(fieldName => JSON.stringify(row[fieldName], replacer)).join(';'))
                 csv_callFlowExperience.unshift(header.join(';'))
                 csv_callFlowExperience = csv_callFlowExperience.join('\r\n')
             } else {
-                console.log('queues are empty, skip csv build...');
+                console.log('call flow experience is empty, skip csv build...');
             }
 
             // DIDs
