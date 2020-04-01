@@ -565,6 +565,24 @@
                         </div>
                     </div>
 
+                    <div class="form-check mr-4">
+                        <div class="form-group col-md-12">
+                            <input class="form-check-input" type="checkbox" value="" id="solutionBusinessConsultingRequired">
+                            <label class="form-check-label" for="solutionBusinessConsultingRequired">
+                                Is Solution Business Consulting required for this opportunity?
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="form-check mr-4">
+                        <div class="form-group col-md-12">
+                            <input class="form-check-input" type="checkbox" value="" id="nonProfitOrganization">
+                            <label class="form-check-label" for="nonProfitOrganization">
+                                Is this a non-profit organisation?
+                            </label>
+                        </div>
+                    </div>
+
                     <!--#endregion Your Info -->
 
                 </form>
@@ -1039,6 +1057,8 @@
             $("#notes").val('');
             $("#partnerCustomerName").val('');
             $("#salesforceAccountOpportunity").val('');
+            $("#solutionBusinessConsultingRequired").prop('checked', false);
+            $("#nonProfitOrganization").prop('checked', false);
 
             localStorage.removeItem("rapidForm_draft");
         }
@@ -1087,6 +1107,8 @@
                     requesterPhoneNumber: $("#requesterPhoneNumber").val(),
                     notes: $("#notes").val(),
                     partnerCustomerName: $("#partnerCustomerName").val(),
+                    solutionBusinessConsultingRequired: $("#solutionBusinessConsultingRequired").is(':checked'),
+                    nonProfitOrganization: $("#nonProfitOrganization").is(':checked'),
 
                     // Optional Fields
                     salesforceAccountOpportunity: $("#salesforceAccountOpportunity").val(),
@@ -1186,6 +1208,8 @@
                 $("#partnerCustomerName").val(data.partnerCustomerName);
                 $("#salesforceAccountOpportunity").val(data.salesforceAccountOpportunity);
                 $("#newNumbers").val(data.newNumbers);
+                $("#solutionBusinessConsultingRequired").prop('checked', data.solutionBusinessConsultingRequired);
+                $("#nonProfitOrganization").prop('checked', data.nonProfitOrganization);
 
             } catch (error) {
                 console.error(error);
