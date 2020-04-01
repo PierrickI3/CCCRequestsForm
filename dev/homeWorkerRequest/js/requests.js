@@ -101,6 +101,14 @@ async function postRequests() {
     data.customerType = $("#customerType").val();
   }
 
+  if ($("#solutionBusinessConsultingRequired")) {
+    data.solutionBusinessConsultingRequired = $("#solutionBusinessConsultingRequired").is(':checked');
+  }
+
+  if ($("#nonProfitOrganization")) {
+    data.nonProfitOrganization = $("#nonProfitOrganization").is(':checked');
+  }
+
   //#endregion
 
   console.log(data);
@@ -142,7 +150,6 @@ async function postRequests() {
 }
 
 async function putRequest() {
-
 
   let id = $("#editModal #id").text();
 
@@ -259,6 +266,14 @@ async function putRequest() {
 
   if ($("#editModal #customerType").val() !== '') {
     data.customerType = $("#editModal #customerType").val()
+  }
+
+  if ($("#editModal #solutionBusinessConsultingRequired")) {
+    data.solutionBusinessConsultingRequired = $("#editModal #solutionBusinessConsultingRequired").is(':checked');
+  }
+
+  if ($("#editModal #nonProfitOrganization")) {
+    data.nonProfitOrganization = $("#editModal #nonProfitOrganization").is(':checked');
   }
 
   console.log(data);
