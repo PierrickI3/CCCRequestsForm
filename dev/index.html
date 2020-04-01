@@ -60,7 +60,7 @@
     <div id="form" class="container-fluid">
         <br>
         <div class="form-row">
-            <div class="form-group col-sm-7">
+            <div class="form-group col-sm-12">
 
                 <form id="modal-form">
 
@@ -68,6 +68,9 @@
                     <div class="form-row mr-4 ml-2">
                         <div class="form-group col-md-6">
                             <label for="region">Region <span class="text-danger font-weight-bold">*</span></label>
+                            <span data-toggle="tooltip" data-html="true" data-placement="bottom" style="float: right;" title="Enter the <b>region</b> you are located in">
+                                <i class="fa fa-question-circle-o" aria-hidden="true" style="color: gray;"></i>
+                            </span>
                             <select id="region" name="region" class="form-control" required>
                                 <option value="" disabled selected>Select a Region</option>
                                 <option value="APAC">APAC</option>
@@ -77,7 +80,10 @@
                             </select>
                         </div>
                         <div class="form-group col-md-6">
-                            <label for="subRegion">Territory <span class="text-danger font-weight-bold">*</span></label>
+                            <label for="subRegion">Territory <span class="text-danger font-weight-bold">*</span></label> 
+                            <span data-toggle="tooltip" data-html="true" data-placement="bottom" style="float: right;" title="Enter the <b>territory</b> you are located in">
+                                <i class="fa fa-question-circle-o" aria-hidden="true" style="color: gray;"></i>
+                            </span>
                             <select id="subRegion" name="subRegion" class="form-control" required>
                                 <option value="" disabled selected>Select a Territory</option>
                             </select>
@@ -88,6 +94,9 @@
                     <div class="form-row mr-4 ml-2">
                         <div class="form-group col-md-6">
                             <label for="customerRelationship">Direct/Indirect? <span class="text-danger font-weight-bold">*</span></label>
+                            <span data-toggle="tooltip" data-html="true" data-placement="bottom" style="float: right;" title="Choose <b>Relationship with a Customer</b> Direct/Indirect">
+                                <i class="fa fa-question-circle-o" aria-hidden="true" style="color: gray;"></i>
+                            </span>
                             <select id="customerRelationship" name="customerRelationship" class="form-control" required>
                                 <option value="" disabled selected>Select a Customer Relationship</option>
                                 <option value="Direct">Direct</option>
@@ -96,6 +105,9 @@
                         </div>
                         <div class="form-group col-md-6">
                             <label for="customerType">Customer Type <span class="text-danger font-weight-bold">*</span></label>
+                            <span data-toggle="tooltip" data-html="true" data-placement="bottom" style="float: right;" title="Choose <b>Customer Type</b>">
+                                <i class="fa fa-question-circle-o" aria-hidden="true" style="color: gray;"></i>
+                            </span>
                             <select id="customerType" name="customerType" class="form-control" required>
                                 <option value="" disabled selected>Select a Customer Type</option>
                                 <option value="ExistingCustomer">Existing Customer</option>
@@ -108,6 +120,9 @@
                     <div class="form-row mr-4 ml-2">
                         <div class="form-group col-md-6">
                             <label for="segment">Market Segment <span class="text-danger font-weight-bold">*</span></label>
+                            <span data-toggle="tooltip" data-html="true" data-placement="bottom" style="float: right;" title="Select <b>Sales Segment</b>">
+                                <i class="fa fa-question-circle-o" aria-hidden="true" style="color: gray;"></i>
+                            </span>
                             <select id="segment" name="segment" class="form-control" required>
                                 <option value="" disabled selected>Select a Segment</option>
                                 <option value="Mid-market">Mid-market</option>
@@ -116,7 +131,10 @@
                             </select>
                         </div>
                         <div class="form-group col-md-6">
-                            <label for="product">Product <span class="text-danger font-weight-bold">*</span></label>
+                            <span data-toggle="tooltip" data-html="true" data-placement="bottom" style="float: right;" title="Select the <b>product</b> name">
+                                <i class="fa fa-question-circle-o" aria-hidden="true" style="color: gray;"></i>
+                            </span>
+                            <label for="product">Product <span class="text-danger font-weight-bold">*</span></label>                           
                             <select id="product" name="product" class="form-control" required>
                                 <option value="" disabled selected>Select a Product</option>
                                 <option value="Genesys Cloud">Genesys Cloud</option>
@@ -129,46 +147,72 @@
 
                     <!-- Tasks -->
                     <div class="border border-black mr-3">
-                        <div class="form-row mt-1 mr-4 ml-2">
+                        <span data-toggle="tooltip" data-html="true" data-placement="bottom" style="float: right;" class="mr-2" title="Select <b>Sales Segment</b>">
+                            <i class="fa fa-question-circle-o" aria-hidden="true" style="color: gray;"></i>
+                        </span>
+                        <div class="form-row mt-1 mr-4 ml-2">                           
                             <div class="form-group col-md-5 text-center">Category <span class="text-danger font-weight-bold">*</span></div>
                             <div class="form-group col-md-5 text-center">Type <span class="text-danger font-weight-bold">*</span></div>
+                           
                         </div>
+                        
                         <div class="form-row mt-2 mr-4 ml-2" id="tasks"></div>
                         <a href="#" id="addTask" class="form-group btn btn-primary mt-1 ml-3"><em class="fa fa-plus"></em> Add New Task</a>
                     </div>
 
-                    <div class="form-row mr-4 ml-2">
+                    <div class="form-row mr-4 ml-2 mt-2">
                         <div class="form-group col-md-6">
                             <label for="requesterName">Requester Name <span class="text-danger font-weight-bold">*</span></label>
+                            <span data-toggle="tooltip" data-html="true" data-placement="bottom" style="float: right;" title="Your name. By default it's automatically collected from Genesys Cloud account">
+                                <i class="fa fa-question-circle-o" aria-hidden="true" style="color: gray;"></i>
+                            </span>
                             <input type="text" class="form-control" id="requesterName" name="requesterName" placeholder="Your Name" required>
                         </div>
                         <div class="form-group col-md-6">
+                            <span data-toggle="tooltip" data-html="true" data-placement="bottom" style="float: right;" title="Your email address. By default it's automatically collected from Genesys Cloud account">
+                                <i class="fa fa-question-circle-o" aria-hidden="true" style="color: gray;"></i>
+                            </span>
                             <label for="requesterEmail">Requester Email <span class="text-danger font-weight-bold">*</span></label>
                             <input type="text" class="form-control" id="requesterEmail" name="requesterEmail" placeholder="Your Email Address" required>
                         </div>
                     </div>
                     <div class="form-row mr-4 ml-2">
                         <div class="form-group col-md-6">
+                            <span data-toggle="tooltip" data-html="true" data-placement="bottom" style="float: right;" title="Enter the phone number where you can be contacted. Be sure to include your country code, for example +447557123456">
+                                <i class="fa fa-question-circle-o" aria-hidden="true" style="color: gray;"></i>
+                            </span>
                             <label for="requesterPhoneNumber">Requester Phone # <span class="text-danger font-weight-bold">*</span></label>
                             <input type="text" class="form-control" id="requesterPhoneNumber" name="requesterPhoneNumber" placeholder="Your Phone Number" required>
                         </div>
                         <div class="form-group col-md-6">
+                            <span data-toggle="tooltip" data-html="true" data-placement="bottom" style="float: right;" title="Enter a date you require the work completed. Please note, this is not a guarantee and will be discussed with the Competence Centre Program Manager when they contact you">
+                                <i class="fa fa-question-circle-o" aria-hidden="true" style="color: gray;"></i>
+                            </span>
                             <label for="datepicker">Need Completed By <span class="text-danger font-weight-bold">*</span></label>
                             <input type="text" id="datepicker" class="form-control" required placeholder="Click to set a date" autocomplete="off" />
                         </div>
                     </div>
                     <div class="form-row mr-4 ml-2">
                         <div class="form-group col-md-12">
+                            <span data-toggle="tooltip" data-html="true" data-placement="bottom" style="float: right;" title="Enter a brief summary of the work required. Your Competence Centre Program Manager will contact you to discuss the request further">
+                                <i class="fa fa-question-circle-o" aria-hidden="true" style="color: gray;"></i>
+                            </span>
                             <label for="description">Description <span class="text-danger font-weight-bold">*</span></label>
                             <textarea class="form-control" id="description" name="description" placeholder="Describe your request" required></textarea>
                         </div>
                     </div>
                     <div class="form-row mr-4 ml-2">
                         <div class="form-group col-md-6">
+                            <span data-toggle="tooltip" data-html="true" data-placement="bottom" style="float: right;" title="If applicable, enter the Partner and/or Customer name the request is related to">
+                                <i class="fa fa-question-circle-o" aria-hidden="true" style="color: gray;"></i>
+                            </span>
                             <label for="partnerCustomerName">Partner and/or Customer Name</label>
                             <input type="text" class="form-control" id="partnerCustomerName" name="partnerCustomerName" placeholder="Partner and/or Customer Name">
                         </div>
                         <div class="form-group col-md-6">
+                            <span data-toggle="tooltip" data-html="true" data-placement="bottom" style="float: right;" title="Provide the link to the account or opportunity in Salesforce. This will provide the Competence Centre Program Manager with more background and will help with your resource allocation">
+                                <i class="fa fa-question-circle-o" aria-hidden="true" style="color: gray;"></i>
+                            </span>
                             <label for="salesforceAccountOpportunity">Opportunity URL <span class="text-danger font-weight-bold">*</span></label>
                             <input type="text" class="form-control" id="salesforceAccountOpportunity" name="salesforceAccountOpportunity" placeholder="Link to Salesforce opportunity" required>
                         </div>
@@ -179,7 +223,9 @@
                 <button type="submit" id="submit" class="btn btn-primary ml-3" disabled>Submit</button>
 
             </div>
+            <!--
             <div class="form-group col-sm-5">
+                
                 <H3 class="text-center">Welcome to the Competence Center Request Form.</H3>
                 <p>
                     This form can be used to request assistance on a variety of topics across different product types.
@@ -218,8 +264,8 @@
                         <ul><em>Provide the link to the account or opportunity in Salesforce. This will provide the Competence Centre Program Manager with more background and will help with your resource allocation.</em></ul>
                     </li>
                 </ol>
-
             </div>
+             -->
         </div>
     </div>
 
