@@ -68,6 +68,8 @@
         <div id="basicgrid"></div>
     </div>
 
+    <p class="text-right" id="version"></p>
+
     <!-- Edit Modal -->
     <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">
@@ -309,10 +311,15 @@
     <script src="js/tools.js"></script>
     <!-- Dictionary -->
     <script src="js/dictionary.js"></script>
+    <script src="js/version.js"></script>
 
     <script>
         if (window.location.href.includes('dev'))
             $("#devModeImage").removeAttr('hidden');
+
+        if (version && version.hasOwnProperty('version')) {
+            $("#version").text(`v${version.version}`);
+        }
 
         let gcToken = localStorage.getItem("gcToken");
         let userName = localStorage.getItem("userName");
@@ -383,7 +390,18 @@
         }
 
         function refreshGrid() {
-            $("#basicgrid").jsGrid("loadData");
+            $("#basicgrid").jsGrid("loadData").done(() => {
+                applySorting();
+            });
+        }
+
+        function applySorting() {
+            // Re-apply sorting (if any)
+            let sorting = $("#basicgrid").jsGrid("getSorting");
+            if (sorting && sorting.field) {
+                console.log('Re-applying sorting:', sorting);
+                $("#basicgrid").jsGrid("sort", sorting);
+            }
         }
 
         $("#refresh").on("click", (e) => {
@@ -494,6 +512,12 @@
                         loadData: async function (filter) {
                             let hasFilter = false;
 
+                            var doNotReload = false;
+                            if (filter.doNotReload) {
+                                doNotReload = filter.doNotReload;
+                                filter.doNotReload = undefined;
+                            }
+
                             // Check if Assigned to Me is filled in!
                             if ($("#basicgrid").data('JSGrid').fields[6].filterControl.val() == userName) {
                                 filter['teamMembers'] = userName
@@ -511,7 +535,12 @@
                                 $('#btnAssignedToMe')[0].classList.add('btn-success');
 
                             try {
+                                if (doNotReload) {
+                                    console.log('Skipping requests reload');
+                                } else {
                                 requests.requests = await getRequests(region, gcToken);
+                                }
+
 
                                 // set default values for undefined/optional item. Without it filtering fails
                                 requests.requests.forEach(function (aItem) {
@@ -541,6 +570,7 @@
                                 } else {
                                     return requests.requests;
                                 }
+
                             } catch (error) {
                                 if (error.status == 401) {
                                     window.open('./index.html', "_self");
@@ -572,6 +602,7 @@
                                 select.on('change', (e) => {
                                     let selectedRegion = select.children("option:selected").val();
                                     searches.region = selectedRegion;
+                                    searches.doNotReload = true;
                                     $("#selectSubRegion").empty();
                                     $("<option/>", { value: "" }).text("(All)").appendTo("#selectSubRegion");
                                     if (selectedRegion && selectedRegion != "(All)") {
@@ -614,6 +645,7 @@
                                 select.on('change', (e) => {
                                     let selectedSubRegion = select.children("option:selected").val();
                                     searches.subRegion = selectedSubRegion;
+                                    searches.doNotReload = true;
                                     $("#basicgrid").data('JSGrid').search(searches);
                                 });
                                 return this.filterControl = select;
@@ -638,6 +670,7 @@
                                     console.log('e:', e);
                                     let selectedProduct = select.children("option:selected").val();
                                     searches.product = selectedProduct;
+                                    searches.doNotReload = true;
                                     $("#basicgrid").data('JSGrid').search(searches);
                                 });
                                 return this.filterControl = select;
@@ -657,6 +690,7 @@
                                 let input = $("<input/>", { type: "text" });
                                 input.on('keyup', () => {
                                     searches.segment = input.val();
+                                    searches.doNotReload = true;
                                     $("#basicgrid").data('JSGrid').search(searches);
                                 });
                                 return this.filterControl = input;
@@ -671,6 +705,7 @@
                                 let input = $("<input/>", { type: "text" });
                                 input.on('keyup', () => {
                                     searches.requesterName = input.val();
+                                    searches.doNotReload = true;
                                     $("#basicgrid").data('JSGrid').search(searches);
                                 });
                                 return this.filterControl = input;
@@ -702,6 +737,7 @@
                                 let input = $("<input/>", { type: "text" });
                                 input.on('keyup', () => {
                                     searches.teamMembers = input.val();
+                                    searches.doNotReload = true;
                                     $("#basicgrid").data('JSGrid').search(searches);
                                 });
                                 return this.filterControl = input;
@@ -716,6 +752,7 @@
                                 let input = $("<input/>", { type: "text" });
                                 input.on('keyup', () => {
                                     searches.partnerCustomerName = input.val();
+                                    searches.doNotReload = true;
                                     $("#basicgrid").data('JSGrid').search(searches);
                                 });
                                 return this.filterControl = input;
