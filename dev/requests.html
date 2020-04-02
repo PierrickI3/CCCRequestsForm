@@ -263,6 +263,9 @@
                             <div class="form-row">
                                 <div class="form-group col-md-6">
                                     <footer id="id" name="id" class="blockquote-footer"></footer>
+                                    <footer id="lblDateAccepted" name="lblDateAccepted" class="blockquote-footer"></footer>
+                                    <footer id="lblDateRejected" name="lblDateRejected" class="blockquote-footer"></footer>
+                                    <footer id="lblDateClosed" name="lblDateClosed" class="blockquote-footer"></footer>
                                 </div>
                             </div>
 
@@ -386,8 +389,40 @@
             $("#editModal #time").val("");
             $("#editModal #txtAcceptedRejectedNotes").val("");
 
+            setDatesLabels(undefined, undefined, undefined);
+
             validator.resetForm(); // Reset validation errors
         }
+
+        function setDatesLabels(dateAccepted, dateRejected, dateClosed) {
+            if (!dateAccepted) {
+                $("#editModal #lblDateAccepted").text("Accepted: not set");                
+            } else {
+                const localAccepted = moment(dateAccepted).local().format('YYYY-MM-DD HH:mm:ss');
+                const localAcceptedFromNow = moment(dateAccepted).fromNow();
+                $("#editModal #lblDateAccepted").val(dateAccepted);
+                $("#editModal #lblDateAccepted").text(`Accepted: ${localAcceptedFromNow} at ${localAccepted}`);                
+            }
+
+            if (!dateRejected) {                
+                $("#editModal #lblDateRejected").text("Rejected: not set");                
+            } else {                
+                const localRejected = moment(dateRejected).local().format('YYYY-MM-DD HH:mm:ss');
+                const localRejectedFromNow = moment(dateRejected).fromNow();
+                $("#editModal #lblDateRejected").val(localRejected);
+                $("#editModal #lblDateRejected").text(`Rejected: ${localRejectedFromNow} at ${localRejected}`);
+            }
+
+            if (!dateClosed) {
+                $("#editModal #lblDateClosed").text("Closed: not set");
+            } else {                
+                const localClosed = moment(dateClosed).local().format('YYYY-MM-DD HH:mm:ss');
+                const localClosedFromNow = moment(dateClosed).fromNow();
+                $("#editModal #lblDateClosed").val(localClosed);
+                $("#editModal #lblDateClosed").text(`Closed: ${localClosedFromNow} at ${localClosed}`);
+            }
+        }
+
 
         function refreshGrid() {
             $("#basicgrid").jsGrid("loadData").done(() => {
@@ -538,7 +573,7 @@
                                 if (doNotReload) {
                                     console.log('Skipping requests reload');
                                 } else {
-                                requests.requests = await getRequests(region, gcToken);
+                                    requests.requests = await getRequests(region, gcToken);
                                 }
 
 
@@ -818,6 +853,8 @@
             $("#editModal #segment").val(request.segment);
             $("#editModal #product").val(request.product);
 
+            setDatesLabels(request.dateAccepted, request.dateRejected, request.dateClosed);
+
             // Load tasks
             let i = 0;
             for (const task of request.tasks) {
@@ -990,12 +1027,13 @@
             }
         }
 
-        $('#editModal').on('shown.bs.modal', (e) => {
+        $('#editModal').on('shown.bs.modal', (e) => {            
         });
 
         $('#editModal').on('hidden.bs.modal', async () => {
             refreshGrid();
             initModal();
+            setDatesLabels();
         });
 
         let validator = $("#editModal #modal-form").validate({
@@ -1016,7 +1054,6 @@
                 searches.teamMembers = userName;
                 $("#basicgrid").data('JSGrid').search(searches);
             }
-
         });
 
         $("#btnOnlyClosed").on("click", async (e) => {
@@ -1038,11 +1075,13 @@
         });
 
         $("#btnAcceptRequest").on("click", async (e) => {
+            $("#editModal #lblDateAccepted").val(moment().utc().format());
             $("#editModal #bAcceptedRequest").val("Accepted");
             $("#editModal #submit").click();
         });
 
         $("#btnRejectRequest").on("click", async (e) => {
+            $("#editModal #lblDateRejected").val(moment().utc().format());
             $("#editModal #bAcceptedRequest").val("Rejected");
             $("#editModal #submit").click();
         });
@@ -1112,10 +1151,15 @@
                 else
                     status = $("#editModal #status").val();
 
+                let dateAccepted = $("#editModal #lblDateAccepted").val();
+                let dateRejected = $("#editModal #lblDateRejected").val();
+                let dateClosed = $("#editModal #lblDateClosed").val();
+                
                 console.log(`Region: ${region}, subRegion: ${subRegion}, Product: ${product}, Segment: ${segment}, tasks: ${JSON.stringify(tasks)}, Requester Name: ${requesterName}, Requester Email: ${requesterEmail}, Requester Phone Number: ${requesterPhoneNumber}, Need Completed By: ${needCompletedBy}, Description: ${description}, Partner or Customer Name: ${partnerCustomerName}, Salesforce Opportunity: ${salesforceAccountOpportunity}`);
                 console.log(`Priority: ${priority}, Accepted/Rejected: ${acceptedRejected}, Status: ${status}, Program Manager: ${programManager}, AcceptedRejectedNotes: ${acceptedRejectedNotes}, teamMembers: ${teamMembers}`);
+                console.log(`dateAccepted: ${dateAccepted}, dateRejected: ${dateRejected}, dateClosed: ${dateClosed}`);
 
-                await putRequest(id, region, subRegion, segment, product, tasks, requesterName, requesterEmail, requesterPhoneNumber, needCompletedBy, description, partnerCustomerName, salesforceAccountOpportunity, priority, acceptedRejected, status, programManager, acceptedRejectedNotes, teamMembers, gcToken, undefined, customerRelationship, customerType);
+                await putRequest(id, region, subRegion, segment, product, tasks, requesterName, requesterEmail, requesterPhoneNumber, needCompletedBy, description, partnerCustomerName, salesforceAccountOpportunity, priority, acceptedRejected, status, programManager, acceptedRejectedNotes, teamMembers, gcToken, undefined, customerRelationship, customerType, dateAccepted, dateRejected, dateClosed);
                 console.log('Success!');
                 showMessage("Request updated. Thanks!");
                 $("#editModal").modal("hide");
