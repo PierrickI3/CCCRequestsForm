@@ -1560,7 +1560,6 @@
                 console.log('build queues csv...');
                 // tune queue columns
                 data.queues.forEach(function (item) {
-                    console.log(item);
                     delete item.enableCallbacks;
                     delete item.enableEmails;
                     if (item.wrapUpCodes && item.wrapUpCodes.length > 0)
@@ -1570,6 +1569,7 @@
                 });
 
                 header = Object.keys(data.queues[0]);
+                console.log(header);
                 csv_queues = data.queues.map(row => header.map(fieldName => JSON.stringify(row[fieldName], replacer)).join(';'))
                 csv_queues.unshift(header.join(';'))
                 csv_queues = csv_queues.join('\r\n')
@@ -1578,17 +1578,34 @@
             }
 
             // Call Flow Experience
-            if (data.callFlowExperience && Object.keys(data.callFlowExperience).length > 0) {
+            if (data.callFlowExperience) {
                 console.log('build call flow experience csv...');
-                // tune columns
-                console.log('call flow experience:', data.callFlowExperience);
-                header = Object.keys(data.callFlowExperience);
-                console.log('header:', header);
-                csv_callFlowExperience = data.callFlowExperience.map(row => header.map(fieldName => JSON.stringify(row[fieldName], replacer)).join(';'))
-                csv_callFlowExperience.unshift(header.join(';'))
-                csv_callFlowExperience = csv_callFlowExperience.join('\r\n')
+                // tune queue columns
+                let tmpObj = [];
+
+                for (var prop in data.callFlowExperience) {
+                    if (Object.prototype.hasOwnProperty.call(data.callFlowExperience, prop)) {
+                        if (prop === "default") continue;
+                        tmpObj.push({
+                            menuDigit: prop,
+                            behavior: data.callFlowExperience[prop].behavior,
+                            queueName: data.callFlowExperience[prop].queueName,
+                            skill: data.callFlowExperience[prop].skill,
+                            prompt: data.callFlowExperience[prop].prompt,
+                            default: data.callFlowExperience.default === prop ? true : false
+                        })
+                    }
+                }
+                if (tmpObj.length > 0) {
+                    header = Object.keys(tmpObj[0]);
+                    csv_callFlowExperience = tmpObj.map(row => header.map(fieldName => JSON.stringify(row[fieldName], replacer)).join(';'))
+                    csv_callFlowExperience.unshift(header.join(';'))
+                    csv_callFlowExperience = csv_callFlowExperience.join('\r\n')
+                } else
+                    console.log('callFlow settings are empty, skip csv build...');
+
             } else {
-                console.log('call flow experience is empty, skip csv build...');
+                console.log('callFlow settings are empty, skip csv build...');
             }
 
             // DIDs

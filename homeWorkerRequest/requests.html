@@ -926,6 +926,12 @@
                         loadData: async function (filter) {
                             let hasFilter = false;
 
+                            var doNotReload = false;
+                            if (filter.doNotReload) {
+                                doNotReload = filter.doNotReload;
+                                filter.doNotReload = undefined;
+                            }
+
                             // Check if Assigned to Me is filled in!
                             if ($("#basicgrid").data('JSGrid').fields[6].filterControl.val() == userName) {
                                 filter['teamMembers'] = userName
@@ -943,7 +949,12 @@
                                 $('#btnAssignedToMe')[0].classList.add('btn-success');
 
                             try {
-                                requests.requests = await getRequests(region, gcToken);
+                                if (doNotReload) {
+                                    console.log('Skipping requests reload');
+                                } else {
+                                    requests.requests = await getRequests(region, gcToken);
+                                }
+
 
                                 // set default values for undefined/optional item. Without it filtering fails
                                 requests.requests.forEach(function (aItem) {
@@ -1015,6 +1026,7 @@
                                     $("#selectSubRegion").on('change', (e) => {
                                         let selectedSubRegion = $("#selectSubRegion").children("option:selected").val();
                                         searches.subRegion = selectedSubRegion;
+                                        searches.doNotReload = true;
                                         $("#basicgrid").data('JSGrid').search(searches);
                                     });
                                     $("#basicgrid").data('JSGrid').search(searches);
@@ -1045,6 +1057,7 @@
                                 select.on('change', (e) => {
                                     let selectedSubRegion = select.children("option:selected").val();
                                     searches.subRegion = selectedSubRegion;
+                                    searches.doNotReload = true;
                                     $("#basicgrid").data('JSGrid').search(searches);
                                 });
                                 return this.filterControl = select;
@@ -1063,6 +1076,7 @@
                                 let input = $("<input/>", { type: "text" });
                                 input.on('keyup', () => {
                                     searches.partnerCustomerName = input.val();
+                                    searches.doNotReload = true;
                                     $("#basicgrid").data('JSGrid').search(searches);
                                 });
                                 return this.filterControl = input;
@@ -1085,6 +1099,7 @@
                                     select.on('change', (e) => {
                                         let selectedTelephonyModel = select.children("option:selected").val();
                                         searches.telephonyModel = selectedTelephonyModel;
+                                        searches.doNotReload = true;
                                         $("#basicgrid").data('JSGrid').search(searches);
                                     });
                                 return this.filterControl = select;
@@ -1104,6 +1119,7 @@
                                 let input = $("<input/>", { type: "text" });
                                 input.on('keyup', () => {
                                     searches.requesterName = input.val();
+                                    searches.doNotReload = true;
                                     $("#basicgrid").data('JSGrid').search(searches);
                                 });
                                 return this.filterControl = input;
@@ -1120,6 +1136,7 @@
                                 let input = $("<input/>", { type: "text" });
                                 input.on('keyup', () => {
                                     searches.programManager = input.val();
+                                    searches.doNotReload = true;
                                     $("#basicgrid").data('JSGrid').search(searches);
                                 });
                                 return this.filterControl = input;
@@ -1135,6 +1152,7 @@
                                 let input = $("<input/>", { type: "text" });
                                 input.on('keyup', () => {
                                     searches.teamMembers = input.val();
+                                    searches.doNotReload = true;
                                     $("#basicgrid").data('JSGrid').search(searches);
                                 });
                                 return this.filterControl = input;
