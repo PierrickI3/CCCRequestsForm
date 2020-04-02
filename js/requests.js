@@ -79,7 +79,7 @@ async function postRequests(region, subRegion, segment, product, tasks, requeste
     });
 }
 
-async function putRequest(id, region, subRegion, segment, product, tasks, requesterName, requesterEmail, requesterPhoneNumber, needCompletedBy, description, partnerCustomerName, salesforceAccountOpportunity, priority, acceptedRejected, status, programManager, acceptedRejectedNotes, teamMembers, _token, isDeleted, customerRelationship, customerType) {
+async function putRequest(id, region, subRegion, segment, product, tasks, requesterName, requesterEmail, requesterPhoneNumber, needCompletedBy, description, partnerCustomerName, salesforceAccountOpportunity, priority, acceptedRejected, status, programManager, acceptedRejectedNotes, teamMembers, _token, isDeleted, customerRelationship, customerType, dateAccepted, dateRejected, dateClosed) {
 
 
   if (!isDeleted) isDeleted = false;
@@ -99,6 +99,9 @@ async function putRequest(id, region, subRegion, segment, product, tasks, reques
     description: description,
     status: status,
     acceptedRejected: acceptedRejected,
+    dateAccepted: dateAccepted ? dateAccepted : undefined,
+    dateRejected: dateRejected ? dateRejected : undefined,
+    dateClosed: dateClosed ? dateClosed : undefined,
     isDeleted: isDeleted,
     mailDistribution: mailDistribution[product][$("#editModal #region").val()],
     token: _token
@@ -317,4 +320,3 @@ async function getExport(_region, _subRegion, _product, _segment, _token) {
       console.log("getRequests completed");
     });
 }
-
