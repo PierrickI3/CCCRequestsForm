@@ -99,6 +99,9 @@ async function putRequest(id, region, subRegion, segment, product, tasks, reques
     description: description,
     status: status,
     acceptedRejected: acceptedRejected,
+    dateAccepted: dateAccepted ? dateAccepted : undefined,
+    dateRejected: dateRejected ? dateRejected : undefined,
+    dateClosed: dateClosed ? dateClosed : undefined,
     isDeleted: isDeleted,
     mailDistribution: mailDistribution[product][$("#editModal #region").val()],
     token: _token
@@ -136,18 +139,6 @@ async function putRequest(id, region, subRegion, segment, product, tasks, reques
 
   if (customerType && customerType.length > 0) {
     data.customerType = customerType;
-  }
-
-  if (dateAccepted) { 
-    data.dateAccepted = dateAccepted;
-  }
-
-  if (dateRejected) { 
-    data.dateRejected = dateRejected;
-  }
-
-  if (dateClosed) { 
-    data.dateClosed = dateClosed;
   }
 
   //#endregion
