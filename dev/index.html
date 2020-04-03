@@ -70,7 +70,7 @@
                         This form can be used to request assistance on a variety of topics across different product types.<br>
                         Fill out the form as required. Some fields are automatically completed using your Genesys Cloud details. Press Submit once all the required fields have been completed.
                     </p>
-                <hr/>
+                    <hr />
                 </div>
 
                 <form id="modal-form" class="ml-5 mr-5">
@@ -324,7 +324,7 @@
             $("#form :input").attr("disabled", true);
             $("#form :button").attr("disabled", true);
         } else {
-            addNewTask(false);
+            addNewTask(undefined, false);
         }
 
         $('[data-toggle="tooltip"]').tooltip()
@@ -385,6 +385,8 @@
             $("#requesterEmail").val(userInfo.mail);
             $("#requesterPhoneNumber").val(userInfo.phone);
 
+            loadDraft();
+
             // Show Admin fields?
 
             if (userInfo.groups.some(g => adminGroups["super"].includes(g))) {
@@ -426,46 +428,85 @@
             }
         }
 
-        function addNewTask(includeDeleteButton) {
-            let currentTaskId = taskId;
-            taskId++;
+        function addNewTask(task, includeDeleteButton = false) {
+            if (!task) {
+                let currentTaskId = taskId;
+                taskId++;
 
-            let categoryDiv = $("<div/>", { class: "form-group col-md-5" }).appendTo("#tasks");
-            let categorySelect = $("<select/>", { class: "form-control", name: "category_" + currentTaskId, required: true }).appendTo(categoryDiv);
-            $("<option/>", { value: "", disabled: true, selected: true }).text("Select a Request Category").appendTo(categorySelect);
-            for (const category of requestCategory) {
-                if (category === "Rapid Response Offer") continue // we don't use it anymore. keep in dict for edit only
-                $("<option/>", { value: category }).text(category).appendTo(categorySelect);
-            }
+                let categoryDiv = $("<div/>", { class: "form-group col-md-5" }).appendTo("#tasks");
+                let categorySelect = $("<select/>", { class: "form-control", name: "category_" + currentTaskId, required: true }).appendTo(categoryDiv);
+                $("<option/>", { value: "", disabled: true, selected: true }).text("Select a Request Category").appendTo(categorySelect);
+                for (const category of requestCategory) {
+                    if (category === "Rapid Response Offer") continue
+                    $("<option/>", { value: category }).text(category).appendTo(categorySelect);
+                }
 
-            let typeDiv = $("<div/>", { class: "form-group col-md-5" }).appendTo("#tasks");
-            let typeSelect = $("<select/>", { class: "form-control", name: "type_" + currentTaskId, required: true }).appendTo(typeDiv);
-            $("<option/>", { value: "", disabled: true, selected: true }).text("Select a Request Type").appendTo(typeSelect);
-            categorySelect.on("change", () => {
-                updateRequestTypeBasedOnRegionAndProduct(categorySelect, typeSelect);
-            });
+                let typeDiv = $("<div/>", { class: "form-group col-md-5" }).appendTo("#tasks");
+                let typeSelect = $("<select/>", { class: "form-control", name: "type_" + currentTaskId, required: true }).appendTo(typeDiv);
+                $("<option/>", { value: "", disabled: true, selected: true }).text("Select a Request Type").appendTo(typeSelect);
+                categorySelect.on("change", () => {
+                    updateRequestTypeBasedOnRegionAndProduct(categorySelect, typeSelect);
+                });
 
-            if (includeDeleteButton) {
-                let deleteButton = $("<a/>", { href: "#", class: "btn btn-danger form-group", style: "max-height:38px" }).html(`<i class="fa fa-trash"></i>`).appendTo("#tasks");
-                deleteButton.on("click", () => {
-                    categoryDiv.remove();
-                    typeDiv.remove();
-                    deleteButton.remove();
-                    tasksControls = tasksControls.filter(tc => tc.id != currentTaskId)
+                if (includeDeleteButton) {
+                    let deleteButton = $("<a/>", { href: "#", class: "btn btn-danger form-group", style: "max-height:38px" }).html(`<i class="fa fa-trash"></i>`).appendTo("#tasks");
+                    deleteButton.on("click", () => {
+                        categoryDiv.remove();
+                        typeDiv.remove();
+                        deleteButton.remove();
+                        tasksControls = tasksControls.filter(tc => tc.id != currentTaskId)
+                    });
+                }
+
+                tasksControls.push({
+                    id: currentTaskId,
+                    categorySelect: categorySelect,
+                    typeSelect: typeSelect
+                });
+            } else {
+                let currentTaskId = task.taskId;
+
+                // Category Select
+                let categoryDiv = $("<div/>", { class: "form-group col-md-5" }).appendTo("#tasks");
+                let categorySelect = $("<select/>", { class: "form-control", required: true }).appendTo(categoryDiv);
+                for (const category of requestCategory) {
+                    if (category === "Rapid Response Offer") continue
+                    $("<option/>", { value: category, selected: category === task.taskCategory }).text(category).appendTo(categorySelect);
+                }
+
+                // Type Select
+                let typeDiv = $("<div/>", { class: "form-group col-md-5" }).appendTo("#tasks");
+                let typeSelect = $("<select/>", { class: "form-control", required: true }).appendTo(typeDiv);
+                categorySelect.on("change", () => {
+                    updateRequestTypeBasedOnRegionAndProduct(categorySelect, typeSelect, task.taskType);
+                });
+                updateRequestTypeBasedOnRegionAndProduct(categorySelect, typeSelect, task.taskType);
+
+
+                if (includeDeleteButton) {
+                    let deleteButton = $("<a/>", { href: "#", class: "btn btn-danger form-group", style: "max-height:38px" }).html(`<i class="fa fa-trash"></i>`).appendTo("#tasks");
+                    deleteButton.on("click", () => {
+                        categoryDiv.remove();
+                        typeDiv.remove();
+                        deleteButton.remove();
+                        tasksControls = tasksControls.filter(tc => tc.id != currentTaskId)
+                    });
+                }
+
+                // Add controls to global list
+                tasksControls.push({
+                    id: currentTaskId,
+                    categorySelect: categorySelect,
+                    typeSelect: typeSelect
                 });
             }
-
-            tasksControls.push({
-                id: currentTaskId,
-                categorySelect: categorySelect,
-                typeSelect: typeSelect
-            });
         }
 
         $("#addTask").on("click", (e) => {
             e.preventDefault();
             if (maintenanceMode) return;
-            addNewTask(true);
+            //addNewTask(true);
+            addNewTask(undefined, true);
         });
 
         $("#region").on("change", () => {
@@ -475,15 +516,14 @@
             }
         });
 
-        function updateRequestTypeBasedOnRegionAndProduct(categorySelect, typeSelect) {
+        function updateRequestTypeBasedOnRegionAndProduct(categorySelect, typeSelect, savedType) {
             typeSelect.empty();
-            $("<option selected disabled />", { value: "" }).text("Select a Request Type").appendTo(typeSelect);
 
             for (let aRequest of requestsType[categorySelect.val()]) {
-                $("<option/>", { value: aRequest }).text(aRequest).appendTo(typeSelect);
+                $("<option/>", { value: aRequest, selected: aRequest === savedType }).text(aRequest).appendTo(typeSelect);
             }
 
-            if ($(typeSelect)[0].length == 1) {
+            if ($(typeSelect)[0].length == 0) {
                 // No SubCategory
                 $(typeSelect)[0].disabled = true;
                 $(typeSelect).removeAttr('required');
@@ -577,14 +617,13 @@
         });
 
         function cleanForm() {
-
             // Populate user info
             $("#requesterName").val(userInfo.name);
             $("#requesterEmail").val(userInfo.mail);
             $("#requesterPhoneNumber").val(userInfo.phone);
             tasksControls = [];
             $("#tasks").empty();
-            addNewTask(false);
+            addNewTask(undefined, false);
             $("#subRegion").empty();
             $("<option selected disabled />", { value: "Select a Sub-Region" }).text("Select a Sub-Region").appendTo("#subRegion");
             $("#segment").val('');
@@ -595,7 +634,118 @@
             $("#partnerCustomerName").val('');
             $("#salesforceAccountOpportunity").val('');
 
+            localStorage.removeItem("intakeForm_draft");
         }
+
+
+
+        setInterval(() => {
+            try {
+
+                let data = {
+                    // Populate user info
+                    region: $("#region").val(),
+                    subRegion: $("#subRegion").val(),
+                    customerRelationship: $("#customerRelationship").val(),
+                    customerType: $("#customerType").val(),
+                    segment: $("#segment").val(),
+                    product: $("#product").val(),
+
+                    requesterName: $("#requesterName").val(),
+                    requesterEmail: $("#requesterEmail").val(),
+                    requesterPhoneNumber: $("#requesterPhoneNumber").val(),
+                    description: $("#description").val(),
+                    partnerCustomerName: $("#partnerCustomerName").val(),
+                    salesforceAccountOpportunity: $("#salesforceAccountOpportunity").val()
+                }
+
+                let needCompletedByDate = moment($("#datepicker").datepicker('getDate')).format("YYYY-MM-DDT00:00:00.000");
+                if (needCompletedByDate != "Invalid date") {
+                    data.needCompletedBy = needCompletedByDate + "Z";
+                }
+
+
+                // Tasks
+                if (tasksControls.length > 0 && tasksControls[0].categorySelect.val()) {
+                    let tasks = [];
+
+                    for (const task of tasksControls) {
+                        tasks.push({
+                            taskId: task.id,
+                            taskCategory: task.categorySelect.val(),
+                            taskType: task.typeSelect.val()
+                        });
+                    }
+                    data.taskControls = tasks;
+
+                }
+
+
+                localStorage.setItem("intakeForm_draft", JSON.stringify(data));
+            } catch (error) {
+                console.error(error);
+            }
+        }, 10000
+        );
+
+        function loadDraft() {
+            console.log('loadDraft()');
+            try {
+                let data = JSON.parse(localStorage.getItem("intakeForm_draft"));
+                if (!data) {
+                    console.log('no draft found.');
+                    return
+                }
+
+                if (data.taskControls) {
+                    tasksControls = [];
+                    $("#tasks").empty();
+                    // Load tasks
+                    let i = 0;
+                    for (const task of data.taskControls) {
+                        console.log('Adding new task:', task);
+                        // Do not add null Tasks
+                        if (task.taskCategory)
+                            addNewTask(task, i++ > 0 ? true : false);
+                    }
+                }
+
+                if (data.segment)
+                    $("#segment").val(data.segment);
+                if (data.product)
+                    $("#product").val(data.product);
+
+                // Your Info
+                if (data.region) {
+                    $("#region").val(data.region);
+                    $("#region").change();
+                }
+                if (data.subRegion) {
+                    $("#subRegion").val(data.subRegion);
+                }
+
+                if (data.customerRelationship) {
+                    $("#customerRelationship").val(data.customerRelationship);
+                }
+                if (data.customerType) {
+                    $("#customerType").val(data.customerType);
+                }
+
+                // Optional
+                $("#requesterName").val(data.requesterName);
+                $("#requesterEmail").val(data.requesterEmail);
+                $("#requesterPhoneNumber").val(data.requesterPhoneNumber);
+                $("#datepicker").datepicker('update', new Date(data.needCompletedBy));
+                $("#description").val(data.description);
+                $("#partnerCustomerName").val(data.partnerCustomerName);
+                $("#salesforceAccountOpportunity").val(data.salesforceAccountOpportunity);
+
+            } catch (error) {
+                console.error(error);
+            }
+        }
+
+
 
     </script>
 
