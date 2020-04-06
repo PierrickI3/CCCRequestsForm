@@ -320,3 +320,4 @@ async function getExport(_region, _subRegion, _product, _segment, _token) {
       console.log("getRequests completed");
     });
 }
+
