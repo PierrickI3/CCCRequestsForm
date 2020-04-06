@@ -29,7 +29,7 @@
 
 <body>
     <img class="overlay" src="./images/devmode.png" id="devModeImage" hidden alt="devMode" />
-    <nav class="navbar navbar-dark bg-dark">
+    <nav class="navbar navbar-dark bg-dark fixed-top">
         <a class="navbar-brand" href="#">
             <img src="images/genesys.png" width="30" height="30" class="d-inline-block align-top" alt="">
             <span class="badge badge-info mr-2">#ps</span>Rapid Response Questionnaire <small><span id="badgePill" class="badge badge-pill badge-warning"></span></small>
@@ -51,7 +51,7 @@
         <a class="btn btn-light" href="#" onclick="location.reload();"><i class="fa fa-refresh"></i> Refresh</a>
     </div>
 
-    <div class="container-fluid mt-4">
+    <div class="container-fluid mt-5">
         <div class="text-center" style="display: none;" id="saveUrl">
         </div>
         <div class="form-row">
@@ -2981,6 +2981,8 @@
 
         //#region WrapUp Codes
 
+        let maxWrapUpCodes = 20;
+
         var dbWrapUpCodes = {
             loadData: function (filter) {
                 return $.grep(this.wrapUpCodes, function (code) {
@@ -3012,7 +3014,6 @@
         });
 
         function initWrapUpCodesGrid() {
-            const maxItems = 10;
 
             dbWrapUpCodes.wrapUpCodes = caItem.hasOwnProperty('wrapUpCodes') ? caItem.wrapUpCodes : [];
 
@@ -3034,14 +3035,14 @@
                     showWrapUpCodesModal("Edit", args.item);
                 },
                 onDataLoaded: function (args) {
-                    $("#addWrapUpCode").attr('disabled', $("#jsGridWrapUpCodes").jsGrid("option", "data").length >= maxItems);
+                    $("#addWrapUpCode").attr('disabled', $("#jsGridWrapUpCodes").jsGrid("option", "data").length >= maxWrapUpCodes);
                 },
                 onItemInserted: function (args) {
-                    $("#addWrapUpCode").attr('disabled', $("#jsGridWrapUpCodes").jsGrid("option", "data").length >= maxItems);
+                    $("#addWrapUpCode").attr('disabled', $("#jsGridWrapUpCodes").jsGrid("option", "data").length >= maxWrapUpCodes);
                     refreshWrapUpCodesDropDownForQueues();
                 },
                 onItemUpdated: function (args) {
-                    $("#addWrapUpCode").attr('disabled', $("#jsGridWrapUpCodes").jsGrid("option", "data").length >= maxItems);
+                    $("#addWrapUpCode").attr('disabled', $("#jsGridWrapUpCodes").jsGrid("option", "data").length >= maxWrapUpCodes);
                     refreshWrapUpCodesDropDownForQueues();
                 },
                 onItemDeleting: function (args) {
@@ -3073,7 +3074,7 @@
                     }
                 },
                 onItemDeleted: function (args) {
-                    $("#addWrapUpCode").attr('disabled', $("#jsGridWrapUpCodes").jsGrid("option", "data").length >= maxItems);
+                    $("#addWrapUpCode").attr('disabled', $("#jsGridWrapUpCodes").jsGrid("option", "data").length >= maxWrapUpCodes);
                 },
                 controller: dbWrapUpCodes,
                 fields: [
