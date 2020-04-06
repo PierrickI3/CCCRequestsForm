@@ -1150,11 +1150,15 @@
                     status = "Closed"
                 else
                     status = $("#editModal #status").val();
-
+                            
                 let dateAccepted = $("#editModal #lblDateAccepted").val();
                 let dateRejected = $("#editModal #lblDateRejected").val();
                 let dateClosed = $("#editModal #lblDateClosed").val();
                 
+                if (status === 'Closed' && !dateClosed) {
+                    dateClosed = moment().utc().format();
+                }
+
                 console.log(`Region: ${region}, subRegion: ${subRegion}, Product: ${product}, Segment: ${segment}, tasks: ${JSON.stringify(tasks)}, Requester Name: ${requesterName}, Requester Email: ${requesterEmail}, Requester Phone Number: ${requesterPhoneNumber}, Need Completed By: ${needCompletedBy}, Description: ${description}, Partner or Customer Name: ${partnerCustomerName}, Salesforce Opportunity: ${salesforceAccountOpportunity}`);
                 console.log(`Priority: ${priority}, Accepted/Rejected: ${acceptedRejected}, Status: ${status}, Program Manager: ${programManager}, AcceptedRejectedNotes: ${acceptedRejectedNotes}, teamMembers: ${teamMembers}`);
                 console.log(`dateAccepted: ${dateAccepted}, dateRejected: ${dateRejected}, dateClosed: ${dateClosed}`);
