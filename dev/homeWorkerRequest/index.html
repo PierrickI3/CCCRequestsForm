@@ -22,6 +22,10 @@
 </head>
 
 <body>
+    <div id="video-overlay" class="video-overlay">
+        <a class="video-overlay-close">&times;</a>
+    </div>
+
     <img class="overlay" src="./images/devmode.png" id="devModeImage" hidden alt="devMode" />
     <nav class="navbar navbar-dark bg-dark fixed-top">
         <a class="navbar-brand" href="#">
@@ -427,8 +431,12 @@
                                 </ol>
                             </li>
                             <li>
-                                Assist the customer with his network readiness assessment. PS is currently preparing a short video tutorial on the network readiness assessment, which we will share with you, once it's available.
+                                Assist the customer with his network readiness assessment. Take a look at the short video below to understand how to run the assessment.
                             </li>
+                            <br>
+                            <a id="play-video" class="video-play-button ml-5" href="#" data-toggle="tooltip" data-placement="top" title="Network Readiness Assessment Video">
+                                <span></span>
+                            </a>
                         </ol>
                         <p>Please engage PS in each of these deals as for now they will do the deployment – also for indirect customers. Our partner & alliance management teams are currently identifying selected partners who will be enabled to deploy this offer, but as long as these partners are not identified and announced, PS will do the deployment to be sure we deploy within the promised time and within the limit of the scope for this offer. SWAT teams have been created by PS in each region and engagement rules for PS have been defined and communicated on a regional basis. <strong>Please contact your local CSD if in doubt.</strong></p>
                     </div>
@@ -643,10 +651,35 @@
             $("#version").text(`v${version.version}`);
         }
 
+        $('[data-toggle="tooltip"]').tooltip()
+
+        //#region Videos
+
+        $('#play-video').on('click', function (e) {
+            e.preventDefault();
+            $('#video-overlay').addClass('open');
+            $("#video-overlay").append('<iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/dwf_6z3QAeQ" frameborder="0" allowfullscreen allow="accelerometer; autoplay;" autoplay="1"></iframe>');
+        });
+
+        $('.video-overlay, .video-overlay-close').on('click', function (e) {
+            e.preventDefault();
+            close_video();
+        });
+
+        $(document).keyup(function (e) {
+            if (e.keyCode === 27) { close_video(); }
+        });
+
+        function close_video() {
+            $('.video-overlay.open').removeClass('open').find('iframe').remove();
+        };
+
         if (window.location.href.includes('dev')) {
             $("#devModeImage").removeAttr('hidden');
         }
 
+        //#endregion
+        
         // Populate countries selects
         $.each(countries, (i, country) => {
             $("<option/>", { value: country.name, ["data-gcv"]: country.gcv }).text(country.name).appendTo("#countriesAgents, #countriesOperation");
