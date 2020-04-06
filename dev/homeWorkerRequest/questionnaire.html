@@ -2981,6 +2981,8 @@
 
         //#region WrapUp Codes
 
+        let maxWrapUpCodes = 20;
+
         var dbWrapUpCodes = {
             loadData: function (filter) {
                 return $.grep(this.wrapUpCodes, function (code) {
@@ -3012,7 +3014,6 @@
         });
 
         function initWrapUpCodesGrid() {
-            const maxItems = 10;
 
             dbWrapUpCodes.wrapUpCodes = caItem.hasOwnProperty('wrapUpCodes') ? caItem.wrapUpCodes : [];
 
@@ -3034,14 +3035,14 @@
                     showWrapUpCodesModal("Edit", args.item);
                 },
                 onDataLoaded: function (args) {
-                    $("#addWrapUpCode").attr('disabled', $("#jsGridWrapUpCodes").jsGrid("option", "data").length >= maxItems);
+                    $("#addWrapUpCode").attr('disabled', $("#jsGridWrapUpCodes").jsGrid("option", "data").length >= maxWrapUpCodes);
                 },
                 onItemInserted: function (args) {
-                    $("#addWrapUpCode").attr('disabled', $("#jsGridWrapUpCodes").jsGrid("option", "data").length >= maxItems);
+                    $("#addWrapUpCode").attr('disabled', $("#jsGridWrapUpCodes").jsGrid("option", "data").length >= maxWrapUpCodes);
                     refreshWrapUpCodesDropDownForQueues();
                 },
                 onItemUpdated: function (args) {
-                    $("#addWrapUpCode").attr('disabled', $("#jsGridWrapUpCodes").jsGrid("option", "data").length >= maxItems);
+                    $("#addWrapUpCode").attr('disabled', $("#jsGridWrapUpCodes").jsGrid("option", "data").length >= maxWrapUpCodes);
                     refreshWrapUpCodesDropDownForQueues();
                 },
                 onItemDeleting: function (args) {
@@ -3073,7 +3074,7 @@
                     }
                 },
                 onItemDeleted: function (args) {
-                    $("#addWrapUpCode").attr('disabled', $("#jsGridWrapUpCodes").jsGrid("option", "data").length >= maxItems);
+                    $("#addWrapUpCode").attr('disabled', $("#jsGridWrapUpCodes").jsGrid("option", "data").length >= maxWrapUpCodes);
                 },
                 controller: dbWrapUpCodes,
                 fields: [
