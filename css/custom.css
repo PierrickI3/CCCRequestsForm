@@ -1,31 +1,29 @@
 .overlay {
-    position: absolute;
-    left: 46%;
-    top: 42%;    
-    height: 12em;
-    z-index: 99;
-    opacity: 20%;
-
+  position: absolute;
+  left: 46%;
+  top: 42%;
+  height: 12em;
+  z-index: 99;
+  opacity: 20%;
 }
 .jsgrid-cell {
-    word-wrap: break-word;
+  word-wrap: break-word;
 }
 .task-accepted td:first-child {
-    background-color: lightgreen !important;
-
+  background-color: lightgreen !important;
 }
 
 .task-rejected td:first-child {
-    background-color: lightcoral !important;
-    opacity: 1.0;
+  background-color: lightcoral !important;
+  opacity: 1;
 }
 
 .task-hidden td {
-    display: none;
+  display: none;
 }
 
 .task-wait td:first-child {
-    background-color: orange !important;
+  background-color: orange !important;
 }
 
 .video-play-button {
@@ -44,7 +42,7 @@
 }
 
 .video-play-button:before {
-  content: "";
+  content: '';
   position: absolute;
   z-index: 0;
   left: 50%;
@@ -59,7 +57,7 @@
 }
 
 .video-play-button:after {
-  content: "";
+  content: '';
   position: absolute;
   z-index: 1;
   left: 50%;
@@ -92,8 +90,8 @@
   width: 0;
   height: 0;
   border-left: 16px solid #fff;
-	border-top: 11px solid transparent;
-	border-bottom: 11px solid transparent;
+  border-top: 11px solid transparent;
+  border-bottom: 11px solid transparent;
 }
 
 @keyframes pulse-border {
@@ -107,8 +105,6 @@
   }
 }
 
-
-
 .video-overlay {
   position: fixed;
   z-index: -1;
@@ -116,7 +112,7 @@
   bottom: 0;
   left: 0;
   right: 0;
-  background: rgba(0,0,0,0.80);
+  background: rgba(0, 0, 0, 0.8);
   opacity: 0;
   transition: all ease 500ms;
 }
@@ -152,5 +148,5 @@
   transform: translateX(-50%) translateY(-50%);
   /* width: 90%; */
   /* height: auto; */
-  box-shadow: 0 0 15px rgba(0,0,0,0.75);
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.75);
 }
