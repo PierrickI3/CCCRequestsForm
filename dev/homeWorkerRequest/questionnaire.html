@@ -1825,7 +1825,6 @@
                 console.log('dids are empty, skip csv build...');
             }
 
-
             console.log(`CSV: locations\n===================\n ${csv_locations}\n===================\n`);
             console.log(`CSV: schedules\n===================\n ${csv_schedules}\n===================\n`);
             console.log(`CSV: holidays\n===================\n ${csv_holidays}\n===================\n`);
@@ -1837,16 +1836,19 @@
             console.log(`CSV: callFlowExperience\n===================\n ${csv_callFlowExperience}\n===================\n`);
             console.log(`CSV: dids\n===================\n ${csv_dids}\n===================\n`);
 
-            zip.file("au-locations-import.csv", csv_locations);
-            zip.file("au-schedules-import.csv", csv_schedules);
-            zip.file("holidays.csv", csv_holidays);
-            zip.file("au-skills-import.csv", csv_skills);
-            zip.file("au-wrapup-codes-import.csv", csv_wrapUpCodes);
-            zip.file("au-queues-full-import.csv", csv_queues);
-            zip.file("au-users-full-import.csv", csv_users);
-            zip.file("prompts.csv", csv_prompts);
-            zip.file("call-flow.csv", csv_callFlowExperience);
-            zip.file("au-dids-import.csv", csv_dids);
+            const customerName = data.organizationSetup.companyName.split(' ').join('');
+            console.log(`customer fileName suffix ${customerName}`);
+
+            zip.file(`locations-import-${customerName}.csv`, csv_locations);
+            zip.file(`schedules-import-${customerName}.csv`, csv_schedules);
+            zip.file(`holidays-import-${customerName}.csv`, csv_holidays);
+            zip.file(`skills-import-${customerName}.csv`, csv_skills);
+            zip.file(`wrapup-codes-import-${customerName}.csv`, csv_wrapUpCodes);
+            zip.file(`queues-full-import-${customerName}.csv`, csv_queues);
+            zip.file(`users-import-${customerName}.csv`, csv_users);
+            zip.file(`prompts-${customerName}.csv`, csv_prompts);
+            zip.file(`call-flow-${customerName}.csv`, csv_callFlowExperience);
+            zip.file(`dids-import-${customerName}.csv`, csv_dids);
 
             zip.generateAsync({ type: "blob" })
                 .then(function (content) {
