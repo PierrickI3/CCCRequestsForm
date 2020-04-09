@@ -821,8 +821,8 @@
                                                                             <input type="text" class="form-control" id="userName" name="userName" placeholder="Enter the User's full name" required></input>
                                                                         </div>
                                                                         <div class="form-group col-md-6">
-                                                                            <label for="jobTitle">Job Title</span></label>
-                                                                            <input type="text" class="form-control" id="jobTitle" name="jobTitle" placeholder="Job Title"></input>
+                                                                            <label for="userTitle">Job Title</span></label>
+                                                                            <input type="text" class="form-control" id="userTitle" name="userTitle" placeholder="Job Title"></input>
                                                                         </div>
                                                                     </div>
 
@@ -1586,7 +1586,7 @@
                         userMail: item.userMail,
                         userPass: item.userPass,
                         userPhoneWork: item.userPhoneWork,
-                        jobTitle: item.jobTitle.length > 0 ? item.jobTitle : 'n/a',
+                        userTitle: item.userTitle.length > 0 ? item.userTitle : 'n/a',
                         userDepartment: item.userDepartment,
                         userManagerEmail: item.userManagerEmail,
                         userLocations: item.userLocations,
@@ -3749,7 +3749,7 @@
         var showUsersModal = function (dialogType, item) {
             console.log('Showing details for user obj:', item);
 
-            $("#editModalUsers #jobTitle").val(item.jobTitle);
+            $("#editModalUsers #userTitle").val(item.userTitle);
             $("#editModalUsers #userName").val(item.userName);
             $("#editModalUsers #userMail").val(item.userMail);
             $("#editModalUsers #userPass").val(item.userPass);
@@ -3783,7 +3783,7 @@
             try {
                 $.extend(item, {
                     userName: $("#editModalUsers #userName").val(),
-                    jobTitle: $("#editModalUsers #jobTitle").val(),
+                    userTitle: $("#editModalUsers #userTitle").val(),
                     userMail: $("#editModalUsers #userMail").val(),
                     userPass: $("#editModalUsers #userPass").val(),
                     userPhoneWork: $("#editModalUsers #userPhoneWork").val(),
@@ -3815,7 +3815,7 @@
 
         function initUsersModal() {
 
-            $("#editModalUsers #jobTitle").val("");
+            $("#editModalUsers #userTitle").val("");
             $("#editModalUsers #userName").val("");
             $("#editModalUsers #userMail").val("");
             $("#editModalUsers #userPass").val("");
