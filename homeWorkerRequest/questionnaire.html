@@ -51,6 +51,7 @@
         <a class="btn btn-light" href="#" onclick="location.reload();"><i class="fa fa-refresh"></i> Refresh</a>
     </div>
 
+    <br>
     <div class="container-fluid mt-5">
         <div class="text-center" style="display: none;" id="saveUrl">
         </div>
@@ -646,7 +647,7 @@
                                         <div class="card-header shadow-lg" role="tab" id="headingSkils">
                                             <div class="mb-0">
                                                 <a data-toggle="collapse" data-parent="#accordion" href="#collapseQueues" aria-expanded="false" aria-controls="collapseQueues" class="collapsed">
-                                                    <i class="fa fa-group" aria-hidden="true" style="color: #FF4F1F;"></i>
+                                                    <i class="fa fa-code-fork" aria-hidden="true" style="color: #FF4F1F;"></i>
                                                     <h3>Queues</h3>
                                                     <p>Information about Queues</p>
                                                 </a>
@@ -782,6 +783,139 @@
                                             </div>
                                         </div>
                                     </div>
+
+                                    <!-- Users -->
+                                    <div class="card">
+                                        <div class="card-header shadow-lg" role="tab" id="headingUsers">
+                                            <div class="mb-0">
+                                                <a data-toggle="collapse" data-parent="#accordion" href="#collapseUsers" aria-expanded="false" aria-controls="collapseUsers" class="collapsed">
+                                                    <i class="fa fa-group" aria-hidden="true" style="color: #FF4F1F;"></i>
+                                                    <h3>Users</h3>
+                                                    <p>Users settings</p>
+                                                </a>
+                                                <i class="fa fa-angle-right" aria-hidden="true" style="color: #FF4F1F;"></i>
+                                            </div>
+                                        </div>
+
+                                        <div id="collapseUsers" class="collapse" role="tabpanel" aria-labelledby="headingUsers" aria-expanded="false">
+                                            <div class="card-block">
+                                                <button id="addUser" class="btn btn-primary mb-2" type="button"><i class="fa fa-plus"></i> Add</button>
+                                                <div id="jsGridUsers"></div>
+
+                                                <div class="modal fade" id="editModalUsers" tabindex="-1" role="dialog" aria-hidden="true">
+                                                    <div class="modal-dialog modal-lg" role="document">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header" id="modal-header">
+                                                                <h5 id="title" class="modal-title">User Configuration</h5>
+                                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                    <span aria-hidden="true">&times;</span>
+                                                                </button>
+                                                            </div>
+                                                            <form class="modal-body form-horizontal" id="modal-form">
+                                                                <div class="form-group">
+
+
+                                                                    <div class="form-group row">
+                                                                        <div class="form-group col-md-6">
+                                                                            <label for="userName">Name <span class="text-danger font-weight-bold">*</span></label>
+                                                                            <input type="text" class="form-control" id="userName" name="userName" placeholder="Enter the User's full name" required></input>
+                                                                        </div>
+                                                                        <div class="form-group col-md-6">
+                                                                            <label for="userTitle">Job Title</span></label>
+                                                                            <input type="text" class="form-control" id="userTitle" name="userTitle" placeholder="Job Title"></input>
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <div class="form-group row">
+                                                                        <div class="form-group col-md-6">
+                                                                            <label for="userMail">Email <span class="text-danger font-weight-bold">*</span></label>
+                                                                            <input type="text" class="form-control" id="userMail" name="userMail" placeholder="Enter User Mail" required></input>
+                                                                        </div>
+                                                                        <div class="form-group col-md-6">
+                                                                            <label for="userPass">Password <span class="text-danger font-weight-bold">*</span></label>
+                                                                            <input type="password" class="form-control" id="userPass" name="userPass" placeholder="User password" required></input>
+                                                                        </div>
+                                                                    </div>
+
+
+                                                                    <div class="form-group row">
+                                                                        <div class="form-group col-md-6">
+                                                                            <label for="userPhoneWork">Phone Work <span class="text-danger font-weight-bold">*</span></label>
+                                                                            <input type="text" class="form-control" id="userPhoneWork" name="userPhoneWork" placeholder="Phone Work" required></input>
+                                                                        </div>
+
+                                                                        <div class="form-group col-md-6">
+                                                                            <label for="userDepartment">Department <span class="text-danger font-weight-bold">*</span></label>
+                                                                            <input type="text" class="form-control" id="userDepartment" name="userDepartment" placeholder="Department"></input>
+                                                                        </div>
+
+                                                                    </div>
+
+
+                                                                    <div class="form-group row">
+                                                                        <div class="form-group col-md-6">
+                                                                            <label for="userLocations">Location</label>
+                                                                            <div>
+                                                                                <select class="selectpicker col-md-12" id="userLocations" name="userLocations" class="form-control" data-live-search="true">
+                                                                                </select>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="form-group col-md-6">
+                                                                            <label for="userRoles">Roles</label>
+                                                                            <div>
+                                                                                <select class="selectpicker col-md-12" id="userRoles" name="userRoles" class="form-control" multiple data-live-search="true">
+
+                                                                                    <option value="Genesys Cloud User">Genesys Cloud User</option>
+                                                                                    <option value="Admin">Admin</option>
+                                                                                </select>
+                                                                            </div>
+                                                                        </div>
+
+                                                                    </div>
+
+                                                                    <div class="form-group row">
+                                                                        <div class="form-group col-md-6">
+                                                                            <label for="userQueues">Queues</label>
+                                                                            <div>
+                                                                                <select class="selectpicker col-md-12" id="userQueues" name="userQueues" class="form-control" multiple data-live-search="true">
+                                                                                </select>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="form-group col-md-6">
+                                                                            <label for="userSkills">Skills</label>
+                                                                            <div>
+                                                                                <select class="selectpicker col-md-12" id="userSkills" name="userSkills" class="form-control" multiple data-live-search="true">
+                                                                                </select>
+                                                                            </div>
+                                                                        </div>
+
+                                                                    </div>
+
+
+
+                                                                    <div class="form-group row">
+
+                                                                        <div class="form-group col-md-12">
+                                                                            <label for="userManagerEmail">Email Manager</label>
+                                                                            <input type="text" class="form-control" id="userManagerEmail" name="userManagerEmail" placeholder="Email Manager"></input>
+                                                                        </div>
+
+                                                                    </div>
+
+
+
+                                                                    <div class="modal-footer">
+                                                                        <button type="button" class="btn btn-link pull-right" data-dismiss="modal">Close</button>
+                                                                        <button type="submit" class="btn btn-primary pull-left"><i class="fa fa-plus"></i> Add</button>
+                                                                    </div>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
 
                                     <!-- Prompts -->
                                     <div class="card">
@@ -1330,6 +1464,7 @@
                 initWrapUpCodesGrid();
                 initPromptsGrid();
                 initQueuesGrid();
+                initUsersGrid();
                 initDIDsGrid();
 
                 await saveDraft(false);
@@ -1356,8 +1491,12 @@
             initWrapUpCodesGrid();
             initPromptsGrid();
             initQueuesGrid();
+            initUsersGrid();
             initDIDsGrid();
             refreshWrapUpCodesDropDownForQueues();
+            refreshQueuesDropDownForUser();
+            refreshSkillsDropDownForUser();
+            refreshLocationsDropDownForUser();
 
             if (caItem && caItem.hasOwnProperty('organizationSetup')) {
                 // Fill in Data
@@ -1379,6 +1518,7 @@
                 skills: [],
                 wrapUpCodes: [],
                 queues: [],
+                users: [],
                 prompts: [],
                 callFlowExperience: {},
                 dids: {
@@ -1438,11 +1578,27 @@
                     })
                 });
             }
+
+            if ($("#jsGridUsers").jsGrid("option", "data").length > 0) {
+                $.each($("#jsGridUsers").jsGrid("option", "data"), (key, item) => {
+                    json.users.push({
+                        userName: item.userName,
+                        userMail: item.userMail,
+                        userPass: item.userPass,
+                        userPhoneWork: item.userPhoneWork,
+                        userTitle: item.userTitle.length > 0 ? item.userTitle : 'n/a',
+                        userDepartment: item.userDepartment,
+                        userManagerEmail: item.userManagerEmail,
+                        userLocations: item.userLocations,
+                        userRoles: item.userRoles,
+                        userQueues: item.userQueues,
+                        userSkills: item.userSkills
+                    })
+                });
+            }
+
             json.callFlowExperience = callFlowExperience;
-            /* //There are Empty Strings inside
-            if ($('#mainInboundNumber').val().length > 0)
-                json.dids.mainInboundNumber = $('#mainInboundNumber').val();
-            */
+
             if ($("#jsGridDIDs").jsGrid("option", "data").length > 0) {
                 $.each($("#jsGridDIDs").jsGrid("option", "data"), (key, item) => {
                     json.dids.ranges.push({
@@ -1504,7 +1660,7 @@
             let data = $.extend(true, {}, buildJSON());
 
             const replacer = (key, value) => (value === null || value === 'n/a') ? '' : value // specify how you want to handle null values here
-            let header, csv_locations, csv_schedules, csv_holidays, csv_skills, csv_wrapUpCodes, csv_queues, csv_callFlowExperience, csv_dids, csv_prompts;
+            let header, csv_locations, csv_schedules, csv_holidays, csv_skills, csv_wrapUpCodes, csv_queues, csv_callFlowExperience, csv_dids, csv_prompts, csv_users;
 
             // Locations
             if (data.locations && data.locations.length > 0) {
@@ -1594,6 +1750,38 @@
                 console.log('queues are empty, skip csv build...');
             }
 
+            // Users
+            if (data.users && data.users.length > 0) {
+                console.log('build users csv...');
+                // tune queue columns
+                data.users.forEach(function (item) {
+                    if (item.userRoles && item.userRoles.length > 0)
+                        item.userRoles = item.userRoles.join('|')
+                    else
+                        item.userRoles = "";
+
+                    if (item.userQueues && item.userQueues.length > 0)
+                        item.userQueues = item.userQueues.join('|')
+                    else
+                        item.userQueues = "";
+
+                    if (item.userSkills && item.userSkills.length > 0)
+                        item.userSkills = item.userSkills.join('|')
+                    else
+                        item.userSkills = "";
+
+                });
+
+                header = Object.keys(data.users[0]);
+                console.log(header);
+                csv_users = data.users.map(row => header.map(fieldName => JSON.stringify(row[fieldName], replacer)).join(';'))
+                csv_users.unshift(header.join(';'))
+                csv_users = csv_users.join('\r\n')
+            } else {
+                console.log('users are empty, skip csv build...');
+            }
+
+
             // Call Flow Experience
             if (data.callFlowExperience) {
                 console.log('build call flow experience csv...');
@@ -1637,28 +1825,30 @@
                 console.log('dids are empty, skip csv build...');
             }
 
-
             console.log(`CSV: locations\n===================\n ${csv_locations}\n===================\n`);
             console.log(`CSV: schedules\n===================\n ${csv_schedules}\n===================\n`);
             console.log(`CSV: holidays\n===================\n ${csv_holidays}\n===================\n`);
             console.log(`CSV: skills\n===================\n ${csv_skills}\n===================\n`);
             console.log(`CSV: wrapUpCodes\n===================\n ${csv_wrapUpCodes}\n===================\n`);
             console.log(`CSV: queues\n===================\n ${csv_queues}\n===================\n`);
+            console.log(`CSV: users\n===================\n ${csv_users}\n===================\n`);
             console.log(`CSV: prompts\n===================\n ${csv_prompts}\n===================\n`);
             console.log(`CSV: callFlowExperience\n===================\n ${csv_callFlowExperience}\n===================\n`);
             console.log(`CSV: dids\n===================\n ${csv_dids}\n===================\n`);
 
-            //download(csv_locations, 'locations.csv');
+            const customerName = data.organizationSetup.companyName.split(' ').join('');
+            console.log(`customer fileName suffix ${customerName}`);
 
-            zip.file("au-locations-import.csv", csv_locations);
-            zip.file("au-schedules-import.csv", csv_schedules);
-            zip.file("holidays.csv", csv_holidays);
-            zip.file("au-skills-import.csv", csv_skills);
-            zip.file("au-wrapup-codes-import.csv", csv_wrapUpCodes);
-            zip.file("au-queues-full-import.csv", csv_queues);
-            zip.file("prompts.csv", csv_prompts);
-            zip.file("call-flow.csv", csv_callFlowExperience);
-            zip.file("au-dids-import.csv", csv_dids);
+            zip.file(`locations-import-${customerName}.csv`, csv_locations);
+            zip.file(`schedules-import-${customerName}.csv`, csv_schedules);
+            zip.file(`holidays-import-${customerName}.csv`, csv_holidays);
+            zip.file(`skills-import-${customerName}.csv`, csv_skills);
+            zip.file(`wrapup-codes-import-${customerName}.csv`, csv_wrapUpCodes);
+            zip.file(`queues-full-import-${customerName}.csv`, csv_queues);
+            zip.file(`users-import-${customerName}.csv`, csv_users);
+            zip.file(`prompts-${customerName}.csv`, csv_prompts);
+            zip.file(`call-flow-${customerName}.csv`, csv_callFlowExperience);
+            zip.file(`dids-import-${customerName}.csv`, csv_dids);
 
             zip.generateAsync({ type: "blob" })
                 .then(function (content) {
@@ -1718,6 +1908,21 @@
             showLocationsModal("Add", {});
         });
 
+        function refreshLocationsDropDownForUser() {
+            console.log('refreshLocationsDropDownForUser()');
+            $("#editModalUsers #userLocations option").remove();
+
+            if (dbLocations.locations && dbLocations.locations.length > 0) {
+                $.each(dbLocations.locations, (i, aItem) => {
+                    $("<option/>", { value: aItem.locationName }).text(aItem.locationName).appendTo("#editModalUsers #userLocations");
+                });
+                $("#editModalUsers #userLocations").selectpicker('refresh');
+            } else {
+                console.log('No Locations found...');
+            }
+        }
+
+
         function initLocationsGrid() {
             //console.log('caItem locations:', caItem.locations);
             dbLocations.locations = caItem.hasOwnProperty('locations') ? caItem.locations : [];
@@ -1744,9 +1949,11 @@
                 },
                 onItemInserted: function (args) {
                     $("#addLocation").attr('disabled', $("#jsGridLocations").jsGrid("option", "data").length >= 2);
+                    refreshLocationsDropDownForUser();
                 },
                 onItemUpdated: function (args) {
                     $("#addLocation").attr('disabled', $("#jsGridLocations").jsGrid("option", "data").length >= 2);
+                    refreshLocationsDropDownForUser();
                 },
                 onItemDeleting: function (args) {
                     console.log("onItemDeleting");
@@ -1769,6 +1976,7 @@
                                     args.item.deleteConfirmed = true;
                                     $("#jsGridLocations").jsGrid('deleteItem', args.item); // Remove item from grid
                                     removeFromArray(dbLocations.locations, args.item); // Remove item from db
+                                    refreshLocationsDropDownForUser();
                                     showMessage("Location deleted", false);
                                 }
                             }
@@ -2842,6 +3050,21 @@
 
         window.dbSkills = dbSkills;
 
+        function refreshSkillsDropDownForUser() {
+            console.log('refreshSkillsDropDownForUser()');
+            $("#editModalUsers #userSkills option").remove();
+
+            if (dbSkills.skills && dbSkills.skills.length > 0) {
+                $.each(dbSkills.skills, (i, aItem) => {
+                    $("<option/>", { value: aItem.skillName }).text(aItem.skillName).appendTo("#editModalUsers #userSkills");
+                });
+                $("#editModalUsers #userSkills").selectpicker('refresh');
+            } else {
+                console.log('No Skills codes found...');
+            }
+        }
+
+
         var formSubmitHandlerSkills = $.noop;
 
         let validatorSkills = $("#editModalSkills #modal-form").validate({
@@ -2884,9 +3107,11 @@
                 },
                 onItemInserted: function (args) {
                     $("#addSkill").attr('disabled', $("#jsGridSkills").jsGrid("option", "data").length >= maxSkills);
+                    refreshSkillsDropDownForUser();
                 },
                 onItemUpdated: function (args) {
                     $("#addSkill").attr('disabled', $("#jsGridSkills").jsGrid("option", "data").length >= maxSkills);
+                    refreshSkillsDropDownForUser();
                 },
                 onItemDeleting: function (args) {
                     console.log("onItemDeleting");
@@ -2909,6 +3134,7 @@
                                     args.item.deleteConfirmed = true;
                                     $("#jsGridSkills").jsGrid('deleteItem', args.item); // Remove item from grid
                                     removeFromArray(dbSkills.skills, args.item); // Remove item from db
+                                    refreshSkillsDropDownForUser();
                                     showMessage("Skill deleted", false);
                                 }
                             }
@@ -3230,9 +3456,11 @@
                 },
                 onItemInserted: function (args) {
                     $("#addQueue").attr('disabled', $("#jsGridQueues").jsGrid("option", "data").length >= maxItems);
+                    refreshQueuesDropDownForUser();
                 },
                 onItemUpdated: function (args) {
                     $("#addQueue").attr('disabled', $("#jsGridQueues").jsGrid("option", "data").length >= maxItems);
+                    refreshQueuesDropDownForUser();
                 },
                 onItemDeleting: function (args) {
                     console.log("onItemDeleting");
@@ -3255,6 +3483,7 @@
                                     args.item.deleteConfirmed = true;
                                     $("#jsGridQueues").jsGrid('deleteItem', args.item); // Remove item from grid
                                     removeFromArray(dbQueues.queues, args.item); // Remove item from db
+                                    refreshQueuesDropDownForUser();
                                     showMessage("Queue deleted", false);
                                 }
                             }
@@ -3376,7 +3605,244 @@
             validatorQueues.resetForm(); // Reset validation errors
         }
 
+        function refreshQueuesDropDownForUser() {
+            console.log('refreshQueuesDropDownForUser()');
+            $("#editModalUsers #userQueues option").remove();
+
+            if (dbQueues.queues && dbQueues.queues.length > 0) {
+                $.each(dbQueues.queues, (i, aItem) => {
+                    $("<option/>", { value: aItem.queueName }).text(aItem.queueName).appendTo("#editModalUsers #userQueues");
+                });
+                $("#editModalUsers #userQueues").selectpicker('refresh');
+            } else {
+                console.log('No Queues codes found...');
+            }
+        }
+
+
         //#endregion
+
+        //#region Users
+
+
+        var dbUsers = {
+            loadData: function (filter) {
+                return $.grep(this.users, function (user) {
+                    return (!filter.users || user.userName.toLowerCase().indexOf(filter.userName.toLowerCase()) > -1);
+                });
+            },
+            insertItem: function (insertingUser) {
+                this.users.push(insertingUser);
+            },
+            updateItem: function (updatingUser) { },
+            deleteItem: function (deletingUser) { }
+        };
+
+        window.dbUsers = dbUsers;
+
+        var formSubmitHandlerUsers = $.noop;
+
+        let validatorUsers = $("#editModalUsers #modal-form").validate({
+            errorClass: "text-danger",
+            successClass: "test-success",
+            submitHandler: function () {
+                formSubmitHandlerUsers();
+            }
+        });
+
+        $("#addUser").on('click', (e) => {
+            e.preventDefault();
+            showUsersModal("Add", {});
+        });
+
+
+        function initUsersGrid() {
+            const maxItems = 10;
+
+            dbUsers.users = caItem.hasOwnProperty('users') ? caItem.users : [];
+
+            $("#jsGridUsers").jsGrid({
+                height: "auto",
+                width: "100%",
+                editing: true,
+                autoload: true,
+                sorting: true,
+                filtering: false,
+                paging: false,
+                noDataContent: "No Users",
+                confirmDeleting: false,
+                onError: function (args) {
+                    console.error('Failed to load grid data:', args);
+                    showMessage("An error occurred while loading your data", true);
+                },
+                rowClick: function (args) {
+                    showUsersModal("Edit", args.item);
+                },
+                onDataLoaded: function (args) {
+                    $("#addUser").attr('disabled', $("#jsGridUsers").jsGrid("option", "data").length >= maxItems);
+                },
+                onItemInserted: function (args) {
+                    $("#addUser").attr('disabled', $("#jsGridUsers").jsGrid("option", "data").length >= maxItems);
+                },
+                onItemUpdated: function (args) {
+                    $("#addUser").attr('disabled', $("#jsGridUsers").jsGrid("option", "data").length >= maxItems);
+                },
+                onItemDeleting: function (args) {
+                    console.log("onItemDeleting");
+                    if (!args.item.deleteConfirmed) { // custom property for confirmation
+                        args.cancel = true; // cancel deleting
+                        bootbox.confirm({
+                            message: 'Do you really want to delete this User?',
+                            buttons: {
+                                confirm: {
+                                    label: "Delete!",
+                                    className: "btn-danger"
+                                },
+                                cancel: {
+                                    label: "No",
+                                    className: "btn-secondary"
+                                }
+                            },
+                            callback: async function (result) {
+                                if (result) {
+                                    args.item.deleteConfirmed = true;
+                                    $("#jsGridUsers").jsGrid('deleteItem', args.item); // Remove item from grid
+                                    removeFromArray(dbUsers.users, args.item); // Remove item from db
+                                    showMessage("User deleted", false);
+                                }
+                            }
+                        });
+                    }
+                },
+                onItemDeleted: function (args) {
+                    $("#addUser").attr('disabled', $("#jsGridUsers").jsGrid("option", "data").length >= maxItems);
+                },
+
+                controller: dbUsers,
+                fields: [
+                    {
+                        name: "userName",
+                        title: "Name",
+                        type: "text",
+                        align: "center"
+                    },
+                    {
+                        name: "userMail",
+                        title: "Email",
+                        type: "text",
+                        align: "center"
+                    },
+                    {
+                        type: "control",
+                        modeSwitchButton: false,
+                        editButton: false,
+                        width: 68,
+                        align: "center",
+                        headerTemplate: function () {
+                            return "Actions";
+                        }
+                    }
+                ]
+            });
+        }
+
+        var showUsersModal = function (dialogType, item) {
+            console.log('Showing details for user obj:', item);
+
+            $("#editModalUsers #userTitle").val(item.userTitle);
+            $("#editModalUsers #userName").val(item.userName);
+            $("#editModalUsers #userMail").val(item.userMail);
+            $("#editModalUsers #userPass").val(item.userPass);
+            $("#editModalUsers #userPhoneWork").val(item.userPhoneWork);
+            $("#editModalUsers #userDepartment").val(item.userDepartment);
+
+            $("#editModalUsers #userLocations").val(item.userLocations ? item.userLocations : undefined);
+            $("#editModalUsers #userLocations").selectpicker('refresh');
+
+            $("#editModalUsers #userRoles").val(item.userRoles ? item.userRoles : undefined);
+            $("#editModalUsers #userRoles").selectpicker('refresh');
+
+            $("#editModalUsers #userQueues").val(item.userQueues ? item.userQueues : undefined);
+            $("#editModalUsers #userQueues").selectpicker('refresh');
+
+            $("#editModalUsers #userSkills").val(item.userSkills);
+            $("#editModalUsers #userSkills").selectpicker('refresh');
+
+            $("#editModalUsers #userManagerEmail").val(item.userManagerEmail);
+
+            $("#editModalQueues #submit").html("<i class='fa fa-floppy-o'></i> Save");
+            formSubmitHandlerUsers = function () {
+                saveUser(item, dialogType === "Add");
+            };
+            $("#editModalUsers").modal('show');
+
+        };
+
+        var saveUser = function (item, isNew) {
+            console.log('Extending item:', item);
+            try {
+                $.extend(item, {
+                    userName: $("#editModalUsers #userName").val(),
+                    userTitle: $("#editModalUsers #userTitle").val(),
+                    userMail: $("#editModalUsers #userMail").val(),
+                    userPass: $("#editModalUsers #userPass").val(),
+                    userPhoneWork: $("#editModalUsers #userPhoneWork").val(),
+                    userDepartment: $("#editModalUsers #userDepartment").val(),
+                    userLocations: $("#editModalUsers #userLocations").val() ? $("#editModalUsers #userLocations").val() : undefined,
+                    userRoles: $("#editModalUsers #userRoles").val() ? $("#editModalUsers #userRoles").val() : undefined,
+                    userQueues: $("#editModalUsers #userQueues").val() ? $("#editModalUsers #userQueues").val() : undefined,
+                    userSkills: $("#editModalUsers #userSkills").val() ? $("#editModalUsers #userSkills").val() : undefined,
+                    userManagerEmail: $("#editModalUsers #userManagerEmail").val().length > 0 ? $("#editModalUsers #userManagerEmail").val() : undefined
+
+                });
+                console.log('Extended Item:', item);
+                console.log('IsNew?', isNew)
+                $("#jsGridUsers").jsGrid(isNew ? "insertItem" : "updateItem", item);
+                $("#editModalUsers").modal('hide');
+            } catch (error) {
+                console.error(error);
+            }
+
+        };
+
+        $("#editModalUsers").on('shown.bs.modal', function () {
+            $("#userName").focus();
+        });
+
+        $('#editModalUsers').on('hidden.bs.modal', async () => {
+            initUsersModal();
+        });
+
+        function initUsersModal() {
+
+            $("#editModalUsers #userTitle").val("");
+            $("#editModalUsers #userName").val("");
+            $("#editModalUsers #userMail").val("");
+            $("#editModalUsers #userPass").val("");
+            $("#editModalUsers #userPhoneWork").val("");
+            $("#editModalUsers #userDepartment").val("");
+
+            $("#editModalUsers #userLocations").val(undefined);
+            $("#editModalUsers #userLocations").selectpicker('refresh');
+
+            $("#editModalUsers #userRoles").val(undefined);
+            $("#editModalUsers #userRoles").selectpicker('refresh');
+
+            $("#editModalUsers #userQueues").val(undefined);
+            $("#editModalUsers #userQueues").selectpicker('refresh');
+
+            $("#editModalUsers #userSkills").val(undefined);
+            $("#editModalUsers #userSkills").selectpicker('refresh');
+
+            $("#editModalUsers #userManagerEmail").val("");
+
+            $("#editModalUsers #submit").html("<i class='fa fa-plus'></i> Add");
+
+            validatorUsers.resetForm(); // Reset validation errors
+        }
+
+        //#endregion
+
 
         //#region Prompts
 
