@@ -350,6 +350,17 @@
                         </div>
                     </div>
 
+                    <!-- Google Chat Bot -->
+                    <div class="form-check mr-4">
+                        <div class="form-group col-md-12">
+                            <input class="form-check-input" type="checkbox" value="" id="googleChatBot">
+                            <label class="form-check-label" for="googleChatBot">
+                                Does the customer want to use the Google Rapid Response Virtual Agent (Google Chat Bot)?
+                            </label>
+                        </div>
+                    </div>
+
+
                     <!--#endregion -->
 
                     <!--#region PS Engagement -->
@@ -679,7 +690,7 @@
         }
 
         //#endregion
-        
+
         // Populate countries selects
         $.each(countries, (i, country) => {
             $("<option/>", { value: country.name, ["data-gcv"]: country.gcv }).text(country.name).appendTo("#countriesAgents, #countriesOperation");
@@ -1131,6 +1142,7 @@
                     usersInternetBandwidth: $("#usersInternetBandwidth").is(':checked'),
                     endUserDevicesRequireVPN: $("#endUserDevicesRequireVPN").is(':checked'),
                     virtualDesktopSolution: $("#virtualDesktopSolution").val(),
+                    googleChatBot: $("#googleChatBot").is(':checked'),
 
                     // Policies & Processes
                     standardTermsConditions: $("#standardTermsConditions").is(':checked'),
@@ -1203,6 +1215,7 @@
                 $("#hyperVEnvironment").prop('checked', data.hyperVEnvironment);
                 $("#estimatedVolumeMinsPerMonth").val(data.estimatedVolumeMinsPerMonth);
                 $("#genesysCloudRegion").val(data.genesysCloudRegion);
+                $("#googleChatBot").prop('checked', data.googleChatBot);
 
                 // General Configuration
                 $("#numberAgents").val(data.numberAgents);
