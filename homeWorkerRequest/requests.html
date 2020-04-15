@@ -339,6 +339,17 @@
                                 </div>
                             </div>
 
+                            <!-- Google Chat Bot -->
+                            <div class="form-check mr-4">
+                                <div class="form-group col-md-12">
+                                    <input class="form-check-input" type="checkbox" value="" id="googleChatBot">
+                                    <label class="form-check-label" for="googleChatBot">
+                                        Does the customer want to use the Google Rapid Response Virtual Agent (Google Chat Bot)?
+                                    </label>
+                                </div>
+                            </div>
+
+
                             <!-- Terms & Conditions -->
                             <div class="form-check mr-4">
                                 <div class="form-group col-md-12">
@@ -774,6 +785,7 @@
             $("#editModal #endUserDevicesRequireVPN").attr('checked', false);
             $("#editModal #virtualDesktopSolution").val("");
             $("#editModal #emailInfrastructure").val("");
+            $("#editModal #googleChatBot").attr('checked', false);
 
             // Policies & Processes
             $("#editModal #standardTermsConditions").prop('checked', false);
@@ -1249,6 +1261,7 @@
             $("#editModal #endUserDevicesRequireVPN").attr('checked', request.endUserDevicesRequireVPN);
             $("#editModal #virtualDesktopSolution").val(request.virtualDesktopSolution);
             $("#editModal #emailInfrastructure").val(request.emailInfrastructure);
+            $("#editModal #googleChatBot").attr('checked', request.googleChatBot || false);
 
             // Policies & Processes
             $("#editModal #standardTermsConditions").prop('checked', request.standardTermsConditions);
