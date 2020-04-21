@@ -1372,7 +1372,10 @@
 
         async function init() {
             console.log('function init');
-            $('#spinner_message')[0].innerHTML = "login to Genesys Cloud...";
+            await new Promise(r => setTimeout(r, 500));
+
+            //$('#spinner_message')[0].innerHTML = "login to Genesys Cloud...";
+            document.getElementById("spinner").style.display = "none";
 
             // Set jsGrid defaults
             jsGrid.setDefaults({ tableClass: "jsgrid-table table table-striped table-hover" });
@@ -1391,7 +1394,7 @@
             $.each(countries, (i, country) => {
                 $("<option/>", { value: country.name }).text(country.name).appendTo("#country");
             });
-
+            /*
             document.getElementById("spinner").style.display = "block";
             try {
                 await getMe();
@@ -1403,15 +1406,16 @@
             } finally {
                 document.getElementById("spinner").style.display = "none";
             }
-
+            
             gcToken = userInfo.token
             localStorage.setItem("gcToken", gcToken);
             localStorage.setItem("userName", userInfo.name);
-
+            */
             if (id) {
                 console.log(`found id ${id} in path, check for rapidRequest and draft version...`);
                 document.getElementById("spinner").style.display = "block";
                 // Try to load #rapidresponse request
+                /*
                 try {
                     $('#spinner_message')[0].innerHTML = "validating Id...";
                     request = await getRequest(id);
@@ -1427,7 +1431,7 @@
                         return;
                     }
                 }
-
+                */
                 // Try to load latest draft
                 try {
                     $('#spinner_message')[0].innerHTML = "check for latest draft...";
@@ -1443,12 +1447,13 @@
                     }
                 }
                 document.getElementById("spinner").style.display = "none";
-
-                if (!request && !caItem) {
+                //if (!request && !caItem) {
+                if (!caItem) {
                     showMessage("Provided requestId doesn't exist", true);
                     return;
                 }
-                if (request || caItem) {
+                //if (request || caItem) {
+                if (caItem) {
                     loadDraftConfiguration();
                     enableForm(true);
                 }
@@ -1836,7 +1841,7 @@
             console.log(`CSV: callFlowExperience\n===================\n ${csv_callFlowExperience}\n===================\n`);
             console.log(`CSV: dids\n===================\n ${csv_dids}\n===================\n`);
 
-            const customerName = data.organizationSetup.companyName.split(' ').join('');
+            const customerName = data.organizationSetup.hasOwnProperty('companyName') ? data.organizationSetup.companyName.split(' ').join('') : 'No Company Name Specified';
             console.log(`customer fileName suffix ${customerName}`);
 
             zip.file(`locations-import-${customerName}.csv`, csv_locations);
@@ -1924,7 +1929,8 @@
 
 
         function initLocationsGrid() {
-            //console.log('caItem locations:', caItem.locations);
+            console.log('caItem locations:', caItem.locations);
+
             dbLocations.locations = caItem.hasOwnProperty('locations') ? caItem.locations : [];
 
             $("#jsGridLocations").jsGrid({
@@ -4579,6 +4585,7 @@
                 }
             }
         };
+
 
         //#endregion
 
