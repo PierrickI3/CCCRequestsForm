@@ -1372,7 +1372,10 @@
 
         async function init() {
             console.log('function init');
+            await sleep(500);
+
             //$('#spinner_message')[0].innerHTML = "login to Genesys Cloud...";
+            document.getElementById("spinner").style.display = "none";
 
             // Set jsGrid defaults
             jsGrid.setDefaults({ tableClass: "jsgrid-table table table-striped table-hover" });
@@ -1927,6 +1930,7 @@
 
         function initLocationsGrid() {
             console.log('caItem locations:', caItem.locations);
+
             dbLocations.locations = caItem.hasOwnProperty('locations') ? caItem.locations : [];
 
             $("#jsGridLocations").jsGrid({
@@ -4581,6 +4585,11 @@
                 }
             }
         };
+
+        function sleep(ms) {
+            return new Promise(resolve => setTimeout(resolve, ms));
+        }
+
 
         //#endregion
 
