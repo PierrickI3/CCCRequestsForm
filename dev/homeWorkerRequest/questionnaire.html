@@ -1372,7 +1372,7 @@
 
         async function init() {
             console.log('function init');
-            await sleep(500);
+            await new Promise(r => setTimeout(r, 500));
 
             //$('#spinner_message')[0].innerHTML = "login to Genesys Cloud...";
             document.getElementById("spinner").style.display = "none";
@@ -4585,10 +4585,6 @@
                 }
             }
         };
-
-        function sleep(ms) {
-            return new Promise(resolve => setTimeout(resolve, ms));
-        }
 
 
         //#endregion
