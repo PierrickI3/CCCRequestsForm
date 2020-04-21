@@ -34,6 +34,7 @@ async function postRequests() {
     usersInternetBandwidth: $("#usersInternetBandwidth").is(':checked'),
     endUserDevicesRequireVPN: $("#endUserDevicesRequireVPN").is(':checked'),
     virtualDesktopSolution: $("#virtualDesktopSolution").val(),
+    googleChatBot: $("#googleChatBot").is(':checked'),
 
     // Policies & Processes
     standardTermsConditions: $("#standardTermsConditions").is(':checked'),
@@ -181,6 +182,8 @@ async function putRequest() {
     usersInternetBandwidth: $("#editModal #usersInternetBandwidth").is(':checked'),
     endUserDevicesRequireVPN: $("#editModal #endUserDevicesRequireVPN").is(':checked'),
     virtualDesktopSolution: $("#editModal #virtualDesktopSolution").val(),
+    googleChatBot: $("#editModal #googleChatBot").is(':checked'),
+
 
     // Policies & Processes
     standardTermsConditions: $("#editModal #standardTermsConditions").is(':checked'),
