@@ -44,7 +44,7 @@
             </ul>
             <ul class="nav navbar-nav mr-2" style="float: right;">
                 <li>
-                    <a href="./homeWorkerRequest/index.html" class="btn btn-warning btn-sm">#rapidresponse</a>
+                    <a href="./homeWorkerRequest/index.html" class="admin btn btn-warning btn-sm" id="rapidResponse" hidden>#rapidresponse</a>
                 </li>
 
             </ul>
@@ -56,8 +56,8 @@
         <strong>Maintenance Alert</strong> This site is being updated. Please wait.
         <a class="btn btn-light" href="#" onclick="location.reload();"><i class="fa fa-refresh"></i> Refresh</a>
     </div>
-    <div class="alert alert-warning fade show text-center">
-        <strong>#rapidResponse</strong> For Rapid Response Offer requests, please use <strong>top right button #rapidresponse</strong>
+    <div class="alert alert-danger fade show text-center">
+        <strong>#rapidResponse</strong> Rapid Response Offer has now expired. Please contact your local Competence Center if you have any questions.
     </div>
 
     <div id="form" class="container-fluid">
@@ -438,7 +438,10 @@
                 let categorySelect = $("<select/>", { class: "form-control", name: "category_" + currentTaskId, required: true }).appendTo(categoryDiv);
                 $("<option/>", { value: "", disabled: true, selected: true }).text("Select a Request Category").appendTo(categorySelect);
                 for (const category of requestCategory) {
-                    if (category === "Rapid Response Offer") continue
+                    console.log(category);
+                    if (category === "Rapid Response Offer" || category === "Google Rapid Response Virtual Agent") continue
+
+
                     $("<option/>", { value: category }).text(category).appendTo(categorySelect);
                 }
 
