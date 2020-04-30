@@ -1841,7 +1841,7 @@
             console.log(`CSV: callFlowExperience\n===================\n ${csv_callFlowExperience}\n===================\n`);
             console.log(`CSV: dids\n===================\n ${csv_dids}\n===================\n`);
 
-            const customerName = data.organizationSetup.companyName.split(' ').join('');
+            const customerName = data.organizationSetup.hasOwnProperty('companyName') ? data.organizationSetup.companyName.split(' ').join('') : 'No Company Name Specified';
             console.log(`customer fileName suffix ${customerName}`);
 
             zip.file(`locations-import-${customerName}.csv`, csv_locations);
