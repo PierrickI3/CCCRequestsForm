@@ -843,7 +843,8 @@
 
             try {
                 await getMe();
-                if (!maintenanceMode) $("#submit").attr('disabled', false);
+                //if (!maintenanceMode) $("#submit").attr('disabled', false);
+                $("#submit").attr('disabled', true);
             } catch (error) {
                 showMessage(error.hasOwnProperty('message') ? error.message : `Unable to login to Genesys Cloud ${JSON.stringify(error)}`, true);
                 $("#submit").attr('disabled', true);
