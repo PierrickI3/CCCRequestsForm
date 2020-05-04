@@ -38,18 +38,6 @@ let mailDistribution = {
     LATAM: ['LATAMCompetencyCenter@genesys.com'],
     APAC: ['apac-cc@genesys.com'],
   },
-  MultiCloud: {
-    EMEA: ['EMEAEntCCRequests@genesys.com'],
-    NA: ['NACompetencyCenterRequests@genesys.com'],
-    LATAM: ['LATAMCompetencyCenter@genesys.com'],
-    APAC: ['apac-cc@genesys.com'],
-  },
-  'Engage + Engage Cloud + MultiCloud': {
-    EMEA: ['EMEAEntCCRequests@genesys.com'],
-    NA: ['NACompetencyCenterRequests@genesys.com'],
-    LATAM: ['LATAMCompetencyCenter@genesys.com'],
-    APAC: ['apac-cc@genesys.com'],
-  },
 };
 
 let regions = {
