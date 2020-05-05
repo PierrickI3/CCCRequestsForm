@@ -396,17 +396,17 @@
 
         function setDatesLabels(dateAccepted, dateRejected, dateClosed) {
             if (!dateAccepted) {
-                $("#editModal #lblDateAccepted").text("Accepted: not set");                
+                $("#editModal #lblDateAccepted").text("Accepted: not set");
             } else {
                 const localAccepted = moment(dateAccepted).local().format('YYYY-MM-DD HH:mm:ss');
                 const localAcceptedFromNow = moment(dateAccepted).fromNow();
                 $("#editModal #lblDateAccepted").val(dateAccepted);
-                $("#editModal #lblDateAccepted").text(`Accepted: ${localAcceptedFromNow} at ${localAccepted}`);                
+                $("#editModal #lblDateAccepted").text(`Accepted: ${localAcceptedFromNow} at ${localAccepted}`);
             }
 
-            if (!dateRejected) {                
-                $("#editModal #lblDateRejected").text("Rejected: not set");                
-            } else {                
+            if (!dateRejected) {
+                $("#editModal #lblDateRejected").text("Rejected: not set");
+            } else {
                 const localRejected = moment(dateRejected).local().format('YYYY-MM-DD HH:mm:ss');
                 const localRejectedFromNow = moment(dateRejected).fromNow();
                 $("#editModal #lblDateRejected").val(localRejected);
@@ -415,7 +415,7 @@
 
             if (!dateClosed) {
                 $("#editModal #lblDateClosed").text("Closed: not set");
-            } else {                
+            } else {
                 const localClosed = moment(dateClosed).local().format('YYYY-MM-DD HH:mm:ss');
                 const localClosedFromNow = moment(dateClosed).fromNow();
                 $("#editModal #lblDateClosed").val(localClosed);
@@ -554,7 +554,7 @@
                             }
 
                             // Check if Assigned to Me is filled in!
-                            if ($("#basicgrid").data('JSGrid').fields[6].filterControl.val() == userName) {
+                            if ($("#basicgrid").data('JSGrid').fields[8].filterControl.val() == userName) {
                                 filter['teamMembers'] = userName
                             }
 
@@ -592,6 +592,7 @@
                                     return $.grep(requests.requests, function (request) {
                                         return (!filter.id || request.id.toLowerCase().indexOf(filter.id.toLowerCase()) > -1)
                                             && (!filter.region || request.region.toLowerCase().indexOf(filter.region.toLowerCase()) > -1)
+                                            && (!filter.status || request.status.toLowerCase().indexOf(filter.status.toLowerCase()) > -1)
                                             && (!filter.subRegion || request.subRegion.toLowerCase().indexOf(filter.subRegion.toLowerCase()) > -1)
                                             && (!filter.product || request.product.toLowerCase().indexOf(filter.product.toLowerCase()) > -1)
                                             && (!filter.segment || request.segment.toLowerCase().indexOf(filter.segment.toLowerCase()) > -1)
@@ -624,6 +625,32 @@
                                 return `<small>${value}</small>`;
                             },
                             visible: false
+                        },
+                        {
+                            name: "status",
+                            title: "Status",
+                            type: "select",
+                            width: "auto",
+                            align: "center",
+                            filterTemplate: function () {
+                                let select = $("<select/>", { id: "selectStatus" });
+                                $("<option/>", { value: "" }).text("(All)").appendTo(select);
+                                $("<option/>", { value: 'Open' }).text('Open').appendTo(select);
+                                $("<option/>", { value: 'On Hold' }).text('On Hold').appendTo(select);
+                                $("<option/>", { value: 'Waiting On Additional Information' }).text('Waiting On Additional Information').appendTo(select);
+                                $("<option/>", { value: 'Closed' }).text('Closed').appendTo(select);
+
+                                select.on('change', (e) => {
+                                    let selectedStatus = select.children("option:selected").val();
+                                    searches.status = selectedStatus;
+                                    searches.doNotReload = true;
+                                    $("#basicgrid").data('JSGrid').search(searches);
+                                });
+                                return this.filterControl = select;
+                            },
+                            itemTemplate: function (value, item) {
+                                return value;
+                            }
                         }, {
                             name: "region",
                             title: "Region",
@@ -685,10 +712,10 @@
                                 });
                                 return this.filterControl = select;
                             },
-                            items: $("#selectRegion").children("option:selected").val() == "(All)" ? Object.keys(regions) : regions[$("#selectRegion").children("option:selected").val()],
+                            items: Object.keys(regions),
                             itemTemplate: function (value, item) {
                                 return value;
-                            }
+                            },
                         }, {
                             name: "product",
                             title: "Product",
@@ -1027,7 +1054,7 @@
             }
         }
 
-        $('#editModal').on('shown.bs.modal', (e) => {            
+        $('#editModal').on('shown.bs.modal', (e) => {
         });
 
         $('#editModal').on('hidden.bs.modal', async () => {
@@ -1044,13 +1071,13 @@
         $("#btnAssignedToMe").on("click", async (e) => {
             if ($('#btnAssignedToMe')[0].classList.contains('btn-success')) {
                 $('#btnAssignedToMe')[0].classList.remove('btn-success');
-                $("#basicgrid").data('JSGrid').fields[7].filterControl[0].value = "";
+                $("#basicgrid").data('JSGrid').fields[8].filterControl[0].value = "";
                 searches.teamMembers = "";
                 $("#basicgrid").data('JSGrid').search(searches);
             }
             else {
                 $('#btnAssignedToMe')[0].classList.add('btn-success');
-                $("#basicgrid").data('JSGrid').fields[7].filterControl[0].value = userName;
+                $("#basicgrid").data('JSGrid').fields[8].filterControl[0].value = userName;
                 searches.teamMembers = userName;
                 $("#basicgrid").data('JSGrid').search(searches);
             }
@@ -1150,11 +1177,11 @@
                     status = "Closed"
                 else
                     status = $("#editModal #status").val();
-                            
+
                 let dateAccepted = $("#editModal #lblDateAccepted").val();
                 let dateRejected = $("#editModal #lblDateRejected").val();
                 let dateClosed = $("#editModal #lblDateClosed").val();
-                
+
                 if (status === 'Closed' && !dateClosed) {
                     dateClosed = moment().utc().format();
                 }
