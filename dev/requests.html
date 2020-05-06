@@ -554,7 +554,7 @@
                             }
 
                             // Check if Assigned to Me is filled in!
-                            if ($("#basicgrid").data('JSGrid').fields[8].filterControl.val() == userName) {
+                            if ($("#basicgrid").data('JSGrid').fields[9].filterControl.val() == userName) {
                                 filter['teamMembers'] = userName
                             }
 
@@ -585,6 +585,9 @@
                                         aItem.partnerCustomerName = 'n/a';
                                     if (!aItem.programManager)
                                         aItem.programManager = 'n/a';
+                                    if (!aItem.acceptedRejected || aItem.acceptedRejected == 'not handled')
+                                        aItem.acceptedRejected = 'n/a';
+
                                 });
 
                                 console.log(`filter: ${JSON.stringify(filter)}`);
@@ -593,6 +596,7 @@
                                         return (!filter.id || request.id.toLowerCase().indexOf(filter.id.toLowerCase()) > -1)
                                             && (!filter.region || request.region.toLowerCase().indexOf(filter.region.toLowerCase()) > -1)
                                             && (!filter.status || request.status.toLowerCase().indexOf(filter.status.toLowerCase()) > -1)
+                                            && (!filter.acceptedRejected || request.acceptedRejected.toLowerCase().indexOf(filter.acceptedRejected.toLowerCase()) > -1)
                                             && (!filter.subRegion || request.subRegion.toLowerCase().indexOf(filter.subRegion.toLowerCase()) > -1)
                                             && (!filter.product || request.product.toLowerCase().indexOf(filter.product.toLowerCase()) > -1)
                                             && (!filter.segment || request.segment.toLowerCase().indexOf(filter.segment.toLowerCase()) > -1)
@@ -651,7 +655,35 @@
                             itemTemplate: function (value, item) {
                                 return value;
                             }
-                        }, {
+                        },
+                        {
+                            name: "acceptedRejected",
+                            title: "Handled",
+                            type: "select",
+                            width: "auto",
+                            align: "center",
+                            filterTemplate: function () {
+                                let select = $("<select/>", { id: "acceptedRejected" });
+                                $("<option/>", { value: "" }).text("(All)").appendTo(select);
+                                $("<option/>", { value: 'Accepted' }).text('Accepted').appendTo(select);
+                                $("<option/>", { value: 'Rejected' }).text('Rejected').appendTo(select);
+                                $("<option/>", { value: 'n/a' }).text('Un handled').appendTo(select);
+
+
+                                select.on('change', (e) => {
+                                    let selectedStatus = select.children("option:selected").val();
+                                    console.log('selected value !! : ', selectedStatus);
+                                    searches.acceptedRejected = selectedStatus;
+                                    searches.doNotReload = true;
+                                    $("#basicgrid").data('JSGrid').search(searches);
+                                });
+                                return this.filterControl = select;
+                            },
+                            itemTemplate: function (value, item) {
+                                return value;
+                            }
+                        },
+                        {
                             name: "region",
                             title: "Region",
                             type: "select",
@@ -1071,13 +1103,13 @@
         $("#btnAssignedToMe").on("click", async (e) => {
             if ($('#btnAssignedToMe')[0].classList.contains('btn-success')) {
                 $('#btnAssignedToMe')[0].classList.remove('btn-success');
-                $("#basicgrid").data('JSGrid').fields[8].filterControl[0].value = "";
+                $("#basicgrid").data('JSGrid').fields[9].filterControl[0].value = "";
                 searches.teamMembers = "";
                 $("#basicgrid").data('JSGrid').search(searches);
             }
             else {
                 $('#btnAssignedToMe')[0].classList.add('btn-success');
-                $("#basicgrid").data('JSGrid').fields[8].filterControl[0].value = userName;
+                $("#basicgrid").data('JSGrid').fields[9].filterControl[0].value = userName;
                 searches.teamMembers = userName;
                 $("#basicgrid").data('JSGrid').search(searches);
             }
