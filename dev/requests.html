@@ -667,7 +667,7 @@
                                 $("<option/>", { value: "" }).text("(All)").appendTo(select);
                                 $("<option/>", { value: 'Accepted' }).text('Accepted').appendTo(select);
                                 $("<option/>", { value: 'Rejected' }).text('Rejected').appendTo(select);
-                                $("<option/>", { value: 'n/a' }).text('Un handled').appendTo(select);
+                                $("<option/>", { value: 'n/a' }).text('Unhandled').appendTo(select);
 
 
                                 select.on('change', (e) => {
@@ -677,6 +677,7 @@
                                     searches.doNotReload = true;
                                     $("#basicgrid").data('JSGrid').search(searches);
                                 });
+
                                 return this.filterControl = select;
                             },
                             itemTemplate: function (value, item) {
