@@ -38,6 +38,12 @@ let mailDistribution = {
     LATAM: ['LATAMCompetencyCenter@genesys.com'],
     APAC: ['apac-cc@genesys.com'],
   },
+  'Latitude by Genesys': {
+    EMEA: ['EMEACloudProgramManagement@genesys.com'],
+    NA: ['NACompetencyCenterRequests@genesys.com'],
+    LATAM: ['LATAMCompetencyCenter@genesys.com'],
+    APAC: ['apac-cc@genesys.com'],
+  },
 };
 
 let regions = {
