@@ -64,8 +64,8 @@ let requestsType = {
   'Critical Situation Support': [],
   'Top 100 Account Planning': [],
   'Rapid Response Offer': [],
-  'Google Rapid Response Virtual Agent': [],
+  'RR Extension': [],
   'Other Request': [],
 };
 
-let requestCategory = ['Demo & Trial Support', 'Opportunity Support', 'Security Support', 'Privacy Support', 'Strategic Business Consulting', 'Specialist Engagement', 'Enablement', 'Critical Situation Support', 'Top 100 Account Planning', 'Rapid Response Offer', 'Google Rapid Response Virtual Agent', 'Other Request'];
+let requestCategory = ['Demo & Trial Support', 'Opportunity Support', 'Security Support', 'Privacy Support', 'Strategic Business Consulting', 'Specialist Engagement', 'Enablement', 'Critical Situation Support', 'Top 100 Account Planning', 'Rapid Response Offer', 'RR Extension', 'Other Request'];
