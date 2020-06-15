@@ -21,13 +21,13 @@ let mailDistribution = {
     APAC: ['apac-cc@genesys.com'],
   },
   'Genesys Engage': {
-    EMEA: ['EMEAEntCCRequests@genesys.com'],
+    EMEA: ['EMEAEntCCRequests@genesys.com', 'david.curley@genesys.com', 'martin.vagner@genesys.com', 'julio.hidalgo@genesys.com', 'cedric.bourgeois@genesys.com', 'alberto.pasi@genesys.com'],
     NA: ['NACompetencyCenterRequests@genesys.com'],
     LATAM: ['LATAMCompetencyCenter@genesys.com'],
     APAC: ['apac-cc@genesys.com'],
   },
   'Genesys Engage Cloud': {
-    EMEA: ['EMEAEntCCRequests@genesys.com'],
+    EMEA: ['EMEAEntCCRequests@genesys.com', 'david.curley@genesys.com', 'martin.vagner@genesys.com', 'julio.hidalgo@genesys.com', 'cedric.bourgeois@genesys.com', 'alberto.pasi@genesys.com'],
     NA: ['NACompetencyCenterRequests@genesys.com'],
     LATAM: ['LATAMCompetencyCenter@genesys.com'],
     APAC: ['apac-cc@genesys.com'],
