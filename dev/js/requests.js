@@ -243,10 +243,10 @@ async function deleteRequest(requestId, _token) {
     });
 }
 
-async function getDashboard(_token) {
+async function getDashboard(_token, _start, _end) {
 
   return await $.ajax({
-    url: `${apiBasePath}/dashboard?token=${_token}`,
+    url: `${apiBasePath}/dashboard?token=${_token}&start=${_start}&end=${_end}`,
     method: "GET",
     contentType: 'application/json',
     dataType: "json"
