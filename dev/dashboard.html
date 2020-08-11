@@ -58,6 +58,15 @@
       <div class="form-group col-sm-12">
         <div class="form-row">
           <div class="form-group col-md-2">
+            <label for="period">Date Period</label>
+            <select id="period" name="period" class="form-control">
+              <option value="custom">Custom range</option>
+              <option value="lastDay">Last day</option>
+              <option value="lastWeek">Last week</option>
+              <option value="lastMonth" selected>Last month</option>
+            </select>
+          </div>
+          <div class="form-group col-md-2">
             <label for="datepicker">Start Date</label>
             <input type="text" id="dpStart" class="form-control" placeholder="Click to set a date" autocomplete="off" />
           </div>
@@ -240,7 +249,8 @@
     let pickerStartDate = new Date(nowDate.setMonth(nowDate.getMonth() - 1));
     $('#dpStart').datepicker('setDate', pickerStartDate);
 
-
+    $('#dpStart').attr("disabled", true);
+    $('#dpEnd').attr("disabled", true);
 
 
     if (maintenanceMode) {
@@ -280,11 +290,43 @@
     });
 
     $('#dpStart').datepicker().on('changeDate', function (ev) {
-      init();
+      if ($('#period').val() === 'custom') init();
     });
     $('#dpEnd').datepicker().on('changeDate', function (ev) {
-      init();
+      if ($('#period').val() === 'custom') init();
     });
+
+    $('#period').on('change', () => {
+      let periodSelection = $('#period').val();
+      let pickerStartDate;
+      switch (periodSelection) {
+        case 'lastDay':
+          pickerStartDate = new Date(new Date().setDate(new Date().getDate() - 1))
+          $('#dpStart').datepicker('setDate', pickerStartDate);
+          $('#dpEnd').datepicker('setDate', new Date());
+          break;
+        case 'lastWeek':
+          pickerStartDate = new Date(new Date().setDate(new Date().getDate() - 7))
+          $('#dpStart').datepicker('setDate', pickerStartDate);
+          $('#dpEnd').datepicker('setDate', new Date());
+          break;
+        case 'lastMonth':
+          pickerStartDate = new Date(new Date().setMonth(new Date().getMonth() - 1));
+          $('#dpStart').datepicker('setDate', pickerStartDate);
+          $('#dpEnd').datepicker('setDate', new Date());
+
+          break;
+        default:
+          break;
+      }
+
+      $('#dpStart').attr("disabled", periodSelection === 'custom' ? false : true);
+      $('#dpEnd').attr("disabled", periodSelection === 'custom' ? false : true);
+
+      if (periodSelection !== 'custom') init();
+
+    });
+
 
     // SetLink for review Requests
     document.getElementById('reviewRequestsButton').setAttribute('href', `./requests.html?region=${region}`);
@@ -585,14 +627,12 @@
       });
     }
 
-    //showRequests();
 
     async function init() {
       let startDate = moment($('#dpStart').datepicker('getDate')).valueOf();
       let endDate = moment($('#dpEnd').datepicker('getDate')).valueOf();
 
       if (!startDate || !endDate) return;
-      console.log('dates are present');
 
       if (startDate > endDate) {
         alert('startDate cannot be greated than endDate');
@@ -710,13 +750,16 @@
     }
 
     async function exportData() {
+      let startDate = moment($('#dpStart').datepicker('getDate')).valueOf();
+      let endDate = moment($('#dpEnd').datepicker('getDate')).valueOf();
+
       let exportRegion = $('#region').val() == '' ? undefined : $('#region').val();
       let exportProduct = $('#product').val() == '' ? undefined : $('#product').val();
       let exportSegment = $('#segment').val() == '' ? undefined : $('#segment').val();
       let exportSubRegion = $('#subRegion').val() == '' ? undefined : $('#subRegion').val();
       let myExportData;
       try {
-        myExportData = await getExport(exportRegion, exportSubRegion, exportProduct, exportSegment, gcToken);
+        myExportData = await getExport(exportRegion, exportSubRegion, exportProduct, exportSegment, gcToken, startDate, endDate);
         if (myExportData.length == 0) {
           bootbox.alert('Nothing to export...');
           return;

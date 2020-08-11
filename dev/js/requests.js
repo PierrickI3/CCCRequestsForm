@@ -270,7 +270,7 @@ async function getDashboard(_token, _start, _end) {
     });
 }
 
-async function getExport(_region, _subRegion, _product, _segment, _token) {
+async function getExport(_region, _subRegion, _product, _segment, _token, _start, _end) {
 
   var sFilter = "";
 
@@ -297,7 +297,7 @@ async function getExport(_region, _subRegion, _product, _segment, _token) {
   console.log(`getExport with filter: ${sFilter}`);
 
   return await $.ajax({
-    url: `${apiBasePath}/export?${sFilter}token=${_token}`,
+    url: `${apiBasePath}/export?${sFilter}token=${_token}&start=${_start}&end=${_end}`,
     method: "GET",
     contentType: 'application/json',
     dataType: "json"
