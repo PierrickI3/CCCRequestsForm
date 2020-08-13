@@ -7,7 +7,7 @@ else
   apiBasePath = "https://drbojb15ma.execute-api.eu-central-1.amazonaws.com/dev";
 
 
-async function postRequests(region, subRegion, segment, product, tasks, requesterName, requesterEmail, requesterPhoneNumber, needCompletedBy, description, partnerCustomerName, salesforceAccountOpportunity, _token, customerRelationship, customerType) {
+async function postRequests(region, subRegion, segment, product, tasks, requesterName, requesterEmail, requesterPhoneNumber, needCompletedBy, description, oppUrl, oppDSRUrl, oppOwner, oppPartnerCustomerName, oppAssignedSC, _token, customerRelationship, customerType) {
 
   console.log('Mail Distribution:', mailDistribution[product][$("#region").val()]);
   var data = {
@@ -35,13 +35,13 @@ async function postRequests(region, subRegion, segment, product, tasks, requeste
 
   //#region Optional fields
 
-  if (partnerCustomerName.length > 0) {
-    data.partnerCustomerName = partnerCustomerName
-  }
+  // if (partnerCustomerName.length > 0) {
+  //   data.partnerCustomerName = partnerCustomerName
+  // }
 
-  if (salesforceAccountOpportunity.length > 0) {
-    data.salesforceAccountOpportunity = salesforceAccountOpportunity
-  }
+  // if (salesforceAccountOpportunity.length > 0) {
+  //   data.salesforceAccountOpportunity = salesforceAccountOpportunity
+  // }
 
   if (customerRelationship.length > 0) {
     data.customerRelationship = customerRelationship
@@ -49,6 +49,26 @@ async function postRequests(region, subRegion, segment, product, tasks, requeste
 
   if (customerType.length > 0) {
     data.customerType = customerType
+  }
+
+  if (oppUrl.length > 0) {
+    data.oppUrl = oppUrl
+  }
+
+  if (oppDSRUrl.length > 0) {
+    data.oppDSRUrl = oppDSRUrl
+  }
+
+  if (oppOwner.length > 0) {
+    data.oppOwner = oppOwner
+  }
+
+  if (oppPartnerCustomerName.length > 0) {
+    data.oppPartnerCustomerName = oppPartnerCustomerName
+  }
+
+  if (oppAssignedSC.length > 0) {
+    data.oppAssignedSC = oppAssignedSC
   }
 
   //#endregion
@@ -321,3 +341,29 @@ async function getExport(_region, _subRegion, _product, _segment, _token, _start
     });
 }
 
+async function getOpportunityDSR(_token, _id) {
+
+  return await $.ajax({
+    url: `${apiBasePath}/sf/opportunities/${_id}/dsr?token=${_token}`,
+    method: "GET",
+    contentType: 'application/json',
+    dataType: "json"
+  })
+    .done((data, textStatus, jqXHR) => {
+      try {
+        if (jqXHR.status === 200) {
+          console.log(jqXHR);
+          return data;
+        } else {
+          showMessage("Unexpected error: " + textStatus, true);
+          reject(textStatus);
+        }
+      } catch (error) {
+        console.error(error);
+        reject(error);
+      }
+    })
+    .always(() => {
+      console.log("getRequests completed");
+    });
+}

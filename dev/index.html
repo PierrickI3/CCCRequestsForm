@@ -16,6 +16,7 @@
   <link href="https://cdnjs.cloudflare.com/ajax/libs/jquery-toast-plugin/1.3.2/jquery.toast.min.css" rel="stylesheet" />
   <!-- Custom CSS -->
   <link rel="stylesheet" href="./css/custom.css" />
+
 </head>
 
 <body>
@@ -207,20 +208,54 @@
             </div>
           </div>
           <div class="form-row mr-4 ml-2">
-            <div class="form-group col-md-6">
-              <span data-toggle="tooltip" data-html="true" data-placement="bottom" style="float: right;" title="If applicable, enter the Partner and/or Customer name the request is related to">
+            <div class="form-group col-md-12">
+              <span data-toggle="tooltip" data-html="true" data-placement="bottom" style="float: right;" title="Search for Opportunity in Salesforce. If present DSR will also be collected">
                 <i class="fa fa-question-circle-o" aria-hidden="true" style="color: gray;"></i>
               </span>
-              <label for="partnerCustomerName">Partner and/or Customer Name</label>
-              <input type="text" class="form-control" id="partnerCustomerName" name="partnerCustomerName" placeholder="Partner and/or Customer Name" />
+              <label for="salesforceAccountOpportunity">Opportunity</label>
+              <select id="sfData" class="form-control js-example-basic-single" name="sfData">
+              </select>
             </div>
+          </div>
+          <div class="form-row mr-4 ml-2">
             <div class="form-group col-md-6">
-              <span data-toggle="tooltip" data-html="true" data-placement="bottom" style="float: right;" title="Provide the link to the account or opportunity in Salesforce. This will provide the Competence Centre Program Manager with more background and will help with your resource allocation">
+              <span data-toggle="tooltip" data-html="true" data-placement="bottom" style="float: right;" title="Partner and/or Customer name the opportunity is related to">
                 <i class="fa fa-question-circle-o" aria-hidden="true" style="color: gray;"></i>
               </span>
-              <label for="salesforceAccountOpportunity">Opportunity URL <span class="text-danger font-weight-bold">*</span></label>
-              <input type="text" class="form-control" id="salesforceAccountOpportunity" name="salesforceAccountOpportunity" placeholder="Link to Salesforce opportunity" required />
+              <label for="oppPartnerCustomerName">Partner and/or Customer Name</label>
+              <input type="text" class="form-control" id="oppPartnerCustomerName" name="oppPartnerCustomerName" placeholder="" disabled />
             </div>
+            <div class="form-group col-md-3">
+              <span data-toggle="tooltip" data-html="true" data-placement="bottom" style="float: right;" title="Assigned SC from latest DSR (if present). If no DSR is found, SC from opportunity is selected.">
+                <i class="fa fa-question-circle-o" aria-hidden="true" style="color: gray;"></i>
+              </span>
+              <label for="oppAssignedSC">Assigned SC</label>
+              <input type="text" class="form-control" id="oppAssignedSC" name="oppAssignedSC" placeholder="" disabled />
+            </div>
+            <div class="form-group col-md-3">
+              <span data-toggle="tooltip" data-html="true" data-placement="bottom" style="float: right;" title="Opportunity Owner">
+                <i class="fa fa-question-circle-o" aria-hidden="true" style="color: gray;"></i>
+              </span>
+              <label for="oppOwner">Owner</label>
+              <input type="text" class="form-control" id="oppOwner" name="oppOwner" placeholder="" disabled />
+            </div>
+          </div>
+          <div class="form-row mr-4 ml-2">
+            <div class="form-group col-md-6">
+              <span data-toggle="tooltip" data-html="true" data-placement="bottom" style="float: right;" title="Salesforce Opportunity URL">
+                <i class="fa fa-question-circle-o" aria-hidden="true" style="color: gray;"></i>
+              </span>
+              <label for="oppUrl">Opportunity Url</label>
+              <input type="url" class="form-control" id="oppUrl" name="oppUrl" placeholder="" disabled />
+            </div>
+            <div class="form-group col-md-6">
+              <span data-toggle="tooltip" data-html="true" data-placement="bottom" style="float: right;" title="Salesforce latest DSR URL linked to Opportunity">
+                <i class="fa fa-question-circle-o" aria-hidden="true" style="color: gray;"></i>
+              </span>
+              <label for="oppDSRUrl">DSR Url</label>
+              <input type="url" class="form-control" id="oppDSRUrl" name="oppDSRUrl" placeholder="" disabled />
+            </div>
+
           </div>
         </form>
 
@@ -301,10 +336,110 @@
   <!-- Dictionary -->
   <script src="js/dictionary.js"></script>
   <script src="js/version.js"></script>
+  <!-- Select2 -->
+  <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
+
 
   <!--#endregion -->
 
   <script>
+
+    //#region handle SF Search element
+
+    $(document).ready(function () {
+      // Apply custom dropdown style to SF Search Input Box
+      let data = JSON.parse(localStorage.getItem('intakeForm_draft'));
+      if (!data) {
+        $('.js-example-basic-single').select2();
+      } else {
+        $(".js-example-basic-single").select2({
+          data: data.opp
+        })
+      }
+
+      // Detect locally correct env
+      if (window.location.href.includes('localhost'))
+        apiBasePath = "http://localhost:3000"
+      else
+        apiBasePath = "https://drbojb15ma.execute-api.eu-central-1.amazonaws.com/dev";
+
+      // Remote query, to search for Opportunity name, bind results to select2 object
+      $('#sfData').select2({
+        placeholder: 'Opportunity Name',
+        allowClear: true,
+        minimumInputLength: 3,
+        ajax: {
+          delay: 350,
+          url: `${apiBasePath}/sf/opportunities`,
+          data: function (params) {
+            var query = {
+              token: gcToken,
+              name: params.term
+            }
+            // Query parameters will be ?search=[term]&type=public
+            return query;
+          },
+          processResults: function (data) {
+            // Transforms the top-level key of the response object from 'items' to 'results'
+            console.log(data);
+            let ret = [];
+            data.forEach((item) => {
+              ret.push({
+                id: item.Id,
+                //text: `${item.Id} ${item.Name} ${item.Solution_Consultant__r ? `(SC: ${item.Solution_Consultant__r.Name})` : ''}`,
+                text: `${item.Name} (${item.Id})`,
+                item: item
+              })
+            })
+
+            return {
+              results: ret
+            };
+          }
+        }
+      });
+
+      // Detect Selected event, post second query on selected Item by Opportunity ID to get latest DSR object
+      $('#sfData').on('select2:select', async function (e) {
+        var data = e.params.data;
+        if (!data) return;
+
+        try {
+          let dsrInformation = await getOpportunityDSR(gcToken, e.params.data.id);
+          $('#sfData').select2('data')[0].item.dsr = dsrInformation;
+
+          // Update Form fields
+
+          let myData = $('#sfData').select2('data')[0].item;
+          $('#oppUrl').val(myData.opportunityUrl);
+          $('#oppDSRUrl').val(myData.dsr && myData.dsr.url ? myData.dsr.url : 'n/a');
+          $('#oppOwner').val(myData.Owner && myData.Owner.Name ? myData.Owner.Name : 'n/a');
+          $('#oppPartnerCustomerName').val(myData.Account && myData.Account.Name ? myData.Account.Name : 'n/a');
+          $('#oppAssignedSC').val(myData.dsr && myData.dsr.virtualTeamNames ? myData.dsr.virtualTeamNames : myData.Solution_Consultant__r && myData.Solution_Consultant__r.Name ? myData.Solution_Consultant__r.Name : 'n/a');
+
+        } catch (error) {
+          console.error(error);
+        }
+
+
+      });
+
+
+      $('#sfData').on('select2:clear', async function (e) {
+        console.log('clear items related to SF');
+        $('#oppUrl').val('');
+        $('#oppDSRUrl').val('');
+        $('#oppOwner').val('');
+        $('#oppPartnerCustomerName').val('');
+        $('#oppAssignedSC').val('');
+
+      });
+
+    });
+
+    //#endregion /handle SF Search element
+
     let tasksControls = [],
       taskId = 0,
       gcToken;
@@ -578,12 +713,20 @@
         }
 
         let description = $('#description').val();
-        let partnerCustomerName = $('#partnerCustomerName').val();
-        let salesforceAccountOpportunity = $('#salesforceAccountOpportunity').val();
+        // let partnerCustomerName = $('#partnerCustomerName').val();
+        // let salesforceAccountOpportunity = $('#salesforceAccountOpportunity').val();
 
-        console.log(`Region: ${region}, subRegion: ${subRegion}, Product: ${product}, Tasks: ${JSON.stringify(tasks)}, Requester Name: ${requesterName}, Requester Email: ${requesterEmail}, Requester Phone Number: ${requesterPhoneNumber}, Need Completed By: ${needCompletedBy}, Description: ${description}, Partner or Customer Name: ${partnerCustomerName}, Salesforce Opportunity: ${salesforceAccountOpportunity}`);
+        // SF Related Data
 
-        await postRequests(region, subRegion, segment, product, tasks, requesterName, requesterEmail, requesterPhoneNumber, needCompletedBy, description, partnerCustomerName, salesforceAccountOpportunity, gcToken, customerRelationship, customerType);
+        let oppUrl = $('#oppUrl').val();
+        let oppDSRUrl = $('#oppDSRUrl').val();
+        let oppOwner = $('#oppOwner').val();
+        let oppPartnerCustomerName = $('#oppPartnerCustomerName').val();
+        let oppAssignedSC = $('#oppAssignedSC').val();
+
+        console.log(`Region: ${region}, subRegion: ${subRegion}, Product: ${product}, Tasks: ${JSON.stringify(tasks)}, Requester Name: ${requesterName}, Requester Email: ${requesterEmail}, Requester Phone Number: ${requesterPhoneNumber}, Need Completed By: ${needCompletedBy}, Description: ${description}`);
+
+        await postRequests(region, subRegion, segment, product, tasks, requesterName, requesterEmail, requesterPhoneNumber, needCompletedBy, description, oppUrl, oppDSRUrl, oppOwner, oppPartnerCustomerName, oppAssignedSC, gcToken, customerRelationship, customerType);
         console.log('Success!');
         showMessage('Request submitted. Thanks!');
 
@@ -594,7 +737,7 @@
         sTasks = sTasks + '\n----------------------------------';
         console.log(sTasks);
 
-        let detailedInfo = '\n```no-highlight\n region:\t\t' + region + '\n sub-region:\t\t' + subRegion + '\n segment:\t\t' + segment + '\n product:\t\t' + product + '\n req name:\t\t' + requesterName + '\n req email:\t\t' + requesterEmail + '\n req phone:\t\t' + requesterPhoneNumber + sTasks + '\n completed by:\t\t' + needCompletedBy + '\n description:\t\t' + description + '\n p/c name:\t\t' + partnerCustomerName + '\n sf/acc opp:\t\t' + salesforceAccountOpportunity + '\n ```\n';
+        let detailedInfo = '\n```no-highlight\n region:\t\t' + region + '\n sub-region:\t\t' + subRegion + '\n segment:\t\t' + segment + '\n product:\t\t' + product + '\n req name:\t\t' + requesterName + '\n req email:\t\t' + requesterEmail + '\n req phone:\t\t' + requesterPhoneNumber + sTasks + '\n completed by:\t\t' + needCompletedBy + '\n description:\t\t' + description + '\n ```\n';
         if (!window.location.href.includes('localhost')) sendNotification(`:loudspeaker: New CCC Request from [@${userInfo.name}](#/person/${userInfo.id}) ${detailedInfo}`, region, subRegion, segment, product);
         $('#submit').prop('disabled', false);
         $('#submit').html('Submit');
@@ -622,8 +765,16 @@
       $('#product').val('');
       $('#datepicker').val('');
       $('#description').val('');
-      $('#partnerCustomerName').val('');
-      $('#salesforceAccountOpportunity').val('');
+      // $('#partnerCustomerName').val('');
+      // $('#salesforceAccountOpportunity').val('');
+
+      // SF Related Data
+      $('#oppUrl').val('');
+      $('#oppDSRUrl').val('');
+      $('#oppOwner').val('');
+      $('#oppPartnerCustomerName').val('');
+      $('#oppAssignedSC').val('');
+      $('#sfData').val(null).trigger('change');
 
       localStorage.removeItem('intakeForm_draft');
     }
@@ -643,8 +794,17 @@
           requesterEmail: $('#requesterEmail').val(),
           requesterPhoneNumber: $('#requesterPhoneNumber').val(),
           description: $('#description').val(),
-          partnerCustomerName: $('#partnerCustomerName').val(),
-          salesforceAccountOpportunity: $('#salesforceAccountOpportunity').val(),
+
+          // SF Related Data
+          // partnerCustomerName: $('#partnerCustomerName').val(),
+          // salesforceAccountOpportunity: $('#salesforceAccountOpportunity').val(),
+          opp: $('#sfData').select2('data'),
+          oppUrl: $('#oppUrl').val(),
+          oppDSRUrl: $('#oppDSRUrl').val(),
+          oppOwner: $('#oppOwner').val(),
+          oppPartnerCustomerName: $('#oppPartnerCustomerName').val(),
+          oppAssignedSC: $('#oppAssignedSC').val()
+
         };
 
         let needCompletedByDate = moment($('#datepicker').datepicker('getDate')).format('YYYY-MM-DDT00:00:00.000');
@@ -718,12 +878,24 @@
         $('#requesterPhoneNumber').val(data.requesterPhoneNumber);
         $('#datepicker').datepicker('update', new Date(data.needCompletedBy));
         $('#description').val(data.description);
-        $('#partnerCustomerName').val(data.partnerCustomerName);
-        $('#salesforceAccountOpportunity').val(data.salesforceAccountOpportunity);
+        // $('#partnerCustomerName').val(data.partnerCustomerName);
+        // $('#salesforceAccountOpportunity').val(data.salesforceAccountOpportunity);
+
+        // SF Related Data
+        $('#oppUrl').val(data.oppUrl);
+        $('#oppDSRUrl').val(data.oppDSRUrl);
+        $('#oppOwner').val(data.oppOwner);
+        $('#oppPartnerCustomerName').val(data.oppPartnerCustomerName);
+        $('#oppAssignedSC').val(data.oppAssignedSC);
+
+
       } catch (error) {
         console.error(error);
       }
     }
+
+
+
   </script>
 
   <!--Coollabs -->

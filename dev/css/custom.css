@@ -150,3 +150,10 @@
   /* height: auto; */
   box-shadow: 0 0 15px rgba(0, 0, 0, 0.75);
 }
+.select2-container .select2-selection--single {
+  height: 38px !important;
+  border-left: 1px solid #ced4da !important;
+  border-right: 1px solid #ced4da !important;
+  border-top: 1px solid #ced4da !important;
+  border-bottom: 1px solid #ced4da !important;
+}
