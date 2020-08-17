@@ -7,7 +7,7 @@ else
   apiBasePath = "https://drbojb15ma.execute-api.eu-central-1.amazonaws.com/dev";
 
 
-async function postRequests(region, subRegion, segment, product, tasks, requesterName, requesterEmail, requesterPhoneNumber, needCompletedBy, description, oppUrl, oppDSRUrl, oppOwner, oppPartnerCustomerName, oppAssignedSC, _token, customerRelationship, customerType) {
+async function postRequests(region, subRegion, segment, product, tasks, requesterName, requesterEmail, requesterPhoneNumber, needCompletedBy, description, oppName, oppUrl, oppDSRUrl, oppOwner, oppPartnerCustomerName, oppAssignedSC, _token, customerRelationship, customerType) {
 
   console.log('Mail Distribution:', mailDistribution[product][$("#region").val()]);
   var data = {
@@ -49,6 +49,10 @@ async function postRequests(region, subRegion, segment, product, tasks, requeste
 
   if (customerType.length > 0) {
     data.customerType = customerType
+  }
+
+  if (oppName.length > 0) {
+    data.oppName = oppName
   }
 
   if (oppUrl.length > 0) {
@@ -99,7 +103,7 @@ async function postRequests(region, subRegion, segment, product, tasks, requeste
     });
 }
 
-async function putRequest(id, region, subRegion, segment, product, tasks, requesterName, requesterEmail, requesterPhoneNumber, needCompletedBy, description, partnerCustomerName, salesforceAccountOpportunity, priority, acceptedRejected, status, programManager, acceptedRejectedNotes, teamMembers, _token, isDeleted, customerRelationship, customerType, dateAccepted, dateRejected, dateClosed) {
+async function putRequest(id, region, subRegion, segment, product, tasks, requesterName, requesterEmail, requesterPhoneNumber, needCompletedBy, description, oppName, oppUrl, oppDSRUrl, oppOwner, oppPartnerCustomerName, oppAssignedSC, priority, acceptedRejected, status, programManager, acceptedRejectedNotes, teamMembers, _token, isDeleted, customerRelationship, customerType, dateAccepted, dateRejected, dateClosed) {
 
 
   if (!isDeleted) isDeleted = false;
@@ -141,13 +145,13 @@ async function putRequest(id, region, subRegion, segment, product, tasks, reques
     data.programManager = programManager;
   }
 
-  if (partnerCustomerName && partnerCustomerName.length > 0) {
-    data.partnerCustomerName = partnerCustomerName
-  }
+  // if (partnerCustomerName && partnerCustomerName.length > 0) {
+  //   data.partnerCustomerName = partnerCustomerName
+  // }
 
-  if (salesforceAccountOpportunity && salesforceAccountOpportunity.length > 0) {
-    data.salesforceAccountOpportunity = salesforceAccountOpportunity
-  }
+  // if (salesforceAccountOpportunity && salesforceAccountOpportunity.length > 0) {
+  //   data.salesforceAccountOpportunity = salesforceAccountOpportunity
+  // }
 
   if (priority && priority.length > 0) {
     data.priority = priority
@@ -159,6 +163,31 @@ async function putRequest(id, region, subRegion, segment, product, tasks, reques
 
   if (customerType && customerType.length > 0) {
     data.customerType = customerType;
+  }
+
+
+  if (oppName.length > 0) {
+    data.oppName = oppName
+  }
+
+  if (oppUrl.length > 0) {
+    data.oppUrl = oppUrl
+  }
+
+  if (oppDSRUrl.length > 0) {
+    data.oppDSRUrl = oppDSRUrl
+  }
+
+  if (oppOwner.length > 0) {
+    data.oppOwner = oppOwner
+  }
+
+  if (oppPartnerCustomerName.length > 0) {
+    data.oppPartnerCustomerName = oppPartnerCustomerName
+  }
+
+  if (oppAssignedSC.length > 0) {
+    data.oppAssignedSC = oppAssignedSC
   }
 
   //#endregion

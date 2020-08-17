@@ -197,7 +197,7 @@
                                     <textarea class="form-control" id="description" name="description" placeholder="Describe your request" required></textarea>
                                 </div>
                             </div>
-                            <div class="form-row">
+                            <!-- <div class="form-row">
                                 <div class="form-group col-md-10">
                                     <label for="partnerCustomerName">Partner and/or Customer Name</label>
                                     <input type="text" class="form-control" id="partnerCustomerName" name="partnerCustomerName" placeholder="Partner and/or Customer Name">
@@ -216,7 +216,43 @@
                                     <button id="btnCopySFLink" type="button" class="btn btn-primary pull-right" onclick="navigateToSFLink();">copy</button>
                                 </div>
 
+                            </div> -->
+
+                            <div class="form-row">
+                                <div class="form-group col-md-10">
+                                    <label for="salesforceAccountOpportunity">Opportunity</label><br>
+                                    <select id="sfData" class="form-control js-example-basic-single" name="sfData">
+                                    </select>
+                                </div>
                             </div>
+                            <div class="form-row">
+                                <div class="form-group col-md-5">
+                                    <label for="oppPartnerCustomerName">Partner and/or Customer Name</label>
+                                    <input type="text" class="form-control" id="oppPartnerCustomerName" name="oppPartnerCustomerName" placeholder="" disabled />
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-md-5">
+                                    <label for="oppAssignedSC">Assigned SC</label>
+                                    <input type="text" class="form-control" id="oppAssignedSC" name="oppAssignedSC" placeholder="" disabled />
+                                </div>
+                                <div class="form-group col-md-5">
+                                    <label for="oppOwner">Owner</label>
+                                    <input type="text" class="form-control" id="oppOwner" name="oppOwner" placeholder="" disabled />
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-md-5">
+                                    <label for="oppUrl">Opportunity Url</label>
+                                    <input type="url" class="form-control" id="oppUrl" name="oppUrl" placeholder="" disabled />
+                                </div>
+                                <div class="form-group col-md-5">
+                                    <label for="oppDSRUrl">DSR Url</label>
+                                    <input type="url" class="form-control" id="oppDSRUrl" name="oppDSRUrl" placeholder="" disabled />
+                                </div>
+
+                            </div>
+
                             <div class="form-row">
                                 <div class="form-group col-md-3">
                                     <label for="priority">Priority</label>
@@ -316,6 +352,10 @@
     <script src="js/dictionary.js"></script>
     <script src="js/version.js"></script>
 
+    <!-- Select2 -->
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
+
     <script>
         if (window.location.href.includes('dev'))
             $("#devModeImage").removeAttr('hidden');
@@ -332,6 +372,90 @@
         console.log(`continue with gcToken: ${gcToken}`);
 
         let tasksControls = [], taskId = 10000;
+
+        $(document).ready(function () {
+            $('.js-example-basic-single').select2({ dropdownAutoWidth: true });
+
+            // Detect locally correct env
+            if (window.location.href.includes('localhost'))
+                apiBasePath = "http://localhost:3000"
+            else
+                apiBasePath = "https://drbojb15ma.execute-api.eu-central-1.amazonaws.com/dev";
+
+            // Remote query, to search for Opportunity name, bind results to select2 object
+            $('#sfData').select2({
+                placeholder: 'Opportunity Name',
+                allowClear: true,
+                minimumInputLength: 3,
+                ajax: {
+                    delay: 350,
+                    url: `${apiBasePath}/sf/opportunities`,
+                    data: function (params) {
+                        var query = {
+                            token: gcToken,
+                            name: params.term
+                        }
+                        // Query parameters will be ?search=[term]&type=public
+                        return query;
+                    },
+                    processResults: function (data) {
+                        // Transforms the top-level key of the response object from 'items' to 'results'
+                        console.log(data);
+                        let ret = [];
+                        data.forEach((item) => {
+                            ret.push({
+                                id: item.Id,
+                                //text: `${item.Id} ${item.Name} ${item.Solution_Consultant__r ? `(SC: ${item.Solution_Consultant__r.Name})` : ''}`,
+                                text: `${item.Name} (${item.Id})`,
+                                item: item
+                            })
+                        })
+
+                        return {
+                            results: ret
+                        };
+                    }
+                }
+            });
+
+            // Detect Selected event, post second query on selected Item by Opportunity ID to get latest DSR object
+            $('#sfData').on('select2:select', async function (e) {
+                var data = e.params.data;
+                if (!data) return;
+
+                try {
+                    let dsrInformation = await getOpportunityDSR(gcToken, e.params.data.id);
+                    $('#sfData').select2('data')[0].item.dsr = dsrInformation;
+
+                    // Update Form fields
+
+                    let myData = $('#sfData').select2('data')[0].item;
+                    $('#oppUrl').val(myData.opportunityUrl);
+                    $('#oppDSRUrl').val(myData.dsr && myData.dsr.url ? myData.dsr.url : 'n/a');
+                    $('#oppOwner').val(myData.Owner && myData.Owner.Name ? myData.Owner.Name : 'n/a');
+                    $('#oppPartnerCustomerName').val(myData.Account && myData.Account.Name ? myData.Account.Name : 'n/a');
+                    $('#oppAssignedSC').val(myData.dsr && myData.dsr.virtualTeamNames ? myData.dsr.virtualTeamNames : myData.Solution_Consultant__r && myData.Solution_Consultant__r.Name ? myData.Solution_Consultant__r.Name : 'n/a');
+
+                } catch (error) {
+                    console.error(error);
+                }
+
+
+            });
+
+
+            $('#sfData').on('select2:clear', async function (e) {
+                console.log('clear items related to SF');
+                $('#oppUrl').val('');
+                $('#oppDSRUrl').val('');
+                $('#oppOwner').val('');
+                $('#oppPartnerCustomerName').val('');
+                $('#oppAssignedSC').val('');
+
+            });
+
+        });
+
 
         let region = getUrlParameter("region");
         $("#region").text(region);
@@ -380,8 +504,17 @@
             $("#editModal #requesterPhoneNumber").val("");
             $("#editModal #datepicker").datepicker('update', '');
             $("#editModal #description").val("");
-            $("#editModal #partnerCustomerName").val("");
-            $("#editModal #salesforceAccountOpportunity").val("");
+            // $("#editModal #partnerCustomerName").val("");
+            // $("#editModal #salesforceAccountOpportunity").val("");
+
+            // SF Related Data
+            $('#editModal #oppUrl').val('');
+            $('#editModal #oppDSRUrl').val('');
+            $('#editModal #oppOwner').val('');
+            $('#editModal #oppPartnerCustomerName').val('');
+            $('#editModal #oppAssignedSC').val('');
+            $('#editModal #sfData').val(null).trigger('change');
+
             $("#editModal #priority").val("");
             $("#editModal #bAcceptedRequest").val("");
             $("#editModal #status").val("");
@@ -927,8 +1060,30 @@
             $("#editModal #requesterPhoneNumber").val(request.requesterPhoneNumber);
             $("#editModal #datepicker").datepicker('update', new Date(request.needCompletedBy));
             $("#editModal #description").val(request.description);
-            $("#editModal #partnerCustomerName").val(request.partnerCustomerName);
-            $("#editModal #salesforceAccountOpportunity").val(request.salesforceAccountOpportunity);
+            // $("#editModal #partnerCustomerName").val(request.partnerCustomerName);
+            // $("#editModal #salesforceAccountOpportunity").val(request.salesforceAccountOpportunity);
+
+            // SF Related Data
+            $('#editModal #oppDSRUrl').val(request.oppDSRUrl);
+
+            if (request.salesforceAccountOpportunity)
+                $('#editModal #oppUrl').val(request.salesforceAccountOpportunity);
+            else
+                $('#editModal #oppUrl').val(request.oppUrl);
+
+            if (request.partnerCustomerName && request.partnerCustomerName.toLowerCase() !== 'n/a')
+                $('#editModal #oppPartnerCustomerName').val(request.partnerCustomerName);
+            else
+                $('#editModal #oppPartnerCustomerName').val(request.oppPartnerCustomerName);
+
+            $('#editModal #oppDSRUrl').val(request.oppDSRUrl);
+            $('#editModal #oppOwner').val(request.oppOwner);
+            $('#editModal #oppAssignedSC').val(request.oppAssignedSC);
+
+            var $newOption = $("<option selected='selected'></option>").val("0").text(request.oppName)
+            $("#editModal #sfData").append($newOption).trigger('change');
+
+
             $("#editModal #priority").val(request.priority);
             $("#editModal #bAcceptedRequest").val(request.acceptedRejected);
             $("#editModal #status").val(request.status);
@@ -954,6 +1109,13 @@
                 $("#btnRestore").attr("hidden", true);
                 $("#createdDate").attr("disabled", true);
                 $("#updatedDate").attr("disabled", true);
+
+                $('#editModal #oppUrl').attr("disabled", true);
+                $('#editModal #oppPartnerCustomerName').attr("disabled", true);
+                $('#editModal #oppDSRUrl').attr("disabled", true);
+                $('#editModal #oppOwner').attr("disabled", true);
+                $('#editModal #oppAssignedSC').attr("disabled", true);
+
             }
 
             if (request.acceptedRejected == "Accepted") {
@@ -1219,11 +1381,22 @@
                     dateClosed = moment().utc().format();
                 }
 
-                console.log(`Region: ${region}, subRegion: ${subRegion}, Product: ${product}, Segment: ${segment}, tasks: ${JSON.stringify(tasks)}, Requester Name: ${requesterName}, Requester Email: ${requesterEmail}, Requester Phone Number: ${requesterPhoneNumber}, Need Completed By: ${needCompletedBy}, Description: ${description}, Partner or Customer Name: ${partnerCustomerName}, Salesforce Opportunity: ${salesforceAccountOpportunity}`);
+
+                // SF Related Data
+
+                let oppUrl = $('#editModal #oppUrl').val();
+                let oppDSRUrl = $('#editModal #oppDSRUrl').val();
+                let oppOwner = $('#editModal #oppOwner').val();
+                let oppPartnerCustomerName = $('#editModal #oppPartnerCustomerName').val();
+                let oppAssignedSC = $('#editModal #oppAssignedSC').val();
+                let oppName = $('#editModal #sfData').select2('data').length > 0 && $('#editModal #sfData').select2('data')[0].text ? $('#editModal #sfData').select2('data')[0].text : undefined;
+
+
+                console.log(`Region: ${region}, subRegion: ${subRegion}, Product: ${product}, Segment: ${segment}, tasks: ${JSON.stringify(tasks)}, Requester Name: ${requesterName}, Requester Email: ${requesterEmail}, Requester Phone Number: ${requesterPhoneNumber}, Need Completed By: ${needCompletedBy}, Description: ${description}`);
                 console.log(`Priority: ${priority}, Accepted/Rejected: ${acceptedRejected}, Status: ${status}, Program Manager: ${programManager}, AcceptedRejectedNotes: ${acceptedRejectedNotes}, teamMembers: ${teamMembers}`);
                 console.log(`dateAccepted: ${dateAccepted}, dateRejected: ${dateRejected}, dateClosed: ${dateClosed}`);
 
-                await putRequest(id, region, subRegion, segment, product, tasks, requesterName, requesterEmail, requesterPhoneNumber, needCompletedBy, description, partnerCustomerName, salesforceAccountOpportunity, priority, acceptedRejected, status, programManager, acceptedRejectedNotes, teamMembers, gcToken, undefined, customerRelationship, customerType, dateAccepted, dateRejected, dateClosed);
+                await putRequest(id, region, subRegion, segment, product, tasks, requesterName, requesterEmail, requesterPhoneNumber, needCompletedBy, description, oppName, oppUrl, oppDSRUrl, oppOwner, oppPartnerCustomerName, oppAssignedSC, priority, acceptedRejected, status, programManager, acceptedRejectedNotes, teamMembers, gcToken, undefined, customerRelationship, customerType, dateAccepted, dateRejected, dateClosed);
                 console.log('Success!');
                 showMessage("Request updated. Thanks!");
                 $("#editModal").modal("hide");

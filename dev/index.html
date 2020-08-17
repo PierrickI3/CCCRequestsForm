@@ -723,10 +723,11 @@
         let oppOwner = $('#oppOwner').val();
         let oppPartnerCustomerName = $('#oppPartnerCustomerName').val();
         let oppAssignedSC = $('#oppAssignedSC').val();
+        let oppName = $('#sfData').select2('data').length > 0 && $('#sfData').select2('data')[0].text ? $('#sfData').select2('data')[0].text : undefined;
 
         console.log(`Region: ${region}, subRegion: ${subRegion}, Product: ${product}, Tasks: ${JSON.stringify(tasks)}, Requester Name: ${requesterName}, Requester Email: ${requesterEmail}, Requester Phone Number: ${requesterPhoneNumber}, Need Completed By: ${needCompletedBy}, Description: ${description}`);
 
-        await postRequests(region, subRegion, segment, product, tasks, requesterName, requesterEmail, requesterPhoneNumber, needCompletedBy, description, oppUrl, oppDSRUrl, oppOwner, oppPartnerCustomerName, oppAssignedSC, gcToken, customerRelationship, customerType);
+        await postRequests(region, subRegion, segment, product, tasks, requesterName, requesterEmail, requesterPhoneNumber, needCompletedBy, description, oppName, oppUrl, oppDSRUrl, oppOwner, oppPartnerCustomerName, oppAssignedSC, gcToken, customerRelationship, customerType);
         console.log('Success!');
         showMessage('Request submitted. Thanks!');
 
