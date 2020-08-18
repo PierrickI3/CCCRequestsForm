@@ -396,3 +396,24 @@ async function getOpportunityDSR(_token, _id) {
       console.log("getRequests completed");
     });
 }
+
+function filterExpand() {
+  $('#filter-sidebar-button-expand').hide();
+  $('#filter-sidebar-button-collapse').show();
+  $('#filter-sidebar-addon').show();
+  $('#filter-sidebar').removeClass('filter-sidebar-collapsed');
+  $('#filter-sidebar').addClass('filter-sidebar-expanded');  
+}
+ 
+function filterCollapse() {
+  $('#filter-sidebar-button-expand').show();
+  $('#filter-sidebar-button-collapse').hide();  
+  $('#filter-sidebar-addon').hide();
+  $('#filter-sidebar').removeClass('filter-sidebar-expanded');
+  $('#filter-sidebar').addClass('filter-sidebar-collapsed');
+}
+
+function filterHandleOnMessageEvent(event) {
+  console.log('filterHandleOnMessageEvent() ', event);
+  // todo: Apply filters
+}

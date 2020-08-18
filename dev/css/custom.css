@@ -158,3 +158,28 @@
   border-bottom: 1px solid #ced4da !important;
   width: max-content;
 }
+
+.filter-sidebar-collapsed {
+  width: 65px;
+  overflow: hidden;
+  padding: 10px;
+}
+
+.filter-sidebar-expanded {
+  width: 300px;
+  overflow: hidden;
+  padding: 10px;
+}
+
+.filter-sidebar-button {
+  margin-bottom: 10px;
+  display: none;
+}
+
+.filter-sidebar-addon {
+  width: 100%;
+  min-height: 300px;
+  display: none;  
+  border: 1px solid gray;
+  border-radius: 8px;
+}
