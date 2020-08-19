@@ -403,6 +403,9 @@ function filterExpand() {
   $('#filter-sidebar-addon').show();
   $('#filter-sidebar').removeClass('filter-sidebar-collapsed');
   $('#filter-sidebar').addClass('filter-sidebar-expanded');  
+  $('#filter-sidebar-addon').addClass('animate__animated');
+  $('#filter-sidebar-addon').addClass('animate__faster');  
+  $('#filter-sidebar-addon').addClass('animate__slideInRight');      
 }
  
 function filterCollapse() {
@@ -411,6 +414,9 @@ function filterCollapse() {
   $('#filter-sidebar-addon').hide();
   $('#filter-sidebar').removeClass('filter-sidebar-expanded');
   $('#filter-sidebar').addClass('filter-sidebar-collapsed');
+  $('#filter-sidebar-addon').removeClass('animate__animated');
+  $('#filter-sidebar-addon').removeClass('animate__faster');  
+  $('#filter-sidebar-addon').removeClass('animate__slideInRight');  
 }
 
 function filterHandleOnMessageEvent(event) {
