@@ -1,15 +1,11 @@
 let apiBasePath;
 const maintenanceMode = false; // Set to true to disable all controls
 
-if (window.location.href.includes('localhost'))
-  apiBasePath = "http://localhost:3000"
-else
-  apiBasePath = "https://drbojb15ma.execute-api.eu-central-1.amazonaws.com/dev";
-
+if (window.location.href.includes("localhost")) apiBasePath = "http://localhost:3000";
+else apiBasePath = "https://drbojb15ma.execute-api.eu-central-1.amazonaws.com/dev";
 
 async function postRequests(region, subRegion, segment, product, tasks, requesterName, requesterEmail, requesterPhoneNumber, needCompletedBy, description, oppName, oppUrl, oppDSRUrl, oppOwner, oppPartnerCustomerName, oppAssignedSC, _token, customerRelationship, customerType) {
-
-  console.log('Mail Distribution:', mailDistribution[product][$("#region").val()]);
+  console.log("Mail Distribution:", mailDistribution[product][$("#region").val()]);
   var data = {
     region: region,
     subRegion: subRegion,
@@ -24,13 +20,13 @@ async function postRequests(region, subRegion, segment, product, tasks, requeste
     status: "Open",
     isDeleted: false,
     mailDistribution: mailDistribution[product][$("#region").val()],
-    token: _token
+    token: _token,
   };
 
   // override Test objects
-  if (window.location.href.includes('localhost')) {
+  if (window.location.href.includes("localhost")) {
     data.mailDistribution = requesterEmail;
-    data.isTest = true
+    data.isTest = true;
   }
 
   //#region Optional fields
@@ -44,35 +40,35 @@ async function postRequests(region, subRegion, segment, product, tasks, requeste
   // }
 
   if (customerRelationship.length > 0) {
-    data.customerRelationship = customerRelationship
+    data.customerRelationship = customerRelationship;
   }
 
   if (customerType.length > 0) {
-    data.customerType = customerType
+    data.customerType = customerType;
   }
 
   if (oppName.length > 0) {
-    data.oppName = oppName
+    data.oppName = oppName;
   }
 
   if (oppUrl.length > 0) {
-    data.oppUrl = oppUrl
+    data.oppUrl = oppUrl;
   }
 
   if (oppDSRUrl.length > 0) {
-    data.oppDSRUrl = oppDSRUrl
+    data.oppDSRUrl = oppDSRUrl;
   }
 
   if (oppOwner.length > 0) {
-    data.oppOwner = oppOwner
+    data.oppOwner = oppOwner;
   }
 
   if (oppPartnerCustomerName.length > 0) {
-    data.oppPartnerCustomerName = oppPartnerCustomerName
+    data.oppPartnerCustomerName = oppPartnerCustomerName;
   }
 
   if (oppAssignedSC.length > 0) {
-    data.oppAssignedSC = oppAssignedSC
+    data.oppAssignedSC = oppAssignedSC;
   }
 
   //#endregion
@@ -80,9 +76,9 @@ async function postRequests(region, subRegion, segment, product, tasks, requeste
   return await $.ajax({
     url: `${apiBasePath}/requests`,
     method: "POST",
-    contentType: 'application/json',
+    contentType: "application/json",
     dataType: "json",
-    data: JSON.stringify(data)
+    data: JSON.stringify(data),
   })
     .done((data, textStatus, jqXHR) => {
       try {
@@ -104,8 +100,6 @@ async function postRequests(region, subRegion, segment, product, tasks, requeste
 }
 
 async function putRequest(id, region, subRegion, segment, product, tasks, requesterName, requesterEmail, requesterPhoneNumber, needCompletedBy, description, oppName, oppUrl, oppDSRUrl, oppOwner, oppPartnerCustomerName, oppAssignedSC, priority, acceptedRejected, status, programManager, acceptedRejectedNotes, teamMembers, _token, isDeleted, customerRelationship, customerType, dateAccepted, dateRejected, dateClosed) {
-
-
   if (!isDeleted) isDeleted = false;
   if (!acceptedRejected) acceptedRejected = "not handled";
 
@@ -128,7 +122,7 @@ async function putRequest(id, region, subRegion, segment, product, tasks, reques
     dateClosed: dateClosed ? dateClosed : undefined,
     isDeleted: isDeleted,
     mailDistribution: mailDistribution[product][$("#editModal #region").val()],
-    token: _token
+    token: _token,
   };
 
   //#region Optional fields
@@ -154,7 +148,7 @@ async function putRequest(id, region, subRegion, segment, product, tasks, reques
   // }
 
   if (priority && priority.length > 0) {
-    data.priority = priority
+    data.priority = priority;
   }
 
   if (customerRelationship && customerRelationship.length > 0) {
@@ -165,29 +159,28 @@ async function putRequest(id, region, subRegion, segment, product, tasks, reques
     data.customerType = customerType;
   }
 
-
   if (oppName.length > 0) {
-    data.oppName = oppName
+    data.oppName = oppName;
   }
 
   if (oppUrl.length > 0) {
-    data.oppUrl = oppUrl
+    data.oppUrl = oppUrl;
   }
 
   if (oppDSRUrl.length > 0) {
-    data.oppDSRUrl = oppDSRUrl
+    data.oppDSRUrl = oppDSRUrl;
   }
 
   if (oppOwner.length > 0) {
-    data.oppOwner = oppOwner
+    data.oppOwner = oppOwner;
   }
 
   if (oppPartnerCustomerName.length > 0) {
-    data.oppPartnerCustomerName = oppPartnerCustomerName
+    data.oppPartnerCustomerName = oppPartnerCustomerName;
   }
 
   if (oppAssignedSC.length > 0) {
-    data.oppAssignedSC = oppAssignedSC
+    data.oppAssignedSC = oppAssignedSC;
   }
 
   //#endregion
@@ -195,9 +188,9 @@ async function putRequest(id, region, subRegion, segment, product, tasks, reques
   return await $.ajax({
     url: `${apiBasePath}/requests/${id}`,
     method: "PUT",
-    contentType: 'application/json',
+    contentType: "application/json",
     dataType: "json",
-    data: JSON.stringify(data)
+    data: JSON.stringify(data),
   })
     .done((data, textStatus, jqXHR) => {
       try {
@@ -219,24 +212,20 @@ async function putRequest(id, region, subRegion, segment, product, tasks, reques
 }
 
 async function getRequests(region = "", _token) {
-
   let onlyClosed = "";
   let onlyDeleted = "";
 
-  if ($('#btnOnlyClosed')[0].classList.contains('btn-success'))
-    onlyClosed = "&onlyClosed=true";
+  if ($("#btnOnlyClosed")[0].classList.contains("btn-success")) onlyClosed = "&onlyClosed=true";
 
-  if ($('#btnOnlyDeleted')[0].classList.contains('btn-success'))
-    onlyDeleted = "&onlyDeleted=true";
+  if ($("#btnOnlyDeleted")[0].classList.contains("btn-success")) onlyDeleted = "&onlyDeleted=true";
 
-  if (region == "super-user")
-    region = "ALL";
+  if (region == "super-user") region = "ALL";
 
   return await $.ajax({
     url: `${apiBasePath}/requests?region=${region}${onlyClosed}${onlyDeleted}&token=${_token}`,
     method: "GET",
-    contentType: 'application/json',
-    dataType: "json"
+    contentType: "application/json",
+    dataType: "json",
   })
     .done((data, textStatus, jqXHR) => {
       try {
@@ -258,20 +247,19 @@ async function getRequests(region = "", _token) {
 }
 
 async function deleteRequest(requestId, _token) {
-
-  console.log('Deleting request:', requestId);
+  console.log("Deleting request:", requestId);
 
   let data = {
-    "isDeleted": true,
-    "token": _token
-  }
+    isDeleted: true,
+    token: _token,
+  };
 
   return await $.ajax({
     url: `${apiBasePath}/requests/${requestId}`,
     method: "PATCH",
-    contentType: 'application/json',
+    contentType: "application/json",
     dataType: "json",
-    data: JSON.stringify(data)
+    data: JSON.stringify(data),
   })
     .done((data, textStatus, jqXHR) => {
       try {
@@ -293,12 +281,11 @@ async function deleteRequest(requestId, _token) {
 }
 
 async function getDashboard(_token, _start, _end) {
-
   return await $.ajax({
     url: `${apiBasePath}/dashboard?token=${_token}&start=${_start}&end=${_end}`,
     method: "GET",
-    contentType: 'application/json',
-    dataType: "json"
+    contentType: "application/json",
+    dataType: "json",
   })
     .done((data, textStatus, jqXHR) => {
       try {
@@ -320,22 +307,14 @@ async function getDashboard(_token, _start, _end) {
 }
 
 async function getExport(_region, _subRegion, _product, _segment, _token, _start, _end) {
-
   var sFilter = "";
 
-  if (_region)
-    sFilter = sFilter + `region=${_region}&`;
-  if (_product)
-    sFilter = sFilter + `product=${_product}&`;
-  if (_segment)
-    sFilter = sFilter + `segment=${_segment}&`;
-  if (_subRegion)
-    sFilter = sFilter + `subRegion=${_subRegion}&`;
-  if ($('#customerRelationship').val() !== "")
-    sFilter = sFilter + `customerRelationship=${$('#customerRelationship').val()}&`;
-  if ($('#customerType').val() !== "")
-    sFilter = sFilter + `customerType=${$('#customerType').val()}&`;
-
+  if (_region) sFilter = sFilter + `region=${_region}&`;
+  if (_product) sFilter = sFilter + `product=${_product}&`;
+  if (_segment) sFilter = sFilter + `segment=${_segment}&`;
+  if (_subRegion) sFilter = sFilter + `subRegion=${_subRegion}&`;
+  if ($("#customerRelationship").val() !== "") sFilter = sFilter + `customerRelationship=${$("#customerRelationship").val()}&`;
+  if ($("#customerType").val() !== "") sFilter = sFilter + `customerType=${$("#customerType").val()}&`;
 
   // remove last char
   /*
@@ -348,8 +327,8 @@ async function getExport(_region, _subRegion, _product, _segment, _token, _start
   return await $.ajax({
     url: `${apiBasePath}/export?${sFilter}token=${_token}&start=${_start}&end=${_end}`,
     method: "GET",
-    contentType: 'application/json',
-    dataType: "json"
+    contentType: "application/json",
+    dataType: "json",
   })
     .done((data, textStatus, jqXHR) => {
       try {
@@ -371,12 +350,11 @@ async function getExport(_region, _subRegion, _product, _segment, _token, _start
 }
 
 async function getOpportunityDSR(_token, _id) {
-
   return await $.ajax({
     url: `${apiBasePath}/sf/opportunities/${_id}/dsr?token=${_token}`,
     method: "GET",
-    contentType: 'application/json',
-    dataType: "json"
+    contentType: "application/json",
+    dataType: "json",
   })
     .done((data, textStatus, jqXHR) => {
       try {
@@ -398,40 +376,37 @@ async function getOpportunityDSR(_token, _id) {
 }
 
 function filterExpand() {
-  $('#filter-sidebar-button-expand').hide();  
-  
-  $('#filter-sidebar').removeClass('filter-sidebar-collapsed');
-  $('#filter-sidebar').addClass('filter-sidebar-expanded');  
+  $("#filter-sidebar").removeClass("filter-sidebar-collapsed");
+  $("#filter-sidebar").addClass("filter-sidebar-expanded");
 
-  $('#filter-sidebar-addon').show();
-  $('#filter-sidebar-addon').addClass('animate__animated');
-  $('#filter-sidebar-addon').addClass('animate__faster');  
-  $('#filter-sidebar-addon').addClass('animate__slideInRight');     
-  
-  $('#filter-sidebar-button-collapse').show();
-  $('#filter-sidebar-button-collapse').addClass('animate__animated');
-  $('#filter-sidebar-button-collapse').addClass('animate__delay-1s');  
-  $('#filter-sidebar-button-collapse').addClass('animate__flipInX');
+  $("#filter-sidebar-addon").show();
+  $("#filter-sidebar-addon").addClass("animate__animated");
+  $("#filter-sidebar-addon").addClass("animate__faster");
+  $("#filter-sidebar-addon").addClass("animate__slideInRight");
+
+  setTimeout(function () {
+    $("#filter-sidebar-button-expand").hide();
+    $("#filter-sidebar-button-collapse").show();
+  }, 500);
 }
- 
+
 function filterCollapse() {
-  $('#filter-sidebar-button-expand').show();
-  
-  $('#filter-sidebar').removeClass('filter-sidebar-expanded');
-  $('#filter-sidebar').addClass('filter-sidebar-collapsed');
+  $("#filter-sidebar-addon").removeClass("animate__slideInRight");
+  $("#filter-sidebar-addon").addClass("animate__slideOutRight");
 
-  $('#filter-sidebar-addon').hide();
-  $('#filter-sidebar-addon').removeClass('animate__animated');
-  $('#filter-sidebar-addon').removeClass('animate__faster');  
-  $('#filter-sidebar-addon').removeClass('animate__slideInRight');  
+  setTimeout(function () {
+    $("#filter-sidebar-addon").removeClass("animate__slideOutRight");
 
-  $('#filter-sidebar-button-collapse').hide();  
-  $('#filter-sidebar-button-collapse').removeClass('animate__animated');
-  $('#filter-sidebar-button-collapse').removeClass('animate__delay-1s');  
-  $('#filter-sidebar-button-collapse').addClass('animate__flipInX');
+    $("#filter-sidebar").removeClass("filter-sidebar-expanded");
+    $("#filter-sidebar").addClass("filter-sidebar-collapsed");
+
+    $("#filter-sidebar-button-expand").show();
+    $("#filter-sidebar-button-collapse").hide();
+    $("#filter-sidebar-addon").hide();
+  }, 500);
 }
 
 function filterHandleOnMessageEvent(event) {
-  console.log('filterHandleOnMessageEvent() ', event);
+  console.log("filterHandleOnMessageEvent() ", event);
   // todo: Apply filters
 }

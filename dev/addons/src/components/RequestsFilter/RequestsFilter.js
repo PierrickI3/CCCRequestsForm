@@ -187,13 +187,13 @@ export default function RequestsFilter() {
             }}
           />
           <FormGroup inline>
-            <Button outline color="primary" className="ml-2" onClick={handleLoadOkBtn} disabled={!loadFilterSelectedItem}>
+            <Button outline size="sm" color="primary" className="ml-2" onClick={handleLoadOkBtn} disabled={!loadFilterSelectedItem}>
               <IoMdOpen /> Load
             </Button>
-            <Button outline color="danger" className="ml-2" onClick={handleLoadDeleteBtn} disabled={!loadFilterSelectedItem}>
+            <Button outline size="sm" color="danger" className="ml-2" onClick={handleLoadDeleteBtn} disabled={!loadFilterSelectedItem}>
               <IoMdRemoveCircleOutline /> Delete
             </Button>
-            <Button outline color="secondary" className="ml-2" onClick={handleLoadCancelBtn}>
+            <Button outline size="sm" color="secondary" className="ml-2" onClick={handleLoadCancelBtn}>
               <IoMdClose /> Cancel
             </Button>
           </FormGroup>
@@ -208,10 +208,10 @@ export default function RequestsFilter() {
           <Input type="text" className="form-control" placeholder="Enter a name" value={saveFilterName} onChange={handleSaveFilterNameChanged} />
           {saveFilterName && !saveFilterNameValid(saveFilterName) && <span style={{ color: "red", fontWeight: "600" }}>Please enter a valid and unique value</span>}
           <FormGroup className="mt-3" inline>
-            <Button outline color="primary" className="ml-2" onClick={handleSaveOkBtn} disabled={!saveFilterNameValid(saveFilterName)}>
+            <Button outline size="sm" color="primary" className="ml-2" onClick={handleSaveOkBtn} disabled={!saveFilterNameValid(saveFilterName)}>
               <IoMdCheckmark /> Save
             </Button>
-            <Button outline color="secondary" className="ml-2" onClick={handleSaveCancelBtn}>
+            <Button outline size="sm" color="secondary" className="ml-2" onClick={handleSaveCancelBtn}>
               <IoMdClose /> Cancel
             </Button>
           </FormGroup>
@@ -238,7 +238,7 @@ export default function RequestsFilter() {
             />
           </div>
           <div className="mb-3">
-            <Button onClick={handleApplyFilters}>
+            <Button outline onClick={handleApplyFilters}>
               <IoMdFlash /> Execute query
             </Button>
           </div>

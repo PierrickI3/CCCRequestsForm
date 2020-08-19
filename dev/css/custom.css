@@ -42,7 +42,7 @@
 }
 
 .video-play-button:before {
-  content: '';
+  content: "";
   position: absolute;
   z-index: 0;
   left: 50%;
@@ -57,7 +57,7 @@
 }
 
 .video-play-button:after {
-  content: '';
+  content: "";
   position: absolute;
   z-index: 1;
   left: 50%;
@@ -160,7 +160,7 @@
 }
 
 .filter-sidebar-collapsed {
-  width: 50px;
+  width: 55px;
   overflow: hidden;
   padding: 10px;
 }
@@ -179,7 +179,11 @@
 .filter-sidebar-addon {
   width: 100%;
   min-height: 300px;
-  display: none;  
+  display: none;
   border: 1px solid #dddddd;
   border-radius: 5px;
+}
+
+.right {
+  text-align: right;
 }
