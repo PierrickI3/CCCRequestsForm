@@ -160,7 +160,7 @@
 }
 
 .filter-sidebar-collapsed {
-  width: 60px;
+  width: 50px;
   overflow: hidden;
   padding: 10px;
 }
@@ -180,6 +180,6 @@
   width: 100%;
   min-height: 300px;
   display: none;  
-  border: 1px solid gray;
-  border-radius: 8px;
+  border: 1px solid #dddddd;
+  border-radius: 5px;
 }

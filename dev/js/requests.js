@@ -398,25 +398,37 @@ async function getOpportunityDSR(_token, _id) {
 }
 
 function filterExpand() {
-  $('#filter-sidebar-button-expand').hide();
-  $('#filter-sidebar-button-collapse').show();
-  $('#filter-sidebar-addon').show();
+  $('#filter-sidebar-button-expand').hide();  
+  
   $('#filter-sidebar').removeClass('filter-sidebar-collapsed');
   $('#filter-sidebar').addClass('filter-sidebar-expanded');  
+
+  $('#filter-sidebar-addon').show();
   $('#filter-sidebar-addon').addClass('animate__animated');
   $('#filter-sidebar-addon').addClass('animate__faster');  
-  $('#filter-sidebar-addon').addClass('animate__slideInRight');      
+  $('#filter-sidebar-addon').addClass('animate__slideInRight');     
+  
+  $('#filter-sidebar-button-collapse').show();
+  $('#filter-sidebar-button-collapse').addClass('animate__animated');
+  $('#filter-sidebar-button-collapse').addClass('animate__delay-1s');  
+  $('#filter-sidebar-button-collapse').addClass('animate__flipInX');
 }
  
 function filterCollapse() {
   $('#filter-sidebar-button-expand').show();
-  $('#filter-sidebar-button-collapse').hide();  
-  $('#filter-sidebar-addon').hide();
+  
   $('#filter-sidebar').removeClass('filter-sidebar-expanded');
   $('#filter-sidebar').addClass('filter-sidebar-collapsed');
+
+  $('#filter-sidebar-addon').hide();
   $('#filter-sidebar-addon').removeClass('animate__animated');
   $('#filter-sidebar-addon').removeClass('animate__faster');  
   $('#filter-sidebar-addon').removeClass('animate__slideInRight');  
+
+  $('#filter-sidebar-button-collapse').hide();  
+  $('#filter-sidebar-button-collapse').removeClass('animate__animated');
+  $('#filter-sidebar-button-collapse').removeClass('animate__delay-1s');  
+  $('#filter-sidebar-button-collapse').addClass('animate__flipInX');
 }
 
 function filterHandleOnMessageEvent(event) {
