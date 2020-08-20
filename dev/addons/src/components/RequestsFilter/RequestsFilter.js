@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Navbar, Nav, Button, Dropdown, DropdownToggle, DropdownMenu, DropdownItem, Label, Form, FormGroup, Input } from "reactstrap";
 import { raiseEvent } from "../../services/iFrameEvents";
-import { IoIosMenu, IoMdSave, IoIosFolderOpen, IoMdFlash, IoMdCheckmark, IoMdClose, IoMdRemoveCircleOutline, IoMdOpen } from "react-icons/io";
+import { IoIosMenu, IoMdSave, IoIosFolderOpen, IoMdFlash, IoMdCheckmark, IoMdClose, IoMdRemoveCircleOutline, IoMdOpen, IoIosBackspace } from "react-icons/io";
 import Select from "react-select";
 
 export default function RequestsFilter() {
@@ -12,15 +12,29 @@ export default function RequestsFilter() {
     { value: "Waiting On Additional Information", label: "Waiting On Additional Information" },
     { value: "Closed", label: "Closed" },
   ];
+
+  const handledValueList = [
+    { value: "Accepted", label: "Accepted" },
+    { value: "Rejected", label: "Rejected" },
+    { value: "Unhandled", label: "Unhandled" },
+  ];
+
+  const regionValueList = [
+    { value: "APAC", label: "APAC" },
+    { value: "EMEA", label: "EMEA" },
+    { value: "LATAM", label: "LATAM" },
+    { value: "NA", label: "NA" },
+  ];
   //#endregion
 
   //#region "state"
+  const clearFilterSet = { status: null, handled: null, region: null };
   const [menuOpen, setMenuOpen] = useState(false);
   const [formMode, setFormMode] = useState("edit"); // values: edit, save, load
   const [saveFilterName, setSaveFilterName] = useState("");
   const [loadFilterSelectedItem, setLoadFilterSelectedItem] = useState(null);
   const [loadFilterItemList, setLoadFilterItemList] = useState([]);
-  const [currentFilter, setCurrentFilter] = useState({ status: null });
+  const [currentFilter, setCurrentFilter] = useState(clearFilterSet);
   //#endregion
 
   //#region "controls handlers"
@@ -40,6 +54,11 @@ export default function RequestsFilter() {
   const handleMenuOptionSave = () => {
     console.log("handleMenuOptionSave()");
     setFormMode("save");
+  };
+
+  const handleMenuOptionClear = () => {
+    console.log("handleMenuOptionClear()");
+    setCurrentFilter(clearFilterSet);
   };
 
   const handleSaveOkBtn = () => {
@@ -165,6 +184,10 @@ export default function RequestsFilter() {
               <DropdownItem onClick={handleMenuOptionSave}>
                 <IoMdSave /> Save filter as...
               </DropdownItem>
+              <DropdownItem divider />
+              <DropdownItem onClick={handleMenuOptionClear}>
+                <IoIosBackspace /> Clear filter
+              </DropdownItem>
             </DropdownMenu>
           </Dropdown>
         </Nav>
@@ -238,8 +261,38 @@ export default function RequestsFilter() {
             />
           </div>
           <div className="mb-3">
+            Handled
+            <Select
+              options={handledValueList}
+              isMulti={true}
+              isSearchable={true}
+              value={currentFilter.handled}
+              onChange={(v) => {
+                console.log(v);
+                let cf = { ...currentFilter };
+                cf.handled = v;
+                setCurrentFilter(cf);
+              }}
+            />
+          </div>
+          <div className="mb-3">
+            Region
+            <Select
+              options={regionValueList}
+              isMulti={true}
+              isSearchable={true}
+              value={currentFilter.region}
+              onChange={(v) => {
+                console.log(v);
+                let cf = { ...currentFilter };
+                cf.region = v;
+                setCurrentFilter(cf);
+              }}
+            />
+          </div>
+          <div className="mb-3">
             <Button outline onClick={handleApplyFilters}>
-              <IoMdFlash /> Execute query
+              <IoMdFlash /> Apply filter
             </Button>
           </div>
         </div>

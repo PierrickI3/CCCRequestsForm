@@ -178,7 +178,7 @@
 
 .filter-sidebar-addon {
   width: 100%;
-  min-height: 300px;
+  min-height: 90%;
   display: none;
   border: 1px solid #dddddd;
   border-radius: 5px;
