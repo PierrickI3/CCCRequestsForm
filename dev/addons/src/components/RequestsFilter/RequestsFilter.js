@@ -5,6 +5,7 @@ import { IoIosMenu, IoMdSave, IoIosFolderOpen, IoMdFlash, IoMdCheckmark, IoMdClo
 import Select from "react-select";
 import queryString from "query-string";
 import { regionList } from "../../services/dictionary";
+import UsersSelect from "../UsersSelect/UsersSelect";
 
 export default function RequestsFilter(props) {
   //#region "value lists"
@@ -395,6 +396,11 @@ export default function RequestsFilter(props) {
                 setCurrentFilter(cf);
               }}
             />
+          </div>
+
+          <div className="mb-3">
+            Requester name
+            <UsersSelect token={query && query.token ? query.token : null} />
           </div>
 
           <div className="mb-3">

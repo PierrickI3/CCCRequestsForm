@@ -352,7 +352,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-toast-plugin/1.3.2/jquery.toast.min.js"></script>
     <!-- Bootbox -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/5.4.0/bootbox.min.js"></script>
-    <!-- Our Scripts -->
+    <!-- Our Scripts -->    
     <script src="js/requests.js"></script>
     <script src="js/tools.js"></script>
     <!-- Dictionary -->
@@ -386,7 +386,7 @@
             // </collapse filter sidebar>
 
             // <load filter page into iFrame            
-            const filterLocation = `addons/build/\#/requestsfilter?region=${region}`;
+            const filterLocation = `addons/build/\#/requestsfilter?region=${region}&token=${gcToken}`;
             console.log('filterLocation: ', filterLocation);
             $("#filter-sidebar-addon").attr("src", filterLocation);
             // </load filter page into iFrame>
