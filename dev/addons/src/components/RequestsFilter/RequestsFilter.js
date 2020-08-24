@@ -27,6 +27,12 @@ export default function RequestsFilter(props) {
     { value: "LATAM", label: "LATAM" },
     { value: "NA", label: "NA" },
   ];
+
+  const marketSegmentValueList = [
+    { value: "Mid-market", label: "Mid-market" },
+    { value: "Commercial", label: "Commercial" },
+    { value: "Enterprise", label: "Enterprise" },
+  ];
   //#endregion
 
   //#region "state"
@@ -323,6 +329,7 @@ export default function RequestsFilter(props) {
               }}
             />
           </div>
+
           <div className="mb-3">
             Handled
             <Select
@@ -338,6 +345,7 @@ export default function RequestsFilter(props) {
               }}
             />
           </div>
+
           <div className="mb-3">
             Region
             <Select
@@ -368,6 +376,22 @@ export default function RequestsFilter(props) {
                 console.log(v);
                 let cf = { ...currentFilter };
                 cf.subRegion = v;
+                setCurrentFilter(cf);
+              }}
+            />
+          </div>
+
+          <div className="mb-3">
+            Market segment
+            <Select
+              options={marketSegmentValueList}
+              isMulti={true}
+              isSearchable={true}
+              value={currentFilter.segment}
+              onChange={(v) => {
+                console.log(v);
+                let cf = { ...currentFilter };
+                cf.segment = v;
                 setCurrentFilter(cf);
               }}
             />
