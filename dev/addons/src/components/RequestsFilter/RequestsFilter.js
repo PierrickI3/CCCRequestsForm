@@ -4,6 +4,7 @@ import { raiseEvent } from "../../services/iFrameEvents";
 import { IoIosMenu, IoMdSave, IoIosFolderOpen, IoMdFlash, IoMdCheckmark, IoMdClose, IoMdRemoveCircleOutline, IoMdOpen, IoIosBackspace } from "react-icons/io";
 import Select from "react-select";
 import queryString from "query-string";
+import { regionList } from "../../services/dictionary";
 
 export default function RequestsFilter(props) {
   //#region "value lists"
@@ -37,14 +38,30 @@ export default function RequestsFilter(props) {
   const [loadFilterSelectedItem, setLoadFilterSelectedItem] = useState(null);
   const [loadFilterItemList, setLoadFilterItemList] = useState([]);
   const [currentFilter, setCurrentFilter] = useState(clearFilterSet);
+  const [regionFixed, setRegionFixed] = useState(false);
+  const [subregionValueList, setSubregionValueList] = useState([]);
   //#endregion
 
   //#region "initialization"
 
   useEffect(() => {
+    // <parse query string>
     const parsedQueryString = queryString.parse(props.location.search);
     console.log("parsedQueryString", parsedQueryString);
     setQuery(parsedQueryString);
+    // </parse query string>
+
+    // <intialize filter>
+    if (parsedQueryString && parsedQueryString.region && parsedQueryString.region.toLowerCase() !== "super-user") {
+      console.log("region will be set to: ", parsedQueryString.region);
+      let cf = { ...currentFilter };
+      cf.region = [{ value: parsedQueryString.region, label: parsedQueryString.region }];
+      setCurrentFilter(cf);
+      setRegionFixed(true);
+      applySubRegionList(cf.region);
+    }
+    // </intialize filter>
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   //#endregion
@@ -177,6 +194,40 @@ export default function RequestsFilter(props) {
     setLoadFilterSelectedItem(null);
   };
 
+  const applySubRegionList = (region) => {
+    console.log("applySubRegionList()");
+    if (!Array.isArray(region) || region.length === 0) {
+      setSubregionValueList([]);
+      return;
+    }
+    let result = [];
+    for (const item of region) {
+      const subregionList = regionList[item.value];
+      if (Array.isArray(subregionList)) {
+        for (const subregion of subregionList) {
+          result.push({ value: `${item.value}/${subregion}`, label: `${item.value}/${subregion}` });
+        }
+      }
+    }
+    setSubregionValueList(result);
+  };
+
+  const removeSelectedSubregionsForNotSelectedRegions = (region, subRegion) => {
+    console.log("removeSelectedSubregionsForNotSelectedRegions()");
+
+    let result = [];
+    if (!Array.isArray(region)) return [];
+    if (!Array.isArray(subRegion)) return [];
+    for (const item of region) {
+      for (const item1 of subRegion) {
+        if (item1.value.startsWith(item.value)) {
+          result.push(item1);
+        }
+      }
+    }
+    return result;
+  };
+
   //#endregion
 
   return (
@@ -290,6 +341,7 @@ export default function RequestsFilter(props) {
           <div className="mb-3">
             Region
             <Select
+              isDisabled={regionFixed}
               options={regionValueList}
               isMulti={true}
               isSearchable={true}
@@ -298,10 +350,29 @@ export default function RequestsFilter(props) {
                 console.log(v);
                 let cf = { ...currentFilter };
                 cf.region = v;
+                cf.subRegion = removeSelectedSubregionsForNotSelectedRegions(cf.region, cf.subRegion);
+                setCurrentFilter(cf);
+                applySubRegionList(cf.region);
+              }}
+            />
+          </div>
+
+          <div className="mb-3">
+            Territory
+            <Select
+              options={subregionValueList}
+              isMulti={true}
+              isSearchable={true}
+              value={currentFilter.subRegion}
+              onChange={(v) => {
+                console.log(v);
+                let cf = { ...currentFilter };
+                cf.subRegion = v;
                 setCurrentFilter(cf);
               }}
             />
           </div>
+
           <div className="mb-3">
             <Button outline onClick={handleApplyFilters}>
               <IoMdFlash /> Apply filter
