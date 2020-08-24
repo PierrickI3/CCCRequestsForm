@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Navbar, Nav, Button, Dropdown, DropdownToggle, DropdownMenu, DropdownItem, Label, Form, FormGroup, Input } from "reactstrap";
 import { raiseEvent } from "../../services/iFrameEvents";
 import { IoIosMenu, IoMdSave, IoIosFolderOpen, IoMdFlash, IoMdCheckmark, IoMdClose, IoMdRemoveCircleOutline, IoMdOpen, IoIosBackspace } from "react-icons/io";
 import Select from "react-select";
+import queryString from "query-string";
 
-export default function RequestsFilter() {
+export default function RequestsFilter(props) {
   //#region "value lists"
   const statusValueList = [
     { value: "Open", label: "Open" },
@@ -29,12 +30,23 @@ export default function RequestsFilter() {
 
   //#region "state"
   const clearFilterSet = { status: null, handled: null, region: null };
+  const [query, setQuery] = useState(null);
   const [menuOpen, setMenuOpen] = useState(false);
   const [formMode, setFormMode] = useState("edit"); // values: edit, save, load
   const [saveFilterName, setSaveFilterName] = useState("");
   const [loadFilterSelectedItem, setLoadFilterSelectedItem] = useState(null);
   const [loadFilterItemList, setLoadFilterItemList] = useState([]);
   const [currentFilter, setCurrentFilter] = useState(clearFilterSet);
+  //#endregion
+
+  //#region "initialization"
+
+  useEffect(() => {
+    const parsedQueryString = queryString.parse(props.location.search);
+    console.log("parsedQueryString", parsedQueryString);
+    setQuery(parsedQueryString);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
   //#endregion
 
   //#region "controls handlers"

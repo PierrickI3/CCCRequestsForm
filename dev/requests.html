@@ -71,7 +71,7 @@
         <div id="filter-sidebar" class="filter-sidebar-collapsed right">
             <button id="filter-sidebar-button-expand" type="button" class="btn btn-secondary filter-sidebar-button" onclick="filterExpand()"><i class="fa fa-angle-double-left"></i></button>
             <button id="filter-sidebar-button-collapse" type="button" class="btn btn-secondary filter-sidebar-button" onclick="filterCollapse()"><i class="fa fa-angle-double-right"></i></button>
-            <iframe id="filter-sidebar-addon" class="filter-sidebar-addon" src="addons/build/#/requestsfilter"></iframe>
+            <iframe id="filter-sidebar-addon" class="filter-sidebar-addon"></iframe>
         </div>
     </div>
 
@@ -384,6 +384,12 @@
             // <collapse filter sidebar>
             filterCollapse();
             // </collapse filter sidebar>
+
+            // <load filter page into iFrame            
+            const filterLocation = `addons/build/\#/requestsfilter?region=${region}`;
+            console.log('filterLocation: ', filterLocation);
+            $("#filter-sidebar-addon").attr("src", filterLocation);
+            // </load filter page into iFrame>
 
             // <handle message event from filter iframe>
             window.addEventListener('message', function (event) {
