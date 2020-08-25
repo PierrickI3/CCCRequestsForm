@@ -10,6 +10,17 @@
 * Make all changes in `dev`
 * Test locally with Live Server (https)
 
+### REACT.JS
+
+Some page elements are created in REACT.JS, e.g. the filter configuration feature. They are stored in the _addons_ folder. In order to apply changes from the REACT.JS code to the main app you have to follow below steps:
+
+* Open a terminal window.
+* Navigate to: _/CCCRequestsForm/dev/addons/src_
+* _Yarn install_
+* _Yarn build_
+
+The REACT.JS part of the app will be built to the _/CCCRequestsForm/dev/addons/build_ folder and it is loaded from this location into the main app.
+
 ### Move changes to production
 
 * Commit and push all changes to the repository
