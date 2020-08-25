@@ -521,41 +521,53 @@
 
       if (userInfo.groups.some((g) => adminGroups['super'].includes(g))) {
         console.log('Show super admin stuff');
-        $('.admin').show();
-        $('.admin').removeAttr('hidden');
+        // $('.admin').show();
+        // $('.admin').removeAttr('hidden');
         $('#reviewRequestsButton').attr('href', 'requests.html?region=super-user');
+        $('#reviewRequestsButton').text('Review Requests');
         $('#regionBadge').text('super-user');
       } else if (userInfo.groups.some((g) => adminGroups['EMEA'].includes(g))) {
         console.log('Show admin stuff');
-        $('.admin').show();
-        $('.admin').removeAttr('hidden');
+        // $('.admin').show();
+        // $('.admin').removeAttr('hidden');
         $('#reviewRequestsButton').attr('href', 'requests.html?region=EMEA');
+        $('#reviewRequestsButton').text('Review Requests');
         $('#regionBadge').text('EMEA');
       } else if (userInfo.groups.some((g) => adminGroups['NA'].includes(g))) {
         console.log('Show admin stuff');
-        $('.admin').show();
-        $('.admin').removeAttr('hidden');
+        // $('.admin').show();
+        // $('.admin').removeAttr('hidden');
         $('#reviewRequestsButton').attr('href', 'requests.html?region=NA');
+        $('#reviewRequestsButton').text('Review Requests');
         $('#regionBadge').text('NA');
       } else if (userInfo.groups.some((g) => adminGroups['APAC'].includes(g))) {
         console.log('Show admin stuff');
-        $('.admin').show();
-        $('.admin').removeAttr('hidden');
+        // $('.admin').show();
+        // $('.admin').removeAttr('hidden');
         $('#reviewRequestsButton').attr('href', 'requests.html?region=APAC');
+        $('#reviewRequestsButton').text('Review Requests');
         $('#regionBadge').text('APAC');
       } else if (userInfo.groups.some((g) => adminGroups['LATAM'].includes(g))) {
         console.log('Show admin stuff');
-        $('.admin').show();
-        $('.admin').removeAttr('hidden');
+        // $('.admin').show();
+        // $('.admin').removeAttr('hidden');
         $('#reviewRequestsButton').attr('href', 'requests.html?region=LATAM');
+        $('#reviewRequestsButton').text('Review Requests');
         $('#regionBadge').text('LATAM');
       } else {
-        console.log('Hide admin stuff');
-        $('.admin').hide();
-        $('.admin').attr('hidden', true);
+        //console.log('Hide admin stuff');
+        //$('.admin').hide();
+        //$('.admin').attr('hidden', true);
+        // $('.admin').show();
+        // $('.admin').removeAttr('hidden');
+
         $('#regionBadge').text('');
-        $('#reviewRequestsButton').hide();
+        //$('#reviewRequestsButton').hide();
+        $('#reviewRequestsButton').attr('href', 'requests.html');
+        $('#reviewRequestsButton').text('My Requests');
       }
+      $('.admin').show();
+      $('.admin').removeAttr('hidden');
     }
 
     function addNewTask(task, includeDeleteButton = false) {

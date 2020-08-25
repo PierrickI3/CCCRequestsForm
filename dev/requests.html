@@ -19,7 +19,7 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/jquery-toast-plugin/1.3.2/jquery.toast.min.css" rel="stylesheet">
     <!-- Custom CSS -->
     <link rel="stylesheet" href="./css/custom.css">
-    <link rel="stylesheet" href="./css/animate.css">    
+    <link rel="stylesheet" href="./css/animate.css">
 </head>
 
 <body>
@@ -352,7 +352,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-toast-plugin/1.3.2/jquery.toast.min.js"></script>
     <!-- Bootbox -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/5.4.0/bootbox.min.js"></script>
-    <!-- Our Scripts -->    
+    <!-- Our Scripts -->
     <script src="js/requests.js"></script>
     <script src="js/tools.js"></script>
     <!-- Dictionary -->
@@ -731,7 +731,8 @@
                                 if (doNotReload) {
                                     console.log('Skipping requests reload');
                                 } else {
-                                    requests.requests = await getRequests(region, gcToken);
+                                    //requests.requests = await getRequests(region, gcToken);
+                                    requests.requests = await queryFilteredRequests({ "region": region }, gcToken)
                                 }
 
 
