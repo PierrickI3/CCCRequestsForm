@@ -302,11 +302,11 @@ export default function RequestsFilter(props) {
           )}
           {deleteFilterConfirm && (
             <FormGroup style={{ textAlign: "center" }} inline>
-              <Button outline size="sm" color="danger" className="ml-2" onClick={handleLoadDeleteConfirmBtn} disabled={!loadFilterSelectedItem}>
-                <IoMdRemoveCircleOutline /> Confirm delete
-              </Button>
               <Button outline size="sm" color="secondary" className="ml-2" onClick={handleLoadDeleteCancelBtn}>
                 <IoMdClose /> Cancel
+              </Button>
+              <Button outline size="sm" color="danger" className="ml-2" onClick={handleLoadDeleteConfirmBtn} disabled={!loadFilterSelectedItem}>
+                <IoMdRemoveCircleOutline /> Confirm delete
               </Button>
             </FormGroup>
           )}
