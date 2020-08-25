@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Navbar, Nav, Button, Dropdown, DropdownToggle, DropdownMenu, DropdownItem, Label, Form, FormGroup, Input } from "reactstrap";
 import { raiseEvent } from "../../services/iFrameEvents";
-import { IoIosMenu, IoMdSave, IoIosFolderOpen, IoMdFlash, IoMdCheckmark, IoMdClose, IoMdRemoveCircleOutline, IoMdOpen, IoIosBackspace } from "react-icons/io";
+import { IoIosMenu, IoMdSave, IoIosFolderOpen, IoMdFlash, IoMdCheckmark, IoMdClose, IoMdRemoveCircleOutline, IoMdOpen, IoIosBackspace, IoIosFunnel } from "react-icons/io";
 import Select from "react-select";
 import queryString from "query-string";
 import { regionList } from "../../services/dictionary";
@@ -241,7 +241,10 @@ export default function RequestsFilter(props) {
     <>
       {/* <Header> */}
       <Navbar color="light">
-        <span style={{ fontWeight: "600" }}>Filter configuration</span>
+        <span style={{ fontWeight: "600" }}>
+          <IoIosFunnel style={{ marginRight: "4px" }} />
+          Filter configuration
+        </span>
         <Nav className="ml-auto" navbar>
           <Dropdown isOpen={menuOpen} toggle={toggleMenuOpen}>
             <DropdownToggle caret>
@@ -443,7 +446,7 @@ export default function RequestsFilter(props) {
           <div className="mb-3">
             Customer name
             <Input
-              placeholder="Enter customer name"
+              placeholder="Enter a name"
               value={currentFilter.customerName || ""}
               onChange={(e) => {
                 console.log(e.target.value);
