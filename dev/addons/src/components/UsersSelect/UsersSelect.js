@@ -64,8 +64,9 @@ export default function UsersSelect(props) {
       />
       {focused && (
         <Input
-          className="user-select-dropdown"
           type="select"
+          className="user-select-dropdown"
+          style={{ height: "90px" }}
           multiple
           onClick={(x) => {
             console.log(x);
