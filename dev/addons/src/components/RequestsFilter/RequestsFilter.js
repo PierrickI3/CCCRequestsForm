@@ -78,7 +78,7 @@ export default function RequestsFilter(props) {
 
   const handleApplyFilters = () => {
     console.log("handleApplyFilters()");
-    raiseEvent("applyFilter", { prop1: "val1", prop2: "val2" });
+    raiseEvent("applyFilter", currentFilter);
   };
 
   const handleMenuOptionLoad = () => {
