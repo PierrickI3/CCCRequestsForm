@@ -246,6 +246,33 @@ async function getRequests(region = "", _token) {
     });
 }
 
+async function queryFilteredRequests(filter, _token) {
+  return await $.ajax({
+    url: `${apiBasePath}/requests/filtered/${_token}`,
+    method: "POST",
+    contentType: "application/json",
+    dataType: "json",
+    data: JSON.stringify(filter),
+  })
+    .done((data, textStatus, jqXHR) => {
+      try {
+        if (jqXHR.status === 200) {
+          console.log(jqXHR);
+          return data;
+        } else {
+          showMessage("Unexpected error: " + textStatus, true);
+          reject(textStatus);
+        }
+      } catch (error) {
+        console.error(error);
+        reject(error);
+      }
+    })
+    .always(() => {
+      console.log("queryFilteredRequests completed");
+    });
+}
+
 async function deleteRequest(requestId, _token) {
   console.log("Deleting request:", requestId);
 
@@ -406,7 +433,14 @@ function filterCollapse() {
   }, 500);
 }
 
-function filterHandleOnMessageEvent(event) {
+async function filterHandleOnMessageEvent(event) {
   console.log("filterHandleOnMessageEvent() ", event);
+  if (!event || !event.eventName || event.eventName !== "applyFilter" || !event.customData) {
+    return;
+  }
   // todo: Apply filters
+  console.log(">>> Filtered requests");
+  const filteredRequests = await queryFilteredRequests(event.customData, gcToken);
+  console.log(filteredRequests);
+  console.log("<<< Filtered requests");
 }
