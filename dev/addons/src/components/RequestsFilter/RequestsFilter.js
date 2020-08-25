@@ -97,6 +97,8 @@ export default function RequestsFilter(props) {
   const handleMenuOptionClear = () => {
     console.log("handleMenuOptionClear()");
     setCurrentFilter(clearFilterSet);
+    applySubRegionList(clearFilterSet.region);
+    raiseEvent("clearFilter", {});
   };
 
   const handleSaveOkBtn = () => {
@@ -115,6 +117,13 @@ export default function RequestsFilter(props) {
   const handleSaveFilterNameChanged = (v) => {
     console.log("handleSaveFilterNameChanged() ", v.target.value);
     setSaveFilterName(v.target.value);
+  };
+
+  const handleLoadApplyBtn = () => {
+    console.log("handleLoadApplyBtn()");
+    setFormMode("edit");
+    setLoadFilterSelectedItem(null);
+    raiseEvent("applyFilter", currentFilter);
   };
 
   const handleLoadDeleteBtn = () => {
@@ -287,11 +296,17 @@ export default function RequestsFilter(props) {
             onChange={(v) => {
               setLoadFilterSelectedItem(v);
               const f = localStorageGet(v.value);
-              if (f && f.filterConfiguration) setCurrentFilter(f.filterConfiguration);
+              if (f && f.filterConfiguration) {
+                setCurrentFilter(f.filterConfiguration);
+                applySubRegionList(f.filterConfiguration.region);
+              }
             }}
           />
           {!deleteFilterConfirm && (
             <FormGroup style={{ textAlign: "center" }} inline>
+              <Button outline size="sm" color="primary" className="ml-2" onClick={handleLoadApplyBtn} disabled={!loadFilterSelectedItem}>
+                <IoMdFlash /> Apply
+              </Button>
               <Button outline size="sm" color="danger" className="ml-2" onClick={handleLoadDeleteBtn} disabled={!loadFilterSelectedItem}>
                 <IoMdRemoveCircleOutline /> Delete
               </Button>

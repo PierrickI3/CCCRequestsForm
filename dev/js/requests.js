@@ -1,5 +1,6 @@
 let apiBasePath;
 const maintenanceMode = false; // Set to true to disable all controls
+var filterConfiguration = null;
 
 if (window.location.href.includes("localhost")) apiBasePath = "http://localhost:3000";
 else apiBasePath = "https://drbojb15ma.execute-api.eu-central-1.amazonaws.com/dev";
@@ -435,12 +436,15 @@ function filterCollapse() {
 
 async function filterHandleOnMessageEvent(event) {
   console.log("filterHandleOnMessageEvent() ", event);
-  if (!event || !event.eventName || event.eventName !== "applyFilter" || !event.customData) {
+  if (!event || !event.eventName) {
     return;
+  } else if (event.eventName === "applyFilter" && event.customData) {
+    console.log(`Event [${event.eventName}] received: `, event.customData);
+    filterConfiguration = event.customData;
+    refreshGrid();
+  } else if (event.eventName === "clearFilter") {
+    console.log(`Event [${event.eventName}] received.`);
+    filterConfiguration = null;
+    refreshGrid();
   }
-  // todo: Apply filters
-  console.log(">>> Filtered requests");
-  const filteredRequests = await queryFilteredRequests(event.customData, gcToken);
-  console.log(filteredRequests);
-  console.log("<<< Filtered requests");
 }
