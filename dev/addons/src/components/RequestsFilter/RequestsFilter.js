@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Navbar, Nav, Button, Dropdown, DropdownToggle, DropdownMenu, DropdownItem, Label, Form, FormGroup, Input } from "reactstrap";
 import { raiseEvent } from "../../services/iFrameEvents";
-import { IoIosMenu, IoMdSave, IoIosFolderOpen, IoMdFlash, IoMdCheckmark, IoMdClose, IoMdRemoveCircleOutline, IoMdOpen, IoIosBackspace, IoIosFunnel } from "react-icons/io";
+import { IoIosMenu, IoMdSave, IoIosFolderOpen, IoMdFlash, IoMdCheckmark, IoMdClose, IoMdRemoveCircleOutline, IoIosBackspace, IoIosFunnel } from "react-icons/io";
 import Select from "react-select";
 import queryString from "query-string";
 import { regionList } from "../../services/dictionary";
@@ -45,6 +45,7 @@ export default function RequestsFilter(props) {
   const [saveFilterName, setSaveFilterName] = useState("");
   const [loadFilterSelectedItem, setLoadFilterSelectedItem] = useState(null);
   const [loadFilterItemList, setLoadFilterItemList] = useState([]);
+  const [deleteFilterConfirm, setDeleteFilterConfirm] = useState(false);
   const [currentFilter, setCurrentFilter] = useState(clearFilterSet);
   const [regionFixed, setRegionFixed] = useState(false);
   const [subregionValueList, setSubregionValueList] = useState([]);
@@ -84,6 +85,7 @@ export default function RequestsFilter(props) {
   const handleMenuOptionLoad = () => {
     console.log("handleMenuOptionLoad()");
     reloadFilterList();
+    setDeleteFilterConfirm(false);
     setFormMode("load");
   };
 
@@ -115,24 +117,27 @@ export default function RequestsFilter(props) {
     setSaveFilterName(v.target.value);
   };
 
-  const handleLoadOkBtn = () => {
-    console.log("handleLoadOkBtn()");
-    const f = localStorageGet(loadFilterSelectedItem.value);
-    if (f && f.filterConfiguration) setCurrentFilter(f.filterConfiguration);
+  const handleLoadDeleteBtn = () => {
+    console.log("handleLoadDeleteBtn()");
+    setDeleteFilterConfirm(true);
+  };
+
+  const handleLoadCloseBtn = () => {
+    console.log("handleLoadCloseBtn()");
     setFormMode("edit");
     setLoadFilterSelectedItem(null);
   };
 
-  const handleLoadDeleteBtn = () => {
-    console.log("handleLoadDeleteBtn()");
+  const handleLoadDeleteConfirmBtn = () => {
+    console.log("handleLoadDeleteConfirmBtn()");
+    setDeleteFilterConfirm(false);
     localStorageDrop(loadFilterSelectedItem.value);
     reloadFilterList();
   };
 
-  const handleLoadCancelBtn = () => {
-    console.log("handleLoadCancelBtn()");
-    setFormMode("edit");
-    setLoadFilterSelectedItem(null);
+  const handleLoadDeleteCancelBtn = () => {
+    console.log("handleLoadDeleteCancelBtn()");
+    setDeleteFilterConfirm(false);
   };
 
   //#endregion
@@ -269,9 +274,10 @@ export default function RequestsFilter(props) {
 
       {/* <Load filter> */}
       {formMode === "load" && (
-        <Form className="p-3" style={{ backgroundColor: "antiquewhite" }}>
+        <Form className="p-3" style={deleteFilterConfirm ? { backgroundColor: "mistyrose" } : { backgroundColor: "antiquewhite" }}>
           <Label>Filter list</Label>
           <Select
+            isDisabled={deleteFilterConfirm}
             noOptionsMessage={() => "No filters configured yet"}
             className="mb-3"
             options={loadFilterItemList}
@@ -280,19 +286,30 @@ export default function RequestsFilter(props) {
             value={loadFilterSelectedItem}
             onChange={(v) => {
               setLoadFilterSelectedItem(v);
+              const f = localStorageGet(v.value);
+              if (f && f.filterConfiguration) setCurrentFilter(f.filterConfiguration);
             }}
           />
-          <FormGroup inline>
-            <Button outline size="sm" color="primary" className="ml-2" onClick={handleLoadOkBtn} disabled={!loadFilterSelectedItem}>
-              <IoMdOpen /> Load
-            </Button>
-            <Button outline size="sm" color="danger" className="ml-2" onClick={handleLoadDeleteBtn} disabled={!loadFilterSelectedItem}>
-              <IoMdRemoveCircleOutline /> Delete
-            </Button>
-            <Button outline size="sm" color="secondary" className="ml-2" onClick={handleLoadCancelBtn}>
-              <IoMdClose /> Cancel
-            </Button>
-          </FormGroup>
+          {!deleteFilterConfirm && (
+            <FormGroup style={{ textAlign: "center" }} inline>
+              <Button outline size="sm" color="danger" className="ml-2" onClick={handleLoadDeleteBtn} disabled={!loadFilterSelectedItem}>
+                <IoMdRemoveCircleOutline /> Delete
+              </Button>
+              <Button outline size="sm" color="secondary" className="ml-2" onClick={handleLoadCloseBtn}>
+                <IoMdClose /> Close
+              </Button>
+            </FormGroup>
+          )}
+          {deleteFilterConfirm && (
+            <FormGroup style={{ textAlign: "center" }} inline>
+              <Button outline size="sm" color="danger" className="ml-2" onClick={handleLoadDeleteConfirmBtn} disabled={!loadFilterSelectedItem}>
+                <IoMdRemoveCircleOutline /> Confirm delete
+              </Button>
+              <Button outline size="sm" color="secondary" className="ml-2" onClick={handleLoadDeleteCancelBtn}>
+                <IoMdClose /> Cancel
+              </Button>
+            </FormGroup>
+          )}
         </Form>
       )}
       {/* </Load filter> */}
@@ -303,7 +320,7 @@ export default function RequestsFilter(props) {
           <Label>Save filter as</Label>
           <Input type="text" className="form-control" placeholder="Enter a name" value={saveFilterName} onChange={handleSaveFilterNameChanged} />
           {saveFilterName && !saveFilterNameValid(saveFilterName) && <span style={{ color: "red", fontWeight: "600" }}>Please enter a valid and unique value</span>}
-          <FormGroup className="mt-3" inline>
+          <FormGroup style={{ textAlign: "center" }} className="mt-3" inline>
             <Button outline size="sm" color="primary" className="ml-2" onClick={handleSaveOkBtn} disabled={!saveFilterNameValid(saveFilterName)}>
               <IoMdCheckmark /> Save
             </Button>
