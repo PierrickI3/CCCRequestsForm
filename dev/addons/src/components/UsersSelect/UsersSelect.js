@@ -1,8 +1,7 @@
-import "./UserSelect.css";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Input } from "reactstrap";
-
 import { searchUser } from "../../services/gc";
+import UsersSelectItem from "./UsersSelectItem";
 
 var searchedPattern = "";
 
@@ -12,6 +11,15 @@ export default function UsersSelect(props) {
   const [searchPattern, setSearchPattern] = useState("");
   const [searchResult, setSearchResult] = useState([]);
   const [selectedItems, setSelectedItems] = useState([]);
+
+  useEffect(() => {
+    if (Array.isArray(props.initialValue)) {
+      setSelectedItems(props.initialValue);
+    } else {
+      setSelectedItems([]);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [props.initialValue]);
 
   const searchForUser = async (pattern) => {
     console.log(`searchForUser([${pattern}])`);
@@ -36,11 +44,21 @@ export default function UsersSelect(props) {
   };
 
   return (
-    <div>
-      <div>
+    <div style={{ padding: "4px", border: "1px solid #cccccc", borderRadius: "4px" }}>
+      <div style={{ display: "flex", flexWrap: "wrap" }}>
         {Array.isArray(selectedItems) &&
-          selectedItems.map((x) => {
-            return <div>ffff{x}</div>;
+          selectedItems.map((x, i) => {
+            return (
+              <UsersSelectItem
+                key={i}
+                name={x}
+                onRemoveClick={() => {
+                  let si = selectedItems.filter((y) => y !== x);
+                  setSelectedItems(si);
+                  props.onChange(si);
+                }}
+              />
+            );
           })}
       </div>
       <Input
@@ -53,7 +71,7 @@ export default function UsersSelect(props) {
           setTimeout(() => {
             setSearchPattern("");
             setFocused(false);
-          }, 100);
+          }, 200);
         }}
         style={searching ? { backgroundColor: "#eeeeee" } : {}}
         placeholder="Search for user..."
@@ -65,11 +83,19 @@ export default function UsersSelect(props) {
       {focused && (
         <Input
           type="select"
-          className="user-select-dropdown"
-          style={{ height: "90px" }}
+          style={{ height: "90px", position: "absolute" }}
           multiple
-          onClick={(x) => {
-            console.log(x);
+          onChange={(x) => {
+            const clickedText = x.target.options[x.target.selectedIndex].text;
+            if (clickedText && (clickedText.startsWith("Searching...") || clickedText.startsWith("Type a name..."))) {
+              return;
+            }
+            if (Array.isArray(selectedItems) && !selectedItems.includes(clickedText)) {
+              let si = [...selectedItems];
+              si.push(clickedText);
+              setSelectedItems(si);
+              props.onChange(si);
+            }
           }}
         >
           {searching && <option>Searching...</option>}
@@ -77,21 +103,7 @@ export default function UsersSelect(props) {
           {!searching &&
             Array.isArray(searchResult) &&
             searchResult.map((x, i) => {
-              return (
-                <option
-                  key={i}
-                  onChange={() => {
-                    console(x);
-                    if (Array.isArray(selectedItems) && !selectedItems.includes(x)) {
-                      let si = { ...selectedItems };
-                      si.push(x);
-                      setSelectedItems(si);
-                    }
-                  }}
-                >
-                  {x}
-                </option>
-              );
+              return <option key={i}>{x}</option>;
             })}
         </Input>
       )}

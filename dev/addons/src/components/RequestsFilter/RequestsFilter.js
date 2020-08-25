@@ -400,7 +400,16 @@ export default function RequestsFilter(props) {
 
           <div className="mb-3">
             Requester name
-            <UsersSelect token={query && query.token ? query.token : null} />
+            <UsersSelect
+              token={query && query.token ? query.token : null}
+              initialValue={currentFilter.requester}
+              onChange={(v) => {
+                console.log(v);
+                let cf = { ...currentFilter };
+                cf.requester = v;
+                setCurrentFilter(cf);
+              }}
+            />
           </div>
 
           <div className="mb-3">
