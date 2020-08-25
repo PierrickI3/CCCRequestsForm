@@ -7,6 +7,8 @@ import queryString from "query-string";
 import { regionList } from "../../services/dictionary";
 import UsersSelect from "../UsersSelect/UsersSelect";
 
+var clearFilterSet = { status: null, handled: null, region: null, subRegion: null, segment: null, requester: null };
+
 export default function RequestsFilter(props) {
   //#region "value lists"
   const statusValueList = [
@@ -37,7 +39,6 @@ export default function RequestsFilter(props) {
   //#endregion
 
   //#region "state"
-  const clearFilterSet = { status: null, handled: null, region: null };
   const [query, setQuery] = useState(null);
   const [menuOpen, setMenuOpen] = useState(false);
   const [formMode, setFormMode] = useState("edit"); // values: edit, save, load
@@ -61,11 +62,10 @@ export default function RequestsFilter(props) {
     // <intialize filter>
     if (parsedQueryString && parsedQueryString.region && parsedQueryString.region.toLowerCase() !== "super-user") {
       console.log("region will be set to: ", parsedQueryString.region);
-      let cf = { ...currentFilter };
-      cf.region = [{ value: parsedQueryString.region, label: parsedQueryString.region }];
-      setCurrentFilter(cf);
+      clearFilterSet.region = [{ value: parsedQueryString.region, label: parsedQueryString.region }];
+      setCurrentFilter(clearFilterSet);
       setRegionFixed(true);
-      applySubRegionList(cf.region);
+      applySubRegionList(clearFilterSet.region);
     }
     // </intialize filter>
 
