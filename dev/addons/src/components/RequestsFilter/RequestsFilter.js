@@ -7,7 +7,7 @@ import queryString from "query-string";
 import { regionList } from "../../services/dictionary";
 import UsersSelect from "../UsersSelect/UsersSelect";
 
-var clearFilterSet = { status: null, handled: null, region: null, subRegion: null, segment: null, requester: null, programManager: null, teamMember: null, customerName: null };
+var clearFilterSet = { status: null, handled: null, region: null, subRegion: null, product: null, segment: null, requester: null, programManager: null, teamMember: null, customerName: null };
 
 export default function RequestsFilter(props) {
   //#region "value lists"
@@ -35,6 +35,14 @@ export default function RequestsFilter(props) {
     { value: "Mid-market", label: "Mid-market" },
     { value: "Commercial", label: "Commercial" },
     { value: "Enterprise", label: "Enterprise" },
+  ];
+
+  const productValueList = [
+    { value: "Genesys Cloud", label: "Genesys Cloud" },
+    { value: "Genesys Engage", label: "Genesys Engage" },
+    { value: "Genesys Engage Cloud", label: "Genesys Engage Cloud" },
+    { value: "PureConnect", label: "PureConnect" },
+    { value: "Latitude by Genesys", label: "Latitude by Genesys" },
   ];
   //#endregion
 
@@ -412,6 +420,22 @@ export default function RequestsFilter(props) {
                 console.log(v);
                 let cf = { ...currentFilter };
                 cf.subRegion = v;
+                setCurrentFilter(cf);
+              }}
+            />
+          </div>
+
+          <div className="mb-3">
+            Product
+            <Select
+              options={productValueList}
+              isMulti={true}
+              isSearchable={true}
+              value={currentFilter.product}
+              onChange={(v) => {
+                console.log(v);
+                let cf = { ...currentFilter };
+                cf.product = v;
                 setCurrentFilter(cf);
               }}
             />
