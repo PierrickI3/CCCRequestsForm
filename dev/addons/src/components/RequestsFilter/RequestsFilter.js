@@ -7,7 +7,7 @@ import queryString from "query-string";
 import { regionList } from "../../services/dictionary";
 import UsersSelect from "../UsersSelect/UsersSelect";
 
-var clearFilterSet = { status: null, handled: null, region: null, subRegion: null, segment: null, requester: null };
+var clearFilterSet = { status: null, handled: null, region: null, subRegion: null, segment: null, requester: null, programManager: null, teamMember: null };
 
 export default function RequestsFilter(props) {
   //#region "value lists"
@@ -407,6 +407,34 @@ export default function RequestsFilter(props) {
                 console.log(v);
                 let cf = { ...currentFilter };
                 cf.requester = v;
+                setCurrentFilter(cf);
+              }}
+            />
+          </div>
+
+          <div className="mb-3">
+            Program manager
+            <UsersSelect
+              token={query && query.token ? query.token : null}
+              initialValue={currentFilter.programManager}
+              onChange={(v) => {
+                console.log(v);
+                let cf = { ...currentFilter };
+                cf.programManager = v;
+                setCurrentFilter(cf);
+              }}
+            />
+          </div>
+
+          <div className="mb-3">
+            Team member
+            <UsersSelect
+              token={query && query.token ? query.token : null}
+              initialValue={currentFilter.teamMember}
+              onChange={(v) => {
+                console.log(v);
+                let cf = { ...currentFilter };
+                cf.teamMember = v;
                 setCurrentFilter(cf);
               }}
             />
