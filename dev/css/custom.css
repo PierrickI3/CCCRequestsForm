@@ -184,6 +184,32 @@
   border-radius: 5px;
 }
 
+.filter-sidebar-addon-vertical-info {
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+  width: 35px;
+  line-height: 35px;
+  margin-top: 10px;
+  display: none; /* hidden by default */
+}
+
+.not-applied {
+  font-weight: 300;
+  color: #bbbbbb;
+}
+
+.applied {
+  font-weight: 600;
+  color: #be9797;
+  animation: blinker 1s linear infinite;
+}
+
+@keyframes blinker {
+  50% {
+    opacity: 0.75;
+  }
+}
+
 .right {
   text-align: right;
 }

@@ -404,6 +404,9 @@ async function getOpportunityDSR(_token, _id) {
 }
 
 function filterExpand() {
+  $("#filter-sidebar-not-applied").hide();
+  $("#filter-sidebar-applied").hide();
+
   $("#filter-sidebar").removeClass("filter-sidebar-collapsed");
   $("#filter-sidebar").addClass("filter-sidebar-expanded");
 
@@ -423,6 +426,14 @@ function filterCollapse() {
   $("#filter-sidebar-addon").addClass("animate__slideOutRight");
 
   setTimeout(function () {
+    if (filterConfiguration === null) {
+      $("#filter-sidebar-not-applied").show();
+      $("#filter-sidebar-applied").hide();
+    } else {
+      $("#filter-sidebar-not-applied").hide();
+      $("#filter-sidebar-applied").show();
+    }
+
     $("#filter-sidebar-addon").removeClass("animate__slideOutRight");
 
     $("#filter-sidebar").removeClass("filter-sidebar-expanded");

@@ -489,7 +489,7 @@ export default function RequestsFilter(props) {
             />
           </div>
 
-          <div className="mb-3">
+          <div className="mb-3" style={{ textAlign: "center" }}>
             <Button outline onClick={handleApplyFilters}>
               <IoMdFlash /> Apply filter
             </Button>

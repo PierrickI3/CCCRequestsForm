@@ -38,6 +38,11 @@
             </ul>
             <ul class="nav navbar-nav mr-2" style="float: left;">
                 <li>
+                    <button class="btn btn-secondary btn-sm" id="btnAssignedToMe"> My Requests </button>
+                </li>
+            </ul>
+            <ul class="nav navbar-nav mr-2" style="float: left;">
+                <li>
                     <button class="btn btn-secondary btn-sm" id="btnOnlyClosed"> Closed </button>
                 </li>
             </ul>
@@ -71,6 +76,8 @@
         <div id="filter-sidebar" class="filter-sidebar-collapsed right">
             <button id="filter-sidebar-button-expand" type="button" class="btn btn-secondary filter-sidebar-button" onclick="filterExpand()"><i class="fa fa-angle-double-left"></i></button>
             <button id="filter-sidebar-button-collapse" type="button" class="btn btn-secondary filter-sidebar-button" onclick="filterCollapse()"><i class="fa fa-angle-double-right"></i></button>
+            <span id="filter-sidebar-not-applied" class="filter-sidebar-addon-vertical-info not-applied">Filter is not applied</span>
+            <span id="filter-sidebar-applied" class="filter-sidebar-addon-vertical-info applied">Filter is applied</span>
             <iframe id="filter-sidebar-addon" class="filter-sidebar-addon"></iframe>
         </div>
     </div>
