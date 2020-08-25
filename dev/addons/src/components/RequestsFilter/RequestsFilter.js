@@ -7,7 +7,7 @@ import queryString from "query-string";
 import { regionList } from "../../services/dictionary";
 import UsersSelect from "../UsersSelect/UsersSelect";
 
-var clearFilterSet = { status: null, handled: null, region: null, subRegion: null, segment: null, requester: null, programManager: null, teamMember: null };
+var clearFilterSet = { status: null, handled: null, region: null, subRegion: null, segment: null, requester: null, programManager: null, teamMember: null, customerName: null };
 
 export default function RequestsFilter(props) {
   //#region "value lists"
@@ -435,6 +435,20 @@ export default function RequestsFilter(props) {
                 console.log(v);
                 let cf = { ...currentFilter };
                 cf.teamMember = v;
+                setCurrentFilter(cf);
+              }}
+            />
+          </div>
+
+          <div className="mb-3">
+            Customer name
+            <Input
+              placeholder="Enter customer name"
+              value={currentFilter.customerName || ""}
+              onChange={(e) => {
+                console.log(e.target.value);
+                let cf = { ...currentFilter };
+                cf.customerName = e.target.value;
                 setCurrentFilter(cf);
               }}
             />
