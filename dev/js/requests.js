@@ -48,7 +48,7 @@ async function postRequests(region, subRegion, segment, product, tasks, requeste
     data.customerType = customerType;
   }
 
-  if (oppName.length > 0) {
+  if (oppName && oppName.length > 0) {
     data.oppName = oppName;
   }
 
@@ -160,7 +160,7 @@ async function putRequest(id, region, subRegion, segment, product, tasks, reques
     data.customerType = customerType;
   }
 
-  if (oppName.length > 0) {
+  if (oppName && oppName.length > 0) {
     data.oppName = oppName;
   }
 

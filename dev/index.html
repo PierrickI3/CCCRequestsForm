@@ -346,6 +346,8 @@
   <script>
 
     //#region handle SF Search element
+    let sfOject = {};
+
 
     $(document).ready(function () {
       // Apply custom dropdown style to SF Search Input Box
@@ -365,6 +367,7 @@
         apiBasePath = "https://drbojb15ma.execute-api.eu-central-1.amazonaws.com/dev";
 
       // Remote query, to search for Opportunity name, bind results to select2 object
+
       $('#sfData').select2({
         placeholder: 'Opportunity Name',
         allowClear: true,
@@ -372,6 +375,7 @@
         ajax: {
           delay: 350,
           url: `${apiBasePath}/sf/opportunities`,
+
           data: function (params) {
             var query = {
               token: gcToken,
@@ -380,23 +384,32 @@
             // Query parameters will be ?search=[term]&type=public
             return query;
           },
+          error: function (err) {
+            console.log(err);
+            if (err.status === 401) {
+              window.open('./index.html', "_self");
+            } else if (err.status > 400) {
+              showMessage(err.hasOwnProperty('responseJSON') ? err.responseJSON.message : error, true);
+            }
+          },
+
           processResults: function (data) {
-            // Transforms the top-level key of the response object from 'items' to 'results'
-            console.log(data);
+            // Transforms the top-level key of the response object from 'items' to 'results'            
+
             let ret = [];
             data.forEach((item) => {
               ret.push({
                 id: item.Id,
-                //text: `${item.Id} ${item.Name} ${item.Solution_Consultant__r ? `(SC: ${item.Solution_Consultant__r.Name})` : ''}`,
                 text: `${item.Name} (${item.Id})`,
                 item: item
               })
             })
-
+            console.log(ret);
             return {
               results: ret
             };
           }
+
         }
       });
 
@@ -405,13 +418,21 @@
         var data = e.params.data;
         if (!data) return;
 
+        console.log('before search:');
+        console.log($('#sfData').select2('data')[0].item);
+        sfOject = e.params.data.item;
+
         try {
           let dsrInformation = await getOpportunityDSR(gcToken, e.params.data.id);
-          $('#sfData').select2('data')[0].item.dsr = dsrInformation;
+
+
+          //$('#sfData').select2('data')[0].item.dsr = dsrInformation;
+          sfOject.dsr = dsrInformation;
 
           // Update Form fields
 
-          let myData = $('#sfData').select2('data')[0].item;
+          //let myData = $('#sfData').select2('data')[0].item;
+          let myData = sfOject
           $('#oppUrl').val(myData.opportunityUrl);
           $('#oppDSRUrl').val(myData.dsr && myData.dsr.url ? myData.dsr.url : 'n/a');
           $('#oppOwner').val(myData.Owner && myData.Owner.Name ? myData.Owner.Name : 'n/a');
@@ -419,7 +440,7 @@
           $('#oppAssignedSC').val(myData.dsr && myData.dsr.virtualTeamNames ? myData.dsr.virtualTeamNames : myData.Solution_Consultant__r && myData.Solution_Consultant__r.Name ? myData.Solution_Consultant__r.Name : 'n/a');
 
         } catch (error) {
-          console.error(error);
+          console.log(error);
         }
 
 
@@ -428,6 +449,7 @@
 
       $('#sfData').on('select2:clear', async function (e) {
         console.log('clear items related to SF');
+        sfOject = {};
         $('#oppUrl').val('');
         $('#oppDSRUrl').val('');
         $('#oppOwner').val('');
@@ -788,6 +810,7 @@
       $('#oppPartnerCustomerName').val('');
       $('#oppAssignedSC').val('');
       $('#sfData').val(null).trigger('change');
+      sfOject = {};
 
       localStorage.removeItem('intakeForm_draft');
     }
