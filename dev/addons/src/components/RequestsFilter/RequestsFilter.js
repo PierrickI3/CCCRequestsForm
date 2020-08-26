@@ -56,6 +56,7 @@ export default function RequestsFilter(props) {
   const [deleteFilterConfirm, setDeleteFilterConfirm] = useState(false);
   const [currentFilter, setCurrentFilter] = useState(clearFilterSet);
   const [regionFixed, setRegionFixed] = useState(false);
+  const [requesterFixed, setRequesterFixed] = useState(false);
   const [subregionValueList, setSubregionValueList] = useState([]);
   //#endregion
 
@@ -69,13 +70,19 @@ export default function RequestsFilter(props) {
     // </parse query string>
     const latestFilterSet = localStorageGetLatestFilter();
     let initialFilterSet = latestFilterSet ? latestFilterSet : clearFilterSet;
-    // <Apply region settings>
-    if (parsedQueryString && parsedQueryString.region && parsedQueryString.region.toLowerCase() !== "super-user") {
-      console.log("region will be set to: ", parsedQueryString.region);
+
+    if (parsedQueryString && parsedQueryString.requester) {
+      console.log("fixed requester will be set to: ", parsedQueryString.requester);
+      initialFilterSet.requester = [parsedQueryString.requester];
+      setRequesterFixed(true);
+    } else if (parsedQueryString && parsedQueryString.region && parsedQueryString.region.toLowerCase() !== "super-user") {
+      // <Apply region settings>
+      console.log("fixed region will be set to: ", parsedQueryString.region);
       initialFilterSet.region = [{ value: parsedQueryString.region, label: parsedQueryString.region }];
       setRegionFixed(true);
+      // <Apply region settings>
     }
-    // <Apply region settings>
+
     initialFilterSet.subRegion = removeSelectedSubregionsForNotSelectedRegions(initialFilterSet.region, initialFilterSet.subRegion); // do not remove it from here
     setCurrentFilter(initialFilterSet);
     applySubRegionList(initialFilterSet.region);
@@ -498,6 +505,7 @@ export default function RequestsFilter(props) {
           <div className="mb-3">
             Requester name
             <UsersSelect
+              isDisabled={requesterFixed}
               token={query && query.token ? query.token : null}
               initialValue={currentFilter.requester}
               onChange={(v) => {

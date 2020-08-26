@@ -44,69 +44,72 @@ export default function UsersSelect(props) {
   };
 
   return (
-    <div style={{ padding: "4px", border: "1px solid #cccccc", borderRadius: "4px" }}>
-      <div style={{ display: "flex", flexWrap: "wrap" }}>
-        {Array.isArray(selectedItems) &&
-          selectedItems.map((x, i) => {
-            return (
-              <UsersSelectItem
-                key={i}
-                name={x}
-                onRemoveClick={() => {
-                  let si = selectedItems.filter((y) => y !== x);
-                  setSelectedItems(si);
-                  props.onChange(si);
-                }}
-              />
-            );
-          })}
-      </div>
-      <Input
-        onFocus={() => {
-          setFocused(true);
-          setSearchResult([]);
-        }}
-        onBlur={() => {
-          // timeout to allow handle a click event on the selected item
-          setTimeout(() => {
-            setSearchPattern("");
-            setFocused(false);
-          }, 200);
-        }}
-        style={searching ? { backgroundColor: "#eeeeee" } : {}}
-        placeholder="Search for user..."
-        value={searchPattern || ""}
-        onChange={(e) => {
-          searchForUser(e.target.value);
-        }}
-      />
-      {focused && (
-        <Input
-          type="select"
-          style={{ height: "90px", position: "absolute" }}
-          multiple
-          onChange={(x) => {
-            const clickedText = x.target.options[x.target.selectedIndex].text;
-            if (clickedText && (clickedText.startsWith("Searching...") || clickedText.startsWith("Type a name..."))) {
-              return;
-            }
-            if (Array.isArray(selectedItems) && !selectedItems.includes(clickedText)) {
-              let si = [...selectedItems];
-              si.push(clickedText);
-              setSelectedItems(si);
-              props.onChange(si);
-            }
-          }}
-        >
-          {searching && <option>Searching...</option>}
-          {!searching && (!searchPattern || searchPattern.length < 3) && <option>Type a name...</option>}
-          {!searching &&
-            Array.isArray(searchResult) &&
-            searchResult.map((x, i) => {
-              return <option key={i}>{x}</option>;
+    <div style={props && props.isDisabled ? { pointerEvents: "none", backgroundColor: "#F2F2F2" } : {}}>
+      <div style={{ padding: "4px", border: "1px solid #cccccc", borderRadius: "4px" }}>
+        <div style={{ display: "flex", flexWrap: "wrap" }}>
+          {Array.isArray(selectedItems) &&
+            selectedItems.map((x, i) => {
+              return (
+                <UsersSelectItem
+                  key={i}
+                  name={x}
+                  onRemoveClick={() => {
+                    let si = selectedItems.filter((y) => y !== x);
+                    setSelectedItems(si);
+                    props.onChange(si);
+                  }}
+                />
+              );
             })}
-        </Input>
-      )}
+        </div>
+        <Input
+          isDisabled={props.isDisabled}
+          onFocus={() => {
+            setFocused(true);
+            setSearchResult([]);
+          }}
+          onBlur={() => {
+            // timeout to allow handle a click event on the selected item
+            setTimeout(() => {
+              setSearchPattern("");
+              setFocused(false);
+            }, 200);
+          }}
+          style={searching ? { backgroundColor: "#eeeeee" } : {}}
+          placeholder="Search for user..."
+          value={searchPattern || ""}
+          onChange={(e) => {
+            searchForUser(e.target.value);
+          }}
+        />
+        {focused && (
+          <Input
+            type="select"
+            style={{ height: "90px", position: "absolute" }}
+            multiple
+            onChange={(x) => {
+              const clickedText = x.target.options[x.target.selectedIndex].text;
+              if (clickedText && (clickedText.startsWith("Searching...") || clickedText.startsWith("Type a name..."))) {
+                return;
+              }
+              if (Array.isArray(selectedItems) && !selectedItems.includes(clickedText)) {
+                let si = [...selectedItems];
+                si.push(clickedText);
+                setSelectedItems(si);
+                props.onChange(si);
+              }
+            }}
+          >
+            {searching && <option>Searching...</option>}
+            {!searching && (!searchPattern || searchPattern.length < 3) && <option>Type a name...</option>}
+            {!searching &&
+              Array.isArray(searchResult) &&
+              searchResult.map((x, i) => {
+                return <option key={i}>{x}</option>;
+              })}
+          </Input>
+        )}
+      </div>
     </div>
   );
 }

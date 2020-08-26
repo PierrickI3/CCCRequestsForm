@@ -470,6 +470,7 @@
 
 
         let region = getUrlParameter("region");
+        console.log('Detected region: ', region);        
         $("#region").text(region);
 
         // SetLink for Dashboard
@@ -499,13 +500,11 @@
         // </handle message event from filter iframe>
         
         // <load filter page into iFrame            
-        const filterLocation = `addons/build/\#/requestsfilter?region=${region}&token=${gcToken}`;
+        const filterLocation = region ? `addons/build/\#/requestsfilter?region=${region}&token=${gcToken}` : `addons/build/\#/requestsfilter?requester=${userName}&token=${gcToken}`;;
         console.log('filterLocation: ', filterLocation);
         $("#filter-sidebar-addon").attr("src", filterLocation);
         // </load filter page into iFrame>
-
         
-
         $(function () {
             $("#datepicker").datepicker({
                 daysOfWeekDisabled: ['0', '6'],
