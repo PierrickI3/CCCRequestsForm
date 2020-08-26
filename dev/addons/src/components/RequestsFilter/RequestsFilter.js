@@ -7,7 +7,7 @@ import queryString from "query-string";
 import { regionList } from "../../services/dictionary";
 import UsersSelect from "../UsersSelect/UsersSelect";
 
-var clearFilterSet = { status: null, isDeleted: false, handled: null, region: null, subRegion: null, product: null, segment: null, requester: null, programManager: null, teamMember: null, customerName: null };
+var clearFilterSet = { isTest: false, status: null, isDeleted: false, handled: null, region: null, subRegion: null, product: null, segment: null, requester: null, programManager: null, teamMember: null, customerName: null };
 
 export default function RequestsFilter(props) {
   //#region "value lists"
@@ -65,16 +65,20 @@ export default function RequestsFilter(props) {
   useEffect(() => {
     // <parse query string>
     const parsedQueryString = queryString.parse(props.location.search);
-    console.log("parsedQueryString", parsedQueryString);
+    console.log("parsedQueryString: ", parsedQueryString);
     setQuery(parsedQueryString);
     // </parse query string>
     const latestFilterSet = localStorageGetLatestFilter();
     let initialFilterSet = latestFilterSet ? latestFilterSet : clearFilterSet;
+    initialFilterSet.isTest = window.location.hostname === "localhost";
+    console.log("initialFilterSet.isTest: ", initialFilterSet.isTest);
 
     if (parsedQueryString && parsedQueryString.requester) {
+      // <Apply requester settings>
       console.log("fixed requester will be set to: ", parsedQueryString.requester);
       initialFilterSet.requester = [parsedQueryString.requester];
       setRequesterFixed(true);
+      // </Apply requester settings>
     } else if (parsedQueryString && parsedQueryString.region && parsedQueryString.region.toLowerCase() !== "super-user") {
       // <Apply region settings>
       console.log("fixed region will be set to: ", parsedQueryString.region);
