@@ -38,11 +38,6 @@
             </ul>
             <ul class="nav navbar-nav mr-2" style="float: left;">
                 <li>
-                    <button class="btn btn-secondary btn-sm" id="btnAssignedToMe"> My Requests </button>
-                </li>
-            </ul>
-            <ul class="nav navbar-nav mr-2" style="float: left;">
-                <li>
                     <button class="btn btn-secondary btn-sm" id="btnOnlyClosed"> Closed </button>
                 </li>
             </ul>
@@ -76,8 +71,7 @@
         <div id="filter-sidebar" class="filter-sidebar-collapsed right">
             <button id="filter-sidebar-button-expand" type="button" class="btn btn-secondary filter-sidebar-button" onclick="filterExpand()"><i class="fa fa-angle-double-left"></i></button>
             <button id="filter-sidebar-button-collapse" type="button" class="btn btn-secondary filter-sidebar-button" onclick="filterCollapse()"><i class="fa fa-angle-double-right"></i></button>
-            <span id="filter-sidebar-not-applied" class="filter-sidebar-addon-vertical-info not-applied">Filter is not applied</span>
-            <span id="filter-sidebar-applied" class="filter-sidebar-addon-vertical-info applied">Filter is applied</span>
+            <span id="filter-sidebar-label" class="filter-sidebar-addon-vertical-info">Filter configuration</span>            
             <iframe id="filter-sidebar-addon" class="filter-sidebar-addon"></iframe>
         </div>
     </div>
@@ -392,20 +386,6 @@
             filterCollapse();
             // </collapse filter sidebar>
 
-            // <load filter page into iFrame            
-            const filterLocation = `addons/build/\#/requestsfilter?region=${region}&token=${gcToken}`;
-            console.log('filterLocation: ', filterLocation);
-            $("#filter-sidebar-addon").attr("src", filterLocation);
-            // </load filter page into iFrame>
-
-            // <handle message event from filter iframe>
-            window.addEventListener('message', function (event) {
-                if (event.data && event.data.eventName) {
-                    filterHandleOnMessageEvent(event.data);
-                }
-            });
-            // </handle message event from filter iframe>
-
             $('.js-example-basic-single').select2({ dropdownAutoWidth: true });
 
             // Detect locally correct env
@@ -509,6 +489,22 @@
         } else {
             showRequests();
         }
+
+        // <handle message event from filter iframe>    
+        window.addEventListener('message', function (event) {
+            if (event.data && event.data.eventName) {
+                filterHandleOnMessageEvent(event.data);
+            }
+        });
+        // </handle message event from filter iframe>
+        
+        // <load filter page into iFrame            
+        const filterLocation = `addons/build/\#/requestsfilter?region=${region}&token=${gcToken}`;
+        console.log('filterLocation: ', filterLocation);
+        $("#filter-sidebar-addon").attr("src", filterLocation);
+        // </load filter page into iFrame>
+
+        
 
         $(function () {
             $("#datepicker").datepicker({
@@ -656,7 +652,7 @@
                     loadIndicationDelay: 500,
                     loadMessage: "Loading...",
                     loadShading: true,
-                    autoload: true,
+                    autoload: false,
                     rowClick: function (args) {
                         showModal(args.item);
                     },
@@ -738,15 +734,18 @@
                             try {
                                 if (doNotReload) {
                                     console.log('Skipping requests reload');
-                                } 
-                                else if (filterConfiguration !== null)
-                                {
+                                } else  {
                                     console.log('Loading filtered request list');
                                     requests.requests = await queryFilteredRequests(filterConfiguration, gcToken);
-                                } else {
-                                    console.log('Loading full request list');
-                                    requests.requests = await getRequests(region, gcToken);
-                                }   
+                                }
+                                // else if (filterConfiguration !== null)
+                                // {
+                                //     console.log('Loading filtered request list');
+                                //     requests.requests = await queryFilteredRequests(filterConfiguration, gcToken);
+                                // } else {
+                                //     console.log('Loading full request list');
+                                //     requests.requests = await getRequests(region, gcToken);
+                                // }   
 
 
                                 // set default values for undefined/optional item. Without it filtering fails

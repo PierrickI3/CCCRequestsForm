@@ -7,7 +7,7 @@ import queryString from "query-string";
 import { regionList } from "../../services/dictionary";
 import UsersSelect from "../UsersSelect/UsersSelect";
 
-var clearFilterSet = { status: null, handled: null, region: null, subRegion: null, product: null, segment: null, requester: null, programManager: null, teamMember: null, customerName: null };
+var clearFilterSet = { status: null, isDeleted: false, handled: null, region: null, subRegion: null, product: null, segment: null, requester: null, programManager: null, teamMember: null, customerName: null };
 
 export default function RequestsFilter(props) {
   //#region "value lists"
@@ -67,17 +67,19 @@ export default function RequestsFilter(props) {
     console.log("parsedQueryString", parsedQueryString);
     setQuery(parsedQueryString);
     // </parse query string>
-
-    // <intialize filter>
+    const latestFilterSet = localStorageGetLatestFilter();
+    let initialFilterSet = latestFilterSet ? latestFilterSet : clearFilterSet;
+    // <Apply region settings>
     if (parsedQueryString && parsedQueryString.region && parsedQueryString.region.toLowerCase() !== "super-user") {
       console.log("region will be set to: ", parsedQueryString.region);
-      clearFilterSet.region = [{ value: parsedQueryString.region, label: parsedQueryString.region }];
-      setCurrentFilter(clearFilterSet);
+      initialFilterSet.region = [{ value: parsedQueryString.region, label: parsedQueryString.region }];
       setRegionFixed(true);
-      applySubRegionList(clearFilterSet.region);
     }
-    // </intialize filter>
-
+    // <Apply region settings>
+    initialFilterSet.subRegion = removeSelectedSubregionsForNotSelectedRegions(initialFilterSet.region, initialFilterSet.subRegion); // do not remove it from here
+    setCurrentFilter(initialFilterSet);
+    applySubRegionList(initialFilterSet.region);
+    raiseEvent("applyFilter", initialFilterSet);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   //#endregion
@@ -88,6 +90,7 @@ export default function RequestsFilter(props) {
   const handleApplyFilters = () => {
     console.log("handleApplyFilters()");
     raiseEvent("applyFilter", currentFilter);
+    localStorageSetLatestFilter(currentFilter);
   };
 
   const handleMenuOptionLoad = () => {
@@ -107,6 +110,7 @@ export default function RequestsFilter(props) {
     setCurrentFilter(clearFilterSet);
     applySubRegionList(clearFilterSet.region);
     raiseEvent("clearFilter", {});
+    localStorageDropLatestFilter();
   };
 
   const handleSaveOkBtn = () => {
@@ -132,6 +136,7 @@ export default function RequestsFilter(props) {
     setFormMode("edit");
     setLoadFilterSelectedItem(null);
     raiseEvent("applyFilter", currentFilter);
+    localStorageSetLatestFilter(currentFilter);
   };
 
   const handleLoadDeleteBtn = () => {
@@ -172,6 +177,7 @@ export default function RequestsFilter(props) {
   //#region "local storage"
 
   const filterConfigKey = "filter.configuration.list";
+  const latestFilterKey = "filter.configuration.latest";
 
   const localStorageGetAll = () => {
     console.log("localStorageGetAll()");
@@ -208,6 +214,25 @@ export default function RequestsFilter(props) {
     const resultClone = result.filter((x) => x.name !== name);
     localStorage.setItem(filterConfigKey, JSON.stringify(resultClone));
   };
+
+  const localStorageGetLatestFilter = (filterConfiguration) => {
+    console.log("localStorageGetLatestFilter");
+    const latestFilterStr = localStorage.getItem(latestFilterKey);
+    if (latestFilterStr) {
+      return JSON.parse(latestFilterStr);
+    }
+  };
+
+  const localStorageSetLatestFilter = (filterConfiguration) => {
+    console.log("localStorageSetLatestFilter");
+    localStorage.setItem(latestFilterKey, JSON.stringify(filterConfiguration));
+  };
+
+  const localStorageDropLatestFilter = () => {
+    console.log("localStorageDropLatestFilter");
+    localStorage.removeItem(latestFilterKey);
+  };
+
   //#endregion
 
   //#region "misc"
@@ -372,6 +397,19 @@ export default function RequestsFilter(props) {
                 setCurrentFilter(cf);
               }}
             />
+            <Label check className="ml-4">
+              <Input
+                type="checkbox"
+                checked={currentFilter.isDeleted}
+                onChange={(v) => {
+                  console.log(v.target.checked);
+                  let cf = { ...currentFilter };
+                  cf.isDeleted = v.target.checked;
+                  setCurrentFilter(cf);
+                }}
+              />{" "}
+              Show deleted only
+            </Label>
           </div>
 
           <div className="mb-3">
