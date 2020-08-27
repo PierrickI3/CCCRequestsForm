@@ -195,6 +195,29 @@
   color: #bbbbbb;
 }
 
+.notes-history {
+  border: 1px solid #ced4da;
+  border-radius: 0.25rem 0.25rem 0 0;
+  padding: 5px;
+  font-size: 0.9rem;
+  background-color: #e9ecef;
+  min-height: 50px;
+}
+
+.notes-timestamp {
+  margin-top: 8px;
+  opacity: 0.5;
+  font-size: 0.7rem;
+}
+
+.notes-content {
+  margin-top: 1px;
+}
+
+.notes-txt-add-note {
+  border-radius: 0 0 0.25rem 0.25rem;
+}
+
 .right {
   text-align: right;
 }

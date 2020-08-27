@@ -301,7 +301,9 @@
                                 <label id="bAcceptedRequest" hidden></label>
                                 <div class="form-group col-md-10">
                                     <label id="lblAcceptedRejectedNotes" for="description">Notes</label>
-                                    <textarea class="form-control" id="txtAcceptedRejectedNotes" name="description" placeholder="Notes" required> </textarea>
+                                    <div id="divNotesHistory" class="notes-history"></div>
+                                    <textarea class="form-control notes-txt-add-note" id="txtAcceptedRejectedNotes" name="description" placeholder="Type a note"> </textarea>
+                                    <button id="btnAddNote" type="button" class="btn btn-secondary pull-right mt-2">Add note</button>
                                 </div>
                             </div>
                             <div class="form-row">
@@ -340,6 +342,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"></script>
     <!-- Moment.js -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js" integrity="sha256-4iQZ6BVL4qNKlQ27TExEhBN1HFPvAvAMbFavKKosSWQ=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.31/moment-timezone.min.js" integrity="sha512-GqWOXT1UPIvzojfXEPf2ByPu4S0iwX0SfFfZ985fePNpTJPuiWKn47mXd0iyfcpcjcmM/HIRtvrd5TsR87A0Zg==" crossorigin="anonymous"></script>
     <!-- Bootstrap DatePicker -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js" integrity="sha256-bqVeqGdJ7h/lYPq6xrPv/YGzMEb6dNxlfiTUHSgRCp8=" crossorigin="anonymous"></script>
     <!-- Genesys Cloud -->
@@ -548,6 +551,7 @@
             $("#editModal #programManager").val("");
             $("#editModal #time").val("");
             $("#editModal #txtAcceptedRejectedNotes").val("");
+            $("#editModal #divNotesHistory").html("");
 
             setDatesLabels(undefined, undefined, undefined);
 
@@ -1126,7 +1130,8 @@
             $("#editModal #status").val(request.status);
             $("#editModal #programManager").val(request.programManager);
             $("#editModal #time").val(request.time);
-            $("#editModal #txtAcceptedRejectedNotes").val(request.acceptedRejectedNotes);
+            $("#editModal #txtAcceptedRejectedNotes").val("");
+            $("#editModal #divNotesHistory").html(request.acceptedRejectedNotes);
             $("#editModal #teamMembers").val(request.teamMembers);
             $("#editModal").modal("show");
 
@@ -1138,6 +1143,7 @@
                 $("#btnAcceptRequest").attr("hidden", true);
                 $("#btnRestore").attr("disabled", false);
                 $("#btnRestore").attr("hidden", false);
+                $("#btnAddNote").prop('disabled', false);                
             } else {
                 $("#modal-form :input").attr("disabled", false);
                 $("#btnRejectRequest").attr("hidden", false);
@@ -1400,7 +1406,7 @@
                 let salesforceAccountOpportunity = $("#editModal #salesforceAccountOpportunity").val();
                 let priority = $("#editModal #priority").val();
                 let acceptedRejected = $("#editModal #bAcceptedRequest").val();
-                let acceptedRejectedNotes = $("#editModal #txtAcceptedRejectedNotes").val();
+                let acceptedRejectedNotes = $("#editModal #divNotesHistory").html();
                 let programManager = $("#editModal #programManager").val();
                 let time = $("#editModal #time").val();
                 let teamMembers = $("#editModal #teamMembers").val();
@@ -1458,6 +1464,24 @@
             e.preventDefault();
             if (maintenanceMode) return;
             addNewTask(undefined, true);
+        });
+
+
+        $("#btnAddNote").on("click", async (e) => {
+            let note = $("#editModal #divNotesHistory").html();
+            let newNote = $("#editModal #txtAcceptedRejectedNotes").val().trim().replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/\n/g, "<br />");
+            if (newNote === "") {
+                console.warn("Cannot add empty notes!");
+                $("#editModal #txtAcceptedRejectedNotes").val("");
+                return;
+            }
+            console.log("Following note will be added: ", newNote);
+            note += `<div class="notes-timestamp">wrote by <b>${userName}</b> on ${moment().format("MMM Do")} at ${moment().format("HH:mm [(UTC]Z[)]")}:</div>`;
+            note += '<div class="notes-content">';
+            note += newNote;
+            note += '</div>';      
+            $("#editModal #divNotesHistory").html(note);
+            $("#editModal #txtAcceptedRejectedNotes").val("");
         });
 
         function getUrlParameter(sParam) {
