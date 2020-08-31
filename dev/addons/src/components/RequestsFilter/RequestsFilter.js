@@ -1,56 +1,62 @@
-import React, { useState, useEffect } from "react";
-import { Navbar, Nav, Button, Dropdown, DropdownToggle, DropdownMenu, DropdownItem, Label, Form, FormGroup, Input } from "reactstrap";
-import { raiseEvent } from "../../services/iFrameEvents";
-import { IoIosMenu, IoMdSave, IoIosFolderOpen, IoMdFlash, IoMdCheckmark, IoMdClose, IoMdRemoveCircleOutline, IoIosBackspace, IoIosFunnel } from "react-icons/io";
-import Select from "react-select";
-import queryString from "query-string";
-import { regionList } from "../../services/dictionary";
-import UsersSelect from "../UsersSelect/UsersSelect";
+import React, { useState, useEffect } from 'react';
+import { Navbar, Nav, Button, Dropdown, DropdownToggle, DropdownMenu, DropdownItem, Label, Form, FormGroup, Input } from 'reactstrap';
+import { raiseEvent } from '../../services/iFrameEvents';
+import { IoIosMenu, IoMdSave, IoIosFolderOpen, IoMdFlash, IoMdCheckmark, IoMdClose, IoMdRemoveCircleOutline, IoIosBackspace, IoIosFunnel } from 'react-icons/io';
+import Select from 'react-select';
+import queryString from 'query-string';
+import { regionList } from '../../services/dictionary';
+import UsersSelect from '../UsersSelect/UsersSelect';
 
-var clearFilterSet = { isTest: false, status: null, isDeleted: false, handled: null, region: null, subRegion: null, product: null, segment: null, requester: null, programManager: null, teamMember: null, customerName: null };
+var clearFilterSet = { isTest: false, status: null, isDeleted: false, handled: null, created: null, region: null, subRegion: null, product: null, segment: null, requester: null, programManager: null, teamMember: null, customerName: null };
 
 export default function RequestsFilter(props) {
   //#region "value lists"
   const statusValueList = [
-    { value: "Open", label: "Open" },
-    { value: "On Hold", label: "On Hold" },
-    { value: "Waiting On Additional Information", label: "Waiting On Additional Information" },
-    { value: "Closed", label: "Closed" },
+    { value: 'Open', label: 'Open' },
+    { value: 'On Hold', label: 'On Hold' },
+    { value: 'Waiting On Additional Information', label: 'Waiting On Additional Information' },
+    { value: 'Closed', label: 'Closed' },
+  ];
+
+  const createdValueList = [
+    { value: 'Last30Days', label: 'Last 30 Days' },
+    { value: 'CurrentMonth', label: 'Current Month' },
+    { value: 'LastMonth', label: 'Last Month' },
   ];
 
   const handledValueList = [
-    { value: "Accepted", label: "Accepted" },
-    { value: "Rejected", label: "Rejected" },
-    { value: "Unhandled", label: "Unhandled" },
+    { value: 'Accepted', label: 'Accepted' },
+    { value: 'Rejected', label: 'Rejected' },
+    { value: 'Unhandled', label: 'Unhandled' },
   ];
 
   const regionValueList = [
-    { value: "APAC", label: "APAC" },
-    { value: "EMEA", label: "EMEA" },
-    { value: "LATAM", label: "LATAM" },
-    { value: "NA", label: "NA" },
+    { value: 'APAC', label: 'APAC' },
+    { value: 'EMEA', label: 'EMEA' },
+    { value: 'LATAM', label: 'LATAM' },
+    { value: 'NA', label: 'NA' },
   ];
 
   const marketSegmentValueList = [
-    { value: "Mid-market", label: "Mid-market" },
-    { value: "Commercial", label: "Commercial" },
-    { value: "Enterprise", label: "Enterprise" },
+    { value: 'Mid-market', label: 'Mid-market' },
+    { value: 'Commercial', label: 'Commercial' },
+    { value: 'Enterprise', label: 'Enterprise' },
   ];
 
   const productValueList = [
-    { value: "Genesys Cloud", label: "Genesys Cloud" },
-    { value: "Genesys Engage", label: "Genesys Engage" },
-    { value: "Genesys Engage Cloud", label: "Genesys Engage Cloud" },
-    { value: "PureConnect", label: "PureConnect" },
-    { value: "Latitude by Genesys", label: "Latitude by Genesys" },
+    { value: 'Genesys Cloud', label: 'Genesys Cloud' },
+    { value: 'Genesys Engage', label: 'Genesys Engage' },
+    { value: 'Genesys Engage Cloud', label: 'Genesys Engage Cloud' },
+    { value: 'PureConnect', label: 'PureConnect' },
+    { value: 'Latitude by Genesys', label: 'Latitude by Genesys' },
   ];
   //#endregion
 
   //#region "state"
   const [query, setQuery] = useState(null);
   const [menuOpen, setMenuOpen] = useState(false);
-  const [formMode, setFormMode] = useState("edit"); // values: edit, save, load
-  const [saveFilterName, setSaveFilterName] = useState("");
+  const [formMode, setFormMode] = useState('edit'); // values: edit, save, load
+  const [saveFilterName, setSaveFilterName] = useState('');
   const [loadFilterSelectedItem, setLoadFilterSelectedItem] = useState(null);
   const [loadFilterItemList, setLoadFilterItemList] = useState([]);
   const [deleteFilterConfirm, setDeleteFilterConfirm] = useState(false);
@@ -65,23 +71,23 @@ export default function RequestsFilter(props) {
   useEffect(() => {
     // <parse query string>
     const parsedQueryString = queryString.parse(props.location.search);
-    console.log("parsedQueryString: ", parsedQueryString);
+    console.log('parsedQueryString: ', parsedQueryString);
     setQuery(parsedQueryString);
     // </parse query string>
     const latestFilterSet = localStorageGetLatestFilter();
     let initialFilterSet = latestFilterSet ? latestFilterSet : clearFilterSet;
-    initialFilterSet.isTest = window.location.hostname === "localhost";
-    console.log("initialFilterSet.isTest: ", initialFilterSet.isTest);
+    initialFilterSet.isTest = window.location.hostname === 'localhost';
+    console.log('initialFilterSet.isTest: ', initialFilterSet.isTest);
 
     if (parsedQueryString && parsedQueryString.requester) {
       // <Apply requester settings>
-      console.log("fixed requester will be set to: ", parsedQueryString.requester);
+      console.log('fixed requester will be set to: ', parsedQueryString.requester);
       initialFilterSet.requester = [parsedQueryString.requester];
       setRequesterFixed(true);
       // </Apply requester settings>
-    } else if (parsedQueryString && parsedQueryString.region && parsedQueryString.region.toLowerCase() !== "super-user") {
+    } else if (parsedQueryString && parsedQueryString.region && parsedQueryString.region.toLowerCase() !== 'super-user') {
       // <Apply region settings>
-      console.log("fixed region will be set to: ", parsedQueryString.region);
+      console.log('fixed region will be set to: ', parsedQueryString.region);
       initialFilterSet.region = [{ value: parsedQueryString.region, label: parsedQueryString.region }];
       setRegionFixed(true);
       // <Apply region settings>
@@ -90,7 +96,7 @@ export default function RequestsFilter(props) {
     initialFilterSet.subRegion = removeSelectedSubregionsForNotSelectedRegions(initialFilterSet.region, initialFilterSet.subRegion); // do not remove it from here
     setCurrentFilter(initialFilterSet);
     applySubRegionList(initialFilterSet.region);
-    raiseEvent("applyFilter", initialFilterSet);
+    raiseEvent('applyFilter', initialFilterSet);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   //#endregion
@@ -99,77 +105,77 @@ export default function RequestsFilter(props) {
   const toggleMenuOpen = () => setMenuOpen((prevState) => !prevState);
 
   const handleApplyFilters = () => {
-    console.log("handleApplyFilters()");
-    raiseEvent("applyFilter", currentFilter);
+    console.log('handleApplyFilters()');
+    raiseEvent('applyFilter', currentFilter);
     localStorageSetLatestFilter(currentFilter);
   };
 
   const handleMenuOptionLoad = () => {
-    console.log("handleMenuOptionLoad()");
+    console.log('handleMenuOptionLoad()');
     reloadFilterList();
     setDeleteFilterConfirm(false);
-    setFormMode("load");
+    setFormMode('load');
   };
 
   const handleMenuOptionSave = () => {
-    console.log("handleMenuOptionSave()");
-    setFormMode("save");
+    console.log('handleMenuOptionSave()');
+    setFormMode('save');
   };
 
   const handleMenuOptionClear = () => {
-    console.log("handleMenuOptionClear()");
+    console.log('handleMenuOptionClear()');
     setCurrentFilter(clearFilterSet);
     applySubRegionList(clearFilterSet.region);
-    raiseEvent("clearFilter", {});
+    raiseEvent('clearFilter', {});
     localStorageDropLatestFilter();
   };
 
   const handleSaveOkBtn = () => {
-    console.log("handleSaveOkBtn()");
+    console.log('handleSaveOkBtn()');
     localStorageSet(saveFilterName, currentFilter);
-    setSaveFilterName("");
-    setFormMode("edit");
+    setSaveFilterName('');
+    setFormMode('edit');
   };
 
   const handleSaveCancelBtn = () => {
-    console.log("handleSaveCancelBtn()");
-    setSaveFilterName("");
-    setFormMode("edit");
+    console.log('handleSaveCancelBtn()');
+    setSaveFilterName('');
+    setFormMode('edit');
   };
 
   const handleSaveFilterNameChanged = (v) => {
-    console.log("handleSaveFilterNameChanged() ", v.target.value);
+    console.log('handleSaveFilterNameChanged() ', v.target.value);
     setSaveFilterName(v.target.value);
   };
 
   const handleLoadApplyBtn = () => {
-    console.log("handleLoadApplyBtn()");
-    setFormMode("edit");
+    console.log('handleLoadApplyBtn()');
+    setFormMode('edit');
     setLoadFilterSelectedItem(null);
-    raiseEvent("applyFilter", currentFilter);
+    raiseEvent('applyFilter', currentFilter);
     localStorageSetLatestFilter(currentFilter);
   };
 
   const handleLoadDeleteBtn = () => {
-    console.log("handleLoadDeleteBtn()");
+    console.log('handleLoadDeleteBtn()');
     setDeleteFilterConfirm(true);
   };
 
   const handleLoadCloseBtn = () => {
-    console.log("handleLoadCloseBtn()");
-    setFormMode("edit");
+    console.log('handleLoadCloseBtn()');
+    setFormMode('edit');
     setLoadFilterSelectedItem(null);
   };
 
   const handleLoadDeleteConfirmBtn = () => {
-    console.log("handleLoadDeleteConfirmBtn()");
+    console.log('handleLoadDeleteConfirmBtn()');
     setDeleteFilterConfirm(false);
     localStorageDrop(loadFilterSelectedItem.value);
     reloadFilterList();
   };
 
   const handleLoadDeleteCancelBtn = () => {
-    console.log("handleLoadDeleteCancelBtn()");
+    console.log('handleLoadDeleteCancelBtn()');
     setDeleteFilterConfirm(false);
   };
 
@@ -177,7 +183,7 @@ export default function RequestsFilter(props) {
 
   //#region "validators"
   const saveFilterNameValid = (v) => {
-    console.log("saveFilterNameValid() ", v);
+    console.log('saveFilterNameValid() ', v);
     if (!v) return false;
     const pattern = /^(?=.*[^\W_])[\w ]*$/;
     if (v && v.length <= 30 && pattern.test(v) && !localStorageGet(v)) return true;
@@ -187,11 +193,11 @@ export default function RequestsFilter(props) {
 
   //#region "local storage"
 
-  const filterConfigKey = "filter.configuration.list";
-  const latestFilterKey = "filter.configuration.latest";
+  const filterConfigKey = 'filter.configuration.list';
+  const latestFilterKey = 'filter.configuration.latest';
 
   const localStorageGetAll = () => {
-    console.log("localStorageGetAll()");
+    console.log('localStorageGetAll()');
     const resultString = localStorage.getItem(filterConfigKey);
     if (!resultString) return [];
     const result = JSON.parse(resultString);
@@ -199,7 +205,7 @@ export default function RequestsFilter(props) {
   };
 
   const localStorageGet = (name) => {
-    console.log("localStorageGet()");
+    console.log('localStorageGet()');
     const resultString = localStorage.getItem(filterConfigKey);
     if (!resultString) return null;
     const result = JSON.parse(resultString);
@@ -207,7 +213,7 @@ export default function RequestsFilter(props) {
   };
 
   const localStorageSet = (name, filterConfiguration) => {
-    console.log("localStorageSet()");
+    console.log('localStorageSet()');
     const resultString = localStorage.getItem(filterConfigKey);
     const result = resultString ? JSON.parse(resultString) : [];
     if (!Array.isArray(result)) return;
@@ -217,7 +223,7 @@ export default function RequestsFilter(props) {
   };
 
   const localStorageDrop = (name) => {
-    console.log("localStorageDrop()");
+    console.log('localStorageDrop()');
     const resultString = localStorage.getItem(filterConfigKey);
     if (!resultString) return;
     const result = JSON.parse(resultString);
@@ -227,7 +233,7 @@ export default function RequestsFilter(props) {
   };
 
   const localStorageGetLatestFilter = (filterConfiguration) => {
-    console.log("localStorageGetLatestFilter");
+    console.log('localStorageGetLatestFilter');
     const latestFilterStr = localStorage.getItem(latestFilterKey);
     if (latestFilterStr) {
       return JSON.parse(latestFilterStr);
@@ -235,12 +241,12 @@ export default function RequestsFilter(props) {
   };
 
   const localStorageSetLatestFilter = (filterConfiguration) => {
-    console.log("localStorageSetLatestFilter");
+    console.log('localStorageSetLatestFilter');
     localStorage.setItem(latestFilterKey, JSON.stringify(filterConfiguration));
   };
 
   const localStorageDropLatestFilter = () => {
-    console.log("localStorageDropLatestFilter");
+    console.log('localStorageDropLatestFilter');
     localStorage.removeItem(latestFilterKey);
   };
 
@@ -249,7 +255,7 @@ export default function RequestsFilter(props) {
   //#region "misc"
 
   const reloadFilterList = () => {
-    console.log("reloadFilterList()");
+    console.log('reloadFilterList()');
     const itemList = localStorageGetAll();
     const itemList1 = itemList.map((x) => {
       return { value: x.name, label: x.name };
@@ -260,7 +266,7 @@ export default function RequestsFilter(props) {
   };
 
   const applySubRegionList = (region) => {
-    console.log("applySubRegionList()");
+    console.log('applySubRegionList()');
     if (!Array.isArray(region) || region.length === 0) {
       setSubregionValueList([]);
       return;
@@ -278,7 +284,7 @@ export default function RequestsFilter(props) {
   };
 
   const removeSelectedSubregionsForNotSelectedRegions = (region, subRegion) => {
-    console.log("removeSelectedSubregionsForNotSelectedRegions()");
+    console.log('removeSelectedSubregionsForNotSelectedRegions()');
 
     let result = [];
     if (!Array.isArray(region)) return [];
@@ -299,8 +305,8 @@ export default function RequestsFilter(props) {
     <>
       {/* <Header> */}
       <Navbar color="light">
-        <span style={{ fontWeight: "600" }}>
-          <IoIosFunnel style={{ marginRight: "4px" }} />
+        <span style={{ fontWeight: '600' }}>
+          <IoIosFunnel style={{ marginRight: '4px' }} />
           Filter configuration
         </span>
         <Nav className="ml-auto" navbar>
@@ -326,12 +332,12 @@ export default function RequestsFilter(props) {
       {/* </Header> */}
 
       {/* <Load filter> */}
-      {formMode === "load" && (
-        <Form className="p-3" style={deleteFilterConfirm ? { backgroundColor: "mistyrose" } : { backgroundColor: "antiquewhite" }}>
+      {formMode === 'load' && (
+        <Form className="p-3" style={deleteFilterConfirm ? { backgroundColor: 'mistyrose' } : { backgroundColor: 'antiquewhite' }}>
           <Label>Filter list</Label>
           <Select
             isDisabled={deleteFilterConfirm}
-            noOptionsMessage={() => "No filters configured yet"}
+            noOptionsMessage={() => 'No filters configured yet'}
             className="mb-3"
             options={loadFilterItemList}
             isMulti={false}
@@ -347,7 +353,7 @@ export default function RequestsFilter(props) {
             }}
           />
           {!deleteFilterConfirm && (
-            <FormGroup style={{ textAlign: "center" }} inline>
+            <FormGroup style={{ textAlign: 'center' }} inline>
               <Button outline size="sm" color="primary" className="ml-2" onClick={handleLoadApplyBtn} disabled={!loadFilterSelectedItem}>
                 <IoMdFlash /> Apply
               </Button>
@@ -360,7 +366,7 @@ export default function RequestsFilter(props) {
             </FormGroup>
           )}
           {deleteFilterConfirm && (
-            <FormGroup style={{ textAlign: "center" }} inline>
+            <FormGroup style={{ textAlign: 'center' }} inline>
               <Button outline size="sm" color="secondary" className="ml-2" onClick={handleLoadDeleteCancelBtn}>
                 <IoMdClose /> Cancel
               </Button>
@@ -374,12 +380,12 @@ export default function RequestsFilter(props) {
       {/* </Load filter> */}
 
       {/* <Save filter> */}
-      {formMode === "save" && (
-        <Form className="p-3" style={{ backgroundColor: "antiquewhite" }}>
+      {formMode === 'save' && (
+        <Form className="p-3" style={{ backgroundColor: 'antiquewhite' }}>
           <Label>Save filter as</Label>
           <Input type="text" className="form-control" placeholder="Enter a name" value={saveFilterName} onChange={handleSaveFilterNameChanged} />
-          {saveFilterName && !saveFilterNameValid(saveFilterName) && <span style={{ color: "red", fontWeight: "600" }}>Please enter a valid and unique value</span>}
-          <FormGroup style={{ textAlign: "center" }} className="mt-3" inline>
+          {saveFilterName && !saveFilterNameValid(saveFilterName) && <span style={{ color: 'red', fontWeight: '600' }}>Please enter a valid and unique value</span>}
+          <FormGroup style={{ textAlign: 'center' }} className="mt-3" inline>
             <Button outline size="sm" color="primary" className="ml-2" onClick={handleSaveOkBtn} disabled={!saveFilterNameValid(saveFilterName)}>
               <IoMdCheckmark /> Save
             </Button>
@@ -392,7 +398,7 @@ export default function RequestsFilter(props) {
       {/* </Save filter> */}
 
       {/* <Filter configuration> */}
-      <div className={formMode === "edit" ? "" : "disabled"}>
+      <div className={formMode === 'edit' ? '' : 'disabled'}>
         <div className="p-3">
           <div className="mb-3">
             Status
@@ -418,9 +424,25 @@ export default function RequestsFilter(props) {
                   cf.isDeleted = v.target.checked;
                   setCurrentFilter(cf);
                 }}
-              />{" "}
+              />{' '}
               Show deleted only
             </Label>
+          </div>
+
+          <div className="mb-3">
+            Created
+            <Select
+              options={createdValueList}
+              isMulti={false}
+              isSearchable={true}
+              value={currentFilter.createdAt}
+              onChange={(v) => {
+                console.log(v);
+                let cf = { ...currentFilter };
+                cf.createdAt = v;
+                setCurrentFilter(cf);
+              }}
+            />
           </div>
 
           <div className="mb-3">
@@ -553,7 +575,7 @@ export default function RequestsFilter(props) {
             Customer name
             <Input
               placeholder="Enter a name"
-              value={currentFilter.customerName || ""}
+              value={currentFilter.customerName || ''}
               onChange={(e) => {
                 console.log(e.target.value);
                 let cf = { ...currentFilter };
@@ -563,7 +585,7 @@ export default function RequestsFilter(props) {
             />
           </div>
 
-          <div className="mb-3" style={{ textAlign: "center" }}>
+          <div className="mb-3" style={{ textAlign: 'center' }}>
             <Button outline onClick={handleApplyFilters}>
               <IoMdFlash /> Apply filter
             </Button>

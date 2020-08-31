@@ -1,3 +1,10 @@
 {
-    "editor.wordWrap": "off"
+  "editor.wordWrap": "off",
+  "liveServer.settings.port": 443,
+  "liveServer.settings.https": {
+    "enable": true, //set it true to enable the feature.
+    "cert": "D:\\https\\server.crt", //full path of the certificate
+    "key": "D:\\https\\server.key", //full path of the private key
+    "passphrase": "12345"
+  }
 }
