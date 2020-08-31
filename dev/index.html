@@ -439,10 +439,17 @@
           $('#oppPartnerCustomerName').val(myData.Account && myData.Account.Name ? myData.Account.Name : 'n/a');
           $('#oppAssignedSC').val(myData.dsr && myData.dsr.virtualTeamNames ? myData.dsr.virtualTeamNames : myData.Solution_Consultant__r && myData.Solution_Consultant__r.Name ? myData.Solution_Consultant__r.Name : 'n/a');
 
-        } catch (error) {
-          console.log(error);
-        }
+          // Find vaild mail address for assigned SC
+          try {
+            sfOject.oppAssignedSCMail = await postUsersSearch($('#oppAssignedSC').val());
+            console.log('sfOject.oppAssignedSCMail:', sfOject.oppAssignedSCMail);
+          } catch (error) {
+            console.error(error);
+          }
 
+        } catch (error) {
+          console.error(error);
+        }
 
       });
 
@@ -531,6 +538,7 @@
       gcToken = userInfo.token;
       localStorage.setItem('gcToken', gcToken);
       localStorage.setItem('userName', userInfo.name);
+
 
       // Populate user info
       $('#requesterName').val(userInfo.name);
@@ -761,7 +769,7 @@
 
         console.log(`Region: ${region}, subRegion: ${subRegion}, Product: ${product}, Tasks: ${JSON.stringify(tasks)}, Requester Name: ${requesterName}, Requester Email: ${requesterEmail}, Requester Phone Number: ${requesterPhoneNumber}, Need Completed By: ${needCompletedBy}, Description: ${description}`);
 
-        await postRequests(region, subRegion, segment, product, tasks, requesterName, requesterEmail, requesterPhoneNumber, needCompletedBy, description, oppName, oppUrl, oppDSRUrl, oppOwner, oppPartnerCustomerName, oppAssignedSC, gcToken, customerRelationship, customerType);
+        await postRequests(region, subRegion, segment, product, tasks, requesterName, requesterEmail, requesterPhoneNumber, needCompletedBy, description, oppName, oppUrl, oppDSRUrl, oppOwner, oppPartnerCustomerName, oppAssignedSC, sfObject.oppAssignedSCMail, gcToken, customerRelationship, customerType);
         console.log('Success!');
         showMessage('Request submitted. Thanks!');
 
@@ -839,7 +847,8 @@
           oppDSRUrl: $('#oppDSRUrl').val(),
           oppOwner: $('#oppOwner').val(),
           oppPartnerCustomerName: $('#oppPartnerCustomerName').val(),
-          oppAssignedSC: $('#oppAssignedSC').val()
+          oppAssignedSC: $('#oppAssignedSC').val(),
+          oppAssignedSCMail: sfOject.oppAssignedSCMail
 
         };
 
@@ -923,6 +932,8 @@
         $('#oppOwner').val(data.oppOwner);
         $('#oppPartnerCustomerName').val(data.oppPartnerCustomerName);
         $('#oppAssignedSC').val(data.oppAssignedSC);
+
+        sfOject.oppAssignedSCMail = data.oppAssignedSCMail;
 
 
       } catch (error) {

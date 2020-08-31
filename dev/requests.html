@@ -38,12 +38,12 @@
             </ul>
             <ul class="nav navbar-nav mr-2" style="float: left; display: none;"">
                 <li>
-                    <button class="btn btn-secondary btn-sm" id="btnOnlyClosed"> Closed </button>
+                    <button class=" btn btn-secondary btn-sm" id="btnOnlyClosed"> Closed </button>
                 </li>
             </ul>
             <ul class="nav navbar-nav mr-4" style="float: left; display: none;"">
                 <li>
-                    <button class="btn btn-secondary btn-sm" id="btnOnlyDeleted"> Deleted </button>
+                    <button class=" btn btn-secondary btn-sm" id="btnOnlyDeleted"> Deleted </button>
                 </li>
             </ul>
             <ul class="nav navbar-nav" style="float: right;">
@@ -71,7 +71,7 @@
         <div id="filter-sidebar" class="filter-sidebar-collapsed right">
             <button id="filter-sidebar-button-expand" type="button" class="btn btn-secondary filter-sidebar-button" onclick="filterExpand()"><i class="fa fa-angle-double-left"></i></button>
             <button id="filter-sidebar-button-collapse" type="button" class="btn btn-secondary filter-sidebar-button" onclick="filterCollapse()"><i class="fa fa-angle-double-right"></i></button>
-            <span id="filter-sidebar-label" class="filter-sidebar-addon-vertical-info">Filter configuration</span>            
+            <span id="filter-sidebar-label" class="filter-sidebar-addon-vertical-info">Filter configuration</span>
             <iframe id="filter-sidebar-addon" class="filter-sidebar-addon"></iframe>
         </div>
     </div>
@@ -357,6 +357,7 @@
     <!-- Bootbox -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/5.4.0/bootbox.min.js"></script>
     <!-- Our Scripts -->
+    <script src="js/gc.js"></script>
     <script src="js/requests.js"></script>
     <script src="js/tools.js"></script>
     <!-- Dictionary -->
@@ -383,8 +384,12 @@
         console.log(`continue with gcToken: ${gcToken}`);
 
         let tasksControls = [], taskId = 10000;
+        let sfOject = {};
 
-        $(document).ready(function () {
+
+        $(document).ready(async function () {
+            await getMe(); // Re-Login
+
             // <collapse filter sidebar>
             filterCollapse();
             // </collapse filter sidebar>
@@ -451,16 +456,26 @@
                     $('#oppPartnerCustomerName').val(myData.Account && myData.Account.Name ? myData.Account.Name : 'n/a');
                     $('#oppAssignedSC').val(myData.dsr && myData.dsr.virtualTeamNames ? myData.dsr.virtualTeamNames : myData.Solution_Consultant__r && myData.Solution_Consultant__r.Name ? myData.Solution_Consultant__r.Name : 'n/a');
 
+
+                    // Find vaild mail address for assigned SC
+                    try {
+                        sfOject.oppAssignedSCMail = await postUsersSearch($('#oppAssignedSC').val());
+                        console.log('sfOject.oppAssignedSCMail:', sfOject.oppAssignedSCMail);
+                    } catch (error) {
+                        console.error(error);
+                    }
+
+
                 } catch (error) {
                     console.error(error);
                 }
-
 
             });
 
 
             $('#sfData').on('select2:clear', async function (e) {
                 console.log('clear items related to SF');
+                sfOject = {};
                 $('#oppUrl').val('');
                 $('#oppDSRUrl').val('');
                 $('#oppOwner').val('');
@@ -473,7 +488,7 @@
 
 
         let region = getUrlParameter("region");
-        console.log('Detected region: ', region);        
+        console.log('Detected region: ', region);
         $("#region").text(region);
 
         // SetLink for Dashboard
@@ -501,13 +516,13 @@
             }
         });
         // </handle message event from filter iframe>
-        
+
         // <load filter page into iFrame            
         const filterLocation = region ? `addons/build/\#/requestsfilter?region=${region}&token=${gcToken}` : `addons/build/\#/requestsfilter?requester=${userName}&token=${gcToken}`;;
         console.log('filterLocation: ', filterLocation);
         $("#filter-sidebar-addon").attr("src", filterLocation);
         // </load filter page into iFrame>
-        
+
         $(function () {
             $("#datepicker").datepicker({
                 daysOfWeekDisabled: ['0', '6'],
@@ -554,6 +569,7 @@
             $("#editModal #divNotesHistory").html("");
 
             setDatesLabels(undefined, undefined, undefined);
+            sfOject = {};
 
             validator.resetForm(); // Reset validation errors
         }
@@ -709,7 +725,7 @@
                     },
                     controller: {
                         loadData: async function (filter) {
-                        
+
                             let hasFilter = false;
 
                             var doNotReload = false;
@@ -737,7 +753,7 @@
                             try {
                                 if (doNotReload) {
                                     console.log('Skipping requests reload');
-                                } else  {
+                                } else {
                                     console.log('Loading filtered request list');
                                     requests.requests = await queryFilteredRequests(filterConfiguration, gcToken);
                                 }
@@ -1068,7 +1084,7 @@
             }
         }
 
-        function showModal(request) {
+        async function showModal(request) {
             console.log("Showing modal for:", request);
 
             if (request.acceptedRejected)
@@ -1133,6 +1149,21 @@
             $("#editModal #txtAcceptedRejectedNotes").val("");
             $("#editModal #divNotesHistory").html(request.acceptedRejectedNotes);
             $("#editModal #teamMembers").val(request.teamMembers);
+
+
+            // Find vaild mail address for assigned SC
+            try {
+                if (!request.oppAssignedSCMail && $('#oppAssignedSC').val().length > 0) {
+                    sfOject.oppAssignedSCMail = await postUsersSearch($('#oppAssignedSC').val());
+                } else
+                    sfOject.oppAssignedSCMail = request.oppAssignedSCMail
+                console.log('sfOject.oppAssignedSCMail:', sfOject.oppAssignedSCMail);
+            } catch (error) {
+                console.error(error);
+            }
+
+
+
             $("#editModal").modal("show");
 
             if (request.isDeleted) {
@@ -1143,7 +1174,7 @@
                 $("#btnAcceptRequest").attr("hidden", true);
                 $("#btnRestore").attr("disabled", false);
                 $("#btnRestore").attr("hidden", false);
-                $("#btnAddNote").prop('disabled', false);                
+                $("#btnAddNote").prop('disabled', false);
             } else {
                 $("#modal-form :input").attr("disabled", false);
                 $("#btnRejectRequest").attr("hidden", false);
@@ -1439,7 +1470,7 @@
                 console.log(`Priority: ${priority}, Accepted/Rejected: ${acceptedRejected}, Status: ${status}, Program Manager: ${programManager}, AcceptedRejectedNotes: ${acceptedRejectedNotes}, teamMembers: ${teamMembers}`);
                 console.log(`dateAccepted: ${dateAccepted}, dateRejected: ${dateRejected}, dateClosed: ${dateClosed}`);
 
-                await putRequest(id, region, subRegion, segment, product, tasks, requesterName, requesterEmail, requesterPhoneNumber, needCompletedBy, description, oppName, oppUrl, oppDSRUrl, oppOwner, oppPartnerCustomerName, oppAssignedSC, priority, acceptedRejected, status, programManager, acceptedRejectedNotes, teamMembers, gcToken, undefined, customerRelationship, customerType, dateAccepted, dateRejected, dateClosed);
+                await putRequest(id, region, subRegion, segment, product, tasks, requesterName, requesterEmail, requesterPhoneNumber, needCompletedBy, description, oppName, oppUrl, oppDSRUrl, oppOwner, oppPartnerCustomerName, oppAssignedSC, sfOject.oppAssignedSCMail, priority, acceptedRejected, status, programManager, acceptedRejectedNotes, teamMembers, gcToken, undefined, customerRelationship, customerType, dateAccepted, dateRejected, dateClosed);
                 console.log('Success!');
                 showMessage("Request updated. Thanks!");
                 $("#editModal").modal("hide");
@@ -1469,7 +1500,7 @@
 
         $("#btnAddNote").on("click", async (e) => {
             let note = $("#editModal #divNotesHistory").html();
-            let newNote = $("#editModal #txtAcceptedRejectedNotes").val().trim().replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/\n/g, "<br />");
+            let newNote = $("#editModal #txtAcceptedRejectedNotes").val().trim().replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/\n/g, "<br />");
             if (newNote === "") {
                 console.warn("Cannot add empty notes!");
                 $("#editModal #txtAcceptedRejectedNotes").val("");
@@ -1479,7 +1510,7 @@
             note += `<div class="notes-timestamp">wrote by <b>${userName}</b> on ${moment().format("MMM Do")} at ${moment().format("HH:mm [(UTC]Z[)]")}:</div>`;
             note += '<div class="notes-content">';
             note += newNote;
-            note += '</div>';      
+            note += '</div>';
             $("#editModal #divNotesHistory").html(note);
             $("#editModal #txtAcceptedRejectedNotes").val("");
         });

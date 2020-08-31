@@ -5,7 +5,7 @@ var filterConfiguration = null;
 if (window.location.href.includes("localhost")) apiBasePath = "http://localhost:3000";
 else apiBasePath = "https://drbojb15ma.execute-api.eu-central-1.amazonaws.com/dev";
 
-async function postRequests(region, subRegion, segment, product, tasks, requesterName, requesterEmail, requesterPhoneNumber, needCompletedBy, description, oppName, oppUrl, oppDSRUrl, oppOwner, oppPartnerCustomerName, oppAssignedSC, _token, customerRelationship, customerType) {
+async function postRequests(region, subRegion, segment, product, tasks, requesterName, requesterEmail, requesterPhoneNumber, needCompletedBy, description, oppName, oppUrl, oppDSRUrl, oppOwner, oppPartnerCustomerName, oppAssignedSC, oppAssignedSCMail, _token, customerRelationship, customerType) {
   console.log("Mail Distribution:", mailDistribution[product][$("#region").val()]);
   var data = {
     region: region,
@@ -72,6 +72,11 @@ async function postRequests(region, subRegion, segment, product, tasks, requeste
     data.oppAssignedSC = oppAssignedSC;
   }
 
+  if (oppAssignedSCMail.length > 0) {
+    data.oppAssignedSCMail = oppAssignedSCMail;
+  }
+
+
   //#endregion
 
   return await $.ajax({
@@ -100,7 +105,7 @@ async function postRequests(region, subRegion, segment, product, tasks, requeste
     });
 }
 
-async function putRequest(id, region, subRegion, segment, product, tasks, requesterName, requesterEmail, requesterPhoneNumber, needCompletedBy, description, oppName, oppUrl, oppDSRUrl, oppOwner, oppPartnerCustomerName, oppAssignedSC, priority, acceptedRejected, status, programManager, acceptedRejectedNotes, teamMembers, _token, isDeleted, customerRelationship, customerType, dateAccepted, dateRejected, dateClosed) {
+async function putRequest(id, region, subRegion, segment, product, tasks, requesterName, requesterEmail, requesterPhoneNumber, needCompletedBy, description, oppName, oppUrl, oppDSRUrl, oppOwner, oppPartnerCustomerName, oppAssignedSC, oppAssignedSCMail, priority, acceptedRejected, status, programManager, acceptedRejectedNotes, teamMembers, _token, isDeleted, customerRelationship, customerType, dateAccepted, dateRejected, dateClosed) {
   if (!isDeleted) isDeleted = false;
   if (!acceptedRejected) acceptedRejected = "not handled";
 
@@ -183,6 +188,11 @@ async function putRequest(id, region, subRegion, segment, product, tasks, reques
   if (oppAssignedSC.length > 0) {
     data.oppAssignedSC = oppAssignedSC;
   }
+
+  if (oppAssignedSCMail.length > 0) {
+    data.oppAssignedSCMail = oppAssignedSCMail;
+  }
+
 
   //#endregion
 

@@ -90,6 +90,51 @@ function getMe() {
     });
 }
 
+function postUsersSearch(_userName) {
+    console.log('function postUsersSearch() for user', _userName);
+    return new Promise(async (resolve, reject) => {
+        try {
+            // Get Users/me
+            let apiInstance = new platformClient.SearchApi();
+            let body = {
+                "query": [
+                    {
+                        "fields": ["name"],
+                        "value": _userName,
+                        "type": "EXACT"
+                    }
+                ]
+            };
+
+            apiInstance.postUsersSearch(body)
+                .then((data) => {
+                    if (data.total === 1 && data.results[0].primaryContactInfo.length > 0 && data.results[0].primaryContactInfo[0].address) {
+                        resolve(data.results[0].primaryContactInfo[0].address);
+                    } else {
+                        if (data.total > 1) {
+                            console.error('ambigous response. more than 1 match found!');
+                            reject();
+                        } else {
+                            console.error('not found');
+                            reject();
+                        }
+                    }
+                })
+                .catch((err) => {
+                    console.log('There was a failure calling postUsersSearch');
+                    console.error(err);
+                    reject(err);
+                });
+        } catch (err) {
+            console.log('There was a failure calling postUsersSearch()');
+            console.error(err);
+            reject(err);
+        };
+
+    });
+}
+
+
 /* 
 async function login() {
     console.log('function login()');
