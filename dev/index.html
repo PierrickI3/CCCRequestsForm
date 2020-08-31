@@ -16,7 +16,6 @@
   <link href="https://cdnjs.cloudflare.com/ajax/libs/jquery-toast-plugin/1.3.2/jquery.toast.min.css" rel="stylesheet" />
   <!-- Custom CSS -->
   <link rel="stylesheet" href="./css/custom.css" />
-
 </head>
 
 <body>
@@ -36,7 +35,7 @@
     </a>
 
     <ul class="mb-0">
-      <ul class="nav navbar-nav" style="float: right;">
+      <ul class="nav navbar-nav" style="float: right">
         <li>
           <a href="#" id="reviewRequestsButton" class="admin btn btn-primary btn-sm" hidden>Review Requests</a>
         </li>
@@ -53,7 +52,7 @@
     <strong>Maintenance Alert</strong> This site is being updated. Please wait.
     <a class="btn btn-light" href="#" onclick="location.reload();"><i class="fa fa-refresh"></i> Refresh</a>
   </div>
-  <div class="alert alert-warning fade show text-center"><strong>#rapidResponse</strong> For Rapid Response Offer requests, please use <strong>top-right button #rapidresponse</strong></div>
+  <!-- <div class="alert alert-warning fade show text-center"><strong>#rapidResponse</strong> For Rapid Response Offer requests, please use <strong>top-right button #rapidresponse</strong></div> -->
 
   <div id="form" class="container-fluid">
     <br />
@@ -73,8 +72,8 @@
           <div class="form-row mr-4 ml-2">
             <div class="form-group col-md-6">
               <label for="region">Region <span class="text-danger font-weight-bold">*</span></label>
-              <span data-toggle="tooltip" data-html="true" data-placement="bottom" style="float: right;" title="Enter the <b>region</b> you are located in">
-                <i class="fa fa-question-circle-o" aria-hidden="true" style="color: gray;"></i>
+              <span data-toggle="tooltip" data-html="true" data-placement="bottom" style="float: right" title="Enter the <b>region</b> you are located in">
+                <i class="fa fa-question-circle-o" aria-hidden="true" style="color: gray"></i>
               </span>
               <select id="region" name="region" class="form-control" required>
                 <option value="" disabled selected>Select a Region</option>
@@ -86,8 +85,8 @@
             </div>
             <div class="form-group col-md-6">
               <label for="subRegion">Territory <span class="text-danger font-weight-bold">*</span></label>
-              <span data-toggle="tooltip" data-html="true" data-placement="bottom" style="float: right;" title="Enter the <b>territory</b> you are located in">
-                <i class="fa fa-question-circle-o" aria-hidden="true" style="color: gray;"></i>
+              <span data-toggle="tooltip" data-html="true" data-placement="bottom" style="float: right" title="Enter the <b>territory</b> you are located in">
+                <i class="fa fa-question-circle-o" aria-hidden="true" style="color: gray"></i>
               </span>
               <select id="subRegion" name="subRegion" class="form-control" required>
                 <option value="" disabled selected>Select a Territory</option>
@@ -99,8 +98,8 @@
           <div class="form-row mr-4 ml-2">
             <div class="form-group col-md-6">
               <label for="customerRelationship">Direct/Indirect? <span class="text-danger font-weight-bold">*</span></label>
-              <span data-toggle="tooltip" data-html="true" data-placement="bottom" style="float: right;" title="Choose <b>Relationship with a Customer</b> Direct/Indirect">
-                <i class="fa fa-question-circle-o" aria-hidden="true" style="color: gray;"></i>
+              <span data-toggle="tooltip" data-html="true" data-placement="bottom" style="float: right" title="Choose <b>Relationship with a Customer</b> Direct/Indirect">
+                <i class="fa fa-question-circle-o" aria-hidden="true" style="color: gray"></i>
               </span>
               <select id="customerRelationship" name="customerRelationship" class="form-control" required>
                 <option value="" disabled selected>Select a Customer Relationship</option>
@@ -110,8 +109,8 @@
             </div>
             <div class="form-group col-md-6">
               <label for="customerType">Customer Type <span class="text-danger font-weight-bold">*</span></label>
-              <span data-toggle="tooltip" data-html="true" data-placement="bottom" style="float: right;" title="Choose <b>Customer Type</b>">
-                <i class="fa fa-question-circle-o" aria-hidden="true" style="color: gray;"></i>
+              <span data-toggle="tooltip" data-html="true" data-placement="bottom" style="float: right" title="Choose <b>Customer Type</b>">
+                <i class="fa fa-question-circle-o" aria-hidden="true" style="color: gray"></i>
               </span>
               <select id="customerType" name="customerType" class="form-control" required>
                 <option value="" disabled selected>Select a Customer Type</option>
@@ -125,8 +124,8 @@
           <div class="form-row mr-4 ml-2">
             <div class="form-group col-md-6">
               <label for="segment">Market Segment <span class="text-danger font-weight-bold">*</span></label>
-              <span data-toggle="tooltip" data-html="true" data-placement="bottom" style="float: right;" title="Select <b>Sales Segment</b>">
-                <i class="fa fa-question-circle-o" aria-hidden="true" style="color: gray;"></i>
+              <span data-toggle="tooltip" data-html="true" data-placement="bottom" style="float: right" title="Select <b>Sales Segment</b>">
+                <i class="fa fa-question-circle-o" aria-hidden="true" style="color: gray"></i>
               </span>
               <select id="segment" name="segment" class="form-control" required>
                 <option value="" disabled selected>Select a Segment</option>
@@ -136,8 +135,8 @@
               </select>
             </div>
             <div class="form-group col-md-6">
-              <span data-toggle="tooltip" data-html="true" data-placement="bottom" style="float: right;" title="Select the <b>product</b> name">
-                <i class="fa fa-question-circle-o" aria-hidden="true" style="color: gray;"></i>
+              <span data-toggle="tooltip" data-html="true" data-placement="bottom" style="float: right" title="Select the <b>product</b> name">
+                <i class="fa fa-question-circle-o" aria-hidden="true" style="color: gray"></i>
               </span>
               <label for="product">Product <span class="text-danger font-weight-bold">*</span></label>
               <select id="product" name="product" class="form-control" required>
@@ -154,8 +153,8 @@
           <!-- Tasks -->
 
           <div class="border border-black mr-3">
-            <span data-toggle="tooltip" data-html="true" data-placement="bottom" style="float: right;" class="mr-2" title="Add one or more Tasks related to your Request. Each Task contain main Category and corresponding Type.">
-              <i class="fa fa-question-circle-o" aria-hidden="true" style="color: gray;"></i>
+            <span data-toggle="tooltip" data-html="true" data-placement="bottom" style="float: right" class="mr-2" title="Add one or more Tasks related to your Request. Each Task contain main Category and corresponding Type.">
+              <i class="fa fa-question-circle-o" aria-hidden="true" style="color: gray"></i>
             </span>
             <div class="form-row mt-1 mr-4 ml-2">
               <div class="form-group col-md-5 text-center">Category <span class="text-danger font-weight-bold">*</span></div>
@@ -169,14 +168,14 @@
           <div class="form-row mr-4 ml-2 mt-2">
             <div class="form-group col-md-6">
               <label for="requesterName">Requester Name <span class="text-danger font-weight-bold">*</span></label>
-              <span data-toggle="tooltip" data-html="true" data-placement="bottom" style="float: right;" title="Your name. By default it's automatically collected from Genesys Cloud account">
-                <i class="fa fa-question-circle-o" aria-hidden="true" style="color: gray;"></i>
+              <span data-toggle="tooltip" data-html="true" data-placement="bottom" style="float: right" title="Your name. By default it's automatically collected from Genesys Cloud account">
+                <i class="fa fa-question-circle-o" aria-hidden="true" style="color: gray"></i>
               </span>
               <input type="text" class="form-control" id="requesterName" name="requesterName" placeholder="Your Name" required />
             </div>
             <div class="form-group col-md-6">
-              <span data-toggle="tooltip" data-html="true" data-placement="bottom" style="float: right;" title="Your email address. By default it's automatically collected from Genesys Cloud account">
-                <i class="fa fa-question-circle-o" aria-hidden="true" style="color: gray;"></i>
+              <span data-toggle="tooltip" data-html="true" data-placement="bottom" style="float: right" title="Your email address. By default it's automatically collected from Genesys Cloud account">
+                <i class="fa fa-question-circle-o" aria-hidden="true" style="color: gray"></i>
               </span>
               <label for="requesterEmail">Requester Email <span class="text-danger font-weight-bold">*</span></label>
               <input type="text" class="form-control" id="requesterEmail" name="requesterEmail" placeholder="Your Email Address" required />
@@ -184,15 +183,15 @@
           </div>
           <div class="form-row mr-4 ml-2">
             <div class="form-group col-md-6">
-              <span data-toggle="tooltip" data-html="true" data-placement="bottom" style="float: right;" title="Enter the phone number where you can be contacted. Be sure to include your country code, for example +447557123456">
-                <i class="fa fa-question-circle-o" aria-hidden="true" style="color: gray;"></i>
+              <span data-toggle="tooltip" data-html="true" data-placement="bottom" style="float: right" title="Enter the phone number where you can be contacted. Be sure to include your country code, for example +447557123456">
+                <i class="fa fa-question-circle-o" aria-hidden="true" style="color: gray"></i>
               </span>
               <label for="requesterPhoneNumber">Requester Phone # <span class="text-danger font-weight-bold">*</span></label>
               <input type="text" class="form-control" id="requesterPhoneNumber" name="requesterPhoneNumber" placeholder="Your Phone Number" required />
             </div>
             <div class="form-group col-md-6">
-              <span data-toggle="tooltip" data-html="true" data-placement="bottom" style="float: right;" title="Enter a date you require the work completed. Please note, this is not a guarantee and will be discussed with the Competence Centre Program Manager when they contact you">
-                <i class="fa fa-question-circle-o" aria-hidden="true" style="color: gray;"></i>
+              <span data-toggle="tooltip" data-html="true" data-placement="bottom" style="float: right" title="Enter a date you require the work completed. Please note, this is not a guarantee and will be discussed with the Competence Centre Program Manager when they contact you">
+                <i class="fa fa-question-circle-o" aria-hidden="true" style="color: gray"></i>
               </span>
               <label for="datepicker">Need Completed By <span class="text-danger font-weight-bold">*</span></label>
               <input type="text" id="datepicker" class="form-control" required placeholder="Click to set a date" autocomplete="off" />
@@ -200,8 +199,8 @@
           </div>
           <div class="form-row mr-4 ml-2">
             <div class="form-group col-md-12">
-              <span data-toggle="tooltip" data-html="true" data-placement="bottom" style="float: right;" title="Enter a brief summary of the work required. Your Competence Centre Program Manager will contact you to discuss the request further">
-                <i class="fa fa-question-circle-o" aria-hidden="true" style="color: gray;"></i>
+              <span data-toggle="tooltip" data-html="true" data-placement="bottom" style="float: right" title="Enter a brief summary of the work required. Your Competence Centre Program Manager will contact you to discuss the request further">
+                <i class="fa fa-question-circle-o" aria-hidden="true" style="color: gray"></i>
               </span>
               <label for="description">Description <span class="text-danger font-weight-bold">*</span></label>
               <textarea class="form-control" id="description" name="description" placeholder="Describe your request" required></textarea>
@@ -209,32 +208,31 @@
           </div>
           <div class="form-row mr-4 ml-2">
             <div class="form-group col-md-12">
-              <span data-toggle="tooltip" data-html="true" data-placement="bottom" style="float: right;" title="Search for Opportunity in Salesforce. If present DSR will also be collected">
-                <i class="fa fa-question-circle-o" aria-hidden="true" style="color: gray;"></i>
+              <span data-toggle="tooltip" data-html="true" data-placement="bottom" style="float: right" title="Search for Opportunity in Salesforce. If present DSR will also be collected">
+                <i class="fa fa-question-circle-o" aria-hidden="true" style="color: gray"></i>
               </span>
               <label for="salesforceAccountOpportunity">Opportunity</label>
-              <select id="sfData" class="form-control js-example-basic-single" name="sfData">
-              </select>
+              <select id="sfData" class="form-control js-example-basic-single" name="sfData"></select>
             </div>
           </div>
           <div class="form-row mr-4 ml-2">
             <div class="form-group col-md-6">
-              <span data-toggle="tooltip" data-html="true" data-placement="bottom" style="float: right;" title="Partner and/or Customer name the opportunity is related to">
-                <i class="fa fa-question-circle-o" aria-hidden="true" style="color: gray;"></i>
+              <span data-toggle="tooltip" data-html="true" data-placement="bottom" style="float: right" title="Partner and/or Customer name the opportunity is related to">
+                <i class="fa fa-question-circle-o" aria-hidden="true" style="color: gray"></i>
               </span>
               <label for="oppPartnerCustomerName">Partner and/or Customer Name</label>
               <input type="text" class="form-control" id="oppPartnerCustomerName" name="oppPartnerCustomerName" placeholder="" disabled />
             </div>
             <div class="form-group col-md-3">
-              <span data-toggle="tooltip" data-html="true" data-placement="bottom" style="float: right;" title="Assigned SC from latest DSR (if present). If no DSR is found, SC from opportunity is selected.">
-                <i class="fa fa-question-circle-o" aria-hidden="true" style="color: gray;"></i>
+              <span data-toggle="tooltip" data-html="true" data-placement="bottom" style="float: right" title="Assigned SC from latest DSR (if present). If no DSR is found, SC from opportunity is selected.">
+                <i class="fa fa-question-circle-o" aria-hidden="true" style="color: gray"></i>
               </span>
               <label for="oppAssignedSC">Assigned SC</label>
               <input type="text" class="form-control" id="oppAssignedSC" name="oppAssignedSC" placeholder="" disabled />
             </div>
             <div class="form-group col-md-3">
-              <span data-toggle="tooltip" data-html="true" data-placement="bottom" style="float: right;" title="Opportunity Owner">
-                <i class="fa fa-question-circle-o" aria-hidden="true" style="color: gray;"></i>
+              <span data-toggle="tooltip" data-html="true" data-placement="bottom" style="float: right" title="Opportunity Owner">
+                <i class="fa fa-question-circle-o" aria-hidden="true" style="color: gray"></i>
               </span>
               <label for="oppOwner">Owner</label>
               <input type="text" class="form-control" id="oppOwner" name="oppOwner" placeholder="" disabled />
@@ -242,20 +240,19 @@
           </div>
           <div class="form-row mr-4 ml-2">
             <div class="form-group col-md-6">
-              <span data-toggle="tooltip" data-html="true" data-placement="bottom" style="float: right;" title="Salesforce Opportunity URL">
-                <i class="fa fa-question-circle-o" aria-hidden="true" style="color: gray;"></i>
+              <span data-toggle="tooltip" data-html="true" data-placement="bottom" style="float: right" title="Salesforce Opportunity URL">
+                <i class="fa fa-question-circle-o" aria-hidden="true" style="color: gray"></i>
               </span>
               <label for="oppUrl">Opportunity Url</label>
               <input type="url" class="form-control" id="oppUrl" name="oppUrl" placeholder="" disabled />
             </div>
             <div class="form-group col-md-6">
-              <span data-toggle="tooltip" data-html="true" data-placement="bottom" style="float: right;" title="Salesforce latest DSR URL linked to Opportunity">
-                <i class="fa fa-question-circle-o" aria-hidden="true" style="color: gray;"></i>
+              <span data-toggle="tooltip" data-html="true" data-placement="bottom" style="float: right" title="Salesforce latest DSR URL linked to Opportunity">
+                <i class="fa fa-question-circle-o" aria-hidden="true" style="color: gray"></i>
               </span>
               <label for="oppDSRUrl">DSR Url</label>
               <input type="url" class="form-control" id="oppDSRUrl" name="oppDSRUrl" placeholder="" disabled />
             </div>
-
           </div>
         </form>
 
@@ -340,14 +337,11 @@
   <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet" />
   <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
 
-
   <!--#endregion -->
 
   <script>
 
-    //#region handle SF Search element
     let sfOject = {};
-
 
     $(document).ready(function () {
       // Apply custom dropdown style to SF Search Input Box
@@ -355,19 +349,16 @@
       if (!data) {
         $('.js-example-basic-single').select2();
       } else {
-        $(".js-example-basic-single").select2({
-          data: data.opp
-        })
+        $('.js-example-basic-single').select2({
+          data: data.opp,
+        });
       }
 
       // Detect locally correct env
-      if (window.location.href.includes('localhost'))
-        apiBasePath = "http://localhost:3000"
-      else
-        apiBasePath = "https://drbojb15ma.execute-api.eu-central-1.amazonaws.com/dev";
+      if (window.location.href.includes('localhost')) apiBasePath = 'http://localhost:3000';
+      else apiBasePath = 'https://drbojb15ma.execute-api.eu-central-1.amazonaws.com/dev';
 
       // Remote query, to search for Opportunity name, bind results to select2 object
-
       $('#sfData').select2({
         placeholder: 'Opportunity Name',
         allowClear: true,
@@ -379,38 +370,37 @@
           data: function (params) {
             var query = {
               token: gcToken,
-              name: params.term
-            }
+              name: params.term,
+            };
             // Query parameters will be ?search=[term]&type=public
             return query;
           },
           error: function (err) {
             console.log(err);
             if (err.status === 401) {
-              window.open('./index.html', "_self");
+              window.open('./index.html', '_self');
             } else if (err.status > 400) {
               showMessage(err.hasOwnProperty('responseJSON') ? err.responseJSON.message : error, true);
             }
           },
 
           processResults: function (data) {
-            // Transforms the top-level key of the response object from 'items' to 'results'            
+            // Transforms the top-level key of the response object from 'items' to 'results'
 
             let ret = [];
             data.forEach((item) => {
               ret.push({
                 id: item.Id,
                 text: `${item.Name} (${item.Id})`,
-                item: item
-              })
-            })
+                item: item,
+              });
+            });
             console.log(ret);
             return {
-              results: ret
+              results: ret,
             };
-          }
-
-        }
+          },
+        },
       });
 
       // Detect Selected event, post second query on selected Item by Opportunity ID to get latest DSR object
@@ -425,14 +415,13 @@
         try {
           let dsrInformation = await getOpportunityDSR(gcToken, e.params.data.id);
 
-
           //$('#sfData').select2('data')[0].item.dsr = dsrInformation;
           sfOject.dsr = dsrInformation;
 
           // Update Form fields
 
           //let myData = $('#sfData').select2('data')[0].item;
-          let myData = sfOject
+          let myData = sfOject;
           $('#oppUrl').val(myData.opportunityUrl);
           $('#oppDSRUrl').val(myData.dsr && myData.dsr.url ? myData.dsr.url : 'n/a');
           $('#oppOwner').val(myData.Owner && myData.Owner.Name ? myData.Owner.Name : 'n/a');
@@ -448,11 +437,9 @@
           }
 
         } catch (error) {
-          console.error(error);
+          console.log(error);
         }
-
       });
-
 
       $('#sfData').on('select2:clear', async function (e) {
         console.log('clear items related to SF');
@@ -462,9 +449,7 @@
         $('#oppOwner').val('');
         $('#oppPartnerCustomerName').val('');
         $('#oppAssignedSC').val('');
-
       });
-
     });
 
     //#endregion /handle SF Search element
@@ -500,16 +485,11 @@
       close_video();
     });
 
-    $(document).keyup(function (e) {
-      if (e.keyCode === 27) {
-        close_video();
-      }
-    });
-
     function close_video() {
       $('.video-overlay.open').removeClass('open').find('iframe').remove();
     }
     //#endregion
+
 
     if (window.location.href.includes('dev')) $('#devModeImage').removeAttr('hidden');
 
@@ -538,7 +518,6 @@
       gcToken = userInfo.token;
       localStorage.setItem('gcToken', gcToken);
       localStorage.setItem('userName', userInfo.name);
-
 
       // Populate user info
       $('#requesterName').val(userInfo.name);
@@ -599,6 +578,7 @@
       $('.admin').show();
       $('.admin').removeAttr('hidden');
     }
+
 
     function addNewTask(task, includeDeleteButton = false) {
       if (!task) {
@@ -708,6 +688,7 @@
       }
     }
 
+
     $('#modal-form').validate({
       errorClass: 'text-danger',
       successClass: 'test-success',
@@ -769,7 +750,7 @@
 
         console.log(`Region: ${region}, subRegion: ${subRegion}, Product: ${product}, Tasks: ${JSON.stringify(tasks)}, Requester Name: ${requesterName}, Requester Email: ${requesterEmail}, Requester Phone Number: ${requesterPhoneNumber}, Need Completed By: ${needCompletedBy}, Description: ${description}`);
 
-        await postRequests(region, subRegion, segment, product, tasks, requesterName, requesterEmail, requesterPhoneNumber, needCompletedBy, description, oppName, oppUrl, oppDSRUrl, oppOwner, oppPartnerCustomerName, oppAssignedSC, sfObject.oppAssignedSCMail, gcToken, customerRelationship, customerType);
+        await postRequests(region, subRegion, segment, product, tasks, requesterName, requesterEmail, requesterPhoneNumber, needCompletedBy, description, oppName, oppUrl, oppDSRUrl, oppOwner, oppPartnerCustomerName, oppAssignedSC, gcToken, customerRelationship, customerType);
         console.log('Success!');
         showMessage('Request submitted. Thanks!');
 
@@ -848,8 +829,6 @@
           oppOwner: $('#oppOwner').val(),
           oppPartnerCustomerName: $('#oppPartnerCustomerName').val(),
           oppAssignedSC: $('#oppAssignedSC').val(),
-          oppAssignedSCMail: sfOject.oppAssignedSCMail
-
         };
 
         let needCompletedByDate = moment($('#datepicker').datepicker('getDate')).format('YYYY-MM-DDT00:00:00.000');
@@ -935,14 +914,10 @@
 
         sfOject.oppAssignedSCMail = data.oppAssignedSCMail;
 
-
       } catch (error) {
         console.error(error);
       }
     }
-
-
-
   </script>
 
   <!--Coollabs -->
