@@ -1,12 +1,9 @@
 {
   "folders": [
-	{
-		"path": "."
-	},
-	{
-		"path": "..\\CCCRequestsFormBackend"
-	}
-],
+    {
+      "path": "."
+    }
+  ],
   "settings": {
     "json.maxItemsComputed": 50000
   }
