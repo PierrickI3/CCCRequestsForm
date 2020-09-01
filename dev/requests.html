@@ -179,9 +179,10 @@
                             </div>
 
                             <div class="form-row">
-                                <div class="form-group col-md-6">
-                                    <label for="requesterName">Requester Name</label>
-                                    <input type="text" class="form-control" id="requesterName" name="requesterName" placeholder="Your Name" required>
+                                <div class="form-group col-md-6">                                                                        
+                                    <label for="gcRequesterName">Requester Name</label><br>
+                                    <select id="gcRequesterName" name="gcRequesterName">
+                                    </select>                                
                                 </div>
                                 <div class="form-group col-md-6">
                                     <label for="requesterEmail">Requester Email</label>
@@ -387,7 +388,6 @@
         let tasksControls = [], taskId = 10000;
         let sfOject = {};
 
-
         $(document).ready(async function () {
             await getMe(); // Re-Login
 
@@ -398,11 +398,16 @@
             $('.js-example-basic-single').select2({ dropdownAutoWidth: true });
 
             // Detect locally correct env
+            let gcEnv;
             if (window.location.href.includes('localhost'))
+            {
                 apiBasePath = "http://localhost:3000"
-            else
+                gcEnv = 'mypurecloud.com';
+            }
+            else{
                 apiBasePath = "https://drbojb15ma.execute-api.eu-central-1.amazonaws.com/dev";
-
+                gcEnv = 'mypurecloud.com';
+            }
             // Remote query, to search for Opportunity name, bind results to select2 object
             $('#sfData').select2({
                 width: '100%',
@@ -439,7 +444,7 @@
                     }
                 }
             });
-
+          
             // Detect Selected event, post second query on selected Item by Opportunity ID to get latest DSR object
             $('#sfData').on('select2:select', async function (e) {
                 var data = e.params.data;
@@ -474,7 +479,6 @@
 
             });
 
-
             $('#sfData').on('select2:clear', async function (e) {
                 console.log('clear items related to SF');
                 sfOject = {};
@@ -486,9 +490,52 @@
 
             });
 
+            // Handle requester name by GC query            
+            $('#gcRequesterName').select2({                
+                width: '100%',
+                placeholder: 'Requester name',
+                allowClear: false,
+                minimumInputLength: 3,
+                ajax: {
+                    delay: 350,
+                    method: 'POST',
+                    headers: {
+                        Authorization: `bearer ${gcToken}`,
+                        "Content-Type": "application/json",
+                        },
+                    url: `https://api.${gcEnv}/api/v2/search?profile=false`,
+                    data: function (params) {
+                        const body = getSearchUserBody(params.term);
+                        console.log('Search user query: ', body);
+                        return JSON.stringify(body);
+                    },
+                    processResults: function (data) {                        
+                        console.log(data);
+                        if (!data || !Array.isArray(data.results) || data.results.length === 0 ) return [];
+                        let result = [];
+                        for (const item of data.results) {
+                            result.push( {id: item.name, text: item.name, item});
+                        }
+                        return {results: result};
+                    }
+                }
+            });
+
+            $('#gcRequesterName').on('select2:select', async function (e) {
+                var data = e.params.data;
+                if (!data) return;
+                console.log(data);
+                try {
+                    const reqEmail = data.item.email;
+                    const reqPhoneNo = data.item.primaryContactInfo.filter(x=> x.mediaType === 'PHONE')[0] ? data.item.primaryContactInfo.filter(x=> x.mediaType === 'PHONE')[0].address : '' ;
+                    $('#editModal #requesterEmail').val(reqEmail);
+                    $('#editModal #requesterPhoneNumber').val(reqPhoneNo);
+                } catch (error) {
+                    console.error(error);
+                }
+            });
         });
-
-
+        
         let region = getUrlParameter("region");
         console.log('Detected region: ', region);
         $("#region").text(region);
@@ -545,8 +592,7 @@
             $("#editModal #customerType").val("");
             $("#editModal #product").val("");
             $("#editModal #tasks").empty();
-            tasksControls = [];
-            $("#editModal #requesterName").val("");
+            tasksControls = [];            
             $("#editModal #requesterEmail").val("");
             $("#editModal #requesterPhoneNumber").val("");
             $("#editModal #datepicker").datepicker('update', '');
@@ -604,7 +650,6 @@
                 $("#editModal #lblDateClosed").text(`Closed: ${localClosedFromNow} at ${localClosed}`);
             }
         }
-
 
         function refreshGrid() {
             $("#basicgrid").jsGrid("loadData").done(() => {
@@ -1113,8 +1158,8 @@
                 console.log('Adding new task:', task);
                 addNewTask(task, i++ > 0 ? true : false);
             }
-
-            $("#editModal #requesterName").val(request.requesterName);
+                                    
+            $("#gcRequesterName").append($("<option selected='selected'></option>").val("0").text(request.requesterName)).trigger('change');
             $("#editModal #requesterEmail").val(request.requesterEmail);
             $("#editModal #requesterPhoneNumber").val(request.requesterPhoneNumber);
             $("#editModal #datepicker").datepicker('update', new Date(request.needCompletedBy));
@@ -1449,7 +1494,7 @@
                     });
                 }
 
-                let requesterName = $("#editModal #requesterName").val();
+                let requesterName = $("#gcRequesterName").val();
                 let requesterEmail = $("#editModal #requesterEmail").val();
                 let requesterPhoneNumber = $("#editModal #requesterPhoneNumber").val();
                 let needCompletedBy = moment($("#datepicker").datepicker('getDate')).format("YYYY-MM-DDT00:00:00.000") + "Z";
@@ -1517,7 +1562,6 @@
             if (maintenanceMode) return;
             addNewTask(undefined, true);
         });
-
 
         $("#btnAddNote").on("click", async (e) => {
             let note = $("#editModal #divNotesHistory").html();
