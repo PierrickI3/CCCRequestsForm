@@ -1,10 +1,10 @@
 {
+  "prettier.singleQuote": true,
+  "prettier.printWidth": 500,
+  "editor.formatOnPaste": true,
+  "editor.formatOnSave": true,
   "editor.wordWrap": "off",
-  "liveServer.settings.port": 443,
-  "liveServer.settings.https": {
-    "enable": true, //set it true to enable the feature.
-    "cert": "D:\\https\\server.crt", //full path of the certificate
-    "key": "D:\\https\\server.key", //full path of the private key
-    "passphrase": "12345"
-  }
+  "html.format.wrapLineLength": 500,
+  "json.maxItemsComputed": 50000,
+  "editor.maxTokenizationLineLength": 2000000
 }
