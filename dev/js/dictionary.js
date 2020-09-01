@@ -70,3 +70,5 @@ let requestsType = {
 };
 
 let requestCategory = ['Critical Situation Support', 'Customer Success Program', 'Demo & Trial Support', 'Enablement', 'Opportunity Support', 'Privacy Support', 'Rapid Response Offer', 'Roadmap', 'RR Extension', 'Security Support', 'Specialist Engagement', 'Strategic Business Consulting', 'Other Request'];
+
+let taskStatus = ['Pending', 'Waiting for info', 'In progress', 'Completed'];
