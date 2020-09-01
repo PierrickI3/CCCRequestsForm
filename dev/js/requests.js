@@ -52,27 +52,27 @@ async function postRequests(region, subRegion, segment, product, tasks, requeste
     data.oppName = oppName;
   }
 
-  if (oppUrl.length > 0) {
+  if (oppUrl && oppUrl.length > 0) {
     data.oppUrl = oppUrl;
   }
 
-  if (oppDSRUrl.length > 0) {
+  if (oppDSRUrl && oppDSRUrl.length > 0) {
     data.oppDSRUrl = oppDSRUrl;
   }
 
-  if (oppOwner.length > 0) {
+  if (oppOwner && oppOwner.length > 0) {
     data.oppOwner = oppOwner;
   }
 
-  if (oppPartnerCustomerName.length > 0) {
+  if (oppPartnerCustomerName && oppPartnerCustomerName.length > 0) {
     data.oppPartnerCustomerName = oppPartnerCustomerName;
   }
 
-  if (oppAssignedSC.length > 0) {
+  if (oppAssignedSC && oppAssignedSC.length > 0) {
     data.oppAssignedSC = oppAssignedSC;
   }
 
-  if (oppAssignedSCMail.length > 0) {
+  if (oppAssignedSCMail && oppAssignedSCMail.length > 0) {
     data.oppAssignedSCMail = oppAssignedSCMail;
   }
 
@@ -168,23 +168,23 @@ async function putRequest(id, region, subRegion, segment, product, tasks, reques
     data.oppName = oppName;
   }
 
-  if (oppUrl.length > 0) {
+  if (oppUrl && oppUrl.length > 0) {
     data.oppUrl = oppUrl;
   }
 
-  if (oppDSRUrl.length > 0) {
+  if (oppDSRUrl && oppDSRUrl.length > 0) {
     data.oppDSRUrl = oppDSRUrl;
   }
 
-  if (oppOwner.length > 0) {
+  if (oppOwner && oppOwner.length > 0) {
     data.oppOwner = oppOwner;
   }
 
-  if (oppPartnerCustomerName.length > 0) {
+  if (oppPartnerCustomerName && oppPartnerCustomerName.length > 0) {
     data.oppPartnerCustomerName = oppPartnerCustomerName;
   }
 
-  if (oppAssignedSC.length > 0) {
+  if (oppAssignedSC && oppAssignedSC.length > 0) {
     data.oppAssignedSC = oppAssignedSC;
   }
 
