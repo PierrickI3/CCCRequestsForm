@@ -492,7 +492,7 @@ function updateStakeholdersEmailsTemp(name, email) {
 function processStakeholdersEmails(programManager, teamMembers) {
   console.log('processtakeholdersEmails() ', programManager, teamMembers);
   if (!programManager && (!Array.isArray(teamMembers) || teamMembers.length) === 0) return;
-  debugger;
+
   // <step #1 - remove deleted items>
   if (Array.isArray(stakeholdersEmails.loadedFromDb) && stakeholdersEmails.loadedFromDb.length > 0) {
     for (const loaded of stakeholdersEmails.loadedFromDb) {
