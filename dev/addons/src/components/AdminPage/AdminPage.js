@@ -169,7 +169,7 @@ export default function AdminPage(props) {
           </Col>
         </Row>
         <span>
-          This configuration page allow to set email reciepments for requests that match Region and Product combination.
+          This configuration page allow to set email reciepments for requests that match Region, Product and Category combination.
           <br />
           Please note that this involves frontend and backend behaviour.
         </span>
