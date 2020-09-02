@@ -86,14 +86,14 @@
     <!-- Edit Modal -->
     <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-xl" role="document">
-            <div class="modal-content pl-4 pr-4">
+            <div class="modal-content">
                 <div class="modal-header" id="modal-header">
                     <h5 id="title" class="modal-title">Request</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <form class="modal-body form-horizontal" id="modal-form">
+                <form class="modal-body form-horizontal pl-4 pr-4" id="modal-form">
                     <div class="form-group">
 
                         <form id="modal-form">
@@ -297,9 +297,8 @@
                             <div class="form-row">
                                 <label id="bAcceptedRequest" hidden></label>
                                 <div class="form-group col-md-12">
-                                    <label for="time">Additional Team Member(s) Assigned</label>
-                                    <input type="text" class="form-control" id="teamMembers" name="teamMembers" placeholder="Additional Team Member(s)">
-
+                                    <label for="gcTeamMembers">Additional Team Member(s) Assigned</label><br>
+                                    <select id="gcTeamMembers" name="gcTeamMembers" class="gcTeamMembers"></select>
                                 </div>
                             </div>
 
@@ -568,6 +567,39 @@
                     }
                 }
             });
+
+            // Handle a program manager name by GC query            
+            $('#gcTeamMembers').select2({
+                width: '100%',
+                placeholder: 'Select team members',
+                allowClear: true,
+                multiple: true,
+                minimumInputLength: 3,
+                ajax: {
+                    delay: 350,
+                    method: 'POST',
+                    headers: {
+                        Authorization: `bearer ${gcToken}`,
+                        "Content-Type": "application/json",
+                    },
+                    url: `https://api.${gcEnv}/api/v2/search?profile=false`,
+                    data: function (params) {
+                        const body = getSearchUserBody(params.term);
+                        console.log('Search user query: ', body);
+                        return JSON.stringify(body);
+                    },
+                    processResults: function (data) {
+                        console.log(data);
+                        if (!data || !Array.isArray(data.results) || data.results.length === 0) return [];
+                        let result = [];
+                        for (const item of data.results) {
+                            result.push({ id: item.name, text: item.name, item });
+                        }
+                        return { results: result };
+                    }
+                }
+            });
+
         });
 
         let region = getUrlParameter("region");
@@ -633,6 +665,10 @@
         });
 
         function initModal() {
+            $('#gcRequester').val(null).trigger('change');
+            $('#gcProgramManager').val(null).trigger('change');
+            $('#gcTeamMembers').val(null).trigger('change');
+
             $("#editModal #id").text("");
             $("#editModal #createdDate").val("");
             $("#editModal #updatedDate").val("");
@@ -662,7 +698,6 @@
             $("#editModal #priority").val("");
             $("#editModal #bAcceptedRequest").val("");
             $("#editModal #status").val("");
-            $("#editModal #programManager").val("");
             $("#editModal #time").val("");
             $("#editModal #txtAcceptedRejectedNotes").val("");
             $("#editModal #divNotesHistory").html("");
@@ -1212,6 +1247,15 @@
 
             $("#gcRequesterName").append($("<option selected='selected'></option>").val("0").text(request.requesterName)).trigger('change');
             if (request.programManager) $("#gcProgramManager").append($("<option selected='selected'></option>").val("0").text(request.programManager)).trigger('change');
+            if (request.teamMembers) {
+                const teamMemberList = request.teamMembers.split(',');
+                let i = 0;
+                for (const tm of teamMemberList) {
+                    if (tm && tm !== 'n/a') {
+                        $("#gcTeamMembers").append($("<option selected='selected'></option>").val(i.toString()).text(tm)).trigger('change');
+                    }
+                }
+            }
             $("#editModal #requesterEmail").val(request.requesterEmail);
             $("#editModal #requesterPhoneNumber").val(request.requesterPhoneNumber);
             $("#editModal #datepicker").datepicker('update', new Date(request.needCompletedBy));
@@ -1547,6 +1591,7 @@
 
                 let requesterName = Array.isArray($("#gcRequesterName").select2('data')) && $("#gcRequesterName").select2('data').length === 1 ? $("#gcRequesterName").select2('data')[0].text : 'n/a';
                 let programManager = Array.isArray($("#gcProgramManager").select2('data')) && $("#gcProgramManager").select2('data').length === 1 ? $("#gcProgramManager").select2('data')[0].text : 'n/a';
+                let teamMembers = Array.isArray($("#gcTeamMembers").select2('data')) && $("#gcTeamMembers").select2('data').length > 0 ? $("#gcTeamMembers").select2('data').map(x => x.text).join(',') : 'n/a';
                 let requesterEmail = $("#editModal #requesterEmail").val();
                 let requesterPhoneNumber = $("#editModal #requesterPhoneNumber").val();
                 let needCompletedBy = moment($("#datepicker").datepicker('getDate')).format("YYYY-MM-DDT00:00:00.000") + "Z";
@@ -1557,7 +1602,6 @@
                 let acceptedRejected = $("#editModal #bAcceptedRequest").val();
                 let acceptedRejectedNotes = $("#editModal #divNotesHistory").html();
                 let time = $("#editModal #time").val();
-                let teamMembers = $("#editModal #teamMembers").val();
                 let status;
                 if (acceptedRejected == "Rejected")
                     status = "Closed"
