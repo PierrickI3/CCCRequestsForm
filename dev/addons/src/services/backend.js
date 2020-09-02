@@ -1,10 +1,11 @@
 export const searchMailConfiguration = (token, query) => {
-  console.log(`searchMailConfiguration ${query}`);
+  console.log(`searchMailConfiguration ${JSON.stringify(query)}`);
 
   const body = {
     token: token,
     region: query.region,
     product: query.product,
+    category: query.category,
   };
   return fetch(`http://localhost:3000/mailconfig`, {
     method: 'POST',
