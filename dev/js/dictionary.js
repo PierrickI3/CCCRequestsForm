@@ -47,7 +47,7 @@ let mailDistribution = {
 };
 
 let regions = {
-  APAC: ['Asia', 'Australia', 'New Zealand'],
+  APAC: ['ANZ', 'Japan', 'SEA', 'Korea', 'India', 'China'],
   EMEA: ['Central', 'North', 'South'],
   LATAM: ['Andean', 'Brazil', 'Mexico', 'Southern-Cone'],
   NA: ['East', 'Central', 'West', 'Canada', 'Government', 'Velocity', 'Channels'],
@@ -60,15 +60,14 @@ let requestsType = {
   Enablement: ['Internal SC/AE Enablement', 'Partner End-to-End Enablement', 'Partner Summits, Events, Webinars', 'Partner Technical Enablement'],
   'Opportunity Support': ['Technical Design / Architecture Review', 'Other Commercial Support'],
   'Privacy Support': ['Questionnaires/Assessments/Audits', 'Other'],
-  'Rapid Response Offer': [],
   Roadmap: [],
-  'RR Extension': [],
+  'Subscription Extension': [],
   'Security Support': ['Questionnaires/Assessments/Audits', 'Other'],
   'Specialist Engagement': ['API (Platform/AppFoundry)', 'Cloud Migration', 'Digital AI', 'MultiCloud', 'Must Win Opportunity Engagement', 'PureBridge', 'Self-Service Automation', 'WEM', 'Other'],
   'Strategic Business Consulting': ['Help with Financial Analysis (TCO/ROI)', 'Industry Expertise'],
   'Other Request': [],
 };
 
-let requestCategory = ['Critical Situation Support', 'Customer Success Program', 'Demo & Trial Support', 'Enablement', 'Opportunity Support', 'Privacy Support', 'Rapid Response Offer', 'Roadmap', 'RR Extension', 'Security Support', 'Specialist Engagement', 'Strategic Business Consulting', 'Other Request'];
+let requestCategory = ['Critical Situation Support', 'Customer Success Program', 'Demo & Trial Support', 'Enablement', 'Opportunity Support', 'Privacy Support', 'Roadmap', 'Security Support', 'Specialist Engagement', 'Strategic Business Consulting', 'Subscription Extension', 'Other Request'];
 
 let taskStatus = ['Pending', 'Waiting for info', 'In progress', 'Completed'];
