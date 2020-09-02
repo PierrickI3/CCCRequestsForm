@@ -47,6 +47,7 @@ export default function AdminPage(props) {
   ];
 
   const categoryList = [
+    { value: '<default>', label: '<default>' },
     { value: 'Critical Situation Support', label: 'Critical Situation Support' },
     { value: 'Customer Success Program', label: 'Customer Success Program' },
     { value: 'Demo & Trial Support', label: 'Demo & Trial Support' },
@@ -78,17 +79,18 @@ export default function AdminPage(props) {
 
   const queryDynamo = (filter) => {
     if (filter.region && filter.product && filter.category) {
+      let genericFilter = { ...filter };
       console.log('queryDynamo()', filter);
+      if (filter.category === '<default>') genericFilter.category = undefined;
       setShowWarning(false);
       setShowSpinner(true);
       setMailConfigObj(null);
-      searchMailConfiguration(query.token, filter)
+      searchMailConfiguration(query.token, genericFilter)
         .then((resp) => {
           console.log('we have got response !');
           console.log(resp);
           if (resp.length === 0) {
             // No results, remove category Filter & search Again
-            let genericFilter = { ...filter };
             genericFilter.category = undefined;
             searchMailConfiguration(query.token, genericFilter)
               .then((resp) => {
@@ -118,13 +120,14 @@ export default function AdminPage(props) {
     console.log('handleSave()');
     setShowSpinner(true);
     let obj = { ...mailConfigObj };
+    let cf = { ...currentFilter };
     obj.token = query.token;
     obj.addresses = tags;
-
-    if (!obj.category || obj.category === '') {
+    console.log(obj);
+    console.log('cf.category', cf.category);
+    if (cf.category !== '<default>' && obj.category === undefined) {
+      console.log('prepare new object ...');
       // Create new entry in DynamoDb
-      let cf = { ...currentFilter };
-
       obj.id = uuid();
       obj.category = cf.category;
     }
