@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { Container, Row, Col, Button, Spinner } from 'reactstrap';
+import { Container, Row, Col, Button, Spinner, Alert } from 'reactstrap';
 import { BiSave, BiMailSend, BiX } from 'react-icons/bi';
+import uuid from 'react-uuid';
 import Select from 'react-select';
 
 import { searchMailConfiguration, updateMailConfiguration } from '../../services/backend';
@@ -15,11 +16,12 @@ const inputProps = {
   placeholder: 'Add mail address',
 };
 
-let clearFilterSet = { region: undefined, product: undefined };
+let clearFilterSet = { region: undefined, product: undefined, category: undefined };
 
 export default function AdminPage(props) {
   //#region "state"
   const [showSpinner, setShowSpinner] = useState(false);
+  const [showWarning, setShowWarning] = useState(false);
   const [query, setQuery] = useState(null);
   const [tags, setTags] = useState([]);
   const [mailConfigObj, setMailConfigObj] = useState(null);
@@ -44,6 +46,21 @@ export default function AdminPage(props) {
     { value: 'Latitude by Genesys', label: 'Latitude by Genesys' },
   ];
 
+  const categoryList = [
+    { value: 'Critical Situation Support', label: 'Critical Situation Support' },
+    { value: 'Customer Success Program', label: 'Customer Success Program' },
+    { value: 'Demo & Trial Support', label: 'Demo & Trial Support' },
+    { value: 'Enablement', label: 'Enablement' },
+    { value: 'Opportunity Support', label: 'Opportunity Support' },
+    { value: 'Privacy Support', label: 'Privacy Support' },
+    { value: 'Roadmap', label: 'Roadmap' },
+    { value: 'RR Extension', label: 'RR Extension' },
+    { value: 'Security Support', label: 'Security Support' },
+    { value: 'Specialist Engagement', label: 'Specialist Engagement' },
+    { value: 'Strategic Business Consulting', label: 'Strategic Business Consulting' },
+    { value: 'Other Request', label: 'Other Request' },
+  ];
+
   useEffect(() => {
     // <parse query string>
     const parsedQueryString = queryString.parse(props.location.search);
@@ -60,16 +77,35 @@ export default function AdminPage(props) {
   };
 
   const queryDynamo = (filter) => {
-    console.log('queryDynamo()', filter);
-    if (filter.region && filter.product) {
+    if (filter.region && filter.product && filter.category) {
+      console.log('queryDynamo()', filter);
+      setShowWarning(false);
       setShowSpinner(true);
       setMailConfigObj(null);
       searchMailConfiguration(query.token, filter)
         .then((resp) => {
+          console.log('we have got response !');
           console.log(resp);
-          setTags(resp[0].addresses);
-          setMailConfigObj(resp[0]);
-          setShowSpinner(false);
+          if (resp.length === 0) {
+            // No results, remove category Filter & search Again
+            let genericFilter = { ...filter };
+            genericFilter.category = undefined;
+            searchMailConfiguration(query.token, genericFilter)
+              .then((resp) => {
+                setShowWarning(true);
+                setTags(resp[0].addresses);
+                setMailConfigObj(resp[0]);
+                setShowSpinner(false);
+              })
+              .catch(() => {
+                NotificationManager.error('Failed to get configuration objects', 'Error', 3000);
+                setShowSpinner(false);
+              });
+          } else {
+            setTags(resp[0].addresses);
+            setMailConfigObj(resp[0]);
+            setShowSpinner(false);
+          }
         })
         .catch(() => {
           NotificationManager.error('Failed to get configuration objects', 'Error', 3000);
@@ -85,11 +121,20 @@ export default function AdminPage(props) {
     obj.token = query.token;
     obj.addresses = tags;
 
+    if (!obj.category || obj.category === '') {
+      // Create new entry in DynamoDb
+      let cf = { ...currentFilter };
+
+      obj.id = uuid();
+      obj.category = cf.category;
+    }
+
     updateMailConfiguration(obj)
       .then(() => {
         console.log('saved !');
         NotificationManager.success('Configuration updated', 'Success', 3000);
         setShowSpinner(false);
+        setShowWarning(false);
       })
       .catch((err) => {
         console.error(err);
@@ -99,13 +144,13 @@ export default function AdminPage(props) {
   };
 
   const goBack = () => {
-    let url = `../../requests.html?region=${query.region}`;
-    // if (window.location.href.includes('localhost')) {
-    //   if (window.location.href.includes('dev')) url = `https://localhost/dev/requests.html?region=${query.region}`;
-    //   else url = `https://localhost/dev/requests.html?region=${query.region}`;
-    // } else {
-    //   url = `../../requests.html?region=${query.region}`;
-    // }
+    let url;
+    if (window.location.href.includes('localhost')) {
+      if (window.location.href.includes('dev')) url = `https://localhost/dev/requests.html?region=${query.region}`;
+      else url = `https://localhost/dev/requests.html?region=${query.region}`;
+    } else {
+      url = `../../requests.html?region=${query.region}`;
+    }
     console.log('goBack()', url);
     window.location.replace(url);
   };
@@ -163,6 +208,31 @@ export default function AdminPage(props) {
                 }}
               />
             </div>
+          </Col>
+          <Col>
+            <div className="mb-3">
+              Category
+              <Select
+                isDisabled={false}
+                options={categoryList}
+                isMulti={false}
+                isSearchable={false}
+                onChange={(v) => {
+                  let cf = { ...currentFilter };
+                  cf.category = v.value;
+                  setCurrentFilter(cf);
+                  queryDynamo(cf);
+                }}
+              />
+            </div>
+          </Col>
+        </Row>
+        <Row>
+          <Col>
+            <Alert color="warning" hidden={!showWarning}>
+              There is no configuration for this combination. Default rules (Region + Product) applied. <br />
+              Once overwritten, new entry will be created.
+            </Alert>
           </Col>
         </Row>
         <Row>
