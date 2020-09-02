@@ -181,8 +181,7 @@
                             <div class="form-row">
                                 <div class="form-group col-md-6">                                                                        
                                     <label for="gcRequesterName">Requester Name</label><br>
-                                    <select id="gcRequesterName" name="gcRequesterName">
-                                    </select>                                
+                                    <select id="gcRequesterName" name="gcRequesterName" class="gcRequesterName"></select>                   
                                 </div>
                                 <div class="form-group col-md-6">
                                     <label for="requesterEmail">Requester Email</label>
@@ -284,9 +283,9 @@
                                         <option value="Closed">Closed</option>
                                     </select>
                                 </div>
-                                <div class="form-group col-md-6">
-                                    <label for="programManager">Program Manager</label>
-                                    <input type="text" class="form-control" id="programManager" name="programManager" placeholder="Program Manager" required>
+                                <div class="form-group col-md-6">                                    
+                                    <label for="gcProgramManager">Program Manager</label><br>
+                                    <select id="gcProgramManager" name="gcProgramManager" class="gcProgramManager"></select>
                                 </div>
                             </div>
 
@@ -490,10 +489,10 @@
 
             });
 
-            // Handle requester name by GC query            
+            // Handle a requester name by GC query            
             $('#gcRequesterName').select2({                
                 width: '100%',
-                placeholder: 'Requester name',
+                placeholder: 'Select a requester',
                 allowClear: false,
                 minimumInputLength: 3,
                 ajax: {
@@ -532,6 +531,37 @@
                     $('#editModal #requesterPhoneNumber').val(reqPhoneNo);
                 } catch (error) {
                     console.error(error);
+                }
+            });
+        
+            // Handle a program manager name by GC query            
+            $('#gcProgramManager').select2({                
+                width: '100%',
+                placeholder: 'Select a program manager',
+                allowClear: true,
+                minimumInputLength: 3,
+                ajax: {
+                    delay: 350,
+                    method: 'POST',
+                    headers: {
+                        Authorization: `bearer ${gcToken}`,
+                        "Content-Type": "application/json",
+                        },
+                    url: `https://api.${gcEnv}/api/v2/search?profile=false`,
+                    data: function (params) {
+                        const body = getSearchUserBody(params.term);
+                        console.log('Search user query: ', body);
+                        return JSON.stringify(body);
+                    },
+                    processResults: function (data) {                        
+                        console.log(data);
+                        if (!data || !Array.isArray(data.results) || data.results.length === 0 ) return [];
+                        let result = [];
+                        for (const item of data.results) {
+                            result.push( {id: item.name, text: item.name, item});
+                        }
+                        return {results: result};
+                    }
                 }
             });
         });
@@ -1160,6 +1190,7 @@
             }
                                     
             $("#gcRequesterName").append($("<option selected='selected'></option>").val("0").text(request.requesterName)).trigger('change');
+            if (request.programManager) $("#gcProgramManager").append($("<option selected='selected'></option>").val("0").text(request.programManager)).trigger('change');
             $("#editModal #requesterEmail").val(request.requesterEmail);
             $("#editModal #requesterPhoneNumber").val(request.requesterPhoneNumber);
             $("#editModal #datepicker").datepicker('update', new Date(request.needCompletedBy));
@@ -1190,8 +1221,7 @@
 
             $("#editModal #priority").val(request.priority);
             $("#editModal #bAcceptedRequest").val(request.acceptedRejected);
-            $("#editModal #status").val(request.status);
-            $("#editModal #programManager").val(request.programManager);
+            $("#editModal #status").val(request.status);            
             $("#editModal #time").val(request.time);
             $("#editModal #txtAcceptedRejectedNotes").val("");
             $("#editModal #divNotesHistory").html(request.acceptedRejectedNotes);
@@ -1493,8 +1523,9 @@
                         taskTime: task.timeInput.val()
                     });
                 }
-
-                let requesterName = $("#gcRequesterName").val();
+  
+                let requesterName = Array.isArray($("#gcRequesterName").select2('data')) && $("#gcRequesterName").select2('data').length === 1 ? $("#gcRequesterName").select2('data')[0].text : 'n/a';
+                let programManager = Array.isArray($("#gcProgramManager").select2('data')) && $("#gcProgramManager").select2('data').length === 1 ? $("#gcProgramManager").select2('data')[0].text : 'n/a';
                 let requesterEmail = $("#editModal #requesterEmail").val();
                 let requesterPhoneNumber = $("#editModal #requesterPhoneNumber").val();
                 let needCompletedBy = moment($("#datepicker").datepicker('getDate')).format("YYYY-MM-DDT00:00:00.000") + "Z";
@@ -1503,8 +1534,7 @@
                 let salesforceAccountOpportunity = $("#editModal #salesforceAccountOpportunity").val();
                 let priority = $("#editModal #priority").val();
                 let acceptedRejected = $("#editModal #bAcceptedRequest").val();
-                let acceptedRejectedNotes = $("#editModal #divNotesHistory").html();
-                let programManager = $("#editModal #programManager").val();
+                let acceptedRejectedNotes = $("#editModal #divNotesHistory").html();                
                 let time = $("#editModal #time").val();
                 let teamMembers = $("#editModal #teamMembers").val();
                 let status;
