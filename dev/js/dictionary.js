@@ -56,7 +56,7 @@ let regions = {
 let requestsType = {
   'Critical Situation Support': [],
   'Customer Success Program': ['General Questions', 'Specific Service Element Questions'],
-  'Demo & Trial Support': ['Innovation (Integrations, Tailored Demos, Vision Clips)', 'POCs, Pilots for Strategic Opps', 'Use Case Automation tool Questions', 'Free Trials Process Related'],
+  'Demo & Trial Support': ['Free Trials Process Related', 'Innovation (Integrations, Tailored Demos, Vision Clips)', 'POCs, Pilots for Strategic Opps', 'Use Case Automation tool Questions'],
   Enablement: ['Internal SC/AE Enablement', 'Partner End-to-End Enablement', 'Partner Summits, Events, Webinars', 'Partner Technical Enablement'],
   'Opportunity Support': ['Technical Design / Architecture Review', 'Other Commercial Support'],
   'Privacy Support': ['Questionnaires/Assessments/Audits', 'Other'],
