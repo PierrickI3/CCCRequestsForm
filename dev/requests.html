@@ -1375,7 +1375,7 @@
             }
         }
 
-        function addNewTask(task, includeDeleteButton = false) {
+        function addNewTask(task, includeDeleteButton = false) {            
             if (!task) {
                 let currentTaskId = taskId;
                 taskId++;
@@ -1421,7 +1421,7 @@
                     id: currentTaskId,
                     categorySelect: categorySelect,
                     typeSelect: typeSelect,
-                    taskStatusSelect,
+                    taskStatusSelect: taskStatusSelect,
                     timeInput: timeInput
                 });
             } else {
@@ -1459,6 +1459,7 @@
                     deleteButton.on("click", () => {
                         categoryDiv.remove();
                         typeDiv.remove();
+                        taskStatusDiv.remove();
                         timeDiv.remove();
                         deleteButton.remove();
                         tasksControls = tasksControls.filter(tc => tc.id != currentTaskId)
