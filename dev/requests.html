@@ -618,7 +618,7 @@
             if (window.location.href.includes('localhost'))
                 url = `http://localhost:3001/#/adminpage?region=${region}&token=${gcToken}`
             else
-                url = `./adminpage?region=${region}&token=${gcToken}`
+                url = `addons/build/\#/adminpage?region=${region}&token=${gcToken}`
             window.location.replace(url);
         }
 
