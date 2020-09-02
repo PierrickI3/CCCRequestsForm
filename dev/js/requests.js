@@ -1,6 +1,8 @@
 let apiBasePath;
 const maintenanceMode = false; // Set to true to disable all controls
 var filterConfiguration = null;
+const stakeholdersEmailsClear = { loadedFromDb: [], temp: [], toBeSaved: [] };
+var stakeholdersEmails = null;
 
 if (window.location.href.includes('localhost')) apiBasePath = 'http://localhost:3000';
 else apiBasePath = 'https://drbojb15ma.execute-api.eu-central-1.amazonaws.com/dev';
@@ -104,7 +106,7 @@ async function postRequests(region, subRegion, segment, product, tasks, requeste
     });
 }
 
-async function putRequest(id, region, subRegion, segment, product, tasks, requesterName, requesterEmail, requesterPhoneNumber, needCompletedBy, description, oppName, oppUrl, oppDSRUrl, oppOwner, oppPartnerCustomerName, oppAssignedSC, oppAssignedSCMail, priority, acceptedRejected, status, programManager, acceptedRejectedNotes, teamMembers, _token, isDeleted, customerRelationship, customerType, dateAccepted, dateRejected, dateClosed) {
+async function putRequest(id, region, subRegion, segment, product, tasks, requesterName, requesterEmail, requesterPhoneNumber, needCompletedBy, description, oppName, oppUrl, oppDSRUrl, oppOwner, oppPartnerCustomerName, oppAssignedSC, oppAssignedSCMail, priority, acceptedRejected, status, programManager, acceptedRejectedNotes, teamMembers, _token, isDeleted, customerRelationship, customerType, dateAccepted, dateRejected, dateClosed, stakeholdersEmails) {
   if (!isDeleted) isDeleted = false;
   if (!acceptedRejected) acceptedRejected = 'not handled';
 
@@ -128,6 +130,7 @@ async function putRequest(id, region, subRegion, segment, product, tasks, reques
     isDeleted: isDeleted,
     mailDistribution: mailDistribution[product][$('#editModal #region').val()],
     token: _token,
+    stakeholdersEmails,
   };
 
   //#region Optional fields
@@ -477,4 +480,43 @@ function getSearchUserBody(pattern) {
     sortBy: 'name',
   };
   return body;
+}
+
+function updateStakeholdersEmailsTemp(name, email) {
+  console.log(`updateStakeholdersEmails([${name}],[${email}])`);
+  if (!name || !email || stakeholdersEmails.temp.filter((x) => x.name === name)[0]) return;
+  stakeholdersEmails.temp.push({ name, email });
+  console.log('stakeholdersEmails.temp: ', stakeholdersEmails.temp);
+}
+
+function processStakeholdersEmails(programManager, teamMembers) {
+  console.log('processtakeholdersEmails() ', programManager, teamMembers);
+  if (!programManager && (!Array.isArray(teamMembers) || teamMembers.length) === 0) return;
+  debugger;
+  // <step #1 - remove deleted items>
+  if (Array.isArray(stakeholdersEmails.loadedFromDb) && stakeholdersEmails.loadedFromDb.length > 0) {
+    for (const loaded of stakeholdersEmails.loadedFromDb) {
+      if (!stakeholdersEmails.toBeSaved.filter((x) => x.name === loaded.name)[0]) {
+        if (programManager === loaded.name || teamMembers.filter((x) => x.text === loaded.name)[0]) {
+          stakeholdersEmails.toBeSaved.push(loaded);
+        }
+      }
+    }
+  }
+  // </step #1 - remove deleted items>
+
+  // <step #2 - push added items>
+  // programManager
+  if (!stakeholdersEmails.toBeSaved.filter((x) => x.name === programManager)[0] && stakeholdersEmails.temp.filter((x) => x.name === programManager)[0]) {
+    stakeholdersEmails.toBeSaved.push(stakeholdersEmails.temp.filter((x) => x.name === programManager)[0]);
+  }
+  // teamMembers
+  for (const tm of teamMembers) {
+    if (!stakeholdersEmails.toBeSaved.filter((x) => x.name === tm.text)[0] && stakeholdersEmails.temp.filter((x) => x.name === tm.text)[0]) {
+      stakeholdersEmails.toBeSaved.push(stakeholdersEmails.temp.filter((x) => x.name === tm.text)[0]);
+    }
+  }
+  // </step #2 - push added items>
+
+  console.log('stakeholdersEmails.toBeSaved: ', stakeholdersEmails.toBeSaved);
 }

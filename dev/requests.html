@@ -553,18 +553,27 @@
                         return JSON.stringify(body);
                     },
                     processResults: function (data) {                        
-                        console.log(data);
-                        if (!data || !Array.isArray(data.results) || data.results.length === 0 ) return [];
+                        console.log(data);                        
+                        if (!data || !Array.isArray(data.results) || data.results.length === 0 ) return [];                        
                         let result = [];
-                        for (const item of data.results) {
-                            result.push( {id: item.name, text: item.name, item});
+                        for (const item of data.results) {                            
+                            result.push( {id: item.name, text: item.name, item});                            
                         }
-                        return {results: result};
+                        return {results: result};                        
                     }
                 }
             });
 
-                        // Handle a program manager name by GC query            
+
+            $('#gcProgramManager').on('select2:select', async function (e) {
+                var data = e.params.data;
+                if (!data) return;
+                console.log(data);
+                updateStakeholdersEmailsTemp( data.item.name, data.item.email);
+            });
+        
+
+            // Handle a program manager name by GC query            
             $('#gcTeamMembers').select2({                
                 width: '100%',
                 placeholder: 'Select team members',
@@ -594,6 +603,13 @@
                         return {results: result};
                     }
                 }
+            });
+
+            $('#gcTeamMembers').on('select2:select', async function (e) {
+                var data = e.params.data;
+                if (!data) return;
+                console.log(data);
+                updateStakeholdersEmailsTemp( data.item.name, data.item.email);
             });
 
         });
@@ -643,7 +659,8 @@
             });
         });
 
-        function initModal() {
+        function initModal() {            
+
             $('#gcRequester').val(null).trigger('change');
             $('#gcProgramManager').val(null).trigger('change');
             $('#gcTeamMembers').val(null).trigger('change');
@@ -683,6 +700,8 @@
 
             setDatesLabels(undefined, undefined, undefined);
             sfOject = {};
+
+            stakeholdersEmails = JSON.parse(JSON.stringify(stakeholdersEmailsClear));
 
             validator.resetForm(); // Reset validation errors
         }
@@ -1283,7 +1302,8 @@
                 console.error(error);
             }
 
-
+            stakeholdersEmails = JSON.parse( JSON.stringify(stakeholdersEmailsClear));
+            stakeholdersEmails.loadedFromDb = Array.isArray(request.stakeholdersEmails) ? Array.from(request.stakeholdersEmails) : [];            
 
             $("#editModal").modal("show");
 
@@ -1605,12 +1625,13 @@
                 let oppAssignedSC = $('#editModal #oppAssignedSC').val();
                 let oppName = $('#editModal #sfData').select2('data').length > 0 && $('#editModal #sfData').select2('data')[0].text ? $('#editModal #sfData').select2('data')[0].text : undefined;
 
-
+                processStakeholdersEmails($("#gcProgramManager").select2('data')[0] && $("#gcProgramManager").select2('data')[0].text ? $("#gcProgramManager").select2('data')[0].text : null, $("#gcTeamMembers").select2('data') || []);
+                
                 console.log(`Region: ${region}, subRegion: ${subRegion}, Product: ${product}, Segment: ${segment}, tasks: ${JSON.stringify(tasks)}, Requester Name: ${requesterName}, Requester Email: ${requesterEmail}, Requester Phone Number: ${requesterPhoneNumber}, Need Completed By: ${needCompletedBy}, Description: ${description}`);
                 console.log(`Priority: ${priority}, Accepted/Rejected: ${acceptedRejected}, Status: ${status}, Program Manager: ${programManager}, AcceptedRejectedNotes: ${acceptedRejectedNotes}, teamMembers: ${teamMembers}`);
                 console.log(`dateAccepted: ${dateAccepted}, dateRejected: ${dateRejected}, dateClosed: ${dateClosed}`);
-
-                await putRequest(id, region, subRegion, segment, product, tasks, requesterName, requesterEmail, requesterPhoneNumber, needCompletedBy, description, oppName, oppUrl, oppDSRUrl, oppOwner, oppPartnerCustomerName, oppAssignedSC, sfOject.oppAssignedSCMail, priority, acceptedRejected, status, programManager, acceptedRejectedNotes, teamMembers, gcToken, undefined, customerRelationship, customerType, dateAccepted, dateRejected, dateClosed);
+                
+                await putRequest(id, region, subRegion, segment, product, tasks, requesterName, requesterEmail, requesterPhoneNumber, needCompletedBy, description, oppName, oppUrl, oppDSRUrl, oppOwner, oppPartnerCustomerName, oppAssignedSC, sfOject.oppAssignedSCMail, priority, acceptedRejected, status, programManager, acceptedRejectedNotes, teamMembers, gcToken, undefined, customerRelationship, customerType, dateAccepted, dateRejected, dateClosed, stakeholdersEmails.toBeSaved);
                 console.log('Success!');
                 showMessage("Request updated. Thanks!");
                 $("#editModal").modal("hide");
