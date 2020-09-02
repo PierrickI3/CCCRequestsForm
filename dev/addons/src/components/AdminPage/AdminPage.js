@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Container, Row, Col, Button, Spinner } from 'reactstrap';
-import { BiSave, BiMailSend } from 'react-icons/bi';
+import { BiSave, BiMailSend, BiX } from 'react-icons/bi';
 import Select from 'react-select';
+
 import { searchMailConfiguration, updateMailConfiguration } from '../../services/backend';
 import TagsInput from 'react-tagsinput';
 import 'react-tagsinput/react-tagsinput.css';
@@ -97,9 +98,24 @@ export default function AdminPage(props) {
       });
   };
 
+  const goBack = () => {
+    let url = `../../requests.html?region=${query.region}`;
+    // if (window.location.href.includes('localhost')) {
+    //   if (window.location.href.includes('dev')) url = `https://localhost/dev/requests.html?region=${query.region}`;
+    //   else url = `https://localhost/dev/requests.html?region=${query.region}`;
+    // } else {
+    //   url = `../../requests.html?region=${query.region}`;
+    // }
+    console.log('goBack()', url);
+    window.location.replace(url);
+  };
+
   return (
     <>
       <Container className="mt-5">
+        <Button outline size="xl" color="primary" className="mb-4" onClick={goBack}>
+          <BiX /> Return to previous page
+        </Button>
         <Row>
           <Col>
             <h1>
