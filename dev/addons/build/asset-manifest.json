@@ -16,11 +16,5 @@
     "static/js/2.7b6d7540.chunk.js.LICENSE.txt": "./static/js/2.7b6d7540.chunk.js.LICENSE.txt",
     "static/media/notifications.css": "./static/media/notification.c0d3c94c.eot"
   },
-  "entrypoints": [
-    "static/js/runtime-main.c8f180be.js",
-    "static/css/2.b8ab67ca.chunk.css",
-    "static/js/2.7b6d7540.chunk.js",
-    "static/css/main.84bddfe6.chunk.css",
-    "static/js/main.d4843bb9.chunk.js"
-  ]
+  "entrypoints": ["static/js/runtime-main.c8f180be.js", "static/css/2.b8ab67ca.chunk.css", "static/js/2.7b6d7540.chunk.js", "static/css/main.84bddfe6.chunk.css", "static/js/main.d4843bb9.chunk.js"]
 }
