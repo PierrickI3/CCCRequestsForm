@@ -85,6 +85,7 @@ export default function AdminPage(props) {
       setShowWarning(false);
       setShowSpinner(true);
       setMailConfigObj(null);
+      setTags([]);
       searchMailConfiguration(query.token, genericFilter)
         .then((resp) => {
           console.log('we have got response !');
