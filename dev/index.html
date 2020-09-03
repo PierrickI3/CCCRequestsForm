@@ -1,266 +1,273 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no" />
-    <title>CCC Request Form</title>
-    <link rel="shortcut icon" href="/favicon.ico" />
-    <!-- Bootstrap -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous" />
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
-    <!-- Bootstrap DatePicker -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker3.min.css" integrity="sha256-FAOaXTpl90/K8cXmSdsskbQN3nKYulhCpPbcFzGTWKI=" crossorigin="anonymous" />
-    <!-- jQuery Toast -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/jquery-toast-plugin/1.3.2/jquery.toast.min.css" rel="stylesheet" />
-    <!-- Custom CSS -->
-    <link rel="stylesheet" href="./css/custom.css" />
-  </head>
 
-  <body>
-    <div id="video-overlay" class="video-overlay">
-      <a class="video-overlay-close">&times;</a>
-    </div>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no" />
+  <title>CCC Request Form</title>
+  <link rel="shortcut icon" href="/favicon.ico" />
+  <!-- Bootstrap -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous" />
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
+  <!-- Bootstrap DatePicker -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker3.min.css" integrity="sha256-FAOaXTpl90/K8cXmSdsskbQN3nKYulhCpPbcFzGTWKI=" crossorigin="anonymous" />
+  <!-- jQuery Toast -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/jquery-toast-plugin/1.3.2/jquery.toast.min.css" rel="stylesheet" />
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="./css/custom.css" />
+</head>
 
-    <img class="overlay" src="./images/devmode.png" id="devModeImage" hidden alt="devMode" />
-    <nav class="navbar navbar-dark bg-dark">
-      <a class="navbar-brand" href="#">
-        <img src="images/genesys.png" width="30" height="30" class="d-inline-block align-top" alt="" />
-        Competence Center Request Form <small><span class="badge badge-pill badge-warning" id="regionBadge"></span></small>
-      </a>
+<body>
+  <div id="video-overlay" class="video-overlay">
+    <a class="video-overlay-close">&times;</a>
+  </div>
 
-      <a id="play-video" class="video-play-button" href="#" data-toggle="tooltip" data-placement="top" title="Introduction Video">
-        <span></span>
-      </a>
+  <img class="overlay" src="./images/devmode.png" id="devModeImage" hidden alt="devMode" />
+  <nav class="navbar navbar-dark bg-dark">
+    <a class="navbar-brand" href="#">
+      <img src="images/genesys.png" width="30" height="30" class="d-inline-block align-top" alt="" />
+      Competence Center Request Form <small><span class="badge badge-pill badge-warning" id="regionBadge"></span></small>
+    </a>
 
-      <ul class="mb-0">
-        <ul class="nav navbar-nav" style="float: right">
-          <li>
-            <a href="#" id="reviewRequestsButton" class="admin btn btn-primary btn-sm" hidden>Review Requests</a>
-          </li>
-        </ul>
-        <!-- <ul class="nav navbar-nav mr-2" style="float: right;">
+    <a id="play-video" class="video-play-button" href="#" data-toggle="tooltip" data-placement="top" title="Introduction Video">
+      <span></span>
+    </a>
+
+    <ul class="mb-0">
+      <ul class="nav navbar-nav" style="float: right">
+        <li>
+          <a href="#" id="reviewRequestsButton" class="admin btn btn-primary btn-sm" hidden>Review Requests</a>
+        </li>
+      </ul>
+      <!-- <ul class="nav navbar-nav mr-2" style="float: right;">
           <li>
             <a href="./homeWorkerRequest/index.html" class="btn btn-warning btn-sm" id="rapidResponse">#rapidresponse</a>
           </li>
         </ul> -->
-      </ul>
-    </nav>
+    </ul>
+  </nav>
 
-    <div class="alert alert-danger fade show" role="alert" id="alert" hidden>
-      <strong>Maintenance Alert</strong> This site is being updated. Please wait.
-      <a class="btn btn-light" href="#" onclick="location.reload();"><i class="fa fa-refresh"></i> Refresh</a>
-    </div>
-    <!-- <div class="alert alert-warning fade show text-center"><strong>#rapidResponse</strong> For Rapid Response Offer requests, please use <strong>top-right button #rapidresponse</strong></div> -->
+  <div class="alert alert-danger fade show" role="alert" id="alert" hidden>
+    <strong>Maintenance Alert</strong> This site is being updated. Please wait.
+    <a class="btn btn-light" href="#" onclick="location.reload();"><i class="fa fa-refresh"></i> Refresh</a>
+  </div>
+  <!-- <div class="alert alert-warning fade show text-center"><strong>#rapidResponse</strong> For Rapid Response Offer requests, please use <strong>top-right button #rapidresponse</strong></div> -->
 
-    <div id="form" class="container-fluid">
-      <br />
-      <div class="form-row">
-        <div class="form-group col-sm-12">
-          <div>
-            <h3 class="text-center">Welcome to the Competence Center Request Form.</h3>
-            <p class="text-center">
-              This form can be used to request assistance on a variety of topics across different product types.<br />
-              Fill out the form as required. Some fields are automatically completed using your Genesys Cloud details. Press Submit once all the required fields have been completed.
-            </p>
-            <hr />
-          </div>
+  <div id="form" class="container-fluid">
+    <br />
+    <div class="form-row">
+      <div class="form-group col-sm-12">
+        <div>
+          <h3 class="text-center">Welcome to the Competence Center Request Form.</h3>
+          <p class="text-center">
+            This form can be used to request assistance on a variety of topics across different product types.<br />
+            Fill out the form as required. Some fields are automatically completed using your Genesys Cloud details. Press Submit once all the required fields have been completed.
+          </p>
+          <hr />
+        </div>
 
-          <form id="modal-form" class="ml-5 mr-5">
-            <!-- Region & Territory -->
-            <div class="form-row mr-4 ml-2">
-              <div class="form-group col-md-6">
-                <label for="region">Region <span class="text-danger font-weight-bold">*</span></label>
-                <span data-toggle="tooltip" data-html="true" data-placement="bottom" style="float: right" title="Enter the <b>region</b> you are located in">
-                  <i class="fa fa-question-circle-o" aria-hidden="true" style="color: gray"></i>
-                </span>
-                <select id="region" name="region" class="form-control" required>
-                  <option value="" disabled selected>Select a Region</option>
-                  <option value="APAC">APAC</option>
-                  <option value="EMEA">EMEA</option>
-                  <option value="LATAM">LATAM</option>
-                  <option value="NA">North America</option>
-                </select>
-              </div>
-              <div class="form-group col-md-6">
-                <label for="subRegion">Territory <span class="text-danger font-weight-bold">*</span></label>
-                <span data-toggle="tooltip" data-html="true" data-placement="bottom" style="float: right" title="Enter the <b>territory</b> you are located in">
-                  <i class="fa fa-question-circle-o" aria-hidden="true" style="color: gray"></i>
-                </span>
-                <select id="subRegion" name="subRegion" class="form-control" required>
-                  <option value="" disabled selected>Select a Territory</option>
-                </select>
-              </div>
-            </div>
-
-            <!-- Customer Relationship & Type -->
-            <div class="form-row mr-4 ml-2">
-              <div class="form-group col-md-6">
-                <label for="customerRelationship">Direct/Indirect? <span class="text-danger font-weight-bold">*</span></label>
-                <span data-toggle="tooltip" data-html="true" data-placement="bottom" style="float: right" title="Choose <b>Relationship with a Customer</b> Direct/Indirect">
-                  <i class="fa fa-question-circle-o" aria-hidden="true" style="color: gray"></i>
-                </span>
-                <select id="customerRelationship" name="customerRelationship" class="form-control" required>
-                  <option value="" disabled selected>Select a Customer Relationship</option>
-                  <option value="Direct">Direct</option>
-                  <option value="Indirect">Indirect (via Partner)</option>
-                </select>
-              </div>
-              <div class="form-group col-md-6">
-                <label for="customerType">Customer Type <span class="text-danger font-weight-bold">*</span></label>
-                <span data-toggle="tooltip" data-html="true" data-placement="bottom" style="float: right" title="Choose <b>Customer Type</b>">
-                  <i class="fa fa-question-circle-o" aria-hidden="true" style="color: gray"></i>
-                </span>
-                <select id="customerType" name="customerType" class="form-control" required>
-                  <option value="" disabled selected>Select a Customer Type</option>
-                  <option value="ExistingCustomer">Existing Customer</option>
-                  <option value="NewLogo">New Logo</option>
-                </select>
-              </div>
-            </div>
-
-            <!-- Market Segment & Product -->
-            <div class="form-row mr-4 ml-2">
-              <div class="form-group col-md-6">
-                <label for="segment">Market Segment <span class="text-danger font-weight-bold">*</span></label>
-                <span data-toggle="tooltip" data-html="true" data-placement="bottom" style="float: right" title="Select <b>Sales Segment</b>">
-                  <i class="fa fa-question-circle-o" aria-hidden="true" style="color: gray"></i>
-                </span>
-                <select id="segment" name="segment" class="form-control" required>
-                  <option value="" disabled selected>Select a Segment</option>
-                  <option value="Mid-market">Mid-market</option>
-                  <option value="Commercial">Commercial</option>
-                  <option value="Enterprise">Enterprise</option>
-                </select>
-              </div>
-              <div class="form-group col-md-6">
-                <span data-toggle="tooltip" data-html="true" data-placement="bottom" style="float: right" title="Select the <b>product</b> name">
-                  <i class="fa fa-question-circle-o" aria-hidden="true" style="color: gray"></i>
-                </span>
-                <label for="product">Product <span class="text-danger font-weight-bold">*</span></label>
-                <select id="product" name="product" class="form-control" required>
-                  <option value="" disabled selected>Select a Product</option>
-                  <option value="Genesys Cloud">Genesys Cloud</option>
-                  <option value="Genesys Engage">Genesys Engage</option>
-                  <option value="Genesys Engage Cloud">Genesys Engage Cloud</option>
-                  <option value="PureConnect">PureConnect</option>
-                  <option value="Latitude by Genesys">Latitude by Genesys</option>
-                </select>
-              </div>
-            </div>
-
-            <!-- Tasks -->
-
-            <div class="border border-black mr-3">
-              <span data-toggle="tooltip" data-html="true" data-placement="bottom" style="float: right" class="mr-2" title="Add one or more Tasks related to your Request. Each Task contain main Category and corresponding Type.">
+        <form id="modal-form" class="ml-5 mr-5">
+          <!-- Region & Territory -->
+          <div class="form-row mr-4 ml-2">
+            <div class="form-group col-md-6">
+              <label for="region">Region <span class="text-danger font-weight-bold">*</span></label>
+              <span data-toggle="tooltip" data-html="true" data-placement="bottom" style="float: right" title="Enter the <b>region</b> you are located in">
                 <i class="fa fa-question-circle-o" aria-hidden="true" style="color: gray"></i>
               </span>
-              <div class="form-row mt-1 mr-4 ml-2">
-                <div class="form-group col-md-5 text-center">Category <span class="text-danger font-weight-bold">*</span></div>
-                <div class="form-group col-md-5 text-center">Type <span class="text-danger font-weight-bold">*</span></div>
-              </div>
+              <select id="region" name="region" class="form-control" required>
+                <option value="" disabled selected>Select a Region</option>
+                <option value="APAC">APAC</option>
+                <option value="EMEA">EMEA</option>
+                <option value="LATAM">LATAM</option>
+                <option value="NA">North America</option>
+              </select>
+            </div>
+            <div class="form-group col-md-6">
+              <label for="subRegion">Territory <span class="text-danger font-weight-bold">*</span></label>
+              <span data-toggle="tooltip" data-html="true" data-placement="bottom" style="float: right" title="Enter the <b>territory</b> you are located in">
+                <i class="fa fa-question-circle-o" aria-hidden="true" style="color: gray"></i>
+              </span>
+              <select id="subRegion" name="subRegion" class="form-control" required>
+                <option value="" disabled selected>Select a Territory</option>
+              </select>
+            </div>
+          </div>
 
-              <div class="form-row mt-2 mr-4 ml-2" id="tasks"></div>
-              <a href="#" id="addTask" class="form-group btn btn-primary mt-1 ml-3"><em class="fa fa-plus"></em> Add New Task</a>
+          <!-- Customer Relationship & Type -->
+          <div class="form-row mr-4 ml-2">
+            <div class="form-group col-md-6">
+              <label for="customerRelationship">Direct/Indirect? <span class="text-danger font-weight-bold">*</span></label>
+              <span data-toggle="tooltip" data-html="true" data-placement="bottom" style="float: right" title="Choose <b>Relationship with a Customer</b> Direct/Indirect">
+                <i class="fa fa-question-circle-o" aria-hidden="true" style="color: gray"></i>
+              </span>
+              <select id="customerRelationship" name="customerRelationship" class="form-control" required>
+                <option value="" disabled selected>Select a Customer Relationship</option>
+                <option value="Direct">Direct</option>
+                <option value="Indirect">Indirect (via Partner)</option>
+              </select>
+            </div>
+            <div class="form-group col-md-6">
+              <label for="customerType">Customer Type <span class="text-danger font-weight-bold">*</span></label>
+              <span data-toggle="tooltip" data-html="true" data-placement="bottom" style="float: right" title="Choose <b>Customer Type</b>">
+                <i class="fa fa-question-circle-o" aria-hidden="true" style="color: gray"></i>
+              </span>
+              <select id="customerType" name="customerType" class="form-control" required>
+                <option value="" disabled selected>Select a Customer Type</option>
+                <option value="ExistingCustomer">Existing Customer</option>
+                <option value="NewLogo">New Logo</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Market Segment & Product -->
+          <div class="form-row mr-4 ml-2">
+            <div class="form-group col-md-6">
+              <label for="segment">Market Segment <span class="text-danger font-weight-bold">*</span></label>
+              <span data-toggle="tooltip" data-html="true" data-placement="bottom" style="float: right" title="Select <b>Sales Segment</b>">
+                <i class="fa fa-question-circle-o" aria-hidden="true" style="color: gray"></i>
+              </span>
+              <select id="segment" name="segment" class="form-control" required>
+                <option value="" disabled selected>Select a Segment</option>
+                <option value="Mid-market">Mid-market</option>
+                <option value="Commercial">Commercial</option>
+                <option value="Enterprise">Enterprise</option>
+              </select>
+            </div>
+            <div class="form-group col-md-6">
+              <span data-toggle="tooltip" data-html="true" data-placement="bottom" style="float: right" title="Select the <b>product</b> name">
+                <i class="fa fa-question-circle-o" aria-hidden="true" style="color: gray"></i>
+              </span>
+              <label for="product">Product <span class="text-danger font-weight-bold">*</span></label>
+              <select id="product" name="product" class="form-control" required>
+                <option value="" disabled selected>Select a Product</option>
+                <option value="Genesys Cloud">Genesys Cloud</option>
+                <option value="Genesys Engage">Genesys Engage</option>
+                <option value="Genesys Engage Cloud">Genesys Engage Cloud</option>
+                <option value="PureConnect">PureConnect</option>
+                <option value="Latitude by Genesys">Latitude by Genesys</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Tasks -->
+
+          <div class="border border-black mr-3">
+            <span data-toggle="tooltip" data-html="true" data-placement="bottom" style="float: right" class="mr-2" title="Add one or more Tasks related to your Request. Each Task contain main Category and corresponding Type.">
+              <i class="fa fa-question-circle-o" aria-hidden="true" style="color: gray"></i>
+            </span>
+            <div class="form-row mt-1 mr-4 ml-2">
+              <div class="form-group col-md-5 text-center">Category <span class="text-danger font-weight-bold">*</span></div>
+              <div class="form-group col-md-5 text-center">Type <span class="text-danger font-weight-bold">*</span></div>
             </div>
 
-            <div class="form-row mr-4 ml-2 mt-2">
-              <div class="form-group col-md-6">
-                <label for="requesterName">Requester Name <span class="text-danger font-weight-bold">*</span></label>
-                <span data-toggle="tooltip" data-html="true" data-placement="bottom" style="float: right" title="Your name. By default it's automatically collected from Genesys Cloud account">
-                  <i class="fa fa-question-circle-o" aria-hidden="true" style="color: gray"></i>
-                </span>
-                <input type="text" class="form-control" id="requesterName" name="requesterName" placeholder="Your Name" required />
-              </div>
-              <div class="form-group col-md-6">
-                <span data-toggle="tooltip" data-html="true" data-placement="bottom" style="float: right" title="Your email address. By default it's automatically collected from Genesys Cloud account">
-                  <i class="fa fa-question-circle-o" aria-hidden="true" style="color: gray"></i>
-                </span>
-                <label for="requesterEmail">Requester Email <span class="text-danger font-weight-bold">*</span></label>
-                <input type="text" class="form-control" id="requesterEmail" name="requesterEmail" placeholder="Your Email Address" required />
-              </div>
-            </div>
-            <div class="form-row mr-4 ml-2">
-              <div class="form-group col-md-6">
-                <span data-toggle="tooltip" data-html="true" data-placement="bottom" style="float: right" title="Enter the phone number where you can be contacted. Be sure to include your country code, for example +447557123456">
-                  <i class="fa fa-question-circle-o" aria-hidden="true" style="color: gray"></i>
-                </span>
-                <label for="requesterPhoneNumber">Requester Phone # <span class="text-danger font-weight-bold">*</span></label>
-                <input type="text" class="form-control" id="requesterPhoneNumber" name="requesterPhoneNumber" placeholder="Your Phone Number" required />
-              </div>
-              <div class="form-group col-md-6">
-                <span data-toggle="tooltip" data-html="true" data-placement="bottom" style="float: right" title="Enter a date you require the work completed. Please note, this is not a guarantee and will be discussed with the Competence Centre Program Manager when they contact you">
-                  <i class="fa fa-question-circle-o" aria-hidden="true" style="color: gray"></i>
-                </span>
-                <label for="datepicker">Need Completed By <span class="text-danger font-weight-bold">*</span></label>
-                <input type="text" id="datepicker" class="form-control" required placeholder="Click to set a date" autocomplete="off" />
-              </div>
-            </div>
-            <div class="form-row mr-4 ml-2">
-              <div class="form-group col-md-12">
-                <span data-toggle="tooltip" data-html="true" data-placement="bottom" style="float: right" title="Enter a brief summary of the work required. Your Competence Centre Program Manager will contact you to discuss the request further">
-                  <i class="fa fa-question-circle-o" aria-hidden="true" style="color: gray"></i>
-                </span>
-                <label for="description">Description <span class="text-danger font-weight-bold">*</span></label>
-                <textarea class="form-control" id="description" name="description" placeholder="Describe your request" required></textarea>
-              </div>
-            </div>
-            <div class="form-row mr-4 ml-2">
-              <div class="form-group col-md-12">
-                <span data-toggle="tooltip" data-html="true" data-placement="bottom" style="float: right" title="Search for Opportunity in Salesforce. If present DSR will also be collected">
-                  <i class="fa fa-question-circle-o" aria-hidden="true" style="color: gray"></i>
-                </span>
-                <label for="salesforceAccountOpportunity">Opportunity</label>
-                <select id="sfData" class="form-control js-example-basic-single" name="sfData"></select>
-              </div>
-            </div>
-            <div class="form-row mr-4 ml-2">
-              <div class="form-group col-md-6">
-                <span data-toggle="tooltip" data-html="true" data-placement="bottom" style="float: right" title="Account name the opportunity is related to">
-                  <i class="fa fa-question-circle-o" aria-hidden="true" style="color: gray"></i>
-                </span>
-                <label for="oppPartnerCustomerName">Account Name</label>
-                <input type="text" class="form-control" id="oppPartnerCustomerName" name="oppPartnerCustomerName" placeholder="" disabled />
-              </div>
-              <div class="form-group col-md-3">
-                <span data-toggle="tooltip" data-html="true" data-placement="bottom" style="float: right" title="Assigned SC from latest DSR (if present). If no DSR is found, SC from opportunity is selected.">
-                  <i class="fa fa-question-circle-o" aria-hidden="true" style="color: gray"></i>
-                </span>
-                <label for="oppAssignedSC">Assigned SC</label>
-                <input type="text" class="form-control" id="oppAssignedSC" name="oppAssignedSC" placeholder="" disabled />
-              </div>
-              <div class="form-group col-md-3">
-                <span data-toggle="tooltip" data-html="true" data-placement="bottom" style="float: right" title="Opportunity Owner">
-                  <i class="fa fa-question-circle-o" aria-hidden="true" style="color: gray"></i>
-                </span>
-                <label for="oppOwner">Owner</label>
-                <input type="text" class="form-control" id="oppOwner" name="oppOwner" placeholder="" disabled />
-              </div>
-            </div>
-            <div class="form-row mr-4 ml-2">
-              <div class="form-group col-md-6">
-                <span data-toggle="tooltip" data-html="true" data-placement="bottom" style="float: right" title="Salesforce Opportunity or Account URL">
-                  <i class="fa fa-question-circle-o" aria-hidden="true" style="color: gray"></i>
-                </span>
-                <label for="oppUrl">Opportunity or Account Url</label>
-                <input type="url" class="form-control" id="oppUrl" name="oppUrl" placeholder="" disabled />
-              </div>
-              <div class="form-group col-md-6">
-                <span data-toggle="tooltip" data-html="true" data-placement="bottom" style="float: right" title="Salesforce latest DSR URL linked to Opportunity">
-                  <i class="fa fa-question-circle-o" aria-hidden="true" style="color: gray"></i>
-                </span>
-                <label for="oppDSRUrl">DSR Url</label>
-                <input type="url" class="form-control" id="oppDSRUrl" name="oppDSRUrl" placeholder="" disabled />
-              </div>
-            </div>
-          </form>
+            <div class="form-row mt-2 mr-4 ml-2" id="tasks"></div>
+            <a href="#" id="addTask" class="form-group btn btn-primary mt-1 ml-3"><em class="fa fa-plus"></em> Add New Task</a>
+          </div>
 
-          <br />
-          <button type="submit" id="submit" class="btn btn-primary ml-5" disabled>Submit</button>
-          <span class="text-muted"><small>This form is automatically saved every 10 seconds.</small></span>
-          <p class="text-right" id="version"></p>
-        </div>
-        <!--
+          <div class="form-row mr-4 ml-2 mt-2">
+            <div class="form-group col-md-6">
+              <label for="requesterName">Requester Name <span class="text-danger font-weight-bold">*</span></label>
+              <span data-toggle="tooltip" data-html="true" data-placement="bottom" style="float: right" title="Your name. By default it's automatically collected from Genesys Cloud account">
+                <i class="fa fa-question-circle-o" aria-hidden="true" style="color: gray"></i>
+              </span>
+              <input type="text" class="form-control" id="requesterName" name="requesterName" placeholder="Your Name" required />
+            </div>
+            <div class="form-group col-md-6">
+              <span data-toggle="tooltip" data-html="true" data-placement="bottom" style="float: right" title="Your email address. By default it's automatically collected from Genesys Cloud account">
+                <i class="fa fa-question-circle-o" aria-hidden="true" style="color: gray"></i>
+              </span>
+              <label for="requesterEmail">Requester Email <span class="text-danger font-weight-bold">*</span></label>
+              <input type="text" class="form-control" id="requesterEmail" name="requesterEmail" placeholder="Your Email Address" required />
+            </div>
+          </div>
+          <div class="form-row mr-4 ml-2">
+            <div class="form-group col-md-6">
+              <span data-toggle="tooltip" data-html="true" data-placement="bottom" style="float: right" title="Enter the phone number where you can be contacted. Be sure to include your country code, for example +447557123456">
+                <i class="fa fa-question-circle-o" aria-hidden="true" style="color: gray"></i>
+              </span>
+              <label for="requesterPhoneNumber">Requester Phone # <span class="text-danger font-weight-bold">*</span></label>
+              <input type="text" class="form-control" id="requesterPhoneNumber" name="requesterPhoneNumber" placeholder="Your Phone Number" required />
+            </div>
+            <div class="form-group col-md-6">
+              <span data-toggle="tooltip" data-html="true" data-placement="bottom" style="float: right" title="Enter a date you require the work completed. Please note, this is not a guarantee and will be discussed with the Competence Centre Program Manager when they contact you">
+                <i class="fa fa-question-circle-o" aria-hidden="true" style="color: gray"></i>
+              </span>
+              <label for="datepicker">Need Completed By <span class="text-danger font-weight-bold">*</span></label>
+              <input type="text" id="datepicker" class="form-control" required placeholder="Click to set a date" autocomplete="off" />
+            </div>
+          </div>
+          <div class="form-row mr-4 ml-2">
+            <div class="form-group col-md-12">
+              <span data-toggle="tooltip" data-html="true" data-placement="bottom" style="float: right" title="Enter a brief summary of the work required. Your Competence Centre Program Manager will contact you to discuss the request further">
+                <i class="fa fa-question-circle-o" aria-hidden="true" style="color: gray"></i>
+              </span>
+              <label for="description">Description <span class="text-danger font-weight-bold">*</span></label>
+              <textarea class="form-control" id="description" name="description" placeholder="Describe your request" required></textarea>
+            </div>
+          </div>
+          <div class=" form-row mr-4 ml-2">
+            <div class="form-group col-md-12">
+              <span class="text-muted"><small>Please choose the Opportunity OR Account the request relates to</small></span>
+            </div>
+          </div>
+          <div class=" form-row mr-4 ml-2">
+
+            <div class="form-group col-md-6">
+              <span data-toggle="tooltip" data-html="true" data-placement="bottom" style="float: right" title="Search for Opportunity in Salesforce. If present DSR will also be collected">
+                <i class="fa fa-question-circle-o" aria-hidden="true" style="color: gray"></i>
+              </span>
+              <label for="salesforceAccountOpportunity">Opportunity</label>
+              <select id="sfData" class="form-control js-example-basic-single" name="sfData"></select>
+            </div>
+            <div class="form-group col-md-6">
+              <span data-toggle="tooltip" data-html="true" data-placement="bottom" style="float: right" title="Account name the opportunity is related to">
+                <i class="fa fa-question-circle-o" aria-hidden="true" style="color: gray"></i>
+              </span>
+              <label for="oppPartnerCustomerName">Account Name</label><br>
+              <select id="oppPartnerCustomerName" name="oppPartnerCustomerName" class="form-control js-example-basic-single"></select>
+            </div>
+          </div>
+          <div class="form-row mr-4 ml-2">
+            <div class="form-group col-md-6">
+              <span data-toggle="tooltip" data-html="true" data-placement="bottom" style="float: right" title="Assigned SC from latest DSR (if present). If no DSR is found, SC from opportunity is selected.">
+                <i class="fa fa-question-circle-o" aria-hidden="true" style="color: gray"></i>
+              </span>
+              <label for="oppAssignedSC">Assigned SC</label><br>
+              <select id="oppAssignedSC" name="oppAssignedSC" class="form-control js-example-basic-single"></select>
+            </div>
+            <div class="form-group col-md-6">
+              <span data-toggle="tooltip" data-html="true" data-placement="bottom" style="float: right" title="Opportunity Owner">
+                <i class="fa fa-question-circle-o" aria-hidden="true" style="color: gray"></i>
+              </span>
+              <label for="oppOwner">Owner</label>
+              <input type="text" class="form-control" id="oppOwner" name="oppOwner" placeholder="" disabled />
+            </div>
+          </div>
+          <div class="form-row mr-4 ml-2">
+            <div class="form-group col-md-6">
+              <span data-toggle="tooltip" data-html="true" data-placement="bottom" style="float: right" title="Salesforce Opportunity or Account URL">
+                <i class="fa fa-question-circle-o" aria-hidden="true" style="color: gray"></i>
+              </span>
+              <label for="oppUrl">Opportunity or Account Url</label>
+              <input type="url" class="form-control" id="oppUrl" name="oppUrl" placeholder="" disabled />
+            </div>
+            <div class="form-group col-md-6">
+              <span data-toggle="tooltip" data-html="true" data-placement="bottom" style="float: right" title="Salesforce latest DSR URL linked to Opportunity">
+                <i class="fa fa-question-circle-o" aria-hidden="true" style="color: gray"></i>
+              </span>
+              <label for="oppDSRUrl">DSR Url</label>
+              <input type="url" class="form-control" id="oppDSRUrl" name="oppDSRUrl" placeholder="" disabled />
+            </div>
+          </div>
+        </form>
+
+        <br />
+        <button type="submit" id="submit" class="btn btn-primary ml-5" disabled>Submit</button>
+        <span class="text-muted"><small>This form is automatically saved every 10 seconds.</small></span>
+        <p class="text-right" id="version"></p>
+      </div>
+      <!--
             <div class="form-group col-sm-5">
                 
                 <H3 class="text-center">Welcome to the Competence Center Request Form.</H3>
@@ -303,617 +310,809 @@
                 </ol>
             </div>
              -->
-      </div>
     </div>
+  </div>
 
-    <noscript>You need to enable JavaScript to run this app.</noscript>
-    <!--#region Imports -->
-    <!-- Bootstrap core JavaScript-->
-    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
-    <!-- Core plugin JavaScript-->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"></script>
-    <!-- Moment.js -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js" integrity="sha256-4iQZ6BVL4qNKlQ27TExEhBN1HFPvAvAMbFavKKosSWQ=" crossorigin="anonymous"></script>
-    <!-- Bootstrap DatePicker -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js" integrity="sha256-bqVeqGdJ7h/lYPq6xrPv/YGzMEb6dNxlfiTUHSgRCp8=" crossorigin="anonymous"></script>
-    <!-- Genesys Cloud -->
-    <script src="https://sdk-cdn.mypurecloud.com/javascript/61.0.0/purecloud-platform-client-v2.min.js"></script>
-    <!-- JQuery Validate -->
-    <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.1/dist/jquery.validate.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.1/dist/additional-methods.min.js"></script>
-    <!-- jQuery Toast -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-toast-plugin/1.3.2/jquery.toast.min.js"></script>
-    <!-- Our Scripts -->
-    <script src="js/gc.js"></script>
-    <script src="js/requests.js"></script>
-    <script src="js/tools.js"></script>
-    <!-- Dictionary -->
-    <script src="js/dictionary.js"></script>
-    <script src="js/version.js"></script>
-    <!-- Select2 -->
-    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet" />
-    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
+  <noscript>You need to enable JavaScript to run this app.</noscript>
+  <!--#region Imports -->
+  <!-- Bootstrap core JavaScript-->
+  <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
+  <!-- Core plugin JavaScript-->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"></script>
+  <!-- Moment.js -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js" integrity="sha256-4iQZ6BVL4qNKlQ27TExEhBN1HFPvAvAMbFavKKosSWQ=" crossorigin="anonymous"></script>
+  <!-- Bootstrap DatePicker -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js" integrity="sha256-bqVeqGdJ7h/lYPq6xrPv/YGzMEb6dNxlfiTUHSgRCp8=" crossorigin="anonymous"></script>
+  <!-- Genesys Cloud -->
+  <script src="https://sdk-cdn.mypurecloud.com/javascript/61.0.0/purecloud-platform-client-v2.min.js"></script>
+  <!-- JQuery Validate -->
+  <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.1/dist/jquery.validate.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.1/dist/additional-methods.min.js"></script>
+  <!-- jQuery Toast -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-toast-plugin/1.3.2/jquery.toast.min.js"></script>
+  <!-- Our Scripts -->
+  <script src="js/gc.js"></script>
+  <script src="js/requests.js"></script>
+  <script src="js/tools.js"></script>
+  <!-- Dictionary -->
+  <script src="js/dictionary.js"></script>
+  <script src="js/version.js"></script>
+  <!-- Select2 -->
+  <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
 
-    <!--#endregion -->
+  <!--#endregion -->
 
-    <script>
-      let sfOject = {};
+  <script>
+    let sfObject = {};
+    let tasksControls = [],
+      taskId = 0,
+      userInfo,
+      gcToken;
 
-      $(document).ready(function () {
-        // Apply custom dropdown style to SF Search Input Box
-        let data = JSON.parse(localStorage.getItem('intakeForm_draft'));
-        if (!data) {
-          $('.js-example-basic-single').select2();
-        } else {
-          $('.js-example-basic-single').select2({
-            data: data.opp,
-          });
-        }
+    $(document).ready(async function () {
 
-        // Detect locally correct env
-        if (window.location.href.includes('localhost')) apiBasePath = 'http://localhost:3000';
-        else apiBasePath = 'https://drbojb15ma.execute-api.eu-central-1.amazonaws.com/dev';
-
-        // Remote query, to search for Opportunity name, bind results to select2 object
-        $('#sfData').select2({
-          placeholder: 'Opportunity Name',
-          allowClear: true,
-          minimumInputLength: 3,
-          ajax: {
-            delay: 350,
-            url: `${apiBasePath}/sf/opportunities`,
-
-            data: function (params) {
-              var query = {
-                token: gcToken,
-                name: params.term,
-              };
-              // Query parameters will be ?search=[term]&type=public
-              return query;
-            },
-            error: function (err) {
-              console.log(err);
-              if (err.status === 401) {
-                window.open('./index.html', '_self');
-              } else if (err.status > 400) {
-                showMessage(err.hasOwnProperty('responseJSON') ? err.responseJSON.message : error, true);
-              }
-            },
-
-            processResults: function (data) {
-              // Transforms the top-level key of the response object from 'items' to 'results'
-
-              let ret = [];
-              data.forEach((item) => {
-                ret.push({
-                  id: item.Id,
-                  text: `${item.Name} (${item.Id})`,
-                  item: item,
-                });
-              });
-              console.log(ret);
-              return {
-                results: ret,
-              };
-            },
-          },
-        });
-
-        // Detect Selected event, post second query on selected Item by Opportunity ID to get latest DSR object
-        $('#sfData').on('select2:select', async function (e) {
-          var data = e.params.data;
-          if (!data) return;
-
-          console.log('before search:');
-          console.log($('#sfData').select2('data')[0].item);
-          sfOject = e.params.data.item;
-
-          try {
-            let dsrInformation = await getOpportunityDSR(gcToken, e.params.data.id);
-
-            //$('#sfData').select2('data')[0].item.dsr = dsrInformation;
-            sfOject.dsr = dsrInformation;
-
-            // Update Form fields
-
-            //let myData = $('#sfData').select2('data')[0].item;
-            let myData = sfOject;
-            $('#oppUrl').val(myData.opportunityUrl);
-            $('#oppDSRUrl').val(myData.dsr && myData.dsr.url ? myData.dsr.url : 'n/a');
-            $('#oppOwner').val(myData.Owner && myData.Owner.Name ? myData.Owner.Name : 'n/a');
-            $('#oppPartnerCustomerName').val(myData.Account && myData.Account.Name ? myData.Account.Name : 'n/a');
-            $('#oppAssignedSC').val(myData.dsr && myData.dsr.virtualTeamNames ? myData.dsr.virtualTeamNames : myData.Solution_Consultant__r && myData.Solution_Consultant__r.Name ? myData.Solution_Consultant__r.Name : 'n/a');
-
-            // Find vaild mail address for assigned SC
-            try {
-              sfOject.oppAssignedSCMail = await postUsersSearch($('#oppAssignedSC').val());
-              console.log('sfOject.oppAssignedSCMail:', sfOject.oppAssignedSCMail);
-            } catch (error) {
-              console.error(error);
-            }
-          } catch (error) {
-            console.log(error);
-          }
-        });
-
-        $('#sfData').on('select2:clear', async function (e) {
-          console.log('clear items related to SF');
-          sfOject = {};
-          $('#oppUrl').val('');
-          $('#oppDSRUrl').val('');
-          $('#oppOwner').val('');
-          $('#oppPartnerCustomerName').val('');
-          $('#oppAssignedSC').val('');
-        });
-      });
-
-      //#endregion /handle SF Search element
-
-      let tasksControls = [],
-        taskId = 0,
-        gcToken;
-
-      if (version && version.hasOwnProperty('version')) {
-        $('#version').text(`v${version.version}`);
+      try {
+        userInfo = await getMe();
+        if (!maintenanceMode) $('#submit').attr('disabled', false);
+      } catch (error) {
+        showMessage(error.hasOwnProperty('message') ? error.message : `Unable to login to Genesys Cloud ${JSON.stringify(error)}`, true);
+        $('#submit').attr('disabled', true);
+        return;
       }
 
-      if (maintenanceMode) {
-        $('#alert').attr('hidden', false);
-        $('#form :input').attr('disabled', true);
-        $('#form :button').attr('disabled', true);
+      gcToken = userInfo.token;
+      localStorage.setItem('gcToken', gcToken);
+      localStorage.setItem('userName', userInfo.name);
+
+      // Apply custom dropdown style to SF Search Input Box
+      let data = JSON.parse(localStorage.getItem('intakeForm_draft'));
+      if (data)
+        sfObject = data.sfObject;
+
+      //$('.js-example-basic-single').select2({ dropdownAutoWidth: true });
+      if (!data) {
+        $('.js-example-basic-single').select2({ dropdownAutoWidth: true });
       } else {
-        addNewTask(undefined, false);
-      }
-
-      $('[data-toggle="tooltip"]').tooltip();
-
-      //#region Videos
-
-      $('#play-video').on('click', function (e) {
-        e.preventDefault();
-        $('#video-overlay').addClass('open');
-        $('#video-overlay').append('<iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/rTgGl64u24c" frameborder="0" allowfullscreen allow="accelerometer; autoplay;" autoplay="1"></iframe>');
-      });
-
-      $('.video-overlay, .video-overlay-close').on('click', function (e) {
-        e.preventDefault();
-        close_video();
-      });
-
-      function close_video() {
-        $('.video-overlay.open').removeClass('open').find('iframe').remove();
-      }
-      //#endregion
-
-      if (window.location.href.includes('dev')) $('#devModeImage').removeAttr('hidden');
-
-      // Init DatePicker
-      let currentDate = new Date();
-      console.log(currentDate);
-      $(function () {
-        $('#datepicker').datepicker({
-          daysOfWeekDisabled: ['0', '6'],
-          todayHighlight: true,
-          autoclose: true,
+        $('#sfData').select2({
+          data: data.opp,
+          dropdownAutoWidth: true
         });
-      });
+        $('#oppAssignedSC').select2({
+          data: data.oppAssignedSC,
+          dropdownAutoWidth: true
+        });
+        $('#oppPartnerCustomerName').select2({
+          data: data.oppPartnerCustomerName,
+          dropdownAutoWidth: true
+        });
 
-      init();
-      async function init() {
-        try {
-          await getMe();
-          if (!maintenanceMode) $('#submit').attr('disabled', false);
-        } catch (error) {
-          showMessage(error.hasOwnProperty('message') ? error.message : `Unable to login to Genesys Cloud ${JSON.stringify(error)}`, true);
-          $('#submit').attr('disabled', true);
-          return;
-        }
 
-        gcToken = userInfo.token;
-        localStorage.setItem('gcToken', gcToken);
-        localStorage.setItem('userName', userInfo.name);
-
-        // Populate user info
-        $('#requesterName').val(userInfo.name);
-        $('#requesterEmail').val(userInfo.mail);
-        $('#requesterPhoneNumber').val(userInfo.phone);
-
-        loadDraft();
-
-        // Show Admin fields?
-
-        if (userInfo.groups.some((g) => adminGroups['super'].includes(g))) {
-          console.log('Show super admin stuff');
-          // $('.admin').show();
-          // $('.admin').removeAttr('hidden');
-          $('#reviewRequestsButton').attr('href', 'requests.html?region=super-user');
-          $('#reviewRequestsButton').text('Review Requests');
-          $('#regionBadge').text('super-user');
-        } else if (userInfo.groups.some((g) => adminGroups['EMEA'].includes(g))) {
-          console.log('Show admin stuff');
-          // $('.admin').show();
-          // $('.admin').removeAttr('hidden');
-          $('#reviewRequestsButton').attr('href', 'requests.html?region=EMEA');
-          $('#reviewRequestsButton').text('Review Requests');
-          $('#regionBadge').text('EMEA');
-        } else if (userInfo.groups.some((g) => adminGroups['NA'].includes(g))) {
-          console.log('Show admin stuff');
-          // $('.admin').show();
-          // $('.admin').removeAttr('hidden');
-          $('#reviewRequestsButton').attr('href', 'requests.html?region=NA');
-          $('#reviewRequestsButton').text('Review Requests');
-          $('#regionBadge').text('NA');
-        } else if (userInfo.groups.some((g) => adminGroups['APAC'].includes(g))) {
-          console.log('Show admin stuff');
-          // $('.admin').show();
-          // $('.admin').removeAttr('hidden');
-          $('#reviewRequestsButton').attr('href', 'requests.html?region=APAC');
-          $('#reviewRequestsButton').text('Review Requests');
-          $('#regionBadge').text('APAC');
-        } else if (userInfo.groups.some((g) => adminGroups['LATAM'].includes(g))) {
-          console.log('Show admin stuff');
-          // $('.admin').show();
-          // $('.admin').removeAttr('hidden');
-          $('#reviewRequestsButton').attr('href', 'requests.html?region=LATAM');
-          $('#reviewRequestsButton').text('Review Requests');
-          $('#regionBadge').text('LATAM');
-        } else {
-          //console.log('Hide admin stuff');
-          //$('.admin').hide();
-          //$('.admin').attr('hidden', true);
-          // $('.admin').show();
-          // $('.admin').removeAttr('hidden');
-
-          $('#regionBadge').text('');
-          //$('#reviewRequestsButton').hide();
-          $('#reviewRequestsButton').attr('href', 'requests.html');
-          $('#reviewRequestsButton').text('My Requests');
-        }
-        $('.admin').show();
-        $('.admin').removeAttr('hidden');
       }
 
-      function addNewTask(task, includeDeleteButton = false) {
-        if (!task) {
-          let currentTaskId = taskId;
-          taskId++;
+      let assignedSCValue = sfObject.dsr && sfObject.dsr.virtualTeamNames ? sfObject.dsr.virtualTeamNames : sfObject.Solution_Consultant__r && sfObject.Solution_Consultant__r.Name ? sfObject.Solution_Consultant__r.Name : undefined;
+      console.log(assignedSCValue);
+      if (assignedSCValue) {
+        $('#oppAssignedSC').attr('disabled', true);
+        $('#oppPartnerCustomerName').attr('disabled', true);
+      }
+      else {
+        $('#oppAssignedSC').attr('disabled', false);
+        $('#oppPartnerCustomerName').attr('disabled', false);
+      }
 
-          let categoryDiv = $('<div/>', { class: 'form-group col-md-5' }).appendTo('#tasks');
-          let categorySelect = $('<select/>', { class: 'form-control', name: 'category_' + currentTaskId, required: true }).appendTo(categoryDiv);
-          $('<option/>', { value: '', disabled: true, selected: true }).text('Select a Request Category').appendTo(categorySelect);
-          for (const category of requestCategory) {
-            console.log(category);
-            $('<option/>', { value: category }).text(category).appendTo(categorySelect);
-          }
+      if (sfObject.Account && !$('#sfData').select2('data')[0])
+        $('#sfData').attr('disabled', true);
+      else
+        $('#sfData').attr('disabled', false);
 
-          let typeDiv = $('<div/>', { class: 'form-group col-md-5' }).appendTo('#tasks');
-          let typeSelect = $('<select/>', { class: 'form-control', name: 'type_' + currentTaskId, required: true }).appendTo(typeDiv);
-          $('<option/>', { value: '', disabled: true, selected: true }).text('Select a Request Type').appendTo(typeSelect);
-          categorySelect.on('change', () => {
-            updateRequestTypeBasedOnRegionAndProduct(categorySelect, typeSelect);
-          });
+      // Detect locally correct env
+      if (window.location.href.includes('localhost')) apiBasePath = 'http://localhost:3000';
+      else apiBasePath = 'https://drbojb15ma.execute-api.eu-central-1.amazonaws.com/dev';
 
-          if (includeDeleteButton) {
-            let deleteButton = $('<a/>', { href: '#', class: 'btn btn-danger form-group', style: 'max-height:38px' }).html(`<i class="fa fa-trash"></i>`).appendTo('#tasks');
-            deleteButton.on('click', () => {
-              categoryDiv.remove();
-              typeDiv.remove();
-              deleteButton.remove();
-              tasksControls = tasksControls.filter((tc) => tc.id != currentTaskId);
+      //##region sfData (Opportunity)
+
+      // Remote query, to search for Opportunity name, bind results to select2 object
+      $('#sfData').select2({
+        placeholder: 'Find Opportunity Name',
+        allowClear: true,
+        minimumInputLength: 3,
+        ajax: {
+          delay: 350,
+          url: `${apiBasePath}/sf/opportunities`,
+
+          data: function (params) {
+            var query = {
+              token: gcToken,
+              name: params.term,
+            };
+            // Query parameters will be ?search=[term]&type=public
+            return query;
+          },
+          error: function (err) {
+            console.log(err);
+            if (err.status === 401) {
+              window.open('./index.html', '_self');
+            } else if (err.status > 400) {
+              showMessage(err.hasOwnProperty('responseJSON') ? err.responseJSON.message : error, true);
+            }
+          },
+
+          processResults: function (data) {
+            // Transforms the top-level key of the response object from 'items' to 'results'
+
+            let ret = [];
+            data.forEach((item) => {
+              ret.push({
+                id: item.Id,
+                text: `${item.Name} (${item.Id})`,
+                item: item,
+              });
             });
-          }
-
-          tasksControls.push({
-            id: currentTaskId,
-            categorySelect: categorySelect,
-            typeSelect: typeSelect,
-          });
-        } else {
-          let currentTaskId = task.taskId;
-
-          // Category Select
-          let categoryDiv = $('<div/>', { class: 'form-group col-md-5' }).appendTo('#tasks');
-          let categorySelect = $('<select/>', { class: 'form-control', required: true }).appendTo(categoryDiv);
-          for (const category of requestCategory) {
-            if (category === 'Rapid Response Offer') continue;
-            $('<option/>', { value: category, selected: category === task.taskCategory })
-              .text(category)
-              .appendTo(categorySelect);
-          }
-
-          // Type Select
-          let typeDiv = $('<div/>', { class: 'form-group col-md-5' }).appendTo('#tasks');
-          let typeSelect = $('<select/>', { class: 'form-control', required: true }).appendTo(typeDiv);
-          categorySelect.on('change', () => {
-            updateRequestTypeBasedOnRegionAndProduct(categorySelect, typeSelect, task.taskType);
-          });
-          updateRequestTypeBasedOnRegionAndProduct(categorySelect, typeSelect, task.taskType);
-
-          if (includeDeleteButton) {
-            let deleteButton = $('<a/>', { href: '#', class: 'btn btn-danger form-group', style: 'max-height:38px' }).html(`<i class="fa fa-trash"></i>`).appendTo('#tasks');
-            deleteButton.on('click', () => {
-              categoryDiv.remove();
-              typeDiv.remove();
-              deleteButton.remove();
-              tasksControls = tasksControls.filter((tc) => tc.id != currentTaskId);
-            });
-          }
-
-          // Add controls to global list
-          tasksControls.push({
-            id: currentTaskId,
-            categorySelect: categorySelect,
-            typeSelect: typeSelect,
-          });
-        }
-      }
-
-      $('#addTask').on('click', (e) => {
-        e.preventDefault();
-        if (maintenanceMode) return;
-        //addNewTask(true);
-        addNewTask(undefined, true);
+            console.log(ret);
+            return {
+              results: ret,
+            };
+          },
+        },
       });
 
-      $('#region').on('change', () => {
-        $('#subRegion').empty();
-        for (let subregion of regions[$('#region').val()]) {
-          $('<option/>', { value: subregion }).text(subregion).appendTo('#subRegion');
-        }
-      });
+      // Detect Selected event, post second query on selected Item by Opportunity ID to get latest DSR object
+      $('#sfData').on('select2:select', async function (e) {
+        var data = e.params.data;
+        if (!data) return;
 
-      function updateRequestTypeBasedOnRegionAndProduct(categorySelect, typeSelect, savedType) {
-        typeSelect.empty();
-
-        for (let aRequest of requestsType[categorySelect.val()]) {
-          $('<option/>', { value: aRequest, selected: aRequest === savedType })
-            .text(aRequest)
-            .appendTo(typeSelect);
-        }
-
-        if ($(typeSelect)[0].length == 0) {
-          // No SubCategory
-          $(typeSelect)[0].disabled = true;
-          $(typeSelect).removeAttr('required');
-        } else {
-          $(typeSelect)[0].disabled = false;
-          $(typeSelect).attr('required', '');
-        }
-      }
-
-      $('#modal-form').validate({
-        errorClass: 'text-danger',
-        successClass: 'test-success',
-      });
-
-      $('#submit').on('click', async (e) => {
-        e.preventDefault();
-        if (!$('#modal-form').valid()) {
-          showMessage('Missing or invalid fields', true);
-          return;
-        }
+        console.log('before search:');
+        console.log($('#sfData').select2('data')[0].item);
+        sfObject = e.params.data.item;
 
         try {
-          // Disable submit button
-          $('#submit').prop('disabled', true);
-          $('#submit').html(`<span class="spinner-border-sm text-light" role="status" aria-hidden="true"></span> Please Wait...`);
+          let dsrInformation = await getOpportunityDSR(gcToken, e.params.data.id);
 
-          let region = $('#region').val();
-          let subRegion = $('#subRegion').val();
-          let customerRelationship = $('#customerRelationship').val();
-          let customerType = $('#customerType').val();
-          let segment = $('#segment').val();
-          let product = $('#product').val();
+          //$('#sfData').select2('data')[0].item.dsr = dsrInformation;
+          sfObject.dsr = dsrInformation;
 
-          // Tasks
-          let tasks = [];
-          for (const task of tasksControls) {
-            tasks.push({
-              taskId: task.id,
-              taskCategory: task.categorySelect.val(),
-              taskType: task.typeSelect.val(),
-              taskTime: 0,
-            });
+          // Update Form fields
+
+          //let myData = $('#sfData').select2('data')[0].item;
+          let myData = sfObject;
+          $('#oppUrl').val(myData.opportunityUrl);
+          $('#oppDSRUrl').val(myData.dsr && myData.dsr.url ? myData.dsr.url : 'n/a');
+          $('#oppOwner').val(myData.Owner && myData.Owner.Name ? myData.Owner.Name : 'n/a');
+
+
+          let assignedSCValue = myData.dsr && myData.dsr.virtualTeamNames ? myData.dsr.virtualTeamNames : myData.Solution_Consultant__r && myData.Solution_Consultant__r.Name ? myData.Solution_Consultant__r.Name : undefined;
+          if (assignedSCValue) {
+            $("#oppAssignedSC").append($("<option selected='selected'></option>").val("0").text(assignedSCValue)).trigger('change');
+            $('#oppAssignedSC').attr('disabled', true);
+          } else {
+            $('#oppAssignedSC').attr('disabled', false);
+            $('#oppAssignedSC').val(null).trigger('change');
           }
+          sfObject.oppAssignedSC = assignedSCValue;
+          let foundAccount = myData.Account && myData.Account.Name ? myData.Account.Name : undefined;
+          if (foundAccount)
+            $("#oppPartnerCustomerName").append($("<option selected='selected'></option>").val("0").text(foundAccount)).trigger('change');
+          else
+            $('#oppPartnerCustomerName').val(null).trigger('change');
+          $('#oppPartnerCustomerName').attr('disabled', true);
 
-          let requesterName = $('#requesterName').val();
-          let requesterEmail = $('#requesterEmail').val();
-          let requesterPhoneNumber = $('#requesterPhoneNumber').val();
 
-          // Need completed by
-          let needCompletedBy = 'Not Set';
-          let needCompletedByDate = moment($('#datepicker').datepicker('getDate')).format('YYYY-MM-DDT00:00:00.000');
-          if (needCompletedByDate != 'Invalid date') {
-            needCompletedBy = moment($('#datepicker').datepicker('getDate')).format('YYYY-MM-DDT00:00:00.000') + 'Z';
+          //$('#oppAssignedSC').val(myData.dsr && myData.dsr.virtualTeamNames ? myData.dsr.virtualTeamNames : myData.Solution_Consultant__r && myData.Solution_Consultant__r.Name ? myData.Solution_Consultant__r.Name : 'n/a');
+
+          // Find vaild mail address for assigned SC (if exists)
+          if (!assignedSCValue) return;
+          try {
+            sfObject.oppAssignedSCMail = await postUsersSearch($('#oppAssignedSC').select2('data')[0].text);
+            console.log('sfObject.oppAssignedSCMail:', sfObject.oppAssignedSCMail);
+          } catch (error) {
+            console.error(error);
           }
-
-          let description = $('#description').val();
-          // let partnerCustomerName = $('#partnerCustomerName').val();
-          // let salesforceAccountOpportunity = $('#salesforceAccountOpportunity').val();
-
-          // SF Related Data
-
-          let oppUrl = $('#oppUrl').val();
-          let oppDSRUrl = $('#oppDSRUrl').val();
-          let oppOwner = $('#oppOwner').val();
-          let oppPartnerCustomerName = $('#oppPartnerCustomerName').val();
-          let oppAssignedSC = $('#oppAssignedSC').val();
-          let oppName = $('#sfData').select2('data').length > 0 && $('#sfData').select2('data')[0].text ? $('#sfData').select2('data')[0].text : undefined;
-
-          console.log(`Region: ${region}, subRegion: ${subRegion}, Product: ${product}, Tasks: ${JSON.stringify(tasks)}, Requester Name: ${requesterName}, Requester Email: ${requesterEmail}, Requester Phone Number: ${requesterPhoneNumber}, Need Completed By: ${needCompletedBy}, Description: ${description}`);
-
-          await postRequests(region, subRegion, segment, product, tasks, requesterName, requesterEmail, requesterPhoneNumber, needCompletedBy, description, oppName, oppUrl, oppDSRUrl, oppOwner, oppPartnerCustomerName, oppAssignedSC, sfOject.oppAssignedSCMail, gcToken, customerRelationship, customerType);
-          console.log('Success!');
-          showMessage('Request submitted. Thanks!');
-
-          let sTasks = '\n----------------------------------';
-          tasks.forEach(function (aTask) {
-            sTasks = sTasks + '\n reqCategory:\t\t' + aTask.taskCategory + '\n requestType:\t\t' + aTask.taskType;
-          });
-          sTasks = sTasks + '\n----------------------------------';
-          console.log(sTasks);
-
-          let detailedInfo = '\n```no-highlight\n region:\t\t' + region + '\n sub-region:\t\t' + subRegion + '\n segment:\t\t' + segment + '\n product:\t\t' + product + '\n req name:\t\t' + requesterName + '\n req email:\t\t' + requesterEmail + '\n req phone:\t\t' + requesterPhoneNumber + sTasks + '\n completed by:\t\t' + needCompletedBy + '\n description:\t\t' + description + '\n ```\n';
-          if (!window.location.href.includes('localhost')) sendNotification(`:loudspeaker: New CCC Request from [@${userInfo.name}](#/person/${userInfo.id}) ${detailedInfo}`, region, subRegion, segment, product);
-          $('#submit').prop('disabled', false);
-          $('#submit').html('Submit');
-          cleanForm();
         } catch (error) {
-          console.error(error);
-          $('#submit').prop('disabled', false);
-          $('#submit').html('Submit');
-          showMessage(error.hasOwnProperty('message') ? error.message : JSON.stringify(error, null, 2), true);
+          console.log(error);
         }
       });
 
-      function cleanForm() {
-        // Populate user info
-        $('#requesterName').val(userInfo.name);
-        $('#requesterEmail').val(userInfo.mail);
-        $('#requesterPhoneNumber').val(userInfo.phone);
-        tasksControls = [];
-        $('#tasks').empty();
-        addNewTask(undefined, false);
-        $('#subRegion').empty();
-        $('<option selected disabled />', { value: 'Select a Sub-Region' }).text('Select a Sub-Region').appendTo('#subRegion');
-        $('#segment').val('');
-        $('#region').val('');
-        $('#product').val('');
-        $('#datepicker').val('');
-        $('#description').val('');
-        // $('#partnerCustomerName').val('');
-        // $('#salesforceAccountOpportunity').val('');
-
-        // SF Related Data
+      $('#sfData').on('select2:clear', async function (e) {
+        console.log('clear items related to SF');
+        sfObject = {};
+        $('#oppAssignedSC').attr('disabled', false);
+        $('#oppAssignedSC').val(null).trigger('change');
+        $('#oppPartnerCustomerName').val(null).trigger('change');
+        $('#oppPartnerCustomerName').attr('disabled', false);
         $('#oppUrl').val('');
         $('#oppDSRUrl').val('');
         $('#oppOwner').val('');
         $('#oppPartnerCustomerName').val('');
         $('#oppAssignedSC').val('');
-        $('#sfData').val(null).trigger('change');
-        sfOject = {};
+      });
 
-        localStorage.removeItem('intakeForm_draft');
+      //#endregion /sfData (Opportunity)
+
+
+      $('#oppAssignedSC').select2({
+        width: '100%',
+        placeholder: 'Select user',
+        allowClear: true,
+        minimumInputLength: 3,
+        ajax: {
+          delay: 350,
+          method: 'POST',
+          headers: {
+            Authorization: `bearer ${gcToken}`,
+            "Content-Type": "application/json",
+          },
+          url: `https://api.mypurecloud.com/api/v2/search?profile=false`,
+          data: function (params) {
+            const body = getSearchUserBody(params.term);
+            console.log('Search user query: ', body);
+            return JSON.stringify(body);
+          },
+          processResults: function (data) {
+            console.log(data);
+            if (!data || !Array.isArray(data.results) || data.results.length === 0) return [];
+            let result = [];
+            for (const item of data.results) {
+              result.push({ id: item.name, text: item.name, item });
+            }
+            return { results: result };
+          }
+        }
+      });
+
+      $('#oppAssignedSC').on('select2:select', async function (e) {
+        var data = e.params.data;
+        if (!data) return;
+        console.log(data);
+        sfObject.oppAssignedSC = data.text;
+        sfObject.oppAssignedSCMail = data.item.email;
+
+      });
+
+      $('#oppAssignedSC').on('select2:clear', async function (e) {
+
+        delete sfObject.oppAssignedSC;
+        delete sfObject.oppAssignedSCMail;
+
+      });
+
+
+      $('#oppPartnerCustomerName').select2({
+        placeholder: 'Find Account Name',
+        allowClear: true,
+        minimumInputLength: 3,
+        ajax: {
+          delay: 350,
+          url: `${apiBasePath}/sf/accounts`,
+
+          data: function (params) {
+            var query = {
+              token: gcToken,
+              name: params.term,
+            };
+            // Query parameters will be ?search=[term]&type=public
+            return query;
+          },
+          error: function (err) {
+            console.log(err);
+            if (err.status === 401) {
+              window.open('./index.html', '_self');
+            } else if (err.status > 400) {
+              showMessage(err.hasOwnProperty('responseJSON') ? err.responseJSON.message : error, true);
+            }
+          },
+
+          processResults: function (data) {
+            // Transforms the top-level key of the response object from 'items' to 'results'
+
+            let ret = [];
+            data.forEach((item) => {
+              ret.push({
+                id: item.Id,
+                text: `${item.Name} (${item.Owner && item.Owner.Name ? item.Owner.Name : 'owner undefined'})`,
+                item: item,
+              });
+            });
+            console.log(ret);
+            return {
+              results: ret,
+            };
+          },
+        },
+      });
+
+
+      $('#oppPartnerCustomerName').on('select2:select', async function (e) {
+        var data = e.params.data;
+        if (!data) return;
+        console.log(data);
+        sfObject.Account = data.item;
+        $('#oppOwner').val(data.item.Owner && data.item.Owner.Name ? data.item.Owner.Name : 'n/a');
+        $('#sfData').attr('disabled', true); // don't allow to set Opportunity when Account is selected
+        $('#oppUrl').val(data.item.opportunityUrl);
+
+      });
+
+      $('#oppPartnerCustomerName').on('select2:clear', async function (e) {
+
+        delete sfObject.Account;
+        $('#sfData').attr('disabled', false);
+        $('#oppOwner').val('');
+        $('#oppUrl').val('');
+
+      });
+
+      init();
+
+    });
+
+    //#endregion /handle SF Search element
+
+
+
+    if (version && version.hasOwnProperty('version')) {
+      $('#version').text(`v${version.version}`);
+    }
+
+    if (maintenanceMode) {
+      $('#alert').attr('hidden', false);
+      $('#form :input').attr('disabled', true);
+      $('#form :button').attr('disabled', true);
+    } else {
+      addNewTask(undefined, false);
+    }
+
+    $('[data-toggle="tooltip"]').tooltip();
+
+    //#region Videos
+
+    $('#play-video').on('click', function (e) {
+      e.preventDefault();
+      $('#video-overlay').addClass('open');
+      $('#video-overlay').append('<iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/rTgGl64u24c" frameborder="0" allowfullscreen allow="accelerometer; autoplay;" autoplay="1"></iframe>');
+    });
+
+    $('.video-overlay, .video-overlay-close').on('click', function (e) {
+      e.preventDefault();
+      close_video();
+    });
+
+    function close_video() {
+      $('.video-overlay.open').removeClass('open').find('iframe').remove();
+    }
+    //#endregion
+
+    if (window.location.href.includes('dev')) $('#devModeImage').removeAttr('hidden');
+
+    // Init DatePicker
+    let currentDate = new Date();
+    console.log(currentDate);
+    $(function () {
+      $('#datepicker').datepicker({
+        daysOfWeekDisabled: ['0', '6'],
+        todayHighlight: true,
+        autoclose: true,
+      });
+    });
+
+
+    function init() {
+      console.log('init()');
+
+      // Populate user info
+      $('#requesterName').val(userInfo.name);
+      $('#requesterEmail').val(userInfo.mail);
+      $('#requesterPhoneNumber').val(userInfo.phone);
+
+      loadDraft();
+
+      // Show Admin fields?
+
+      if (userInfo.groups.some((g) => adminGroups['super'].includes(g))) {
+        console.log('Show super admin stuff');
+        // $('.admin').show();
+        // $('.admin').removeAttr('hidden');
+        $('#reviewRequestsButton').attr('href', 'requests.html?region=super-user');
+        $('#reviewRequestsButton').text('Review Requests');
+        $('#regionBadge').text('super-user');
+      } else if (userInfo.groups.some((g) => adminGroups['EMEA'].includes(g))) {
+        console.log('Show admin stuff');
+        // $('.admin').show();
+        // $('.admin').removeAttr('hidden');
+        $('#reviewRequestsButton').attr('href', 'requests.html?region=EMEA');
+        $('#reviewRequestsButton').text('Review Requests');
+        $('#regionBadge').text('EMEA');
+      } else if (userInfo.groups.some((g) => adminGroups['NA'].includes(g))) {
+        console.log('Show admin stuff');
+        // $('.admin').show();
+        // $('.admin').removeAttr('hidden');
+        $('#reviewRequestsButton').attr('href', 'requests.html?region=NA');
+        $('#reviewRequestsButton').text('Review Requests');
+        $('#regionBadge').text('NA');
+      } else if (userInfo.groups.some((g) => adminGroups['APAC'].includes(g))) {
+        console.log('Show admin stuff');
+        // $('.admin').show();
+        // $('.admin').removeAttr('hidden');
+        $('#reviewRequestsButton').attr('href', 'requests.html?region=APAC');
+        $('#reviewRequestsButton').text('Review Requests');
+        $('#regionBadge').text('APAC');
+      } else if (userInfo.groups.some((g) => adminGroups['LATAM'].includes(g))) {
+        console.log('Show admin stuff');
+        // $('.admin').show();
+        // $('.admin').removeAttr('hidden');
+        $('#reviewRequestsButton').attr('href', 'requests.html?region=LATAM');
+        $('#reviewRequestsButton').text('Review Requests');
+        $('#regionBadge').text('LATAM');
+      } else {
+        //console.log('Hide admin stuff');
+        //$('.admin').hide();
+        //$('.admin').attr('hidden', true);
+        // $('.admin').show();
+        // $('.admin').removeAttr('hidden');
+
+        $('#regionBadge').text('');
+        //$('#reviewRequestsButton').hide();
+        $('#reviewRequestsButton').attr('href', 'requests.html');
+        $('#reviewRequestsButton').text('My Requests');
+      }
+      $('.admin').show();
+      $('.admin').removeAttr('hidden');
+    }
+
+    function addNewTask(task, includeDeleteButton = false) {
+      if (!task) {
+        let currentTaskId = taskId;
+        taskId++;
+
+        let categoryDiv = $('<div/>', { class: 'form-group col-md-5' }).appendTo('#tasks');
+        let categorySelect = $('<select/>', { class: 'form-control', name: 'category_' + currentTaskId, required: true }).appendTo(categoryDiv);
+        $('<option/>', { value: '', disabled: true, selected: true }).text('Select a Request Category').appendTo(categorySelect);
+        for (const category of requestCategory) {
+          console.log(category);
+          $('<option/>', { value: category }).text(category).appendTo(categorySelect);
+        }
+
+        let typeDiv = $('<div/>', { class: 'form-group col-md-5' }).appendTo('#tasks');
+        let typeSelect = $('<select/>', { class: 'form-control', name: 'type_' + currentTaskId, required: true }).appendTo(typeDiv);
+        $('<option/>', { value: '', disabled: true, selected: true }).text('Select a Request Type').appendTo(typeSelect);
+        categorySelect.on('change', () => {
+          updateRequestTypeBasedOnRegionAndProduct(categorySelect, typeSelect);
+        });
+
+        if (includeDeleteButton) {
+          let deleteButton = $('<a/>', { href: '#', class: 'btn btn-danger form-group', style: 'max-height:38px' }).html(`<i class="fa fa-trash"></i>`).appendTo('#tasks');
+          deleteButton.on('click', () => {
+            categoryDiv.remove();
+            typeDiv.remove();
+            deleteButton.remove();
+            tasksControls = tasksControls.filter((tc) => tc.id != currentTaskId);
+          });
+        }
+
+        tasksControls.push({
+          id: currentTaskId,
+          categorySelect: categorySelect,
+          typeSelect: typeSelect,
+        });
+      } else {
+        let currentTaskId = task.taskId;
+
+        // Category Select
+        let categoryDiv = $('<div/>', { class: 'form-group col-md-5' }).appendTo('#tasks');
+        let categorySelect = $('<select/>', { class: 'form-control', required: true }).appendTo(categoryDiv);
+        for (const category of requestCategory) {
+          if (category === 'Rapid Response Offer') continue;
+          $('<option/>', { value: category, selected: category === task.taskCategory })
+            .text(category)
+            .appendTo(categorySelect);
+        }
+
+        // Type Select
+        let typeDiv = $('<div/>', { class: 'form-group col-md-5' }).appendTo('#tasks');
+        let typeSelect = $('<select/>', { class: 'form-control', required: true }).appendTo(typeDiv);
+        categorySelect.on('change', () => {
+          updateRequestTypeBasedOnRegionAndProduct(categorySelect, typeSelect, task.taskType);
+        });
+        updateRequestTypeBasedOnRegionAndProduct(categorySelect, typeSelect, task.taskType);
+
+        if (includeDeleteButton) {
+          let deleteButton = $('<a/>', { href: '#', class: 'btn btn-danger form-group', style: 'max-height:38px' }).html(`<i class="fa fa-trash"></i>`).appendTo('#tasks');
+          deleteButton.on('click', () => {
+            categoryDiv.remove();
+            typeDiv.remove();
+            deleteButton.remove();
+            tasksControls = tasksControls.filter((tc) => tc.id != currentTaskId);
+          });
+        }
+
+        // Add controls to global list
+        tasksControls.push({
+          id: currentTaskId,
+          categorySelect: categorySelect,
+          typeSelect: typeSelect,
+        });
+      }
+    }
+
+    $('#addTask').on('click', (e) => {
+      e.preventDefault();
+      if (maintenanceMode) return;
+      //addNewTask(true);
+      addNewTask(undefined, true);
+    });
+
+    $('#region').on('change', () => {
+      $('#subRegion').empty();
+      for (let subregion of regions[$('#region').val()]) {
+        $('<option/>', { value: subregion }).text(subregion).appendTo('#subRegion');
+      }
+    });
+
+    function updateRequestTypeBasedOnRegionAndProduct(categorySelect, typeSelect, savedType) {
+      typeSelect.empty();
+
+      for (let aRequest of requestsType[categorySelect.val()]) {
+        $('<option/>', { value: aRequest, selected: aRequest === savedType })
+          .text(aRequest)
+          .appendTo(typeSelect);
       }
 
-      setInterval(() => {
-        try {
-          let data = {
-            // Populate user info
-            region: $('#region').val(),
-            subRegion: $('#subRegion').val(),
-            customerRelationship: $('#customerRelationship').val(),
-            customerType: $('#customerType').val(),
-            segment: $('#segment').val(),
-            product: $('#product').val(),
+      if ($(typeSelect)[0].length == 0) {
+        // No SubCategory
+        $(typeSelect)[0].disabled = true;
+        $(typeSelect).removeAttr('required');
+      } else {
+        $(typeSelect)[0].disabled = false;
+        $(typeSelect).attr('required', '');
+      }
+    }
 
-            requesterName: $('#requesterName').val(),
-            requesterEmail: $('#requesterEmail').val(),
-            requesterPhoneNumber: $('#requesterPhoneNumber').val(),
-            description: $('#description').val(),
+    $('#modal-form').validate({
+      errorClass: 'text-danger',
+      successClass: 'test-success',
+    });
 
-            // SF Related Data
-            // partnerCustomerName: $('#partnerCustomerName').val(),
-            // salesforceAccountOpportunity: $('#salesforceAccountOpportunity').val(),
-            opp: $('#sfData').select2('data'),
-            oppUrl: $('#oppUrl').val(),
-            oppDSRUrl: $('#oppDSRUrl').val(),
-            oppOwner: $('#oppOwner').val(),
-            oppPartnerCustomerName: $('#oppPartnerCustomerName').val(),
-            oppAssignedSC: $('#oppAssignedSC').val(),
-          };
+    $('#submit').on('click', async (e) => {
+      e.preventDefault();
+      if (!$('#modal-form').valid()) {
+        showMessage('Missing or invalid fields', true);
+        return;
+      }
 
-          let needCompletedByDate = moment($('#datepicker').datepicker('getDate')).format('YYYY-MM-DDT00:00:00.000');
-          if (needCompletedByDate != 'Invalid date') {
-            data.needCompletedBy = needCompletedByDate + 'Z';
-          }
+      try {
+        // Disable submit button
+        $('#submit').prop('disabled', true);
+        $('#submit').html(`<span class="spinner-border-sm text-light" role="status" aria-hidden="true"></span> Please Wait...`);
 
-          // Tasks
-          if (tasksControls.length > 0 && tasksControls[0].categorySelect.val()) {
-            let tasks = [];
+        let region = $('#region').val();
+        let subRegion = $('#subRegion').val();
+        let customerRelationship = $('#customerRelationship').val();
+        let customerType = $('#customerType').val();
+        let segment = $('#segment').val();
+        let product = $('#product').val();
 
-            for (const task of tasksControls) {
-              tasks.push({
-                taskId: task.id,
-                taskCategory: task.categorySelect.val(),
-                taskType: task.typeSelect.val(),
-              });
-            }
-            data.taskControls = tasks;
-          }
-
-          localStorage.setItem('intakeForm_draft', JSON.stringify(data));
-        } catch (error) {
-          console.error(error);
+        // Tasks
+        let tasks = [];
+        for (const task of tasksControls) {
+          tasks.push({
+            taskId: task.id,
+            taskCategory: task.categorySelect.val(),
+            taskType: task.typeSelect.val(),
+            taskTime: 0,
+          });
         }
-      }, 10000);
 
-      function loadDraft() {
-        console.log('loadDraft()');
-        try {
-          let data = JSON.parse(localStorage.getItem('intakeForm_draft'));
-          if (!data) {
-            console.log('no draft found.');
-            return;
-          }
+        let requesterName = $('#requesterName').val();
+        let requesterEmail = $('#requesterEmail').val();
+        let requesterPhoneNumber = $('#requesterPhoneNumber').val();
 
-          if (data.taskControls) {
-            tasksControls = [];
-            $('#tasks').empty();
-            // Load tasks
-            let i = 0;
-            for (const task of data.taskControls) {
-              console.log('Adding new task:', task);
-              // Do not add null Tasks
-              if (task.taskCategory) addNewTask(task, i++ > 0 ? true : false);
-            }
-          }
+        // Need completed by
+        let needCompletedBy = 'Not Set';
+        let needCompletedByDate = moment($('#datepicker').datepicker('getDate')).format('YYYY-MM-DDT00:00:00.000');
+        if (needCompletedByDate != 'Invalid date') {
+          needCompletedBy = moment($('#datepicker').datepicker('getDate')).format('YYYY-MM-DDT00:00:00.000') + 'Z';
+        }
 
-          if (data.segment) $('#segment').val(data.segment);
-          if (data.product) $('#product').val(data.product);
+        let description = $('#description').val();
+        // let partnerCustomerName = $('#partnerCustomerName').val();
+        // let salesforceAccountOpportunity = $('#salesforceAccountOpportunity').val();
 
-          // Your Info
-          if (data.region) {
-            $('#region').val(data.region);
-            $('#region').change();
-          }
-          if (data.subRegion) {
-            $('#subRegion').val(data.subRegion);
-          }
+        // SF Related Data
 
-          if (data.customerRelationship) {
-            $('#customerRelationship').val(data.customerRelationship);
-          }
-          if (data.customerType) {
-            $('#customerType').val(data.customerType);
-          }
+        let oppUrl = $('#oppUrl').val();
+        let oppDSRUrl = $('#oppDSRUrl').val();
+        let oppOwner = $('#oppOwner').val();
+        let oppPartnerCustomerName = sfObject.Account && sfObject.Account.Name ? sfObject.Account.Name : undefined
+        let oppAssignedSC = $('#oppAssignedSC').val();
+        let oppName = $('#sfData').select2('data').length > 0 && $('#sfData').select2('data')[0].text ? $('#sfData').select2('data')[0].text : undefined;
 
-          // Optional
-          $('#requesterName').val(data.requesterName);
-          $('#requesterEmail').val(data.requesterEmail);
-          $('#requesterPhoneNumber').val(data.requesterPhoneNumber);
-          $('#datepicker').datepicker('update', new Date(data.needCompletedBy));
-          $('#description').val(data.description);
-          // $('#partnerCustomerName').val(data.partnerCustomerName);
-          // $('#salesforceAccountOpportunity').val(data.salesforceAccountOpportunity);
+        console.log(`Region: ${region}, subRegion: ${subRegion}, Product: ${product}, Tasks: ${JSON.stringify(tasks)}, Requester Name: ${requesterName}, Requester Email: ${requesterEmail}, Requester Phone Number: ${requesterPhoneNumber}, Need Completed By: ${needCompletedBy}, Description: ${description}, AccountName: ${oppPartnerCustomerName}`);
+
+        await postRequests(region, subRegion, segment, product, tasks, requesterName, requesterEmail, requesterPhoneNumber, needCompletedBy, description, oppName, oppUrl, oppDSRUrl, oppOwner, oppPartnerCustomerName, sfObject.oppAssignedSC, sfObject.oppAssignedSCMail, gcToken, customerRelationship, customerType);
+        console.log('Success!');
+        showMessage('Request submitted. Thanks!');
+
+        let sTasks = '\n----------------------------------';
+        tasks.forEach(function (aTask) {
+          sTasks = sTasks + '\n reqCategory:\t\t' + aTask.taskCategory + '\n requestType:\t\t' + aTask.taskType;
+        });
+        sTasks = sTasks + '\n----------------------------------';
+        console.log(sTasks);
+
+        let detailedInfo = '\n```no-highlight\n region:\t\t' + region + '\n sub-region:\t\t' + subRegion + '\n segment:\t\t' + segment + '\n product:\t\t' + product + '\n req name:\t\t' + requesterName + '\n req email:\t\t' + requesterEmail + '\n req phone:\t\t' + requesterPhoneNumber + sTasks + '\n completed by:\t\t' + needCompletedBy + '\n description:\t\t' + description + '\n ```\n';
+        if (!window.location.href.includes('localhost')) sendNotification(`:loudspeaker: New CCC Request from [@${userInfo.name}](#/person/${userInfo.id}) ${detailedInfo}`, region, subRegion, segment, product);
+        $('#submit').prop('disabled', false);
+        $('#submit').html('Submit');
+        cleanForm();
+      } catch (error) {
+        console.error(error);
+        $('#submit').prop('disabled', false);
+        $('#submit').html('Submit');
+        showMessage(error.hasOwnProperty('message') ? error.message : JSON.stringify(error, null, 2), true);
+      }
+    });
+
+    function cleanForm() {
+      // Populate user info
+      $('#requesterName').val(userInfo.name);
+      $('#requesterEmail').val(userInfo.mail);
+      $('#requesterPhoneNumber').val(userInfo.phone);
+      tasksControls = [];
+      $('#tasks').empty();
+      addNewTask(undefined, false);
+      $('#subRegion').empty();
+      $('<option selected disabled />', { value: 'Select a Sub-Region' }).text('Select a Sub-Region').appendTo('#subRegion');
+      $('#segment').val('');
+      $('#region').val('');
+      $('#product').val('');
+      $('#datepicker').val('');
+      $('#description').val('');
+      $('#customerRelationship').val('');
+      $('#customerType').val('');
+
+
+      // $('#partnerCustomerName').val('');
+      // $('#salesforceAccountOpportunity').val('');
+
+      // SF Related Data
+      $('#oppUrl').val('');
+      $('#oppDSRUrl').val('');
+      $('#oppOwner').val('');
+
+      $('#sfData').val(null).trigger('change');
+      $('#oppAssignedSC').val(null).trigger('change');
+      $('#oppPartnerCustomerName').val(null).trigger('change');
+
+      sfObject = {};
+
+      localStorage.removeItem('intakeForm_draft');
+    }
+
+    setInterval(() => {
+      try {
+        let data = {
+          // Populate user info
+          region: $('#region').val(),
+          subRegion: $('#subRegion').val(),
+          customerRelationship: $('#customerRelationship').val(),
+          customerType: $('#customerType').val(),
+          segment: $('#segment').val(),
+          product: $('#product').val(),
+
+          requesterName: $('#requesterName').val(),
+          requesterEmail: $('#requesterEmail').val(),
+          requesterPhoneNumber: $('#requesterPhoneNumber').val(),
+          description: $('#description').val(),
 
           // SF Related Data
-          $('#oppUrl').val(data.oppUrl);
-          $('#oppDSRUrl').val(data.oppDSRUrl);
-          $('#oppOwner').val(data.oppOwner);
-          $('#oppPartnerCustomerName').val(data.oppPartnerCustomerName);
-          $('#oppAssignedSC').val(data.oppAssignedSC);
+          // partnerCustomerName: $('#partnerCustomerName').val(),
+          // salesforceAccountOpportunity: $('#salesforceAccountOpportunity').val(),
+          opp: $('#sfData').select2('data'),
+          oppUrl: $('#oppUrl').val(),
+          oppDSRUrl: $('#oppDSRUrl').val(),
+          oppOwner: $('#oppOwner').val(),
+          oppPartnerCustomerName: $('#oppPartnerCustomerName').select2('data'),
+          oppAssignedSC: $('#oppAssignedSC').select2('data'),
 
-          sfOject.oppAssignedSCMail = data.oppAssignedSCMail;
-        } catch (error) {
-          console.error(error);
+          sfObject: sfObject
+
+        };
+
+        let needCompletedByDate = moment($('#datepicker').datepicker('getDate')).format('YYYY-MM-DDT00:00:00.000');
+        if (needCompletedByDate != 'Invalid date') {
+          data.needCompletedBy = needCompletedByDate + 'Z';
         }
-      }
-    </script>
 
-    <!--Coollabs -->
-    <script async defer src="https://cdn.coollabs.io/save.js"></script>
-  </body>
+        // Tasks
+        if (tasksControls.length > 0 && tasksControls[0].categorySelect.val()) {
+          let tasks = [];
+
+          for (const task of tasksControls) {
+            tasks.push({
+              taskId: task.id,
+              taskCategory: task.categorySelect.val(),
+              taskType: task.typeSelect.val(),
+            });
+          }
+          data.taskControls = tasks;
+        }
+
+        localStorage.setItem('intakeForm_draft', JSON.stringify(data));
+      } catch (error) {
+        console.error(error);
+      }
+    }, 10000);
+
+    function loadDraft() {
+      console.log('loadDraft()');
+      try {
+        let data = JSON.parse(localStorage.getItem('intakeForm_draft'));
+        if (!data) {
+          console.log('no draft found.');
+          return;
+        }
+
+        if (data.taskControls) {
+          tasksControls = [];
+          $('#tasks').empty();
+          // Load tasks
+          let i = 0;
+          for (const task of data.taskControls) {
+            console.log('Adding new task:', task);
+            // Do not add null Tasks
+            if (task.taskCategory) addNewTask(task, i++ > 0 ? true : false);
+          }
+        }
+
+        if (data.segment) $('#segment').val(data.segment);
+        if (data.product) $('#product').val(data.product);
+
+        // Your Info
+        if (data.region) {
+          $('#region').val(data.region);
+          $('#region').change();
+        }
+        if (data.subRegion) {
+          $('#subRegion').val(data.subRegion);
+        }
+
+        if (data.customerRelationship) {
+          $('#customerRelationship').val(data.customerRelationship);
+        }
+        if (data.customerType) {
+          $('#customerType').val(data.customerType);
+        }
+
+        // Optional
+        $('#requesterName').val(data.requesterName);
+        $('#requesterEmail').val(data.requesterEmail);
+        $('#requesterPhoneNumber').val(data.requesterPhoneNumber);
+        $('#datepicker').datepicker('update', new Date(data.needCompletedBy));
+        $('#description').val(data.description);
+        // $('#partnerCustomerName').val(data.partnerCustomerName);
+        // $('#salesforceAccountOpportunity').val(data.salesforceAccountOpportunity);
+
+        // SF Related Data
+        $('#oppUrl').val(data.oppUrl);
+        $('#oppDSRUrl').val(data.oppDSRUrl);
+        $('#oppOwner').val(data.oppOwner);
+        //$('#oppPartnerCustomerName').val(data.oppPartnerCustomerName);
+        $('#oppAssignedSC').val(data.oppAssignedSC);
+
+        sfObject = data.sfObject;
+        delete data.sfObject;
+
+        //sfObject.oppAssignedSCMail = data.oppAssignedSCMail;
+      } catch (error) {
+        console.error(error);
+      }
+    }
+  </script>
+
+  <!--Coollabs -->
+  <script async defer src="https://cdn.coollabs.io/save.js"></script>
+</body>
+
 </html>
