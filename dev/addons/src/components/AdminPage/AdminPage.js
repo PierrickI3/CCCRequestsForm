@@ -85,6 +85,7 @@ export default function AdminPage(props) {
       setShowWarning(false);
       setShowSpinner(true);
       setMailConfigObj(null);
+      setTags([]);
       searchMailConfiguration(query.token, genericFilter)
         .then((resp) => {
           console.log('we have got response !');
@@ -147,13 +148,13 @@ export default function AdminPage(props) {
   };
 
   const goBack = () => {
-    let url;
-    if (window.location.href.includes('localhost')) {
-      if (window.location.href.includes('dev')) url = `https://localhost/dev/requests.html?region=${query.region}`;
-      else url = `https://localhost/dev/requests.html?region=${query.region}`;
-    } else {
-      url = `../../requests.html?region=${query.region}`;
-    }
+    let url = `../../requests.html?region=${query.region}`;
+    // if (window.location.href.includes('localhost')) {
+    //   if (window.location.href.includes('dev')) url = `https://localhost/dev/requests.html?region=${query.region}`;
+    //   else url = `https://localhost/dev/requests.html?region=${query.region}`;
+    // } else {
+    //   url = `../../requests.html?region=${query.region}`;
+    // }
     console.log('goBack()', url);
     window.location.replace(url);
   };
