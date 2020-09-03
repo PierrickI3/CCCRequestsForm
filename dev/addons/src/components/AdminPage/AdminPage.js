@@ -3,7 +3,6 @@ import { Container, Row, Col, Button, Spinner, Alert } from 'reactstrap';
 import { BiSave, BiMailSend, BiX } from 'react-icons/bi';
 import uuid from 'react-uuid';
 import Select from 'react-select';
-
 import { searchMailConfiguration, updateMailConfiguration } from '../../services/backend';
 import TagsInput from 'react-tagsinput';
 import 'react-tagsinput/react-tagsinput.css';
@@ -67,6 +66,7 @@ export default function AdminPage(props) {
     const parsedQueryString = queryString.parse(props.location.search);
     console.log('parsedQueryString: ', parsedQueryString);
     setQuery(parsedQueryString);
+
     // </parse query string>
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
