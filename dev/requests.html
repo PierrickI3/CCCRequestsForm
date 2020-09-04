@@ -1525,9 +1525,14 @@
 
             if ($('#editModal #sfData').select2('data')[0] && $('#sfData').select2('data')[0].text == "") {
                 $('#editModal #oppPartnerCustomerName').attr('disabled', false);
+                if ($('#editModal #oppPartnerCustomerName').select2('data')[0] && $('#editModal #oppPartnerCustomerName').select2('data')[0].text !== "")
+                    $('#editModal #sfData').attr('disabled', true);
             } else {
                 $('#editModal #oppPartnerCustomerName').attr('disabled', true);
             }
+
+
+
 
             if (request.acceptedRejected == "Accepted") {
                 $("#modal-header").css('background', 'lightgreen');
