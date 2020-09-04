@@ -7,7 +7,7 @@ import queryString from 'query-string';
 import { regionList } from '../../services/dictionary';
 import UsersSelect from '../UsersSelect/UsersSelect';
 
-var clearFilterSet = { isTest: false, status: null, isDeleted: false, handled: null, created: null, region: null, subRegion: null, product: null, segment: null, requester: null, programManager: null, teamMember: null, customerName: null };
+var clearFilterSet = { isTest: false, status: null, isDeleted: false, handled: null, created: null, region: null, subRegion: null, product: null, segment: null, requester: null, programManager: null, teamMember: null, customerName: null, createdAt: { value: 'Last30Days', label: 'Last 30 Days' } };
 
 export default function RequestsFilter(props) {
   //#region "value lists"
@@ -432,6 +432,7 @@ export default function RequestsFilter(props) {
           <div className="mb-3">
             Created
             <Select
+              isClearable={true}
               options={createdValueList}
               isMulti={false}
               isSearchable={true}
