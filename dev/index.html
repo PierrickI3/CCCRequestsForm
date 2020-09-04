@@ -212,7 +212,6 @@
             </div>
           </div>
           <div class=" form-row mr-4 ml-2">
-
             <div class="form-group col-md-6">
               <span data-toggle="tooltip" data-html="true" data-placement="bottom" style="float: right" title="Search for Opportunity in Salesforce. If present DSR will also be collected">
                 <i class="fa fa-question-circle-o" aria-hidden="true" style="color: gray"></i>
@@ -228,6 +227,17 @@
               <select id="oppPartnerCustomerName" name="oppPartnerCustomerName" class="form-control js-example-basic-single"></select>
             </div>
           </div>
+
+          <div class="form-row mr-4 ml-2">
+            <div class="form-group col-md-12">
+              <div class="text-center" style="position: absolute; width: 99%; height: 99%;">
+                <div id="sfSpinner" class="spinner-grow text-primary" class="width: 7rem; height: 7rem; " hidden role="status">
+                </div>
+              </div>
+            </div>
+          </div>
+
+
           <div class="form-row mr-4 ml-2">
             <div class="form-group col-md-6">
               <span data-toggle="tooltip" data-html="true" data-placement="bottom" style="float: right" title="Assigned SC from latest DSR (if present). If no DSR is found, SC from opportunity is selected.">
@@ -260,6 +270,7 @@
               <input type="url" class="form-control" id="oppDSRUrl" name="oppDSRUrl" placeholder="" disabled />
             </div>
           </div>
+
         </form>
 
         <br />
@@ -460,6 +471,10 @@
       $('#sfData').on('select2:select', async function (e) {
         var data = e.params.data;
         if (!data) return;
+        $("#sfSpinner").attr("hidden", false);
+        $("#oppAssignedSC").attr("disabled", true);
+        $("#oppPartnerCustomerName").attr("disabled", true);
+        $("#sfData").attr("disabled", true);
 
         console.log('before search:');
         console.log($('#sfData').select2('data')[0].item);
@@ -509,6 +524,9 @@
           }
         } catch (error) {
           console.log(error);
+        } finally {
+          $("#sfSpinner").attr("hidden", true);
+          $("#sfData").attr("disabled", false);
         }
       });
 
