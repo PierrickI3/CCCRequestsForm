@@ -981,7 +981,7 @@
       $('#segment').val('');
       $('#region').val('');
       $('#product').val('');
-      $('#datepicker').val('');
+      $('#datepicker').datepicker('update', '');
       $('#description').val('');
       $('#customerRelationship').val('');
       $('#customerType').val('');
@@ -1035,7 +1035,7 @@
         };
 
         let needCompletedByDate = moment($('#datepicker').datepicker('getDate')).format('YYYY-MM-DDT00:00:00.000');
-        if (needCompletedByDate != 'Invalid date') {
+        if (needCompletedByDate !== 'Invalid date') {
           data.needCompletedBy = needCompletedByDate + 'Z';
         }
 
