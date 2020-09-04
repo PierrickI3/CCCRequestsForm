@@ -372,7 +372,6 @@
       if (data)
         sfObject = data.sfObject;
 
-      //$('.js-example-basic-single').select2({ dropdownAutoWidth: true });
       if (!data) {
         $('.js-example-basic-single').select2({ dropdownAutoWidth: true });
       } else {
@@ -388,8 +387,6 @@
           data: data.oppPartnerCustomerName,
           dropdownAutoWidth: true
         });
-
-
       }
 
       let assignedSCValue = sfObject.dsr && sfObject.dsr.virtualTeamNames ? sfObject.dsr.virtualTeamNames : sfObject.Solution_Consultant__r && sfObject.Solution_Consultant__r.Name ? sfObject.Solution_Consultant__r.Name : undefined;
@@ -622,7 +619,6 @@
           },
         },
       });
-
 
       $('#oppPartnerCustomerName').on('select2:select', async function (e) {
         var data = e.params.data;

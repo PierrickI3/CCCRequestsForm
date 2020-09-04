@@ -233,22 +233,23 @@
                             </div> -->
 
                             <div class="form-row">
-                                <div class="form-group col-md-12">
+                                <div class="form-group col-md-6">
                                     <label for="salesforceAccountOpportunity">Opportunity</label><br>
                                     <select id="sfData" class="form-control js-example-basic-single" name="sfData">
                                     </select>
                                 </div>
-                            </div>
-                            <div class="form-row">
                                 <div class="form-group col-md-6">
-                                    <label for="oppPartnerCustomerName">Account Name</label>
-                                    <input type="text" class="form-control" id="oppPartnerCustomerName" name="oppPartnerCustomerName" placeholder="" disabled />
+                                    <span data-toggle="tooltip" data-html="true" data-placement="bottom" style="float: right" title="Account name the opportunity is related to">
+                                        <i class="fa fa-question-circle-o" aria-hidden="true" style="color: gray"></i>
+                                    </span>
+                                    <label for="oppPartnerCustomerName">Account Name</label><br>
+                                    <select id="oppPartnerCustomerName" name="oppPartnerCustomerName" class="form-control js-example-basic-single"></select>
                                 </div>
                             </div>
                             <div class="form-row">
                                 <div class="form-group col-md-6">
                                     <label for="oppAssignedSC">Assigned SC</label>
-                                    <input type="text" class="form-control" id="oppAssignedSC" name="oppAssignedSC" placeholder="" disabled />
+                                    <select id="oppAssignedSC" name="oppAssignedSC" class="form-control js-example-basic-single" disabled></select>
                                 </div>
                                 <div class="form-group col-md-6">
                                     <label for="oppOwner">Owner</label>
@@ -389,16 +390,18 @@
         console.log(`continue with gcToken: ${gcToken}`);
 
         let tasksControls = [], taskId = 10000;
-        let sfOject = {};
+        let sfObject = {};
 
         $(document).ready(async function () {
+            //$('.js-example-basic-single').select2({ width: '100%', dropdownAutoWidth: true });
+
             await getMe(); // Re-Login
 
             // <collapse filter sidebar>
             filterCollapse();
             // </collapse filter sidebar>
 
-            $('.js-example-basic-single').select2({ dropdownAutoWidth: true });
+            //$('.js-example-basic-single').select2({ dropdownAutoWidth: true });
 
             // Detect locally correct env
             let gcEnv;
@@ -410,6 +413,9 @@
                 apiBasePath = "https://drbojb15ma.execute-api.eu-central-1.amazonaws.com/dev";
                 gcEnv = 'mypurecloud.com';
             }
+
+
+
             // Remote query, to search for Opportunity name, bind results to select2 object
             $('#sfData').select2({
                 width: '100%',
@@ -462,14 +468,39 @@
                     $('#oppUrl').val(myData.opportunityUrl);
                     $('#oppDSRUrl').val(myData.dsr && myData.dsr.url ? myData.dsr.url : 'n/a');
                     $('#oppOwner').val(myData.Owner && myData.Owner.Name ? myData.Owner.Name : 'n/a');
-                    $('#oppPartnerCustomerName').val(myData.Account && myData.Account.Name ? myData.Account.Name : 'n/a');
-                    $('#oppAssignedSC').val(myData.dsr && myData.dsr.virtualTeamNames ? myData.dsr.virtualTeamNames : myData.Solution_Consultant__r && myData.Solution_Consultant__r.Name ? myData.Solution_Consultant__r.Name : 'n/a');
+
+                    let assignedSCValue = myData.dsr && myData.dsr.virtualTeamNames ? myData.dsr.virtualTeamNames : myData.Solution_Consultant__r && myData.Solution_Consultant__r.Name ? myData.Solution_Consultant__r.Name : undefined;
+                    console.log(assignedSCValue);
+                    if (assignedSCValue) {
+                        $("#oppAssignedSC").append($("<option selected='selected'></option>").val("0").text(assignedSCValue)).trigger('change');
+                        $('#oppAssignedSC').attr('disabled', true);
+                    } else {
+                        $('#oppAssignedSC').attr('disabled', false);
+                        $('#oppAssignedSC').val(null).trigger('change');
+                    }
+                    sfObject.oppAssignedSC = assignedSCValue;
+                    let foundAccount = myData.Account && myData.Account.Name ? myData.Account.Name : undefined;
+                    if (foundAccount)
+                        $("#oppPartnerCustomerName").append($("<option selected='selected'></option>").val("0").text(foundAccount)).trigger('change');
+                    else
+                        $('#oppPartnerCustomerName').val(null).trigger('change');
+                    $('#oppPartnerCustomerName').attr('disabled', true);
+
+
+                    //$('#oppAssignedSC').val(myData.dsr && myData.dsr.virtualTeamNames ? myData.dsr.virtualTeamNames : myData.Solution_Consultant__r && myData.Solution_Consultant__r.Name ? myData.Solution_Consultant__r.Name : 'n/a');
+
+                    // Find vaild mail address for assigned SC (if exists)
+                    if (!assignedSCValue) return;
+
+                    // $('#oppPartnerCustomerName').val(myData.Account && myData.Account.Name ? myData.Account.Name : 'n/a');
+                    // $('#oppAssignedSC').val(myData.dsr && myData.dsr.virtualTeamNames ? myData.dsr.virtualTeamNames : myData.Solution_Consultant__r && myData.Solution_Consultant__r.Name ? myData.Solution_Consultant__r.Name : 'n/a');
 
 
                     // Find vaild mail address for assigned SC
                     try {
-                        sfOject.oppAssignedSCMail = await postUsersSearch($('#oppAssignedSC').val());
-                        console.log('sfOject.oppAssignedSCMail:', sfOject.oppAssignedSCMail);
+                        //sfObject.oppAssignedSCMail = await postUsersSearch($('#oppAssignedSC').val());
+                        sfObject.oppAssignedSCMail = await postUsersSearch($('#oppAssignedSC').select2('data')[0].text);
+                        console.log('sfObject.oppAssignedSCMail:', sfObject.oppAssignedSCMail);
                     } catch (error) {
                         console.error(error);
                     }
@@ -483,12 +514,14 @@
 
             $('#sfData').on('select2:clear', async function (e) {
                 console.log('clear items related to SF');
-                sfOject = {};
+                sfObject = {};
+                $('#oppAssignedSC').attr('disabled', false);
+                $('#oppAssignedSC').val(null).trigger('change');
+                $('#oppPartnerCustomerName').val(null).trigger('change');
+                $('#oppPartnerCustomerName').attr('disabled', false);
                 $('#oppUrl').val('');
                 $('#oppDSRUrl').val('');
                 $('#oppOwner').val('');
-                $('#oppPartnerCustomerName').val('');
-                $('#oppAssignedSC').val('');
 
             });
 
@@ -576,7 +609,6 @@
                 updateStakeholdersEmailsTemp(data.item.name, data.item.email);
             });
 
-
             // Handle a program manager name by GC query            
             $('#gcTeamMembers').select2({
                 width: '100%',
@@ -615,6 +647,123 @@
                 console.log(data);
                 updateStakeholdersEmailsTemp(data.item.name, data.item.email);
             });
+
+            // Handle oppAssignedSC
+
+            $('#oppAssignedSC').select2({
+                width: '100%',
+                placeholder: 'Select user',
+                allowClear: true,
+                minimumInputLength: 3,
+                ajax: {
+                    delay: 350,
+                    method: 'POST',
+                    headers: {
+                        Authorization: `bearer ${gcToken}`,
+                        "Content-Type": "application/json",
+                    },
+                    url: `https://api.mypurecloud.com/api/v2/search?profile=false`,
+                    data: function (params) {
+                        const body = getSearchUserBody(params.term);
+                        console.log('Search user query: ', body);
+                        return JSON.stringify(body);
+                    },
+                    processResults: function (data) {
+                        console.log(data);
+                        if (!data || !Array.isArray(data.results) || data.results.length === 0) return [];
+                        let result = [];
+                        for (const item of data.results) {
+                            result.push({ id: item.name, text: item.name, item });
+                        }
+                        return { results: result };
+                    }
+                }
+            });
+
+            $('#oppAssignedSC').on('select2:select', async function (e) {
+                var data = e.params.data;
+                if (!data) return;
+                console.log(data);
+                sfObject.oppAssignedSC = data.text;
+                sfObject.oppAssignedSCMail = data.item.email;
+
+            });
+
+            $('#oppAssignedSC').on('select2:clear', async function (e) {
+
+                delete sfObject.oppAssignedSC;
+                delete sfObject.oppAssignedSCMail;
+
+            });
+
+            // Handle Account Name
+
+
+            $('#oppPartnerCustomerName').select2({
+                placeholder: 'Find Account Name',
+                width: '100%',
+                allowClear: true,
+                minimumInputLength: 3,
+                ajax: {
+                    delay: 350,
+                    url: `${apiBasePath}/sf/accounts`,
+
+                    data: function (params) {
+                        var query = {
+                            token: gcToken,
+                            name: params.term,
+                        };
+                        // Query parameters will be ?search=[term]&type=public
+                        return query;
+                    },
+                    error: function (err) {
+                        console.log(err);
+                        if (err.status === 401) {
+                            window.open('./index.html', '_self');
+                        } else if (err.status > 400) {
+                            showMessage(err.hasOwnProperty('responseJSON') ? err.responseJSON.message : error, true);
+                        }
+                    },
+
+                    processResults: function (data) {
+                        // Transforms the top-level key of the response object from 'items' to 'results'
+
+                        let ret = [];
+                        data.forEach((item) => {
+                            ret.push({
+                                id: item.Id,
+                                text: `${item.Name} (${item.Owner && item.Owner.Name ? item.Owner.Name : 'owner undefined'})`,
+                                item: item,
+                            });
+                        });
+                        console.log(ret);
+                        return {
+                            results: ret,
+                        };
+                    },
+                },
+            });
+
+            $('#oppPartnerCustomerName').on('select2:select', async function (e) {
+                var data = e.params.data;
+                if (!data) return;
+                console.log(data);
+                sfObject.Account = data.item;
+                $('#oppOwner').val(data.item.Owner && data.item.Owner.Name ? data.item.Owner.Name : 'n/a');
+                $('#sfData').attr('disabled', true); // don't allow to set Opportunity when Account is selected
+                $('#oppUrl').val(data.item.opportunityUrl);
+
+            });
+
+            $('#oppPartnerCustomerName').on('select2:clear', async function (e) {
+
+                delete sfObject.Account;
+                $('#sfData').attr('disabled', false);
+                $('#oppOwner').val('');
+                $('#oppUrl').val('');
+
+            });
+
 
         });
 
@@ -708,7 +857,8 @@
             $('#editModal #oppUrl').val('');
             $('#editModal #oppDSRUrl').val('');
             $('#editModal #oppOwner').val('');
-            $('#editModal #oppPartnerCustomerName').val('');
+            //$('#editModal #oppPartnerCustomerName').val('');
+            $('#editModal #oppPartnerCustomerName').val(null).trigger('change');
             $('#editModal #oppAssignedSC').val('');
             $('#editModal #sfData').val(null).trigger('change');
 
@@ -720,7 +870,7 @@
             $("#editModal #divNotesHistory").html("");
 
             setDatesLabels(undefined, undefined, undefined);
-            sfOject = {};
+            sfObject = {};
 
             stakeholdersEmails = JSON.parse(JSON.stringify(stakeholdersEmailsClear));
 
@@ -1239,6 +1389,10 @@
         async function showModal(request) {
             console.log("Showing modal for:", request);
 
+            $('#editModal #sfData').val(null).trigger('change');
+            $('#editModal #oppAssignedSC').val(null).trigger('change');
+            $('#editModal #oppPartnerCustomerName').val(null).trigger('change');
+
             if (request.acceptedRejected)
                 $("#editModal #title").text(`Request (${request.acceptedRejected})`)
             else
@@ -1279,27 +1433,29 @@
             $("#editModal #requesterPhoneNumber").val(request.requesterPhoneNumber);
             $("#editModal #datepicker").datepicker('update', new Date(request.needCompletedBy));
             $("#editModal #description").val(request.description);
-            // $("#editModal #partnerCustomerName").val(request.partnerCustomerName);
-            // $("#editModal #salesforceAccountOpportunity").val(request.salesforceAccountOpportunity);
 
             // SF Related Data
             $('#editModal #oppDSRUrl').val(request.oppDSRUrl);
+            $('#editModal #oppOwner').val(request.oppOwner);
 
             if (request.salesforceAccountOpportunity)
                 $('#editModal #oppUrl').val(request.salesforceAccountOpportunity);
             else
                 $('#editModal #oppUrl').val(request.oppUrl);
 
+            let tmpVal;
             if (request.partnerCustomerName && request.partnerCustomerName.toLowerCase() !== 'n/a')
-                $('#editModal #oppPartnerCustomerName').val(request.partnerCustomerName);
+                tmpVal = $("<option selected='selected'></option>").val("0").text(request.partnerCustomerName);
             else
-                $('#editModal #oppPartnerCustomerName').val(request.oppPartnerCustomerName);
+                tmpVal = $("<option selected='selected'></option>").val("0").text(request.oppPartnerCustomerName);
+            $("#editModal #oppPartnerCustomerName").append(tmpVal).trigger('change');
 
-            $('#editModal #oppDSRUrl').val(request.oppDSRUrl);
-            $('#editModal #oppOwner').val(request.oppOwner);
-            $('#editModal #oppAssignedSC').val(request.oppAssignedSC);
+            if (request.oppAssignedSC) {
+                tmpVal = $("<option selected='selected'></option>").val("0").text(request.oppAssignedSC);
+                $("#editModal #oppAssignedSC").append(tmpVal).trigger('change');
+            }
 
-            var $newOption = $("<option selected='selected'></option>").val("0").text(request.oppName)
+            let $newOption = $("<option selected='selected'></option>").val("0").text(request.oppName)
             $("#editModal #sfData").append($newOption).trigger('change');
 
 
@@ -1314,17 +1470,18 @@
 
             // Find vaild mail address for assigned SC
             try {
-                if (!request.oppAssignedSCMail && $('#oppAssignedSC').val().length > 0) {
-                    sfOject.oppAssignedSCMail = await postUsersSearch($('#oppAssignedSC').val());
+                if (!request.oppAssignedSCMail && $('#editModal #oppAssignedSC').val() && $('#editModal #oppAssignedSC').val().length > 0) {
+                    sfObject.oppAssignedSCMail = await postUsersSearch($('#editModal #oppAssignedSC').val());
                 } else
-                    sfOject.oppAssignedSCMail = request.oppAssignedSCMail
-                console.log('sfOject.oppAssignedSCMail:', sfOject.oppAssignedSCMail);
+                    sfObject.oppAssignedSCMail = request.oppAssignedSCMail
+                console.log('sfObject.oppAssignedSCMail:', sfObject.oppAssignedSCMail);
             } catch (error) {
                 console.error(error);
             }
 
             stakeholdersEmails = JSON.parse(JSON.stringify(stakeholdersEmailsClear));
             stakeholdersEmails.loadedFromDb = Array.isArray(request.stakeholdersEmails) ? Array.from(request.stakeholdersEmails) : [];
+
 
             $("#editModal").modal("show");
 
@@ -1347,11 +1504,17 @@
                 $("#updatedDate").attr("disabled", true);
 
                 $('#editModal #oppUrl').attr("disabled", true);
-                $('#editModal #oppPartnerCustomerName').attr("disabled", true);
+                //$('#editModal #oppPartnerCustomerName').attr("disabled", true);
                 $('#editModal #oppDSRUrl').attr("disabled", true);
                 $('#editModal #oppOwner').attr("disabled", true);
-                $('#editModal #oppAssignedSC').attr("disabled", true);
+                //$('#editModal #oppAssignedSC').attr("disabled", true);
 
+            }
+
+            if ($('#editModal #sfData').select2('data')[0] && $('#sfData').select2('data')[0].text == "") {
+                $('#editModal #oppPartnerCustomerName').attr('disabled', false);
+            } else {
+                $('#editModal #oppPartnerCustomerName').attr('disabled', true);
             }
 
             if (request.acceptedRejected == "Accepted") {
@@ -1643,8 +1806,8 @@
                 let oppUrl = $('#editModal #oppUrl').val();
                 let oppDSRUrl = $('#editModal #oppDSRUrl').val();
                 let oppOwner = $('#editModal #oppOwner').val();
-                let oppPartnerCustomerName = $('#editModal #oppPartnerCustomerName').val();
-                let oppAssignedSC = $('#editModal #oppAssignedSC').val();
+                let oppPartnerCustomerName = $('#editModal #oppPartnerCustomerName').select2('data')[0] ? $('#editModal #oppPartnerCustomerName').select2('data')[0].text : undefined;
+                let oppAssignedSC = $('#editModal #oppAssignedSC').select2('data')[0] ? $('#editModal #oppAssignedSC').select2('data')[0].text : undefined;
                 let oppName = $('#editModal #sfData').select2('data').length > 0 && $('#editModal #sfData').select2('data')[0].text ? $('#editModal #sfData').select2('data')[0].text : undefined;
 
                 processStakeholdersEmails($("#gcProgramManager").select2('data')[0] && $("#gcProgramManager").select2('data')[0].text ? $("#gcProgramManager").select2('data')[0].text : null, $("#gcTeamMembers").select2('data') || []);
@@ -1653,7 +1816,8 @@
                 console.log(`Priority: ${priority}, Accepted/Rejected: ${acceptedRejected}, Status: ${status}, Program Manager: ${programManager}, AcceptedRejectedNotes: ${acceptedRejectedNotes}, teamMembers: ${teamMembers}`);
                 console.log(`dateAccepted: ${dateAccepted}, dateRejected: ${dateRejected}, dateClosed: ${dateClosed}`);
 
-                await putRequest(id, region, subRegion, segment, product, tasks, requesterName, requesterEmail, requesterPhoneNumber, needCompletedBy, description, oppName, oppUrl, oppDSRUrl, oppOwner, oppPartnerCustomerName, oppAssignedSC, sfOject.oppAssignedSCMail, priority, acceptedRejected, status, programManager, acceptedRejectedNotes, teamMembers, gcToken, undefined, customerRelationship, customerType, dateAccepted, dateRejected, dateClosed, stakeholdersEmails.toBeSaved);
+                await putRequest(id, region, subRegion, segment, product, tasks, requesterName, requesterEmail, requesterPhoneNumber, needCompletedBy, description, oppName, oppUrl, oppDSRUrl, oppOwner, oppPartnerCustomerName, oppAssignedSC, sfObject.oppAssignedSCMail, priority, acceptedRejected, status, programManager, acceptedRejectedNotes, teamMembers, gcToken, undefined, customerRelationship, customerType, dateAccepted, dateRejected, dateClosed, stakeholdersEmails.toBeSaved);
+
                 console.log('Success!');
                 showMessage("Request updated. Thanks!");
                 $("#editModal").modal("hide");
