@@ -320,8 +320,14 @@ async function deleteRequest(requestId, _token) {
 }
 
 async function getDashboard(_token, _start, _end) {
+  let requestType,
+    sExtendedFilter = '';
+  if ($('#requestType').val() !== '') requestType = $('#requestType').val();
+
+  if (requestType) sExtendedFilter = `&requestType=${requestType}`;
+
   return await $.ajax({
-    url: `${apiBasePath}/dashboard?token=${_token}&start=${_start}&end=${_end}`,
+    url: `${apiBasePath}/dashboard?token=${_token}&start=${_start}&end=${_end}${sExtendedFilter}`,
     method: 'GET',
     contentType: 'application/json',
     dataType: 'json',
@@ -347,6 +353,7 @@ async function getDashboard(_token, _start, _end) {
 
 async function getExport(_region, _subRegion, _product, _segment, _token, _start, _end) {
   var sFilter = '';
+  let requestType = '';
 
   if (_region) sFilter = sFilter + `region=${_region}&`;
   if (_product) sFilter = sFilter + `product=${_product}&`;
@@ -354,13 +361,8 @@ async function getExport(_region, _subRegion, _product, _segment, _token, _start
   if (_subRegion) sFilter = sFilter + `subRegion=${_subRegion}&`;
   if ($('#customerRelationship').val() !== '') sFilter = sFilter + `customerRelationship=${$('#customerRelationship').val()}&`;
   if ($('#customerType').val() !== '') sFilter = sFilter + `customerType=${$('#customerType').val()}&`;
+  if ($('#requestType').val() !== '') sFilter += `requestType=${$('#requestType').val()}&`;
 
-  // remove last char
-  /*
-  if (sFilter.length > 0)
-    sFilter = "?"
-  else sFilter = sFilter + "&" //+ sFilter.substring(0, sFilter.length - 1);
-  */
   console.log(`getExport with filter: ${sFilter}`);
 
   return await $.ajax({
