@@ -74,6 +74,15 @@
             <label for="datepicker">End Date</label>
             <input type="text" id="dpEnd" class="form-control" placeholder="Click to set a date" autocomplete="off" />
           </div>
+          <div class="form-group col-md-2">
+            <label for="requestType">Request Type</label>
+            <select id="requestType" name="requestType" class="form-control">
+              <option value="">All requests types</option>
+              <option value="0" selected>Request Forms</option>
+              <option value="1">Free Trials</option>
+
+            </select>
+          </div>
         </div>
         <div class="form-row">
           <div class="form-group col-md-2">
@@ -280,6 +289,9 @@
       init();
     });
     $('#segment').on('change', () => {
+      init();
+    });
+    $('#requestType').on('change', () => {
       init();
     });
     $('#customerRelationship').on('change', () => {
