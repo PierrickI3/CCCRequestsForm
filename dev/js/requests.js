@@ -3,6 +3,7 @@ const maintenanceMode = false; // Set to true to disable all controls
 var filterConfiguration = null;
 const stakeholdersEmailsClear = { loadedFromDb: [], temp: [], toBeSaved: [] };
 var stakeholdersEmails = null;
+var currentRequestType = 0;
 
 if (window.location.href.includes('localhost')) apiBasePath = 'http://localhost:3000';
 else apiBasePath = 'https://drbojb15ma.execute-api.eu-central-1.amazonaws.com/dev';
@@ -519,4 +520,23 @@ function processStakeholdersEmails(programManager, teamMembers) {
   // </step #2 - push added items>
 
   console.log('stakeholdersEmails.toBeSaved: ', stakeholdersEmails.toBeSaved);
+}
+
+function setRequestFormType(type /* 0 - standard, 1 - free trial */) {
+  console.log(`setRequestFormType(${type})`);
+  currentRequestType = type;
+
+  switch (type) {
+    case 0:
+      $('#task-list').show();
+      $('#free-trial-questions').hide();
+      break;
+    case 1:
+      $('#task-list').hide();
+      $('#free-trial-questions').show();
+      break;
+    default: {
+      console.error('unhandled request type: ', type);
+    }
+  }
 }
