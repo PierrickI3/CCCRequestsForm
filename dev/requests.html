@@ -2008,7 +2008,7 @@
             $("#editModal  #countriesOperation").selectpicker('refresh');
 
             $("#editModal #newNumbers").val(request.freeTrialNewNumbers);
-            $("#editModal #existingTelephonyUsage").attr('checked', request.freeTrialExistingTelephonyUsage);
+            $("#editModal #existingTelephonyUsage").prop('checked', request.freeTrialExistingTelephonyUsage);
             $("#editModal #existingTelephonyUsageDetails").attr('disabled', !request.freeTrialExistingTelephonyUsage);
             $("#editModal #existingTelephonyUsageDetails").val(request.freeTrialExistingTelephonyUsageDetails);
             countriesAndCarriers = request.freeTrialByocCloudCarriers;

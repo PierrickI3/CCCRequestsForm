@@ -646,12 +646,21 @@ function setRequestFormType(type /* 0 - standard, 1 - free trial */) {
       $('#free-trial-questions').hide();
       $('#home-tab')[0].classList.add('active');
       $('#profile-tab')[0].classList.remove('active');
+      $('#trial')[0].classList.remove('show');
+      $('#trial')[0].classList.remove('active');
+      $('#standard')[0].classList.add('show');
+      $('#standard')[0].classList.add('active');
       break;
     case 1:
       $('#task-list').hide();
       $('#free-trial-questions').show();
       $('#profile-tab')[0].classList.add('active');
       $('#home-tab')[0].classList.remove('active');
+      $('#standard')[0].classList.remove('show');
+      $('#standard')[0].classList.remove('active');
+      $('#trial')[0].classList.add('show');
+      $('#trial')[0].classList.add('active');
+
       break;
     default: {
       console.error('unhandled request type: ', type);
