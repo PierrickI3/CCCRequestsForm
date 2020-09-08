@@ -7,10 +7,11 @@ import queryString from 'query-string';
 import { regionList } from '../../services/dictionary';
 import UsersSelect from '../UsersSelect/UsersSelect';
 
-var clearFilterSet = { isTest: false, status: null, isDeleted: false, handled: null, created: null, region: null, subRegion: null, product: null, segment: null, requester: null, programManager: null, teamMember: null, customerName: null, createdAt: { value: 'Last30Days', label: 'Last 30 Days' } };
+var clearFilterSet = { isTest: false, status: null, isDeleted: false, handled: null, created: null, region: null, subRegion: null, product: null, segment: null, requester: null, programManager: null, teamMember: null, customerName: null, createdAt: { value: 'Last30Days', label: 'Last 30 Days' }, requestType: null };
 
 export default function RequestsFilter(props) {
   //#region "value lists"
+
   const statusValueList = [
     { value: 'Open', label: 'Open' },
     { value: 'On Hold', label: 'On Hold' },
@@ -22,6 +23,11 @@ export default function RequestsFilter(props) {
     { value: 'Last30Days', label: 'Last 30 Days' },
     { value: 'CurrentMonth', label: 'Current Month' },
     { value: 'LastMonth', label: 'Last Month' },
+  ];
+
+  const requestTypeValueList = [
+    { value: '0', label: 'Standard' },
+    { value: '1', label: 'Trial validation' },
   ];
 
   const handledValueList = [
@@ -441,6 +447,22 @@ export default function RequestsFilter(props) {
                 console.log(v);
                 let cf = { ...currentFilter };
                 cf.createdAt = v;
+                setCurrentFilter(cf);
+              }}
+            />
+          </div>
+
+          <div className="mb-3">
+            Request type
+            <Select
+              options={requestTypeValueList}
+              isMulti={true}
+              isSearchable={true}
+              value={currentFilter.requestType}
+              onChange={(v) => {
+                console.log(v);
+                let cf = { ...currentFilter };
+                cf.requestType = v;
                 setCurrentFilter(cf);
               }}
             />
