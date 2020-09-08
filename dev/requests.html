@@ -1136,6 +1136,17 @@
                             visible: false
                         },
                         {
+                            name: "requestType",
+                            title: "",
+                            type: "control",
+                            itemTemplate: function (value, item) {
+                                if (value === "1") {
+                                    return '<img alt="TRIAL" src="images/tag-trial.svg" style="transform: rotate(-45deg); width: 3rem; height: 3rem; margin: -10px 0 0 -10px;" />';
+                                }
+                                return '<img alt="STD" src="images/tag-std.svg" style="transform: rotate(-45deg); width: 3rem; height: 3rem; margin: -10px 0 0 -10px;" />';
+                            }
+                        },
+                        {
                             name: "status",
                             title: "Status",
                             type: "select",
