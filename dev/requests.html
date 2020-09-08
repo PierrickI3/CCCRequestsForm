@@ -1141,22 +1141,6 @@
                             type: "select",
                             width: "auto",
                             align: "center",
-                            filterTemplate: function () {
-                                let select = $("<select/>", { id: "selectStatus" });
-                                $("<option/>", { value: "" }).text("(All)").appendTo(select);
-                                $("<option/>", { value: 'Open' }).text('Open').appendTo(select);
-                                $("<option/>", { value: 'On Hold' }).text('On Hold').appendTo(select);
-                                $("<option/>", { value: 'Waiting On Additional Information' }).text('Waiting On Additional Information').appendTo(select);
-                                $("<option/>", { value: 'Closed' }).text('Closed').appendTo(select);
-
-                                select.on('change', (e) => {
-                                    let selectedStatus = select.children("option:selected").val();
-                                    searches.status = selectedStatus;
-                                    searches.doNotReload = true;
-                                    $("#basicgrid").data('JSGrid').search(searches);
-                                });
-                                return this.filterControl = select;
-                            },
                             itemTemplate: function (value, item) {
                                 return value;
                             }
@@ -1167,24 +1151,6 @@
                             type: "select",
                             width: "auto",
                             align: "center",
-                            filterTemplate: function () {
-                                let select = $("<select/>", { id: "acceptedRejected" });
-                                $("<option/>", { value: "" }).text("(All)").appendTo(select);
-                                $("<option/>", { value: 'Accepted' }).text('Accepted').appendTo(select);
-                                $("<option/>", { value: 'Rejected' }).text('Rejected').appendTo(select);
-                                $("<option/>", { value: 'n/a' }).text('Unhandled').appendTo(select);
-
-
-                                select.on('change', (e) => {
-                                    let selectedStatus = select.children("option:selected").val();
-                                    console.log('selected value !! : ', selectedStatus);
-                                    searches.acceptedRejected = selectedStatus;
-                                    searches.doNotReload = true;
-                                    $("#basicgrid").data('JSGrid').search(searches);
-                                });
-
-                                return this.filterControl = select;
-                            },
                             itemTemplate: function (value, item) {
                                 return value;
                             }
@@ -1193,34 +1159,6 @@
                             name: "region",
                             title: "Region",
                             type: "select",
-                            filterTemplate: function () {
-                                let select = $("<select/>", { id: "selectRegion" });
-                                $("<option/>", { value: "" }).text("(All)").appendTo(select);
-                                for (const region of Object.keys(regions)) {
-                                    let option = $("<option/>", { value: region }).text(region).appendTo(select);
-                                }
-                                select.on('change', (e) => {
-                                    let selectedRegion = select.children("option:selected").val();
-                                    searches.region = selectedRegion;
-                                    searches.doNotReload = true;
-                                    $("#selectSubRegion").empty();
-                                    $("<option/>", { value: "" }).text("(All)").appendTo("#selectSubRegion");
-                                    if (selectedRegion && selectedRegion != "(All)") {
-                                        for (const subRegion of regions[selectedRegion]) {
-                                            let option = $("<option/>", { value: subRegion }).text(subRegion).appendTo("#selectSubRegion");
-                                        }
-                                    } else {
-                                        searches.subRegion = "";
-                                    }
-                                    $("#selectSubRegion").on('change', (e) => {
-                                        let selectedSubRegion = $("#selectSubRegion").children("option:selected").val();
-                                        searches.subRegion = selectedSubRegion;
-                                        $("#basicgrid").data('JSGrid').search(searches);
-                                    });
-                                    $("#basicgrid").data('JSGrid').search(searches);
-                                });
-                                return this.filterControl = select;
-                            },
                             items: Object.keys(regions),
                             itemTemplate: function (value, item) {
                                 return value;
@@ -1233,23 +1171,6 @@
                             type: "select",
                             width: "auto",
                             align: "center",
-                            filterTemplate: function () {
-                                let select = $("<select/>", { id: "selectSubRegion" });
-                                $("<option/>", { value: "" }).text("(All)").appendTo(select);
-                                let selectedRegion = $("#selectRegion").children("option:selected").val();
-                                if (selectedRegion && selectedRegion != "(All)") {
-                                    for (const subRegion of regions[selectedRegion]) {
-                                        let option = $("<option/>", { value: subRegion }).text(subRegion).appendTo(select);
-                                    }
-                                }
-                                select.on('change', (e) => {
-                                    let selectedSubRegion = select.children("option:selected").val();
-                                    searches.subRegion = selectedSubRegion;
-                                    searches.doNotReload = true;
-                                    $("#basicgrid").data('JSGrid').search(searches);
-                                });
-                                return this.filterControl = select;
-                            },
                             items: Object.keys(regions),
                             itemTemplate: function (value, item) {
                                 return value;
@@ -1260,21 +1181,6 @@
                             type: "text",
                             width: "auto",
                             align: "center",
-                            filterTemplate: function () {
-                                let select = $("<select/>");
-                                $("<option/>", { value: "" }).text("(All)").appendTo(select);
-                                for (const product of Object.keys(mailDistribution)) {
-                                    let option = $("<option/>", { value: product }).text(product).appendTo(select);
-                                }
-                                select.on('change', (e) => {
-                                    console.log('e:', e);
-                                    let selectedProduct = select.children("option:selected").val();
-                                    searches.product = selectedProduct;
-                                    searches.doNotReload = true;
-                                    $("#basicgrid").data('JSGrid').search(searches);
-                                });
-                                return this.filterControl = select;
-                            },
                             items: Object.keys(regions),
                             itemTemplate: function (value, item) {
                                 return value;
@@ -1286,30 +1192,12 @@
                             type: "text",
                             width: "auto",
                             align: "center",
-                            filterTemplate: function () {
-                                let input = $("<input/>", { type: "text" });
-                                input.on('keyup', () => {
-                                    searches.segment = input.val();
-                                    searches.doNotReload = true;
-                                    $("#basicgrid").data('JSGrid').search(searches);
-                                });
-                                return this.filterControl = input;
-                            },
                         }, {
                             name: "requesterName",
                             title: "Requester Name",
                             type: "text",
                             width: "auto",
                             align: "center",
-                            filterTemplate: function () {
-                                let input = $("<input/>", { type: "text" });
-                                input.on('keyup', () => {
-                                    searches.requesterName = input.val();
-                                    searches.doNotReload = true;
-                                    $("#basicgrid").data('JSGrid').search(searches);
-                                });
-                                return this.filterControl = input;
-                            },
                         },
                         {
                             name: "programManager",
@@ -1318,14 +1206,6 @@
                             width: "auto",
                             visible: true,
                             align: "center",
-                            filterTemplate: function () {
-                                let input = $("<input/>", { type: "text" });
-                                input.on('keyup', () => {
-                                    searches.programManager = input.val();
-                                    $("#basicgrid").data('JSGrid').search(searches);
-                                });
-                                return this.filterControl = input;
-                            },
                         }, {
                             name: "teamMembers",
                             title: "Team Members",
@@ -1333,30 +1213,12 @@
                             width: "auto",
                             visible: true,
                             align: "center",
-                            filterTemplate: function () {
-                                let input = $("<input/>", { type: "text" });
-                                input.on('keyup', () => {
-                                    searches.teamMembers = input.val();
-                                    searches.doNotReload = true;
-                                    $("#basicgrid").data('JSGrid').search(searches);
-                                });
-                                return this.filterControl = input;
-                            },
                         }, {
                             name: "partnerCustomerName",
                             title: "Partner/Customer",
                             type: "text",
                             width: "160",
                             align: "center",
-                            filterTemplate: function () {
-                                let input = $("<input/>", { type: "text" });
-                                input.on('keyup', () => {
-                                    searches.partnerCustomerName = input.val();
-                                    searches.doNotReload = true;
-                                    $("#basicgrid").data('JSGrid').search(searches);
-                                });
-                                return this.filterControl = input;
-                            },
                         }, {
                             name: "needCompletedBy",
                             title: "Need Completed",
