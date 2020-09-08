@@ -75,11 +75,10 @@ async function postRequests(region, subRegion, segment, product, tasks, requeste
 
   if (currentRequestType == 1) {
     // Include FreeTrial Fields
-
+    data.requestType = '1';
     data.tasks = [{ taskCategory: 'Demo & Trial Support', taskId: 0, taskTime: 0, taskType: $('#trialValidationType').val() }];
-
+    if ($('#trialValidationType').val()) data.freeTrialValidationType = $('#trialValidationType').val();
     if ($('#trialValidationType').val() !== 'FreeTrial') {
-      console.log('trialValidationType not FreeTrial');
       if ($('#countriesAgents').val().length > 0) data.freeTrialCountriesAgents = $('#countriesAgents').val();
       if ($('#countriesOperation').val().length > 0) data.freeTrialCountriesOperation = $('#countriesOperation').val();
 
@@ -131,11 +130,9 @@ async function postRequests(region, subRegion, segment, product, tasks, requeste
     data.freeTrialCustomerResourceCommitted = $('#customerResourceCommitted').is(':checked');
     data.freeTrialStandardTermsConditions = $('#standardTermsConditions').is(':checked');
     data.freeTrialSolutionBusinessConsultingRequired = $('#solutionBusinessConsultingRequired').is(':checked');
-  }
+  } else data.requestType = '0';
 
   console.log(data);
-
-  return;
 
   return await $.ajax({
     url: `${apiBasePath}/requests`,
@@ -163,7 +160,7 @@ async function postRequests(region, subRegion, segment, product, tasks, requeste
     });
 }
 
-async function putRequest(id, region, subRegion, segment, product, tasks, requesterName, requesterEmail, requesterPhoneNumber, needCompletedBy, description, oppName, oppUrl, oppDSRUrl, oppOwner, oppPartnerCustomerName, oppAssignedSC, oppAssignedSCMail, priority, acceptedRejected, status, programManager, acceptedRejectedNotes, teamMembers, _token, isDeleted, customerRelationship, customerType, dateAccepted, dateRejected, dateClosed, stakeholdersEmails) {
+async function putRequest(id, region, subRegion, segment, product, tasks, requesterName, requesterEmail, requesterPhoneNumber, needCompletedBy, description, oppName, oppUrl, oppDSRUrl, oppOwner, oppPartnerCustomerName, oppAssignedSC, oppAssignedSCMail, priority, acceptedRejected, status, programManager, acceptedRejectedNotes, teamMembers, _token, isDeleted, customerRelationship, customerType, dateAccepted, dateRejected, dateClosed, stakeholdersEmails, _requestType) {
   if (!isDeleted) isDeleted = false;
   if (!acceptedRejected) acceptedRejected = 'not handled';
 
@@ -251,6 +248,65 @@ async function putRequest(id, region, subRegion, segment, product, tasks, reques
   if (oppAssignedSCMail && oppAssignedSCMail.length > 0) {
     data.oppAssignedSCMail = oppAssignedSCMail;
   }
+
+  if (_requestType == 1) {
+    // Include FreeTrial Fields
+    data.requestType = '1';
+    data.tasks = [{ taskCategory: 'Demo & Trial Support', taskId: 0, taskTime: 0, taskType: $('#trialValidationType').val() }];
+    if ($('#trialValidationType').val()) data.freeTrialValidationType = $('#trialValidationType').val();
+    if ($('#trialValidationType').val() !== 'FreeTrial') {
+      if ($('#countriesAgents').val().length > 0) data.freeTrialCountriesAgents = $('#countriesAgents').val();
+      if ($('#countriesOperation').val().length > 0) data.freeTrialCountriesOperation = $('#countriesOperation').val();
+
+      if ($('#telephonyModel').val()) data.freeTrialTelephonyModel = $('#telephonyModel').val();
+
+      if (countriesAndCarriers.length > 0) data.freeTrialByocCloudCarriers = countriesAndCarriers;
+
+      if ($('#phoneNumbersDeployment').val().length > 0) {
+        data.freeTrialPhoneNumbersDeployment = $('#phoneNumbersDeployment').val();
+      }
+      if ($('#newNumbers').val().length > 0) {
+        data.freeTrialNewNumbers = $('#newNumbers').val();
+      }
+      if ($('#genesysCloudRegion').val()) {
+        data.freeTrialGenesysCloudRegion = $('#genesysCloudRegion').val();
+      }
+      if ($('#estimatedVolumeMinsPerMonth').val().length > 0) {
+        data.freeTrialEstimatedVolumeMinsPerMonth = $('#estimatedVolumeMinsPerMonth').val();
+      }
+      data.freeTrialRelationshipWithCarrier = $('#relationshipWithCarrier').is(':checked');
+      data.freeTrialHyperVEnvironment = $('#hyperVEnvironment').is(':checked');
+    }
+
+    // General Configuration
+
+    if ($('#numberAgents').val().length > 0) {
+      data.freeTrialNumberAgents = $('#numberAgents').val();
+    }
+    data.freeTrialExistingTelephonyUsage = $('#existingTelephonyUsage').is(':checked');
+    if ($('#existingTelephonyUsageDetails').val().length > 0) {
+      data.freeTrialExistingTelephonyUsageDetails = $('#existingTelephonyUsageDetails').val();
+    }
+
+    if ($('#identificationAndVerificationProcesses').val().length > 0) {
+      data.freeTrialIdentificationAndVerificationProcesses = $('#identificationAndVerificationProcesses').val();
+    }
+
+    if ($('#itInfrastructure').val().length > 0) {
+      data.freeTrialItInfrastructure = $('#itInfrastructure').val();
+    }
+    data.freeTrialEndUserDevicesRequireVPN = $('#endUserDevicesRequireVPN').is(':checked');
+
+    if ($('#virtualDesktopSolution').val().length > 0) {
+      data.freeTrialVirtualDesktopSolution = $('#virtualDesktopSolution').val();
+    }
+
+    // Other
+
+    data.freeTrialCustomerResourceCommitted = $('#customerResourceCommitted').is(':checked');
+    data.freeTrialStandardTermsConditions = $('#standardTermsConditions').is(':checked');
+    data.freeTrialSolutionBusinessConsultingRequired = $('#solutionBusinessConsultingRequired').is(':checked');
+  } else data.requestType = '0';
 
   //#endregion
   return await $.ajax({

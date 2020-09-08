@@ -1608,7 +1608,7 @@
           if (!window.location.href.includes('localhost')) sendNotification(`:loudspeaker: New CCC Request from [@${userInfo.name}](#/person/${userInfo.id}) ${detailedInfo}`, region, subRegion, segment, product);
           $('#submit').prop('disabled', false);
           $('#submit').html('Submit');
-          //cleanForm();
+          cleanForm();
         } catch (error) {
           console.error(error);
           $('#submit').prop('disabled', false);
