@@ -27,7 +27,7 @@ export default function RequestsFilter(props) {
 
   const requestTypeValueList = [
     { value: '0', label: 'Standard' },
-    { value: '1', label: 'Trial validation' },
+    { value: '1', label: 'Trial Validation' },
   ];
 
   const handledValueList = [
