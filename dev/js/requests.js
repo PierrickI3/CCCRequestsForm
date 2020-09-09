@@ -76,7 +76,7 @@ async function postRequests(region, subRegion, segment, product, tasks, requeste
   if (currentRequestType == 1) {
     // Include FreeTrial Fields
     data.requestType = '1';
-    data.tasks = [{ taskCategory: 'Demo & Trial Support', taskId: 0, taskTime: 0, taskType: $('#trialValidationType').val() }];
+    data.tasks = [{ taskCategory: 'Trial Validation', taskId: 0, taskTime: 0, taskType: $('#trialValidationType').val() }];
     if ($('#trialValidationType').val()) data.freeTrialValidationType = $('#trialValidationType').val();
     if ($('#trialValidationType').val() !== 'FreeTrial') {
       if ($('#countriesAgents').val().length > 0) data.freeTrialCountriesAgents = $('#countriesAgents').val();
