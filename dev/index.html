@@ -195,11 +195,14 @@
             <div id="free-trial-questions" style="display: none;">
               <div class="border border-black p-3">
                 <table class="table table-striped table-bordered ">
+                  <div class="text-center">Definitions (put descriptive text later here)</div>
+                  <br>
                   <thead>
+                    </tr>
                     <tr>
                       <th scope="col" style="width: 25%"></th>
                       <th scope="col" class="text-center" style="width: 25%">Free Trials</th>
-                      <th scope="col" class="text-center" style="width: 25%">Prrof Of Concept (POC)</th>
+                      <th scope="col" class="text-center" style="width: 25%">Proof Of Concept (POC)</th>
                       <th scope="col" class="text-center" style="width: 25%">Pilot</th>
                     </tr>
                   </thead>
@@ -1036,7 +1039,7 @@
           });
         }
 
-        let assignedSCValue = sfObject.dsr && sfObject.dsr.virtualTeamNames ? sfObject.dsr.virtualTeamNames : sfObject.Solution_Consultant__r && sfObject.Solution_Consultant__r.Name ? sfObject.Solution_Consultant__r.Name : undefined;
+        let assignedSCValue = sfObject && sfObject.dsr && sfObject.dsr.virtualTeamNames ? sfObject.dsr.virtualTeamNames : sfObject && sfObject.Solution_Consultant__r && sfObject.Solution_Consultant__r.Name ? sfObject.Solution_Consultant__r.Name : undefined;
         console.log(assignedSCValue);
         if (assignedSCValue) {
           $('#oppAssignedSC').attr('disabled', true);
@@ -1047,7 +1050,7 @@
           $('#oppPartnerCustomerName').attr('disabled', false);
         }
 
-        if (sfObject.Account && !$('#sfData').select2('data')[0])
+        if (sfObject && sfObject.Account && !$('#sfData').select2('data')[0])
           $('#sfData').attr('disabled', true);
         else
           $('#sfData').attr('disabled', false);
