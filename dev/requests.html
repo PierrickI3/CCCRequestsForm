@@ -76,8 +76,10 @@
             <div id="basicgrid"></div>
         </div>
         <div id="filter-sidebar" class="filter-sidebar-collapsed right">
-            <button id="filter-sidebar-button-expand" type="button" class="btn btn-secondary filter-sidebar-button" onclick="filterExpand()"><i class="fa fa-angle-double-left"></i></button>
-            <button id="filter-sidebar-button-collapse" type="button" class="btn btn-secondary filter-sidebar-button" onclick="filterCollapse()"><i class="fa fa-angle-double-right"></i></button>
+            <div class="filter-buttons-container">
+                <button id="filter-sidebar-button-expand" type="button" class="btn btn-secondary filter-sidebar-button" onclick="filterExpand()"><i class="fa fa-angle-double-left"></i></button>
+                <button id="filter-sidebar-button-collapse" type="button" class="btn btn-secondary filter-sidebar-button" onclick="filterCollapse()"><i class="fa fa-angle-double-right"></i></button>
+            </div>
             <span id="filter-sidebar-label" class="filter-sidebar-addon-vertical-info">Filter configuration</span>
             <iframe id="filter-sidebar-addon" class="filter-sidebar-addon"></iframe>
         </div>

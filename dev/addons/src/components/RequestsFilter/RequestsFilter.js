@@ -1,3 +1,4 @@
+import './RequestsFilter.css';
 import React, { useState, useEffect } from 'react';
 import { Navbar, Nav, Button, Dropdown, DropdownToggle, DropdownMenu, DropdownItem, Label, Form, FormGroup, Input } from 'reactstrap';
 import { raiseEvent } from '../../services/iFrameEvents';
@@ -70,6 +71,7 @@ export default function RequestsFilter(props) {
   const [regionFixed, setRegionFixed] = useState(false);
   const [requesterFixed, setRequesterFixed] = useState(false);
   const [subregionValueList, setSubregionValueList] = useState([]);
+  const [filterChanged, setFilterChanged] = useState(false);
   //#endregion
 
   //#region "initialization"
@@ -114,6 +116,7 @@ export default function RequestsFilter(props) {
     console.log('handleApplyFilters()');
     raiseEvent('applyFilter', currentFilter);
     localStorageSetLatestFilter(currentFilter);
+    setFilterChanged(false);
   };
 
   const handleMenuOptionLoad = () => {
@@ -134,6 +137,7 @@ export default function RequestsFilter(props) {
     applySubRegionList(clearFilterSet.region);
     raiseEvent('clearFilter', {});
     localStorageDropLatestFilter();
+    setFilterChanged(true);
   };
 
   const handleSaveOkBtn = () => {
@@ -160,6 +164,7 @@ export default function RequestsFilter(props) {
     setLoadFilterSelectedItem(null);
     raiseEvent('applyFilter', currentFilter);
     localStorageSetLatestFilter(currentFilter);
+    setFilterChanged(false);
   };
 
   const handleLoadDeleteBtn = () => {
@@ -354,6 +359,7 @@ export default function RequestsFilter(props) {
               const f = localStorageGet(v.value);
               if (f && f.filterConfiguration) {
                 setCurrentFilter(f.filterConfiguration);
+                setFilterChanged(true);
                 applySubRegionList(f.filterConfiguration.region);
               }
             }}
@@ -418,6 +424,7 @@ export default function RequestsFilter(props) {
                 let cf = { ...currentFilter };
                 cf.status = v;
                 setCurrentFilter(cf);
+                setFilterChanged(true);
               }}
             />
             <Label check className="ml-4">
@@ -429,6 +436,7 @@ export default function RequestsFilter(props) {
                   let cf = { ...currentFilter };
                   cf.isDeleted = v.target.checked;
                   setCurrentFilter(cf);
+                  setFilterChanged(true);
                 }}
               />{' '}
               Show deleted only
@@ -448,6 +456,7 @@ export default function RequestsFilter(props) {
                 let cf = { ...currentFilter };
                 cf.createdAt = v;
                 setCurrentFilter(cf);
+                setFilterChanged(true);
               }}
             />
           </div>
@@ -464,6 +473,7 @@ export default function RequestsFilter(props) {
                 let cf = { ...currentFilter };
                 cf.requestType = v;
                 setCurrentFilter(cf);
+                setFilterChanged(true);
               }}
             />
           </div>
@@ -480,6 +490,7 @@ export default function RequestsFilter(props) {
                 let cf = { ...currentFilter };
                 cf.handled = v;
                 setCurrentFilter(cf);
+                setFilterChanged(true);
               }}
             />
           </div>
@@ -498,6 +509,7 @@ export default function RequestsFilter(props) {
                 cf.region = v;
                 cf.subRegion = removeSelectedSubregionsForNotSelectedRegions(cf.region, cf.subRegion);
                 setCurrentFilter(cf);
+                setFilterChanged(true);
                 applySubRegionList(cf.region);
               }}
             />
@@ -515,6 +527,7 @@ export default function RequestsFilter(props) {
                 let cf = { ...currentFilter };
                 cf.subRegion = v;
                 setCurrentFilter(cf);
+                setFilterChanged(true);
               }}
             />
           </div>
@@ -531,6 +544,7 @@ export default function RequestsFilter(props) {
                 let cf = { ...currentFilter };
                 cf.product = v;
                 setCurrentFilter(cf);
+                setFilterChanged(true);
               }}
             />
           </div>
@@ -547,6 +561,7 @@ export default function RequestsFilter(props) {
                 let cf = { ...currentFilter };
                 cf.segment = v;
                 setCurrentFilter(cf);
+                setFilterChanged(true);
               }}
             />
           </div>
@@ -562,6 +577,7 @@ export default function RequestsFilter(props) {
                 let cf = { ...currentFilter };
                 cf.requester = v;
                 setCurrentFilter(cf);
+                setFilterChanged(true);
               }}
             />
           </div>
@@ -576,6 +592,7 @@ export default function RequestsFilter(props) {
                 let cf = { ...currentFilter };
                 cf.programManager = v;
                 setCurrentFilter(cf);
+                setFilterChanged(true);
               }}
             />
           </div>
@@ -590,6 +607,7 @@ export default function RequestsFilter(props) {
                 let cf = { ...currentFilter };
                 cf.teamMember = v;
                 setCurrentFilter(cf);
+                setFilterChanged(true);
               }}
             />
           </div>
@@ -604,15 +622,22 @@ export default function RequestsFilter(props) {
                 let cf = { ...currentFilter };
                 cf.customerName = e.target.value;
                 setCurrentFilter(cf);
+                setFilterChanged(true);
               }}
             />
           </div>
 
-          <div className="mb-3" style={{ textAlign: 'center' }}>
-            <Button outline onClick={handleApplyFilters}>
-              <IoMdFlash /> Apply filter
+          {filterChanged && formMode === 'edit' &&
+            <div className='request-filter-floating-button'>
+              <Button color="primary" onClick={handleApplyFilters}>
+                <IoMdFlash /> Apply filter
             </Button>
+            </div>
+          }
+
+          <div className="request-filter-floating-button-bottom-placeholder">
           </div>
+
         </div>
       </div>
 

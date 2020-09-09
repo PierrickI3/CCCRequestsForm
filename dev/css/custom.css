@@ -162,6 +162,10 @@
   width: max-content;
 }
 
+.filter-buttons-container {
+  height: 50px;
+}
+
 .filter-sidebar-collapsed {
   width: 55px;
   overflow: hidden;
@@ -181,7 +185,7 @@
 
 .filter-sidebar-addon {
   width: 100%;
-  min-height: 90%;
+  height: calc(100% - 110px);
   display: none;
   border: 1px solid #dddddd;
   border-radius: 5px;
