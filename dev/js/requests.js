@@ -125,6 +125,16 @@ async function postRequests(region, subRegion, segment, product, tasks, requeste
       data.freeTrialVirtualDesktopSolution = $('#virtualDesktopSolution').val();
     }
 
+    data.freeTrialImpactByDesign = $('#impactByDesign').is(':checked');
+
+    if ($('#businessGoal').val().length > 0) {
+      data.freeTrialBusinessGoal = $('#businessGoal').val();
+    }
+
+    if ($('#measureOfSuccess').val().length > 0) {
+      data.freeTrialMeasureOfSuccess = $('#measureOfSuccess').val();
+    }
+
     // Other
 
     data.freeTrialCustomerResourceCommitted = $('#customerResourceCommitted').is(':checked');
