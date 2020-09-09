@@ -27,8 +27,8 @@ export default function RequestsFilter(props) {
   ];
 
   const requestTypeValueList = [
-    { value: '0', label: 'Standard' },
-    { value: '1', label: 'Trial Validation' },
+    { value: '0', label: 'CC Request' },
+    { value: '1', label: 'Trial/POC/Pilot Validation' },
   ];
 
   const handledValueList = [
