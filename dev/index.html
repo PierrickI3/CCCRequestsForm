@@ -947,13 +947,13 @@
         let freeTrialBYOCCarriers = {
           US: [
             {
-              name: 'Twillio',
+              name: 'Twillio US',
               url: 'https://www.twilio.com/',
             }
           ],
           EU: [
             {
-              name: 'Twillio',
+              name: 'Twillio EU',
               url: 'https://www.twilio.com/',
             }]
         }
@@ -1035,14 +1035,14 @@
               $.each(freeTrialBYOCCarriers, (region, regionalSupportedBYOCCloudCarriers) => {
                 let optGroup = $("<optgroup/>", { label: region }).appendTo(carriersSelect);
                 $.each(regionalSupportedBYOCCloudCarriers, (i, regionalSupportedBYOCCloudCarrier) => {
-                  $("<option/>", { value: regionalSupportedBYOCCloudCarrier.name }).text(regionalSupportedBYOCCloudCarrier.name).appendTo(optGroup);
+                  $("<option/>", { value: regionalSupportedBYOCCloudCarrier.name, selected: carriers.includes(regionalSupportedBYOCCloudCarrier.name) }).text(regionalSupportedBYOCCloudCarrier.name).appendTo(optGroup);
                 });
               });
             } else {
               $.each(supportedBYOCCloudCarriers, (region, regionalSupportedBYOCCloudCarriers) => {
                 let optGroup = $("<optgroup/>", { label: region }).appendTo(carriersSelect);
                 $.each(regionalSupportedBYOCCloudCarriers, (i, regionalSupportedBYOCCloudCarrier) => {
-                  $("<option/>", { value: regionalSupportedBYOCCloudCarrier.name }).text(regionalSupportedBYOCCloudCarrier.name).appendTo(optGroup);
+                  $("<option/>", { value: regionalSupportedBYOCCloudCarrier.name, selected: carriers.includes(regionalSupportedBYOCCloudCarrier.name) }).text(regionalSupportedBYOCCloudCarrier.name).appendTo(optGroup);
                 });
               });
             }

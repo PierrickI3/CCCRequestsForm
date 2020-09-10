@@ -95,7 +95,7 @@ let supportedBYOCCloudCarriers = {
       url: 'http://www.rsquaredtelecom.com/',
     },
     {
-      name: 'Twillio',
+      name: 'Twillio US',
       url: 'https://www.twilio.com/',
     },
   ],
@@ -137,7 +137,7 @@ let supportedBYOCCloudCarriers = {
       url: 'https://www.tenios.de/en/sip-trunk',
     },
     {
-      name: 'Twillio',
+      name: 'Twillio EU',
       url: 'https://www.twilio.com/',
     },
     {
