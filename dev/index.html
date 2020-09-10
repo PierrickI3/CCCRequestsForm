@@ -1666,7 +1666,7 @@
           let oppUrl = $('#oppUrl').val();
           let oppDSRUrl = $('#oppDSRUrl').val();
           let oppOwner = $('#oppOwner').val();
-          let oppPartnerCustomerName = sfObject.Account && sfObject.Account.Name ? sfObject.Account.Name : undefined
+          let oppPartnerCustomerName = sfObject && sfObject.Account && sfObject.Account.Name ? sfObject.Account.Name : undefined
           let oppAssignedSC = $('#oppAssignedSC').val();
           let oppName = $('#sfData').select2('data').length > 0 && $('#sfData').select2('data')[0].text ? $('#sfData').select2('data')[0].text : undefined;
 
