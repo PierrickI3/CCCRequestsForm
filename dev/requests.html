@@ -382,143 +382,146 @@
                                 </div>
 
                                 <!--#endregion Telephony -->
-                            </div>
 
-                            <!--#region General Configuration -->
+                                <!--#region General Configuration -->
 
-                            <div class="col-md-12 bg-light shadow-lg">
-                                <hr />
-                                <h3 class="text-center">General Configuration</h3>
-                                <hr />
-                            </div>
-
-                            <!-- Number of Agents -->
-                            <div class="form-row mr-4 ml-2">
-                                <div class="form-group col-md-12">
-                                    <label for="numberAgents">What is the expected number of agents? <span class="text-danger font-weight-bold">*</span></label>
-                                    <textarea class="form-control" id="numberAgents" name="numberAgents" placeholder="" required></textarea>
+                                <div class="col-md-12 bg-light shadow-lg">
+                                    <hr />
+                                    <h3 class="text-center">General Configuration</h3>
+                                    <hr />
                                 </div>
-                            </div>
 
-                            <!-- Phone Numbers Deployment -->
-                            <div class="form-check mr-4">
-                                <div class="form-group col-md-12">
-                                    <input class="form-check-input" type="checkbox" value="" id="existingTelephonyUsage">
-                                    <label class="form-check-label" for="existingTelephonyUsage">
-                                        Will the customer connect, via a trunk or forwarding of calls, to Genesys Engage, another PBX, an SBC or directly to a carrier? If so, please provide more details below.
-                                    </label>
-                                    <br>
+                                <!-- Number of Agents -->
+                                <div class="form-row mr-4 ml-2">
+                                    <div class="form-group col-md-12">
+                                        <label for="numberAgents">What is the expected number of agents? <span class="text-danger font-weight-bold">*</span></label>
+                                        <textarea class="form-control" id="numberAgents" name="numberAgents" placeholder="" required></textarea>
+                                    </div>
                                 </div>
-                            </div>
 
-                            <div class="form-row col-md-12">
-                                <div class="form-group col-md-12">
-                                    <textarea class="form-control" id="existingTelephonyUsageDetails" name="existingTelephonyUsageDetails" placeholder="Please provide more details about the telephony connection..." disabled></textarea>
+                                <!-- Phone Numbers Deployment -->
+                                <div class="form-check mr-4">
+                                    <div class="form-group col-md-12">
+                                        <input class="form-check-input" type="checkbox" value="" id="existingTelephonyUsage">
+                                        <label class="form-check-label" for="existingTelephonyUsage">
+                                            Will the customer connect, via a trunk or forwarding of calls, to Genesys Engage, another PBX, an SBC or directly to a carrier? If so, please provide more details below.
+                                        </label>
+                                        <br>
+                                    </div>
                                 </div>
-                            </div>
 
-                            <!-- Identification and Verification -->
-                            <div class="form-row mr-4 ml-2">
-                                <div class="form-group col-md-12">
-                                    <label for="identificationAndVerificationProcesses">Identity and Verification Processes <span class="text-danger font-weight-bold">*</span></label>
-                                    <textarea class="form-control" id="identificationAndVerificationProcesses" name="identificationAndVerificationProcesses" placeholder="Are there any mandatory Identification and Verification processes?" required></textarea>
+                                <div class="form-row col-md-12">
+                                    <div class="form-group col-md-12">
+                                        <textarea class="form-control" id="existingTelephonyUsageDetails" name="existingTelephonyUsageDetails" placeholder="Please provide more details about the telephony connection..." disabled></textarea>
+                                    </div>
                                 </div>
-                            </div>
 
-                            <!-- IT Infrastructure -->
-                            <div class="form-row mr-4 ml-2">
-                                <div class="form-group col-md-12">
-                                    <label for="itInfrastructure">IT Infrastructure <span class="text-danger font-weight-bold">*</span></label>
-                                    <textarea class="form-control" id="itInfrastructure" name="itInfrastructure" placeholder="Is the IT infrastructure supported in-house or via a third-party, including internet connections, user/company provided laptops and headsets?" required></textarea>
+                                <!-- Identification and Verification -->
+                                <div class="form-row mr-4 ml-2">
+                                    <div class="form-group col-md-12">
+                                        <label for="identificationAndVerificationProcesses">Identity and Verification Processes <span class="text-danger font-weight-bold">*</span></label>
+                                        <textarea class="form-control" id="identificationAndVerificationProcesses" name="identificationAndVerificationProcesses" placeholder="Are there any mandatory Identification and Verification processes?" required></textarea>
+                                    </div>
                                 </div>
-                            </div>
 
-                            <!-- End devices require VPN? -->
-                            <div class="form-check mr-4">
-                                <div class="form-group col-md-12">
-                                    <input class="form-check-input" type="checkbox" value="" id="endUserDevicesRequireVPN">
-                                    <label class="form-check-label" for="endUserDevicesRequireVPN">
-                                        Are user end-devices required to connect via VPN?
-                                    </label>
+                                <!-- IT Infrastructure -->
+                                <div class="form-row mr-4 ml-2">
+                                    <div class="form-group col-md-12">
+                                        <label for="itInfrastructure">IT Infrastructure <span class="text-danger font-weight-bold">*</span></label>
+                                        <textarea class="form-control" id="itInfrastructure" name="itInfrastructure" placeholder="Is the IT infrastructure supported in-house or via a third-party, including internet connections, user/company provided laptops and headsets?" required></textarea>
+                                    </div>
                                 </div>
-                            </div>
 
-                            <!-- Virtual Solution -->
-                            <div class="form-row mr-4 ml-2">
-                                <div class="form-group col-md-12">
-                                    <label for="virtualDesktopSolution">Virtual Desktop Solution <span class="text-danger font-weight-bold">*</span></label>
-                                    <textarea class="form-control" id="virtualDesktopSolution" name="virtualDesktopSolution" placeholder="Does the customer use a Virtual Desktop solution, e.g. Citrix, thin-clients, etc.?" required></textarea>
+                                <!-- End devices require VPN? -->
+                                <div class="form-check mr-4">
+                                    <div class="form-group col-md-12">
+                                        <input class="form-check-input" type="checkbox" value="" id="endUserDevicesRequireVPN">
+                                        <label class="form-check-label" for="endUserDevicesRequireVPN">
+                                            Are user end-devices required to connect via VPN?
+                                        </label>
+                                    </div>
                                 </div>
-                            </div>
 
-                            <!-- Impact By Design -->
-                            <div class="form-check mr-4">
-                                <div class="form-group col-md-12">
-                                    <input class="form-check-input" type="checkbox" value="" id="impactByDesign">
-                                    <label class="form-check-label" for="impactByDesign">
-                                        Has an Impact By Design been initiated?
-                                    </label>
-                                    <br>
-                                    <small><a href="https://help.mypurecloud.com/articles/global-purecloud-service-terms-and-conditions/" target="_blank">Access the latest documents here</a> (press <span class="bg-warning">SHIFT</span> while clicking on the link to open the page from the <strong>Genesys Cloud app</strong>)</small>
+                                <!-- Virtual Solution -->
+                                <div class="form-row mr-4 ml-2">
+                                    <div class="form-group col-md-12">
+                                        <label for="virtualDesktopSolution">Virtual Desktop Solution <span class="text-danger font-weight-bold">*</span></label>
+                                        <textarea class="form-control" id="virtualDesktopSolution" name="virtualDesktopSolution" placeholder="Does the customer use a Virtual Desktop solution, e.g. Citrix, thin-clients, etc.?" required></textarea>
+                                    </div>
                                 </div>
-                            </div>
 
-                            <!-- Business Goal -->
-                            <div class="form-row mr-4 ml-2">
-                                <div class="form-group col-md-12">
-                                    <label for="businessGoal">What is the customer business goal? <span class="text-danger font-weight-bold">*</span></label>
-                                    <textarea class="form-control" id="businessGoal" name="businessGoal" placeholder="Describe your business goal here" required></textarea>
+                                <!-- Impact By Design -->
+                                <div class="form-check mr-4">
+                                    <div class="form-group col-md-12">
+                                        <input class="form-check-input" type="checkbox" value="" id="impactByDesign">
+                                        <label class="form-check-label" for="impactByDesign">
+                                            Has an Impact By Design been initiated?
+                                        </label>
+                                        <br>
+                                        <small><a href="https://help.mypurecloud.com/articles/global-purecloud-service-terms-and-conditions/" target="_blank">Access the latest documents here</a> (press <span class="bg-warning">SHIFT</span> while clicking on the link to open the page from the <strong>Genesys Cloud app</strong>)</small>
+                                    </div>
                                 </div>
-                            </div>
 
-                            <!-- Measure of Success -->
-                            <div class="form-row mr-4 ml-2">
-                                <div class="form-group col-md-12">
-                                    <label for="measureOfSuccess">What is the customer's measure of success? <span class="text-danger font-weight-bold">*</span></label>
-                                    <textarea class="form-control" id="measureOfSuccess" name="measureOfSuccess" placeholder="Describe customer's measure of success here" required></textarea>
+                                <!-- Business Goal -->
+                                <div class="form-row mr-4 ml-2">
+                                    <div class="form-group col-md-12">
+                                        <label for="businessGoal">What is the customer business goal? <span class="text-danger font-weight-bold">*</span></label>
+                                        <textarea class="form-control" id="businessGoal" name="businessGoal" placeholder="Describe your business goal here" required></textarea>
+                                    </div>
                                 </div>
-                            </div>
 
-
-                            <div class="col-md-12 bg-light shadow-lg">
-                                <hr />
-                                <h3 class="text-center">Other</h3>
-                                <hr />
-                            </div>
-
-                            <!-- Commmitted Customer Resource -->
-                            <div class="form-check mr-4">
-                                <div class="form-group col-md-12">
-                                    <input class="form-check-input" type="checkbox" value="" id="customerResourceCommitted">
-                                    <label class="form-check-label" for="customerResourceCommitted">
-                                        Have customer resources been committed (e.g. Project Manager, Project Sponsor, Business Champion and/or IT/Operations Manager, etc.)?
-                                    </label>
+                                <!-- Measure of Success -->
+                                <div class="form-row mr-4 ml-2">
+                                    <div class="form-group col-md-12">
+                                        <label for="measureOfSuccess">What is the customer's measure of success? <span class="text-danger font-weight-bold">*</span></label>
+                                        <textarea class="form-control" id="measureOfSuccess" name="measureOfSuccess" placeholder="Describe customer's measure of success here" required></textarea>
+                                    </div>
                                 </div>
-                            </div>
 
 
-                            <!-- Terms & Conditions -->
-                            <div class="form-check mr-4">
-                                <div class="form-group col-md-12">
-                                    <input class="form-check-input" type="checkbox" value="" id="standardTermsConditions">
-                                    <label class="form-check-label" for="standardTermsConditions">
-                                        Has the customer agreed to our standard Terms and Conditions and DPA?
-                                    </label>
-                                    <br>
-                                    <small><a href="https://help.mypurecloud.com/articles/global-purecloud-service-terms-and-conditions/" target="_blank">Access the latest documents here</a> (press <span class="bg-warning">SHIFT</span> while clicking on the link to open the page from the <strong>Genesys Cloud app</strong>)</small>
+                                <div class="col-md-12 bg-light shadow-lg">
+                                    <hr />
+                                    <h3 class="text-center">Other</h3>
+                                    <hr />
                                 </div>
-                            </div>
 
-                            <div class="form-check mr-4">
-                                <div class="form-group col-md-12">
-                                    <input class="form-check-input" type="checkbox" value="" id="solutionBusinessConsultingRequired">
-                                    <label class="form-check-label" for="solutionBusinessConsultingRequired">
-                                        Is Strategic Business Consulting required for this opportunity?
-                                    </label>
+                                <!-- Commmitted Customer Resource -->
+                                <div class="form-check mr-4">
+                                    <div class="form-group col-md-12">
+                                        <input class="form-check-input" type="checkbox" value="" id="customerResourceCommitted">
+                                        <label class="form-check-label" for="customerResourceCommitted">
+                                            Have customer resources been committed (e.g. Project Manager, Project Sponsor, Business Champion and/or IT/Operations Manager, etc.)?
+                                        </label>
+                                    </div>
                                 </div>
+
+
+                                <!-- Terms & Conditions -->
+                                <div class="form-check mr-4">
+                                    <div class="form-group col-md-12">
+                                        <input class="form-check-input" type="checkbox" value="" id="standardTermsConditions">
+                                        <label class="form-check-label" for="standardTermsConditions">
+                                            Has the customer agreed to our standard Terms and Conditions and DPA?
+                                        </label>
+                                        <br>
+                                        <small><a href="https://help.mypurecloud.com/articles/global-purecloud-service-terms-and-conditions/" target="_blank">Access the latest documents here</a> (press <span class="bg-warning">SHIFT</span> while clicking on the link to open the page from the <strong>Genesys Cloud app</strong>)</small>
+                                    </div>
+                                </div>
+
+                                <div class="form-check mr-4">
+                                    <div class="form-group col-md-12">
+                                        <input class="form-check-input" type="checkbox" value="" id="solutionBusinessConsultingRequired">
+                                        <label class="form-check-label" for="solutionBusinessConsultingRequired">
+                                            Is Strategic Business Consulting required for this opportunity?
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <!--#endregion -->
+
                             </div>
 
-                            <!--#endregion -->
+
 
                     </div>
 
