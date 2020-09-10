@@ -1667,12 +1667,15 @@
           let oppDSRUrl = $('#oppDSRUrl').val();
           let oppOwner = $('#oppOwner').val();
           let oppPartnerCustomerName = sfObject && sfObject.Account && sfObject.Account.Name ? sfObject.Account.Name : undefined
-          let oppAssignedSC = $('#oppAssignedSC').val();
+          //let oppAssignedSC = $('#oppAssignedSC').val();
           let oppName = $('#sfData').select2('data').length > 0 && $('#sfData').select2('data')[0].text ? $('#sfData').select2('data')[0].text : undefined;
 
+          let oppAssignedSC = sfObject && sfObject.oppAssignedSC ? sfObject.oppAssignedSC : undefined;
+
+          let oppAssignedSCMail = sfObject && sfObject.oppAssignedSCMail ? sfObject.oppAssignedSCMail : undefined;
           console.log(`Region: ${region}, subRegion: ${subRegion}, Product: ${product}, Tasks: ${JSON.stringify(tasks)}, Requester Name: ${requesterName}, Requester Email: ${requesterEmail}, Requester Phone Number: ${requesterPhoneNumber}, Need Completed By: ${needCompletedBy}, Description: ${description}, AccountName: ${oppPartnerCustomerName}`);
 
-          await postRequests(region, subRegion, segment, product, tasks, requesterName, requesterEmail, requesterPhoneNumber, needCompletedBy, description, oppName, oppUrl, oppDSRUrl, oppOwner, oppPartnerCustomerName, sfObject.oppAssignedSC, sfObject.oppAssignedSCMail, gcToken, customerRelationship, customerType);
+          await postRequests(region, subRegion, segment, product, tasks, requesterName, requesterEmail, requesterPhoneNumber, needCompletedBy, description, oppName, oppUrl, oppDSRUrl, oppOwner, oppPartnerCustomerName, oppAssignedSC, oppAssignedSCMail, gcToken, customerRelationship, customerType);
           console.log('Success!');
           showMessage('Request submitted. Thanks!');
 
