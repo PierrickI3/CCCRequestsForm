@@ -1012,12 +1012,11 @@
                     // Carriers
                     let carriersDiv = $("<div/>", { class: "form-group col-md-6" }).appendTo("#byocCloudCarriers");
                     let carriersSelect = $("<select/>", { class: "selectpicker form-control", id: "carriers_" + country, name: "carriers_" + country, ["data-live-search"]: true, required: true, multiple: true }).appendTo(carriersDiv);
-                    //$("<option/>", { value: "", disabled: true }).text("Select a Carrier").appendTo(carriersSelect);
                     if ($('#trialValidationType').val() === 'FreeTrial') {
                         $.each(freeTrialBYOCCarriers, (region, regionalSupportedBYOCCloudCarriers) => {
                             let optGroup = $("<optgroup/>", { label: region }).appendTo(carriersSelect);
                             $.each(regionalSupportedBYOCCloudCarriers, (i, regionalSupportedBYOCCloudCarrier) => {
-                                $("<option/>", { value: regionalSupportedBYOCCloudCarrier.name }).text(regionalSupportedBYOCCloudCarrier.name).appendTo(optGroup);
+                                $("<option/>", { value: regionalSupportedBYOCCloudCarrier.name, selected: carriers.includes(regionalSupportedBYOCCloudCarrier.name) }).text(regionalSupportedBYOCCloudCarrier.name).appendTo(optGroup);
                             });
                         });
                     } else {
