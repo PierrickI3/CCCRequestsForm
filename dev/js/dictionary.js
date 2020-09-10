@@ -63,8 +63,8 @@ let requestsType = {
   Roadmap: [],
   'Subscription Extension': [],
   'Security Support': ['Questionnaires/Assessments/Audits', 'Other'],
-  'Specialist Engagement': ['API (Platform/AppFoundry)', 'Cloud Migration', 'Digital AI', 'MultiCloud', 'Must Win Opportunity Engagement', 'PureBridge', 'Self-Service Automation', 'WEM', 'Other'],
-  'Strategic Business Consulting': ['Help with Financial Analysis (TCO/ROI)', 'Industry Expertise'],
+  'Specialist Engagement': ['API (Platform/AppFoundry)', 'AppFoundry', 'Cloud Migration', 'Digital AI', 'MultiCloud', 'Must Win Opportunity Engagement', 'Predictive Engagement', 'PureBridge', 'Self-Service Automation', 'WEM', 'Outbound', 'Other'],
+  'Strategic Business Consulting': ['CX Whitespace', 'Help with Financial Analysis (TCO/ROI)', 'Industry Expertise'],
   'Other Request': [],
 };
 
