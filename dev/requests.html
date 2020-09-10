@@ -213,316 +213,344 @@
                                 </div>
 
 
-                                <div id="free-trial-deploymentModel" hidden>
-                                    <!--#region Deployment Model -->
 
-                                    <div class="col-md-12 bg-light shadow-lg">
-                                        <hr />
-                                        <h3 class="text-center">Deployment Model</h3>
-                                        <hr />
-                                    </div>
+                                <!--#region Deployment Model -->
 
-                                    <!-- Countries & Languages -->
-                                    <div class="form-row mr-4 ml-2">
-                                        <div class="form-group col-md-12">
-                                            <label for="countriesAgents">In which countries are the customer's agents located? <span class="text-danger font-weight-bold">*</span></label>
-                                            <select class="selectpicker" id="countriesAgents" name="countriesAgents" class="form-control" required multiple data-live-search="true">
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="form-row mr-4 ml-2">
-                                        <div class="form-group col-md-12">
-                                            <label for="countriesOperation">In which countries does the customer operate and require (or have existing) phone numbers? <span class="text-danger font-weight-bold">*</span></label>
-                                            <select class="selectpicker" id="countriesOperation" name="countriesOperation" class="form-control" required multiple data-live-search="true">
-                                            </select>
-                                        </div>
-                                    </div>
+                                <div class="col-md-12 bg-light shadow-lg">
+                                    <hr />
+                                    <h3 class="text-center">Deployment Model</h3>
+                                    <hr />
+                                </div>
 
-                                    <!-- Telephony Model -->
-
-                                    <div class="text-muted form-group ml-3">
-                                        <small>Where a SIP trunk cannot be easily established, it is recommended to use Genesys Cloud Voice and forwarding of calls.</small>
-                                        <br>
-                                        <small>A new option has been added to select BYOC Cloud and Genesys Cloud Voice together.</small>
-                                    </div>
-
+                                <!-- Countries & Languages -->
+                                <div class="form-row mr-4 ml-2">
                                     <div class="form-group col-md-12">
-                                        <div class="text-muted" id="recommendation">
-                                        </div>
-                                        <label for="telephonyModel">Telephony Model <span class="text-danger font-weight-bold">*</span></label>
-                                        <select id="telephonyModel" name="telephonyModel" class="form-control" required>
-                                            <option value="" disabled selected>Select a Telephony Model</option>
+                                        <label for="countriesAgents">In which countries are the customer's agents located? <span class="text-danger font-weight-bold">*</span></label>
+                                        <select class="selectpicker" id="countriesAgents" name="countriesAgents" class="form-control" required multiple data-live-search="true">
                                         </select>
                                     </div>
-
-                                    <!-- GCV Questions -->
-                                    <div id="GCVQuestions" style="display:none;">
-                                        <h3 class="text-center shadow-lg pt-2 pb-2 offset-md-4 col-md-4">Genesys Cloud Voice</h3>
-
-                                        <!-- Phone Numbers Deployment -->
-                                        <div class="form-row mr-4 ml-2">
-                                            <div class="form-group col-md-12">
-                                                <label for="phoneNumbersDeployment">Phone Numbers Deployment <span class="text-danger font-weight-bold">*</span></label>
-                                                <textarea class="form-control" id="phoneNumbersDeployment" name="phoneNumbersDeployment" placeholder="Will the customer deploy new customer-facing numbers from GCV, re-route non-geographic numbers to GCV or forward calls to GCV numbers?"></textarea>
-                                                Genesys Cloud Voice (Resource Center): <a href="https://help.mypurecloud.com/articles/about-purecloud-voice/" target="_blank">https://help.mypurecloud.com/articles/about-purecloud-voice/</a>
-                                            </div>
-                                        </div>
-
-                                        <!-- New Numbers -->
-                                        <div class="form-row mr-4 ml-2">
-                                            <div class="form-group col-md-12">
-                                                <label for="newNumbers">New Numbers <span class="text-danger font-weight-bold">*</span></label>
-                                                <textarea class="form-control" id="newNumbers" name="newNumbers" placeholder="If using new numbers, how many of each number type and which area codes are required?"></textarea>
-                                            </div>
-                                        </div>
-
-                                        <div class="form-row mr-4 ml-2">
-                                            <div class="form-group col-md-12">
-                                                <label for="genesysCloudRegion">Genesys Cloud Region <span class="text-danger font-weight-bold">*</span></label>
-                                                <select class="custom-select" id="genesysCloudRegion" name="genesysCloudRegion" required>
-                                                    <option selected disabled>Select a Genesys Cloud Region</option>
-                                                    <optgroup label="North America">
-                                                        <option value="cac1.pure.cloud">cac1.pure.cloud - Canada</option>
-                                                        <option value="mypurecloud.com">mypurecloud.com - East</option>
-                                                        <option value="usw2.pure.cloud">usw2.pure.cloud - West</option>
-                                                    </optgroup>
-                                                    <optgroup label="EMEA">
-                                                        <option value="euw2.pure.cloud">euw2.pure.cloud - UK</option>
-                                                        <option value="mypurecloud.de">mypurecloud.de - Frankfurt</option>
-                                                        <option value="mypurecloud.ie">mypurecloud.ie - Ireland</option>
-                                                    </optgroup>
-                                                    <optgroup label="APAC">
-                                                        <option value="apne2.pure.cloud">apne2.pure.cloud - Seoul </option>
-                                                        <option value="mypurecloud.com.au">mypurecloud.com.au - Australia/New Zealand </option>
-                                                        <option value="mypurecloud.jp">mypurecloud.jp - Japan </option>
-                                                    </optgroup>
-                                                </select>
-                                            </div>
-                                        </div>
-
-                                        <!-- Estimated Volume of Minutes Per Month -->
-                                        <div class="form-row mr-4 ml-2">
-                                            <div class="form-group col-md-12">
-                                                <label for="estimatedVolumeMinsPerMonth">Estimated Volumes of GCV Minutes per Month <span class="text-danger font-weight-bold">*</span></label>
-                                                <textarea class="form-control" id="estimatedVolumeMinsPerMonth" name="estimatedVolumeMinsPerMonth" placeholder="What is the estimated volumes of minutes per month?" required></textarea>
-                                            </div>
-                                        </div>
-
-                                    </div>
-
-                                    <!-- BYOC Cloud Carriers -->
-                                    <div class="border border-black mr-3 col-md-12" id="byocCloudCarriersDiv" style="display: none;">
-                                        <br>
-                                        <h3 class="text-center shadow-lg pt-2 pb-2 offset-md-4 col-md-4">BYOC Cloud Carriers</h3>
-                                        <div class="form-row mt-1 mr-4 ml-2">
-                                            <div class="form-group col-md-5">Country</div>
-                                            <div class="form-group col-md-5">Select one or more Carriers <span class="text-danger font-weight-bold">*</span></div>
-                                        </div>
-                                        <div class="form-row mt-2 mr-4 ml-2" id="byocCloudCarriers"></div>
-                                        <small id="otherNote" class="form-group ml-2">
-                                            If you have selected "Other":
-                                            <ul>
-                                                <li>Carrier must meeting standard requirements as per Resource Centre: <a href="https://help.mypurecloud.com/articles/carrier-requirements-byoc-cloud/" target="_blank">https://help.mypurecloud.com/articles/carrier-requirements-byoc-cloud/</a></li>
-                                                <li>Expectation that deployment time will be extended, <strong>in most cases significantly</strong></li>
-                                            </ul>
-                                        </small>
-                                        <div class="form-check mr-4">
-                                            <div class="form-group col-md-12">
-                                                <input class="form-check-input" type="checkbox" value="" id="relationshipWithCarrier">
-                                                <label class="form-check-label" for="relationshipWithCarrier">
-                                                    Does the customer already have a relationship with the carrier and access to technical resources?
-                                                </label>
-                                            </div>
-                                        </div>
-
-                                    </div>
-
-                                    <!-- BYOC Cloud Questions -->
-                                    <div id="BYOCCloudQuestions" style="display:none;">
-                                    </div>
-
-                                    <!-- BYOC Premise with Virtual Edges -->
-                                    <div class="border border-black mr-3 ml-2 bg-warning" id="byocPremiseDiv" style="display: none;">
-                                        <p class="form-group ml-2">
-                                            If planning to use a virtual edge, very strict guidelines for deployment must be followed:
-                                        <ul>
-                                            <li>Virtual Edge Hardware/Software Requirements: <a href="https://help.mypurecloud.com/articles/virtual-edge-hardware-software-requirements/" target="_blank">https://help.mypurecloud.com/articles/virtual-edge-hardware-software-requirements/</a></li>
-                                            <li>Virtual Edge Warnings: <a href="https://help.mypurecloud.com/articles/virtual-edge-warnings/" target="_blank">https://help.mypurecloud.com/articles/virtual-edge-warnings/</a></li>
-                                        </ul>
-                                        </p>
-                                        <p class="form-group ml-2">
-                                            The customer must acknowledge that failing to comply with the requirements and warnings will result in possible audio quality issues.
-                                        </p>
-                                    </div>
-
-                                    <!-- BYOC Premise Questions -->
-                                    <div id="BYOCPremiseQuestions" class="mt-2" style="display:none;">
-
-                                        <!-- Virtual Environment -->
-                                        <div class="form-check mr-4">
-                                            <div class="form-group col-md-12">
-                                                <input class="form-check-input" type="checkbox" value="" id="hyperVEnvironment">
-                                                <label class="form-check-label" for="hyperVEnvironment">
-                                                    Does the customer have a Hyper-V environment available?
-                                                </label>
-                                                <br>
-                                            </div>
-                                        </div>
-
-                                    </div>
-
-                                    <!-- BYOC Premise with Appliance -->
-                                    <div class="border border-black mr-3 ml-2 bg-warning" id="byocPremiseWithApplianceDiv" style="display: none;">
-                                        <p class="form-group ml-2">
-                                            Choosing BYOC Premise w/ Hardware Appliance assumes the partner or customer already has access to hardware Edges. In most cases this would be from a partner who purchased them in advance.
-                                        </p>
-                                        <p class="form-group ml-2">
-                                            Genesys is not shipping hardware Edges at this time.
-                                        </p>
-                                    </div>
-
-                                    <!--#endregion Telephony -->
                                 </div>
-
-                                <!--#region General Configuration -->
-
-                                <div class="col-md-12 bg-light shadow-lg">
-                                    <hr />
-                                    <h3 class="text-center">General Configuration</h3>
-                                    <hr />
-                                </div>
-
-                                <!-- Number of Agents -->
                                 <div class="form-row mr-4 ml-2">
                                     <div class="form-group col-md-12">
-                                        <label for="numberAgents">What is the expected number of agents? <span class="text-danger font-weight-bold">*</span></label>
-                                        <textarea class="form-control" id="numberAgents" name="numberAgents" placeholder="" required></textarea>
+                                        <label for="countriesOperation">In which countries does the customer operate and require (or have existing) phone numbers? <span class="text-danger font-weight-bold">*</span></label>
+                                        <select class="selectpicker" id="countriesOperation" name="countriesOperation" class="form-control" required multiple data-live-search="true">
+                                        </select>
                                     </div>
                                 </div>
 
-                                <!-- Phone Numbers Deployment -->
-                                <div class="form-check mr-4">
-                                    <div class="form-group col-md-12">
-                                        <input class="form-check-input" type="checkbox" value="" id="existingTelephonyUsage">
-                                        <label class="form-check-label" for="existingTelephonyUsage">
-                                            Will the customer connect, via a trunk or forwarding of calls, to Genesys Engage, another PBX, an SBC or directly to a carrier? If so, please provide more details below.
-                                        </label>
-                                        <br>
-                                    </div>
+                                <!-- Telephony Model -->
+
+                                <div class="text-muted form-group ml-3">
+                                    <small>Where a SIP trunk cannot be easily established, it is recommended to use Genesys Cloud Voice and forwarding of calls.</small>
+                                    <br>
+                                    <small>A new option has been added to select BYOC Cloud and Genesys Cloud Voice together.</small>
                                 </div>
 
-                                <div class="form-row col-md-12">
-                                    <div class="form-group col-md-12">
-                                        <textarea class="form-control" id="existingTelephonyUsageDetails" name="existingTelephonyUsageDetails" placeholder="Please provide more details about the telephony connection..." disabled></textarea>
-                                    </div>
-                                </div>
-
-                                <!-- Identification and Verification -->
-                                <div class="form-row mr-4 ml-2">
-                                    <div class="form-group col-md-12">
-                                        <label for="identificationAndVerificationProcesses">Identity and Verification Processes <span class="text-danger font-weight-bold">*</span></label>
-                                        <textarea class="form-control" id="identificationAndVerificationProcesses" name="identificationAndVerificationProcesses" placeholder="Are there any mandatory Identification and Verification processes?" required></textarea>
-                                    </div>
-                                </div>
-
-                                <!-- IT Infrastructure -->
-                                <div class="form-row mr-4 ml-2">
-                                    <div class="form-group col-md-12">
-                                        <label for="itInfrastructure">IT Infrastructure <span class="text-danger font-weight-bold">*</span></label>
-                                        <textarea class="form-control" id="itInfrastructure" name="itInfrastructure" placeholder="Is the IT infrastructure supported in-house or via a third-party, including internet connections, user/company provided laptops and headsets?" required></textarea>
-                                    </div>
-                                </div>
-
-                                <!-- End devices require VPN? -->
-                                <div class="form-check mr-4">
-                                    <div class="form-group col-md-12">
-                                        <input class="form-check-input" type="checkbox" value="" id="endUserDevicesRequireVPN">
-                                        <label class="form-check-label" for="endUserDevicesRequireVPN">
-                                            Are user end-devices required to connect via VPN?
-                                        </label>
-                                    </div>
-                                </div>
-
-                                <!-- Virtual Solution -->
-                                <div class="form-row mr-4 ml-2">
-                                    <div class="form-group col-md-12">
-                                        <label for="virtualDesktopSolution">Virtual Desktop Solution <span class="text-danger font-weight-bold">*</span></label>
-                                        <textarea class="form-control" id="virtualDesktopSolution" name="virtualDesktopSolution" placeholder="Does the customer use a Virtual Desktop solution, e.g. Citrix, thin-clients, etc.?" required></textarea>
-                                    </div>
-                                </div>
-
-
-                                <div class="col-md-12 bg-light shadow-lg">
-                                    <hr />
-                                    <h3 class="text-center">Other</h3>
-                                    <hr />
-                                </div>
-
-                                <!-- Commmitted Customer Resource -->
-                                <div class="form-check mr-4">
-                                    <div class="form-group col-md-12">
-                                        <input class="form-check-input" type="checkbox" value="" id="customerResourceCommitted">
-                                        <label class="form-check-label" for="customerResourceCommitted">
-                                            Have customer resources been committed (e.g. Project Manager, Project Sponsor, Business Champion and/or IT/Operations Manager, etc.)?
-                                        </label>
-                                    </div>
-                                </div>
-
-
-                                <!-- Terms & Conditions -->
-                                <div class="form-check mr-4">
-                                    <div class="form-group col-md-12">
-                                        <input class="form-check-input" type="checkbox" value="" id="standardTermsConditions">
-                                        <label class="form-check-label" for="standardTermsConditions">
-                                            Has the customer agreed to our standard Terms and Conditions and DPA?
-                                        </label>
-                                        <br>
-                                        <small><a href="https://help.mypurecloud.com/articles/global-purecloud-service-terms-and-conditions/" target="_blank">Access the latest documents here</a> (press <span class="bg-warning">SHIFT</span> while clicking on the link to open the page from the <strong>Genesys Cloud app</strong>)</small>
-                                    </div>
-                                </div>
-
-                                <div class="form-check mr-4">
-                                    <div class="form-group col-md-12">
-                                        <input class="form-check-input" type="checkbox" value="" id="solutionBusinessConsultingRequired">
-                                        <label class="form-check-label" for="solutionBusinessConsultingRequired">
-                                            Is Strategic Business Consulting required for this opportunity?
-                                        </label>
-                                    </div>
-                                </div>
-
-                                <!--#endregion -->
-
-                            </div>
-
-                            <div class="form-row">
-                                <div class="form-group col-md-6">
-                                    <label for="gcRequesterName">Requester Name</label><br>
-                                    <select id="gcRequesterName" name="gcRequesterName" class="gcRequesterName"></select>
-                                </div>
-                                <div class="form-group col-md-6">
-                                    <label for="requesterEmail">Requester Email</label>
-                                    <input type="text" class="form-control" id="requesterEmail" name="requesterEmail" placeholder="Your Email Address" required>
-                                </div>
-                            </div>
-                            <div class="form-row">
-                                <div class="form-group col-md-6">
-                                    <label for="requesterPhoneNumber">Requester Phone #</label>
-                                    <input type="text" class="form-control" id="requesterPhoneNumber" name="requesterPhoneNumber" placeholder="Your Phone Number" required>
-                                </div>
-                                <div class="form-group col-md-6">
-                                    <label for="datepicker">Need Completed By</label>
-                                    <div class="input-group date">
-                                        <input type="text" id="datepicker" class="form-control" required />
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="form-row">
                                 <div class="form-group col-md-12">
-                                    <label for="description">Description</label>
-                                    <textarea class="form-control" id="description" name="description" placeholder="Describe your request" required></textarea>
+                                    <div class="text-muted" id="recommendation">
+                                    </div>
+                                    <label for="telephonyModel">Telephony Model <span class="text-danger font-weight-bold">*</span></label>
+                                    <select id="telephonyModel" name="telephonyModel" class="form-control" required>
+                                        <option value="" disabled selected>Select a Telephony Model</option>
+                                    </select>
+                                </div>
+
+                                <!-- GCV Questions -->
+                                <div id="GCVQuestions" style="display:none;">
+                                    <h3 class="text-center shadow-lg pt-2 pb-2 offset-md-4 col-md-4">Genesys Cloud Voice</h3>
+
+                                    <!-- Phone Numbers Deployment -->
+                                    <div class="form-row mr-4 ml-2">
+                                        <div class="form-group col-md-12">
+                                            <label for="phoneNumbersDeployment">Phone Numbers Deployment <span class="text-danger font-weight-bold">*</span></label>
+                                            <textarea class="form-control" id="phoneNumbersDeployment" name="phoneNumbersDeployment" placeholder="Will the customer deploy new customer-facing numbers from GCV, re-route non-geographic numbers to GCV or forward calls to GCV numbers?"></textarea>
+                                            Genesys Cloud Voice (Resource Center): <a href="https://help.mypurecloud.com/articles/about-purecloud-voice/" target="_blank">https://help.mypurecloud.com/articles/about-purecloud-voice/</a>
+                                        </div>
+                                    </div>
+
+                                    <!-- New Numbers -->
+                                    <div class="form-row mr-4 ml-2">
+                                        <div class="form-group col-md-12">
+                                            <label for="newNumbers">New Numbers <span class="text-danger font-weight-bold">*</span></label>
+                                            <textarea class="form-control" id="newNumbers" name="newNumbers" placeholder="If using new numbers, how many of each number type and which area codes are required?"></textarea>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-row mr-4 ml-2">
+                                        <div class="form-group col-md-12">
+                                            <label for="genesysCloudRegion">Genesys Cloud Region <span class="text-danger font-weight-bold">*</span></label>
+                                            <select class="custom-select" id="genesysCloudRegion" name="genesysCloudRegion" required>
+                                                <option selected disabled>Select a Genesys Cloud Region</option>
+                                                <optgroup label="North America">
+                                                    <option value="cac1.pure.cloud">cac1.pure.cloud - Canada</option>
+                                                    <option value="mypurecloud.com">mypurecloud.com - East</option>
+                                                    <option value="usw2.pure.cloud">usw2.pure.cloud - West</option>
+                                                </optgroup>
+                                                <optgroup label="EMEA">
+                                                    <option value="euw2.pure.cloud">euw2.pure.cloud - UK</option>
+                                                    <option value="mypurecloud.de">mypurecloud.de - Frankfurt</option>
+                                                    <option value="mypurecloud.ie">mypurecloud.ie - Ireland</option>
+                                                </optgroup>
+                                                <optgroup label="APAC">
+                                                    <option value="apne2.pure.cloud">apne2.pure.cloud - Seoul </option>
+                                                    <option value="mypurecloud.com.au">mypurecloud.com.au - Australia/New Zealand </option>
+                                                    <option value="mypurecloud.jp">mypurecloud.jp - Japan </option>
+                                                </optgroup>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <!-- Estimated Volume of Minutes Per Month -->
+                                    <div class="form-row mr-4 ml-2">
+                                        <div class="form-group col-md-12">
+                                            <label for="estimatedVolumeMinsPerMonth">Estimated Volumes of GCV Minutes per Month <span class="text-danger font-weight-bold">*</span></label>
+                                            <textarea class="form-control" id="estimatedVolumeMinsPerMonth" name="estimatedVolumeMinsPerMonth" placeholder="What is the estimated volumes of minutes per month?" required></textarea>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <!-- BYOC Cloud Carriers -->
+                                <div class="border border-black mr-3 col-md-12" id="byocCloudCarriersDiv" style="display: none;">
+                                    <br>
+                                    <h3 class="text-center shadow-lg pt-2 pb-2 offset-md-4 col-md-4">BYOC Cloud Carriers</h3>
+                                    <div class="form-row mt-1 mr-4 ml-2">
+                                        <div class="form-group col-md-5">Country</div>
+                                        <div class="form-group col-md-5">Select one or more Carriers <span class="text-danger font-weight-bold">*</span></div>
+                                    </div>
+                                    <div class="form-row mt-2 mr-4 ml-2" id="byocCloudCarriers"></div>
+                                    <small id="otherNote" class="form-group ml-2">
+                                        If you have selected "Other":
+                                        <ul>
+                                            <li>Carrier must meeting standard requirements as per Resource Centre: <a href="https://help.mypurecloud.com/articles/carrier-requirements-byoc-cloud/" target="_blank">https://help.mypurecloud.com/articles/carrier-requirements-byoc-cloud/</a></li>
+                                            <li>Expectation that deployment time will be extended, <strong>in most cases significantly</strong></li>
+                                        </ul>
+                                    </small>
+                                    <div class="form-check mr-4">
+                                        <div class="form-group col-md-12">
+                                            <input class="form-check-input" type="checkbox" value="" id="relationshipWithCarrier">
+                                            <label class="form-check-label" for="relationshipWithCarrier">
+                                                Does the customer already have a relationship with the carrier and access to technical resources?
+                                            </label>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <!-- BYOC Cloud Questions -->
+                                <div id="BYOCCloudQuestions" style="display:none;">
+                                </div>
+
+                                <!-- BYOC Premise with Virtual Edges -->
+                                <div class="border border-black mr-3 ml-2 bg-warning" id="byocPremiseDiv" style="display: none;">
+                                    <p class="form-group ml-2">
+                                        If planning to use a virtual edge, very strict guidelines for deployment must be followed:
+                                    <ul>
+                                        <li>Virtual Edge Hardware/Software Requirements: <a href="https://help.mypurecloud.com/articles/virtual-edge-hardware-software-requirements/" target="_blank">https://help.mypurecloud.com/articles/virtual-edge-hardware-software-requirements/</a></li>
+                                        <li>Virtual Edge Warnings: <a href="https://help.mypurecloud.com/articles/virtual-edge-warnings/" target="_blank">https://help.mypurecloud.com/articles/virtual-edge-warnings/</a></li>
+                                    </ul>
+                                    </p>
+                                    <p class="form-group ml-2">
+                                        The customer must acknowledge that failing to comply with the requirements and warnings will result in possible audio quality issues.
+                                    </p>
+                                </div>
+
+                                <!-- BYOC Premise Questions -->
+                                <div id="BYOCPremiseQuestions" class="mt-2" style="display:none;">
+
+                                    <!-- Virtual Environment -->
+                                    <div class="form-check mr-4">
+                                        <div class="form-group col-md-12">
+                                            <input class="form-check-input" type="checkbox" value="" id="hyperVEnvironment">
+                                            <label class="form-check-label" for="hyperVEnvironment">
+                                                Does the customer have a Hyper-V environment available?
+                                            </label>
+                                            <br>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <!-- BYOC Premise with Appliance -->
+                                <div class="border border-black mr-3 ml-2 bg-warning" id="byocPremiseWithApplianceDiv" style="display: none;">
+                                    <p class="form-group ml-2">
+                                        Choosing BYOC Premise w/ Hardware Appliance assumes the partner or customer already has access to hardware Edges. In most cases this would be from a partner who purchased them in advance.
+                                    </p>
+                                    <p class="form-group ml-2">
+                                        Genesys is not shipping hardware Edges at this time.
+                                    </p>
+                                </div>
+
+                                <!--#endregion Telephony -->
+                            </div>
+
+                            <!--#region General Configuration -->
+
+                            <div class="col-md-12 bg-light shadow-lg">
+                                <hr />
+                                <h3 class="text-center">General Configuration</h3>
+                                <hr />
+                            </div>
+
+                            <!-- Number of Agents -->
+                            <div class="form-row mr-4 ml-2">
+                                <div class="form-group col-md-12">
+                                    <label for="numberAgents">What is the expected number of agents? <span class="text-danger font-weight-bold">*</span></label>
+                                    <textarea class="form-control" id="numberAgents" name="numberAgents" placeholder="" required></textarea>
                                 </div>
                             </div>
-                            <!-- <div class="form-row">
+
+                            <!-- Phone Numbers Deployment -->
+                            <div class="form-check mr-4">
+                                <div class="form-group col-md-12">
+                                    <input class="form-check-input" type="checkbox" value="" id="existingTelephonyUsage">
+                                    <label class="form-check-label" for="existingTelephonyUsage">
+                                        Will the customer connect, via a trunk or forwarding of calls, to Genesys Engage, another PBX, an SBC or directly to a carrier? If so, please provide more details below.
+                                    </label>
+                                    <br>
+                                </div>
+                            </div>
+
+                            <div class="form-row col-md-12">
+                                <div class="form-group col-md-12">
+                                    <textarea class="form-control" id="existingTelephonyUsageDetails" name="existingTelephonyUsageDetails" placeholder="Please provide more details about the telephony connection..." disabled></textarea>
+                                </div>
+                            </div>
+
+                            <!-- Identification and Verification -->
+                            <div class="form-row mr-4 ml-2">
+                                <div class="form-group col-md-12">
+                                    <label for="identificationAndVerificationProcesses">Identity and Verification Processes <span class="text-danger font-weight-bold">*</span></label>
+                                    <textarea class="form-control" id="identificationAndVerificationProcesses" name="identificationAndVerificationProcesses" placeholder="Are there any mandatory Identification and Verification processes?" required></textarea>
+                                </div>
+                            </div>
+
+                            <!-- IT Infrastructure -->
+                            <div class="form-row mr-4 ml-2">
+                                <div class="form-group col-md-12">
+                                    <label for="itInfrastructure">IT Infrastructure <span class="text-danger font-weight-bold">*</span></label>
+                                    <textarea class="form-control" id="itInfrastructure" name="itInfrastructure" placeholder="Is the IT infrastructure supported in-house or via a third-party, including internet connections, user/company provided laptops and headsets?" required></textarea>
+                                </div>
+                            </div>
+
+                            <!-- End devices require VPN? -->
+                            <div class="form-check mr-4">
+                                <div class="form-group col-md-12">
+                                    <input class="form-check-input" type="checkbox" value="" id="endUserDevicesRequireVPN">
+                                    <label class="form-check-label" for="endUserDevicesRequireVPN">
+                                        Are user end-devices required to connect via VPN?
+                                    </label>
+                                </div>
+                            </div>
+
+                            <!-- Virtual Solution -->
+                            <div class="form-row mr-4 ml-2">
+                                <div class="form-group col-md-12">
+                                    <label for="virtualDesktopSolution">Virtual Desktop Solution <span class="text-danger font-weight-bold">*</span></label>
+                                    <textarea class="form-control" id="virtualDesktopSolution" name="virtualDesktopSolution" placeholder="Does the customer use a Virtual Desktop solution, e.g. Citrix, thin-clients, etc.?" required></textarea>
+                                </div>
+                            </div>
+
+                            <!-- Impact By Design -->
+                            <div class="form-check mr-4">
+                                <div class="form-group col-md-12">
+                                    <input class="form-check-input" type="checkbox" value="" id="impactByDesign">
+                                    <label class="form-check-label" for="impactByDesign">
+                                        Has an Impact By Design been initiated?
+                                    </label>
+                                    <br>
+                                    <small><a href="https://help.mypurecloud.com/articles/global-purecloud-service-terms-and-conditions/" target="_blank">Access the latest documents here</a> (press <span class="bg-warning">SHIFT</span> while clicking on the link to open the page from the <strong>Genesys Cloud app</strong>)</small>
+                                </div>
+                            </div>
+
+                            <!-- Business Goal -->
+                            <div class="form-row mr-4 ml-2">
+                                <div class="form-group col-md-12">
+                                    <label for="businessGoal">What is the customer business goal? <span class="text-danger font-weight-bold">*</span></label>
+                                    <textarea class="form-control" id="businessGoal" name="businessGoal" placeholder="Describe your business goal here" required></textarea>
+                                </div>
+                            </div>
+
+                            <!-- Measure of Success -->
+                            <div class="form-row mr-4 ml-2">
+                                <div class="form-group col-md-12">
+                                    <label for="measureOfSuccess">What is the customer's measure of success? <span class="text-danger font-weight-bold">*</span></label>
+                                    <textarea class="form-control" id="measureOfSuccess" name="measureOfSuccess" placeholder="Describe customer's measure of success here" required></textarea>
+                                </div>
+                            </div>
+
+
+                            <div class="col-md-12 bg-light shadow-lg">
+                                <hr />
+                                <h3 class="text-center">Other</h3>
+                                <hr />
+                            </div>
+
+                            <!-- Commmitted Customer Resource -->
+                            <div class="form-check mr-4">
+                                <div class="form-group col-md-12">
+                                    <input class="form-check-input" type="checkbox" value="" id="customerResourceCommitted">
+                                    <label class="form-check-label" for="customerResourceCommitted">
+                                        Have customer resources been committed (e.g. Project Manager, Project Sponsor, Business Champion and/or IT/Operations Manager, etc.)?
+                                    </label>
+                                </div>
+                            </div>
+
+
+                            <!-- Terms & Conditions -->
+                            <div class="form-check mr-4">
+                                <div class="form-group col-md-12">
+                                    <input class="form-check-input" type="checkbox" value="" id="standardTermsConditions">
+                                    <label class="form-check-label" for="standardTermsConditions">
+                                        Has the customer agreed to our standard Terms and Conditions and DPA?
+                                    </label>
+                                    <br>
+                                    <small><a href="https://help.mypurecloud.com/articles/global-purecloud-service-terms-and-conditions/" target="_blank">Access the latest documents here</a> (press <span class="bg-warning">SHIFT</span> while clicking on the link to open the page from the <strong>Genesys Cloud app</strong>)</small>
+                                </div>
+                            </div>
+
+                            <div class="form-check mr-4">
+                                <div class="form-group col-md-12">
+                                    <input class="form-check-input" type="checkbox" value="" id="solutionBusinessConsultingRequired">
+                                    <label class="form-check-label" for="solutionBusinessConsultingRequired">
+                                        Is Strategic Business Consulting required for this opportunity?
+                                    </label>
+                                </div>
+                            </div>
+
+                            <!--#endregion -->
+
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label for="gcRequesterName">Requester Name</label><br>
+                            <select id="gcRequesterName" name="gcRequesterName" class="gcRequesterName"></select>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="requesterEmail">Requester Email</label>
+                            <input type="text" class="form-control" id="requesterEmail" name="requesterEmail" placeholder="Your Email Address" required>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label for="requesterPhoneNumber">Requester Phone #</label>
+                            <input type="text" class="form-control" id="requesterPhoneNumber" name="requesterPhoneNumber" placeholder="Your Phone Number" required>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="datepicker">Need Completed By</label>
+                            <div class="input-group date">
+                                <input type="text" id="datepicker" class="form-control" required />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-12">
+                            <label for="description">Description</label>
+                            <textarea class="form-control" id="description" name="description" placeholder="Describe your request" required></textarea>
+                        </div>
+                    </div>
+                    <!-- <div class="form-row">
                                 <div class="form-group col-md-10">
                                     <label for="partnerCustomerName">Partner and/or Customer Name</label>
                                     <input type="text" class="form-control" id="partnerCustomerName" name="partnerCustomerName" placeholder="Partner and/or Customer Name">
@@ -544,112 +572,112 @@
                             </div> -->
 
 
-                            <div class="form-row">
-                                <div class="form-group col-md-6">
-                                    <label for="salesforceAccountOpportunity">Opportunity</label><br>
-                                    <select id="sfData" class="form-control js-example-basic-single" name="sfData">
-                                    </select>
-                                </div>
-                                <div class="form-group col-md-6">
-                                    <label for="oppPartnerCustomerName">Account Name</label><br>
-                                    <select id="oppPartnerCustomerName" name="oppPartnerCustomerName" class="form-control js-example-basic-single"></select>
-                                </div>
-                            </div>
-                            <div class="form-row">
-                                <div class="form-group col-md-12">
-                                    <div class="text-center" style="position: absolute; width: 99%; height: 99%;">
-                                        <div id="sfSpinner" class="spinner-grow text-primary" class="width: 7rem; height: 7rem; " hidden role="status">
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="form-row">
-                                <div class="form-group col-md-6">
-                                    <label for="oppAssignedSC">Assigned SC</label>
-                                    <select id="oppAssignedSC" name="oppAssignedSC" class="form-control js-example-basic-single" disabled></select>
-                                </div>
-                                <div class="form-group col-md-6">
-                                    <label for="oppOwner">Owner</label>
-                                    <input type="text" class="form-control" id="oppOwner" name="oppOwner" placeholder="" disabled />
-                                </div>
-                            </div>
-                            <div class="form-row">
-                                <div class="form-group col-md-6">
-                                    <label for="oppUrl">Opportunity or Account Url</label>
-                                    <input type="url" class="form-control" id="oppUrl" name="oppUrl" placeholder="" disabled />
-                                </div>
-                                <div class="form-group col-md-6">
-                                    <label for="oppDSRUrl">DSR Url</label>
-                                    <input type="url" class="form-control" id="oppDSRUrl" name="oppDSRUrl" placeholder="" disabled />
-                                </div>
-
-                            </div>
-
-                            <div class="form-row">
-                                <div class="form-group col-md-3">
-                                    <label for="priority">Priority</label>
-                                    <select id="priority" name="priority" class="form-control">
-                                        <option value="" disabled selected>Select a Priority</option>
-                                        <option value="Low">Low</option>
-                                        <option value="Medium">Medium</option>
-                                        <option value="High">High</option>
-                                    </select>
-                                </div>
-                                <div class="form-group col-md-3">
-                                    <label for="status">Status</label>
-                                    <select id="status" name="status" class="form-control" required>
-                                        <option value="" disabled selected>Select a Status</option>
-                                        <option value="Open">Open</option>
-                                        <option value="On Hold">On Hold</option>
-                                        <option value="Waiting On Additional Information">Waiting On Additional
-                                            Information</option>
-                                        <option value="Closed">Closed</option>
-                                    </select>
-                                </div>
-                                <div class="form-group col-md-6">
-                                    <label for="gcProgramManager">Program Manager</label><br>
-                                    <select id="gcProgramManager" name="gcProgramManager" class="gcProgramManager"></select>
-                                </div>
-                            </div>
-
-                            <div class="form-row">
-                                <label id="bAcceptedRequest" hidden></label>
-                                <div class="form-group col-md-12">
-                                    <label for="gcTeamMembers">Additional Team Member(s) Assigned</label><br>
-                                    <select id="gcTeamMembers" name="gcTeamMembers" class="gcTeamMembers"></select>
-                                </div>
-                            </div>
-
-                            <div class="form-row">
-                                <label id="bAcceptedRequest" hidden></label>
-                                <div class="form-group col-md-12">
-                                    <label id="lblAcceptedRejectedNotes" for="description">Notes</label>
-                                    <div id="divNotesHistory" class="notes-history"></div>
-                                    <textarea class="form-control notes-txt-add-note" id="txtAcceptedRejectedNotes" name="description" placeholder="Type a note"> </textarea>
-                                    <button id="btnAddNote" type="button" class="btn btn-secondary pull-right mt-2">Add note</button>
-                                </div>
-                            </div>
-                            <div class="form-row">
-                                <div class="form-group col-md-6">
-                                    <footer id="id" name="id" class="blockquote-footer"></footer>
-                                    <footer id="lblDateAccepted" name="lblDateAccepted" class="blockquote-footer"></footer>
-                                    <footer id="lblDateRejected" name="lblDateRejected" class="blockquote-footer"></footer>
-                                    <footer id="lblDateClosed" name="lblDateClosed" class="blockquote-footer"></footer>
-                                </div>
-                            </div>
-
-                        </form>
-
-                        <div class="modal-footer">
-                            <button type="button" id="btnRestore" class="btn btn-warning pull-left">Restore</button>
-                            <button type="button" id="btnRejectRequest" class="btn btn-danger pull-left">Save and
-                                Reject</button>
-                            <button type="button" id="btnAcceptRequest" class="btn btn-success pull-left">Save and
-                                Accept</button>
-                            <button id="submit" type="submit" class="btn btn-primary pull-left">Save</button>
-                            <button id="btnClose" type="button" class="btn btn-secondary pull-right" data-dismiss="modal">Close</button>
-
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label for="salesforceAccountOpportunity">Opportunity</label><br>
+                            <select id="sfData" class="form-control js-example-basic-single" name="sfData">
+                            </select>
                         </div>
+                        <div class="form-group col-md-6">
+                            <label for="oppPartnerCustomerName">Account Name</label><br>
+                            <select id="oppPartnerCustomerName" name="oppPartnerCustomerName" class="form-control js-example-basic-single"></select>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-12">
+                            <div class="text-center" style="position: absolute; width: 99%; height: 99%;">
+                                <div id="sfSpinner" class="spinner-grow text-primary" class="width: 7rem; height: 7rem; " hidden role="status">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label for="oppAssignedSC">Assigned SC</label>
+                            <select id="oppAssignedSC" name="oppAssignedSC" class="form-control js-example-basic-single" disabled></select>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="oppOwner">Owner</label>
+                            <input type="text" class="form-control" id="oppOwner" name="oppOwner" placeholder="" disabled />
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label for="oppUrl">Opportunity or Account Url</label>
+                            <input type="url" class="form-control" id="oppUrl" name="oppUrl" placeholder="" disabled />
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="oppDSRUrl">DSR Url</label>
+                            <input type="url" class="form-control" id="oppDSRUrl" name="oppDSRUrl" placeholder="" disabled />
+                        </div>
+
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group col-md-3">
+                            <label for="priority">Priority</label>
+                            <select id="priority" name="priority" class="form-control">
+                                <option value="" disabled selected>Select a Priority</option>
+                                <option value="Low">Low</option>
+                                <option value="Medium">Medium</option>
+                                <option value="High">High</option>
+                            </select>
+                        </div>
+                        <div class="form-group col-md-3">
+                            <label for="status">Status</label>
+                            <select id="status" name="status" class="form-control" required>
+                                <option value="" disabled selected>Select a Status</option>
+                                <option value="Open">Open</option>
+                                <option value="On Hold">On Hold</option>
+                                <option value="Waiting On Additional Information">Waiting On Additional
+                                    Information</option>
+                                <option value="Closed">Closed</option>
+                            </select>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="gcProgramManager">Program Manager</label><br>
+                            <select id="gcProgramManager" name="gcProgramManager" class="gcProgramManager"></select>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <label id="bAcceptedRequest" hidden></label>
+                        <div class="form-group col-md-12">
+                            <label for="gcTeamMembers">Additional Team Member(s) Assigned</label><br>
+                            <select id="gcTeamMembers" name="gcTeamMembers" class="gcTeamMembers"></select>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <label id="bAcceptedRequest" hidden></label>
+                        <div class="form-group col-md-12">
+                            <label id="lblAcceptedRejectedNotes" for="description">Notes</label>
+                            <div id="divNotesHistory" class="notes-history"></div>
+                            <textarea class="form-control notes-txt-add-note" id="txtAcceptedRejectedNotes" name="description" placeholder="Type a note"> </textarea>
+                            <button id="btnAddNote" type="button" class="btn btn-secondary pull-right mt-2">Add note</button>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <footer id="id" name="id" class="blockquote-footer"></footer>
+                            <footer id="lblDateAccepted" name="lblDateAccepted" class="blockquote-footer"></footer>
+                            <footer id="lblDateRejected" name="lblDateRejected" class="blockquote-footer"></footer>
+                            <footer id="lblDateClosed" name="lblDateClosed" class="blockquote-footer"></footer>
+                        </div>
+                    </div>
+
+                </form>
+
+                <div class="modal-footer">
+                    <button type="button" id="btnRestore" class="btn btn-warning pull-left">Restore</button>
+                    <button type="button" id="btnRejectRequest" class="btn btn-danger pull-left">Save and
+                        Reject</button>
+                    <button type="button" id="btnAcceptRequest" class="btn btn-success pull-left">Save and
+                        Accept</button>
+                    <button id="submit" type="submit" class="btn btn-primary pull-left">Save</button>
+                    <button id="btnClose" type="button" class="btn btn-secondary pull-right" data-dismiss="modal">Close</button>
+
+                </div>
                 </form>
             </div>
         </div>
@@ -750,6 +778,13 @@
             title: "Select one or more countries"
         });
 
+
+        $('#trialValidationType').on('change', () => {
+            // TODO: Change Telephony Deployment
+            setTelephonyModelDropDown();
+
+        });
+
         $("#countriesOperation").on('change', (e) => {
             selectedCountries = [];
             $.each($("#countriesOperation").val(), (i, selectedCountry) => {
@@ -766,6 +801,23 @@
         $("#existingTelephonyUsage").on('change', () => {
             $("#existingTelephonyUsageDetails").attr('disabled', !$("#existingTelephonyUsage").is(":checked"));
         });
+
+        function setTelephonyModelDropDown() {
+            // Populate telephonyModel selects from dictionary
+            $('#telephonyModel').empty();
+            $("<option/>", { value: '', disabled: true, selected: true }).text('Select a Telephony Model').appendTo("#telephonyModel");
+
+            if ($('#trialValidationType').val() === 'FreeTrial') {
+                $("<option/>", { value: 'GCV' }).text('Genesys Cloud Voice').appendTo("#telephonyModel");
+                $("<option/>", { value: 'BYOCCloud' }).text('BYOC Cloud (no GCV)').appendTo("#telephonyModel");
+            } else {
+                $.each(telephonyModel, (key, value) => {
+                    $("<option/>", { value: key }).text(value).appendTo("#telephonyModel");
+                });
+            }
+            refreshTelephonyModel();
+
+        }
 
         function setTelephonyModel() {
             let gcvSupported = selectedCountries.length > 0 && selectedCountries.every(c => c.gcv);
@@ -789,7 +841,7 @@
             }
         }
 
-        $("#telephonyModel").on('change', (e) => {
+        function refreshTelephonyModel() {
             switch ($("#telephonyModel").val()) {
                 case 'GCV':
                     $("#byocCloudCarriersDiv").hide();
@@ -863,12 +915,30 @@
                     $("#byocPremiseWithApplianceDiv").hide();
                     break;
             }
+        }
+
+        $("#telephonyModel").on('change', (e) => {
+            refreshTelephonyModel();
         });
 
         function refreshBYOCCloudCountryCarriers() {
             let currentCountryCarrierId = countryCarrierId++;
 
             $("#byocCloudCarriers").empty();
+            let freeTrialBYOCCarriers = {
+                US: [
+                    {
+                        name: 'Twillio',
+                        url: 'https://www.twilio.com/',
+                    }
+                ],
+                EU: [
+                    {
+                        name: 'Twillio',
+                        url: 'https://www.twilio.com/',
+                    }]
+            }
+
             if (countriesAndCarriers.length == 0) {
 
                 $.each($("#countriesOperation").val(), (i, country) => {
@@ -881,12 +951,21 @@
                     let carriersDiv = $("<div/>", { class: "form-group col-md-5" }).appendTo("#byocCloudCarriers");
                     let carriersSelect = $("<select/>", { class: "selectpicker form-control", id: "carriers_" + country, name: "carriers_" + country, ["data-live-search"]: true, required: true, multiple: true }).appendTo(carriersDiv);
                     //$("<option/>", { value: "", disabled: true }).text("Select a Carrier").appendTo(carriersSelect);
-                    $.each(supportedBYOCCloudCarriers, (region, regionalSupportedBYOCCloudCarriers) => {
-                        let optGroup = $("<optgroup/>", { label: region }).appendTo(carriersSelect);
-                        $.each(regionalSupportedBYOCCloudCarriers, (i, regionalSupportedBYOCCloudCarrier) => {
-                            $("<option/>", { value: regionalSupportedBYOCCloudCarrier.name }).text(regionalSupportedBYOCCloudCarrier.name).appendTo(optGroup);
+                    if ($('#trialValidationType').val() === 'FreeTrial') {
+                        $.each(freeTrialBYOCCarriers, (region, regionalSupportedBYOCCloudCarriers) => {
+                            let optGroup = $("<optgroup/>", { label: region }).appendTo(carriersSelect);
+                            $.each(regionalSupportedBYOCCloudCarriers, (i, regionalSupportedBYOCCloudCarrier) => {
+                                $("<option/>", { value: regionalSupportedBYOCCloudCarrier.name }).text(regionalSupportedBYOCCloudCarrier.name).appendTo(optGroup);
+                            });
                         });
-                    });
+                    } else {
+                        $.each(supportedBYOCCloudCarriers, (region, regionalSupportedBYOCCloudCarriers) => {
+                            let optGroup = $("<optgroup/>", { label: region }).appendTo(carriersSelect);
+                            $.each(regionalSupportedBYOCCloudCarriers, (i, regionalSupportedBYOCCloudCarrier) => {
+                                $("<option/>", { value: regionalSupportedBYOCCloudCarrier.name }).text(regionalSupportedBYOCCloudCarrier.name).appendTo(optGroup);
+                            });
+                        });
+                    }
                     $("<option/>", { value: "Other" }).text("Other").appendTo(carriersSelect);
                     carriersSelect.selectpicker({
                         title: "Select one or more carriers"
@@ -931,12 +1010,21 @@
                     let carriersDiv = $("<div/>", { class: "form-group col-md-6" }).appendTo("#byocCloudCarriers");
                     let carriersSelect = $("<select/>", { class: "selectpicker form-control", id: "carriers_" + country, name: "carriers_" + country, ["data-live-search"]: true, required: true, multiple: true }).appendTo(carriersDiv);
                     //$("<option/>", { value: "", disabled: true }).text("Select a Carrier").appendTo(carriersSelect);
-                    $.each(supportedBYOCCloudCarriers, (region, regionalSupportedBYOCCloudCarriers) => {
-                        let optGroup = $("<optgroup/>", { label: region }).appendTo(carriersSelect);
-                        $.each(regionalSupportedBYOCCloudCarriers, (i, regionalSupportedBYOCCloudCarrier) => {
-                            $("<option/>", { value: regionalSupportedBYOCCloudCarrier.name, selected: carriers.includes(regionalSupportedBYOCCloudCarrier.name) }).text(regionalSupportedBYOCCloudCarrier.name).appendTo(optGroup);
+                    if ($('#trialValidationType').val() === 'FreeTrial') {
+                        $.each(freeTrialBYOCCarriers, (region, regionalSupportedBYOCCloudCarriers) => {
+                            let optGroup = $("<optgroup/>", { label: region }).appendTo(carriersSelect);
+                            $.each(regionalSupportedBYOCCloudCarriers, (i, regionalSupportedBYOCCloudCarrier) => {
+                                $("<option/>", { value: regionalSupportedBYOCCloudCarrier.name }).text(regionalSupportedBYOCCloudCarrier.name).appendTo(optGroup);
+                            });
                         });
-                    });
+                    } else {
+                        $.each(supportedBYOCCloudCarriers, (region, regionalSupportedBYOCCloudCarriers) => {
+                            let optGroup = $("<optgroup/>", { label: region }).appendTo(carriersSelect);
+                            $.each(regionalSupportedBYOCCloudCarriers, (i, regionalSupportedBYOCCloudCarrier) => {
+                                $("<option/>", { value: regionalSupportedBYOCCloudCarrier.name, selected: carriers.includes(regionalSupportedBYOCCloudCarrier.name) }).text(regionalSupportedBYOCCloudCarrier.name).appendTo(optGroup);
+                            });
+                        });
+                    }
                     $("<option/>", { value: "Other", selected: carriers.includes('Other') }).text("Other").appendTo(carriersSelect);
                     carriersSelect.selectpicker({
                         title: "Select one or more carriers"
@@ -1901,6 +1989,8 @@
                 $('#requestType').val("0");
 
 
+            setTelephonyModelDropDown();
+
             $('#editModal #sfData').val(null).trigger('change');
             $('#editModal #oppAssignedSC').val(null).trigger('change');
             $('#editModal #oppPartnerCustomerName').val(null).trigger('change');
@@ -2032,6 +2122,11 @@
             $("#editModal #itInfrastructure").val(request.freeTrialItInfrastructure);
             $("#editModal #endUserDevicesRequireVPN").prop('checked', request.freeTrialEndUserDevicesRequireVPN);
             $("#editModal #virtualDesktopSolution").val(request.freeTrialVirtualDesktopSolution);
+
+            $('#editModal #impactByDesign').prop('checked', request.freeTrialImpactByDesign);
+            $('#editModal #businessGoal').val(request.freeTrialBusinessGoal);
+            $('#editModal #measureOfSuccess').val(request.freeTrialMeasureOfSuccess);
+
 
             // Policies & Processes
             $("#editModal #standardTermsConditions").prop('checked', request.freeTrialStandardTermsConditions);

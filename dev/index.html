@@ -944,6 +944,20 @@
 
       function refreshBYOCCloudCountryCarriers() {
         let currentCountryCarrierId = countryCarrierId++;
+        let freeTrialBYOCCarriers = {
+          US: [
+            {
+              name: 'Twillio',
+              url: 'https://www.twilio.com/',
+            }
+          ],
+          EU: [
+            {
+              name: 'Twillio',
+              url: 'https://www.twilio.com/',
+            }]
+        }
+
 
         $("#byocCloudCarriers").empty();
         if (countriesAndCarriers.length == 0) {
@@ -958,12 +972,21 @@
             let carriersDiv = $("<div/>", { class: "form-group col-md-5" }).appendTo("#byocCloudCarriers");
             let carriersSelect = $("<select/>", { class: "selectpicker form-control", id: "carriers_" + country, name: "carriers_" + country, ["data-live-search"]: true, required: true, multiple: true }).appendTo(carriersDiv);
             //$("<option/>", { value: "", disabled: true }).text("Select a Carrier").appendTo(carriersSelect);
-            $.each(supportedBYOCCloudCarriers, (region, regionalSupportedBYOCCloudCarriers) => {
-              let optGroup = $("<optgroup/>", { label: region }).appendTo(carriersSelect);
-              $.each(regionalSupportedBYOCCloudCarriers, (i, regionalSupportedBYOCCloudCarrier) => {
-                $("<option/>", { value: regionalSupportedBYOCCloudCarrier.name }).text(regionalSupportedBYOCCloudCarrier.name).appendTo(optGroup);
+            if ($('#trialValidationType').val() === 'FreeTrial') {
+              $.each(freeTrialBYOCCarriers, (region, regionalSupportedBYOCCloudCarriers) => {
+                let optGroup = $("<optgroup/>", { label: region }).appendTo(carriersSelect);
+                $.each(regionalSupportedBYOCCloudCarriers, (i, regionalSupportedBYOCCloudCarrier) => {
+                  $("<option/>", { value: regionalSupportedBYOCCloudCarrier.name }).text(regionalSupportedBYOCCloudCarrier.name).appendTo(optGroup);
+                });
               });
-            });
+            } else {
+              $.each(supportedBYOCCloudCarriers, (region, regionalSupportedBYOCCloudCarriers) => {
+                let optGroup = $("<optgroup/>", { label: region }).appendTo(carriersSelect);
+                $.each(regionalSupportedBYOCCloudCarriers, (i, regionalSupportedBYOCCloudCarrier) => {
+                  $("<option/>", { value: regionalSupportedBYOCCloudCarrier.name }).text(regionalSupportedBYOCCloudCarrier.name).appendTo(optGroup);
+                });
+              });
+            }
             $("<option/>", { value: "Other" }).text("Other").appendTo(carriersSelect);
             carriersSelect.selectpicker({
               title: "Select one or more carriers"
@@ -1008,12 +1031,23 @@
             let carriersDiv = $("<div/>", { class: "form-group col-md-6" }).appendTo("#byocCloudCarriers");
             let carriersSelect = $("<select/>", { class: "selectpicker form-control", id: "carriers_" + country, name: "carriers_" + country, ["data-live-search"]: true, required: true, multiple: true }).appendTo(carriersDiv);
             //$("<option/>", { value: "", disabled: true }).text("Select a Carrier").appendTo(carriersSelect);
-            $.each(supportedBYOCCloudCarriers, (region, regionalSupportedBYOCCloudCarriers) => {
-              let optGroup = $("<optgroup/>", { label: region }).appendTo(carriersSelect);
-              $.each(regionalSupportedBYOCCloudCarriers, (i, regionalSupportedBYOCCloudCarrier) => {
-                $("<option/>", { value: regionalSupportedBYOCCloudCarrier.name, selected: carriers.includes(regionalSupportedBYOCCloudCarrier.name) }).text(regionalSupportedBYOCCloudCarrier.name).appendTo(optGroup);
+            if ($('#trialValidationType').val() === 'FreeTrial') {
+              $.each(freeTrialBYOCCarriers, (region, regionalSupportedBYOCCloudCarriers) => {
+                let optGroup = $("<optgroup/>", { label: region }).appendTo(carriersSelect);
+                $.each(regionalSupportedBYOCCloudCarriers, (i, regionalSupportedBYOCCloudCarrier) => {
+                  $("<option/>", { value: regionalSupportedBYOCCloudCarrier.name }).text(regionalSupportedBYOCCloudCarrier.name).appendTo(optGroup);
+                });
               });
-            });
+            } else {
+              $.each(supportedBYOCCloudCarriers, (region, regionalSupportedBYOCCloudCarriers) => {
+                let optGroup = $("<optgroup/>", { label: region }).appendTo(carriersSelect);
+                $.each(regionalSupportedBYOCCloudCarriers, (i, regionalSupportedBYOCCloudCarrier) => {
+                  $("<option/>", { value: regionalSupportedBYOCCloudCarrier.name }).text(regionalSupportedBYOCCloudCarrier.name).appendTo(optGroup);
+                });
+              });
+            }
+
+
             $("<option/>", { value: "Other", selected: carriers.includes('Other') }).text("Other").appendTo(carriersSelect);
             carriersSelect.selectpicker({
               title: "Select one or more carriers"
@@ -1916,6 +1950,7 @@
             $("#telephonyModel").val(data.telephonyModel);
             $("#telephonyModel").change();
           }
+
 
           $("#phoneNumbersDeployment").val(data.phoneNumbersDeployment);
           $("#relationshipWithCarrier").prop('checked', data.relationshipWithCarrier);
