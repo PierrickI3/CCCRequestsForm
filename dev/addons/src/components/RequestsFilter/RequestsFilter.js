@@ -139,6 +139,7 @@ export default function RequestsFilter(props) {
       console.log('fixed region will be set to: ', query.region);
       clearFilterCopy.region = [{ value: query.region, label: query.region }];
       setRegionFixed(true);
+      // </Apply region settings>
     }
     setCurrentFilter(clearFilterCopy);
     applySubRegionList(clearFilterCopy.region);
