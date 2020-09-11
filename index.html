@@ -1,78 +1,103 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no" />
-    <title>CCC Request Form</title>
-    <link rel="shortcut icon" href="/favicon.ico" />
-    <!-- Bootstrap -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous" />
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
-    <!-- Bootstrap DatePicker -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker3.min.css" integrity="sha256-FAOaXTpl90/K8cXmSdsskbQN3nKYulhCpPbcFzGTWKI=" crossorigin="anonymous" />
-    <!-- jQuery Toast -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/jquery-toast-plugin/1.3.2/jquery.toast.min.css" rel="stylesheet" />
-    <!-- Custom CSS -->
-    <link rel="stylesheet" href="./css/custom.css" />
-  </head>
 
-  <body>
-    <div id="video-overlay" class="video-overlay">
-      <a class="video-overlay-close">&times;</a>
-    </div>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no" />
+  <title>CCC Request Form</title>
+  <link rel="shortcut icon" href="/favicon.ico" />
+  <!-- Bootstrap -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous" />
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
+  <!-- Bootstrap DatePicker -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker3.min.css" integrity="sha256-FAOaXTpl90/K8cXmSdsskbQN3nKYulhCpPbcFzGTWKI=" crossorigin="anonymous" />
+  <!-- jQuery Toast -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/jquery-toast-plugin/1.3.2/jquery.toast.min.css" rel="stylesheet" />
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="./css/custom.css" />
+  <!-- Bootstrap Select -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.9/dist/css/bootstrap-select.min.css">
+</head>
 
-    <img class="overlay" src="./images/devmode.png" id="devModeImage" hidden alt="devMode" />
-    <nav class="navbar navbar-dark bg-dark">
-      <a class="navbar-brand" href="#">
-        <img src="images/genesys.png" width="30" height="30" class="d-inline-block align-top" alt="" />
-        Competence Center Request Form <small><span class="badge badge-pill badge-warning" id="regionBadge"></span></small>
-      </a>
+<body>
+  <div id="video-overlay" class="video-overlay">
+    <a class="video-overlay-close">&times;</a>
+  </div>
 
-      <a id="play-video" class="video-play-button" href="#" data-toggle="tooltip" data-placement="top" title="Introduction Video">
-        <span></span>
-      </a>
+  <img class="overlay" src="./images/devmode.png" id="devModeImage" hidden alt="devMode" />
+  <nav class="navbar navbar-dark bg-dark">
+    <a class="navbar-brand" href="#">
+      <img src="images/genesys.png" width="30" height="30" class="d-inline-block align-top" alt="" />
+      Competence Center Request Form <small><span class="badge badge-pill badge-warning" id="regionBadge"></span></small>
+    </a>
 
-      <ul class="mb-0">
-        <ul class="nav navbar-nav" style="float: right;">
-          <li>
-            <a href="#" id="reviewRequestsButton" class="admin btn btn-primary btn-sm" hidden>Review Requests</a>
-          </li>
-        </ul>
-        <ul class="nav navbar-nav mr-2" style="float: right;">
+    <a id="play-video" class="video-play-button" href="#" data-toggle="tooltip" data-placement="top" title="Introduction Video">
+      <span></span>
+    </a>
+
+    <ul class="mb-0">
+      <ul class="nav navbar-nav" style="float: right">
+        <li>
+          <a href="#" id="reviewRequestsButton" class="admin btn btn-primary btn-sm" hidden>Review Requests</a>
+        </li>
+      </ul>
+      <!-- <ul class="nav navbar-nav mr-2" style="float: right;">
           <li>
             <a href="./homeWorkerRequest/index.html" class="btn btn-warning btn-sm" id="rapidResponse">#rapidresponse</a>
           </li>
-        </ul>
-      </ul>
-    </nav>
+        </ul> -->
+    </ul>
+  </nav>
 
-    <div class="alert alert-danger fade show" role="alert" id="alert" hidden>
-      <strong>Maintenance Alert</strong> This site is being updated. Please wait.
-      <a class="btn btn-light" href="#" onclick="location.reload();"><i class="fa fa-refresh"></i> Refresh</a>
-    </div>
-    <div class="alert alert-warning fade show text-center"><strong>#rapidResponse</strong> For Rapid Response Offer requests, please use <strong>top-right button #rapidresponse</strong></div>
+  <div class="alert alert-danger fade show" role="alert" id="alert" hidden>
+    <strong>Maintenance Alert</strong> This site is being updated. Please wait.
+    <a class="btn btn-light" href="#" onclick="location.reload();"><i class="fa fa-refresh"></i> Refresh</a>
+  </div>
+  <!-- <div class="alert alert-warning fade show text-center"><strong>#rapidResponse</strong> For Rapid Response Offer requests, please use <strong>top-right button #rapidresponse</strong></div> -->
 
-    <div id="form" class="container-fluid">
-      <br />
-      <div class="form-row">
-        <div class="form-group col-sm-12">
-          <div>
-            <h3 class="text-center">Welcome to the Competence Center Request Form.</h3>
-            <p class="text-center">
-              This form can be used to request assistance on a variety of topics across different product types.<br />
-              Fill out the form as required. Some fields are automatically completed using your Genesys Cloud details. Press Submit once all the required fields have been completed.
-            </p>
+  <div id="form" class="container-fluid">
+    <br />
+    <div class="form-row">
+      <div class="form-group col-sm-12">
+        <div>
+          <!-- <FORM TYPE TAB CONTROL> -->
+          <div class="ml-5 mr-5" style="font-size: 1.3rem">
+            <ul class="nav nav-tabs" id="myTab" role="tablist">
+              <li class="nav-item" role="presentation">
+                <a class="nav-link active" id="home-tab" data-toggle="tab" href="#standard" role="tab" aria-controls="home" aria-selected="true" onclick="setRequestFormType(0)">CC Requests</a>
+              </li>
+              <li class="nav-item" role="presentation">
+                <a class="nav-link" id="profile-tab" data-toggle="tab" href="#trial" role="tab" aria-controls="profile" aria-selected="false" onclick="setRequestFormType(1)">Trials/POCs/Pilots Validation <span class="badge badge-danger">NEW!</span></a>
+              </li>
+            </ul>
+            <div class="tab-content" id="myTabContent">
+              <div class="tab-pane fade show active" id="standard" role="tabpanel" aria-labelledby="home-tab">
+                <h3 class="text-center mt-4">Welcome to the Competence Center Request Form <img alt="STD" src="images/tag-std.svg" style="transform: rotate(10deg); width: 4rem; margin: 0 0 0 10px;" /></h3>
+                <p class="text-center mt-3">
+                  This form can be used to request assistance on a variety of topics across different product types.<br />
+                  Fill out the form as required. Some fields are automatically completed using your Genesys Cloud details. Press Submit once all the required fields have been completed.
+                </p>
+              </div>
+              <div class="tab-pane fade" id="trial" role="tabpanel" aria-labelledby="profile-tab">
+                <h3 class="text-center mt-4">Welcome to the Trials/POCs/Pilots Validation Form <img alt="TRIAL" src="images/tag-trial.svg" style="transform: rotate(10deg); width: 4rem; margin: 0 0 0 10px;" /></h3>
+                <p class="text-center mt-3">
+                  This form shows the available options for prospects to test Genesys Cloud before placing an order. Select the option from the table below and be sure to complete all fields before pressing Submit. One of the team will be in contact within 24 hours.
+                </p>
+              </div>
+            </div>
+
             <hr />
           </div>
+          <!-- </FORM TYPE TAB CONTROL> -->
 
           <form id="modal-form" class="ml-5 mr-5">
             <!-- Region & Territory -->
             <div class="form-row mr-4 ml-2">
               <div class="form-group col-md-6">
                 <label for="region">Region <span class="text-danger font-weight-bold">*</span></label>
-                <span data-toggle="tooltip" data-html="true" data-placement="bottom" style="float: right;" title="Enter the <b>region</b> you are located in">
-                  <i class="fa fa-question-circle-o" aria-hidden="true" style="color: gray;"></i>
+                <span data-toggle="tooltip" data-html="true" data-placement="bottom" style="float: right" title="Enter the <b>region</b> you are located in">
+                  <i class="fa fa-question-circle-o" aria-hidden="true" style="color: gray"></i>
                 </span>
                 <select id="region" name="region" class="form-control" required>
                   <option value="" disabled selected>Select a Region</option>
@@ -84,8 +109,8 @@
               </div>
               <div class="form-group col-md-6">
                 <label for="subRegion">Territory <span class="text-danger font-weight-bold">*</span></label>
-                <span data-toggle="tooltip" data-html="true" data-placement="bottom" style="float: right;" title="Enter the <b>territory</b> you are located in">
-                  <i class="fa fa-question-circle-o" aria-hidden="true" style="color: gray;"></i>
+                <span data-toggle="tooltip" data-html="true" data-placement="bottom" style="float: right" title="Enter the <b>territory</b> you are located in">
+                  <i class="fa fa-question-circle-o" aria-hidden="true" style="color: gray"></i>
                 </span>
                 <select id="subRegion" name="subRegion" class="form-control" required>
                   <option value="" disabled selected>Select a Territory</option>
@@ -97,8 +122,8 @@
             <div class="form-row mr-4 ml-2">
               <div class="form-group col-md-6">
                 <label for="customerRelationship">Direct/Indirect? <span class="text-danger font-weight-bold">*</span></label>
-                <span data-toggle="tooltip" data-html="true" data-placement="bottom" style="float: right;" title="Choose <b>Relationship with a Customer</b> Direct/Indirect">
-                  <i class="fa fa-question-circle-o" aria-hidden="true" style="color: gray;"></i>
+                <span data-toggle="tooltip" data-html="true" data-placement="bottom" style="float: right" title="Choose <b>Relationship with a Customer</b> Direct/Indirect">
+                  <i class="fa fa-question-circle-o" aria-hidden="true" style="color: gray"></i>
                 </span>
                 <select id="customerRelationship" name="customerRelationship" class="form-control" required>
                   <option value="" disabled selected>Select a Customer Relationship</option>
@@ -108,8 +133,8 @@
               </div>
               <div class="form-group col-md-6">
                 <label for="customerType">Customer Type <span class="text-danger font-weight-bold">*</span></label>
-                <span data-toggle="tooltip" data-html="true" data-placement="bottom" style="float: right;" title="Choose <b>Customer Type</b>">
-                  <i class="fa fa-question-circle-o" aria-hidden="true" style="color: gray;"></i>
+                <span data-toggle="tooltip" data-html="true" data-placement="bottom" style="float: right" title="Choose <b>Customer Type</b>">
+                  <i class="fa fa-question-circle-o" aria-hidden="true" style="color: gray"></i>
                 </span>
                 <select id="customerType" name="customerType" class="form-control" required>
                   <option value="" disabled selected>Select a Customer Type</option>
@@ -123,8 +148,8 @@
             <div class="form-row mr-4 ml-2">
               <div class="form-group col-md-6">
                 <label for="segment">Market Segment <span class="text-danger font-weight-bold">*</span></label>
-                <span data-toggle="tooltip" data-html="true" data-placement="bottom" style="float: right;" title="Select <b>Sales Segment</b>">
-                  <i class="fa fa-question-circle-o" aria-hidden="true" style="color: gray;"></i>
+                <span data-toggle="tooltip" data-html="true" data-placement="bottom" style="float: right" title="Select <b>Sales Segment</b>">
+                  <i class="fa fa-question-circle-o" aria-hidden="true" style="color: gray"></i>
                 </span>
                 <select id="segment" name="segment" class="form-control" required>
                   <option value="" disabled selected>Select a Segment</option>
@@ -134,8 +159,8 @@
                 </select>
               </div>
               <div class="form-group col-md-6">
-                <span data-toggle="tooltip" data-html="true" data-placement="bottom" style="float: right;" title="Select the <b>product</b> name">
-                  <i class="fa fa-question-circle-o" aria-hidden="true" style="color: gray;"></i>
+                <span data-toggle="tooltip" data-html="true" data-placement="bottom" style="float: right" title="Select the <b>product</b> name">
+                  <i class="fa fa-question-circle-o" aria-hidden="true" style="color: gray"></i>
                 </span>
                 <label for="product">Product <span class="text-danger font-weight-bold">*</span></label>
                 <select id="product" name="product" class="form-control" required>
@@ -149,32 +174,426 @@
               </div>
             </div>
 
-            <!-- Tasks -->
+            <!-- <TASK LIST> -->
+            <div id="task-list">
+              <div class="border border-black mr-3">
+                <span data-toggle="tooltip" data-html="true" data-placement="bottom" style="float: right" class="mr-2" title="Add one or more Tasks related to your Request. Each Task contain main Category and corresponding Type.">
+                  <i class="fa fa-question-circle-o" aria-hidden="true" style="color: gray"></i>
+                </span>
+                <div class="form-row mt-1 mr-4 ml-2">
+                  <div class="form-group col-md-5 text-center">Category <span class="text-danger font-weight-bold">*</span></div>
+                  <div class="form-group col-md-5 text-center">Type <span class="text-danger font-weight-bold">*</span></div>
+                </div>
 
-            <div class="border border-black mr-3">
-              <span data-toggle="tooltip" data-html="true" data-placement="bottom" style="float: right;" class="mr-2" title="Add one or more Tasks related to your Request. Each Task contain main Category and corresponding Type.">
-                <i class="fa fa-question-circle-o" aria-hidden="true" style="color: gray;"></i>
-              </span>
-              <div class="form-row mt-1 mr-4 ml-2">
-                <div class="form-group col-md-5 text-center">Category <span class="text-danger font-weight-bold">*</span></div>
-                <div class="form-group col-md-5 text-center">Type <span class="text-danger font-weight-bold">*</span></div>
+                <div class="form-row mt-2 mr-4 ml-2" id="tasks"></div>
+                <a href="#" id="addTask" class="form-group btn btn-primary mt-1 ml-3"><em class="fa fa-plus"></em> Add New Task</a>
               </div>
-
-              <div class="form-row mt-2 mr-4 ml-2" id="tasks"></div>
-              <a href="#" id="addTask" class="form-group btn btn-primary mt-1 ml-3"><em class="fa fa-plus"></em> Add New Task</a>
             </div>
+            <!-- </TASK LIST> -->
+
+            <!-- <FREE TRIAL QUESTIONS> -->
+            <div id="free-trial-questions" style="display: none;">
+              <div class="border border-black p-3">
+                <table class="table table-striped table-bordered ">
+                  <h4 class="text-center">Customer Options</h4>
+                  <br>
+                  <thead>
+                    </tr>
+                    <tr>
+                      <th scope="col" style="width: 25%"></th>
+                      <th scope="col" class="text-center" style="width: 25%">Free Trials</th>
+                      <th scope="col" class="text-center" style="width: 25%">Proof Of Concept (POC)</th>
+                      <th scope="col" class="text-center" style="width: 25%">Pilot</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <th scope="row">Responsible*​</th>
+                      <td class="text-center">Solution Consultant​</td>
+                      <td class="text-center">Competency Center and/or Professional Services</td>
+                      <td class="text-center">Competency Center and/or Professional Services​</td>
+                    </tr>
+                    <tr>
+                      <th scope="row">Scope</th>
+                      <td class="text-center">Digital (Email, Chat & Predictive Engagement) +Voice (BYOC Cloud with Twilio or GCV)<br />Standard SFDC integrations​</td>
+                      <td class="text-center">Free Trial Scope + Customizations, AppFoundry & CC approved scope​ </td>
+                      <td class="text-center">CC and/or PS approved scope</td>
+                    </tr>
+                    <tr>
+                      <th scope="row">Commercial Offer​</th>
+                      <td class="text-center">Free Trial bundle (No AppFoundry)​</td>
+                      <td class="text-center">Free Trials Bundle (no 3rd party integrations) or MTM or Partner Dev Org bundle</td>
+                      <td class="text-center">MTM or Partner Dev Org bundle</td>
+                    </tr>
+                    <tr>
+                      <th scope="row">Approval/Qualification Required</th>
+                      <td class="text-center">Yes – Competency Center</td>
+                      <td class="text-center">Yes – Competency Center​</td>
+                      <td class="text-center">Yes – Sales Leadership & Competency Center</td>
+                    </tr>
+                    <tr>
+                      <th scope="row">Automation Tools</th>
+                      <td class="text-center" colspan="2">Always start with CC Portal (Use Case Automation + Customer Insights) before manual configuration/customization</td>
+                      <td class="text-center">CC Portal tools and/or PS Methodology​</td>
+
+                    </tr>
+                    <tr>
+                      <th scope="row">Production Use & Care Support​</th>
+                      <td class="text-center">No</td>
+                      <td class="text-center">No</td>
+                      <td class="text-center">Yes</td>
+                    </tr>
+                    <tr>
+                      <th scope="row">Billable?</th>
+                      <td class="text-center">No (free up to 90 days)​</td>
+                      <td class="text-center">Depends on commercial offer​</td>
+                      <td class="text-center">Yes, unless funded by sales​</td>
+                    </tr>
+                  </tbody>
+                </table>
+
+                <div class="alert alert-secondary" role="alert">
+                  *POD resources remain engaged for all opportunity types
+                </div>
+
+                <div class="form-group col-md-6">
+                  <label for="trialValidationType">Trial validation Type<span class="text-danger font-weight-bold">*</span></label>
+                  <span data-toggle="tooltip" data-html="true" data-placement="bottom" style="float: right" title="Choose from FreeTrial / POC / Pilot. Use Table above for reference.">
+                    <i class="fa fa-question-circle-o" aria-hidden="true" style="color: gray"></i>
+                  </span>
+                  <select id="trialValidationType" name="trialValidationType" class="form-control" required>
+                    <option value="" disabled selected>Select your Type</option>
+                    <option value="FreeTrial">Free Trial</option>
+                    <option value="POC">POC</option>
+                    <option value="Pilot">Pilot</option>
+                  </select>
+                </div>
+
+
+
+                <!--#region Deployment Model -->
+
+                <div class="col-md-12 bg-light shadow-lg">
+                  <hr />
+                  <h3 class="text-center">Deployment Model</h3>
+                  <hr />
+                </div>
+
+                <!-- Countries & Languages -->
+                <div class="form-row mr-4 ml-2">
+                  <div class="form-group col-md-12">
+                    <label for="countriesAgents">In which countries are the customer's agents located? <span class="text-danger font-weight-bold">*</span></label>
+                    <select class="selectpicker" id="countriesAgents" name="countriesAgents" class="form-control" required multiple data-live-search="true">
+                    </select>
+                  </div>
+                </div>
+                <div class="form-row mr-4 ml-2">
+                  <div class="form-group col-md-12">
+                    <label for="countriesOperation">In which countries does the customer operate and require (or have existing) phone numbers? <span class="text-danger font-weight-bold">*</span></label>
+                    <select class="selectpicker" id="countriesOperation" name="countriesOperation" class="form-control" required multiple data-live-search="true">
+                    </select>
+                  </div>
+                </div>
+
+                <!-- Telephony Model -->
+
+                <div class="text-muted form-group ml-3">
+                  <small>Where a SIP trunk cannot be easily established, it is recommended to use Genesys Cloud Voice and forwarding of calls.</small>
+                  <br>
+                  <small>A new option has been added to select BYOC Cloud and Genesys Cloud Voice together.</small>
+                </div>
+
+                <div class="form-group col-md-12">
+                  <div class="text-muted" id="recommendation">
+                  </div>
+                  <label for="telephonyModel">Telephony Model <span class="text-danger font-weight-bold">*</span></label>
+                  <select id="telephonyModel" name="telephonyModel" class="form-control" required>
+                    <option value="" disabled selected>Select a Telephony Model</option>
+                  </select>
+                </div>
+
+                <!-- GCV Questions -->
+                <div id="GCVQuestions" style="display:none;">
+                  <h3 class="text-center shadow-lg pt-2 pb-2 offset-md-4 col-md-4">Genesys Cloud Voice</h3>
+
+                  <!-- Phone Numbers Deployment -->
+                  <div class="form-row mr-4 ml-2">
+                    <div class="form-group col-md-12">
+                      <label for="phoneNumbersDeployment">Phone Numbers Deployment <span class="text-danger font-weight-bold">*</span></label>
+                      <textarea class="form-control" id="phoneNumbersDeployment" name="phoneNumbersDeployment" placeholder="Will the customer deploy new customer-facing numbers from GCV, re-route non-geographic numbers to GCV or forward calls to GCV numbers?"></textarea>
+                      Genesys Cloud Voice (Resource Center): <a href="https://help.mypurecloud.com/articles/about-purecloud-voice/" target="_blank">https://help.mypurecloud.com/articles/about-purecloud-voice/</a>
+                    </div>
+                  </div>
+
+                  <!-- New Numbers -->
+                  <div class="form-row mr-4 ml-2">
+                    <div class="form-group col-md-12">
+                      <label for="newNumbers">New Numbers <span class="text-danger font-weight-bold">*</span></label>
+                      <textarea class="form-control" id="newNumbers" name="newNumbers" placeholder="If using new numbers, how many of each number type and which area codes are required?"></textarea>
+                    </div>
+                  </div>
+
+                  <div class="form-row mr-4 ml-2">
+                    <div class="form-group col-md-12">
+                      <label for="genesysCloudRegion">Genesys Cloud Region <span class="text-danger font-weight-bold">*</span></label>
+                      <select class="custom-select" id="genesysCloudRegion" name="genesysCloudRegion" required>
+                        <option selected disabled>Select a Genesys Cloud Region</option>
+                        <optgroup label="North America">
+                          <option value="cac1.pure.cloud">cac1.pure.cloud - Canada</option>
+                          <option value="mypurecloud.com">mypurecloud.com - East</option>
+                          <option value="usw2.pure.cloud">usw2.pure.cloud - West</option>
+                        </optgroup>
+                        <optgroup label="EMEA">
+                          <option value="euw2.pure.cloud">euw2.pure.cloud - UK</option>
+                          <option value="mypurecloud.de">mypurecloud.de - Frankfurt</option>
+                          <option value="mypurecloud.ie">mypurecloud.ie - Ireland</option>
+                        </optgroup>
+                        <optgroup label="APAC">
+                          <option value="apne2.pure.cloud">apne2.pure.cloud - Seoul </option>
+                          <option value="mypurecloud.com.au">mypurecloud.com.au - Australia/New Zealand </option>
+                          <option value="mypurecloud.jp">mypurecloud.jp - Japan </option>
+                        </optgroup>
+                      </select>
+                    </div>
+                  </div>
+
+                  <!-- Estimated Volume of Minutes Per Month -->
+                  <div class="form-row mr-4 ml-2">
+                    <div class="form-group col-md-12">
+                      <label for="estimatedVolumeMinsPerMonth">Estimated Volumes of GCV Minutes per Month <span class="text-danger font-weight-bold">*</span></label>
+                      <textarea class="form-control" id="estimatedVolumeMinsPerMonth" name="estimatedVolumeMinsPerMonth" placeholder="What is the estimated volumes of minutes per month?" required></textarea>
+                    </div>
+                  </div>
+
+                </div>
+
+                <!-- BYOC Cloud Carriers -->
+                <div class="border border-black mr-3 col-md-12" id="byocCloudCarriersDiv" style="display: none;">
+                  <br>
+                  <h3 class="text-center shadow-lg pt-2 pb-2 offset-md-4 col-md-4">BYOC Cloud Carriers</h3>
+                  <div class="form-row mt-1 mr-4 ml-2">
+                    <div class="form-group col-md-5">Country</div>
+                    <div class="form-group col-md-5">Select one or more Carriers <span class="text-danger font-weight-bold">*</span></div>
+                  </div>
+                  <div class="form-row mt-2 mr-4 ml-2" id="byocCloudCarriers"></div>
+                  <small id="otherNote" class="form-group ml-2">
+                    If you have selected "Other":
+                    <ul>
+                      <li>Carrier must meeting standard requirements as per Resource Centre: <a href="https://help.mypurecloud.com/articles/carrier-requirements-byoc-cloud/" target="_blank">https://help.mypurecloud.com/articles/carrier-requirements-byoc-cloud/</a></li>
+                      <li>Expectation that deployment time will be extended, <strong>in most cases significantly</strong></li>
+                    </ul>
+                  </small>
+                  <div class="form-check mr-4">
+                    <div class="form-group col-md-12">
+                      <input class="form-check-input" type="checkbox" value="" id="relationshipWithCarrier">
+                      <label class="form-check-label" for="relationshipWithCarrier">
+                        Does the customer already have a relationship with the carrier and access to technical resources?
+                      </label>
+                    </div>
+                  </div>
+
+                </div>
+
+                <!-- BYOC Cloud Questions -->
+                <div id="BYOCCloudQuestions" style="display:none;">
+                </div>
+
+                <!-- BYOC Premise with Virtual Edges -->
+                <div class="border border-black mr-3 ml-2 bg-warning" id="byocPremiseDiv" style="display: none;">
+                  <p class="form-group ml-2">
+                    If planning to use a virtual edge, very strict guidelines for deployment must be followed:
+                  <ul>
+                    <li>Virtual Edge Hardware/Software Requirements: <a href="https://help.mypurecloud.com/articles/virtual-edge-hardware-software-requirements/" target="_blank">https://help.mypurecloud.com/articles/virtual-edge-hardware-software-requirements/</a></li>
+                    <li>Virtual Edge Warnings: <a href="https://help.mypurecloud.com/articles/virtual-edge-warnings/" target="_blank">https://help.mypurecloud.com/articles/virtual-edge-warnings/</a></li>
+                  </ul>
+                  </p>
+                  <p class="form-group ml-2">
+                    The customer must acknowledge that failing to comply with the requirements and warnings will result in possible audio quality issues.
+                  </p>
+                </div>
+
+                <!-- BYOC Premise Questions -->
+                <div id="BYOCPremiseQuestions" class="mt-2" style="display:none;">
+
+                  <!-- Virtual Environment -->
+                  <div class="form-check mr-4">
+                    <div class="form-group col-md-12">
+                      <input class="form-check-input" type="checkbox" value="" id="hyperVEnvironment">
+                      <label class="form-check-label" for="hyperVEnvironment">
+                        Does the customer have a Hyper-V environment available?
+                      </label>
+                      <br>
+                    </div>
+                  </div>
+
+                </div>
+
+                <!-- BYOC Premise with Appliance -->
+                <div class="border border-black mr-3 ml-2 bg-warning" id="byocPremiseWithApplianceDiv" style="display: none;">
+                  <p class="form-group ml-2">
+                    Choosing BYOC Premise w/ Hardware Appliance assumes the partner or customer already has access to hardware Edges. In most cases this would be from a partner who purchased them in advance.
+                  </p>
+                  <p class="form-group ml-2">
+                    Genesys is not shipping hardware Edges at this time.
+                  </p>
+                </div>
+
+                <!--#endregion Telephony -->
+
+
+                <!--#region General Configuration -->
+
+                <div class="col-md-12 bg-light shadow-lg">
+                  <hr />
+                  <h3 class="text-center">General Configuration</h3>
+                  <hr />
+                </div>
+
+                <!-- Number of Agents -->
+                <div class="form-row mr-4 ml-2">
+                  <div class="form-group col-md-12">
+                    <label for="numberAgents">What is the expected number of agents? <span class="text-danger font-weight-bold">*</span></label>
+                    <textarea class="form-control" id="numberAgents" name="numberAgents" placeholder="" required></textarea>
+                  </div>
+                </div>
+
+                <!-- Phone Numbers Deployment -->
+                <div class="form-check mr-4">
+                  <div class="form-group col-md-12">
+                    <input class="form-check-input" type="checkbox" value="" id="existingTelephonyUsage">
+                    <label class="form-check-label" for="existingTelephonyUsage">
+                      Will the customer connect, via a trunk or forwarding of calls, to Genesys Engage, another PBX, an SBC or directly to a carrier? If so, please provide more details below.
+                    </label>
+                    <br>
+                  </div>
+                </div>
+
+                <div class="form-row col-md-12">
+                  <div class="form-group col-md-12">
+                    <textarea class="form-control" id="existingTelephonyUsageDetails" name="existingTelephonyUsageDetails" placeholder="Please provide more details about the telephony connection..." disabled></textarea>
+                  </div>
+                </div>
+
+                <!-- Identification and Verification -->
+                <div class="form-row mr-4 ml-2">
+                  <div class="form-group col-md-12">
+                    <label for="identificationAndVerificationProcesses">Identity and Verification Processes <span class="text-danger font-weight-bold">*</span></label>
+                    <textarea class="form-control" id="identificationAndVerificationProcesses" name="identificationAndVerificationProcesses" placeholder="Are there any mandatory Identification and Verification processes?" required></textarea>
+                  </div>
+                </div>
+
+                <!-- IT Infrastructure -->
+                <div class="form-row mr-4 ml-2">
+                  <div class="form-group col-md-12">
+                    <label for="itInfrastructure">IT Infrastructure <span class="text-danger font-weight-bold">*</span></label>
+                    <textarea class="form-control" id="itInfrastructure" name="itInfrastructure" placeholder="Is the IT infrastructure supported in-house or via a third-party, including internet connections, user/company provided laptops and headsets?" required></textarea>
+                  </div>
+                </div>
+
+                <!-- End devices require VPN? -->
+                <div class="form-check mr-4">
+                  <div class="form-group col-md-12">
+                    <input class="form-check-input" type="checkbox" value="" id="endUserDevicesRequireVPN">
+                    <label class="form-check-label" for="endUserDevicesRequireVPN">
+                      Are user end-devices required to connect via VPN?
+                    </label>
+                  </div>
+                </div>
+
+                <!-- Virtual Solution -->
+                <div class="form-row mr-4 ml-2">
+                  <div class="form-group col-md-12">
+                    <label for="virtualDesktopSolution">Virtual Desktop Solution <span class="text-danger font-weight-bold">*</span></label>
+                    <textarea class="form-control" id="virtualDesktopSolution" name="virtualDesktopSolution" placeholder="Does the customer use a Virtual Desktop solution, e.g. Citrix, thin-clients, etc.?" required></textarea>
+                  </div>
+                </div>
+
+                <!-- Impact By Design -->
+                <div class="form-check mr-4">
+                  <div class="form-group col-md-12">
+                    <input class="form-check-input" type="checkbox" value="" id="impactByDesign">
+                    <label class="form-check-label" for="impactByDesign">
+                      Has an Impact By Design been initiated?
+                    </label>
+                    <br>
+                    <small><a href="https://help.mypurecloud.com/articles/global-purecloud-service-terms-and-conditions/" target="_blank">Access the latest documents here</a> (press <span class="bg-warning">SHIFT</span> while clicking on the link to open the page from the <strong>Genesys Cloud app</strong>)</small>
+                  </div>
+                </div>
+
+                <!-- Business Goal -->
+                <div class="form-row mr-4 ml-2">
+                  <div class="form-group col-md-12">
+                    <label for="businessGoal">What is the customer business goal? <span class="text-danger font-weight-bold">*</span></label>
+                    <textarea class="form-control" id="businessGoal" name="businessGoal" placeholder="Describe your business goal here" required></textarea>
+                  </div>
+                </div>
+
+                <!-- Measure of Success -->
+                <div class="form-row mr-4 ml-2">
+                  <div class="form-group col-md-12">
+                    <label for="measureOfSuccess">What is the customer's measure of success? <span class="text-danger font-weight-bold">*</span></label>
+                    <textarea class="form-control" id="measureOfSuccess" name="measureOfSuccess" placeholder="Describe customer's measure of success here" required></textarea>
+                  </div>
+                </div>
+
+
+                <div class="col-md-12 bg-light shadow-lg">
+                  <hr />
+                  <h3 class="text-center">Other</h3>
+                  <hr />
+                </div>
+
+                <!-- Commmitted Customer Resource -->
+                <div class="form-check mr-4">
+                  <div class="form-group col-md-12">
+                    <input class="form-check-input" type="checkbox" value="" id="customerResourceCommitted">
+                    <label class="form-check-label" for="customerResourceCommitted">
+                      Have customer resources been committed (e.g. Project Manager, Project Sponsor, Business Champion and/or IT/Operations Manager, etc.)?
+                    </label>
+                  </div>
+                </div>
+
+
+                <!-- Terms & Conditions -->
+                <div class="form-check mr-4">
+                  <div class="form-group col-md-12">
+                    <input class="form-check-input" type="checkbox" value="" id="standardTermsConditions">
+                    <label class="form-check-label" for="standardTermsConditions">
+                      Has the customer agreed to our standard Terms and Conditions and DPA?
+                    </label>
+                    <br>
+                    <small><a href="https://help.mypurecloud.com/articles/global-purecloud-service-terms-and-conditions/" target="_blank">Access the latest documents here</a> (press <span class="bg-warning">SHIFT</span> while clicking on the link to open the page from the <strong>Genesys Cloud app</strong>)</small>
+                  </div>
+                </div>
+
+                <div class="form-check mr-4">
+                  <div class="form-group col-md-12">
+                    <input class="form-check-input" type="checkbox" value="" id="solutionBusinessConsultingRequired">
+                    <label class="form-check-label" for="solutionBusinessConsultingRequired">
+                      Is Strategic Business Consulting required for this opportunity?
+                    </label>
+                  </div>
+                </div>
+
+                <!--#endregion -->
+
+
+              </div>
+            </div>
+            <!-- <FREE TRIAL QUESTIONS> -->
+
 
             <div class="form-row mr-4 ml-2 mt-2">
               <div class="form-group col-md-6">
                 <label for="requesterName">Requester Name <span class="text-danger font-weight-bold">*</span></label>
-                <span data-toggle="tooltip" data-html="true" data-placement="bottom" style="float: right;" title="Your name. By default it's automatically collected from Genesys Cloud account">
-                  <i class="fa fa-question-circle-o" aria-hidden="true" style="color: gray;"></i>
+                <span data-toggle="tooltip" data-html="true" data-placement="bottom" style="float: right" title="Your name. By default it's automatically collected from Genesys Cloud account">
+                  <i class="fa fa-question-circle-o" aria-hidden="true" style="color: gray"></i>
                 </span>
                 <input type="text" class="form-control" id="requesterName" name="requesterName" placeholder="Your Name" required />
               </div>
               <div class="form-group col-md-6">
-                <span data-toggle="tooltip" data-html="true" data-placement="bottom" style="float: right;" title="Your email address. By default it's automatically collected from Genesys Cloud account">
-                  <i class="fa fa-question-circle-o" aria-hidden="true" style="color: gray;"></i>
+                <span data-toggle="tooltip" data-html="true" data-placement="bottom" style="float: right" title="Your email address. By default it's automatically collected from Genesys Cloud account">
+                  <i class="fa fa-question-circle-o" aria-hidden="true" style="color: gray"></i>
                 </span>
                 <label for="requesterEmail">Requester Email <span class="text-danger font-weight-bold">*</span></label>
                 <input type="text" class="form-control" id="requesterEmail" name="requesterEmail" placeholder="Your Email Address" required />
@@ -182,15 +601,15 @@
             </div>
             <div class="form-row mr-4 ml-2">
               <div class="form-group col-md-6">
-                <span data-toggle="tooltip" data-html="true" data-placement="bottom" style="float: right;" title="Enter the phone number where you can be contacted. Be sure to include your country code, for example +447557123456">
-                  <i class="fa fa-question-circle-o" aria-hidden="true" style="color: gray;"></i>
+                <span data-toggle="tooltip" data-html="true" data-placement="bottom" style="float: right" title="Enter the phone number where you can be contacted. Be sure to include your country code, for example +447557123456">
+                  <i class="fa fa-question-circle-o" aria-hidden="true" style="color: gray"></i>
                 </span>
                 <label for="requesterPhoneNumber">Requester Phone # <span class="text-danger font-weight-bold">*</span></label>
                 <input type="text" class="form-control" id="requesterPhoneNumber" name="requesterPhoneNumber" placeholder="Your Phone Number" required />
               </div>
               <div class="form-group col-md-6">
-                <span data-toggle="tooltip" data-html="true" data-placement="bottom" style="float: right;" title="Enter a date you require the work completed. Please note, this is not a guarantee and will be discussed with the Competence Centre Program Manager when they contact you">
-                  <i class="fa fa-question-circle-o" aria-hidden="true" style="color: gray;"></i>
+                <span data-toggle="tooltip" data-html="true" data-placement="bottom" style="float: right" title="Enter a date you require the work completed. Please note, this is not a guarantee and will be discussed with the Competence Centre Program Manager when they contact you">
+                  <i class="fa fa-question-circle-o" aria-hidden="true" style="color: gray"></i>
                 </span>
                 <label for="datepicker">Need Completed By <span class="text-danger font-weight-bold">*</span></label>
                 <input type="text" id="datepicker" class="form-control" required placeholder="Click to set a date" autocomplete="off" />
@@ -198,29 +617,78 @@
             </div>
             <div class="form-row mr-4 ml-2">
               <div class="form-group col-md-12">
-                <span data-toggle="tooltip" data-html="true" data-placement="bottom" style="float: right;" title="Enter a brief summary of the work required. Your Competence Centre Program Manager will contact you to discuss the request further">
-                  <i class="fa fa-question-circle-o" aria-hidden="true" style="color: gray;"></i>
+                <span data-toggle="tooltip" data-html="true" data-placement="bottom" style="float: right" title="Enter a brief summary of the work required. Your Competence Centre Program Manager will contact you to discuss the request further">
+                  <i class="fa fa-question-circle-o" aria-hidden="true" style="color: gray"></i>
                 </span>
                 <label for="description">Description <span class="text-danger font-weight-bold">*</span></label>
                 <textarea class="form-control" id="description" name="description" placeholder="Describe your request" required></textarea>
               </div>
             </div>
-            <div class="form-row mr-4 ml-2">
-              <div class="form-group col-md-6">
-                <span data-toggle="tooltip" data-html="true" data-placement="bottom" style="float: right;" title="If applicable, enter the Partner and/or Customer name the request is related to">
-                  <i class="fa fa-question-circle-o" aria-hidden="true" style="color: gray;"></i>
-                </span>
-                <label for="partnerCustomerName">Partner and/or Customer Name</label>
-                <input type="text" class="form-control" id="partnerCustomerName" name="partnerCustomerName" placeholder="Partner and/or Customer Name" />
-              </div>
-              <div class="form-group col-md-6">
-                <span data-toggle="tooltip" data-html="true" data-placement="bottom" style="float: right;" title="Provide the link to the account or opportunity in Salesforce. This will provide the Competence Centre Program Manager with more background and will help with your resource allocation">
-                  <i class="fa fa-question-circle-o" aria-hidden="true" style="color: gray;"></i>
-                </span>
-                <label for="salesforceAccountOpportunity">Opportunity URL <span class="text-danger font-weight-bold">*</span></label>
-                <input type="text" class="form-control" id="salesforceAccountOpportunity" name="salesforceAccountOpportunity" placeholder="Link to Salesforce opportunity" required />
+            <div class=" form-row mr-4 ml-2">
+              <div class="form-group col-md-12">
+                <span class="text-muted"><small>Please choose the Opportunity OR Account the request relates to</small></span>
               </div>
             </div>
+            <div class=" form-row mr-4 ml-2">
+              <div class="form-group col-md-6">
+                <span data-toggle="tooltip" data-html="true" data-placement="bottom" style="float: right" title="Search for Opportunity in Salesforce. If present DSR will also be collected">
+                  <i class="fa fa-question-circle-o" aria-hidden="true" style="color: gray"></i>
+                </span>
+                <label for="salesforceAccountOpportunity">Opportunity</label>
+                <select id="sfData" class="form-control js-example-basic-single" name="sfData"></select>
+              </div>
+              <div class="form-group col-md-6">
+                <span data-toggle="tooltip" data-html="true" data-placement="bottom" style="float: right" title="Account name the opportunity is related to">
+                  <i class="fa fa-question-circle-o" aria-hidden="true" style="color: gray"></i>
+                </span>
+                <label for="oppPartnerCustomerName">Account Name</label><br>
+                <select id="oppPartnerCustomerName" name="oppPartnerCustomerName" class="form-control js-example-basic-single"></select>
+              </div>
+            </div>
+
+            <div class="form-row mr-4 ml-2">
+              <div class="form-group col-md-12">
+                <div class="text-center" style="position: absolute; width: 99%; height: 99%;">
+                  <div id="sfSpinner" class="spinner-grow text-primary" class="width: 7rem; height: 7rem; " hidden role="status">
+                  </div>
+                </div>
+              </div>
+            </div>
+
+
+            <div class="form-row mr-4 ml-2">
+              <div class="form-group col-md-6">
+                <span data-toggle="tooltip" data-html="true" data-placement="bottom" style="float: right" title="Assigned SC from latest DSR (if present). If no DSR is found, SC from opportunity is selected.">
+                  <i class="fa fa-question-circle-o" aria-hidden="true" style="color: gray"></i>
+                </span>
+                <label for="oppAssignedSC">Assigned SC</label><br>
+                <select id="oppAssignedSC" name="oppAssignedSC" class="form-control js-example-basic-single"></select>
+              </div>
+              <div class="form-group col-md-6">
+                <span data-toggle="tooltip" data-html="true" data-placement="bottom" style="float: right" title="Opportunity Owner">
+                  <i class="fa fa-question-circle-o" aria-hidden="true" style="color: gray"></i>
+                </span>
+                <label for="oppOwner">Owner</label>
+                <input type="text" class="form-control" id="oppOwner" name="oppOwner" placeholder="" disabled />
+              </div>
+            </div>
+            <div class="form-row mr-4 ml-2">
+              <div class="form-group col-md-6">
+                <span data-toggle="tooltip" data-html="true" data-placement="bottom" style="float: right" title="Salesforce Opportunity or Account URL">
+                  <i class="fa fa-question-circle-o" aria-hidden="true" style="color: gray"></i>
+                </span>
+                <label for="oppUrl">Opportunity or Account Url</label>
+                <input type="url" class="form-control" id="oppUrl" name="oppUrl" placeholder="" disabled />
+              </div>
+              <div class="form-group col-md-6">
+                <span data-toggle="tooltip" data-html="true" data-placement="bottom" style="float: right" title="Salesforce latest DSR URL linked to Opportunity">
+                  <i class="fa fa-question-circle-o" aria-hidden="true" style="color: gray"></i>
+                </span>
+                <label for="oppDSRUrl">DSR Url</label>
+                <input type="url" class="form-control" id="oppDSRUrl" name="oppDSRUrl" placeholder="" disabled />
+              </div>
+            </div>
+
           </form>
 
           <br />
@@ -300,13 +768,621 @@
     <!-- Dictionary -->
     <script src="js/dictionary.js"></script>
     <script src="js/version.js"></script>
+    <!-- Select2 -->
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
+    <!-- Bootstrap Select -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.9/dist/js/bootstrap-select.min.js"></script>
 
     <!--#endregion -->
 
     <script>
+      let sfObject = {};
       let tasksControls = [],
         taskId = 0,
+        userInfo,
         gcToken;
+
+      //#region Free Trials
+
+      let countriesAndCarriers = [], countryCarrierId = 0, selectedCountries = [];
+
+
+      // Populate countries selects
+      $.each(countries, (i, country) => {
+        $("<option/>", { value: country.name, ["data-gcv"]: country.gcv }).text(country.name).appendTo("#countriesAgents, #countriesOperation");
+      });
+
+
+      $("#countriesAgents").selectpicker({
+        width: '100%',
+        selectedTextFormat: 'count > 3',
+        title: "Select one or more countries"
+      });
+
+      $("#countriesOperation").selectpicker({
+        width: '100%',
+        selectedTextFormat: 'count > 3',
+        title: "Select one or more countries"
+      });
+
+      $("#countriesOperation").on('change', (e) => {
+        selectedCountries = [];
+        $.each($("#countriesOperation").val(), (i, selectedCountry) => {
+          selectedCountries.push({
+            name: selectedCountry,
+            gcv: $(`#countriesOperation option[value="${selectedCountry}"]`).attr('data-gcv') == "true" || false
+          });
+        });
+        console.log(selectedCountries);
+        refreshBYOCCloudCountryCarriers();
+        setTelephonyModel();
+      });
+
+      $("#existingTelephonyUsage").on('change', () => {
+        $("#existingTelephonyUsageDetails").attr('disabled', !$("#existingTelephonyUsage").is(":checked"));
+      });
+
+      function setTelephonyModelDropDown() {
+        // Populate telephonyModel selects from dictionary
+        $('#telephonyModel').empty();
+        $("<option/>", { value: '', disabled: true, selected: true }).text('Select a Telephony Model').appendTo("#telephonyModel");
+
+        if ($('#trialValidationType').val() === 'FreeTrial') {
+          $("<option/>", { value: 'GCV' }).text('Genesys Cloud Voice').appendTo("#telephonyModel");
+          $("<option/>", { value: 'BYOCCloud' }).text('BYOC Cloud (no GCV)').appendTo("#telephonyModel");
+        } else {
+          $.each(telephonyModel, (key, value) => {
+            $("<option/>", { value: key }).text(value).appendTo("#telephonyModel");
+          });
+        }
+        refreshTelephonyModel();
+
+      }
+
+      function setTelephonyModel() {
+        let gcvSupported = selectedCountries.length > 0 && selectedCountries.every(c => c.gcv);
+        if (gcvSupported) {
+          if (!$("#existingTelephonyUsage").is(":checked")) {
+            $("#telephonyModel").val('GCV');
+            $("#telephonyModel").change();
+            $("#recommendation").empty();
+            $("<small/>", { class: "btn-warning" }).html(`Based on your selection of countries where the customer operates phone numbers, <strong>${$("#telephonyModel option:selected").text()}</strong> is the recommended choice. You may also select the BYOC Cloud & GCV option.`).appendTo("#recommendation")
+          } else {
+            $("#telephonyModel").val('BYOCCloud');
+            $("#telephonyModel").change();
+            $("#recommendation").empty();
+            $("<small/>", { class: "btn-warning" }).html(`Based on your selection of countries where the customer operates phone numbers, <strong>${$("#telephonyModel option:selected").text()}</strong> is the recommended choice. You may also select the BYOC Cloud & GCV option.`).appendTo("#recommendation")
+          }
+        } else {
+          $("#telephonyModel").val('BYOCCloud');
+          $("#telephonyModel").change();
+          $("#recommendation").empty();
+          //$("<small/>", { class: "btn-warning" }).html(`Based on your selection of countries, <strong>${$("#telephonyModel option:selected").text()}</strong> is the recommended choice`).appendTo("#recommendation")
+        }
+      }
+
+      function refreshTelephonyModel() {
+        switch ($("#telephonyModel").val()) {
+          case 'GCV':
+            $("#byocCloudCarriersDiv").hide();
+            $("#byocPremiseDiv").hide();
+            countriesAndCarriers = [];
+            $("#GCVQuestions").show();
+            $("#BYOCCloudQuestions").hide();
+            $("#BYOCPremiseQuestions").hide();
+            $("#byocPremiseWithApplianceDiv").hide();
+            break;
+          case 'BYOCCloud':
+            if (!$("#countriesOperation").val() || $("#countriesOperation").val().length === 0) {
+              $("#telephonyModel").val('');
+              showMessage('Please select at least one country where the customer operates first', true);
+              return;
+            }
+            refreshBYOCCloudCountryCarriers();
+            $("#byocCloudCarriersDiv").show();
+            $("#byocPremiseDiv").hide();
+            $("#GCVQuestions").hide();
+            $("#BYOCPremiseQuestions").hide();
+            $("#byocPremiseWithApplianceDiv").hide();
+            $("#phoneNumbersDeployment").val('');
+            $("#BYOCCloudQuestions").show();
+            break;
+          case 'BYOCCloudAndGCV':
+            if (!$("#countriesOperation").val() || $("#countriesOperation").val().length === 0) {
+              $("#telephonyModel").val('');
+              showMessage('Please select at least one country where the customer operates first', true);
+              return;
+            }
+            refreshBYOCCloudCountryCarriers();
+            $("#byocCloudCarriersDiv").show();
+            $("#byocPremiseDiv").hide();
+            $("#GCVQuestions").show();
+            $("#BYOCPremiseQuestions").hide();
+            $("#byocPremiseWithApplianceDiv").hide();
+            $("#phoneNumbersDeployment").val('');
+            $("#BYOCCloudQuestions").show();
+            break;
+          case 'BYOCPremiseWithVirtualEdges':
+            $("#byocCloudCarriersDiv").hide();
+            $("#GCVQuestions").hide();
+            $("#byocPremiseDiv").show();
+            $("#byocPremiseWithApplianceDiv").hide();
+            countriesAndCarriers = [];
+            $("#GCVQuestions").hide();
+            $("#phoneNumbersDeployment").val('');
+            $("#BYOCCloudQuestions").hide();
+            $("#BYOCPremiseQuestions").show();
+            break;
+          case 'BYOCPremiseWithAppliance':
+            $("#byocCloudCarriersDiv").hide();
+            $("#GCVQuestions").hide();
+            $("#byocPremiseDiv").hide();
+            $("#byocPremiseWithApplianceDiv").show();
+            countriesAndCarriers = [];
+            $("#GCVQuestions").hide();
+            $("#phoneNumbersDeployment").val('');
+            $("#BYOCCloudQuestions").hide();
+            $("#BYOCPremiseQuestions").hide();
+            break;
+          default:
+            $("#byocCloudCarriersDiv").hide();
+            $("#byocPremiseDiv").hide();
+            countriesAndCarriers = [];
+            $("#GCVQuestions").hide();
+            $("#phoneNumbersDeployment").val('');
+            $("#BYOCCloudQuestions").hide();
+            $("#BYOCPremiseQuestions").hide();
+            $("#byocPremiseWithApplianceDiv").hide();
+            break;
+        }
+      }
+
+      $("#telephonyModel").on('change', (e) => {
+        refreshTelephonyModel();
+      });
+
+      function refreshBYOCCloudCountryCarriers() {
+        let currentCountryCarrierId = countryCarrierId++;
+        let freeTrialBYOCCarriers = {
+          US: [
+            {
+              name: 'Twillio US',
+              url: 'https://www.twilio.com/',
+            }
+          ],
+          EU: [
+            {
+              name: 'Twillio EU',
+              url: 'https://www.twilio.com/',
+            }]
+        }
+
+
+        $("#byocCloudCarriers").empty();
+        if (countriesAndCarriers.length == 0) {
+
+          $.each($("#countriesOperation").val(), (i, country) => {
+
+            // Country
+            let countryDiv = $("<div/>", { class: "form-group col-md-5" }).appendTo("#byocCloudCarriers");
+            $("<label/>", { id: "country_" + country }).text(country).appendTo(countryDiv);
+
+            // Carriers
+            let carriersDiv = $("<div/>", { class: "form-group col-md-5" }).appendTo("#byocCloudCarriers");
+            let carriersSelect = $("<select/>", { class: "selectpicker form-control", id: "carriers_" + country, name: "carriers_" + country, ["data-live-search"]: true, required: true, multiple: true }).appendTo(carriersDiv);
+            //$("<option/>", { value: "", disabled: true }).text("Select a Carrier").appendTo(carriersSelect);
+            if ($('#trialValidationType').val() === 'FreeTrial') {
+              $.each(freeTrialBYOCCarriers, (region, regionalSupportedBYOCCloudCarriers) => {
+                let optGroup = $("<optgroup/>", { label: region }).appendTo(carriersSelect);
+                $.each(regionalSupportedBYOCCloudCarriers, (i, regionalSupportedBYOCCloudCarrier) => {
+                  $("<option/>", { value: regionalSupportedBYOCCloudCarrier.name }).text(regionalSupportedBYOCCloudCarrier.name).appendTo(optGroup);
+                });
+              });
+            } else {
+              $.each(supportedBYOCCloudCarriers, (region, regionalSupportedBYOCCloudCarriers) => {
+                let optGroup = $("<optgroup/>", { label: region }).appendTo(carriersSelect);
+                $.each(regionalSupportedBYOCCloudCarriers, (i, regionalSupportedBYOCCloudCarrier) => {
+                  $("<option/>", { value: regionalSupportedBYOCCloudCarrier.name }).text(regionalSupportedBYOCCloudCarrier.name).appendTo(optGroup);
+                });
+              });
+            }
+            $("<option/>", { value: "Other" }).text("Other").appendTo(carriersSelect);
+            carriersSelect.selectpicker({
+              title: "Select one or more carriers"
+            });
+            carriersSelect.on('change', (e) => {
+              if (carriersSelect.val().includes("Other")) {
+                $("otherNote").show();
+              } else {
+                $("otherNote").hide();
+              }
+
+              let bFound = false;
+              for (var i in countriesAndCarriers) {
+                if (countriesAndCarriers[i].hasOwnProperty(country)) {
+                  countriesAndCarriers[i] = {
+                    [country]: carriersSelect.val().join(',')
+                  }
+                  bFound = true;
+                  break;
+                }
+              }
+              if (!bFound) {
+                // Add to array
+                countriesAndCarriers.push({
+                  [country]: carriersSelect.val().join(',')
+                });
+              }
+
+            });
+          });
+        } else {
+          $.each(countriesAndCarriers, (i, byocCloudCarrier) => {
+            console.log(i, byocCloudCarrier);
+            let country = Object.keys(byocCloudCarrier)[0];
+            let carriers = Object.values(byocCloudCarrier)[0].split(',');
+
+            // Country
+            let countryDiv = $("<div/>", { class: "form-group col-md-6" }).appendTo("#byocCloudCarriers");
+            $("<label/>", { id: "country_" + country }).text(country).appendTo(countryDiv);
+
+            // Carriers
+            let carriersDiv = $("<div/>", { class: "form-group col-md-6" }).appendTo("#byocCloudCarriers");
+            let carriersSelect = $("<select/>", { class: "selectpicker form-control", id: "carriers_" + country, name: "carriers_" + country, ["data-live-search"]: true, required: true, multiple: true }).appendTo(carriersDiv);
+            //$("<option/>", { value: "", disabled: true }).text("Select a Carrier").appendTo(carriersSelect);
+            if ($('#trialValidationType').val() === 'FreeTrial') {
+              $.each(freeTrialBYOCCarriers, (region, regionalSupportedBYOCCloudCarriers) => {
+                let optGroup = $("<optgroup/>", { label: region }).appendTo(carriersSelect);
+                $.each(regionalSupportedBYOCCloudCarriers, (i, regionalSupportedBYOCCloudCarrier) => {
+                  $("<option/>", { value: regionalSupportedBYOCCloudCarrier.name, selected: carriers.includes(regionalSupportedBYOCCloudCarrier.name) }).text(regionalSupportedBYOCCloudCarrier.name).appendTo(optGroup);
+                });
+              });
+            } else {
+              $.each(supportedBYOCCloudCarriers, (region, regionalSupportedBYOCCloudCarriers) => {
+                let optGroup = $("<optgroup/>", { label: region }).appendTo(carriersSelect);
+                $.each(regionalSupportedBYOCCloudCarriers, (i, regionalSupportedBYOCCloudCarrier) => {
+                  $("<option/>", { value: regionalSupportedBYOCCloudCarrier.name, selected: carriers.includes(regionalSupportedBYOCCloudCarrier.name) }).text(regionalSupportedBYOCCloudCarrier.name).appendTo(optGroup);
+                });
+              });
+            }
+
+
+            $("<option/>", { value: "Other", selected: carriers.includes('Other') }).text("Other").appendTo(carriersSelect);
+            carriersSelect.selectpicker({
+              title: "Select one or more carriers"
+            });
+            carriersSelect.on('change', (e) => {
+              let bFound = false;
+              for (var i in countriesAndCarriers) {
+                if (countriesAndCarriers[i].hasOwnProperty(country)) {
+                  countriesAndCarriers[i] = {
+                    [country]: carriersSelect.val().join(',')
+                  }
+                  bFound = true;
+                  break;
+                }
+              }
+              if (!bFound) {
+                // Add to array
+                countriesAndCarriers.push({
+                  [country]: carriersSelect.val().join(',')
+                });
+              }
+
+            });
+          });
+        }
+      }
+
+
+      //#endregion /Free Trials
+
+
+      $(document).ready(async function () {
+
+        //setRequestFormType(0);
+
+        try {
+          userInfo = await getMe();
+          if (!maintenanceMode) $('#submit').attr('disabled', false);
+        } catch (error) {
+          showMessage(error.hasOwnProperty('message') ? error.message : `Unable to login to Genesys Cloud ${JSON.stringify(error)}`, true);
+          $('#submit').attr('disabled', true);
+          return;
+        }
+
+        gcToken = userInfo.token;
+        localStorage.setItem('gcToken', gcToken);
+        localStorage.setItem('userName', userInfo.name);
+
+        // Apply custom dropdown style to SF Search Input Box
+        let data = JSON.parse(localStorage.getItem('intakeForm_draft'));
+        if (data)
+          sfObject = data.sfObject;
+
+        if (!data) {
+          $('.js-example-basic-single').select2({ dropdownAutoWidth: true });
+        } else {
+          $('#sfData').select2({
+            data: data.opp,
+            dropdownAutoWidth: true
+          });
+          $('#oppAssignedSC').select2({
+            data: data.oppAssignedSC,
+            dropdownAutoWidth: true
+          });
+          $('#oppPartnerCustomerName').select2({
+            data: data.oppPartnerCustomerName,
+            dropdownAutoWidth: true
+          });
+        }
+
+        let assignedSCValue = sfObject && sfObject.dsr && sfObject.dsr.virtualTeamNames ? sfObject.dsr.virtualTeamNames : sfObject && sfObject.Solution_Consultant__r && sfObject.Solution_Consultant__r.Name ? sfObject.Solution_Consultant__r.Name : undefined;
+        console.log(assignedSCValue);
+        if (assignedSCValue) {
+          $('#oppAssignedSC').attr('disabled', true);
+          $('#oppPartnerCustomerName').attr('disabled', true);
+        }
+        else {
+          $('#oppAssignedSC').attr('disabled', false);
+          $('#oppPartnerCustomerName').attr('disabled', false);
+        }
+
+        if (sfObject && sfObject.Account && !$('#sfData').select2('data')[0])
+          $('#sfData').attr('disabled', true);
+        else
+          $('#sfData').attr('disabled', false);
+
+        // Detect locally correct env
+        if (window.location.href.includes('localhost')) apiBasePath = 'http://localhost:3000';
+        else apiBasePath = 'https://drbojb15ma.execute-api.eu-central-1.amazonaws.com/dev';
+
+        //##region sfData (Opportunity)
+
+        // Remote query, to search for Opportunity name, bind results to select2 object
+        $('#sfData').select2({
+          placeholder: 'Find Opportunity Name',
+          allowClear: true,
+          minimumInputLength: 3,
+          ajax: {
+            delay: 350,
+            url: `${apiBasePath}/sf/opportunities`,
+
+            data: function (params) {
+              var query = {
+                token: gcToken,
+                name: params.term,
+              };
+              // Query parameters will be ?search=[term]&type=public
+              return query;
+            },
+            error: function (err) {
+              console.log(err);
+              if (err.status === 401) {
+                window.open('./index.html', '_self');
+              } else if (err.status > 400) {
+                showMessage(err.hasOwnProperty('responseJSON') ? err.responseJSON.message : error, true);
+              }
+            },
+
+            processResults: function (data) {
+              // Transforms the top-level key of the response object from 'items' to 'results'
+
+              let ret = [];
+              data.forEach((item) => {
+                ret.push({
+                  id: item.Id,
+                  text: `${item.Name} (${item.Id})`,
+                  item: item,
+                });
+              });
+              console.log(ret);
+              return {
+                results: ret,
+              };
+            },
+          },
+        });
+
+        // Detect Selected event, post second query on selected Item by Opportunity ID to get latest DSR object
+        $('#sfData').on('select2:select', async function (e) {
+          var data = e.params.data;
+          if (!data) return;
+          $("#sfSpinner").attr("hidden", false);
+          $("#oppAssignedSC").attr("disabled", true);
+          $("#oppPartnerCustomerName").attr("disabled", true);
+          $("#sfData").attr("disabled", true);
+
+          console.log('before search:');
+          console.log($('#sfData').select2('data')[0].item);
+          sfObject = e.params.data.item;
+
+          try {
+            let dsrInformation = await getOpportunityDSR(gcToken, e.params.data.id);
+
+            //$('#sfData').select2('data')[0].item.dsr = dsrInformation;
+            sfObject.dsr = dsrInformation;
+
+            // Update Form fields
+
+            //let myData = $('#sfData').select2('data')[0].item;
+            let myData = sfObject;
+            $('#oppUrl').val(myData.opportunityUrl);
+            $('#oppDSRUrl').val(myData.dsr && myData.dsr.url ? myData.dsr.url : 'n/a');
+            $('#oppOwner').val(myData.Owner && myData.Owner.Name ? myData.Owner.Name : 'n/a');
+
+
+            let assignedSCValue = myData.dsr && myData.dsr.virtualTeamNames ? myData.dsr.virtualTeamNames : myData.Solution_Consultant__r && myData.Solution_Consultant__r.Name ? myData.Solution_Consultant__r.Name : undefined;
+            if (assignedSCValue) {
+              $("#oppAssignedSC").append($("<option selected='selected'></option>").val("0").text(assignedSCValue)).trigger('change');
+              $('#oppAssignedSC').attr('disabled', true);
+            } else {
+              $('#oppAssignedSC').attr('disabled', false);
+              $('#oppAssignedSC').val(null).trigger('change');
+            }
+            sfObject.oppAssignedSC = assignedSCValue;
+            let foundAccount = myData.Account && myData.Account.Name ? myData.Account.Name : undefined;
+            if (foundAccount)
+              $("#oppPartnerCustomerName").append($("<option selected='selected'></option>").val("0").text(foundAccount)).trigger('change');
+            else
+              $('#oppPartnerCustomerName').val(null).trigger('change');
+            $('#oppPartnerCustomerName').attr('disabled', true);
+
+
+            //$('#oppAssignedSC').val(myData.dsr && myData.dsr.virtualTeamNames ? myData.dsr.virtualTeamNames : myData.Solution_Consultant__r && myData.Solution_Consultant__r.Name ? myData.Solution_Consultant__r.Name : 'n/a');
+
+            // Find vaild mail address for assigned SC (if exists)
+            if (!assignedSCValue) return;
+            try {
+              sfObject.oppAssignedSCMail = await postUsersSearch($('#oppAssignedSC').select2('data')[0].text);
+              console.log('sfObject.oppAssignedSCMail:', sfObject.oppAssignedSCMail);
+            } catch (error) {
+              console.error(error);
+            }
+          } catch (error) {
+            console.log(error);
+          } finally {
+            $("#sfSpinner").attr("hidden", true);
+            $("#sfData").attr("disabled", false);
+          }
+        });
+
+        $('#sfData').on('select2:clear', async function (e) {
+          console.log('clear items related to SF');
+          sfObject = {};
+          $('#oppAssignedSC').attr('disabled', false);
+          $('#oppAssignedSC').val(null).trigger('change');
+          $('#oppPartnerCustomerName').val(null).trigger('change');
+          $('#oppPartnerCustomerName').attr('disabled', false);
+          $('#oppUrl').val('');
+          $('#oppDSRUrl').val('');
+          $('#oppOwner').val('');
+          $('#oppPartnerCustomerName').val('');
+          $('#oppAssignedSC').val('');
+        });
+
+        //#endregion /sfData (Opportunity)
+
+
+        $('#oppAssignedSC').select2({
+          width: '100%',
+          placeholder: 'Select user',
+          allowClear: true,
+          minimumInputLength: 3,
+          ajax: {
+            delay: 350,
+            method: 'POST',
+            headers: {
+              Authorization: `bearer ${gcToken}`,
+              "Content-Type": "application/json",
+            },
+            url: `https://api.mypurecloud.com/api/v2/search?profile=false`,
+            data: function (params) {
+              const body = getSearchUserBody(params.term);
+              console.log('Search user query: ', body);
+              return JSON.stringify(body);
+            },
+            processResults: function (data) {
+              console.log(data);
+              if (!data || !Array.isArray(data.results) || data.results.length === 0) return [];
+              let result = [];
+              for (const item of data.results) {
+                result.push({ id: item.name, text: item.name, item });
+              }
+              return { results: result };
+            }
+          }
+        });
+
+        $('#oppAssignedSC').on('select2:select', async function (e) {
+          var data = e.params.data;
+          if (!data) return;
+          console.log(data);
+          sfObject.oppAssignedSC = data.text;
+          sfObject.oppAssignedSCMail = data.item.email;
+
+        });
+
+        $('#oppAssignedSC').on('select2:clear', async function (e) {
+
+          delete sfObject.oppAssignedSC;
+          delete sfObject.oppAssignedSCMail;
+
+        });
+
+
+        $('#oppPartnerCustomerName').select2({
+          placeholder: 'Find Account Name',
+          allowClear: true,
+          minimumInputLength: 3,
+          ajax: {
+            delay: 350,
+            url: `${apiBasePath}/sf/accounts`,
+
+            data: function (params) {
+              var query = {
+                token: gcToken,
+                name: params.term,
+              };
+              // Query parameters will be ?search=[term]&type=public
+              return query;
+            },
+            error: function (err) {
+              console.log(err);
+              if (err.status === 401) {
+                window.open('./index.html', '_self');
+              } else if (err.status > 400) {
+                showMessage(err.hasOwnProperty('responseJSON') ? err.responseJSON.message : error, true);
+              }
+            },
+
+            processResults: function (data) {
+              // Transforms the top-level key of the response object from 'items' to 'results'
+
+              let ret = [];
+              data.forEach((item) => {
+                ret.push({
+                  id: item.Id,
+                  text: `${item.Name} (${item.Owner && item.Owner.Name ? item.Owner.Name : 'owner undefined'})`,
+                  item: item,
+                });
+              });
+              console.log(ret);
+              return {
+                results: ret,
+              };
+            },
+          },
+        });
+
+        $('#oppPartnerCustomerName').on('select2:select', async function (e) {
+          var data = e.params.data;
+          if (!data) return;
+          console.log(data);
+          sfObject.Account = data.item;
+          $('#oppOwner').val(data.item.Owner && data.item.Owner.Name ? data.item.Owner.Name : 'n/a');
+          $('#sfData').attr('disabled', true); // don't allow to set Opportunity when Account is selected
+          $('#oppUrl').val(data.item.opportunityUrl);
+
+        });
+
+        $('#oppPartnerCustomerName').on('select2:clear', async function (e) {
+
+          delete sfObject.Account;
+          $('#sfData').attr('disabled', false);
+          $('#oppOwner').val('');
+          $('#oppUrl').val('');
+
+        });
+
+        init();
+
+      });
+
+      //#endregion /handle SF Search element
+
+
 
       if (version && version.hasOwnProperty('version')) {
         $('#version').text(`v${version.version}`);
@@ -335,12 +1411,6 @@
         close_video();
       });
 
-      $(document).keyup(function (e) {
-        if (e.keyCode === 27) {
-          close_video();
-        }
-      });
-
       function close_video() {
         $('.video-overlay.open').removeClass('open').find('iframe').remove();
       }
@@ -349,29 +1419,21 @@
       if (window.location.href.includes('dev')) $('#devModeImage').removeAttr('hidden');
 
       // Init DatePicker
+      let currentDate = new Date();
+      console.log(currentDate);
       $(function () {
         $('#datepicker').datepicker({
-          daysOfWeekDisabled: '0,6',
+          daysOfWeekDisabled: ['0', '6'],
           todayHighlight: true,
           autoclose: true,
-          startDate: new Date(),
         });
       });
 
-      init();
-      async function init() {
-        try {
-          await getMe();
-          if (!maintenanceMode) $('#submit').attr('disabled', false);
-        } catch (error) {
-          showMessage(error.hasOwnProperty('message') ? error.message : `Unable to login to Genesys Cloud ${JSON.stringify(error)}`, true);
-          $('#submit').attr('disabled', true);
-          return;
-        }
 
-        gcToken = userInfo.token;
-        localStorage.setItem('gcToken', gcToken);
-        localStorage.setItem('userName', userInfo.name);
+      function init() {
+        console.log('init()');
+        setTelephonyModelDropDown();
+
 
         // Populate user info
         $('#requesterName').val(userInfo.name);
@@ -384,41 +1446,53 @@
 
         if (userInfo.groups.some((g) => adminGroups['super'].includes(g))) {
           console.log('Show super admin stuff');
-          $('.admin').show();
-          $('.admin').removeAttr('hidden');
+          // $('.admin').show();
+          // $('.admin').removeAttr('hidden');
           $('#reviewRequestsButton').attr('href', 'requests.html?region=super-user');
+          $('#reviewRequestsButton').text('Review Requests');
           $('#regionBadge').text('super-user');
         } else if (userInfo.groups.some((g) => adminGroups['EMEA'].includes(g))) {
           console.log('Show admin stuff');
-          $('.admin').show();
-          $('.admin').removeAttr('hidden');
+          // $('.admin').show();
+          // $('.admin').removeAttr('hidden');
           $('#reviewRequestsButton').attr('href', 'requests.html?region=EMEA');
+          $('#reviewRequestsButton').text('Review Requests');
           $('#regionBadge').text('EMEA');
         } else if (userInfo.groups.some((g) => adminGroups['NA'].includes(g))) {
           console.log('Show admin stuff');
-          $('.admin').show();
-          $('.admin').removeAttr('hidden');
+          // $('.admin').show();
+          // $('.admin').removeAttr('hidden');
           $('#reviewRequestsButton').attr('href', 'requests.html?region=NA');
+          $('#reviewRequestsButton').text('Review Requests');
           $('#regionBadge').text('NA');
         } else if (userInfo.groups.some((g) => adminGroups['APAC'].includes(g))) {
           console.log('Show admin stuff');
-          $('.admin').show();
-          $('.admin').removeAttr('hidden');
+          // $('.admin').show();
+          // $('.admin').removeAttr('hidden');
           $('#reviewRequestsButton').attr('href', 'requests.html?region=APAC');
+          $('#reviewRequestsButton').text('Review Requests');
           $('#regionBadge').text('APAC');
         } else if (userInfo.groups.some((g) => adminGroups['LATAM'].includes(g))) {
           console.log('Show admin stuff');
-          $('.admin').show();
-          $('.admin').removeAttr('hidden');
+          // $('.admin').show();
+          // $('.admin').removeAttr('hidden');
           $('#reviewRequestsButton').attr('href', 'requests.html?region=LATAM');
+          $('#reviewRequestsButton').text('Review Requests');
           $('#regionBadge').text('LATAM');
         } else {
-          console.log('Hide admin stuff');
-          $('.admin').hide();
-          $('.admin').attr('hidden', true);
+          //console.log('Hide admin stuff');
+          //$('.admin').hide();
+          //$('.admin').attr('hidden', true);
+          // $('.admin').show();
+          // $('.admin').removeAttr('hidden');
+
           $('#regionBadge').text('');
-          $('#reviewRequestsButton').hide();
+          //$('#reviewRequestsButton').hide();
+          $('#reviewRequestsButton').attr('href', 'requests.html');
+          $('#reviewRequestsButton').text('My Requests');
         }
+        $('.admin').show();
+        $('.admin').removeAttr('hidden');
       }
 
       function addNewTask(task, includeDeleteButton = false) {
@@ -510,6 +1584,14 @@
         }
       });
 
+
+      $('#trialValidationType').on('change', () => {
+        // TODO: Change Telephony Deployment
+        setTelephonyModelDropDown();
+
+      });
+
+
       function updateRequestTypeBasedOnRegionAndProduct(categorySelect, typeSelect, savedType) {
         typeSelect.empty();
 
@@ -576,12 +1658,24 @@
           }
 
           let description = $('#description').val();
-          let partnerCustomerName = $('#partnerCustomerName').val();
-          let salesforceAccountOpportunity = $('#salesforceAccountOpportunity').val();
+          // let partnerCustomerName = $('#partnerCustomerName').val();
+          // let salesforceAccountOpportunity = $('#salesforceAccountOpportunity').val();
 
-          console.log(`Region: ${region}, subRegion: ${subRegion}, Product: ${product}, Tasks: ${JSON.stringify(tasks)}, Requester Name: ${requesterName}, Requester Email: ${requesterEmail}, Requester Phone Number: ${requesterPhoneNumber}, Need Completed By: ${needCompletedBy}, Description: ${description}, Partner or Customer Name: ${partnerCustomerName}, Salesforce Opportunity: ${salesforceAccountOpportunity}`);
+          // SF Related Data
 
-          await postRequests(region, subRegion, segment, product, tasks, requesterName, requesterEmail, requesterPhoneNumber, needCompletedBy, description, partnerCustomerName, salesforceAccountOpportunity, gcToken, customerRelationship, customerType);
+          let oppUrl = $('#oppUrl').val();
+          let oppDSRUrl = $('#oppDSRUrl').val();
+          let oppOwner = $('#oppOwner').val();
+          let oppPartnerCustomerName = sfObject && sfObject.Account && sfObject.Account.Name ? sfObject.Account.Name : undefined
+          //let oppAssignedSC = $('#oppAssignedSC').val();
+          let oppName = $('#sfData').select2('data').length > 0 && $('#sfData').select2('data')[0].text ? $('#sfData').select2('data')[0].text : undefined;
+
+          let oppAssignedSC = sfObject && sfObject.oppAssignedSC ? sfObject.oppAssignedSC : undefined;
+
+          let oppAssignedSCMail = sfObject && sfObject.oppAssignedSCMail ? sfObject.oppAssignedSCMail : undefined;
+          console.log(`Region: ${region}, subRegion: ${subRegion}, Product: ${product}, Tasks: ${JSON.stringify(tasks)}, Requester Name: ${requesterName}, Requester Email: ${requesterEmail}, Requester Phone Number: ${requesterPhoneNumber}, Need Completed By: ${needCompletedBy}, Description: ${description}, AccountName: ${oppPartnerCustomerName}`);
+
+          await postRequests(region, subRegion, segment, product, tasks, requesterName, requesterEmail, requesterPhoneNumber, needCompletedBy, description, oppName, oppUrl, oppDSRUrl, oppOwner, oppPartnerCustomerName, oppAssignedSC, oppAssignedSCMail, gcToken, customerRelationship, customerType);
           console.log('Success!');
           showMessage('Request submitted. Thanks!');
 
@@ -592,7 +1686,7 @@
           sTasks = sTasks + '\n----------------------------------';
           console.log(sTasks);
 
-          let detailedInfo = '\n```no-highlight\n region:\t\t' + region + '\n sub-region:\t\t' + subRegion + '\n segment:\t\t' + segment + '\n product:\t\t' + product + '\n req name:\t\t' + requesterName + '\n req email:\t\t' + requesterEmail + '\n req phone:\t\t' + requesterPhoneNumber + sTasks + '\n completed by:\t\t' + needCompletedBy + '\n description:\t\t' + description + '\n p/c name:\t\t' + partnerCustomerName + '\n sf/acc opp:\t\t' + salesforceAccountOpportunity + '\n ```\n';
+          let detailedInfo = '\n```no-highlight\n region:\t\t' + region + '\n sub-region:\t\t' + subRegion + '\n segment:\t\t' + segment + '\n product:\t\t' + product + '\n req name:\t\t' + requesterName + '\n req email:\t\t' + requesterEmail + '\n req phone:\t\t' + requesterPhoneNumber + sTasks + '\n completed by:\t\t' + needCompletedBy + '\n description:\t\t' + description + '\n ```\n';
           if (!window.location.href.includes('localhost')) sendNotification(`:loudspeaker: New CCC Request from [@${userInfo.name}](#/person/${userInfo.id}) ${detailedInfo}`, region, subRegion, segment, product);
           $('#submit').prop('disabled', false);
           $('#submit').html('Submit');
@@ -618,10 +1712,64 @@
         $('#segment').val('');
         $('#region').val('');
         $('#product').val('');
-        $('#datepicker').val('');
+        $('#datepicker').datepicker('update', '');
         $('#description').val('');
-        $('#partnerCustomerName').val('');
-        $('#salesforceAccountOpportunity').val('');
+        $('#customerRelationship').val('');
+        $('#customerType').val('');
+
+
+        // $('#partnerCustomerName').val('');
+        // $('#salesforceAccountOpportunity').val('');
+
+        // SF Related Data
+        $('#oppUrl').val('');
+        $('#oppDSRUrl').val('');
+        $('#oppOwner').val('');
+
+        $('#sfData').val(null).trigger('change');
+        $('#oppAssignedSC').val(null).trigger('change');
+        $('#oppPartnerCustomerName').val(null).trigger('change');
+
+        sfObject = {};
+
+        // Free Trial
+        $('#trialValidationType').val('');
+        $('#trialValidationType').change();
+
+        // Telephony
+        $("#countriesAgents").val('');
+        $("#countriesAgents").selectpicker('refresh');
+        $("#countriesOperation").val('');
+        $("#countriesOperation").selectpicker('refresh');
+
+        $("#existingTelephonyUsage").prop('checked', false);
+        $("#existingTelephonyUsageDetails").val('');
+        $("#telephonyModel")[0].selectedIndex = 0;
+        $("#telephonyModel").change();
+        countriesAndCarriers = [];
+        $("#byocCloudCarriers").empty();
+        $("#phoneNumbersDeployment").val('');
+        $("#relationshipWithCarrier").prop('checked', false);
+        $("#customerResourceCommitted").prop('checked', false);
+        $("#hyperVEnvironment").prop('checked', false);
+        $("#estimatedVolumeMinsPerMonth").val('');
+        $("#genesysCloudRegion").val('');
+
+        // General Configuration
+        $("#numberAgents").val('');
+        $("#identificationAndVerificationProcesses").val('');
+        $("#itInfrastructure").val('');
+        $("#endUserDevicesRequireVPN").prop('checked', false);
+        $("#virtualDesktopSolution").val('');
+        $('#impactByDesign').prop('checked', false);
+        $('#businessGoal').val('');
+        $('#measureOfSuccess').val('');
+
+        // Policies & Processes
+        $("#standardTermsConditions").prop('checked', false);
+
+        // Other
+        $("#solutionBusinessConsultingRequired").prop('checked', false);
 
         localStorage.removeItem('intakeForm_draft');
       }
@@ -629,7 +1777,9 @@
       setInterval(() => {
         try {
           let data = {
+            currentRequestType: currentRequestType,
             // Populate user info
+
             region: $('#region').val(),
             subRegion: $('#subRegion').val(),
             customerRelationship: $('#customerRelationship').val(),
@@ -641,12 +1791,58 @@
             requesterEmail: $('#requesterEmail').val(),
             requesterPhoneNumber: $('#requesterPhoneNumber').val(),
             description: $('#description').val(),
-            partnerCustomerName: $('#partnerCustomerName').val(),
-            salesforceAccountOpportunity: $('#salesforceAccountOpportunity').val(),
+
+            // SF Related Data
+            // partnerCustomerName: $('#partnerCustomerName').val(),
+            // salesforceAccountOpportunity: $('#salesforceAccountOpportunity').val(),
+            opp: $('#sfData').select2('data'),
+            oppUrl: $('#oppUrl').val(),
+            oppDSRUrl: $('#oppDSRUrl').val(),
+            oppOwner: $('#oppOwner').val(),
+            oppPartnerCustomerName: $('#oppPartnerCustomerName').select2('data'),
+            oppAssignedSC: $('#oppAssignedSC').select2('data'),
+
+            sfObject: sfObject,
+
+            //FreeTrial
+            trialValidationType: $('#trialValidationType').val(),
+            // Telephony
+            countriesAgents: $("#countriesAgents").val(),
+            countriesOperation: $("#countriesOperation").val(),
+
+            newNumbers: $("#newNumbers").val(),
+            phoneNumbersDeployment: $("#phoneNumbersDeployment").val(),
+            existingTelephonyUsage: $("#existingTelephonyUsage").is(':checked'),
+            existingTelephonyUsageDetails: $("#existingTelephonyUsageDetails").val(),
+            telephonyModel: $("#telephonyModel").val(),
+            byocCloudCarriers: countriesAndCarriers,
+            relationshipWithCarrier: $("#relationshipWithCarrier").is(':checked'),
+            customerResourceCommitted: $("#customerResourceCommitted").is(':checked'),
+            hyperVEnvironment: $("#hyperVEnvironment").is(':checked'),
+            estimatedVolumeMinsPerMonth: $("#estimatedVolumeMinsPerMonth").val(),
+            genesysCloudRegion: $("#genesysCloudRegion").val(),
+
+            // General Configuration
+            numberAgents: $("#numberAgents").val(),
+            identificationAndVerificationProcesses: $("#identificationAndVerificationProcesses").val(),
+            itInfrastructure: $("#itInfrastructure").val(),
+            endUserDevicesRequireVPN: $("#endUserDevicesRequireVPN").is(':checked'),
+            virtualDesktopSolution: $("#virtualDesktopSolution").val(),
+            impactByDesign: $('#impactByDesign').is(':checked'),
+            businessGoal: $('#businessGoal').val(),
+            measureOfSuccess: $('#measureOfSuccess').val(),
+
+
+            // Policies & Processes
+            standardTermsConditions: $("#standardTermsConditions").is(':checked'),
+
+            // Other
+            solutionBusinessConsultingRequired: $("#solutionBusinessConsultingRequired").is(':checked'),
+
           };
 
           let needCompletedByDate = moment($('#datepicker').datepicker('getDate')).format('YYYY-MM-DDT00:00:00.000');
-          if (needCompletedByDate != 'Invalid date') {
+          if (needCompletedByDate !== 'Invalid date') {
             data.needCompletedBy = needCompletedByDate + 'Z';
           }
 
@@ -676,8 +1872,12 @@
           let data = JSON.parse(localStorage.getItem('intakeForm_draft'));
           if (!data) {
             console.log('no draft found.');
+            setRequestFormType(0);
             return;
           }
+
+          if (data.currentRequestType)
+            setRequestFormType(Number(data.currentRequestType));
 
           if (data.taskControls) {
             tasksControls = [];
@@ -716,8 +1916,71 @@
           $('#requesterPhoneNumber').val(data.requesterPhoneNumber);
           $('#datepicker').datepicker('update', new Date(data.needCompletedBy));
           $('#description').val(data.description);
-          $('#partnerCustomerName').val(data.partnerCustomerName);
-          $('#salesforceAccountOpportunity').val(data.salesforceAccountOpportunity);
+          // $('#partnerCustomerName').val(data.partnerCustomerName);
+          // $('#salesforceAccountOpportunity').val(data.salesforceAccountOpportunity);
+
+          // SF Related Data
+          $('#oppUrl').val(data.oppUrl);
+          $('#oppDSRUrl').val(data.oppDSRUrl);
+          $('#oppOwner').val(data.oppOwner);
+          //$('#oppPartnerCustomerName').val(data.oppPartnerCustomerName);
+          $('#oppAssignedSC').val(data.oppAssignedSC);
+
+          sfObject = data.sfObject;
+          delete data.sfObject;
+
+          // Load FreeTrial Items
+          if (data.trialValidationType) {
+            $('#trialValidationType').val(data.trialValidationType);
+            $('#trialValidationType').change();
+          }
+
+          // Telephony
+          if (data.countriesAgents) {
+            $("#countriesAgents").val(data.countriesAgents);
+            $("#countriesAgents").selectpicker('refresh');
+          }
+          if (data.countriesOperation) {
+            $("#countriesOperation").val(data.countriesOperation);
+            $("#countriesOperation").selectpicker('refresh');
+          }
+          $("#newNumbers").val(data.newNumbers);
+          $("#existingTelephonyUsage").attr('checked', data.existingTelephonyUsage);
+          $("#existingTelephonyUsageDetails").attr('disabled', !data.existingTelephonyUsage);
+          $("#existingTelephonyUsageDetails").val(data.existingTelephonyUsageDetails);
+          countriesAndCarriers = data.byocCloudCarriers;
+          if (data.telephonyModel) {
+            $("#telephonyModel").val(data.telephonyModel);
+            $("#telephonyModel").change();
+          }
+
+
+          $("#phoneNumbersDeployment").val(data.phoneNumbersDeployment);
+          $("#relationshipWithCarrier").prop('checked', data.relationshipWithCarrier);
+          $("#customerResourceCommitted").prop('checked', data.customerResourceCommitted);
+          $("#hyperVEnvironment").prop('checked', data.hyperVEnvironment);
+          $("#estimatedVolumeMinsPerMonth").val(data.estimatedVolumeMinsPerMonth);
+          $("#genesysCloudRegion").val(data.genesysCloudRegion);
+
+          // General Configuration
+          $("#numberAgents").val(data.numberAgents);
+          $("#identificationAndVerificationProcesses").val(data.identificationAndVerificationProcesses);
+          $("#itInfrastructure").val(data.itInfrastructure);
+          $("#endUserDevicesRequireVPN").prop('checked', data.endUserDevicesRequireVPN);
+          $("#virtualDesktopSolution").val(data.virtualDesktopSolution);
+          $('#impactByDesign').prop('checked', data.impactByDesign);
+          $('#businessGoal').val(data.businessGoal);
+          $('#measureOfSuccess').val(data.measureOfSuccess);
+
+
+          // Policies & Processes
+          $("#standardTermsConditions").prop('checked', data.standardTermsConditions);
+
+          // Other          
+          $("#solutionBusinessConsultingRequired").prop('checked', data.solutionBusinessConsultingRequired);
+
+
+
         } catch (error) {
           console.error(error);
         }
@@ -726,5 +1989,6 @@
 
     <!--Coollabs -->
     <script async defer src="https://cdn.coollabs.io/save.js"></script>
-  </body>
+</body>
+
 </html>
