@@ -78,29 +78,28 @@ async function postRequests(region, subRegion, segment, product, tasks, requeste
     data.requestType = '1';
     data.tasks = [{ taskCategory: 'Trial Validation', taskId: 0, taskTime: 0, taskType: $('#trialValidationType').val() }];
     if ($('#trialValidationType').val()) data.freeTrialValidationType = $('#trialValidationType').val();
-    if ($('#trialValidationType').val() !== 'FreeTrial') {
-      if ($('#countriesAgents').val().length > 0) data.freeTrialCountriesAgents = $('#countriesAgents').val();
-      if ($('#countriesOperation').val().length > 0) data.freeTrialCountriesOperation = $('#countriesOperation').val();
 
-      if ($('#telephonyModel').val()) data.freeTrialTelephonyModel = $('#telephonyModel').val();
+    if ($('#countriesAgents').val().length > 0) data.freeTrialCountriesAgents = $('#countriesAgents').val();
+    if ($('#countriesOperation').val().length > 0) data.freeTrialCountriesOperation = $('#countriesOperation').val();
 
-      if (countriesAndCarriers.length > 0) data.freeTrialByocCloudCarriers = countriesAndCarriers;
+    if ($('#telephonyModel').val()) data.freeTrialTelephonyModel = $('#telephonyModel').val();
 
-      if ($('#phoneNumbersDeployment').val().length > 0) {
-        data.freeTrialPhoneNumbersDeployment = $('#phoneNumbersDeployment').val();
-      }
-      if ($('#newNumbers').val().length > 0) {
-        data.freeTrialNewNumbers = $('#newNumbers').val();
-      }
-      if ($('#genesysCloudRegion').val()) {
-        data.freeTrialGenesysCloudRegion = $('#genesysCloudRegion').val();
-      }
-      if ($('#estimatedVolumeMinsPerMonth').val().length > 0) {
-        data.freeTrialEstimatedVolumeMinsPerMonth = $('#estimatedVolumeMinsPerMonth').val();
-      }
-      data.freeTrialRelationshipWithCarrier = $('#relationshipWithCarrier').is(':checked');
-      data.freeTrialHyperVEnvironment = $('#hyperVEnvironment').is(':checked');
+    if (countriesAndCarriers.length > 0) data.freeTrialByocCloudCarriers = countriesAndCarriers;
+
+    if ($('#phoneNumbersDeployment').val().length > 0) {
+      data.freeTrialPhoneNumbersDeployment = $('#phoneNumbersDeployment').val();
     }
+    if ($('#newNumbers').val().length > 0) {
+      data.freeTrialNewNumbers = $('#newNumbers').val();
+    }
+    if ($('#genesysCloudRegion').val()) {
+      data.freeTrialGenesysCloudRegion = $('#genesysCloudRegion').val();
+    }
+    if ($('#estimatedVolumeMinsPerMonth').val().length > 0) {
+      data.freeTrialEstimatedVolumeMinsPerMonth = $('#estimatedVolumeMinsPerMonth').val();
+    }
+    data.freeTrialRelationshipWithCarrier = $('#relationshipWithCarrier').is(':checked');
+    data.freeTrialHyperVEnvironment = $('#hyperVEnvironment').is(':checked');
 
     // General Configuration
 
@@ -123,6 +122,16 @@ async function postRequests(region, subRegion, segment, product, tasks, requeste
 
     if ($('#virtualDesktopSolution').val().length > 0) {
       data.freeTrialVirtualDesktopSolution = $('#virtualDesktopSolution').val();
+    }
+
+    data.freeTrialImpactByDesign = $('#impactByDesign').is(':checked');
+
+    if ($('#businessGoal').val().length > 0) {
+      data.freeTrialBusinessGoal = $('#businessGoal').val();
+    }
+
+    if ($('#measureOfSuccess').val().length > 0) {
+      data.freeTrialMeasureOfSuccess = $('#measureOfSuccess').val();
     }
 
     // Other
@@ -254,29 +263,28 @@ async function putRequest(id, region, subRegion, segment, product, tasks, reques
     data.requestType = '1';
     data.tasks = [{ taskCategory: 'Demo & Trial Support', taskId: 0, taskTime: 0, taskType: $('#trialValidationType').val() }];
     if ($('#trialValidationType').val()) data.freeTrialValidationType = $('#trialValidationType').val();
-    if ($('#trialValidationType').val() !== 'FreeTrial') {
-      if ($('#countriesAgents').val().length > 0) data.freeTrialCountriesAgents = $('#countriesAgents').val();
-      if ($('#countriesOperation').val().length > 0) data.freeTrialCountriesOperation = $('#countriesOperation').val();
 
-      if ($('#telephonyModel').val()) data.freeTrialTelephonyModel = $('#telephonyModel').val();
+    if ($('#countriesAgents').val().length > 0) data.freeTrialCountriesAgents = $('#countriesAgents').val();
+    if ($('#countriesOperation').val().length > 0) data.freeTrialCountriesOperation = $('#countriesOperation').val();
 
-      if (countriesAndCarriers.length > 0) data.freeTrialByocCloudCarriers = countriesAndCarriers;
+    if ($('#telephonyModel').val()) data.freeTrialTelephonyModel = $('#telephonyModel').val();
 
-      if ($('#phoneNumbersDeployment').val().length > 0) {
-        data.freeTrialPhoneNumbersDeployment = $('#phoneNumbersDeployment').val();
-      }
-      if ($('#newNumbers').val().length > 0) {
-        data.freeTrialNewNumbers = $('#newNumbers').val();
-      }
-      if ($('#genesysCloudRegion').val()) {
-        data.freeTrialGenesysCloudRegion = $('#genesysCloudRegion').val();
-      }
-      if ($('#estimatedVolumeMinsPerMonth').val().length > 0) {
-        data.freeTrialEstimatedVolumeMinsPerMonth = $('#estimatedVolumeMinsPerMonth').val();
-      }
-      data.freeTrialRelationshipWithCarrier = $('#relationshipWithCarrier').is(':checked');
-      data.freeTrialHyperVEnvironment = $('#hyperVEnvironment').is(':checked');
+    if (countriesAndCarriers.length > 0) data.freeTrialByocCloudCarriers = countriesAndCarriers;
+
+    if ($('#phoneNumbersDeployment').val().length > 0) {
+      data.freeTrialPhoneNumbersDeployment = $('#phoneNumbersDeployment').val();
     }
+    if ($('#newNumbers').val().length > 0) {
+      data.freeTrialNewNumbers = $('#newNumbers').val();
+    }
+    if ($('#genesysCloudRegion').val()) {
+      data.freeTrialGenesysCloudRegion = $('#genesysCloudRegion').val();
+    }
+    if ($('#estimatedVolumeMinsPerMonth').val().length > 0) {
+      data.freeTrialEstimatedVolumeMinsPerMonth = $('#estimatedVolumeMinsPerMonth').val();
+    }
+    data.freeTrialRelationshipWithCarrier = $('#relationshipWithCarrier').is(':checked');
+    data.freeTrialHyperVEnvironment = $('#hyperVEnvironment').is(':checked');
 
     // General Configuration
 
@@ -299,6 +307,16 @@ async function putRequest(id, region, subRegion, segment, product, tasks, reques
 
     if ($('#virtualDesktopSolution').val().length > 0) {
       data.freeTrialVirtualDesktopSolution = $('#virtualDesktopSolution').val();
+    }
+
+    data.freeTrialImpactByDesign = $('#impactByDesign').is(':checked');
+
+    if ($('#businessGoal').val().length > 0) {
+      data.freeTrialBusinessGoal = $('#businessGoal').val();
+    }
+
+    if ($('#measureOfSuccess').val().length > 0) {
+      data.freeTrialMeasureOfSuccess = $('#measureOfSuccess').val();
     }
 
     // Other

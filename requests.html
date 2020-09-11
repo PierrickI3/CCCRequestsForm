@@ -10,6 +10,8 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <!-- Bootstrap DatePicker -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker3.min.css" integrity="sha256-FAOaXTpl90/K8cXmSdsskbQN3nKYulhCpPbcFzGTWKI=" crossorigin="anonymous" />
+    <!-- Bootstrap Select -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.9/dist/css/bootstrap-select.min.css">
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <!-- Editable CSS -->
@@ -19,6 +21,7 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/jquery-toast-plugin/1.3.2/jquery.toast.min.css" rel="stylesheet">
     <!-- Custom CSS -->
     <link rel="stylesheet" href="./css/custom.css">
+    <link rel="stylesheet" href="./css/animate.css">
 </head>
 
 <body>
@@ -30,31 +33,35 @@
         </a>
 
         <ul class="mb-0">
-            <ul class="nav navbar-nav mr-2" style="float: left;">
+            <ul class="nav navbar-nav mr-2" style="float: left; display: none;">
                 <li>
                     <button class="btn btn-secondary btn-sm" id="btnAssignedToMe"> My Requests </button>
                 </li>
             </ul>
-            <ul class="nav navbar-nav mr-2" style="float: left;">
+            <ul class="nav navbar-nav mr-2" style="float: left; display: none;"">
                 <li>
-                    <button class="btn btn-secondary btn-sm" id="btnOnlyClosed"> Closed </button>
+                    <button class=" btn btn-secondary btn-sm" id="btnOnlyClosed"> Closed </button>
                 </li>
             </ul>
-            <ul class="nav navbar-nav mr-4" style="float: left;">
+            <ul class="nav navbar-nav mr-4" style="float: left; display: none;"">
                 <li>
-                    <button class="btn btn-secondary btn-sm" id="btnOnlyDeleted"> Deleted </button>
+                    <button class=" btn btn-secondary btn-sm" id="btnOnlyDeleted"> Deleted </button>
+                </li>
+            </ul>
+            <ul class="nav navbar-nav mr-4" style="float: left;"">
+                <li>
+                    <button class=" admin btn btn-secondary btn-sm" id="btnSettings" onclick="showSettings()" hidden><em class="fa fa-envelope-o"></em> Settings</button>
                 </li>
             </ul>
             <ul class="nav navbar-nav" style="float: right;">
-                <li><a href="./index.html" class="admin btn btn-primary btn-sm ml-2">Submit a new Request</a></li>
+                <li><a href="./index.html" class="btn btn-primary btn-sm ml-2">Submit a new Request</a></li>
             </ul>
             <ul class="nav navbar-nav" style="float: right;">
-                <li><a href="./dashboard.html" id="dashboardLink" class="admin btn btn-info btn-sm ml-2">Dashboard</a></li>
+                <li><a href="./dashboard.html" id="dashboardLink" class="btn btn-info btn-sm ml-2">Dashboard</a></li>
             </ul>
 
             <ul class="nav navbar-nav" style="float: right;">
-                <li><button id="refresh" class="admin btn btn-secondary btn-sm"><em class="fa fa-refresh"></em></button></li>
-
+                <li><button id="refresh" class="btn btn-secondary btn-sm"><em class="fa fa-refresh"></em></button></li>
             </ul>
         </ul>
     </nav>
@@ -64,40 +71,60 @@
         <a class="btn btn-light" href="#" onclick="location.reload();"><i class="fa fa-refresh"></i> Refresh</a>
     </div>
 
-    <div class="col-12 admin">
-        <div id="basicgrid"></div>
+    <div class="row mr-0">
+        <div class="col pr-0">
+            <div id="basicgrid"></div>
+        </div>
+        <div id="filter-sidebar" class="filter-sidebar-collapsed right">
+            <div class="filter-buttons-container">
+                <button id="filter-sidebar-button-expand" type="button" class="btn btn-secondary filter-sidebar-button" onclick="filterExpand()"><i class="fa fa-angle-double-left"></i></button>
+                <button id="filter-sidebar-button-collapse" type="button" class="btn btn-secondary filter-sidebar-button" onclick="filterCollapse()"><i class="fa fa-angle-double-right"></i></button>
+            </div>
+            <span id="filter-sidebar-label" class="filter-sidebar-addon-vertical-info">Filter configuration</span>
+            <iframe id="filter-sidebar-addon" class="filter-sidebar-addon"></iframe>
+        </div>
     </div>
 
     <p class="text-right" id="version"></p>
 
     <!-- Edit Modal -->
     <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-dialog modal-xl" role="document">
             <div class="modal-content">
                 <div class="modal-header" id="modal-header">
+
                     <h5 id="title" class="modal-title">Request</h5>
+                    <span id="modal-tag-std" style="display: none">
+                        <img alt="STD" src="images/tag-std.svg" style="transform: rotate(10deg); width: 4rem; margin: 0 0 0 10px;" />
+                    </span>
+                    <span id="modal-tag-trial" style="display: none">
+                        <img alt="TRIAL" src="images/tag-trial.svg" style="transform: rotate(10deg); width: 4rem; margin: 0 0 0 10px;" />
+                    </span>
+                    <input id="requestType" style="display: none" value="0" />
+
+
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <form class="modal-body form-horizontal" id="modal-form">
+                <form class="modal-body form-horizontal pl-4 pr-4" id="modal-form">
                     <div class="form-group">
 
                         <form id="modal-form">
 
                             <div class="form-row">
-                                <div class="form-group col-md-5">
+                                <div class="form-group col-md-6">
                                     <label>Created Date</label>
                                     <input disabled type="text" class="form-control" id="createdDate" name="createdDate" />
                                 </div>
-                                <div class="form-group col-md-5">
+                                <div class="form-group col-md-6">
                                     <label>Last Updated</label>
                                     <input disabled type="text" class="form-control" id="updatedDate" name="updatedDate" />
                                 </div>
                             </div>
 
                             <div class="form-row">
-                                <div class="form-group col-md-5">
+                                <div class="form-group col-md-6">
                                     <label for="region">Region</label>
                                     <select id="region" name="region" class="form-control" required>
                                         <option value="" disabled selected>Select a Region</option>
@@ -107,7 +134,7 @@
                                         <option value="NA">North America</option>
                                     </select>
                                 </div>
-                                <div class="form-group col-md-5">
+                                <div class="form-group col-md-6">
                                     <label for="subRegion">Territory</label>
                                     <select id="subRegion" name="subRegion" class="form-control" required>
                                         <option value="" disabled selected>Select a Territory</option>
@@ -116,7 +143,7 @@
                             </div>
 
                             <div class="form-row">
-                                <div class="form-group col-md-5">
+                                <div class="form-group col-md-6">
                                     <label for="customerRelationship">Direct/Indirect?</label>
                                     <select id="customerRelationship" name="customerRelationship" class="form-control" required>
                                         <option value="" disabled selected>Select a Customer Relationship</option>
@@ -124,7 +151,7 @@
                                         <option value="Indirect">Indirect (via Partner)</option>
                                     </select>
                                 </div>
-                                <div class="form-group col-md-5">
+                                <div class="form-group col-md-6">
                                     <label for="customerType">Customer Type</label>
                                     <select id="customerType" name="customerType" class="form-control" required>
                                         <option value="" disabled selected>Select a Customer Type</option>
@@ -135,7 +162,7 @@
                             </div>
 
                             <div class="form-row">
-                                <div class="form-group col-md-5">
+                                <div class="form-group col-md-6">
                                     <label for="segment">Market Segment</label>
                                     <select id="segment" name="segment" class="form-control" required>
                                         <option value="" disabled selected>Select segment</option>
@@ -144,7 +171,7 @@
                                         <option value="Enterprise">Enterprise</option>
                                     </select>
                                 </div>
-                                <div class="form-group col-md-5">
+                                <div class="form-group col-md-6">
                                     <label for="product">Product</label>
                                     <select id="product" name="product" class="form-control" required>
                                         <option value="" disabled selected>Select a Product</option>
@@ -157,11 +184,12 @@
                                 </div>
                             </div>
 
-                            <div class="form-row">
-                                <div class="border border-black col-md-11 mt-3 mb-3">
+                            <div class="form-row" id="taskSection">
+                                <div class="border border-black col-md-12 p-3">
                                     <div class="form-row mt-2">
-                                        <div class="form-group col-md-4 text-center"><strong>Category</strong></div>
-                                        <div class="form-group col-md-4 text-center"><strong>Type</strong></div>
+                                        <div class="form-group col-md-3 text-center"><strong>Category</strong></div>
+                                        <div class="form-group col-md-3 text-center"><strong>Type</strong></div>
+                                        <div class="form-group col-md-3 text-center"><strong>Task Status</strong></div>
                                         <div class="form-group col-md-2 text-center"><strong>Time (hours)</strong></div>
                                     </div>
                                     <div class="form-row mt-2" id="tasks"></div>
@@ -169,35 +197,363 @@
                                 </div>
                             </div>
 
-                            <div class="form-row">
-                                <div class="form-group col-md-5">
-                                    <label for="requesterName">Requester Name</label>
-                                    <input type="text" class="form-control" id="requesterName" name="requesterName" placeholder="Your Name" required>
+                            <div id="free-trial-questions" style="display: none">
+
+                                <div class="form-group col-md-6">
+                                    <label for="trialValidationType">Trial validation Type<span class="text-danger font-weight-bold">*</span></label>
+                                    <span data-toggle="tooltip" data-html="true" data-placement="bottom" style="float: right" title="Choose from FreeTrial / POC / Pilot. Use Table above for reference.">
+                                        <i class="fa fa-question-circle-o" aria-hidden="true" style="color: gray"></i>
+                                    </span>
+                                    <select id="trialValidationType" name="trialValidationType" class="form-control" required>
+                                        <option value="" disabled selected>Select your Type</option>
+                                        <option value="FreeTrial">Free Trial</option>
+                                        <option value="POC">POC</option>
+                                        <option value="Pilot">Pilot</option>
+                                    </select>
                                 </div>
-                                <div class="form-group col-md-5">
-                                    <label for="requesterEmail">Requester Email</label>
-                                    <input type="text" class="form-control" id="requesterEmail" name="requesterEmail" placeholder="Your Email Address" required>
+
+
+
+                                <!--#region Deployment Model -->
+
+                                <div class="col-md-12 bg-light shadow-lg">
+                                    <hr />
+                                    <h3 class="text-center">Deployment Model</h3>
+                                    <hr />
                                 </div>
-                            </div>
-                            <div class="form-row">
-                                <div class="form-group col-md-5">
-                                    <label for="requesterPhoneNumber">Requester Phone #</label>
-                                    <input type="text" class="form-control" id="requesterPhoneNumber" name="requesterPhoneNumber" placeholder="Your Phone Number" required>
-                                </div>
-                                <div class="form-group col-md-3">
-                                    <label for="datepicker">Need Completed By</label>
-                                    <div class="input-group date">
-                                        <input type="text" id="datepicker" class="form-control" required />
+
+                                <!-- Countries & Languages -->
+                                <div class="form-row mr-4 ml-2">
+                                    <div class="form-group col-md-12">
+                                        <label for="countriesAgents">In which countries are the customer's agents located? <span class="text-danger font-weight-bold">*</span></label>
+                                        <select class="selectpicker" id="countriesAgents" name="countriesAgents" class="form-control" required multiple data-live-search="true">
+                                        </select>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="form-row">
-                                <div class="form-group col-md-10">
-                                    <label for="description">Description</label>
-                                    <textarea class="form-control" id="description" name="description" placeholder="Describe your request" required></textarea>
+                                <div class="form-row mr-4 ml-2">
+                                    <div class="form-group col-md-12">
+                                        <label for="countriesOperation">In which countries does the customer operate and require (or have existing) phone numbers? <span class="text-danger font-weight-bold">*</span></label>
+                                        <select class="selectpicker" id="countriesOperation" name="countriesOperation" class="form-control" required multiple data-live-search="true">
+                                        </select>
+                                    </div>
                                 </div>
+
+                                <!-- Telephony Model -->
+
+                                <div class="text-muted form-group ml-3">
+                                    <small>Where a SIP trunk cannot be easily established, it is recommended to use Genesys Cloud Voice and forwarding of calls.</small>
+                                    <br>
+                                    <small>A new option has been added to select BYOC Cloud and Genesys Cloud Voice together.</small>
+                                </div>
+
+                                <div class="form-group col-md-12">
+                                    <div class="text-muted" id="recommendation">
+                                    </div>
+                                    <label for="telephonyModel">Telephony Model <span class="text-danger font-weight-bold">*</span></label>
+                                    <select id="telephonyModel" name="telephonyModel" class="form-control" required>
+                                        <option value="" disabled selected>Select a Telephony Model</option>
+                                    </select>
+                                </div>
+
+                                <!-- GCV Questions -->
+                                <div id="GCVQuestions" style="display:none;">
+                                    <h3 class="text-center shadow-lg pt-2 pb-2 offset-md-4 col-md-4">Genesys Cloud Voice</h3>
+
+                                    <!-- Phone Numbers Deployment -->
+                                    <div class="form-row mr-4 ml-2">
+                                        <div class="form-group col-md-12">
+                                            <label for="phoneNumbersDeployment">Phone Numbers Deployment <span class="text-danger font-weight-bold">*</span></label>
+                                            <textarea class="form-control" id="phoneNumbersDeployment" name="phoneNumbersDeployment" placeholder="Will the customer deploy new customer-facing numbers from GCV, re-route non-geographic numbers to GCV or forward calls to GCV numbers?"></textarea>
+                                            Genesys Cloud Voice (Resource Center): <a href="https://help.mypurecloud.com/articles/about-purecloud-voice/" target="_blank">https://help.mypurecloud.com/articles/about-purecloud-voice/</a>
+                                        </div>
+                                    </div>
+
+                                    <!-- New Numbers -->
+                                    <div class="form-row mr-4 ml-2">
+                                        <div class="form-group col-md-12">
+                                            <label for="newNumbers">New Numbers <span class="text-danger font-weight-bold">*</span></label>
+                                            <textarea class="form-control" id="newNumbers" name="newNumbers" placeholder="If using new numbers, how many of each number type and which area codes are required?"></textarea>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-row mr-4 ml-2">
+                                        <div class="form-group col-md-12">
+                                            <label for="genesysCloudRegion">Genesys Cloud Region <span class="text-danger font-weight-bold">*</span></label>
+                                            <select class="custom-select" id="genesysCloudRegion" name="genesysCloudRegion" required>
+                                                <option selected disabled>Select a Genesys Cloud Region</option>
+                                                <optgroup label="North America">
+                                                    <option value="cac1.pure.cloud">cac1.pure.cloud - Canada</option>
+                                                    <option value="mypurecloud.com">mypurecloud.com - East</option>
+                                                    <option value="usw2.pure.cloud">usw2.pure.cloud - West</option>
+                                                </optgroup>
+                                                <optgroup label="EMEA">
+                                                    <option value="euw2.pure.cloud">euw2.pure.cloud - UK</option>
+                                                    <option value="mypurecloud.de">mypurecloud.de - Frankfurt</option>
+                                                    <option value="mypurecloud.ie">mypurecloud.ie - Ireland</option>
+                                                </optgroup>
+                                                <optgroup label="APAC">
+                                                    <option value="apne2.pure.cloud">apne2.pure.cloud - Seoul </option>
+                                                    <option value="mypurecloud.com.au">mypurecloud.com.au - Australia/New Zealand </option>
+                                                    <option value="mypurecloud.jp">mypurecloud.jp - Japan </option>
+                                                </optgroup>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <!-- Estimated Volume of Minutes Per Month -->
+                                    <div class="form-row mr-4 ml-2">
+                                        <div class="form-group col-md-12">
+                                            <label for="estimatedVolumeMinsPerMonth">Estimated Volumes of GCV Minutes per Month <span class="text-danger font-weight-bold">*</span></label>
+                                            <textarea class="form-control" id="estimatedVolumeMinsPerMonth" name="estimatedVolumeMinsPerMonth" placeholder="What is the estimated volumes of minutes per month?" required></textarea>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <!-- BYOC Cloud Carriers -->
+                                <div class="border border-black mr-3 col-md-12" id="byocCloudCarriersDiv" style="display: none;">
+                                    <br>
+                                    <h3 class="text-center shadow-lg pt-2 pb-2 offset-md-4 col-md-4">BYOC Cloud Carriers</h3>
+                                    <div class="form-row mt-1 mr-4 ml-2">
+                                        <div class="form-group col-md-5">Country</div>
+                                        <div class="form-group col-md-5">Select one or more Carriers <span class="text-danger font-weight-bold">*</span></div>
+                                    </div>
+                                    <div class="form-row mt-2 mr-4 ml-2" id="byocCloudCarriers"></div>
+                                    <small id="otherNote" class="form-group ml-2">
+                                        If you have selected "Other":
+                                        <ul>
+                                            <li>Carrier must meeting standard requirements as per Resource Centre: <a href="https://help.mypurecloud.com/articles/carrier-requirements-byoc-cloud/" target="_blank">https://help.mypurecloud.com/articles/carrier-requirements-byoc-cloud/</a></li>
+                                            <li>Expectation that deployment time will be extended, <strong>in most cases significantly</strong></li>
+                                        </ul>
+                                    </small>
+                                    <div class="form-check mr-4">
+                                        <div class="form-group col-md-12">
+                                            <input class="form-check-input" type="checkbox" value="" id="relationshipWithCarrier">
+                                            <label class="form-check-label" for="relationshipWithCarrier">
+                                                Does the customer already have a relationship with the carrier and access to technical resources?
+                                            </label>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <!-- BYOC Cloud Questions -->
+                                <div id="BYOCCloudQuestions" style="display:none;">
+                                </div>
+
+                                <!-- BYOC Premise with Virtual Edges -->
+                                <div class="border border-black mr-3 ml-2 bg-warning" id="byocPremiseDiv" style="display: none;">
+                                    <p class="form-group ml-2">
+                                        If planning to use a virtual edge, very strict guidelines for deployment must be followed:
+                                    <ul>
+                                        <li>Virtual Edge Hardware/Software Requirements: <a href="https://help.mypurecloud.com/articles/virtual-edge-hardware-software-requirements/" target="_blank">https://help.mypurecloud.com/articles/virtual-edge-hardware-software-requirements/</a></li>
+                                        <li>Virtual Edge Warnings: <a href="https://help.mypurecloud.com/articles/virtual-edge-warnings/" target="_blank">https://help.mypurecloud.com/articles/virtual-edge-warnings/</a></li>
+                                    </ul>
+                                    </p>
+                                    <p class="form-group ml-2">
+                                        The customer must acknowledge that failing to comply with the requirements and warnings will result in possible audio quality issues.
+                                    </p>
+                                </div>
+
+                                <!-- BYOC Premise Questions -->
+                                <div id="BYOCPremiseQuestions" class="mt-2" style="display:none;">
+
+                                    <!-- Virtual Environment -->
+                                    <div class="form-check mr-4">
+                                        <div class="form-group col-md-12">
+                                            <input class="form-check-input" type="checkbox" value="" id="hyperVEnvironment">
+                                            <label class="form-check-label" for="hyperVEnvironment">
+                                                Does the customer have a Hyper-V environment available?
+                                            </label>
+                                            <br>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <!-- BYOC Premise with Appliance -->
+                                <div class="border border-black mr-3 ml-2 bg-warning" id="byocPremiseWithApplianceDiv" style="display: none;">
+                                    <p class="form-group ml-2">
+                                        Choosing BYOC Premise w/ Hardware Appliance assumes the partner or customer already has access to hardware Edges. In most cases this would be from a partner who purchased them in advance.
+                                    </p>
+                                    <p class="form-group ml-2">
+                                        Genesys is not shipping hardware Edges at this time.
+                                    </p>
+                                </div>
+
+                                <!--#endregion Telephony -->
+
+                                <!--#region General Configuration -->
+
+                                <div class="col-md-12 bg-light shadow-lg">
+                                    <hr />
+                                    <h3 class="text-center">General Configuration</h3>
+                                    <hr />
+                                </div>
+
+                                <!-- Number of Agents -->
+                                <div class="form-row mr-4 ml-2">
+                                    <div class="form-group col-md-12">
+                                        <label for="numberAgents">What is the expected number of agents? <span class="text-danger font-weight-bold">*</span></label>
+                                        <textarea class="form-control" id="numberAgents" name="numberAgents" placeholder="" required></textarea>
+                                    </div>
+                                </div>
+
+                                <!-- Phone Numbers Deployment -->
+                                <div class="form-check mr-4">
+                                    <div class="form-group col-md-12">
+                                        <input class="form-check-input" type="checkbox" value="" id="existingTelephonyUsage">
+                                        <label class="form-check-label" for="existingTelephonyUsage">
+                                            Will the customer connect, via a trunk or forwarding of calls, to Genesys Engage, another PBX, an SBC or directly to a carrier? If so, please provide more details below.
+                                        </label>
+                                        <br>
+                                    </div>
+                                </div>
+
+                                <div class="form-row col-md-12">
+                                    <div class="form-group col-md-12">
+                                        <textarea class="form-control" id="existingTelephonyUsageDetails" name="existingTelephonyUsageDetails" placeholder="Please provide more details about the telephony connection..." disabled></textarea>
+                                    </div>
+                                </div>
+
+                                <!-- Identification and Verification -->
+                                <div class="form-row mr-4 ml-2">
+                                    <div class="form-group col-md-12">
+                                        <label for="identificationAndVerificationProcesses">Identity and Verification Processes <span class="text-danger font-weight-bold">*</span></label>
+                                        <textarea class="form-control" id="identificationAndVerificationProcesses" name="identificationAndVerificationProcesses" placeholder="Are there any mandatory Identification and Verification processes?" required></textarea>
+                                    </div>
+                                </div>
+
+                                <!-- IT Infrastructure -->
+                                <div class="form-row mr-4 ml-2">
+                                    <div class="form-group col-md-12">
+                                        <label for="itInfrastructure">IT Infrastructure <span class="text-danger font-weight-bold">*</span></label>
+                                        <textarea class="form-control" id="itInfrastructure" name="itInfrastructure" placeholder="Is the IT infrastructure supported in-house or via a third-party, including internet connections, user/company provided laptops and headsets?" required></textarea>
+                                    </div>
+                                </div>
+
+                                <!-- End devices require VPN? -->
+                                <div class="form-check mr-4">
+                                    <div class="form-group col-md-12">
+                                        <input class="form-check-input" type="checkbox" value="" id="endUserDevicesRequireVPN">
+                                        <label class="form-check-label" for="endUserDevicesRequireVPN">
+                                            Are user end-devices required to connect via VPN?
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <!-- Virtual Solution -->
+                                <div class="form-row mr-4 ml-2">
+                                    <div class="form-group col-md-12">
+                                        <label for="virtualDesktopSolution">Virtual Desktop Solution <span class="text-danger font-weight-bold">*</span></label>
+                                        <textarea class="form-control" id="virtualDesktopSolution" name="virtualDesktopSolution" placeholder="Does the customer use a Virtual Desktop solution, e.g. Citrix, thin-clients, etc.?" required></textarea>
+                                    </div>
+                                </div>
+
+                                <!-- Impact By Design -->
+                                <div class="form-check mr-4">
+                                    <div class="form-group col-md-12">
+                                        <input class="form-check-input" type="checkbox" value="" id="impactByDesign">
+                                        <label class="form-check-label" for="impactByDesign">
+                                            Has an Impact By Design been initiated?
+                                        </label>
+                                        <br>
+                                        <!-- <small><a href="https://help.mypurecloud.com/articles/global-purecloud-service-terms-and-conditions/" target="_blank">Access the latest documents here</a> (press <span class="bg-warning">SHIFT</span> while clicking on the link to open the page from the <strong>Genesys Cloud app</strong>)</small> -->
+                                    </div>
+                                </div>
+
+                                <!-- Business Goal -->
+                                <div class="form-row mr-4 ml-2">
+                                    <div class="form-group col-md-12">
+                                        <label for="businessGoal">What is the customer business goal? <span class="text-danger font-weight-bold">*</span></label>
+                                        <textarea class="form-control" id="businessGoal" name="businessGoal" placeholder="Describe your business goal here" required></textarea>
+                                    </div>
+                                </div>
+
+                                <!-- Measure of Success -->
+                                <div class="form-row mr-4 ml-2">
+                                    <div class="form-group col-md-12">
+                                        <label for="measureOfSuccess">What is the customer's measure of success? <span class="text-danger font-weight-bold">*</span></label>
+                                        <textarea class="form-control" id="measureOfSuccess" name="measureOfSuccess" placeholder="Describe customer's measure of success here" required></textarea>
+                                    </div>
+                                </div>
+
+
+                                <div class="col-md-12 bg-light shadow-lg">
+                                    <hr />
+                                    <h3 class="text-center">Other</h3>
+                                    <hr />
+                                </div>
+
+                                <!-- Commmitted Customer Resource -->
+                                <div class="form-check mr-4">
+                                    <div class="form-group col-md-12">
+                                        <input class="form-check-input" type="checkbox" value="" id="customerResourceCommitted">
+                                        <label class="form-check-label" for="customerResourceCommitted">
+                                            Have customer resources been committed (e.g. Project Manager, Project Sponsor, Business Champion and/or IT/Operations Manager, etc.)?
+                                        </label>
+                                    </div>
+                                </div>
+
+
+                                <!-- Terms & Conditions -->
+                                <div class="form-check mr-4">
+                                    <div class="form-group col-md-12">
+                                        <input class="form-check-input" type="checkbox" value="" id="standardTermsConditions">
+                                        <label class="form-check-label" for="standardTermsConditions">
+                                            Has the customer agreed to our standard Terms and Conditions and DPA?
+                                        </label>
+                                        <br>
+                                        <small><a href="https://help.mypurecloud.com/articles/global-purecloud-service-terms-and-conditions/" target="_blank">Access the latest documents here</a> (press <span class="bg-warning">SHIFT</span> while clicking on the link to open the page from the <strong>Genesys Cloud app</strong>)</small>
+                                    </div>
+                                </div>
+
+                                <div class="form-check mr-4">
+                                    <div class="form-group col-md-12">
+                                        <input class="form-check-input" type="checkbox" value="" id="solutionBusinessConsultingRequired">
+                                        <label class="form-check-label" for="solutionBusinessConsultingRequired">
+                                            Is Strategic Business Consulting required for this opportunity?
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <!--#endregion -->
+
                             </div>
-                            <div class="form-row">
+
+
+
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label for="gcRequesterName">Requester Name</label><br>
+                            <select id="gcRequesterName" name="gcRequesterName" class="gcRequesterName"></select>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="requesterEmail">Requester Email</label>
+                            <input type="text" class="form-control" id="requesterEmail" name="requesterEmail" placeholder="Your Email Address" required>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label for="requesterPhoneNumber">Requester Phone #</label>
+                            <input type="text" class="form-control" id="requesterPhoneNumber" name="requesterPhoneNumber" placeholder="Your Phone Number" required>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="datepicker">Need Completed By</label>
+                            <div class="input-group date">
+                                <input type="text" id="datepicker" class="form-control" required />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-12">
+                            <label for="description">Description</label>
+                            <textarea class="form-control" id="description" name="description" placeholder="Describe your request" required></textarea>
+                        </div>
+                    </div>
+                    <!-- <div class="form-row">
                                 <div class="form-group col-md-10">
                                     <label for="partnerCustomerName">Partner and/or Customer Name</label>
                                     <input type="text" class="form-control" id="partnerCustomerName" name="partnerCustomerName" placeholder="Partner and/or Customer Name">
@@ -216,72 +572,115 @@
                                     <button id="btnCopySFLink" type="button" class="btn btn-primary pull-right" onclick="navigateToSFLink();">copy</button>
                                 </div>
 
-                            </div>
-                            <div class="form-row">
-                                <div class="form-group col-md-3">
-                                    <label for="priority">Priority</label>
-                                    <select id="priority" name="priority" class="form-control">
-                                        <option value="" disabled selected>Select a Priority</option>
-                                        <option value="Low">Low</option>
-                                        <option value="Medium">Medium</option>
-                                        <option value="High">High</option>
-                                    </select>
-                                </div>
-                                <div class="form-group col-md-3">
-                                    <label for="status">Status</label>
-                                    <select id="status" name="status" class="form-control" required>
-                                        <option value="" disabled selected>Select a Status</option>
-                                        <option value="Open">Open</option>
-                                        <option value="On Hold">On Hold</option>
-                                        <option value="Waiting On Additional Information">Waiting On Additional
-                                            Information</option>
-                                        <option value="Closed">Closed</option>
-                                    </select>
-                                </div>
-                                <div class="form-group col-md-4">
-                                    <label for="programManager">Program Manager</label>
-                                    <input type="text" class="form-control" id="programManager" name="programManager" placeholder="Program Manager" required>
-                                </div>
-                            </div>
+                            </div> -->
 
-                            <div class="form-row">
-                                <label id="bAcceptedRequest" hidden></label>
-                                <div class="form-group col-md-10">
-                                    <label for="time">Additional Team Member(s) Assigned</label>
-                                    <input type="text" class="form-control" id="teamMembers" name="teamMembers" placeholder="Additional Team Member(s)">
 
-                                </div>
-                            </div>
-
-                            <div class="form-row">
-                                <label id="bAcceptedRequest" hidden></label>
-                                <div class="form-group col-md-10">
-                                    <label id="lblAcceptedRejectedNotes" for="description">Accepted / Rejected
-                                        Notes</label>
-                                    <textarea class="form-control" id="txtAcceptedRejectedNotes" name="description" placeholder="Notes" required> </textarea>
-                                </div>
-                            </div>
-                            <div class="form-row">
-                                <div class="form-group col-md-6">
-                                    <footer id="id" name="id" class="blockquote-footer"></footer>
-                                    <footer id="lblDateAccepted" name="lblDateAccepted" class="blockquote-footer"></footer>
-                                    <footer id="lblDateRejected" name="lblDateRejected" class="blockquote-footer"></footer>
-                                    <footer id="lblDateClosed" name="lblDateClosed" class="blockquote-footer"></footer>
-                                </div>
-                            </div>
-
-                        </form>
-
-                        <div class="modal-footer">
-                            <button type="button" id="btnRestore" class="btn btn-warning pull-left">Restore</button>
-                            <button type="button" id="btnRejectRequest" class="btn btn-danger pull-left">Save and
-                                Reject</button>
-                            <button type="button" id="btnAcceptRequest" class="btn btn-success pull-left">Save and
-                                Accept</button>
-                            <button id="submit" type="submit" class="btn btn-primary pull-left">Save</button>
-                            <button id="btnClose" type="button" class="btn btn-secondary pull-right" data-dismiss="modal">Close</button>
-
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label for="salesforceAccountOpportunity">Opportunity</label><br>
+                            <select id="sfData" class="form-control js-example-basic-single" name="sfData">
+                            </select>
                         </div>
+                        <div class="form-group col-md-6">
+                            <label for="oppPartnerCustomerName">Account Name</label><br>
+                            <select id="oppPartnerCustomerName" name="oppPartnerCustomerName" class="form-control js-example-basic-single"></select>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-12">
+                            <div class="text-center" style="position: absolute; width: 99%; height: 99%;">
+                                <div id="sfSpinner" class="spinner-grow text-primary" class="width: 7rem; height: 7rem; " hidden role="status">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label for="oppAssignedSC">Assigned SC</label>
+                            <select id="oppAssignedSC" name="oppAssignedSC" class="form-control js-example-basic-single" disabled></select>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="oppOwner">Owner</label>
+                            <input type="text" class="form-control" id="oppOwner" name="oppOwner" placeholder="" disabled />
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label for="oppUrl">Opportunity or Account Url</label>
+                            <input type="url" class="form-control" id="oppUrl" name="oppUrl" placeholder="" disabled />
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="oppDSRUrl">DSR Url</label>
+                            <input type="url" class="form-control" id="oppDSRUrl" name="oppDSRUrl" placeholder="" disabled />
+                        </div>
+
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group col-md-3">
+                            <label for="priority">Priority</label>
+                            <select id="priority" name="priority" class="form-control">
+                                <option value="" disabled selected>Select a Priority</option>
+                                <option value="Low">Low</option>
+                                <option value="Medium">Medium</option>
+                                <option value="High">High</option>
+                            </select>
+                        </div>
+                        <div class="form-group col-md-3">
+                            <label for="status">Status</label>
+                            <select id="status" name="status" class="form-control" required>
+                                <option value="" disabled selected>Select a Status</option>
+                                <option value="Open">Open</option>
+                                <option value="On Hold">On Hold</option>
+                                <option value="Waiting On Additional Information">Waiting On Additional
+                                    Information</option>
+                                <option value="Closed">Closed</option>
+                            </select>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="gcProgramManager">Program Manager</label><br>
+                            <select id="gcProgramManager" name="gcProgramManager" class="gcProgramManager"></select>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <label id="bAcceptedRequest" hidden></label>
+                        <div class="form-group col-md-12">
+                            <label for="gcTeamMembers">Additional Team Member(s) Assigned</label><br>
+                            <select id="gcTeamMembers" name="gcTeamMembers" class="gcTeamMembers"></select>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <label id="bAcceptedRequest" hidden></label>
+                        <div class="form-group col-md-12">
+                            <label id="lblAcceptedRejectedNotes" for="description">Notes</label>
+                            <div id="divNotesHistory" class="notes-history"></div>
+                            <textarea class="form-control notes-txt-add-note" id="txtAcceptedRejectedNotes" name="description" placeholder="Type a note"> </textarea>
+                            <button id="btnAddNote" type="button" class="btn btn-secondary pull-right mt-2">Add note</button>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <footer id="id" name="id" class="blockquote-footer"></footer>
+                            <footer id="lblDateAccepted" name="lblDateAccepted" class="blockquote-footer"></footer>
+                            <footer id="lblDateRejected" name="lblDateRejected" class="blockquote-footer"></footer>
+                            <footer id="lblDateClosed" name="lblDateClosed" class="blockquote-footer"></footer>
+                        </div>
+                    </div>
+
+                </form>
+
+                <div class="modal-footer">
+                    <button type="button" id="btnRestore" class="btn btn-warning pull-left">Restore</button>
+                    <button type="button" id="btnRejectRequest" class="btn btn-danger pull-left">Save and
+                        Reject</button>
+                    <button type="button" id="btnAcceptRequest" class="btn btn-success pull-left">Save and
+                        Accept</button>
+                    <button id="submit" type="submit" class="btn btn-primary pull-left">Save</button>
+                    <button id="btnClose" type="button" class="btn btn-secondary pull-right" data-dismiss="modal">Close</button>
+
+                </div>
                 </form>
             </div>
         </div>
@@ -297,6 +696,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"></script>
     <!-- Moment.js -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js" integrity="sha256-4iQZ6BVL4qNKlQ27TExEhBN1HFPvAvAMbFavKKosSWQ=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.31/moment-timezone.min.js" integrity="sha512-GqWOXT1UPIvzojfXEPf2ByPu4S0iwX0SfFfZ985fePNpTJPuiWKn47mXd0iyfcpcjcmM/HIRtvrd5TsR87A0Zg==" crossorigin="anonymous"></script>
     <!-- Bootstrap DatePicker -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js" integrity="sha256-bqVeqGdJ7h/lYPq6xrPv/YGzMEb6dNxlfiTUHSgRCp8=" crossorigin="anonymous"></script>
     <!-- Genesys Cloud -->
@@ -311,11 +711,18 @@
     <!-- Bootbox -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/5.4.0/bootbox.min.js"></script>
     <!-- Our Scripts -->
+    <script src="js/gc.js"></script>
     <script src="js/requests.js"></script>
     <script src="js/tools.js"></script>
     <!-- Dictionary -->
     <script src="js/dictionary.js"></script>
     <script src="js/version.js"></script>
+    <!-- Bootstrap Select -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.9/dist/js/bootstrap-select.min.js"></script>
+
+    <!-- Select2 -->
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
 
     <script>
         if (window.location.href.includes('dev'))
@@ -333,9 +740,725 @@
         console.log(`continue with gcToken: ${gcToken}`);
 
         let tasksControls = [], taskId = 10000;
+        let sfObject = {};
+
+
+        //#region Free Trials
+
+        let countriesAndCarriers = [], countryCarrierId = 0, selectedCountries = [];
+
+        $('#editModal #trialValidationType').on('change', () => {
+            if ($('#editModal #trialValidationType').val())
+                $('#free-trial-questionsInside').removeAttr('hidden')
+            else
+                $('#free-trial-questionsInside').attr('hidden', true);
+            if ($('#editModal #trialValidationType').val() !== 'FreeTrial')
+                $('#free-trial-deploymentModel').removeAttr('hidden');
+            else
+                $('#free-trial-deploymentModel').attr('hidden', true);
+
+        });
+
+        // Populate countries selects
+        $.each(countries, (i, country) => {
+            $("<option/>", { value: country.name, ["data-gcv"]: country.gcv }).text(country.name).appendTo("#countriesAgents, #countriesOperation");
+        });
+
+        // Populate telephonyModel selects from dictionary
+        $.each(telephonyModel, (key, value) => {
+            $("<option/>", { value: key }).text(value).appendTo("#telephonyModel");
+        });
+
+        $("#countriesAgents").selectpicker({
+            width: '100%',
+            selectedTextFormat: 'count > 3',
+            title: "Select one or more countries"
+        });
+
+        $("#countriesOperation").selectpicker({
+            width: '100%',
+            selectedTextFormat: 'count > 3',
+            title: "Select one or more countries"
+        });
+
+
+        $('#trialValidationType').on('change', () => {
+            // TODO: Change Telephony Deployment
+            setTelephonyModelDropDown();
+
+        });
+
+        $("#countriesOperation").on('change', (e) => {
+            selectedCountries = [];
+            $.each($("#countriesOperation").val(), (i, selectedCountry) => {
+                selectedCountries.push({
+                    name: selectedCountry,
+                    gcv: $(`#countriesOperation option[value="${selectedCountry}"]`).attr('data-gcv') == "true" || false
+                });
+            });
+            console.log(selectedCountries);
+            refreshBYOCCloudCountryCarriers();
+            setTelephonyModel();
+        });
+
+        $("#existingTelephonyUsage").on('change', () => {
+            $("#existingTelephonyUsageDetails").attr('disabled', !$("#existingTelephonyUsage").is(":checked"));
+        });
+
+        function setTelephonyModelDropDown() {
+            // Populate telephonyModel selects from dictionary
+            $('#telephonyModel').empty();
+            $("<option/>", { value: '', disabled: true, selected: true }).text('Select a Telephony Model').appendTo("#telephonyModel");
+
+            if ($('#trialValidationType').val() === 'FreeTrial') {
+                $("<option/>", { value: 'GCV' }).text('Genesys Cloud Voice').appendTo("#telephonyModel");
+                $("<option/>", { value: 'BYOCCloud' }).text('BYOC Cloud (no GCV)').appendTo("#telephonyModel");
+            } else {
+                $.each(telephonyModel, (key, value) => {
+                    $("<option/>", { value: key }).text(value).appendTo("#telephonyModel");
+                });
+            }
+            refreshTelephonyModel();
+
+        }
+
+        function setTelephonyModel() {
+            let gcvSupported = selectedCountries.length > 0 && selectedCountries.every(c => c.gcv);
+            if (gcvSupported) {
+                if (!$("#existingTelephonyUsage").is(":checked")) {
+                    $("#telephonyModel").val('GCV');
+                    $("#telephonyModel").change();
+                    $("#recommendation").empty();
+                    $("<small/>", { class: "btn-warning" }).html(`Based on your selection of countries where the customer operates phone numbers, <strong>${$("#telephonyModel option:selected").text()}</strong> is the recommended choice. You may also select the BYOC Cloud & GCV option.`).appendTo("#recommendation")
+                } else {
+                    $("#telephonyModel").val('BYOCCloud');
+                    $("#telephonyModel").change();
+                    $("#recommendation").empty();
+                    $("<small/>", { class: "btn-warning" }).html(`Based on your selection of countries where the customer operates phone numbers, <strong>${$("#telephonyModel option:selected").text()}</strong> is the recommended choice. You may also select the BYOC Cloud & GCV option.`).appendTo("#recommendation")
+                }
+            } else {
+                $("#telephonyModel").val('BYOCCloud');
+                $("#telephonyModel").change();
+                $("#recommendation").empty();
+                //$("<small/>", { class: "btn-warning" }).html(`Based on your selection of countries, <strong>${$("#telephonyModel option:selected").text()}</strong> is the recommended choice`).appendTo("#recommendation")
+            }
+        }
+
+        function refreshTelephonyModel() {
+            switch ($("#telephonyModel").val()) {
+                case 'GCV':
+                    $("#byocCloudCarriersDiv").hide();
+                    $("#byocPremiseDiv").hide();
+                    countriesAndCarriers = [];
+                    $("#GCVQuestions").show();
+                    $("#BYOCCloudQuestions").hide();
+                    $("#BYOCPremiseQuestions").hide();
+                    $("#byocPremiseWithApplianceDiv").hide();
+                    break;
+                case 'BYOCCloud':
+                    if (!$("#countriesOperation").val() || $("#countriesOperation").val().length === 0) {
+                        $("#telephonyModel").val('');
+                        showMessage('Please select at least one country where the customer operates first', true);
+                        return;
+                    }
+                    refreshBYOCCloudCountryCarriers();
+                    $("#byocCloudCarriersDiv").show();
+                    $("#byocPremiseDiv").hide();
+                    $("#GCVQuestions").hide();
+                    $("#BYOCPremiseQuestions").hide();
+                    $("#byocPremiseWithApplianceDiv").hide();
+                    $("#phoneNumbersDeployment").val('');
+                    $("#BYOCCloudQuestions").show();
+                    break;
+                case 'BYOCCloudAndGCV':
+                    if (!$("#countriesOperation").val() || $("#countriesOperation").val().length === 0) {
+                        $("#telephonyModel").val('');
+                        showMessage('Please select at least one country where the customer operates first', true);
+                        return;
+                    }
+                    refreshBYOCCloudCountryCarriers();
+                    $("#byocCloudCarriersDiv").show();
+                    $("#byocPremiseDiv").hide();
+                    $("#GCVQuestions").show();
+                    $("#BYOCPremiseQuestions").hide();
+                    $("#byocPremiseWithApplianceDiv").hide();
+                    $("#phoneNumbersDeployment").val('');
+                    $("#BYOCCloudQuestions").show();
+                    break;
+                case 'BYOCPremiseWithVirtualEdges':
+                    $("#byocCloudCarriersDiv").hide();
+                    $("#GCVQuestions").hide();
+                    $("#byocPremiseDiv").show();
+                    $("#byocPremiseWithApplianceDiv").hide();
+                    countriesAndCarriers = [];
+                    $("#GCVQuestions").hide();
+                    $("#phoneNumbersDeployment").val('');
+                    $("#BYOCCloudQuestions").hide();
+                    $("#BYOCPremiseQuestions").show();
+                    break;
+                case 'BYOCPremiseWithAppliance':
+                    $("#byocCloudCarriersDiv").hide();
+                    $("#GCVQuestions").hide();
+                    $("#byocPremiseDiv").hide();
+                    $("#byocPremiseWithApplianceDiv").show();
+                    countriesAndCarriers = [];
+                    $("#GCVQuestions").hide();
+                    $("#phoneNumbersDeployment").val('');
+                    $("#BYOCCloudQuestions").hide();
+                    $("#BYOCPremiseQuestions").hide();
+                    break;
+                default:
+                    $("#byocCloudCarriersDiv").hide();
+                    $("#byocPremiseDiv").hide();
+                    countriesAndCarriers = [];
+                    $("#GCVQuestions").hide();
+                    $("#phoneNumbersDeployment").val('');
+                    $("#BYOCCloudQuestions").hide();
+                    $("#BYOCPremiseQuestions").hide();
+                    $("#byocPremiseWithApplianceDiv").hide();
+                    break;
+            }
+        }
+
+        $("#telephonyModel").on('change', (e) => {
+            refreshTelephonyModel();
+        });
+
+        function refreshBYOCCloudCountryCarriers() {
+            let currentCountryCarrierId = countryCarrierId++;
+
+            $("#byocCloudCarriers").empty();
+            let freeTrialBYOCCarriers = {
+                US: [
+                    {
+                        name: 'Twillio US',
+                        url: 'https://www.twilio.com/',
+                    }
+                ],
+                EU: [
+                    {
+                        name: 'Twillio EU',
+                        url: 'https://www.twilio.com/',
+                    }]
+            }
+
+            if (countriesAndCarriers.length == 0) {
+
+                $.each($("#countriesOperation").val(), (i, country) => {
+
+                    // Country
+                    let countryDiv = $("<div/>", { class: "form-group col-md-5" }).appendTo("#byocCloudCarriers");
+                    $("<label/>", { id: "country_" + country }).text(country).appendTo(countryDiv);
+
+                    // Carriers
+                    let carriersDiv = $("<div/>", { class: "form-group col-md-5" }).appendTo("#byocCloudCarriers");
+                    let carriersSelect = $("<select/>", { class: "selectpicker form-control", id: "carriers_" + country, name: "carriers_" + country, ["data-live-search"]: true, required: true, multiple: true }).appendTo(carriersDiv);
+                    //$("<option/>", { value: "", disabled: true }).text("Select a Carrier").appendTo(carriersSelect);
+                    if ($('#trialValidationType').val() === 'FreeTrial') {
+                        $.each(freeTrialBYOCCarriers, (region, regionalSupportedBYOCCloudCarriers) => {
+                            let optGroup = $("<optgroup/>", { label: region }).appendTo(carriersSelect);
+                            $.each(regionalSupportedBYOCCloudCarriers, (i, regionalSupportedBYOCCloudCarrier) => {
+                                $("<option/>", { value: regionalSupportedBYOCCloudCarrier.name }).text(regionalSupportedBYOCCloudCarrier.name).appendTo(optGroup);
+                            });
+                        });
+                    } else {
+                        $.each(supportedBYOCCloudCarriers, (region, regionalSupportedBYOCCloudCarriers) => {
+                            let optGroup = $("<optgroup/>", { label: region }).appendTo(carriersSelect);
+                            $.each(regionalSupportedBYOCCloudCarriers, (i, regionalSupportedBYOCCloudCarrier) => {
+                                $("<option/>", { value: regionalSupportedBYOCCloudCarrier.name }).text(regionalSupportedBYOCCloudCarrier.name).appendTo(optGroup);
+                            });
+                        });
+                    }
+                    $("<option/>", { value: "Other" }).text("Other").appendTo(carriersSelect);
+                    carriersSelect.selectpicker({
+                        title: "Select one or more carriers"
+                    });
+                    carriersSelect.on('change', (e) => {
+                        if (carriersSelect.val().includes("Other")) {
+                            $("otherNote").show();
+                        } else {
+                            $("otherNote").hide();
+                        }
+
+                        let bFound = false;
+                        for (var i in countriesAndCarriers) {
+                            if (countriesAndCarriers[i].hasOwnProperty(country)) {
+                                countriesAndCarriers[i] = {
+                                    [country]: carriersSelect.val().join(',')
+                                }
+                                bFound = true;
+                                break;
+                            }
+                        }
+                        if (!bFound) {
+                            // Add to array
+                            countriesAndCarriers.push({
+                                [country]: carriersSelect.val().join(',')
+                            });
+                        }
+
+                    });
+                });
+            } else {
+                $.each(countriesAndCarriers, (i, byocCloudCarrier) => {
+                    console.log(i, byocCloudCarrier);
+                    let country = Object.keys(byocCloudCarrier)[0];
+                    let carriers = Object.values(byocCloudCarrier)[0].split(',');
+
+                    // Country
+                    let countryDiv = $("<div/>", { class: "form-group col-md-6" }).appendTo("#byocCloudCarriers");
+                    $("<label/>", { id: "country_" + country }).text(country).appendTo(countryDiv);
+
+                    // Carriers
+                    let carriersDiv = $("<div/>", { class: "form-group col-md-6" }).appendTo("#byocCloudCarriers");
+                    let carriersSelect = $("<select/>", { class: "selectpicker form-control", id: "carriers_" + country, name: "carriers_" + country, ["data-live-search"]: true, required: true, multiple: true }).appendTo(carriersDiv);
+                    if ($('#trialValidationType').val() === 'FreeTrial') {
+                        $.each(freeTrialBYOCCarriers, (region, regionalSupportedBYOCCloudCarriers) => {
+                            let optGroup = $("<optgroup/>", { label: region }).appendTo(carriersSelect);
+                            $.each(regionalSupportedBYOCCloudCarriers, (i, regionalSupportedBYOCCloudCarrier) => {
+                                $("<option/>", { value: regionalSupportedBYOCCloudCarrier.name, selected: carriers.includes(regionalSupportedBYOCCloudCarrier.name) }).text(regionalSupportedBYOCCloudCarrier.name).appendTo(optGroup);
+                            });
+                        });
+                    } else {
+                        $.each(supportedBYOCCloudCarriers, (region, regionalSupportedBYOCCloudCarriers) => {
+                            let optGroup = $("<optgroup/>", { label: region }).appendTo(carriersSelect);
+                            $.each(regionalSupportedBYOCCloudCarriers, (i, regionalSupportedBYOCCloudCarrier) => {
+                                $("<option/>", { value: regionalSupportedBYOCCloudCarrier.name, selected: carriers.includes(regionalSupportedBYOCCloudCarrier.name) }).text(regionalSupportedBYOCCloudCarrier.name).appendTo(optGroup);
+                            });
+                        });
+                    }
+                    $("<option/>", { value: "Other", selected: carriers.includes('Other') }).text("Other").appendTo(carriersSelect);
+                    carriersSelect.selectpicker({
+                        title: "Select one or more carriers"
+                    });
+                    carriersSelect.on('change', (e) => {
+                        let bFound = false;
+                        for (var i in countriesAndCarriers) {
+                            if (countriesAndCarriers[i].hasOwnProperty(country)) {
+                                countriesAndCarriers[i] = {
+                                    [country]: carriersSelect.val().join(',')
+                                }
+                                bFound = true;
+                                break;
+                            }
+                        }
+                        if (!bFound) {
+                            // Add to array
+                            countriesAndCarriers.push({
+                                [country]: carriersSelect.val().join(',')
+                            });
+                        }
+
+                    });
+                });
+            }
+        }
+
+
+        //#endregion /Free Trials
+
+
+        $(document).ready(async function () {
+            //$('.js-example-basic-single').select2({ width: '100%', dropdownAutoWidth: true });
+
+            await getMe(); // Re-Login
+
+            // <collapse filter sidebar>
+            filterCollapse();
+            // </collapse filter sidebar>
+
+            //$('.js-example-basic-single').select2({ dropdownAutoWidth: true });
+
+            // Detect locally correct env
+            let gcEnv;
+            if (window.location.href.includes('localhost')) {
+                apiBasePath = "http://localhost:3000"
+                gcEnv = 'mypurecloud.com';
+            }
+            else {
+                apiBasePath = "https://drbojb15ma.execute-api.eu-central-1.amazonaws.com/dev";
+                gcEnv = 'mypurecloud.com';
+            }
+
+
+
+            // Remote query, to search for Opportunity name, bind results to select2 object
+            $('#sfData').select2({
+                width: '100%',
+                placeholder: 'Opportunity Name',
+                allowClear: true,
+                minimumInputLength: 3,
+                ajax: {
+                    delay: 350,
+                    url: `${apiBasePath}/sf/opportunities`,
+                    data: function (params) {
+                        var query = {
+                            token: gcToken,
+                            name: params.term
+                        }
+                        // Query parameters will be ?search=[term]&type=public
+                        return query;
+                    },
+                    processResults: function (data) {
+                        // Transforms the top-level key of the response object from 'items' to 'results'
+                        console.log(data);
+                        let ret = [];
+                        data.forEach((item) => {
+                            ret.push({
+                                id: item.Id,
+                                //text: `${item.Id} ${item.Name} ${item.Solution_Consultant__r ? `(SC: ${item.Solution_Consultant__r.Name})` : ''}`,
+                                text: `${item.Name} (${item.Id})`,
+                                item: item
+                            })
+                        })
+
+                        return {
+                            results: ret
+                        };
+                    }
+                }
+            });
+
+            // Detect Selected event, post second query on selected Item by Opportunity ID to get latest DSR object
+            $('#sfData').on('select2:select', async function (e) {
+                var data = e.params.data;
+                if (!data) return;
+                $("#sfSpinner").attr("hidden", false);
+                $("#oppAssignedSC").attr("disabled", true);
+                $("#oppPartnerCustomerName").attr("disabled", true);
+                $("#sfData").attr("disabled", true);
+
+                try {
+                    let dsrInformation = await getOpportunityDSR(gcToken, e.params.data.id);
+                    $('#sfData').select2('data')[0].item.dsr = dsrInformation;
+
+                    // Update Form fields
+
+                    let myData = $('#sfData').select2('data')[0].item;
+                    $('#oppUrl').val(myData.opportunityUrl);
+                    $('#oppDSRUrl').val(myData.dsr && myData.dsr.url ? myData.dsr.url : 'n/a');
+                    $('#oppOwner').val(myData.Owner && myData.Owner.Name ? myData.Owner.Name : 'n/a');
+
+                    let assignedSCValue = myData.dsr && myData.dsr.virtualTeamNames ? myData.dsr.virtualTeamNames : myData.Solution_Consultant__r && myData.Solution_Consultant__r.Name ? myData.Solution_Consultant__r.Name : undefined;
+                    console.log(assignedSCValue);
+                    if (assignedSCValue) {
+                        $("#oppAssignedSC").append($("<option selected='selected'></option>").val("0").text(assignedSCValue)).trigger('change');
+                        $('#oppAssignedSC').attr('disabled', true);
+                    } else {
+                        $('#oppAssignedSC').attr('disabled', false);
+                        $('#oppAssignedSC').val(null).trigger('change');
+                    }
+                    sfObject.oppAssignedSC = assignedSCValue;
+                    let foundAccount = myData.Account && myData.Account.Name ? myData.Account.Name : undefined;
+                    if (foundAccount)
+                        $("#oppPartnerCustomerName").append($("<option selected='selected'></option>").val("0").text(foundAccount)).trigger('change');
+                    else
+                        $('#oppPartnerCustomerName').val(null).trigger('change');
+                    $('#oppPartnerCustomerName').attr('disabled', true);
+
+
+                    //$('#oppAssignedSC').val(myData.dsr && myData.dsr.virtualTeamNames ? myData.dsr.virtualTeamNames : myData.Solution_Consultant__r && myData.Solution_Consultant__r.Name ? myData.Solution_Consultant__r.Name : 'n/a');
+
+                    // Find vaild mail address for assigned SC (if exists)
+                    if (!assignedSCValue) return;
+
+                    // $('#oppPartnerCustomerName').val(myData.Account && myData.Account.Name ? myData.Account.Name : 'n/a');
+                    // $('#oppAssignedSC').val(myData.dsr && myData.dsr.virtualTeamNames ? myData.dsr.virtualTeamNames : myData.Solution_Consultant__r && myData.Solution_Consultant__r.Name ? myData.Solution_Consultant__r.Name : 'n/a');
+
+
+                    // Find vaild mail address for assigned SC
+                    try {
+                        //sfObject.oppAssignedSCMail = await postUsersSearch($('#oppAssignedSC').val());
+                        sfObject.oppAssignedSCMail = await postUsersSearch($('#oppAssignedSC').select2('data')[0].text);
+                        console.log('sfObject.oppAssignedSCMail:', sfObject.oppAssignedSCMail);
+                    } catch (error) {
+                        console.error(error);
+                    }
+
+
+                } catch (error) {
+                    console.error(error);
+                } finally {
+                    $("#sfSpinner").attr("hidden", true);
+                    $("#sfData").attr("disabled", false);
+                }
+
+            });
+
+            $('#sfData').on('select2:clear', async function (e) {
+                console.log('clear items related to SF');
+                sfObject = {};
+                $('#oppAssignedSC').attr('disabled', false);
+                $('#oppAssignedSC').val(null).trigger('change');
+                $('#oppPartnerCustomerName').val(null).trigger('change');
+                $('#oppPartnerCustomerName').attr('disabled', false);
+                $('#oppUrl').val('');
+                $('#oppDSRUrl').val('');
+                $('#oppOwner').val('');
+
+            });
+
+            // Handle a requester name by GC query            
+            $('#gcRequesterName').select2({
+                width: '100%',
+                placeholder: 'Select a requester',
+                allowClear: false,
+                minimumInputLength: 3,
+                ajax: {
+                    delay: 350,
+                    method: 'POST',
+                    headers: {
+                        Authorization: `bearer ${gcToken}`,
+                        "Content-Type": "application/json",
+                    },
+                    url: `https://api.${gcEnv}/api/v2/search?profile=false`,
+                    data: function (params) {
+                        const body = getSearchUserBody(params.term);
+                        console.log('Search user query: ', body);
+                        return JSON.stringify(body);
+                    },
+                    processResults: function (data) {
+                        console.log(data);
+                        if (!data || !Array.isArray(data.results) || data.results.length === 0) return [];
+                        let result = [];
+                        for (const item of data.results) {
+                            result.push({ id: item.name, text: item.name, item });
+                        }
+                        return { results: result };
+                    }
+                }
+            });
+
+            $('#gcRequesterName').on('select2:select', async function (e) {
+                var data = e.params.data;
+                if (!data) return;
+                console.log(data);
+                try {
+                    const reqEmail = data.item.email;
+                    const reqPhoneNo = data.item.primaryContactInfo.filter(x => x.mediaType === 'PHONE')[0] ? data.item.primaryContactInfo.filter(x => x.mediaType === 'PHONE')[0].address : '';
+                    $('#editModal #requesterEmail').val(reqEmail);
+                    $('#editModal #requesterPhoneNumber').val(reqPhoneNo);
+                } catch (error) {
+                    console.error(error);
+                }
+            });
+
+            // Handle a program manager name by GC query            
+            $('#gcProgramManager').select2({
+                width: '100%',
+                placeholder: 'Select a program manager',
+                allowClear: true,
+                minimumInputLength: 3,
+                ajax: {
+                    delay: 350,
+                    method: 'POST',
+                    headers: {
+                        Authorization: `bearer ${gcToken}`,
+                        "Content-Type": "application/json",
+                    },
+                    url: `https://api.${gcEnv}/api/v2/search?profile=false`,
+                    data: function (params) {
+                        const body = getSearchUserBody(params.term);
+                        console.log('Search user query: ', body);
+                        return JSON.stringify(body);
+                    },
+                    processResults: function (data) {
+                        console.log(data);
+                        if (!data || !Array.isArray(data.results) || data.results.length === 0) return [];
+                        let result = [];
+                        for (const item of data.results) {
+                            result.push({ id: item.name, text: item.name, item });
+                        }
+                        return { results: result };
+                    }
+                }
+            });
+
+
+            $('#gcProgramManager').on('select2:select', async function (e) {
+                var data = e.params.data;
+                if (!data) return;
+                console.log(data);
+                updateStakeholdersEmailsTemp(data.item.name, data.item.email);
+            });
+
+            // Handle a program manager name by GC query            
+            $('#gcTeamMembers').select2({
+                width: '100%',
+                placeholder: 'Select team members',
+                allowClear: true,
+                multiple: true,
+                minimumInputLength: 3,
+                ajax: {
+                    delay: 350,
+                    method: 'POST',
+                    headers: {
+                        Authorization: `bearer ${gcToken}`,
+                        "Content-Type": "application/json",
+                    },
+                    url: `https://api.${gcEnv}/api/v2/search?profile=false`,
+                    data: function (params) {
+                        const body = getSearchUserBody(params.term);
+                        console.log('Search user query: ', body);
+                        return JSON.stringify(body);
+                    },
+                    processResults: function (data) {
+                        console.log(data);
+                        if (!data || !Array.isArray(data.results) || data.results.length === 0) return [];
+                        let result = [];
+                        for (const item of data.results) {
+                            result.push({ id: item.name, text: item.name, item });
+                        }
+                        return { results: result };
+                    }
+                }
+            });
+
+            $('#gcTeamMembers').on('select2:select', async function (e) {
+                var data = e.params.data;
+                if (!data) return;
+                console.log(data);
+                updateStakeholdersEmailsTemp(data.item.name, data.item.email);
+            });
+
+            // Handle oppAssignedSC
+
+            $('#oppAssignedSC').select2({
+                width: '100%',
+                placeholder: 'Select user',
+                allowClear: true,
+                minimumInputLength: 3,
+                ajax: {
+                    delay: 350,
+                    method: 'POST',
+                    headers: {
+                        Authorization: `bearer ${gcToken}`,
+                        "Content-Type": "application/json",
+                    },
+                    url: `https://api.mypurecloud.com/api/v2/search?profile=false`,
+                    data: function (params) {
+                        const body = getSearchUserBody(params.term);
+                        console.log('Search user query: ', body);
+                        return JSON.stringify(body);
+                    },
+                    processResults: function (data) {
+                        console.log(data);
+                        if (!data || !Array.isArray(data.results) || data.results.length === 0) return [];
+                        let result = [];
+                        for (const item of data.results) {
+                            result.push({ id: item.name, text: item.name, item });
+                        }
+                        return { results: result };
+                    }
+                }
+            });
+
+            $('#oppAssignedSC').on('select2:select', async function (e) {
+                var data = e.params.data;
+                if (!data) return;
+                console.log(data);
+                sfObject.oppAssignedSC = data.text;
+                sfObject.oppAssignedSCMail = data.item.email;
+
+            });
+
+            $('#oppAssignedSC').on('select2:clear', async function (e) {
+
+                delete sfObject.oppAssignedSC;
+                delete sfObject.oppAssignedSCMail;
+
+            });
+
+            // Handle Account Name
+
+
+            $('#oppPartnerCustomerName').select2({
+                placeholder: 'Find Account Name',
+                width: '100%',
+                allowClear: true,
+                minimumInputLength: 3,
+                ajax: {
+                    delay: 350,
+                    url: `${apiBasePath}/sf/accounts`,
+
+                    data: function (params) {
+                        var query = {
+                            token: gcToken,
+                            name: params.term,
+                        };
+                        // Query parameters will be ?search=[term]&type=public
+                        return query;
+                    },
+                    error: function (err) {
+                        console.log(err);
+                        if (err.status === 401) {
+                            window.open('./index.html', '_self');
+                        } else if (err.status > 400) {
+                            showMessage(err.hasOwnProperty('responseJSON') ? err.responseJSON.message : error, true);
+                        }
+                    },
+
+                    processResults: function (data) {
+                        // Transforms the top-level key of the response object from 'items' to 'results'
+
+                        let ret = [];
+                        data.forEach((item) => {
+                            ret.push({
+                                id: item.Id,
+                                text: `${item.Name} (${item.Owner && item.Owner.Name ? item.Owner.Name : 'owner undefined'})`,
+                                item: item,
+                            });
+                        });
+                        console.log(ret);
+                        return {
+                            results: ret,
+                        };
+                    },
+                },
+            });
+
+            $('#oppPartnerCustomerName').on('select2:select', async function (e) {
+                var data = e.params.data;
+                if (!data) return;
+                console.log(data);
+                sfObject.Account = data.item;
+                $('#oppOwner').val(data.item.Owner && data.item.Owner.Name ? data.item.Owner.Name : 'n/a');
+                $('#sfData').attr('disabled', true); // don't allow to set Opportunity when Account is selected
+                $('#oppUrl').val(data.item.opportunityUrl);
+
+            });
+
+            $('#oppPartnerCustomerName').on('select2:clear', async function (e) {
+
+                delete sfObject.Account;
+                $('#sfData').attr('disabled', false);
+                $('#oppOwner').val('');
+                $('#oppUrl').val('');
+
+            });
+
+
+        });
 
         let region = getUrlParameter("region");
+        console.log('Detected region: ', region);
         $("#region").text(region);
+
+        if (region && region !== true) {
+            $('.admin').show();
+            $('.admin').removeAttr('hidden');
+        }
+
+        function showSettings() {
+            let url = `addons/build/\#/adminpage?region=${region}&token=${gcToken}`
+            // if (window.location.href.includes('localhost'))
+            //     // /url = `http://localhost:3001/#/adminpage?region=${region}&token=${gcToken}`
+            //     url = `addons/build/\#/adminpage?region=${region}&token=${gcToken}`
+            // else
+            //     url = `addons/build/\#/adminpage?region=${region}&token=${gcToken}`
+            window.location.replace(url);
+        }
+
 
         // SetLink for Dashboard
         document.getElementById("dashboardLink").setAttribute("href", `./dashboard.html?region=${$("#region").text()}`);
@@ -355,16 +1478,36 @@
             showRequests();
         }
 
+        // <handle message event from filter iframe>    
+        window.addEventListener('message', function (event) {
+            if (event.data && event.data.eventName) {
+                filterHandleOnMessageEvent(event.data);
+            }
+        });
+        // </handle message event from filter iframe>
+
+        // <load filter page into iFrame            
+        const filterLocation = region ? `addons/build/\#/requestsfilter?region=${region}&token=${gcToken}` : `addons/build/\#/requestsfilter?requester=${userName}&token=${gcToken}`;;
+        console.log('filterLocation: ', filterLocation);
+        $("#filter-sidebar-addon").attr("src", filterLocation);
+        // </load filter page into iFrame>
+
         $(function () {
             $("#datepicker").datepicker({
-                daysOfWeekDisabled: "0,6",
+                daysOfWeekDisabled: ['0', '6'],
                 todayHighlight: true,
                 autoclose: true,
-                startDate: new Date()
+                //startDate: new Date()
             });
         });
 
         function initModal() {
+            $('#requestType').val("0");
+            $('#gcRequester').val(null).trigger('change');
+            $('#gcProgramManager').val(null).trigger('change');
+            $('#gcTeamMembers').val(null).trigger('change');
+            $('#gcTeamMembers').empty();
+
             $("#editModal #id").text("");
             $("#editModal #createdDate").val("");
             $("#editModal #updatedDate").val("");
@@ -376,21 +1519,70 @@
             $("#editModal #product").val("");
             $("#editModal #tasks").empty();
             tasksControls = [];
-            $("#editModal #requesterName").val("");
             $("#editModal #requesterEmail").val("");
             $("#editModal #requesterPhoneNumber").val("");
             $("#editModal #datepicker").datepicker('update', '');
             $("#editModal #description").val("");
-            $("#editModal #partnerCustomerName").val("");
-            $("#editModal #salesforceAccountOpportunity").val("");
+            // $("#editModal #partnerCustomerName").val("");
+            // $("#editModal #salesforceAccountOpportunity").val("");
+
+            // SF Related Data
+            $('#editModal #oppUrl').val('');
+            $('#editModal #oppDSRUrl').val('');
+            $('#editModal #oppOwner').val('');
+            //$('#editModal #oppPartnerCustomerName').val('');
+            $('#editModal #oppPartnerCustomerName').val(null).trigger('change');
+            $('#editModal #oppAssignedSC').val('');
+            $('#editModal #sfData').val(null).trigger('change');
+
             $("#editModal #priority").val("");
             $("#editModal #bAcceptedRequest").val("");
             $("#editModal #status").val("");
-            $("#editModal #programManager").val("");
             $("#editModal #time").val("");
             $("#editModal #txtAcceptedRejectedNotes").val("");
+            $("#editModal #divNotesHistory").html("");
 
             setDatesLabels(undefined, undefined, undefined);
+            sfObject = {};
+
+            stakeholdersEmails = JSON.parse(JSON.stringify(stakeholdersEmailsClear));
+
+            // Free Trial
+            $('#editModal #trialValidationType').val('');
+            $('#editModal #trialValidationType').change();
+
+            // Telephony
+            $("#editModal #countriesAgents").val('');
+            $("#editModal #countriesAgents").selectpicker('refresh');
+            $("#editModal #countriesOperation").val('');
+            $("#editModal #countriesOperation").selectpicker('refresh');
+
+            $("#editModal #existingTelephonyUsage").prop('checked', false);
+            $("#editModal #existingTelephonyUsageDetails").val('');
+            $("#editModal #telephonyModel")[0].selectedIndex = 0;
+            $("#editModal #telephonyModel").change();
+            countriesAndCarriers = [];
+            $("#editModal #byocCloudCarriers").empty();
+            $("#editModal #phoneNumbersDeployment").val('');
+            $("#editModal #relationshipWithCarrier").prop('checked', false);
+            $("#editModal #customerResourceCommitted").prop('checked', false);
+            $("#editModal #hyperVEnvironment").prop('checked', false);
+            $("#editModal #estimatedVolumeMinsPerMonth").val('');
+            $("#editModal #genesysCloudRegion").val('');
+
+            // General Configuration
+            $("#editModal #numberAgents").val('');
+            $("#editModal #identificationAndVerificationProcesses").val('');
+            $("#editModal #itInfrastructure").val('');
+            $("#editModal #endUserDevicesRequireVPN").prop('checked', false);
+            $("#editModal #virtualDesktopSolution").val('');
+
+            // Policies & Processes
+            $("#editModal #standardTermsConditions").prop('checked', false);
+
+            // Other
+            $("#editModal #solutionBusinessConsultingRequired").prop('checked', false);
+
 
             validator.resetForm(); // Reset validation errors
         }
@@ -423,7 +1615,6 @@
                 $("#editModal #lblDateClosed").text(`Closed: ${localClosedFromNow} at ${localClosed}`);
             }
         }
-
 
         function refreshGrid() {
             $("#basicgrid").jsGrid("loadData").done(() => {
@@ -481,7 +1672,7 @@
                 $("#basicgrid").jsGrid({
                     height: "100vh",
                     width: "100%",
-                    filtering: true,
+                    filtering: false,
                     editing: false,
                     sorting: true,
                     paging: true,
@@ -492,7 +1683,7 @@
                     loadIndicationDelay: 500,
                     loadMessage: "Loading...",
                     loadShading: true,
-                    autoload: true,
+                    autoload: false,
                     rowClick: function (args) {
                         showModal(args.item);
                     },
@@ -546,6 +1737,7 @@
                     },
                     controller: {
                         loadData: async function (filter) {
+
                             let hasFilter = false;
 
                             var doNotReload = false;
@@ -574,8 +1766,17 @@
                                 if (doNotReload) {
                                     console.log('Skipping requests reload');
                                 } else {
-                                    requests.requests = await getRequests(region, gcToken);
+                                    console.log('Loading filtered request list');
+                                    requests.requests = await queryFilteredRequests(filterConfiguration, gcToken);
                                 }
+                                // else if (filterConfiguration !== null)
+                                // {
+                                //     console.log('Loading filtered request list');
+                                //     requests.requests = await queryFilteredRequests(filterConfiguration, gcToken);
+                                // } else {
+                                //     console.log('Loading full request list');
+                                //     requests.requests = await getRequests(region, gcToken);
+                                // }   
 
 
                                 // set default values for undefined/optional item. Without it filtering fails
@@ -632,27 +1833,22 @@
                             visible: false
                         },
                         {
+                            name: "requestType",
+                            title: "",
+                            type: "control",
+                            itemTemplate: function (value, item) {
+                                if (value === "1") {
+                                    return '<img alt="TRIAL" src="images/tag-trial.svg" style="transform: rotate(80deg); width: 3rem; height: 3rem; margin: -8px 0 0 -10px;" />';
+                                }
+                                return '<img alt="STD" src="images/tag-std.svg" style="transform: rotate(80deg); width: 3rem; height: 3rem; margin: -8px 0 0 -10px;" />';
+                            }
+                        },
+                        {
                             name: "status",
                             title: "Status",
                             type: "select",
                             width: "auto",
                             align: "center",
-                            filterTemplate: function () {
-                                let select = $("<select/>", { id: "selectStatus" });
-                                $("<option/>", { value: "" }).text("(All)").appendTo(select);
-                                $("<option/>", { value: 'Open' }).text('Open').appendTo(select);
-                                $("<option/>", { value: 'On Hold' }).text('On Hold').appendTo(select);
-                                $("<option/>", { value: 'Waiting On Additional Information' }).text('Waiting On Additional Information').appendTo(select);
-                                $("<option/>", { value: 'Closed' }).text('Closed').appendTo(select);
-
-                                select.on('change', (e) => {
-                                    let selectedStatus = select.children("option:selected").val();
-                                    searches.status = selectedStatus;
-                                    searches.doNotReload = true;
-                                    $("#basicgrid").data('JSGrid').search(searches);
-                                });
-                                return this.filterControl = select;
-                            },
                             itemTemplate: function (value, item) {
                                 return value;
                             }
@@ -663,24 +1859,6 @@
                             type: "select",
                             width: "auto",
                             align: "center",
-                            filterTemplate: function () {
-                                let select = $("<select/>", { id: "acceptedRejected" });
-                                $("<option/>", { value: "" }).text("(All)").appendTo(select);
-                                $("<option/>", { value: 'Accepted' }).text('Accepted').appendTo(select);
-                                $("<option/>", { value: 'Rejected' }).text('Rejected').appendTo(select);
-                                $("<option/>", { value: 'n/a' }).text('Unhandled').appendTo(select);
-
-
-                                select.on('change', (e) => {
-                                    let selectedStatus = select.children("option:selected").val();
-                                    console.log('selected value !! : ', selectedStatus);
-                                    searches.acceptedRejected = selectedStatus;
-                                    searches.doNotReload = true;
-                                    $("#basicgrid").data('JSGrid').search(searches);
-                                });
-
-                                return this.filterControl = select;
-                            },
                             itemTemplate: function (value, item) {
                                 return value;
                             }
@@ -689,34 +1867,6 @@
                             name: "region",
                             title: "Region",
                             type: "select",
-                            filterTemplate: function () {
-                                let select = $("<select/>", { id: "selectRegion" });
-                                $("<option/>", { value: "" }).text("(All)").appendTo(select);
-                                for (const region of Object.keys(regions)) {
-                                    let option = $("<option/>", { value: region }).text(region).appendTo(select);
-                                }
-                                select.on('change', (e) => {
-                                    let selectedRegion = select.children("option:selected").val();
-                                    searches.region = selectedRegion;
-                                    searches.doNotReload = true;
-                                    $("#selectSubRegion").empty();
-                                    $("<option/>", { value: "" }).text("(All)").appendTo("#selectSubRegion");
-                                    if (selectedRegion && selectedRegion != "(All)") {
-                                        for (const subRegion of regions[selectedRegion]) {
-                                            let option = $("<option/>", { value: subRegion }).text(subRegion).appendTo("#selectSubRegion");
-                                        }
-                                    } else {
-                                        searches.subRegion = "";
-                                    }
-                                    $("#selectSubRegion").on('change', (e) => {
-                                        let selectedSubRegion = $("#selectSubRegion").children("option:selected").val();
-                                        searches.subRegion = selectedSubRegion;
-                                        $("#basicgrid").data('JSGrid').search(searches);
-                                    });
-                                    $("#basicgrid").data('JSGrid').search(searches);
-                                });
-                                return this.filterControl = select;
-                            },
                             items: Object.keys(regions),
                             itemTemplate: function (value, item) {
                                 return value;
@@ -729,23 +1879,6 @@
                             type: "select",
                             width: "auto",
                             align: "center",
-                            filterTemplate: function () {
-                                let select = $("<select/>", { id: "selectSubRegion" });
-                                $("<option/>", { value: "" }).text("(All)").appendTo(select);
-                                let selectedRegion = $("#selectRegion").children("option:selected").val();
-                                if (selectedRegion && selectedRegion != "(All)") {
-                                    for (const subRegion of regions[selectedRegion]) {
-                                        let option = $("<option/>", { value: subRegion }).text(subRegion).appendTo(select);
-                                    }
-                                }
-                                select.on('change', (e) => {
-                                    let selectedSubRegion = select.children("option:selected").val();
-                                    searches.subRegion = selectedSubRegion;
-                                    searches.doNotReload = true;
-                                    $("#basicgrid").data('JSGrid').search(searches);
-                                });
-                                return this.filterControl = select;
-                            },
                             items: Object.keys(regions),
                             itemTemplate: function (value, item) {
                                 return value;
@@ -756,21 +1889,6 @@
                             type: "text",
                             width: "auto",
                             align: "center",
-                            filterTemplate: function () {
-                                let select = $("<select/>");
-                                $("<option/>", { value: "" }).text("(All)").appendTo(select);
-                                for (const product of Object.keys(mailDistribution)) {
-                                    let option = $("<option/>", { value: product }).text(product).appendTo(select);
-                                }
-                                select.on('change', (e) => {
-                                    console.log('e:', e);
-                                    let selectedProduct = select.children("option:selected").val();
-                                    searches.product = selectedProduct;
-                                    searches.doNotReload = true;
-                                    $("#basicgrid").data('JSGrid').search(searches);
-                                });
-                                return this.filterControl = select;
-                            },
                             items: Object.keys(regions),
                             itemTemplate: function (value, item) {
                                 return value;
@@ -782,30 +1900,12 @@
                             type: "text",
                             width: "auto",
                             align: "center",
-                            filterTemplate: function () {
-                                let input = $("<input/>", { type: "text" });
-                                input.on('keyup', () => {
-                                    searches.segment = input.val();
-                                    searches.doNotReload = true;
-                                    $("#basicgrid").data('JSGrid').search(searches);
-                                });
-                                return this.filterControl = input;
-                            },
                         }, {
                             name: "requesterName",
                             title: "Requester Name",
                             type: "text",
                             width: "auto",
                             align: "center",
-                            filterTemplate: function () {
-                                let input = $("<input/>", { type: "text" });
-                                input.on('keyup', () => {
-                                    searches.requesterName = input.val();
-                                    searches.doNotReload = true;
-                                    $("#basicgrid").data('JSGrid').search(searches);
-                                });
-                                return this.filterControl = input;
-                            },
                         },
                         {
                             name: "programManager",
@@ -814,14 +1914,6 @@
                             width: "auto",
                             visible: true,
                             align: "center",
-                            filterTemplate: function () {
-                                let input = $("<input/>", { type: "text" });
-                                input.on('keyup', () => {
-                                    searches.programManager = input.val();
-                                    $("#basicgrid").data('JSGrid').search(searches);
-                                });
-                                return this.filterControl = input;
-                            },
                         }, {
                             name: "teamMembers",
                             title: "Team Members",
@@ -829,30 +1921,12 @@
                             width: "auto",
                             visible: true,
                             align: "center",
-                            filterTemplate: function () {
-                                let input = $("<input/>", { type: "text" });
-                                input.on('keyup', () => {
-                                    searches.teamMembers = input.val();
-                                    searches.doNotReload = true;
-                                    $("#basicgrid").data('JSGrid').search(searches);
-                                });
-                                return this.filterControl = input;
-                            },
                         }, {
                             name: "partnerCustomerName",
                             title: "Partner/Customer",
                             type: "text",
                             width: "160",
                             align: "center",
-                            filterTemplate: function () {
-                                let input = $("<input/>", { type: "text" });
-                                input.on('keyup', () => {
-                                    searches.partnerCustomerName = input.val();
-                                    searches.doNotReload = true;
-                                    $("#basicgrid").data('JSGrid').search(searches);
-                                });
-                                return this.filterControl = input;
-                            },
                         }, {
                             name: "needCompletedBy",
                             title: "Need Completed",
@@ -895,8 +1969,33 @@
             }
         }
 
-        function showModal(request) {
+        async function showModal(request) {
             console.log("Showing modal for:", request);
+
+            if (request.requestType === "1") {
+                $('#modal-tag-std').hide();
+                $('#modal-tag-trial').show();
+                $('#editModal #taskSection').hide();
+                $('#free-trial-questions').show();
+
+
+            } else {
+                $('#modal-tag-std').show();
+                $('#modal-tag-trial').hide();
+                $('#editModal #taskSection').show();
+                $('#free-trial-questions').hide();
+            }
+
+            if (request.requestType) $('#requestType').val(request.requestType)
+            else
+                $('#requestType').val("0");
+
+
+            setTelephonyModelDropDown();
+
+            $('#editModal #sfData').val(null).trigger('change');
+            $('#editModal #oppAssignedSC').val(null).trigger('change');
+            $('#editModal #oppPartnerCustomerName').val(null).trigger('change');
 
             if (request.acceptedRejected)
                 $("#editModal #title").text(`Request (${request.acceptedRejected})`)
@@ -923,20 +2022,122 @@
                 addNewTask(task, i++ > 0 ? true : false);
             }
 
-            $("#editModal #requesterName").val(request.requesterName);
+            $("#gcRequesterName").append($("<option selected='selected'></option>").val("0").text(request.requesterName)).trigger('change');
+            if (request.programManager) $("#gcProgramManager").append($("<option selected='selected'></option>").val("0").text(request.programManager)).trigger('change');
+            if (request.teamMembers) {
+                const teamMemberList = request.teamMembers.split(',');
+                let i = 0;
+                for (const tm of teamMemberList) {
+                    if (tm && tm !== 'n/a') {
+                        $("#gcTeamMembers").append($("<option selected='selected'></option>").val(i.toString()).text(tm)).trigger('change');
+                    }
+                }
+            }
             $("#editModal #requesterEmail").val(request.requesterEmail);
             $("#editModal #requesterPhoneNumber").val(request.requesterPhoneNumber);
             $("#editModal #datepicker").datepicker('update', new Date(request.needCompletedBy));
             $("#editModal #description").val(request.description);
-            $("#editModal #partnerCustomerName").val(request.partnerCustomerName);
-            $("#editModal #salesforceAccountOpportunity").val(request.salesforceAccountOpportunity);
+
+            // SF Related Data
+            $('#editModal #oppDSRUrl').val(request.oppDSRUrl);
+            $('#editModal #oppOwner').val(request.oppOwner);
+
+            if (request.salesforceAccountOpportunity)
+                $('#editModal #oppUrl').val(request.salesforceAccountOpportunity);
+            else
+                $('#editModal #oppUrl').val(request.oppUrl);
+
+            let tmpVal;
+            if (request.partnerCustomerName && request.partnerCustomerName.toLowerCase() !== 'n/a')
+                tmpVal = $("<option selected='selected'></option>").val("0").text(request.partnerCustomerName);
+            else
+                tmpVal = $("<option selected='selected'></option>").val("0").text(request.oppPartnerCustomerName);
+            $("#editModal #oppPartnerCustomerName").append(tmpVal).trigger('change');
+
+            if (request.oppAssignedSC) {
+                tmpVal = $("<option selected='selected'></option>").val("0").text(request.oppAssignedSC);
+                $("#editModal #oppAssignedSC").append(tmpVal).trigger('change');
+            }
+
+            let $newOption = $("<option selected='selected'></option>").val("0").text(request.oppName)
+            $("#editModal #sfData").append($newOption).trigger('change');
+
+
             $("#editModal #priority").val(request.priority);
             $("#editModal #bAcceptedRequest").val(request.acceptedRejected);
             $("#editModal #status").val(request.status);
-            $("#editModal #programManager").val(request.programManager);
             $("#editModal #time").val(request.time);
-            $("#editModal #txtAcceptedRejectedNotes").val(request.acceptedRejectedNotes);
+            $("#editModal #txtAcceptedRejectedNotes").val("");
+            $("#editModal #divNotesHistory").html(request.acceptedRejectedNotes);
             $("#editModal #teamMembers").val(request.teamMembers);
+
+
+            // Find vaild mail address for assigned SC
+            try {
+                if (!request.oppAssignedSCMail && $('#editModal #oppAssignedSC').val() && $('#editModal #oppAssignedSC').val().length > 0) {
+                    sfObject.oppAssignedSCMail = await postUsersSearch($('#editModal #oppAssignedSC').val());
+                } else
+                    sfObject.oppAssignedSCMail = request.oppAssignedSCMail
+                console.log('sfObject.oppAssignedSCMail:', sfObject.oppAssignedSCMail);
+            } catch (error) {
+                console.error(error);
+            }
+
+            stakeholdersEmails = JSON.parse(JSON.stringify(stakeholdersEmailsClear));
+            stakeholdersEmails.loadedFromDb = Array.isArray(request.stakeholdersEmails) ? Array.from(request.stakeholdersEmails) : [];
+
+
+            // FreeTrial Section            
+            $('#editModal #trialValidationType').val(request.freeTrialValidationType);
+            $('#editModal #trialValidationType').change();
+
+
+            // Telephony
+
+            $("#editModal  #countriesAgents").val(request.freeTrialCountriesAgents);
+            $("#editModal  #countriesAgents").selectpicker('refresh');
+
+
+            $("#editModal  #countriesOperation").val(request.freeTrialCountriesOperation);
+            $("#editModal  #countriesOperation").selectpicker('refresh');
+
+            $("#editModal #newNumbers").val(request.freeTrialNewNumbers);
+            $("#editModal #existingTelephonyUsage").prop('checked', request.freeTrialExistingTelephonyUsage);
+            $("#editModal #existingTelephonyUsageDetails").attr('disabled', !request.freeTrialExistingTelephonyUsage);
+            $("#editModal #existingTelephonyUsageDetails").val(request.freeTrialExistingTelephonyUsageDetails);
+            countriesAndCarriers = request.freeTrialByocCloudCarriers;
+            if (request.freeTrialTelephonyModel) {
+                $("#editModal #telephonyModel").val(request.freeTrialTelephonyModel);
+                $("#editModal #telephonyModel").change();
+            }
+
+            $("#editModal #phoneNumbersDeployment").val(request.freeTrialPhoneNumbersDeployment);
+            $("#editModal #relationshipWithCarrier").prop('checked', request.freeTrialRelationshipWithCarrier);
+            $("#editModal #customerResourceCommitted").prop('checked', request.freeTrialCustomerResourceCommitted);
+            $("#editModal #hyperVEnvironment").prop('checked', request.freeTrialHyperVEnvironment);
+            $("#editModal #estimatedVolumeMinsPerMonth").val(request.freeTrialEstimatedVolumeMinsPerMonth);
+            $("#editModal #genesysCloudRegion").val(request.freeTrialGenesysCloudRegion);
+
+            // General Configuration
+            $("#editModal #numberAgents").val(request.freeTrialNumberAgents);
+            $("#editModal #identificationAndVerificationProcesses").val(request.freeTrialIdentificationAndVerificationProcesses);
+            $("#editModal #itInfrastructure").val(request.freeTrialItInfrastructure);
+            $("#editModal #endUserDevicesRequireVPN").prop('checked', request.freeTrialEndUserDevicesRequireVPN);
+            $("#editModal #virtualDesktopSolution").val(request.freeTrialVirtualDesktopSolution);
+
+            $('#editModal #impactByDesign').prop('checked', request.freeTrialImpactByDesign);
+            $('#editModal #businessGoal').val(request.freeTrialBusinessGoal);
+            $('#editModal #measureOfSuccess').val(request.freeTrialMeasureOfSuccess);
+
+
+            // Policies & Processes
+            $("#editModal #standardTermsConditions").prop('checked', request.freeTrialStandardTermsConditions);
+
+            // Other          
+            $("#editModal #solutionBusinessConsultingRequired").prop('checked', request.freeTrialSolutionBusinessConsultingRequired);
+
+
+
             $("#editModal").modal("show");
 
             if (request.isDeleted) {
@@ -947,6 +2148,7 @@
                 $("#btnAcceptRequest").attr("hidden", true);
                 $("#btnRestore").attr("disabled", false);
                 $("#btnRestore").attr("hidden", false);
+                $("#btnAddNote").prop('disabled', false);
             } else {
                 $("#modal-form :input").attr("disabled", false);
                 $("#btnRejectRequest").attr("hidden", false);
@@ -955,7 +2157,25 @@
                 $("#btnRestore").attr("hidden", true);
                 $("#createdDate").attr("disabled", true);
                 $("#updatedDate").attr("disabled", true);
+
+                $('#editModal #oppUrl').attr("disabled", true);
+                //$('#editModal #oppPartnerCustomerName').attr("disabled", true);
+                $('#editModal #oppDSRUrl').attr("disabled", true);
+                $('#editModal #oppOwner').attr("disabled", true);
+                //$('#editModal #oppAssignedSC').attr("disabled", true);
+
             }
+
+            if ($('#editModal #sfData').select2('data')[0] && $('#sfData').select2('data')[0].text == "") {
+                $('#editModal #oppPartnerCustomerName').attr('disabled', false);
+                if ($('#editModal #oppPartnerCustomerName').select2('data')[0] && $('#editModal #oppPartnerCustomerName').select2('data')[0].text !== "")
+                    $('#editModal #sfData').attr('disabled', true);
+            } else {
+                $('#editModal #oppPartnerCustomerName').attr('disabled', true);
+            }
+
+
+
 
             if (request.acceptedRejected == "Accepted") {
                 $("#modal-header").css('background', 'lightgreen');
@@ -985,19 +2205,26 @@
                 let currentTaskId = taskId;
                 taskId++;
 
-                let categoryDiv = $("<div/>", { class: "form-group col-md-4" }).appendTo("#tasks");
+                let categoryDiv = $("<div/>", { class: "form-group col-md-3" }).appendTo("#tasks");
                 let categorySelect = $("<select/>", { class: "form-control", name: "category_" + currentTaskId, required: true }).appendTo(categoryDiv);
                 $("<option/>", { value: "", disabled: true, selected: true }).text("Select a Request Category").appendTo(categorySelect);
                 for (const category of requestCategory) {
                     $("<option/>", { value: category }).text(category).appendTo(categorySelect);
                 }
 
-                let typeDiv = $("<div/>", { class: "form-group col-md-4" }).appendTo("#tasks");
+                let typeDiv = $("<div/>", { class: "form-group col-md-3" }).appendTo("#tasks");
                 let typeSelect = $("<select/>", { class: "form-control", name: "type_" + currentTaskId, required: true }).appendTo(typeDiv);
                 $("<option/>", { value: "", disabled: true, selected: true }).text("Select a Request Type").appendTo(typeSelect);
                 categorySelect.on("change", () => {
                     updateRequestTypeBasedOnRegionAndProduct(categorySelect, typeSelect);
                 });
+
+                let taskStatusDiv = $("<div/>", { class: "form-group col-md-3" }).appendTo("#tasks");
+                let taskStatusSelect = $("<select/>", { class: "form-control", name: "taskStatus_" + currentTaskId, required: true }).appendTo(taskStatusDiv);
+                $("<option/>", { value: "", disabled: true, selected: true }).text("Select a task status").appendTo(taskStatusSelect);
+                for (const item of taskStatus) {
+                    $("<option/>", { value: item }).text(item).appendTo(taskStatusSelect);
+                }
 
                 // Time Field
                 let timeDiv = $("<div/>", { class: "form-group col-md-2" }).appendTo("#tasks");
@@ -1008,6 +2235,7 @@
                     deleteButton.on("click", () => {
                         categoryDiv.remove();
                         typeDiv.remove();
+                        taskStatusDiv.remove();
                         deleteButton.remove();
                         timeDiv.remove();
                         tasksControls = tasksControls.filter(tc => tc.id != currentTaskId)
@@ -1018,25 +2246,34 @@
                     id: currentTaskId,
                     categorySelect: categorySelect,
                     typeSelect: typeSelect,
+                    taskStatusSelect: taskStatusSelect,
                     timeInput: timeInput
                 });
             } else {
                 let currentTaskId = task.taskId;
 
                 // Category Select
-                let categoryDiv = $("<div/>", { class: "form-group col-md-4" }).appendTo("#tasks");
+                let categoryDiv = $("<div/>", { class: "form-group col-md-3" }).appendTo("#tasks");
                 let categorySelect = $("<select/>", { class: "form-control", required: true }).appendTo(categoryDiv);
                 for (const category of requestCategory) {
                     $("<option/>", { value: category, selected: category === task.taskCategory }).text(category).appendTo(categorySelect);
                 }
 
                 // Type Select
-                let typeDiv = $("<div/>", { class: "form-group col-md-4" }).appendTo("#tasks");
+                let typeDiv = $("<div/>", { class: "form-group col-md-3" }).appendTo("#tasks");
                 let typeSelect = $("<select/>", { class: "form-control", required: true }).appendTo(typeDiv);
                 categorySelect.on("change", () => {
                     updateRequestTypeBasedOnRegionAndProduct(categorySelect, typeSelect, task.taskType);
                 });
                 updateRequestTypeBasedOnRegionAndProduct(categorySelect, typeSelect, task.taskType);
+
+                let taskStatusDiv = $("<div/>", { class: "form-group col-md-3" }).appendTo("#tasks");
+                let taskStatusSelect = $("<select/>", { class: "form-control", name: "taskStatus_" + currentTaskId, required: true }).appendTo(taskStatusDiv);
+                $("<option/>", { value: "", disabled: true, selected: true }).text("Select task status").appendTo(taskStatusSelect);
+                for (const item of taskStatus) {
+                    $("<option/>", { value: item, selected: item === task.taskStatus }).text(item).appendTo(taskStatusSelect);
+                }
+
 
                 // Time Field
                 let timeDiv = $("<div/>", { class: "form-group col-md-2" }).appendTo("#tasks");
@@ -1047,6 +2284,7 @@
                     deleteButton.on("click", () => {
                         categoryDiv.remove();
                         typeDiv.remove();
+                        taskStatusDiv.remove();
                         timeDiv.remove();
                         deleteButton.remove();
                         tasksControls = tasksControls.filter(tc => tc.id != currentTaskId)
@@ -1058,6 +2296,7 @@
                     id: currentTaskId,
                     categorySelect: categorySelect,
                     typeSelect: typeSelect,
+                    taskStatusSelect,
                     timeInput: timeInput
                 });
             }
@@ -1189,11 +2428,14 @@
                         taskId: task.id,
                         taskCategory: task.categorySelect.val(),
                         taskType: task.typeSelect.val(),
+                        taskStatus: task.taskStatusSelect.val(),
                         taskTime: task.timeInput.val()
                     });
                 }
 
-                let requesterName = $("#editModal #requesterName").val();
+                let requesterName = Array.isArray($("#gcRequesterName").select2('data')) && $("#gcRequesterName").select2('data').length === 1 ? $("#gcRequesterName").select2('data')[0].text : 'n/a';
+                let programManager = Array.isArray($("#gcProgramManager").select2('data')) && $("#gcProgramManager").select2('data').length === 1 ? $("#gcProgramManager").select2('data')[0].text : 'n/a';
+                let teamMembers = Array.isArray($("#gcTeamMembers").select2('data')) && $("#gcTeamMembers").select2('data').length > 0 ? $("#gcTeamMembers").select2('data').map(x => x.text).join(',') : 'n/a';
                 let requesterEmail = $("#editModal #requesterEmail").val();
                 let requesterPhoneNumber = $("#editModal #requesterPhoneNumber").val();
                 let needCompletedBy = moment($("#datepicker").datepicker('getDate')).format("YYYY-MM-DDT00:00:00.000") + "Z";
@@ -1202,10 +2444,8 @@
                 let salesforceAccountOpportunity = $("#editModal #salesforceAccountOpportunity").val();
                 let priority = $("#editModal #priority").val();
                 let acceptedRejected = $("#editModal #bAcceptedRequest").val();
-                let acceptedRejectedNotes = $("#editModal #txtAcceptedRejectedNotes").val();
-                let programManager = $("#editModal #programManager").val();
+                let acceptedRejectedNotes = $("#editModal #divNotesHistory").html();
                 let time = $("#editModal #time").val();
-                let teamMembers = $("#editModal #teamMembers").val();
                 let status;
                 if (acceptedRejected == "Rejected")
                     status = "Closed"
@@ -1220,17 +2460,30 @@
                     dateClosed = moment().utc().format();
                 }
 
-                console.log(`Region: ${region}, subRegion: ${subRegion}, Product: ${product}, Segment: ${segment}, tasks: ${JSON.stringify(tasks)}, Requester Name: ${requesterName}, Requester Email: ${requesterEmail}, Requester Phone Number: ${requesterPhoneNumber}, Need Completed By: ${needCompletedBy}, Description: ${description}, Partner or Customer Name: ${partnerCustomerName}, Salesforce Opportunity: ${salesforceAccountOpportunity}`);
+
+                // SF Related Data
+
+                let oppUrl = $('#editModal #oppUrl').val();
+                let oppDSRUrl = $('#editModal #oppDSRUrl').val();
+                let oppOwner = $('#editModal #oppOwner').val();
+                let oppPartnerCustomerName = $('#editModal #oppPartnerCustomerName').select2('data')[0] ? $('#editModal #oppPartnerCustomerName').select2('data')[0].text : undefined;
+                let oppAssignedSC = $('#editModal #oppAssignedSC').select2('data')[0] ? $('#editModal #oppAssignedSC').select2('data')[0].text : undefined;
+                let oppName = $('#editModal #sfData').select2('data').length > 0 && $('#editModal #sfData').select2('data')[0].text ? $('#editModal #sfData').select2('data')[0].text : undefined;
+
+                processStakeholdersEmails($("#gcProgramManager").select2('data')[0] && $("#gcProgramManager").select2('data')[0].text ? $("#gcProgramManager").select2('data')[0].text : null, $("#gcTeamMembers").select2('data') || []);
+
+                console.log(`Region: ${region}, subRegion: ${subRegion}, Product: ${product}, Segment: ${segment}, tasks: ${JSON.stringify(tasks)}, Requester Name: ${requesterName}, Requester Email: ${requesterEmail}, Requester Phone Number: ${requesterPhoneNumber}, Need Completed By: ${needCompletedBy}, Description: ${description}`);
                 console.log(`Priority: ${priority}, Accepted/Rejected: ${acceptedRejected}, Status: ${status}, Program Manager: ${programManager}, AcceptedRejectedNotes: ${acceptedRejectedNotes}, teamMembers: ${teamMembers}`);
                 console.log(`dateAccepted: ${dateAccepted}, dateRejected: ${dateRejected}, dateClosed: ${dateClosed}`);
 
-                await putRequest(id, region, subRegion, segment, product, tasks, requesterName, requesterEmail, requesterPhoneNumber, needCompletedBy, description, partnerCustomerName, salesforceAccountOpportunity, priority, acceptedRejected, status, programManager, acceptedRejectedNotes, teamMembers, gcToken, undefined, customerRelationship, customerType, dateAccepted, dateRejected, dateClosed);
+                await putRequest(id, region, subRegion, segment, product, tasks, requesterName, requesterEmail, requesterPhoneNumber, needCompletedBy, description, oppName, oppUrl, oppDSRUrl, oppOwner, oppPartnerCustomerName, oppAssignedSC, sfObject.oppAssignedSCMail, priority, acceptedRejected, status, programManager, acceptedRejectedNotes, teamMembers, gcToken, undefined, customerRelationship, customerType, dateAccepted, dateRejected, dateClosed, stakeholdersEmails.toBeSaved, $('#requestType').val());
+
                 console.log('Success!');
                 showMessage("Request updated. Thanks!");
                 $("#editModal").modal("hide");
             } catch (error) {
                 console.error(error);
-                if (error.status == 401) {
+                if (error.status === 401) {
                     window.open('./index.html', "_self");
                 } else
                     showMessage(error.hasOwnProperty('responseJSON') ? error.responseJSON.message : error, true);
@@ -1249,6 +2502,23 @@
             e.preventDefault();
             if (maintenanceMode) return;
             addNewTask(undefined, true);
+        });
+
+        $("#btnAddNote").on("click", async (e) => {
+            let note = $("#editModal #divNotesHistory").html();
+            let newNote = $("#editModal #txtAcceptedRejectedNotes").val().trim().replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/\n/g, "<br />");
+            if (newNote === "") {
+                console.warn("Cannot add empty notes!");
+                $("#editModal #txtAcceptedRejectedNotes").val("");
+                return;
+            }
+            console.log("Following note will be added: ", newNote);
+            note += `<div class="notes-timestamp">wrote by <b>${userName}</b> on ${moment().format("MMM Do")} at ${moment().format("HH:mm [(UTC]Z[)]")}:</div>`;
+            note += '<div class="notes-content">';
+            note += newNote;
+            note += '</div>';
+            $("#editModal #divNotesHistory").html(note);
+            $("#editModal #txtAcceptedRejectedNotes").val("");
         });
 
         function getUrlParameter(sParam) {
