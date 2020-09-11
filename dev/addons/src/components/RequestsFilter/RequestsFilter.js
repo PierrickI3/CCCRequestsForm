@@ -133,8 +133,15 @@ export default function RequestsFilter(props) {
 
   const handleMenuOptionClear = () => {
     console.log('handleMenuOptionClear()');
-    setCurrentFilter(clearFilterSet);
-    applySubRegionList(clearFilterSet.region);
+    let clearFilterCopy = JSON.parse(JSON.stringify(clearFilterSet));
+    if (query && query.region && query.region.toLowerCase() !== 'super-user') {
+      // <Apply region settings>
+      console.log('fixed region will be set to: ', query.region);
+      clearFilterCopy.region = [{ value: query.region, label: query.region }];
+      setRegionFixed(true);
+    }
+    setCurrentFilter(clearFilterCopy);
+    applySubRegionList(clearFilterCopy.region);
     raiseEvent('clearFilter', {});
     localStorageDropLatestFilter();
     setFilterChanged(true);
@@ -627,17 +634,15 @@ export default function RequestsFilter(props) {
             />
           </div>
 
-          {filterChanged && formMode === 'edit' &&
-            <div className='request-filter-floating-button'>
+          {filterChanged && formMode === 'edit' && (
+            <div className="request-filter-floating-button">
               <Button color="primary" onClick={handleApplyFilters}>
                 <IoMdFlash /> Apply filter
-            </Button>
+              </Button>
             </div>
-          }
+          )}
 
-          <div className="request-filter-floating-button-bottom-placeholder">
-          </div>
-
+          <div className="request-filter-floating-button-bottom-placeholder"></div>
         </div>
       </div>
 
