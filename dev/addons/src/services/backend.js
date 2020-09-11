@@ -1,3 +1,5 @@
+let apiBasePath;
+
 if (window.location.href.includes('localhost')) apiBasePath = 'http://localhost:3000';
 else apiBasePath = 'https://drbojb15ma.execute-api.eu-central-1.amazonaws.com/dev';
 
