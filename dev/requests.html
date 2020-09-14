@@ -657,7 +657,7 @@
                             <label id="lblAcceptedRejectedNotes" for="description">Notes</label>
                             <div id="divNotesHistory" class="notes-history"></div>
                             <textarea class="form-control notes-txt-add-note" id="txtAcceptedRejectedNotes" name="description" placeholder="Type a note"> </textarea>
-                            <button id="btnAddNote" type="button" class="btn btn-secondary pull-right mt-2">Add note</button>
+                            <button id="btnAddNote" type="button" class="btn btn-primary pull-right mt-2">Add note</button>
                         </div>
                     </div>
                     <div class="form-row">
@@ -2413,6 +2413,9 @@
                     `<span class="spinner-border-sm text-light" role="status" aria-hidden="true"></span> Please Wait...`
                 )
 
+                $("#btnAddNote").click();
+                
+
                 let id = $("#editModal #id").text();
                 let region = $("#editModal #region").val();
                 let subRegion = $("#editModal #subRegion").val();
@@ -2508,7 +2511,7 @@
             let note = $("#editModal #divNotesHistory").html();
             let newNote = $("#editModal #txtAcceptedRejectedNotes").val().trim().replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/\n/g, "<br />");
             if (newNote === "") {
-                console.warn("Cannot add empty notes!");
+                console.log("The note is empty and won't be added");
                 $("#editModal #txtAcceptedRejectedNotes").val("");
                 return;
             }
