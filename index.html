@@ -101,6 +101,49 @@
           </div>
           <!-- </FORM TYPE TAB CONTROL> -->
 
+          <!-- <CUSTOMER SUCCES MEASURE MODAL> -->
+          <div class="modal fade" id="customer-success-measure-modal" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="customer-success-measure-modal-label">The customer's measure of success</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  <p>
+                  Success Criteria must be agreed with the customer.  Success Criteria must be measurable, achievable and limited in number.  Examples include:
+                  </p>
+                  <h5>Inbound:</h5>                  
+                  <ul>
+                  <li>Retrieve data from Salesforce using ANI lookup</li>
+                  <li>Screen pop Salesforce</li>
+                  </ul>                  
+                  <h5>Admin:</h5>                  
+                  <ul>
+                  <li>Ability to change prompts within 2 hours</li>
+                  <li>Give rights to Supervisors to change Queue membership</li>
+                  </ul>                  
+                  <h5>WEM:</h5>                  
+                  <ul>
+                  <li>Ability to automatically assign Evaluations</li>
+                  <li>Ability to record 100% of interactions</li>
+                  </ul>                  
+                  <h5>Email:</h5>                  
+                  <ul>
+                  <li>Ability configure auto-replies</li>
+                  </ul>                  
+                  <p>Note that Free Trial Success Criteria is limited to the available Use Cases.</p>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>                  
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- </CUSTOMER SUCCES MEASURE MODAL> -->
+
           <form id="modal-form" class="ml-5 mr-5">
             <!-- Region & Territory -->
             <div class="form-row mr-4 ml-2">
@@ -207,8 +250,7 @@
                 <table class="table table-striped table-bordered ">
                   <h4 class="text-center">Customer Options</h4>
                   <br>
-                  <thead>
-                    </tr>
+                  <thead>                 
                     <tr>
                       <th scope="col" style="width: 25%"></th>
                       <th scope="col" class="text-center" style="width: 25%">Free Trials</th>
@@ -412,14 +454,14 @@
                 <div class="border border-black mr-3 ml-2 bg-warning" id="byocPremiseDiv" style="display: none;">
                   <p class="form-group ml-2">
                     If planning to use a virtual edge, very strict guidelines for deployment must be followed:
+                  </p>
                   <ul>
                     <li>Virtual Edge Hardware/Software Requirements: <a href="https://help.mypurecloud.com/articles/virtual-edge-hardware-software-requirements/" target="_blank">https://help.mypurecloud.com/articles/virtual-edge-hardware-software-requirements/</a></li>
                     <li>Virtual Edge Warnings: <a href="https://help.mypurecloud.com/articles/virtual-edge-warnings/" target="_blank">https://help.mypurecloud.com/articles/virtual-edge-warnings/</a></li>
-                  </ul>
-                  </p>
+                  </ul>                  
                   <p class="form-group ml-2">
                     The customer must acknowledge that failing to comply with the requirements and warnings will result in possible audio quality issues.
-                  </p>
+                  </p>                  
                 </div>
 
                 <!-- BYOC Premise Questions -->
@@ -541,7 +583,7 @@
                 <!-- Measure of Success -->
                 <div class="form-row mr-4 ml-2">
                   <div class="form-group col-md-12">
-                    <label for="measureOfSuccess">What is the customer's measure of success? <span class="text-danger font-weight-bold">*</span></label>
+                    <label for="measureOfSuccess">What is the customer's measure of success? <span class="text-danger font-weight-bold">*</span> <span data-toggle="tooltip" data-html="true" data-placement="top" style="float: right" title="Click here to learn more"> <span class="clickable-icon-wrapper ml-2"> <span class="clickable-icon" data-toggle="modal" data-target="#customer-success-measure-modal"><i class="fa fa-question-circle"></i></span></span></span></label>
                     <textarea class="form-control" id="measureOfSuccess" name="measureOfSuccess" placeholder="Describe customer's measure of success here" required></textarea>
                   </div>
                 </div>
