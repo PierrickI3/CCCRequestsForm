@@ -668,6 +668,7 @@ function setRequestFormType(type /* 0 - standard, 1 - free trial */) {
       $('#trial')[0].classList.remove('active');
       $('#standard')[0].classList.add('show');
       $('#standard')[0].classList.add('active');
+      $('#product').prop('disabled', false);
       break;
     case 1:
       $('#task-list').hide();
@@ -678,7 +679,8 @@ function setRequestFormType(type /* 0 - standard, 1 - free trial */) {
       $('#standard')[0].classList.remove('active');
       $('#trial')[0].classList.add('show');
       $('#trial')[0].classList.add('active');
-
+      $('#product').val('Genesys Cloud');
+      $('#product').prop('disabled', true);
       break;
     default: {
       console.error('unhandled request type: ', type);
