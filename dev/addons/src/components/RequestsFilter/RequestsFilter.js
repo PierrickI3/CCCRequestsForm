@@ -5,10 +5,10 @@ import { raiseEvent } from '../../services/iFrameEvents';
 import { IoIosMenu, IoMdSave, IoIosFolderOpen, IoMdFlash, IoMdCheckmark, IoMdClose, IoMdRemoveCircleOutline, IoIosBackspace, IoIosFunnel } from 'react-icons/io';
 import Select from 'react-select';
 import queryString from 'query-string';
-import { regionList } from '../../services/dictionary';
+import { regionList, requestTypeList } from '../../services/dictionary';
 import UsersSelect from '../UsersSelect/UsersSelect';
 
-var clearFilterSet = { isTest: false, status: null, isDeleted: false, handled: null, created: null, region: null, subRegion: null, product: null, segment: null, requester: null, programManager: null, teamMember: null, customerName: null, createdAt: { value: 'Last30Days', label: 'Last 30 Days' }, requestType: null };
+var clearFilterSet = { isTest: false, status: null, isDeleted: false, handled: null, created: null, region: null, subRegion: null, product: null, segment: null, requester: null, programManager: null, teamMember: null, customerName: null, createdAt: { value: 'Last30Days', label: 'Last 30 Days' }, requestType: null, category: null, subCategory: null };
 
 export default function RequestsFilter(props) {
   //#region "value lists"
@@ -44,6 +44,21 @@ export default function RequestsFilter(props) {
     { value: 'NA', label: 'NA' },
   ];
 
+  const categoryValueList = [
+    { value: 'Critical Situation Support', label: 'Critical Situation Support' },
+    { value: 'Customer Success Program', label: 'Customer Success Program' },
+    { value: 'Demo & Trial Support', label: 'Demo & Trial Support' },
+    { value: 'Enablement', label: 'Enablement' },
+    { value: 'Opportunity Support', label: 'Opportunity Support' },
+    { value: 'Privacy Support', label: 'Privacy Support' },
+    { value: 'Roadmap', label: 'Roadmap' },
+    { value: 'Subscription Extension', label: 'Subscription Extension' },
+    { value: 'Security Support', label: 'Security Support' },
+    { value: 'Specialist Engagement', label: 'Specialist Engagement' },
+    { value: 'Strategic Business Consulting', label: 'Strategic Business Consulting' },
+    { value: 'Other Request', label: 'Other Request' },
+  ];
+
   const marketSegmentValueList = [
     { value: 'Mid-market', label: 'Mid-market' },
     { value: 'Commercial', label: 'Commercial' },
@@ -72,6 +87,7 @@ export default function RequestsFilter(props) {
   const [requesterFixed, setRequesterFixed] = useState(false);
   const [subregionValueList, setSubregionValueList] = useState([]);
   const [filterChanged, setFilterChanged] = useState(false);
+  const [subcategoryValueList, setSubcategoryValueList] = useState([]);
   //#endregion
 
   //#region "initialization"
@@ -102,6 +118,7 @@ export default function RequestsFilter(props) {
     }
 
     initialFilterSet.subRegion = removeSelectedSubregionsForNotSelectedRegions(initialFilterSet.region, initialFilterSet.subRegion); // do not remove it from here
+    initialFilterSet.subCategory = removeSelectedSubcategoriesForNotSelectedCategories(initialFilterSet.category, initialFilterSet.subCategory); // do not remove it from here
     setCurrentFilter(initialFilterSet);
     applySubRegionList(initialFilterSet.region);
     raiseEvent('applyFilter', initialFilterSet);
@@ -311,6 +328,40 @@ export default function RequestsFilter(props) {
     for (const item of region) {
       for (const item1 of subRegion) {
         if (item1.value.startsWith(item.value)) {
+          result.push(item1);
+        }
+      }
+    }
+    return result;
+  };
+
+  const applySubCategoryList = (category) => {
+    console.log('applySubCategoryList()');
+    if (!Array.isArray(category) || category.length === 0) {
+      setSubcategoryValueList([]);
+      return;
+    }
+    let result = [];
+    for (const item of category) {
+      const subcategoryList = requestTypeList[item.value];
+      if (Array.isArray(subcategoryList)) {
+        for (const subcategory of subcategoryList) {
+          result.push({ value: subcategory, label: subcategory });
+        }
+      }
+    }
+    setSubcategoryValueList(result);
+  };
+
+  const removeSelectedSubcategoriesForNotSelectedCategories = (category, subcategory) => {
+    console.log('removeSelectedSubcategoriesForNotSelectedCategories()');
+    //debugger;
+    let result = [];
+    if (!Array.isArray(category)) return [];
+    if (!Array.isArray(subcategory)) return [];
+    for (const item of category) {
+      for (const item1 of subcategory) {
+        if (requestTypeList[item.value] && requestTypeList[item.value].includes(item1.value)) {
           result.push(item1);
         }
       }
@@ -534,6 +585,42 @@ export default function RequestsFilter(props) {
                 console.log(v);
                 let cf = { ...currentFilter };
                 cf.subRegion = v;
+                setCurrentFilter(cf);
+                setFilterChanged(true);
+              }}
+            />
+          </div>
+
+          <div className="mb-3">
+            Category
+            <Select
+              options={categoryValueList}
+              isMulti={true}
+              isSearchable={true}
+              value={currentFilter.category}
+              onChange={(v) => {
+                console.log(v);
+                let cf = { ...currentFilter };
+                cf.category = v;
+                cf.subCategory = removeSelectedSubcategoriesForNotSelectedCategories(cf.category, cf.subCategory);
+                setCurrentFilter(cf);
+                setFilterChanged(true);
+                applySubCategoryList(cf.category);
+              }}
+            />
+          </div>
+
+          <div className="mb-3">
+            Sub-category
+            <Select
+              options={subcategoryValueList}
+              isMulti={true}
+              isSearchable={true}
+              value={currentFilter.subCategory}
+              onChange={(v) => {
+                console.log(v);
+                let cf = { ...currentFilter };
+                cf.subCategory = v;
                 setCurrentFilter(cf);
                 setFilterChanged(true);
               }}
