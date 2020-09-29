@@ -1,14 +1,14 @@
-import React, { useState, useEffect } from "react";
-import { Input } from "reactstrap";
-import { searchUser } from "../../services/gc";
-import UsersSelectItem from "./UsersSelectItem";
+import React, { useState, useEffect } from 'react';
+import { Input } from 'reactstrap';
+import { searchUser } from '../../services/gc';
+import UsersSelectItem from './UsersSelectItem';
 
-var searchedPattern = "";
+var searchedPattern = '';
 
 export default function UsersSelect(props) {
   const [focused, setFocused] = useState(false);
   const [searching, setSearching] = useState(false);
-  const [searchPattern, setSearchPattern] = useState("");
+  const [searchPattern, setSearchPattern] = useState('');
   const [searchResult, setSearchResult] = useState([]);
   const [selectedItems, setSelectedItems] = useState([]);
 
@@ -31,7 +31,7 @@ export default function UsersSelect(props) {
       return;
     }
     setSearching(true);
-    const userList = await searchUser("mypurecloud.com", props.token, pattern);
+    const userList = await searchUser('mypurecloud.com', props.token, pattern);
     if (Array.isArray(userList)) {
       setSearchResult(userList.map((x) => x.name));
     } else {
@@ -44,9 +44,9 @@ export default function UsersSelect(props) {
   };
 
   return (
-    <div style={props && props.isDisabled ? { pointerEvents: "none", backgroundColor: "#F2F2F2" } : {}}>
-      <div style={{ padding: "4px", border: "1px solid #cccccc", borderRadius: "4px" }}>
-        <div style={{ display: "flex", flexWrap: "wrap" }}>
+    <div style={props && props.isDisabled ? { pointerEvents: 'none', backgroundColor: '#F2F2F2' } : {}}>
+      <div style={{ padding: '4px', border: '1px solid #cccccc', borderRadius: '4px' }}>
+        <div style={{ display: 'flex', flexWrap: 'wrap' }}>
           {Array.isArray(selectedItems) &&
             selectedItems.map((x, i) => {
               return (
@@ -63,7 +63,7 @@ export default function UsersSelect(props) {
             })}
         </div>
         <Input
-          isDisabled={props.isDisabled}
+          // isDisabled={props.isDisabled}
           onFocus={() => {
             setFocused(true);
             setSearchResult([]);
@@ -71,13 +71,13 @@ export default function UsersSelect(props) {
           onBlur={() => {
             // timeout to allow handle a click event on the selected item
             setTimeout(() => {
-              setSearchPattern("");
+              setSearchPattern('');
               setFocused(false);
             }, 200);
           }}
-          style={searching ? { backgroundColor: "#eeeeee" } : {}}
+          style={searching ? { backgroundColor: '#eeeeee' } : {}}
           placeholder="Search for user..."
-          value={searchPattern || ""}
+          value={searchPattern || ''}
           onChange={(e) => {
             searchForUser(e.target.value);
           }}
@@ -85,11 +85,11 @@ export default function UsersSelect(props) {
         {focused && (
           <Input
             type="select"
-            style={{ height: "90px", position: "absolute" }}
+            style={{ height: '90px', position: 'absolute' }}
             multiple
             onChange={(x) => {
               const clickedText = x.target.options[x.target.selectedIndex].text;
-              if (clickedText && (clickedText.startsWith("Searching...") || clickedText.startsWith("Type a name..."))) {
+              if (clickedText && (clickedText.startsWith('Searching...') || clickedText.startsWith('Type a name...'))) {
                 return;
               }
               if (Array.isArray(selectedItems) && !selectedItems.includes(clickedText)) {

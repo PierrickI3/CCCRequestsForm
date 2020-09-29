@@ -11,11 +11,11 @@
   word-wrap: break-word;
 }
 
-.task-accepted td:first-child+td {
+.task-accepted td:first-child + td {
   background-color: lightgreen !important;
 }
 
-.task-rejected td:first-child+td {
+.task-rejected td:first-child + td {
   background-color: lightcoral !important;
   opacity: 1;
 }
@@ -24,7 +24,7 @@
   display: none;
 }
 
-.task-wait td:first-child+td {
+.task-wait td:first-child + td {
   background-color: orange !important;
 }
 
@@ -232,4 +232,28 @@
 
 .select2-selection--single {
   width: 100% !important;
+}
+
+.clickable-icon-wrapper {
+  line-height: 1.2rem;
+}
+
+.clickable-icon {
+  color: darkred;
+  cursor: pointer;
+  animation-name: pulse;
+  animation-duration: 0.5s;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+}
+
+@keyframes pulse {
+  from {
+    font-size: 1.2rem;
+    opacity: 1;
+  }
+  to {
+    font-size: 1.1rem;
+    opacity: 0.6;
+  }
 }

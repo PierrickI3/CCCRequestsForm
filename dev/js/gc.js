@@ -107,8 +107,8 @@ function postUsersSearch(_userName) {
       apiInstance
         .postUsersSearch(body)
         .then((data) => {
-          if (data.total === 1 && data.results[0].primaryContactInfo.length > 0 && data.results[0].primaryContactInfo[0].address) {
-            resolve(data.results[0].primaryContactInfo[0].address);
+          if (data.total === 1 && data.results[0].email) {
+            resolve(data.results[0].email);
           } else {
             if (data.total > 1) {
               console.error('ambigous response. more than 1 match found!');

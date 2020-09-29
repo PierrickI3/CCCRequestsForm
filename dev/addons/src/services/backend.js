@@ -1,3 +1,8 @@
+let apiBasePath;
+
+if (window.location.href.includes('localhost')) apiBasePath = 'http://localhost:3000';
+else apiBasePath = 'https://drbojb15ma.execute-api.eu-central-1.amazonaws.com/dev';
+
 export const searchMailConfiguration = (token, query) => {
   console.log(`searchMailConfiguration ${JSON.stringify(query)}`);
 
@@ -7,7 +12,7 @@ export const searchMailConfiguration = (token, query) => {
     product: query.product,
     category: query.category,
   };
-  return fetch(`http://localhost:3000/mailconfig`, {
+  return fetch(`${apiBasePath}/mailconfig`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -27,7 +32,7 @@ export const searchMailConfiguration = (token, query) => {
 export const updateMailConfiguration = (body) => {
   console.log(`updateMailConfiguration ${JSON.stringify(body)}`);
 
-  return fetch(`http://localhost:3000/mailconfig`, {
+  return fetch(`${apiBasePath}/mailconfig`, {
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json',
