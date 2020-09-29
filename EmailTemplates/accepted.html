@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="Content-Type" content="text/html charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CC Request</title>
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet" />
+    <style>
+      /* Remove space around the email design. */
+      html,
+      body {
+        margin: 0 auto !important;
+        padding: 0 !important;
+        height: 100% !important;
+        width: 100% !important;
+      }
+      table {
+        margin-left: 3%;
+      }
+      /* Stop Outlook resizing small text. */
+      * {
+        -ms-text-size-adjust: 100%;
+      }
+
+      /* Stop Outlook from adding extra spacing to tables. */
+      table,
+      td {
+        mso-table-lspace: 0pt !important;
+        mso-table-rspace: 0pt !important;
+      }
+
+      /* Use a better rendering method when resizing images in Outlook IE. */
+      img {
+        -ms-interpolation-mode: bicubic;
+      }
+
+      /* Prevent Windows 10 Mail from underlining links. Styles for underlined links should be inline. */
+      a {
+        text-decoration: none;
+      }
+    </style>
+  </head>
+  <body width="100%" style="margin: 0; padding: 0 !important; mso-line-height-rule: exactly; font-family: Roboto, arial, sans-serif">
+    <p style="margin-left: 3%">Your request has been accepted by <strong>${data.programManager}</strong>. He/she will be in contact with you directly to discuss your request further.</p>
+
+    <p style="margin-left: 3%">
+      Please review these notes and take any required actions: <i><strong>${data.acceptedRejectedNotes}</strong></i>
+    </p>
+    <br />
+
+    <table role="presentation" cellspacing="1" cellpadding="3" border="1">
+      <tr>
+        <td>Product</td>
+        <td>${data.product}</td>
+      </tr>
+
+      <tr>
+        <td>Request Category</td>
+        <td>${aTask.taskCategory}</td>
+      </tr>
+
+      <tr>
+        <td>Request Type</td>
+        <td>${aTask.taskType}</td>
+      </tr>
+
+      <tr>
+        <td>Opportunity Name</td>
+        <td>${data.oppPartnerCustomerName ? data.oppPartnerCustomerName : n/a}</td>
+      </tr>
+
+      <tr>
+        <td>Account Name</td>
+        <td>${data.accountName ? data.accountName : n/a}</td>
+      </tr>
+
+      <tr>
+        <td>Opportunity/Account URL</td>
+        <td>${data.salesforceAccountOpportunity ? data.salesforceAccountOpportunity : data.oppUrl}</td>
+      </tr>
+
+      <tr>
+        <td>Description</td>
+        <td>${data.description}</td>
+      </tr>
+
+      <tr>
+        <td>Need Completed By</td>
+        <td>${data.needCompletedBy}</td>
+      </tr>
+
+      <tr>
+        <td>Requester</td>
+        <td>${data.requesterName}: ${data.requesterPhoneNumber} / ${data.requesterEmail}</td>
+      </tr>
+
+      <tr>
+        <td>Region</td>
+        <td>${data.region}</td>
+      </tr>
+
+      <tr>
+        <td>Sub-region</td>
+        <td>${data.subRegion}</td>
+      </tr>
+
+      <tr>
+        <td>Market Segment</td>
+        <td>${data.segment}</td>
+      </tr>
+    </table>
+    <br /><br />
+    <img src="https://raw.githubusercontent.com/PierrickI3/CCCRequestsForm/master/images/genesys_logo_mail.png" alt="Genesys" style="margin-left: 3%; max-width: 250px; border: 0; display: block" />
+  </body>
+</html>
