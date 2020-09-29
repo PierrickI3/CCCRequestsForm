@@ -657,7 +657,7 @@
                             <label id="lblAcceptedRejectedNotes" for="description">Notes</label>
                             <div id="divNotesHistory" class="notes-history"></div>
                             <textarea class="form-control notes-txt-add-note" id="txtAcceptedRejectedNotes" name="description" placeholder="Type a note"> </textarea>
-                            <button id="btnAddNote" type="button" class="btn btn-secondary pull-right mt-2">Add note</button>
+                            <button id="btnAddNote" type="button" class="btn btn-primary pull-right mt-2">Add note</button>
                         </div>
                     </div>
                     <div class="form-row">
@@ -1783,8 +1783,10 @@
                                 requests.requests.forEach(function (aItem) {
                                     if (!aItem.teamMembers)
                                         aItem.teamMembers = 'n/a';
-                                    if (!aItem.partnerCustomerName)
-                                        aItem.partnerCustomerName = 'n/a';
+                                    if (!aItem.partnerCustomerName) {
+                                        // the field name has chenged from 'partnerCustomerName' to 'oppPartnerCustomerName' during SF integration
+                                        aItem.partnerCustomerName = aItem.oppPartnerCustomerName ? aItem.oppPartnerCustomerName : 'n/a';
+                                    }                                        
                                     if (!aItem.programManager)
                                         aItem.programManager = 'n/a';
                                     if (!aItem.acceptedRejected || aItem.acceptedRejected == 'not handled')
@@ -1976,15 +1978,15 @@
                 $('#modal-tag-std').hide();
                 $('#modal-tag-trial').show();
                 $('#editModal #taskSection').hide();
-                $('#free-trial-questions').show();
-
-
+                $('#free-trial-questions').show();                  
             } else {
                 $('#modal-tag-std').show();
                 $('#modal-tag-trial').hide();
                 $('#editModal #taskSection').show();
-                $('#free-trial-questions').hide();
+                $('#free-trial-questions').hide();                
             }
+
+            
 
             if (request.requestType) $('#requestType').val(request.requestType)
             else
@@ -2198,6 +2200,8 @@
                     $("#btnRejectRequest").prop('disabled', false);
                 }
             }
+
+            $('#product').prop('disabled', request.requestType === "1");
         }
 
         function addNewTask(task, includeDeleteButton = false) {
@@ -2413,6 +2417,9 @@
                     `<span class="spinner-border-sm text-light" role="status" aria-hidden="true"></span> Please Wait...`
                 )
 
+                $("#btnAddNote").click();
+                
+
                 let id = $("#editModal #id").text();
                 let region = $("#editModal #region").val();
                 let subRegion = $("#editModal #subRegion").val();
@@ -2508,7 +2515,7 @@
             let note = $("#editModal #divNotesHistory").html();
             let newNote = $("#editModal #txtAcceptedRejectedNotes").val().trim().replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/\n/g, "<br />");
             if (newNote === "") {
-                console.warn("Cannot add empty notes!");
+                console.log("The note is empty and won't be added");
                 $("#editModal #txtAcceptedRejectedNotes").val("");
                 return;
             }
