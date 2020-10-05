@@ -139,7 +139,7 @@
             <div style="background-image: url(''); background-position: center top; background-repeat: no-repeat">
               <div class="block-grid" style="margin: 0 auto; min-width: 320px; max-width: 650px; overflow-wrap: break-word; word-wrap: break-word; word-break: break-word; background-color: transparent">
                 <div style="border-collapse: collapse; display: table; width: 100%; background-color: transparent">
-                  <!--[if (mso)|(IE)]><table width="100%" cellpadding="0" cellspacing="0" border="0" style="background-image:url('');background-position:center top;background-repeat:no-repeat;background-color:#ff4f1f;"><tr><td align="center"><table cellpadding="0" cellspacing="0" border="0" style="width:650px"><tr class="layout-full-width" style="background-color:transparent"><![endif]-->
+                  <!--[if (mso)|(IE)]><table width="100%" cellpadding="0" cellspacing="0" border="0" style="background-image:url('');background-position:center top;background-repeat:no-repeat;"><tr><td align="center"><table cellpadding="0" cellspacing="0" border="0" style="width:650px"><tr class="layout-full-width" style="background-color:transparent"><![endif]-->
                   <!--[if (mso)|(IE)]><td align="center" width="650" style="background-color:transparent;width:650px; border-top: 0px solid transparent; border-left: 0px solid transparent; border-bottom: 0px solid transparent; border-right: 0px solid transparent;" valign="top"><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="padding-right: 0px; padding-left: 10px; padding-top:0px; padding-bottom:0px;"><![endif]-->
                   <div class="col num12" style="min-width: 320px; max-width: 650px; display: table-cell; vertical-align: top; width: 650px">
                     <div style="width: 100% !important">
@@ -167,10 +167,10 @@
                         <div style="color: #000000; font-family: 'Ubuntu', Tahoma, Verdana, Segoe, sans-serif; line-height: 1.2; padding-top: 10px; padding-right: 10px; padding-bottom: 10px; padding-left: 10px">
                           <div style="line-height: 1.2; font-size: 12px; color: #000000; font-family: 'Ubuntu', Tahoma, Verdana, Segoe, sans-serif; mso-line-height-alt: 14px">
                             <p style="font-size: 30px; line-height: 1.2; word-break: break-word; text-align: center; mso-line-height-alt: 36px; margin: 0; margin-bottom: 10px;">
-                              <span style="font-size: 30px"><strong>{{ firstName }}, your  request is now </strong></span>
+                              <span style="font-size: 30px"><strong>{{firstName}}, your request is now </strong></span>
                             </p>
                             <p style="font-size: 30px; line-height: 1.2; word-break: break-word; text-align: center; mso-line-height-alt: 36px; margin: 0">
-                              <img src="https://cc-requests-icons.s3.eu-central-1.amazonaws.com/cross.png"><strong><span style="font-size: 30px; color: darkred; margin-left: 10px">REJECTED</span></strong></span>
+                              <img src="https://cc-requests-icons.s3.eu-central-1.amazonaws.com/times-solid.png" width="5%"><strong><span style="font-size: 30px; color: red; margin-left: 10px">REJECTED</span></strong></span>
                             </p>
                           </div>
                         </div>
@@ -179,10 +179,10 @@
                         <div style="color: #555555; font-family: 'Lato', Tahoma, Verdana, Segoe, sans-serif; line-height: 1.5; padding-top: 10px; padding-right: 10px; padding-bottom: 10px; padding-left: 10px">
                           <div style="line-height: 1.5; font-size: 12px; font-family: 'Lato', Tahoma, Verdana, Segoe, sans-serif; color: #555555; mso-line-height-alt: 18px">
                             <p style="font-size: 16px; line-height: 1.5; word-break: break-word; text-align: center; font-family: Lato, Tahoma, Verdana, Segoe, sans-serif; mso-line-height-alt: 24px; margin: 0; margin-bottom: 10px">
-                              <span style="font-size: 16px"><strong>{{ programManager }}</strong> has rejected your request</span>
+                              <span style="font-size: 16px"><strong>{{programManager}}</strong> has rejected your request</span>
                             </p>
                             <p style="font-size: 16px; line-height: 1.5; word-break: break-word; text-align: center; font-family: Lato, Tahoma, Verdana, Segoe, sans-serif; mso-line-height-alt: 24px; margin: 0; background-color: #ff4f1f">
-                              <span style="font-size: 16px; color: #ffffff"><strong>{{ notes }}</strong></span>
+                              <span style="font-size: 16px; color: #ffffff"><strong>{{notes}}</strong></span>
                             </p>
                           </div>
                         </div>
@@ -295,9 +295,9 @@
                                 <!--<![endif]-->
                                 <tr style="vertical-align: top" valign="top">
                                   <td align="center" style="word-break: break-word; vertical-align: top; text-align: center; padding-top: 5px; padding-bottom: 5px; padding-left: 5px; padding-right: 5px" valign="top">
-                                    <img src="https://cc-requests-icons.s3.eu-central-1.amazonaws.com/tasks.png">
+                                    <img src="https://cc-requests-icons.s3.eu-central-1.amazonaws.com/tasks-solid.png" width="40%">
                                   </td>
-                                  <td style="word-break: break-word; font-family: 'Ubuntu', Tahoma, Verdana, Segoe, sans-serif; font-size: 14px; color: #000000; vertical-align: middle" valign="middle">{{ product }}: {{ category }} / {{ type }}</td>
+                                  <td style="word-break: break-word; font-family: 'Ubuntu', Tahoma, Verdana, Segoe, sans-serif; font-size: 14px; color: #000000; vertical-align: middle" valign="middle">{{product}}: {{category}} / {{type}}</td>
                                 </tr>
                               </table>
                             </td>
@@ -345,9 +345,9 @@
                                 <!--<![endif]-->
                                 <tr style="vertical-align: top" valign="top">
                                   <td align="center" style="word-break: break-word; vertical-align: top; text-align: center; padding-top: 5px; padding-bottom: 5px; padding-left: 5px; padding-right: 5px" valign="top">
-                                    <img src="https://cc-requests-icons.s3.eu-central-1.amazonaws.com/company.png">
+                                    <img src="https://cc-requests-icons.s3.eu-central-1.amazonaws.com/building-solid.png" width="40%">
                                   </td>
-                                  <td style="word-break: break-word; font-family: 'Ubuntu', Tahoma, Verdana, Segoe, sans-serif; font-size: 14px; color: #000000; vertical-align: middle" valign="middle">{{ opportunityUrl }}</td>
+                                  <td style="word-break: break-word; font-family: 'Ubuntu', Tahoma, Verdana, Segoe, sans-serif; font-size: 14px; color: #000000; vertical-align: middle" valign="middle">{{opportunityUrl}}</td>
                                 </tr>
                               </table>
                             </td>
@@ -395,9 +395,9 @@
                                 <!--<![endif]-->
                                 <tr style="vertical-align: top" valign="top">
                                   <td align="center" style="word-break: break-word; vertical-align: top; text-align: center; padding-top: 5px; padding-bottom: 5px; padding-left: 5px; padding-right: 5px" valign="top">
-                                    <img src="https://cc-requests-icons.s3.eu-central-1.amazonaws.com/information.png">
+                                    <img src="https://cc-requests-icons.s3.eu-central-1.amazonaws.com/info-circle-solid.png" width="40%">
                                   </td>
-                                  <td style="word-break: break-word; font-family: 'Ubuntu', Tahoma, Verdana, Segoe, sans-serif; font-size: 14px; color: #000000; vertical-align: middle" valign="middle">{{ description }}</td>
+                                  <td style="word-break: break-word; font-family: 'Ubuntu', Tahoma, Verdana, Segoe, sans-serif; font-size: 14px; color: #000000; vertical-align: middle" valign="middle">{{description}}</td>
                                 </tr>
                               </table>
                             </td>
@@ -445,9 +445,9 @@
                                 <!--<![endif]-->
                                 <tr style="vertical-align: top" valign="top">
                                   <td align="center" style="word-break: break-word; vertical-align: top; text-align: center; padding-top: 5px; padding-bottom: 5px; padding-left: 5px; padding-right: 5px" valign="top">
-                                    <img src="https://cc-requests-icons.s3.eu-central-1.amazonaws.com/calendar.png">
+                                    <img src="https://cc-requests-icons.s3.eu-central-1.amazonaws.com/calendar-alt-solid.png" width="40%">
                                   </td>
-                                  <td style="word-break: break-word; font-family: 'Ubuntu', Tahoma, Verdana, Segoe, sans-serif; font-size: 14px; color: #000000; vertical-align: middle" valign="middle">{{ needCompletedBy }}</td>
+                                  <td style="word-break: break-word; font-family: 'Ubuntu', Tahoma, Verdana, Segoe, sans-serif; font-size: 14px; color: #000000; vertical-align: middle" valign="middle">{{needCompletedBy}}</td>
                                 </tr>
                               </table>
                             </td>
@@ -495,9 +495,9 @@
                                 <!--<![endif]-->
                                 <tr style="vertical-align: top" valign="top">
                                   <td align="center" style="word-break: break-word; vertical-align: top; text-align: center; padding-top: 5px; padding-bottom: 5px; padding-left: 5px; padding-right: 5px" valign="top">
-                                    <img src="https://cc-requests-icons.s3.eu-central-1.amazonaws.com/phone.png">
+                                    <img src="https://cc-requests-icons.s3.eu-central-1.amazonaws.com/phone-alt-solid.png" width="40%">
                                   </td>
-                                  <td style="word-break: break-word; font-family: 'Ubuntu', Tahoma, Verdana, Segoe, sans-serif; font-size: 14px; color: #000000; vertical-align: middle" valign="middle">{{ requesterPhoneNumber }}</td>
+                                  <td style="word-break: break-word; font-family: 'Ubuntu', Tahoma, Verdana, Segoe, sans-serif; font-size: 14px; color: #000000; vertical-align: middle" valign="middle">{{requesterPhoneNumber}}</td>
                                 </tr>
                               </table>
                             </td>
@@ -545,9 +545,9 @@
                                 <!--<![endif]-->
                                 <tr style="vertical-align: top" valign="top">
                                   <td align="center" style="word-break: break-word; vertical-align: top; text-align: center; padding-top: 5px; padding-bottom: 5px; padding-left: 5px; padding-right: 5px" valign="top">
-                                    <img src="https://cc-requests-icons.s3.eu-central-1.amazonaws.com/globe.png">
+                                    <img src="https://cc-requests-icons.s3.eu-central-1.amazonaws.com/globe-solid.png" width="40%">
                                   </td>
-                                  <td style="word-break: break-word; font-family: 'Ubuntu', Tahoma, Verdana, Segoe, sans-serif; font-size: 14px; color: #000000; vertical-align: middle" valign="middle">{{ region }}/{{ subRegion }}</td>
+                                  <td style="word-break: break-word; font-family: 'Ubuntu', Tahoma, Verdana, Segoe, sans-serif; font-size: 14px; color: #000000; vertical-align: middle" valign="middle">{{region}}/{{subRegion}}</td>
                                 </tr>
                               </table>
                             </td>
@@ -595,9 +595,9 @@
                                 <!--<![endif]-->
                                 <tr style="vertical-align: top" valign="top">
                                   <td align="center" style="word-break: break-word; vertical-align: top; text-align: center; padding-top: 5px; padding-bottom: 5px; padding-left: 5px; padding-right: 5px" valign="top">
-                                    <img src="https://cc-requests-icons.s3.eu-central-1.amazonaws.com/segment.png">
+                                    <img src="https://cc-requests-icons.s3.eu-central-1.amazonaws.com/object-ungroup-regular.png" width="40%">
                                   </td>
-                                  <td style="word-break: break-word; font-family: 'Ubuntu', Tahoma, Verdana, Segoe, sans-serif; font-size: 14px; color: #000000; vertical-align: middle" valign="middle">{{ segment }}</td>
+                                  <td style="word-break: break-word; font-family: 'Ubuntu', Tahoma, Verdana, Segoe, sans-serif; font-size: 14px; color: #000000; vertical-align: middle" valign="middle">{{segment}}</td>
                                 </tr>
                               </table>
                             </td>
@@ -736,23 +736,6 @@
                             </p>
                           </div>
                         </div>
-                        <!--[if mso]></td></tr></table><![endif]-->
-                        <table border="0" cellpadding="0" cellspacing="0" class="divider" role="presentation" style="table-layout: fixed; vertical-align: top; border-spacing: 0; border-collapse: collapse; mso-table-lspace: 0pt; mso-table-rspace: 0pt; min-width: 100%; -ms-text-size-adjust: 100%; -webkit-text-size-adjust: 100%" valign="top" width="100%">
-                          <tbody>
-                            <tr style="vertical-align: top" valign="top">
-                              <td class="divider_inner" style="word-break: break-word; vertical-align: top; min-width: 100%; -ms-text-size-adjust: 100%; -webkit-text-size-adjust: 100%; padding-top: 10px; padding-right: 10px; padding-bottom: 10px; padding-left: 10px" valign="top">
-                                <table align="center" border="0" cellpadding="0" cellspacing="0" class="divider_content" role="presentation" style="table-layout: fixed; vertical-align: top; border-spacing: 0; border-collapse: collapse; mso-table-lspace: 0pt; mso-table-rspace: 0pt; border-top: 1px dotted #93cade; width: 100%" valign="top" width="100%">
-                                  <tbody>
-                                    <tr style="vertical-align: top" valign="top">
-                                      <td style="word-break: break-word; vertical-align: top; -ms-text-size-adjust: 100%; -webkit-text-size-adjust: 100%" valign="top"><span></span></td>
-                                    </tr>
-                                  </tbody>
-                                </table>
-                              </td>
-                            </tr>
-                          </tbody>
-                        </table>
-                        <!--[if (!mso)&(!IE)]><!-->
                       </div>
                       <!--<![endif]-->
                     </div>
