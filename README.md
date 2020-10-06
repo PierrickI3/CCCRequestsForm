@@ -55,3 +55,5 @@ The REACT.JS part of the app will be built to the _/CCCRequestsForm/dev/addons/b
 - Copy all PNG files to the [S3 bucket](https://s3.console.aws.amazon.com/s3/buckets/cc-requests-icons/?region=eu-central-1&tab=overview), cc-requests-icons in Genesys-managed AWS account
 - Make sure to give public read access
 - You can test what your email will look like in Outlook by using [PutsMail](https://putsmail.com/tests/new)
+- Test your template using the Live Server VS Code extension
+- When ready, overwrite the content of the \*.mustache files in the services\requests\emailTemplates folder in the backend repository
