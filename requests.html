@@ -1451,11 +1451,6 @@
 
         function showSettings() {
             let url = `addons/build/\#/adminpage?region=${region}&token=${gcToken}`
-            // if (window.location.href.includes('localhost'))
-            //     // /url = `http://localhost:3001/#/adminpage?region=${region}&token=${gcToken}`
-            //     url = `addons/build/\#/adminpage?region=${region}&token=${gcToken}`
-            // else
-            //     url = `addons/build/\#/adminpage?region=${region}&token=${gcToken}`
             window.location.replace(url);
         }
 
@@ -1786,7 +1781,7 @@
                                     if (!aItem.partnerCustomerName) {
                                         // the field name has chenged from 'partnerCustomerName' to 'oppPartnerCustomerName' during SF integration
                                         aItem.partnerCustomerName = aItem.oppPartnerCustomerName ? aItem.oppPartnerCustomerName : 'n/a';
-                                    }                                        
+                                    }
                                     if (!aItem.programManager)
                                         aItem.programManager = 'n/a';
                                     if (!aItem.acceptedRejected || aItem.acceptedRejected == 'not handled')
@@ -1960,7 +1955,12 @@
                                 var $result = $([]);
 
                                 if (item.isDeleted == false) {
-                                    $result = $result.add(this._createDeleteButton(item));
+                                    if (!region && item.acceptedRejected.toLowerCase() == 'n/a') {
+                                        $result = $result.add(this._createDeleteButton(item));
+                                    } else if (region) {
+                                        $result = $result.add(this._createDeleteButton(item));
+                                    }
+
                                 }
                                 return $result;
                             }
@@ -1978,15 +1978,15 @@
                 $('#modal-tag-std').hide();
                 $('#modal-tag-trial').show();
                 $('#editModal #taskSection').hide();
-                $('#free-trial-questions').show();                  
+                $('#free-trial-questions').show();
             } else {
                 $('#modal-tag-std').show();
                 $('#modal-tag-trial').hide();
                 $('#editModal #taskSection').show();
-                $('#free-trial-questions').hide();                
+                $('#free-trial-questions').hide();
             }
 
-            
+
 
             if (request.requestType) $('#requestType').val(request.requestType)
             else
@@ -2138,11 +2138,30 @@
             // Other          
             $("#editModal #solutionBusinessConsultingRequired").prop('checked', request.freeTrialSolutionBusinessConsultingRequired);
 
-
-
+            if ($('#editModal #sfData').select2('data')[0] && $('#sfData').select2('data')[0].text == "") {
+                $('#editModal #oppPartnerCustomerName').attr('disabled', false);
+                if ($('#editModal #oppPartnerCustomerName').select2('data')[0] && $('#editModal #oppPartnerCustomerName').select2('data')[0].text !== "")
+                    $('#editModal #sfData').attr('disabled', true);
+            } else {
+                $('#editModal #oppPartnerCustomerName').attr('disabled', true);
+            }
             $("#editModal").modal("show");
 
-            if (request.isDeleted) {
+            if (!region || region.length === 0) {
+                $("#modal-form :input").attr("disabled", true);
+                $("#btnRestore").attr("hidden", true);
+                $("#btnRejectRequest").attr("hidden", true);
+                $("#submit").attr("hidden", false);
+                $("#btnAcceptRequest").attr("hidden", true);
+                $("#btnAddNote").prop('disabled', false);
+                $("#txtAcceptedRejectedNotes").prop('disabled', false);
+                if (request.isDeleted) {
+                    $("#btnRestore").attr("disabled", false);
+                    $("#btnRestore").attr("hidden", false);
+                }
+                $('#product').prop('disabled', true);
+
+            } else if (request.isDeleted) {
                 $("#modal-form :input").attr("disabled", true);
                 $("#btnClose").prop('disabled', false);
                 $("#btnRejectRequest").attr("hidden", true);
@@ -2151,6 +2170,7 @@
                 $("#btnRestore").attr("disabled", false);
                 $("#btnRestore").attr("hidden", false);
                 $("#btnAddNote").prop('disabled', false);
+                $("#product").prop('disabled', true);
             } else {
                 $("#modal-form :input").attr("disabled", false);
                 $("#btnRejectRequest").attr("hidden", false);
@@ -2159,22 +2179,13 @@
                 $("#btnRestore").attr("hidden", true);
                 $("#createdDate").attr("disabled", true);
                 $("#updatedDate").attr("disabled", true);
-
+                $("#product").prop('disabled', false);
                 $('#editModal #oppUrl').attr("disabled", true);
-                //$('#editModal #oppPartnerCustomerName').attr("disabled", true);
                 $('#editModal #oppDSRUrl').attr("disabled", true);
                 $('#editModal #oppOwner').attr("disabled", true);
-                //$('#editModal #oppAssignedSC').attr("disabled", true);
-
+                $('#product').prop('disabled', request.requestType === "1");
             }
 
-            if ($('#editModal #sfData').select2('data')[0] && $('#sfData').select2('data')[0].text == "") {
-                $('#editModal #oppPartnerCustomerName').attr('disabled', false);
-                if ($('#editModal #oppPartnerCustomerName').select2('data')[0] && $('#editModal #oppPartnerCustomerName').select2('data')[0].text !== "")
-                    $('#editModal #sfData').attr('disabled', true);
-            } else {
-                $('#editModal #oppPartnerCustomerName').attr('disabled', true);
-            }
 
 
 
@@ -2201,7 +2212,7 @@
                 }
             }
 
-            $('#product').prop('disabled', request.requestType === "1");
+
         }
 
         function addNewTask(task, includeDeleteButton = false) {
@@ -2418,7 +2429,7 @@
                 )
 
                 $("#btnAddNote").click();
-                
+
 
                 let id = $("#editModal #id").text();
                 let region = $("#editModal #region").val();
@@ -2467,7 +2478,6 @@
                     dateClosed = moment().utc().format();
                 }
 
-
                 // SF Related Data
 
                 let oppUrl = $('#editModal #oppUrl').val();
@@ -2482,6 +2492,7 @@
                 console.log(`Region: ${region}, subRegion: ${subRegion}, Product: ${product}, Segment: ${segment}, tasks: ${JSON.stringify(tasks)}, Requester Name: ${requesterName}, Requester Email: ${requesterEmail}, Requester Phone Number: ${requesterPhoneNumber}, Need Completed By: ${needCompletedBy}, Description: ${description}`);
                 console.log(`Priority: ${priority}, Accepted/Rejected: ${acceptedRejected}, Status: ${status}, Program Manager: ${programManager}, AcceptedRejectedNotes: ${acceptedRejectedNotes}, teamMembers: ${teamMembers}`);
                 console.log(`dateAccepted: ${dateAccepted}, dateRejected: ${dateRejected}, dateClosed: ${dateClosed}`);
+                console.log(`oppName: ${oppName}, oppUrl: ${oppUrl}, oppDSRUrl: ${oppDSRUrl}, oppOwner: ${oppOwner}, oppPartnerCustomerName: ${oppPartnerCustomerName}, oppAssignedSC: ${oppAssignedSC}`);
 
                 await putRequest(id, region, subRegion, segment, product, tasks, requesterName, requesterEmail, requesterPhoneNumber, needCompletedBy, description, oppName, oppUrl, oppDSRUrl, oppOwner, oppPartnerCustomerName, oppAssignedSC, sfObject.oppAssignedSCMail, priority, acceptedRejected, status, programManager, acceptedRejectedNotes, teamMembers, gcToken, undefined, customerRelationship, customerType, dateAccepted, dateRejected, dateClosed, stakeholdersEmails.toBeSaved, $('#requestType').val());
 
