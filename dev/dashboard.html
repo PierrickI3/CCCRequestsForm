@@ -306,7 +306,12 @@
       init();
     });
     $('#requestType').on('change', () => {
+      $('#requestCategory').attr("disabled", $('#requestType').val() == "1" ? true : false);
+      if ($('#requestType').val() == "1") {
+        $('#requestCategory').val('');
+      }
       init();
+
     });
     $('#customerRelationship').on('change', () => {
       init();
