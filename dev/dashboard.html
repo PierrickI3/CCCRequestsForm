@@ -85,7 +85,13 @@
             </select>
           </div>
           <div class="form-group col-md-2">
-            <label for="requestCategory">Category</label>
+            <label for="requestCategory">Category
+              <span class="clickable-icon-wrapper ml-2">
+                <span class="clickable-icon" data-toggle="tooltip" data-html="true" data-placement="bottom" style="float: right" title="Requests might contain more than one category.">
+                  <i class="fa fa-question-circle"></i>
+                </span>
+              </span>
+            </label>
             <select id="requestCategory" name="requestCategory" class="form-control">
               <option value="" selected>All Categories</option>
 
@@ -195,7 +201,10 @@
         <div class="form-row">
           <div class="form-group col-md-12">
             <div class="chart-container" style="width: 90vw;" id="chart_requestCategory_container" name="requestCategory">
-              <canvas id="chart_requestCategory"></canvas>
+              <center>
+                <span class="text-muted"><small>Requests might contain more than one category.</small></span>
+                <canvas id="chart_requestCategory"></canvas>
+              </center>
             </div>
           </div>
         </div>
@@ -233,6 +242,8 @@
     if (version && version.hasOwnProperty('version')) {
       $('#version').text(`v${version.version}`);
     }
+
+    $('[data-toggle="tooltip"]').tooltip();
 
     let task_parsed = [],
       filter = '';
