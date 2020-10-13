@@ -75,13 +75,25 @@
             <input type="text" id="dpEnd" class="form-control" placeholder="Click to set a date" autocomplete="off" />
           </div>
           <div class="form-group col-md-2"></div>
-          <div class="form-group col-md-2"></div>
           <div class="form-group col-md-2">
             <label for="requestType">Request Type</label>
             <select id="requestType" name="requestType" class="form-control">
               <option value="">All requests types</option>
               <option value="0" selected>Standard Forms</option>
               <option value="1">Trial Validation</option>
+
+            </select>
+          </div>
+          <div class="form-group col-md-2">
+            <label for="requestCategory">Category
+              <span class="clickable-icon-wrapper ml-2">
+                <span class="clickable-icon" data-toggle="tooltip" data-html="true" data-placement="bottom" style="float: right" title="Requests might contain more than one category.">
+                  <i class="fa fa-question-circle"></i>
+                </span>
+              </span>
+            </label>
+            <select id="requestCategory" name="requestCategory" class="form-control">
+              <option value="" selected>All Categories</option>
 
             </select>
           </div>
@@ -189,7 +201,10 @@
         <div class="form-row">
           <div class="form-group col-md-12">
             <div class="chart-container" style="width: 90vw;" id="chart_requestCategory_container" name="requestCategory">
-              <canvas id="chart_requestCategory"></canvas>
+              <center>
+                <span class="text-muted"><small>Requests might contain more than one category.</small></span>
+                <canvas id="chart_requestCategory"></canvas>
+              </center>
             </div>
           </div>
         </div>
@@ -227,6 +242,8 @@
     if (version && version.hasOwnProperty('version')) {
       $('#version').text(`v${version.version}`);
     }
+
+    $('[data-toggle="tooltip"]').tooltip();
 
     let task_parsed = [],
       filter = '';
@@ -271,6 +288,12 @@
       init();
     }
 
+    for (const category of requestCategory) {
+      console.log(category);
+      $('<option/>', { value: category }).text(category).appendTo('#requestCategory');
+    }
+
+
 
     $('#region').on('change', () => {
       $('#subRegion').empty();
@@ -294,12 +317,20 @@
       init();
     });
     $('#requestType').on('change', () => {
+      $('#requestCategory').attr("disabled", $('#requestType').val() == "1" ? true : false);
+      if ($('#requestType').val() == "1") {
+        $('#requestCategory').val('');
+      }
       init();
+
     });
     $('#customerRelationship').on('change', () => {
       init();
     });
     $('#customerType').on('change', () => {
+      init();
+    });
+    $('#requestCategory').on('change', () => {
       init();
     });
 
