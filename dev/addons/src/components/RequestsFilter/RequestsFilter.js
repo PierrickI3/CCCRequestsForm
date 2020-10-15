@@ -8,7 +8,7 @@ import queryString from 'query-string';
 import { regionList, requestTypeList } from '../../services/dictionary';
 import UsersSelect from '../UsersSelect/UsersSelect';
 
-var clearFilterSet = { isTest: false, status: null, isDeleted: false, handled: null, created: null, region: null, subRegion: null, product: null, segment: null, requester: null, programManager: null, teamMember: null, customerName: null, createdAt: { value: 'Last30Days', label: 'Last 30 Days' }, requestType: null, category: null, subCategory: null };
+var clearFilterSet = { isTest: false, status: null, isDeleted: false, handled: null, created: null, region: null, subRegion: null, product: null, segment: null, requester: null, programManager: null, teamMember: null, customerName: null, createdAt: { value: 'Last30Days', label: 'Last 30 Days' }, requestType: null, category: null, subCategory: null, fixedRequester: false };
 
 export default function RequestsFilter(props) {
   //#region "value lists"
@@ -105,8 +105,10 @@ export default function RequestsFilter(props) {
 
     if (parsedQueryString && parsedQueryString.requester) {
       // <Apply requester settings>
-      console.log('fixed requester will be set to: ', parsedQueryString.requester);
+      console.log('fixed requester and teamMember will be set to: ', parsedQueryString.requester);
       initialFilterSet.requester = [parsedQueryString.requester];
+      initialFilterSet.teamMember = [parsedQueryString.requester];
+      initialFilterSet.fixedRequester = true;
       setRequesterFixed(true);
       // </Apply requester settings>
     } else if (parsedQueryString && parsedQueryString.region && parsedQueryString.region.toLowerCase() !== 'super-user') {
@@ -115,6 +117,8 @@ export default function RequestsFilter(props) {
       initialFilterSet.region = [{ value: parsedQueryString.region, label: parsedQueryString.region }];
       setRegionFixed(true);
       // <Apply region settings>
+    } else {
+      initialFilterSet.fixedRequester = false;
     }
 
     initialFilterSet.subRegion = removeSelectedSubregionsForNotSelectedRegions(initialFilterSet.region, initialFilterSet.subRegion); // do not remove it from here
@@ -151,13 +155,22 @@ export default function RequestsFilter(props) {
   const handleMenuOptionClear = () => {
     console.log('handleMenuOptionClear()');
     let clearFilterCopy = JSON.parse(JSON.stringify(clearFilterSet));
-    if (query && query.region && query.region.toLowerCase() !== 'super-user') {
+    if (query && query.requester) {
+      // <Apply requester settings>
+      console.log('fixed requester and teamMember will be set to: ', query.requester);
+      clearFilterCopy.requester = [query.requester];
+      clearFilterCopy.teamMember = [query.requester];
+      clearFilterCopy.fixedRequester = true;
+      setRequesterFixed(true);
+      // </Apply requester settings>
+    } else if (query && query.region && query.region.toLowerCase() !== 'super-user') {
       // <Apply region settings>
       console.log('fixed region will be set to: ', query.region);
       clearFilterCopy.region = [{ value: query.region, label: query.region }];
       setRegionFixed(true);
       // </Apply region settings>
     }
+
     setCurrentFilter(clearFilterCopy);
     applySubRegionList(clearFilterCopy.region);
     raiseEvent('clearFilter', {});
@@ -695,6 +708,7 @@ export default function RequestsFilter(props) {
           <div className="mb-3">
             Team member
             <UsersSelect
+              isDisabled={requesterFixed}
               token={query && query.token ? query.token : null}
               initialValue={currentFilter.teamMember}
               onChange={(v) => {
