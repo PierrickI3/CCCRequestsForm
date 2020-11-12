@@ -456,6 +456,12 @@ async function getDashboard(_token, _start, _end) {
 
   if (requestType) sExtendedFilter = `&requestType=${requestType}`;
 
+  if ($('#requestCategory').val() !== '') {   
+    sExtendedFilter += `&requestCategory=${$('#requestCategory').val()}`
+  }
+   
+
+
   return await $.ajax({
     url: `${apiBasePath}/dashboard?token=${_token}&start=${_start}&end=${_end}${sExtendedFilter}`,
     method: 'GET',
@@ -492,6 +498,7 @@ async function getExport(_region, _subRegion, _product, _segment, _token, _start
   if ($('#customerRelationship').val() !== '') sFilter = sFilter + `customerRelationship=${$('#customerRelationship').val()}&`;
   if ($('#customerType').val() !== '') sFilter = sFilter + `customerType=${$('#customerType').val()}&`;
   if ($('#requestType').val() !== '') sFilter += `requestType=${$('#requestType').val()}&`;
+  if ($('#requestCategory').val() !== '') sFilter += `requestCategory=${$('#requestCategory').val()}&`;
 
   console.log(`getExport with filter: ${sFilter}`);
 
