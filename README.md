@@ -50,7 +50,7 @@ The REACT.JS part of the app will be built to the _/CCCRequestsForm/dev/addons/b
 
 ## Email Templates
 
-- Use https://fa2png.app/ to convert font awesome icons to PNG
+- Use [https://fa2png.app/](https://fa2png.app/) to convert font awesome icons to PNG
 - Set the color to RGB 255, 79, 31 for the Genesys color
 - Copy all PNG files to the [S3 bucket](https://s3.console.aws.amazon.com/s3/buckets/cc-requests-icons/?region=eu-central-1&tab=overview), cc-requests-icons in Genesys-managed AWS account
 - Make sure to give public read access
