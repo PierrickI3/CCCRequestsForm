@@ -659,8 +659,8 @@
                   <!-- Cloud Readiness Category   -->
                   <div class="form-row mr-4 ml-2">
                     <div class="form-group col-md-12">
-                      <label for="attach-cx-evolution">What Cloud Readiness Category is your customer in today?<span class="text-danger font-weight-bold">*</span></label>
-                      <select id="attach-cx-evolution" name="attach-cx-evolution" class="form-control" required>
+                      <label for="attach-readiness-category">What Cloud Readiness Category is your customer in today?<span class="text-danger font-weight-bold">*</span></label>
+                      <select id="attach-readiness-category" name="attach-readiness-category" class="form-control" required>
                         <option value="" disabled selected>Select one option</option>
                         <option value="Category 1">Category 1</option>
                         <option value="Category 2">Category 2</option>
@@ -805,14 +805,14 @@
                   </div>
                 </div>
 
+
+                <div class="col-md-12 bg-light shadow-lg">
+                  <hr />
+                  <h3 class="text-center">Other</h3>
+                  <hr />
+                </div>
+
                 <div id="free-trial-other" style="display:none;">
-
-                  <div class="col-md-12 bg-light shadow-lg">
-                    <hr />
-                    <h3 class="text-center">Other</h3>
-                    <hr />
-                  </div>
-
                   <!-- Commmitted Customer Resource -->
                   <div class="form-check mr-4">
                     <div class="form-group col-md-12">
@@ -822,20 +822,21 @@
                       </label>
                     </div>
                   </div>
+                </div>
 
-
-                  <!-- Terms & Conditions -->
-                  <div class="form-check mr-4">
-                    <div class="form-group col-md-12">
-                      <input class="form-check-input" type="checkbox" value="" id="standardTermsConditions">
-                      <label class="form-check-label" for="standardTermsConditions">
-                        Has the customer agreed to our standard Terms and Conditions and DPA?
-                      </label>
-                      <br>
-                      <small><a href="https://help.mypurecloud.com/articles/global-purecloud-service-terms-and-conditions/" target="_blank">Access the latest documents here</a> (press <span class="bg-warning">SHIFT</span> while clicking on the link to open the page from the <strong>Genesys Cloud app</strong>)</small>
-                    </div>
+                <!-- Terms & Conditions -->
+                <div class="form-check mr-4">
+                  <div class="form-group col-md-12">
+                    <input class="form-check-input" type="checkbox" value="" id="standardTermsConditions">
+                    <label class="form-check-label" for="standardTermsConditions">
+                      Has the customer agreed to our standard Terms and Conditions and DPA?
+                    </label>
+                    <br>
+                    <small><a href="https://help.mypurecloud.com/articles/global-purecloud-service-terms-and-conditions/" target="_blank">Access the latest documents here</a> (press <span class="bg-warning">SHIFT</span> while clicking on the link to open the page from the <strong>Genesys Cloud app</strong>)</small>
                   </div>
+                </div>
 
+                <div id="free-trial-other3" style="display:none;">
                   <div class="form-check mr-4">
                     <div class="form-group col-md-12">
                       <input class="form-check-input" type="checkbox" value="" id="solutionBusinessConsultingRequired">
@@ -844,8 +845,8 @@
                       </label>
                     </div>
                   </div>
-
                 </div>
+
 
                 <!--#endregion -->
 

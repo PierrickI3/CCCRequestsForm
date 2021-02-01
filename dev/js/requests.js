@@ -678,8 +678,8 @@ function setRequestFormType(type /* 0 - standard, 1 - free trial  2- cloud attac
       $('#standard')[0].classList.add('active');
       $('#product').prop('disabled', false);
 
-      $('#oppDSRUrl-label').show();
-      $('#oppDSRUrl').show();
+      // $('#oppDSRUrl-label').show();
+      // $('#oppDSRUrl').show();
       $('#free-trial-table').hide();
 
       // Hide fields related strict to Attach Form
@@ -715,11 +715,13 @@ function setRequestFormType(type /* 0 - standard, 1 - free trial  2- cloud attac
       $('#free-trial-measure-of-success').show();
       $('#free-trial-other').show();
       $('#attach-form-questions').hide();
-      $('#oppDSRUrl-label').show();
-      $('#oppDSRUrl').show();
+      // $('#oppDSRUrl-label').show();
+      // $('#oppDSRUrl').show();
 
       // Hide fields related strict to Attach Form
       $('#attach-main-text').hide();
+      $('#free-trial-other').show();
+      $('#free-trial-other3').show();
 
       $('#salesforceAccountOpportunity-label').text('Opportunity');
       $('#oppUrl-label').text('Opportunity or Account URL');
@@ -750,16 +752,17 @@ function setRequestFormType(type /* 0 - standard, 1 - free trial  2- cloud attac
       $('#free-trial-business-goal').hide();
       $('#free-trial-measure-of-success').hide();
       $('#free-trial-other').hide();
+      $('#free-trial-other3').hide();
       $('#attach-form-questions').show();
-      $('#oppDSRUrl-label').hide();
-      $('#oppDSRUrl').hide();
+      // $('#oppDSRUrl-label').hide();
+      // $('#oppDSRUrl').hide();
 
       $('#salesforceAccountOpportunity-label').text('Cloud Attach Opportunity (if created)');
       $('#oppUrl-label').text('Account URL');
       $('#general-configuration-label').text('General');
 
       $('#product').val('Genesys Cloud');
-      $('#product').prop('disabled', true);
+      $('#product').prop('disabled', false);
 
       break;
     default: {
