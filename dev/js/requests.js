@@ -456,11 +456,9 @@ async function getDashboard(_token, _start, _end) {
 
   if (requestType) sExtendedFilter = `&requestType=${requestType}`;
 
-  if ($('#requestCategory').val() !== '') {   
-    sExtendedFilter += `&requestCategory=${$('#requestCategory').val()}`
+  if ($('#requestCategory').val() !== '') {
+    sExtendedFilter += `&requestCategory=${$('#requestCategory').val()}`;
   }
-   
-
 
   return await $.ajax({
     url: `${apiBasePath}/dashboard?token=${_token}&start=${_start}&end=${_end}${sExtendedFilter}`,
@@ -661,33 +659,105 @@ function processStakeholdersEmails(programManager, teamMembers) {
   console.log('stakeholdersEmails.toBeSaved: ', stakeholdersEmails.toBeSaved);
 }
 
-function setRequestFormType(type /* 0 - standard, 1 - free trial */) {
+function setRequestFormType(type /* 0 - standard, 1 - free trial  2- cloud attach form */) {
   console.log(`setRequestFormType(${type})`);
   currentRequestType = type;
 
   switch (type) {
-    case 0:
+    case 0: // standard
       $('#task-list').show();
       $('#free-trial-questions').hide();
       $('#home-tab')[0].classList.add('active');
       $('#profile-tab')[0].classList.remove('active');
+      $('#attach-tab')[0].classList.remove('active');
       $('#trial')[0].classList.remove('show');
       $('#trial')[0].classList.remove('active');
+      $('#attach-welcomeTxt')[0].classList.remove('show');
+      $('#attach-welcomeTxt')[0].classList.remove('active');
       $('#standard')[0].classList.add('show');
       $('#standard')[0].classList.add('active');
       $('#product').prop('disabled', false);
+
+      $('#oppDSRUrl-label').show();
+      $('#oppDSRUrl').show();
+      $('#free-trial-table').hide();
+
+      // Hide fields related strict to Attach Form
+      $('#attach-main-text').hide();
+
+      $('#salesforceAccountOpportunity-label').text('Opportunity');
+      $('#oppUrl-label').text('Opportunity or Account URL');
+
       break;
-    case 1:
+    case 1: // free trial
       $('#task-list').hide();
-      $('#free-trial-questions').show();
+
       $('#profile-tab')[0].classList.add('active');
       $('#home-tab')[0].classList.remove('active');
+      $('#attach-tab')[0].classList.remove('active');
       $('#standard')[0].classList.remove('show');
       $('#standard')[0].classList.remove('active');
+      $('#attach-welcomeTxt')[0].classList.remove('show');
+      $('#attach-welcomeTxt')[0].classList.remove('active');
       $('#trial')[0].classList.add('show');
       $('#trial')[0].classList.add('active');
       $('#product').val('Genesys Cloud');
       $('#product').prop('disabled', true);
+
+      $('#free-trial-questions').show(); // Main Section for All questions
+      $('#free-trial-table').show();
+      $('#free-trial-pod-alert').show();
+      $('#free-trial-type').show();
+      $('#free-tial-deployment-model').show();
+      $('#free-trial-impact-by-design').show();
+      $('#free-trial-business-goal').show();
+      $('#free-trial-measure-of-success').show();
+      $('#free-trial-other').show();
+      $('#attach-form-questions').hide();
+      $('#oppDSRUrl-label').show();
+      $('#oppDSRUrl').show();
+
+      // Hide fields related strict to Attach Form
+      $('#attach-main-text').hide();
+
+      $('#salesforceAccountOpportunity-label').text('Opportunity');
+      $('#oppUrl-label').text('Opportunity or Account URL');
+
+      break;
+    case 2: // attach form
+      $('#task-list').hide();
+      $('#home-tab')[0].classList.remove('active');
+      $('#profile-tab')[0].classList.remove('active');
+      $('#attach-tab')[0].classList.add('active');
+      $('#standard')[0].classList.remove('show');
+      $('#standard')[0].classList.remove('active');
+      $('#trial')[0].classList.remove('show');
+      $('#trial')[0].classList.remove('active');
+      $('#attach-welcomeTxt')[0].classList.add('show');
+      $('#attach-welcomeTxt')[0].classList.add('active');
+
+      // Questions
+      $('#free-trial-questions').show();
+      $('#attach-main-text').show();
+
+      $('#free-trial-table').hide();
+      $('#free-trial-pod-alert').hide();
+      $('#free-trial-type').hide();
+      $('#free-tial-deployment-model').hide();
+      $('#free-trial-impact-by-design').hide();
+      $('#free-trial-business-goal').hide();
+      $('#free-trial-measure-of-success').hide();
+      $('#free-trial-other').hide();
+      $('#attach-form-questions').show();
+      $('#oppDSRUrl-label').hide();
+      $('#oppDSRUrl').hide();
+
+      $('#salesforceAccountOpportunity-label').text('Cloud Attach Opportunity (if created)');
+      $('#oppUrl-label').text('Account URL');
+
+      $('#product').val('Genesys Cloud');
+      $('#product').prop('disabled', true);
+
       break;
     default: {
       console.error('unhandled request type: ', type);
