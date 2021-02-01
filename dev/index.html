@@ -633,9 +633,90 @@
 
                 <div class="col-md-12 bg-light shadow-lg">
                   <hr />
-                  <h3 class="text-center">General Configuration</h3>
+                  <h3 id="general-configuration-label" class="text-center">General Configuration</h3>
                   <hr />
                 </div>
+
+                <!-- Attach Form Section (General) -->
+                <div id="attach-form-questions" style="display: none;">
+                  <!-- CX Evolution Segment  -->
+                  <div class="form-row mr-4 ml-2">
+                    <div class="form-group col-md-12">
+                      <label for="attach-cx-evolution">What is the CX Evolution Segment for this Account?<span class="text-danger font-weight-bold">*</span></label>
+
+                      <select id="attach-cx-evolution" name="attach-cx-evolution" class="form-control" required>
+                        <option value="" disabled selected>Select one option</option>
+                        <option value="MC Must-Win">MC Must-Win</option>
+                        <option value="Must-Win">Must-Win</option>
+                        <option value="Attack">Attack</option>
+                        <option value="Sweet Spot">Sweet Spot</option>
+                        <option value="Automate">Automate</option>
+                        <option value="C2C">C2C</option>
+                        <option value="Do Not Know">Do Not Know</option>
+                      </select>
+                    </div>
+                  </div>
+                  <!-- Cloud Readiness Category   -->
+                  <div class="form-row mr-4 ml-2">
+                    <div class="form-group col-md-12">
+                      <label for="attach-cx-evolution">What Cloud Readiness Category is your customer in today?<span class="text-danger font-weight-bold">*</span></label>
+                      <select id="attach-cx-evolution" name="attach-cx-evolution" class="form-control" required>
+                        <option value="" disabled selected>Select one option</option>
+                        <option value="Category 1">Category 1</option>
+                        <option value="Category 2">Category 2</option>
+                        <option value="Category 3">Category 3</option>
+                        <option value="Category 4">Category 4</option>
+                      </select>
+                    </div>
+                  </div>
+                  <!-- Maintenance renewal conversation   -->
+                  <div class="form-check mr-4">
+                    <div class="form-group col-md-12">
+                      <input class="form-check-input" type="checkbox" value="" id="attachMaintenanceRenewal">
+                      <label class="form-check-label" for="attachMaintenanceRenewal">
+                        Is this part of the maintenance renewal conversation with the customer and renewal manager?
+                      </label>
+                    </div>
+                  </div>
+                  <!-- Bill for hour 200   -->
+                  <div class="form-check mr-4">
+                    <div class="form-group col-md-12">
+                      <input class="form-check-input" type="checkbox" value="" id="attachAwareBill200">
+                      <label class="form-check-label" for="attachAwareBill200">
+                        Is the customer aware they will be billed for any hour >200?
+                      </label>
+                    </div>
+                  </div>
+                  <!-- Key Success Criteria   -->
+                  <div class="form-row mr-4 ml-2">
+                    <div class="form-group col-md-12">
+                      <label for="attachKeySuccessCriteria">What are customer's key success criteria for Cloud Attach?<span class="text-danger font-weight-bold">*</span></label>
+                      <textarea class="form-control" id="attachKeySuccessCriteria" name="attachKeySuccessCriteria" placeholder="Describe Customer's key success criteria" required></textarea>
+                    </div>
+                  </div>
+
+                  <!-- Use Cases   -->
+                  <div class="form-row mr-4 ml-2">
+                    <div class="form-group col-md-12">
+                      <label for="attachUseCases">What are the use case(s) to be deployed for this account?<span class="text-danger font-weight-bold">*</span></label>
+                      <textarea class="form-control" id="attachUseCases" name="attachUseCases" placeholder="Planned UseCases" required></textarea>
+                    </div>
+                  </div>
+
+                  <!-- Partner for Setup   -->
+                  <div class="form-row mr-4 ml-2">
+                    <div class="form-group col-md-12">
+                      <label for="attachPartnerForSetup">If Indirect, who is the partner responsible for setup and implementation?</label>
+                      <textarea class="form-control" id="attachPartnerForSetup" name="attachPartnerForSetup" placeholder="Partner responsible for setup"></textarea>
+                    </div>
+                  </div>
+
+
+
+                </div>
+
+                <!-- /Attach Form Section (General) -->
+
 
                 <!-- Number of Agents -->
                 <div class="form-row mr-4 ml-2">
@@ -723,86 +804,6 @@
                     <textarea class="form-control" id="measureOfSuccess" name="measureOfSuccess" placeholder="Describe customer's measure of success here" required></textarea>
                   </div>
                 </div>
-
-                <!-- Attach Form Section (General) -->
-                <div id="attach-form-questions" style="display: none;">
-                  <!-- CX Evolution Segment  -->
-                  <div class="form-row mr-4 ml-2">
-                    <div class="form-group col-md-12">
-                      <label for="attach-cx-evolution">What is the CX Evolution Segment for this Account?<span class="text-danger font-weight-bold">*</span></label>
-
-                      <select id="attach-cx-evolution" name="attach-cx-evolution" class="form-control" required>
-                        <option value="" disabled selected>Select one option</option>
-                        <option value="MC Must-Win">MC Must-Win</option>
-                        <option value="Must-Win">Must-Win</option>
-                        <option value="Attack">Attack</option>
-                        <option value="Sweet Spot">Sweet Spot</option>
-                        <option value="Automate">Automate</option>
-                        <option value="C2C">C2C</option>
-                        <option value="Do Not Know">Do Not Know</option>
-                      </select>
-                    </div>
-                  </div>
-                  <!-- Cloud Readiness Category   -->
-                  <div class="form-row mr-4 ml-2">
-                    <div class="form-group col-md-12">
-                      <label for="attach-cx-evolution">What Cloud Readiness Category is your customer in today?<span class="text-danger font-weight-bold">*</span></label>
-                      <select id="attach-cx-evolution" name="attach-cx-evolution" class="form-control" required>
-                        <option value="" disabled selected>Select one option</option>
-                        <option value="Category 1">Category 1</option>
-                        <option value="Category 2">Category 2</option>
-                        <option value="Category 3">Category 3</option>
-                        <option value="Category 4">Category 4</option>
-                      </select>
-                    </div>
-                  </div>
-                  <!-- Maintenance renewal conversation   -->
-                  <div class="form-check mr-4">
-                    <div class="form-group col-md-12">
-                      <input class="form-check-input" type="checkbox" value="" id="attachMaintenanceRenewal">
-                      <label class="form-check-label" for="attachMaintenanceRenewal">
-                        Is this part of the maintenance renewal conversation with the customer and renewal manager?
-                      </label>
-                    </div>
-                  </div>
-                  <!-- Bill for hour 200   -->
-                  <div class="form-check mr-4">
-                    <div class="form-group col-md-12">
-                      <input class="form-check-input" type="checkbox" value="" id="attachAwareBill200">
-                      <label class="form-check-label" for="attachAwareBill200">
-                        Is the customer aware they will be billed for any hour >200?
-                      </label>
-                    </div>
-                  </div>
-                  <!-- Key Success Criteria   -->
-                  <div class="form-row mr-4 ml-2">
-                    <div class="form-group col-md-12">
-                      <label for="attachKeySuccessCriteria">What are customer's key success criteria for Cloud Attach?<span class="text-danger font-weight-bold">*</span></label>
-                      <textarea class="form-control" id="attachKeySuccessCriteria" name="attachKeySuccessCriteria" placeholder="Describe Customer's key success criteria" required></textarea>
-                    </div>
-                  </div>
-
-                  <!-- Use Cases   -->
-                  <div class="form-row mr-4 ml-2">
-                    <div class="form-group col-md-12">
-                      <label for="attachUseCases">What are the use case(s) to be deployed for this account?<span class="text-danger font-weight-bold">*</span></label>
-                      <textarea class="form-control" id="attachUseCases" name="attachUseCases" placeholder="Planned UseCases" required></textarea>
-                    </div>
-                  </div>
-
-                  <!-- Partner for Setup   -->
-                  <div class="form-row mr-4 ml-2">
-                    <div class="form-group col-md-12">
-                      <label for="attachPartnerForSetup">If Indirect, who is the partner responsible for setup and implementation?</label>
-                      <textarea class="form-control" id="attachPartnerForSetup" name="attachPartnerForSetup" placeholder="Partner responsible for setup"></textarea>
-                    </div>
-                  </div>
-
-
-
-                </div>
-
-                <!-- /Attach Form Section (General) -->
 
                 <div id="free-trial-other" style="display:none;">
 

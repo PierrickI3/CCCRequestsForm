@@ -687,6 +687,7 @@ function setRequestFormType(type /* 0 - standard, 1 - free trial  2- cloud attac
 
       $('#salesforceAccountOpportunity-label').text('Opportunity');
       $('#oppUrl-label').text('Opportunity or Account URL');
+      $('#general-configuration-label').text('General Configuration');
 
       break;
     case 1: // free trial
@@ -722,6 +723,7 @@ function setRequestFormType(type /* 0 - standard, 1 - free trial  2- cloud attac
 
       $('#salesforceAccountOpportunity-label').text('Opportunity');
       $('#oppUrl-label').text('Opportunity or Account URL');
+      $('#general-configuration-label').text('General Configuration');
 
       break;
     case 2: // attach form
@@ -754,6 +756,7 @@ function setRequestFormType(type /* 0 - standard, 1 - free trial  2- cloud attac
 
       $('#salesforceAccountOpportunity-label').text('Cloud Attach Opportunity (if created)');
       $('#oppUrl-label').text('Account URL');
+      $('#general-configuration-label').text('General');
 
       $('#product').val('Genesys Cloud');
       $('#product').prop('disabled', true);

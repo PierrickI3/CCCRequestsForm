@@ -1,221 +1,222 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no" />
-    <title>CCC Request Form</title>
-    <link rel="shortcut icon" href="/favicon.ico" />
-    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/alasql/0.6.1/alasql.min.js"></script>
 
-    <script src="https://chartjs-plugin-datalabels.netlify.com/chartjs-plugin-datalabels.js"></script>
-    <script src="js/requests.js"></script>
-    <link type="text/css" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jsgrid/1.5.3/jsgrid.min.css" />
-    <link type="text/css" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jsgrid/1.5.3/jsgrid-theme.min.css" />
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no" />
+  <title>CCC Request Form</title>
+  <link rel="shortcut icon" href="/favicon.ico" />
+  <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/alasql/0.6.1/alasql.min.js"></script>
 
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous" />
-    <!-- Bootstrap core JavaScript-->
-    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
-    <!-- Bootstrap Date-Picker Plugin -->
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/js/bootstrap-datepicker.min.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/css/bootstrap-datepicker3.css" />
+  <script src="https://chartjs-plugin-datalabels.netlify.com/chartjs-plugin-datalabels.js"></script>
+  <script src="js/requests.js"></script>
+  <link type="text/css" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jsgrid/1.5.3/jsgrid.min.css" />
+  <link type="text/css" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jsgrid/1.5.3/jsgrid-theme.min.css" />
 
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
-    <!-- Moment.js -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js" integrity="sha256-4iQZ6BVL4qNKlQ27TExEhBN1HFPvAvAMbFavKKosSWQ=" crossorigin="anonymous"></script>
-    <!-- Bootbox -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/5.4.0/bootbox.min.js"></script>
-    <!-- Custom CSS -->
-    <link rel="stylesheet" href="./css/custom.css" />
-  </head>
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous" />
+  <!-- Bootstrap core JavaScript-->
+  <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
+  <!-- Bootstrap Date-Picker Plugin -->
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/js/bootstrap-datepicker.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/css/bootstrap-datepicker3.css" />
 
-  <body>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jsgrid/1.5.3/jsgrid.min.js"></script>
-    <img class="overlay" src="./images/devmode.png" id="devModeImage" hidden />
-    <nav class="navbar navbar-dark bg-dark">
-      <a class="navbar-brand" href="#">
-        <img src="images/genesys.png" width="30" height="30" class="d-inline-block align-top" alt="" />
-        Competence Center Request Form <small><span class="badge badge-pill badge-warning" id="regionBadge"></span></small>
-      </a>
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
+  <!-- Moment.js -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js" integrity="sha256-4iQZ6BVL4qNKlQ27TExEhBN1HFPvAvAMbFavKKosSWQ=" crossorigin="anonymous"></script>
+  <!-- Bootbox -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/5.4.0/bootbox.min.js"></script>
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="./css/custom.css" />
+</head>
 
-      <a href="./requests.html" id="reviewRequestsButton" class="admin btn btn-primary btn-sm">Review Requests</a>
-    </nav>
+<body>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jsgrid/1.5.3/jsgrid.min.js"></script>
+  <img class="overlay" src="./images/devmode.png" id="devModeImage" hidden />
+  <nav class="navbar navbar-dark bg-dark">
+    <a class="navbar-brand" href="#">
+      <img src="images/genesys.png" width="30" height="30" class="d-inline-block align-top" alt="" />
+      Competence Center Request Form <small><span class="badge badge-pill badge-warning" id="regionBadge"></span></small>
+    </a>
 
-    <div class="alert alert-danger fade show" role="alert" id="alert" hidden>
-      <strong>Maintenance Alert</strong> This site is being updated. Please wait.
-      <a class="btn btn-light" href="#" onclick="location.reload();"><i class="fa fa-refresh"></i> Refresh</a>
-    </div>
+    <a href="./requests.html" id="reviewRequestsButton" class="admin btn btn-primary btn-sm">Review Requests</a>
+  </nav>
 
-    <div class="container-fluid" id="dashboard">
-      <br />
-      <div class="form-row">
-        <div class="form-group col-sm-12">
-          <div class="form-row">
-            <div class="form-group col-md-2">
-              <label for="period">Date Period</label>
-              <select id="period" name="period" class="form-control">
-                <option value="custom">Custom range</option>
-                <option value="lastDay">Last day</option>
-                <option value="lastWeek">Last week</option>
-                <option value="lastMonth" selected>Last month</option>
-              </select>
-            </div>
-            <div class="form-group col-md-2">
-              <label for="datepicker">Start Date</label>
-              <input type="text" id="dpStart" class="form-control" placeholder="Click to set a date" autocomplete="off" />
-            </div>
-            <div class="form-group col-md-2">
-              <label for="datepicker">End Date</label>
-              <input type="text" id="dpEnd" class="form-control" placeholder="Click to set a date" autocomplete="off" />
-            </div>
-            <div class="form-group col-md-2"></div>
-            <div class="form-group col-md-2">
-              <label for="requestType">Request Type</label>
-              <select id="requestType" name="requestType" class="form-control">
-                <option value="">All requests types</option>
-                <option value="0" selected>Standard Forms</option>
-                <option value="1">Trial Validation</option>
-              </select>
-            </div>
-            <div class="form-group col-md-2">
-              <label for="requestCategory"
-                >Category
-                <span class="clickable-icon-wrapper ml-2">
-                  <span class="clickable-icon" data-toggle="tooltip" data-html="true" data-placement="bottom" style="float: right" title="Requests might contain more than one category.">
-                    <i class="fa fa-question-circle"></i>
-                  </span>
+  <div class="alert alert-danger fade show" role="alert" id="alert" hidden>
+    <strong>Maintenance Alert</strong> This site is being updated. Please wait.
+    <a class="btn btn-light" href="#" onclick="location.reload();"><i class="fa fa-refresh"></i> Refresh</a>
+  </div>
+
+  <div class="container-fluid" id="dashboard">
+    <br />
+    <div class="form-row">
+      <div class="form-group col-sm-12">
+        <div class="form-row">
+          <div class="form-group col-md-2">
+            <label for="period">Date Period</label>
+            <select id="period" name="period" class="form-control">
+              <option value="custom">Custom range</option>
+              <option value="lastDay">Last day</option>
+              <option value="lastWeek">Last week</option>
+              <option value="lastMonth" selected>Last month</option>
+            </select>
+          </div>
+          <div class="form-group col-md-2">
+            <label for="datepicker">Start Date</label>
+            <input type="text" id="dpStart" class="form-control" placeholder="Click to set a date" autocomplete="off" />
+          </div>
+          <div class="form-group col-md-2">
+            <label for="datepicker">End Date</label>
+            <input type="text" id="dpEnd" class="form-control" placeholder="Click to set a date" autocomplete="off" />
+          </div>
+          <div class="form-group col-md-2"></div>
+          <div class="form-group col-md-2">
+            <label for="requestType">Request Type</label>
+            <select id="requestType" name="requestType" class="form-control">
+              <option value="">All requests types</option>
+              <option value="0" selected>Standard Forms</option>
+              <option value="1">Trial Validation</option>
+              <option value="2">Attach Form</option>
+            </select>
+          </div>
+          <div class="form-group col-md-2">
+            <label for="requestCategory">Category
+              <span class="clickable-icon-wrapper ml-2">
+                <span class="clickable-icon" data-toggle="tooltip" data-html="true" data-placement="bottom" style="float: right" title="Requests might contain more than one category.">
+                  <i class="fa fa-question-circle"></i>
                 </span>
-              </label>
-              <select id="requestCategory" name="requestCategory" class="form-control">
-                <option value="" selected>All Categories</option>
-              </select>
+              </span>
+            </label>
+            <select id="requestCategory" name="requestCategory" class="form-control">
+              <option value="" selected>All Categories</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group col-md-2">
+            <label for="region">Region</label>
+            <select id="region" name="region" class="form-control">
+              <option value="" selected>All regions</option>
+              <option value="APAC">APAC</option>
+              <option value="EMEA">EMEA</option>
+              <option value="LATAM">LATAM</option>
+              <option value="NA">North America</option>
+            </select>
+          </div>
+          <div class="form-group col-md-2">
+            <label for="subRegion">Territory</label>
+            <select id="subRegion" name="subRegion" class="form-control" required>
+              <option value="" selected>All</option>
+            </select>
+          </div>
+          <div class="form-group col-md-2">
+            <label for="product">Product</label>
+            <select id="product" name="product" class="form-control">
+              <option value="" selected>All products</option>
+              <option value="Genesys Cloud">Genesys Cloud</option>
+              <option value="Genesys Engage">Genesys Engage</option>
+              <option value="Genesys Engage Cloud">Genesys Engage Cloud</option>
+              <option value="PureConnect">PureConnect</option>
+              <option value="Latitude by Genesys">Latitude by Genesys</option>
+            </select>
+          </div>
+          <div class="form-group col-md-2">
+            <label for="segment">Market Segment</label>
+            <select id="segment" name="segment" class="form-control">
+              <option value="" selected>All</option>
+              <option value="Mid-market">Mid-market</option>
+              <option value="Commercial">Commercial</option>
+              <option value="Enterprise">Enterprise</option>
+            </select>
+          </div>
+          <div class="form-group col-md-2">
+            <label for="customerRelationship">Direct/Indirect</label>
+            <select id="customerRelationship" name="customerRelationship" class="form-control" required>
+              <option value="" selected>All</option>
+              <option value="Direct">Direct</option>
+              <option value="Indirect">Indirect (via Partner)</option>
+            </select>
+          </div>
+          <div class="form-group col-md-2">
+            <label for="customerType">Customer Type</label>
+            <select id="customerType" name="customerType" class="form-control" required>
+              <option value="" selected>All</option>
+              <option value="ExistingCustomer">Existing Customer</option>
+              <option value="NewLogo">New Logo</option>
+            </select>
+          </div>
+        </div>
+        <center>
+          <div id="spinner" class="justify-content-center">
+            <div class="spinner-grow text-secondary" role="status"></div>
+            <br />
+            <p class="text-secondary">Refreshing Dashboard...</p>
+          </div>
+        </center>
+        <div class="form-row">
+          <div class="form-group col-md-5">
+            <div class="chart-container" style="width: 50vw" id="chart_region_container" name="region">
+              <canvas id="chart_region"></canvas>
             </div>
           </div>
-          <div class="form-row">
-            <div class="form-group col-md-2">
-              <label for="region">Region</label>
-              <select id="region" name="region" class="form-control">
-                <option value="" selected>All regions</option>
-                <option value="APAC">APAC</option>
-                <option value="EMEA">EMEA</option>
-                <option value="LATAM">LATAM</option>
-                <option value="NA">North America</option>
-              </select>
-            </div>
-            <div class="form-group col-md-2">
-              <label for="subRegion">Territory</label>
-              <select id="subRegion" name="subRegion" class="form-control" required>
-                <option value="" selected>All</option>
-              </select>
-            </div>
-            <div class="form-group col-md-2">
-              <label for="product">Product</label>
-              <select id="product" name="product" class="form-control">
-                <option value="" selected>All products</option>
-                <option value="Genesys Cloud">Genesys Cloud</option>
-                <option value="Genesys Engage">Genesys Engage</option>
-                <option value="Genesys Engage Cloud">Genesys Engage Cloud</option>
-                <option value="PureConnect">PureConnect</option>
-                <option value="Latitude by Genesys">Latitude by Genesys</option>
-              </select>
-            </div>
-            <div class="form-group col-md-2">
-              <label for="segment">Market Segment</label>
-              <select id="segment" name="segment" class="form-control">
-                <option value="" selected>All</option>
-                <option value="Mid-market">Mid-market</option>
-                <option value="Commercial">Commercial</option>
-                <option value="Enterprise">Enterprise</option>
-              </select>
-            </div>
-            <div class="form-group col-md-2">
-              <label for="customerRelationship">Direct/Indirect</label>
-              <select id="customerRelationship" name="customerRelationship" class="form-control" required>
-                <option value="" selected>All</option>
-                <option value="Direct">Direct</option>
-                <option value="Indirect">Indirect (via Partner)</option>
-              </select>
-            </div>
-            <div class="form-group col-md-2">
-              <label for="customerType">Customer Type</label>
-              <select id="customerType" name="customerType" class="form-control" required>
-                <option value="" selected>All</option>
-                <option value="ExistingCustomer">Existing Customer</option>
-                <option value="NewLogo">New Logo</option>
-              </select>
-            </div>
-          </div>
-          <center>
-            <div id="spinner" class="justify-content-center">
-              <div class="spinner-grow text-secondary" role="status"></div>
-              <br />
-              <p class="text-secondary">Refreshing Dashboard...</p>
-            </div>
-          </center>
-          <div class="form-row">
-            <div class="form-group col-md-5">
-              <div class="chart-container" style="width: 50vw" id="chart_region_container" name="region">
-                <canvas id="chart_region"></canvas>
-              </div>
-            </div>
-            <div class="form-group col-md-5">
-              <div class="chart-container" style="width: 50vw" id="chart_subRegion_container" name="subRegion">
-                <canvas id="chart_subRegion"></canvas>
-              </div>
-            </div>
-          </div>
-
-          <div class="form-row">
-            <div class="form-group col-md-5">
-              <div class="chart-container" style="width: 50vw" id="chart_product_container" name="product">
-                <canvas id="chart_product"></canvas>
-              </div>
-            </div>
-            <div class="form-group col-md-5">
-              <div class="chart-container" style="width: 50vw" id="chart_segment_container" name="segment">
-                <canvas id="chart_segment"></canvas>
-              </div>
-            </div>
-          </div>
-
-          <div class="form-row">
-            <div class="form-group col-md-5">
-              <div class="chart-container" style="width: 50vw" id="chart_status_container" name="status">
-                <canvas id="chart_status"></canvas>
-              </div>
-            </div>
-            <div class="form-group col-md-5">
-              <div class="chart-container" style="width: 50vw" id="chart_acceptedRejected_container" name="acceptedRejected">
-                <canvas id="chart_acceptedRejected"></canvas>
-              </div>
-            </div>
-          </div>
-
-          <div class="form-row">
-            <div class="form-group col-md-12">
-              <div class="chart-container" style="width: 90vw" id="chart_requestCategory_container" name="requestCategory">
-                <center>
-                  <span class="text-muted"><small>Requests might contain more than one category.</small></span>
-                  <canvas id="chart_requestCategory"></canvas>
-                </center>
-              </div>
-            </div>
-          </div>
-
-          <div class="form-row">
-            <div class="form-group col-md-12">
-              <div class="chart-container" style="width: 80vw" id="chart_requestType_container" name="requestType">
-                <canvas id="chart_requestType"></canvas>
-              </div>
+          <div class="form-group col-md-5">
+            <div class="chart-container" style="width: 50vw" id="chart_subRegion_container" name="subRegion">
+              <canvas id="chart_subRegion"></canvas>
             </div>
           </div>
         </div>
-        <!--
+
+        <div class="form-row">
+          <div class="form-group col-md-5">
+            <div class="chart-container" style="width: 50vw" id="chart_product_container" name="product">
+              <canvas id="chart_product"></canvas>
+            </div>
+          </div>
+          <div class="form-group col-md-5">
+            <div class="chart-container" style="width: 50vw" id="chart_segment_container" name="segment">
+              <canvas id="chart_segment"></canvas>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group col-md-5">
+            <div class="chart-container" style="width: 50vw" id="chart_status_container" name="status">
+              <canvas id="chart_status"></canvas>
+            </div>
+          </div>
+          <div class="form-group col-md-5">
+            <div class="chart-container" style="width: 50vw" id="chart_acceptedRejected_container" name="acceptedRejected">
+              <canvas id="chart_acceptedRejected"></canvas>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group col-md-12">
+            <div class="chart-container" style="width: 90vw" id="chart_requestCategory_container" name="requestCategory">
+              <center>
+                <span class="text-muted"><small>Requests might contain more than one category.</small></span>
+                <canvas id="chart_requestCategory"></canvas>
+              </center>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group col-md-12">
+            <div class="chart-container" style="width: 80vw" id="chart_requestType_container" name="requestType">
+              <canvas id="chart_requestType"></canvas>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!--
             <div class="col-12 admin">
                 <center>
                     <h5 id="selectedTaskType">Task Type: Not selected </h5>
@@ -223,407 +224,547 @@
                 <div id="basicgrid"></div>
             </div>
             -->
-      </div>
-      <div class="alert alert-primary" style="text-align: center"><strong>If you are facing issues with CSV export</strong>, please use narrower filters to get less amount of data. This is a known problem and will be solved soon.</div>
-      <button onclick="exportData();" class="admin btn btn-dark" style="float: right">Export to CSV</button>
-      <br /><br /><br />
     </div>
+    <div class="alert alert-primary" style="text-align: center"><strong>If you are facing issues with CSV export</strong>, please use narrower filters to get less amount of data. This is a known problem and will be solved soon.</div>
+    <button onclick="exportData();" class="admin btn btn-dark" style="float: right">Export to CSV</button>
+    <br /><br /><br />
+  </div>
 
-    <p class="text-right" id="version"></p>
+  <p class="text-right" id="version"></p>
 
-    <!-- Dictionary -->
-    <script src="js/dictionary.js"></script>
-    <script src="js/version.js"></script>
+  <!-- Dictionary -->
+  <script src="js/dictionary.js"></script>
+  <script src="js/version.js"></script>
 
-    <script>
-      if (window.location.href.includes('dev')) $('#devModeImage').removeAttr('hidden');
+  <script>
+    if (window.location.href.includes('dev')) $('#devModeImage').removeAttr('hidden');
 
-      if (version && version.hasOwnProperty('version')) {
-        $('#version').text(`v${version.version}`);
+    if (version && version.hasOwnProperty('version')) {
+      $('#version').text(`v${version.version}`);
+    }
+
+    $('[data-toggle="tooltip"]').tooltip();
+
+    let task_parsed = [],
+      filter = '';
+
+    let gcToken = localStorage.getItem('gcToken');
+    if (!gcToken) window.open('./index.html', '_self');
+    console.log(`continue with gcToken: ${gcToken}`);
+
+    let data;
+    let region = getUrlParameter('region');
+    if (region == 'super-user') $('#region').val();
+    else $('#region').val(region);
+
+    $('#regionBadge').text(region);
+
+    // Init DatePicker
+    let nowDate = new Date();
+    $('#dpEnd').datepicker({
+      todayHighlight: true,
+      autoclose: true,
+      endDate: new Date(nowDate.setDate(nowDate.getDate() + 1)),
+    });
+    console.log('try to set end date...');
+    $('#dpEnd').datepicker('setDate', new Date());
+
+    $('#dpStart').datepicker({
+      todayHighlight: true,
+      autoclose: true,
+      endDate: nowDate,
+    });
+    let pickerStartDate = new Date(nowDate.setMonth(nowDate.getMonth() - 1));
+    $('#dpStart').datepicker('setDate', pickerStartDate);
+
+    $('#dpStart').attr('disabled', true);
+    $('#dpEnd').attr('disabled', true);
+
+    if (maintenanceMode) {
+      $('#alert').attr('hidden', false);
+      $('#dashboard :input').attr('disabled', true);
+    } else {
+      init();
+    }
+
+    for (const category of requestCategory) {
+      console.log(category);
+      $('<option/>', { value: category }).text(category).appendTo('#requestCategory');
+    }
+
+    $('#region').on('change', () => {
+      $('#subRegion').empty();
+      $('<option/>', { value: '' }).text('All').appendTo('#subRegion');
+      console.log('Regions:', regions);
+      console.log('Selected Region:', $('#region').val());
+      if (regions[$('#region').val()]) {
+        for (let subregion of regions[$('#region').val()]) {
+          $('<option/>', { value: subregion }).text(subregion).appendTo('#subRegion');
+        }
       }
+      init();
+    });
+    $('#subRegion').on('change', () => {
+      init();
+    });
+    $('#product').on('change', () => {
+      init();
+    });
+    $('#segment').on('change', () => {
+      init();
+    });
+    $('#requestType').on('change', () => {
+      $('#requestCategory').attr('disabled', $('#requestType').val() !== '0' ? true : false);
+      if ($('#requestType').val() == '1') {
+        $('#requestCategory').val('');
+      }
+      init();
+    });
+    $('#customerRelationship').on('change', () => {
+      init();
+    });
+    $('#customerType').on('change', () => {
+      init();
+    });
+    $('#requestCategory').on('change', () => {
+      init();
+    });
 
-      $('[data-toggle="tooltip"]').tooltip();
-
-      let task_parsed = [],
-        filter = '';
-
-      let gcToken = localStorage.getItem('gcToken');
-      if (!gcToken) window.open('./index.html', '_self');
-      console.log(`continue with gcToken: ${gcToken}`);
-
-      let data;
-      let region = getUrlParameter('region');
-      if (region == 'super-user') $('#region').val();
-      else $('#region').val(region);
-
-      $('#regionBadge').text(region);
-
-      // Init DatePicker
-      let nowDate = new Date();
-      $('#dpEnd').datepicker({
-        todayHighlight: true,
-        autoclose: true,
-        endDate: new Date(nowDate.setDate(nowDate.getDate() + 1)),
+    $('#dpStart')
+      .datepicker()
+      .on('changeDate', function (ev) {
+        if ($('#period').val() === 'custom') init();
       });
-      console.log('try to set end date...');
-      $('#dpEnd').datepicker('setDate', new Date());
-
-      $('#dpStart').datepicker({
-        todayHighlight: true,
-        autoclose: true,
-        endDate: nowDate,
+    $('#dpEnd')
+      .datepicker()
+      .on('changeDate', function (ev) {
+        if ($('#period').val() === 'custom') init();
       });
-      let pickerStartDate = new Date(nowDate.setMonth(nowDate.getMonth() - 1));
-      $('#dpStart').datepicker('setDate', pickerStartDate);
 
-      $('#dpStart').attr('disabled', true);
-      $('#dpEnd').attr('disabled', true);
+    $('#period').on('change', () => {
+      let periodSelection = $('#period').val();
+      let pickerStartDate;
+      switch (periodSelection) {
+        case 'lastDay':
+          pickerStartDate = new Date(new Date().setDate(new Date().getDate() - 1));
+          $('#dpStart').datepicker('setDate', pickerStartDate);
+          $('#dpEnd').datepicker('setDate', new Date());
+          break;
+        case 'lastWeek':
+          pickerStartDate = new Date(new Date().setDate(new Date().getDate() - 7));
+          $('#dpStart').datepicker('setDate', pickerStartDate);
+          $('#dpEnd').datepicker('setDate', new Date());
+          break;
+        case 'lastMonth':
+          pickerStartDate = new Date(new Date().setMonth(new Date().getMonth() - 1));
+          $('#dpStart').datepicker('setDate', pickerStartDate);
+          $('#dpEnd').datepicker('setDate', new Date());
 
-      if (maintenanceMode) {
-        $('#alert').attr('hidden', false);
-        $('#dashboard :input').attr('disabled', true);
-      } else {
-        init();
+          break;
+        default:
+          break;
       }
 
-      for (const category of requestCategory) {
-        console.log(category);
-        $('<option/>', { value: category }).text(category).appendTo('#requestCategory');
-      }
+      $('#dpStart').attr('disabled', periodSelection === 'custom' ? false : true);
+      $('#dpEnd').attr('disabled', periodSelection === 'custom' ? false : true);
 
-      $('#region').on('change', () => {
-        $('#subRegion').empty();
-        $('<option/>', { value: '' }).text('All').appendTo('#subRegion');
-        console.log('Regions:', regions);
-        console.log('Selected Region:', $('#region').val());
-        if (regions[$('#region').val()]) {
-          for (let subregion of regions[$('#region').val()]) {
-            $('<option/>', { value: subregion }).text(subregion).appendTo('#subRegion');
+      if (periodSelection !== 'custom') init();
+    });
+
+    // SetLink for review Requests
+    document.getElementById('reviewRequestsButton').setAttribute('href', `./requests.html?region=${region}`);
+
+    function graphClick_taskType(event, array) {
+      if (array && array.length > 0 && array[0]._model) {
+        console.log(array[0]._model.label);
+        filter = array[0]._model.label;
+        //document.getElementById('selectedTaskType').innerHTML = `TaskType: ${array[0]._model.label}`;
+        //refreshGrid();
+      }
+    }
+    function prepareDataForSQL(_sql, _data) {
+      //console.log(`prepareDataForSQL: ${_sql}`);
+      let res = alasql(_sql, [_data]);
+
+      let labels = [];
+      let values = [];
+      res.forEach((element) => {
+        if (!element.label) labels.push('Not Handled');
+        else labels.push(element.label);
+
+        values.push(element.val);
+      });
+
+      let myData = {
+        labels: labels,
+        datasets: [
+          {
+            data: values,
+            label: 'All',
+            backgroundColor: ['rgba(255, 99, 132, 1)', 'rgba(54, 162, 235, 1)', 'rgba(255, 206, 86, 1)', 'rgba(75, 192, 192, 1)', 'rgba(153, 102, 255, 1)', 'rgba(255, 100, 64, 1)', 'rgba(200, 109, 164, 1)', 'rgba(255, 50, 99, 1)', 'rgba(100, 30, 164, 1)', 'rgba(200, 159, 255, 1)', 'rgba(50, 100, 200, 1)', 'rgba(70, 150, 76, 1)', 'rgba(20, 255, 150, 1)', 'rgba(250, 50, 40, 1)', 'rgba(175, 55, 55, 1)', 'rgba(240, 140, 40, 1)', 'rgba(66, 66, 166, 1)'],
+          },
+        ],
+      };
+
+      return myData;
+    }
+
+    /*
+          function refreshGrid() {
+              $("#basicgrid").jsGrid("loadData")
           }
+  
+  */
+    /*
+          function showRequests() {
+              console.log('Showing requests by TaskType...');
+  
+              try {
+  
+                  jsGrid.setDefaults({ tableClass: "jsgrid-table table table-striped table-hover" });
+                  jsGrid.setDefaults("text", {
+                      _createTextBox: function () {
+                          return $("<input>").attr("type", "text").attr("class", "form-control input-sm")
+                      }
+                  });
+                  jsGrid.setDefaults("number", {
+                      _createTextBox: function () {
+                          return $("<input>").attr("type", "number").attr("class", "form-control input-sm")
+                      }
+                  });
+                  jsGrid.setDefaults("textarea", {
+                      _createTextBox: function () {
+                          return $("<input>").attr("type", "textarea").attr("class", "form-control")
+                      }
+                  });
+                  jsGrid.setDefaults("control", {
+                      _createGridButton: function (cls, tooltip, clickHandler) {
+                          var grid = this._grid;
+                          return $("<button>").addClass(this.buttonClass).addClass(cls).attr({
+                              type: "button",
+                              title: tooltip
+                          }).on("click", function (e) {
+                              clickHandler(grid, e)
+                          })
+                      }
+                  });
+                  jsGrid.setDefaults("select", {
+                      _createSelect: function () {
+                          var $result = $("<select>").attr("class", "form-control input-sm"),
+                              valueField = this.valueField,
+                              textField = this.textField,
+                              selectedIndex = this.selectedIndex;
+                          return $.each(this.items, function (index, item) {
+                              var value = valueField ? item[valueField] : index,
+                                  text = textField ? item[textField] : item,
+                                  $option = $("<option>").attr("value", value).text(text).appendTo($result);
+                              $option.prop("selected", selectedIndex === index)
+                          }), $result
+                      }
+                  });
+  
+                  $("#basicgrid").jsGrid({
+                      height: "40vh",
+                      width: "100%",
+                      filtering: false,
+                      editing: false,
+                      sorting: true,
+                      paging: true,
+                      autoload: true,
+                      pageSize: 25,
+                      pageButtonCount: 5,
+                      loadIndication: true,
+                      loadIndicationDelay: 500,
+                      loadMessage: "Loading...",
+                      loadShading: true,
+                      autoload: true,
+                      rowClick: function (args) {
+  
+                      },
+                      rowClass: function (item, itemIndex) {
+  
+                          if (item.acceptedRejected == "Accepted") {
+                              return "task-accepted"
+                          } else if (item.acceptedRejected == "Rejected")
+                              return "task-rejected"
+                          else
+                              return
+  
+  
+                      },
+                      deleteItem: async function (deletingRequest) {
+  
+                      },
+                      controller: {
+                          loadData: async function () {
+                              console.log('display data for TaskType: ', filter);
+                              return $.grep(data, function (request) {
+                                  return (
+                                       ($('#region').val() === "" || request.region == $('#region').val())
+                                      && ($('#subRegion').val() === "" || request.subRegion == $('#subRegion').val())
+                                      && ($('#product').val() === "" || request.product == $('#product').val())
+                                      && ($('#segment').val() === "" || request.segment == $('#segment').val())
+                                      && (!filter || (request.tasks.find(o => o.taskType === filter)) )
+                                  )
+  
+                              });
+  
+                          }
+                      },
+                      noDataContent: "No Requests",
+                      fields: [
+                          {
+                              name: "id",
+                              title: "Id",
+                              type: "text",
+                              width: "auto",
+                              itemTemplate: function (value, item) {
+                                  return `<small>${value}</small>`;
+                              },
+                              visible: false
+                          }, {
+                              name: "region",
+                              title: "Region",
+                              type: "text",
+                              width: "auto",
+                              visible: region == 'super-user' ? true : false
+                          }, {
+                              name: "subRegion",
+                              title: "Territory",
+                              type: "text",
+                              width: "auto"
+                          }, {
+                              name: "product",
+                              title: "Product",
+                              type: "text",
+                              width: "auto"
+                          },
+                          {
+                              name: "segment",
+                              title: "Market Segment",
+                              type: "text",
+                              width: "auto"
+                          },{
+                              name: "updatedAt",
+                              title: "Last Updated",
+                              type: "text",
+                              itemTemplate: function (value, item) {
+                                  return `${moment(value).fromNow()}`;
+                              },
+                              width: "auto",
+                              filtering: false
+                          }]
+  
+                  });
+  
+              } catch (error) {
+                  console.error(error);
+              }
+          }
+  */
+
+    function buildFilter(_sql, _isWHERE) {
+      var filter = '';
+      var bAND = false;
+      var bEmpty = true;
+
+      if (!_isWHERE) filter = 'WHERE (';
+      else filter = ' AND ';
+
+      if ($('#region').val() != '' || $('#product').val() != '' || $('#segment').val() != '' || $('#subRegion').val() != '' || $('#customerRelationship').val() != '' || $('#customerType').val() != '') {
+        if ($('#region').val() != '') {
+          filter = filter + ` region = '${$('#region').val()}' `;
+          bAND = true;
+          bEmpty = false;
         }
-        init();
-      });
-      $('#subRegion').on('change', () => {
-        init();
-      });
-      $('#product').on('change', () => {
-        init();
-      });
-      $('#segment').on('change', () => {
-        init();
-      });
-      $('#requestType').on('change', () => {
-        $('#requestCategory').attr('disabled', $('#requestType').val() == '1' ? true : false);
-        if ($('#requestType').val() == '1') {
-          $('#requestCategory').val('');
+        if ($('#product').val() != '') {
+          if (bAND) filter = filter + ' AND ';
+          filter = filter + `product = '${$('#product').val()}' `;
+          bEmpty = false;
+          bAND = true;
         }
-        init();
-      });
-      $('#customerRelationship').on('change', () => {
-        init();
-      });
-      $('#customerType').on('change', () => {
-        init();
-      });
-      $('#requestCategory').on('change', () => {
-        init();
-      });
-
-      $('#dpStart')
-        .datepicker()
-        .on('changeDate', function (ev) {
-          if ($('#period').val() === 'custom') init();
-        });
-      $('#dpEnd')
-        .datepicker()
-        .on('changeDate', function (ev) {
-          if ($('#period').val() === 'custom') init();
-        });
-
-      $('#period').on('change', () => {
-        let periodSelection = $('#period').val();
-        let pickerStartDate;
-        switch (periodSelection) {
-          case 'lastDay':
-            pickerStartDate = new Date(new Date().setDate(new Date().getDate() - 1));
-            $('#dpStart').datepicker('setDate', pickerStartDate);
-            $('#dpEnd').datepicker('setDate', new Date());
-            break;
-          case 'lastWeek':
-            pickerStartDate = new Date(new Date().setDate(new Date().getDate() - 7));
-            $('#dpStart').datepicker('setDate', pickerStartDate);
-            $('#dpEnd').datepicker('setDate', new Date());
-            break;
-          case 'lastMonth':
-            pickerStartDate = new Date(new Date().setMonth(new Date().getMonth() - 1));
-            $('#dpStart').datepicker('setDate', pickerStartDate);
-            $('#dpEnd').datepicker('setDate', new Date());
-
-            break;
-          default:
-            break;
+        if ($('#segment').val() != '') {
+          if (bAND) filter = filter + ' AND ';
+          filter = filter + `segment = '${$('#segment').val()}' `;
+          bEmpty = false;
+          bAND = true;
         }
-
-        $('#dpStart').attr('disabled', periodSelection === 'custom' ? false : true);
-        $('#dpEnd').attr('disabled', periodSelection === 'custom' ? false : true);
-
-        if (periodSelection !== 'custom') init();
-      });
-
-      // SetLink for review Requests
-      document.getElementById('reviewRequestsButton').setAttribute('href', `./requests.html?region=${region}`);
-
-      function graphClick_taskType(event, array) {
-        if (array && array.length > 0 && array[0]._model) {
-          console.log(array[0]._model.label);
-          filter = array[0]._model.label;
-          //document.getElementById('selectedTaskType').innerHTML = `TaskType: ${array[0]._model.label}`;
-          //refreshGrid();
+        if ($('#subRegion').val() != '') {
+          if (bAND) filter = filter + ' AND ';
+          filter = filter + `subRegion = '${$('#subRegion').val()}' `;
+          bEmpty = false;
+          bAND = true;
+        }
+        if ($('#customerRelationship').val() != '') {
+          if (bAND) filter = filter + ' AND ';
+          filter = filter + `customerRelationship = '${$('#customerRelationship').val()}' `;
+          bAND = true;
+          bEmpty = false;
+        }
+        if ($('#customerType').val() != '') {
+          if (bAND) filter = filter + ' AND ';
+          filter = filter + `customerType = '${$('#customerType').val()}' `;
+          bEmpty = false;
         }
       }
-      function prepareDataForSQL(_sql, _data) {
-        //console.log(`prepareDataForSQL: ${_sql}`);
-        let res = alasql(_sql, [_data]);
+      if (!_isWHERE) filter = filter + ')';
+      if (bEmpty) {
+        _sql = _sql.replace('##', '');
+      } else _sql = _sql.replace('##', filter);
 
-        let labels = [];
-        let values = [];
-        res.forEach((element) => {
-          if (!element.label) labels.push('Not Handled');
-          else labels.push(element.label);
+      return _sql;
+    }
 
-          values.push(element.val);
-        });
+    function makeChart(_sql, _isWHERE, _chartName, _chartType, _chartTitle, _data, _functionOnClick) {
+      let sql = buildFilter(_sql, _isWHERE);
+      console.log(sql);
 
-        let myData = {
-          labels: labels,
-          datasets: [
+      $(`#chart_${_chartName}`).remove();
+      $(`#chart_${_chartName}_container`).append(`<canvas id="chart_${_chartName}"><canvas>`);
+
+      let scales;
+      if (_chartType == 'bar' || _chartType == 'horizontalBar') {
+        scales = {
+          yAxes: [
             {
-              data: values,
-              label: 'All',
-              backgroundColor: ['rgba(255, 99, 132, 1)', 'rgba(54, 162, 235, 1)', 'rgba(255, 206, 86, 1)', 'rgba(75, 192, 192, 1)', 'rgba(153, 102, 255, 1)', 'rgba(255, 100, 64, 1)', 'rgba(200, 109, 164, 1)', 'rgba(255, 50, 99, 1)', 'rgba(100, 30, 164, 1)', 'rgba(200, 159, 255, 1)', 'rgba(50, 100, 200, 1)', 'rgba(70, 150, 76, 1)', 'rgba(20, 255, 150, 1)', 'rgba(250, 50, 40, 1)', 'rgba(175, 55, 55, 1)', 'rgba(240, 140, 40, 1)', 'rgba(66, 66, 166, 1)'],
+              ticks: {
+                min: 0,
+              },
+            },
+          ],
+          xAxes: [
+            {
+              ticks: {
+                min: 0,
+              },
             },
           ],
         };
-
-        return myData;
       }
 
-      /*
-            function refreshGrid() {
-                $("#basicgrid").jsGrid("loadData")
-            }
-    
-    */
-      /*
-            function showRequests() {
-                console.log('Showing requests by TaskType...');
-    
-                try {
-    
-                    jsGrid.setDefaults({ tableClass: "jsgrid-table table table-striped table-hover" });
-                    jsGrid.setDefaults("text", {
-                        _createTextBox: function () {
-                            return $("<input>").attr("type", "text").attr("class", "form-control input-sm")
-                        }
-                    });
-                    jsGrid.setDefaults("number", {
-                        _createTextBox: function () {
-                            return $("<input>").attr("type", "number").attr("class", "form-control input-sm")
-                        }
-                    });
-                    jsGrid.setDefaults("textarea", {
-                        _createTextBox: function () {
-                            return $("<input>").attr("type", "textarea").attr("class", "form-control")
-                        }
-                    });
-                    jsGrid.setDefaults("control", {
-                        _createGridButton: function (cls, tooltip, clickHandler) {
-                            var grid = this._grid;
-                            return $("<button>").addClass(this.buttonClass).addClass(cls).attr({
-                                type: "button",
-                                title: tooltip
-                            }).on("click", function (e) {
-                                clickHandler(grid, e)
-                            })
-                        }
-                    });
-                    jsGrid.setDefaults("select", {
-                        _createSelect: function () {
-                            var $result = $("<select>").attr("class", "form-control input-sm"),
-                                valueField = this.valueField,
-                                textField = this.textField,
-                                selectedIndex = this.selectedIndex;
-                            return $.each(this.items, function (index, item) {
-                                var value = valueField ? item[valueField] : index,
-                                    text = textField ? item[textField] : item,
-                                    $option = $("<option>").attr("value", value).text(text).appendTo($result);
-                                $option.prop("selected", selectedIndex === index)
-                            }), $result
-                        }
-                    });
-    
-                    $("#basicgrid").jsGrid({
-                        height: "40vh",
-                        width: "100%",
-                        filtering: false,
-                        editing: false,
-                        sorting: true,
-                        paging: true,
-                        autoload: true,
-                        pageSize: 25,
-                        pageButtonCount: 5,
-                        loadIndication: true,
-                        loadIndicationDelay: 500,
-                        loadMessage: "Loading...",
-                        loadShading: true,
-                        autoload: true,
-                        rowClick: function (args) {
-    
-                        },
-                        rowClass: function (item, itemIndex) {
-    
-                            if (item.acceptedRejected == "Accepted") {
-                                return "task-accepted"
-                            } else if (item.acceptedRejected == "Rejected")
-                                return "task-rejected"
-                            else
-                                return
-    
-    
-                        },
-                        deleteItem: async function (deletingRequest) {
-    
-                        },
-                        controller: {
-                            loadData: async function () {
-                                console.log('display data for TaskType: ', filter);
-                                return $.grep(data, function (request) {
-                                    return (
-                                         ($('#region').val() === "" || request.region == $('#region').val())
-                                        && ($('#subRegion').val() === "" || request.subRegion == $('#subRegion').val())
-                                        && ($('#product').val() === "" || request.product == $('#product').val())
-                                        && ($('#segment').val() === "" || request.segment == $('#segment').val())
-                                        && (!filter || (request.tasks.find(o => o.taskType === filter)) )
-                                    )
-    
-                                });
-    
-                            }
-                        },
-                        noDataContent: "No Requests",
-                        fields: [
-                            {
-                                name: "id",
-                                title: "Id",
-                                type: "text",
-                                width: "auto",
-                                itemTemplate: function (value, item) {
-                                    return `<small>${value}</small>`;
-                                },
-                                visible: false
-                            }, {
-                                name: "region",
-                                title: "Region",
-                                type: "text",
-                                width: "auto",
-                                visible: region == 'super-user' ? true : false
-                            }, {
-                                name: "subRegion",
-                                title: "Territory",
-                                type: "text",
-                                width: "auto"
-                            }, {
-                                name: "product",
-                                title: "Product",
-                                type: "text",
-                                width: "auto"
-                            },
-                            {
-                                name: "segment",
-                                title: "Market Segment",
-                                type: "text",
-                                width: "auto"
-                            },{
-                                name: "updatedAt",
-                                title: "Last Updated",
-                                type: "text",
-                                itemTemplate: function (value, item) {
-                                    return `${moment(value).fromNow()}`;
-                                },
-                                width: "auto",
-                                filtering: false
-                            }]
-    
-                    });
-    
-                } catch (error) {
-                    console.error(error);
-                }
-            }
-    */
+      var ctx = document.getElementById(`chart_${_chartName}`);
+      var myDoughnutChart = new Chart(ctx, {
+        type: _chartType,
+        data: prepareDataForSQL(sql, _data),
+        options: {
+          onClick: _functionOnClick,
+          title: {
+            display: true,
+            text: _chartTitle,
+          },
+          plugins: {
+            datalabels: {
+              color: 'black',
+              align: 'center',
+              clamp: true,
+            },
+          },
+          scales: scales,
+          legend: {
+            position: 'bottom',
+          },
+        },
+      });
+    }
 
-      function buildFilter(_sql, _isWHERE) {
-        var filter = '';
-        var bAND = false;
-        var bEmpty = true;
+    async function init() {
+      let startDate = moment($('#dpStart').datepicker('getDate')).valueOf();
+      let endDate = moment($('#dpEnd').datepicker('getDate')).valueOf();
 
-        if (!_isWHERE) filter = 'WHERE (';
-        else filter = ' AND ';
+      if (!startDate || !endDate) return;
 
-        if ($('#region').val() != '' || $('#product').val() != '' || $('#segment').val() != '' || $('#subRegion').val() != '' || $('#customerRelationship').val() != '' || $('#customerType').val() != '') {
-          if ($('#region').val() != '') {
-            filter = filter + ` region = '${$('#region').val()}' `;
-            bAND = true;
-            bEmpty = false;
-          }
-          if ($('#product').val() != '') {
-            if (bAND) filter = filter + ' AND ';
-            filter = filter + `product = '${$('#product').val()}' `;
-            bEmpty = false;
-            bAND = true;
-          }
-          if ($('#segment').val() != '') {
-            if (bAND) filter = filter + ' AND ';
-            filter = filter + `segment = '${$('#segment').val()}' `;
-            bEmpty = false;
-            bAND = true;
-          }
-          if ($('#subRegion').val() != '') {
-            if (bAND) filter = filter + ' AND ';
-            filter = filter + `subRegion = '${$('#subRegion').val()}' `;
-            bEmpty = false;
-            bAND = true;
-          }
-          if ($('#customerRelationship').val() != '') {
-            if (bAND) filter = filter + ' AND ';
-            filter = filter + `customerRelationship = '${$('#customerRelationship').val()}' `;
-            bAND = true;
-            bEmpty = false;
-          }
-          if ($('#customerType').val() != '') {
-            if (bAND) filter = filter + ' AND ';
-            filter = filter + `customerType = '${$('#customerType').val()}' `;
-            bEmpty = false;
-          }
+      if (startDate > endDate) {
+        alert('startDate cannot be greated than endDate');
+        return;
+      }
+      document.getElementById('spinner').style.display = 'block';
+
+      try {
+        data = await getDashboard(gcToken, startDate, endDate);
+      } catch (error) {
+        if (error.status == 401) {
+          window.open('./index.html', '_self');
         }
-        if (!_isWHERE) filter = filter + ')';
-        if (bEmpty) {
-          _sql = _sql.replace('##', '');
-        } else _sql = _sql.replace('##', filter);
-
-        return _sql;
       }
+      document.getElementById('spinner').style.display = 'none';
+      // Parse Tasks
+      let task_filter = buildFilter('SELECT tasks FROM ? ##', false);
+      let task_raw = alasql(task_filter, [data]);
+      task_parsed = []; // Tasks with Time
+      task_raw.forEach(function (aItem) {
+        if (aItem.tasks && aItem.tasks.length > 0) {
+          aItem.tasks.forEach(function (aTask) {
+            task_parsed.push(aTask);
+          });
+        }
+      });
 
-      function makeChart(_sql, _isWHERE, _chartName, _chartType, _chartTitle, _data, _functionOnClick) {
-        let sql = buildFilter(_sql, _isWHERE);
-        console.log(sql);
+      //filter = undefined;
+      //document.getElementById('selectedTaskType').innerHTML = "Task Type: Not Selected";
+      //refreshGrid();
 
-        $(`#chart_${_chartName}`).remove();
-        $(`#chart_${_chartName}_container`).append(`<canvas id="chart_${_chartName}"><canvas>`);
+      // By Region
+      makeChart('SELECT count(*) as val, region as label FROM ? ## GROUP BY region', false, 'region', 'doughnut', 'By Region', data);
 
-        let scales;
-        if (_chartType == 'bar' || _chartType == 'horizontalBar') {
-          scales = {
+      // By Teritory
+      makeChart(`SELECT count(*) as val, subRegion as label FROM ? ## GROUP BY subRegion`, false, 'subRegion', 'doughnut', 'By Territory', data);
+
+      // By Segment
+      makeChart('SELECT count(*) as val, segment as label FROM ? ## GROUP BY segment', false, 'segment', 'pie', 'By Segment', data);
+
+      // By Product
+      makeChart('SELECT count(*) as val, product as label FROM ? ## GROUP BY product', false, 'product', 'pie', 'By Product', data);
+
+      // By Status for Active and not deleted
+      makeChart('SELECT count(*) as val, status as label FROM ? WHERE (isDeleted = false ##) GROUP BY status', true, 'status', 'doughnut', 'By Status for Active Requests', data);
+
+      // By Handled Status for Active
+      makeChart('SELECT count(*) as val, acceptedRejected as label FROM ? WHERE (isDeleted = false ##) GROUP BY acceptedRejected', true, 'acceptedRejected', 'doughnut', 'By Accepted/Rejected Status', data);
+
+      // By Request Category / Time
+      let res = alasql('SELECT count(*) as val, taskCategory as label FROM ? GROUP BY taskCategory', [task_parsed]);
+      var labels = [];
+      var values1 = [];
+      res.forEach((element) => {
+        labels.push(element.label);
+        values1.push(element.val);
+      });
+
+      res = alasql('SELECT SUM(taskTime::NUMBER) as val, taskCategory as label FROM ? GROUP BY taskCategory', [task_parsed]);
+      var values2 = [];
+      res.forEach((element) => {
+        values2.push(element.val);
+      });
+
+      $('#chart_requestCategory').remove();
+      $('#chart_requestCategory_container').append('<canvas id="chart_requestCategory"><canvas>');
+
+      var ctx = document.getElementById(`chart_requestCategory`);
+      var myDoughnutChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+          datasets: [
+            {
+              data: values1,
+              label: 'Requests',
+              backgroundColor: ['rgba(255, 99, 132, 1)', 'rgba(54, 162, 235, 1)', 'rgba(255, 206, 86, 1)', 'rgba(75, 192, 192, 1)', 'rgba(153, 102, 255, 1)', 'rgba(255, 100, 64, 1)', 'rgba(200, 109, 164, 1)', 'rgba(255, 50, 99, 1)', 'rgba(100, 30, 164, 1)', 'rgba(200, 159, 255, 1)', 'rgba(50, 100, 200, 1)', 'rgba(70, 150, 76, 1)', 'rgba(20, 255, 150, 1)', 'rgba(250, 50, 40, 1)', 'rgba(175, 55, 55, 1)', 'rgba(240, 140, 40, 1)', 'rgba(66, 66, 166, 1)'],
+            },
+            {
+              type: 'line',
+              data: values2,
+              label: 'Time spent',
+              backgroundColor: ['rgba(70, 128, 215, 0.3)'],
+              borderWidth: 0,
+            },
+          ],
+          labels: labels,
+        },
+        options: {
+          title: {
+            display: true,
+            text: 'RequestCategory / Time spent',
+          },
+          scales: {
             yAxes: [
               {
                 ticks: {
@@ -638,269 +779,130 @@
                 },
               },
             ],
-          };
-        }
-
-        var ctx = document.getElementById(`chart_${_chartName}`);
-        var myDoughnutChart = new Chart(ctx, {
-          type: _chartType,
-          data: prepareDataForSQL(sql, _data),
-          options: {
-            onClick: _functionOnClick,
-            title: {
-              display: true,
-              text: _chartTitle,
-            },
-            plugins: {
-              datalabels: {
-                color: 'black',
-                align: 'center',
-                clamp: true,
-              },
-            },
-            scales: scales,
-            legend: {
-              position: 'bottom',
-            },
           },
-        });
-      }
+        },
+      });
 
-      async function init() {
-        let startDate = moment($('#dpStart').datepicker('getDate')).valueOf();
-        let endDate = moment($('#dpEnd').datepicker('getDate')).valueOf();
+      // By RequestType (a'ka taskType)
+      makeChart("SELECT count(*) as val, taskType as label FROM ? WHERE (taskType <> 'undefined') GROUP BY taskType", false, 'requestType', 'bar', 'By task Type', task_parsed, graphClick_taskType);
+    }
 
-        if (!startDate || !endDate) return;
+    async function exportData() {
+      let startDate = moment($('#dpStart').datepicker('getDate')).valueOf();
+      let endDate = moment($('#dpEnd').datepicker('getDate')).valueOf();
 
-        if (startDate > endDate) {
-          alert('startDate cannot be greated than endDate');
+      let exportRegion = $('#region').val() == '' ? undefined : $('#region').val();
+      let exportProduct = $('#product').val() == '' ? undefined : $('#product').val();
+      let exportSegment = $('#segment').val() == '' ? undefined : $('#segment').val();
+      let exportSubRegion = $('#subRegion').val() == '' ? undefined : $('#subRegion').val();
+      let myExportData;
+      try {
+        myExportData = await getExport(exportRegion, exportSubRegion, exportProduct, exportSegment, gcToken, startDate, endDate);
+        if (myExportData.length == 0) {
+          bootbox.alert('Nothing to export...');
           return;
         }
-        document.getElementById('spinner').style.display = 'block';
 
-        try {
-          data = await getDashboard(gcToken, startDate, endDate);
-        } catch (error) {
-          if (error.status == 401) {
-            window.open('./index.html', '_self');
-          }
-        }
-        document.getElementById('spinner').style.display = 'none';
-        // Parse Tasks
-        let task_filter = buildFilter('SELECT tasks FROM ? ##', false);
-        let task_raw = alasql(task_filter, [data]);
-        task_parsed = []; // Tasks with Time
-        task_raw.forEach(function (aItem) {
-          if (aItem.tasks && aItem.tasks.length > 0) {
-            aItem.tasks.forEach(function (aTask) {
-              task_parsed.push(aTask);
-            });
-          }
-        });
+        var flatData = [];
+        myExportData.forEach(function (aItem) {
+          aItem.tasks.forEach(function (aTask) {
+            if (!aItem.priority) aItem.priority = '';
+            if (!aItem.status) aItem.status = '';
+            if (!aItem.isDeleted) aItem.isDeleted = '';
+            if (!aItem.isTest) aItem.isTest = '';
+            if (!aItem.acceptedRejected) aItem.acceptedRejected = '';
+            if (!aItem.dateAccepted) aItem.dateAccepted = '';
+            if (!aItem.dateRejected) aItem.dateRejected = '';
+            if (!aItem.dateClosed) aItem.dateClosed = '';
+            if (!aItem.customerRelationship) aItem.customerRelationship = '';
+            if (!aItem.customerType) aItem.customerType = '';
+            if (!aItem.segment) aItem.segment = '';
+            if (!aItem.product) aItem.product = '';
+            if (!aItem.needCompletedBy) aItem.needCompletedBy = '';
+            if (!aItem.description) aItem.description = '';
+            if (!aItem.partnerCustomerName) aItem.partnerCustomerName = '';
+            if (!aItem.partnerCustomerNameSearch) aItem.partnerCustomerNameSearch = '';
+            if (!aItem.salesforceAccountOpportunity) aItem.salesforceAccountOpportunity = '';
+            if (!aItem.oppName) aItem.oppName = '';
+            if (!aItem.oppOwner) aItem.oppOwner = '';
+            if (!aItem.oppUrl) aItem.oppUrl = '';
+            if (!aItem.oppPartnerCustomerName) aItem.oppPartnerCustomerName = '';
+            if (!aItem.oppDsrUrl) aItem.oppDsrUrl = '';
+            if (!aItem.oppAssignedSC) aItem.oppAssignedSC = '';
+            if (!aItem.oppAssignedSCMail) aItem.oppAssignedSCMail = '';
+            if (!aItem.AcceptedRejectedNotes) aItem.AcceptedRejectedNotes = '';
+            if (!aItem.needCompletedBy) aItem.needCompletedBy = '';
+            if (!aItem.mailDistribution) aItem.mailDistribution = '';
+            if (!aItem.programManager) aItem.programManager = '';
+            if (!aItem.teamMembers) aItem.teamMembers = '';
+            if (!aItem.categorySearch) aItem.categorySearch = '';
+            if (!aItem.stakeholderEmails) aItem.stakeholderEmails = '';
 
-        //filter = undefined;
-        //document.getElementById('selectedTaskType').innerHTML = "Task Type: Not Selected";
-        //refreshGrid();
-
-        // By Region
-        makeChart('SELECT count(*) as val, region as label FROM ? ## GROUP BY region', false, 'region', 'doughnut', 'By Region', data);
-
-        // By Teritory
-        makeChart(`SELECT count(*) as val, subRegion as label FROM ? ## GROUP BY subRegion`, false, 'subRegion', 'doughnut', 'By Territory', data);
-
-        // By Segment
-        makeChart('SELECT count(*) as val, segment as label FROM ? ## GROUP BY segment', false, 'segment', 'pie', 'By Segment', data);
-
-        // By Product
-        makeChart('SELECT count(*) as val, product as label FROM ? ## GROUP BY product', false, 'product', 'pie', 'By Product', data);
-
-        // By Status for Active and not deleted
-        makeChart('SELECT count(*) as val, status as label FROM ? WHERE (isDeleted = false ##) GROUP BY status', true, 'status', 'doughnut', 'By Status for Active Requests', data);
-
-        // By Handled Status for Active
-        makeChart('SELECT count(*) as val, acceptedRejected as label FROM ? WHERE (isDeleted = false ##) GROUP BY acceptedRejected', true, 'acceptedRejected', 'doughnut', 'By Accepted/Rejected Status', data);
-
-        // By Request Category / Time
-        let res = alasql('SELECT count(*) as val, taskCategory as label FROM ? GROUP BY taskCategory', [task_parsed]);
-        var labels = [];
-        var values1 = [];
-        res.forEach((element) => {
-          labels.push(element.label);
-          values1.push(element.val);
-        });
-
-        res = alasql('SELECT SUM(taskTime::NUMBER) as val, taskCategory as label FROM ? GROUP BY taskCategory', [task_parsed]);
-        var values2 = [];
-        res.forEach((element) => {
-          values2.push(element.val);
-        });
-
-        $('#chart_requestCategory').remove();
-        $('#chart_requestCategory_container').append('<canvas id="chart_requestCategory"><canvas>');
-
-        var ctx = document.getElementById(`chart_requestCategory`);
-        var myDoughnutChart = new Chart(ctx, {
-          type: 'bar',
-          data: {
-            datasets: [
-              {
-                data: values1,
-                label: 'Requests',
-                backgroundColor: ['rgba(255, 99, 132, 1)', 'rgba(54, 162, 235, 1)', 'rgba(255, 206, 86, 1)', 'rgba(75, 192, 192, 1)', 'rgba(153, 102, 255, 1)', 'rgba(255, 100, 64, 1)', 'rgba(200, 109, 164, 1)', 'rgba(255, 50, 99, 1)', 'rgba(100, 30, 164, 1)', 'rgba(200, 159, 255, 1)', 'rgba(50, 100, 200, 1)', 'rgba(70, 150, 76, 1)', 'rgba(20, 255, 150, 1)', 'rgba(250, 50, 40, 1)', 'rgba(175, 55, 55, 1)', 'rgba(240, 140, 40, 1)', 'rgba(66, 66, 166, 1)'],
-              },
-              {
-                type: 'line',
-                data: values2,
-                label: 'Time spent',
-                backgroundColor: ['rgba(70, 128, 215, 0.3)'],
-                borderWidth: 0,
-              },
-            ],
-            labels: labels,
-          },
-          options: {
-            title: {
-              display: true,
-              text: 'RequestCategory / Time spent',
-            },
-            scales: {
-              yAxes: [
-                {
-                  ticks: {
-                    min: 0,
-                  },
-                },
-              ],
-              xAxes: [
-                {
-                  ticks: {
-                    min: 0,
-                  },
-                },
-              ],
-            },
-          },
-        });
-
-        // By RequestType (a'ka taskType)
-        makeChart("SELECT count(*) as val, taskType as label FROM ? WHERE (taskType <> 'undefined') GROUP BY taskType", false, 'requestType', 'bar', 'By task Type', task_parsed, graphClick_taskType);
-      }
-
-      async function exportData() {
-        let startDate = moment($('#dpStart').datepicker('getDate')).valueOf();
-        let endDate = moment($('#dpEnd').datepicker('getDate')).valueOf();
-
-        let exportRegion = $('#region').val() == '' ? undefined : $('#region').val();
-        let exportProduct = $('#product').val() == '' ? undefined : $('#product').val();
-        let exportSegment = $('#segment').val() == '' ? undefined : $('#segment').val();
-        let exportSubRegion = $('#subRegion').val() == '' ? undefined : $('#subRegion').val();
-        let myExportData;
-        try {
-          myExportData = await getExport(exportRegion, exportSubRegion, exportProduct, exportSegment, gcToken, startDate, endDate);
-          if (myExportData.length == 0) {
-            bootbox.alert('Nothing to export...');
-            return;
-          }
-
-          var flatData = [];
-          myExportData.forEach(function (aItem) {
-            aItem.tasks.forEach(function (aTask) {
-              if (!aItem.priority) aItem.priority = '';
-              if (!aItem.status) aItem.status = '';
-              if (!aItem.isDeleted) aItem.isDeleted = '';
-              if (!aItem.isTest) aItem.isTest = '';
-              if (!aItem.acceptedRejected) aItem.acceptedRejected = '';
-              if (!aItem.dateAccepted) aItem.dateAccepted = '';
-              if (!aItem.dateRejected) aItem.dateRejected = '';
-              if (!aItem.dateClosed) aItem.dateClosed = '';
-              if (!aItem.customerRelationship) aItem.customerRelationship = '';
-              if (!aItem.customerType) aItem.customerType = '';
-              if (!aItem.segment) aItem.segment = '';
-              if (!aItem.product) aItem.product = '';
-              if (!aItem.needCompletedBy) aItem.needCompletedBy = '';
-              if (!aItem.description) aItem.description = '';
-              if (!aItem.partnerCustomerName) aItem.partnerCustomerName = '';
-              if (!aItem.partnerCustomerNameSearch) aItem.partnerCustomerNameSearch = '';
-              if (!aItem.salesforceAccountOpportunity) aItem.salesforceAccountOpportunity = '';
-              if (!aItem.oppName) aItem.oppName = '';
-              if (!aItem.oppOwner) aItem.oppOwner = '';
-              if (!aItem.oppUrl) aItem.oppUrl = '';
-              if (!aItem.oppPartnerCustomerName) aItem.oppPartnerCustomerName = '';
-              if (!aItem.oppDsrUrl) aItem.oppDsrUrl = '';
-              if (!aItem.oppAssignedSC) aItem.oppAssignedSC = '';
-              if (!aItem.oppAssignedSCMail) aItem.oppAssignedSCMail = '';
-              if (!aItem.AcceptedRejectedNotes) aItem.AcceptedRejectedNotes = '';
-              if (!aItem.needCompletedBy) aItem.needCompletedBy = '';
-              if (!aItem.mailDistribution) aItem.mailDistribution = '';
-              if (!aItem.programManager) aItem.programManager = '';
-              if (!aItem.teamMembers) aItem.teamMembers = '';
-              if (!aItem.categorySearch) aItem.categorySearch = '';
-              if (!aItem.stakeholderEmails) aItem.stakeholderEmails = '';
-
-              var singleRow = $.extend(true, {}, aItem);
-              singleRow.taskCategory = aTask.taskCategory;
-              singleRow.taskType = aTask.taskType;
-              singleRow.taskTime = aTask.taskTime;
-              delete singleRow.tasks;
-              if (singleRow.mailDistibution) delete singleRow.mailDistibution;
-              singleRow.createdAt = moment.utc(singleRow.createdAt);
-              singleRow.updatedAt = moment.utc(singleRow.updatedAt);
-              flatData.push(singleRow);
-            });
+            var singleRow = $.extend(true, {}, aItem);
+            singleRow.taskCategory = aTask.taskCategory;
+            singleRow.taskType = aTask.taskType;
+            singleRow.taskTime = aTask.taskTime;
+            delete singleRow.tasks;
+            if (singleRow.mailDistibution) delete singleRow.mailDistibution;
+            singleRow.createdAt = moment.utc(singleRow.createdAt);
+            singleRow.updatedAt = moment.utc(singleRow.updatedAt);
+            flatData.push(singleRow);
           });
+        });
 
-          myExportData = {};
+        myExportData = {};
 
-          const replacer = (key, value) => (value === null ? '' : value); // specify how you want to handle null values here
-          const header = Object.keys(flatData[0]);
-          let csv = flatData.map((row) => header.map((fieldName) => JSON.stringify(row[fieldName], replacer)).join(';'));
-          csv.unshift(header.join(';'));
-          csv = csv.join('\r\n');
+        const replacer = (key, value) => (value === null ? '' : value); // specify how you want to handle null values here
+        const header = Object.keys(flatData[0]);
+        let csv = flatData.map((row) => header.map((fieldName) => JSON.stringify(row[fieldName], replacer)).join(';'));
+        csv.unshift(header.join(';'));
+        csv = csv.join('\r\n');
 
-          download(csv, 'export.csv');
-        } catch (error) {
-          console.log(error);
-          if (error.status == 401) {
-            window.open('./index.html', '_self');
-          }
+        download(csv, 'export.csv');
+      } catch (error) {
+        console.log(error);
+        if (error.status == 401) {
+          window.open('./index.html', '_self');
         }
       }
+    }
 
-      // Function to download data to a file
-      function download(data, filename, type) {
-        var file = new Blob([data], { type: type });
-        if (window.navigator.msSaveOrOpenBlob)
-          // IE10+
-          window.navigator.msSaveOrOpenBlob(file, filename);
-        else {
-          // Others
-          var a = document.createElement('a'),
-            url = URL.createObjectURL(file);
-          a.href = url;
-          a.download = filename;
-          document.body.appendChild(a);
-          a.click();
-          setTimeout(function () {
-            document.body.removeChild(a);
-            window.URL.revokeObjectURL(url);
-          }, 0);
+    // Function to download data to a file
+    function download(data, filename, type) {
+      var file = new Blob([data], { type: type });
+      if (window.navigator.msSaveOrOpenBlob)
+        // IE10+
+        window.navigator.msSaveOrOpenBlob(file, filename);
+      else {
+        // Others
+        var a = document.createElement('a'),
+          url = URL.createObjectURL(file);
+        a.href = url;
+        a.download = filename;
+        document.body.appendChild(a);
+        a.click();
+        setTimeout(function () {
+          document.body.removeChild(a);
+          window.URL.revokeObjectURL(url);
+        }, 0);
+      }
+    }
+
+    function getUrlParameter(sParam) {
+      var sPageURL = window.location.search.substring(1),
+        sURLVariables = sPageURL.split('&'),
+        sParameterName,
+        i;
+
+      for (i = 0; i < sURLVariables.length; i++) {
+        sParameterName = sURLVariables[i].split('=');
+
+        if (sParameterName[0] === sParam) {
+          return sParameterName[1] === undefined ? true : decodeURIComponent(sParameterName[1]);
         }
       }
+    }
+  </script>
+</body>
 
-      function getUrlParameter(sParam) {
-        var sPageURL = window.location.search.substring(1),
-          sURLVariables = sPageURL.split('&'),
-          sParameterName,
-          i;
-
-        for (i = 0; i < sURLVariables.length; i++) {
-          sParameterName = sURLVariables[i].split('=');
-
-          if (sParameterName[0] === sParam) {
-            return sParameterName[1] === undefined ? true : decodeURIComponent(sParameterName[1]);
-          }
-        }
-      }
-    </script>
-  </body>
 </html>
