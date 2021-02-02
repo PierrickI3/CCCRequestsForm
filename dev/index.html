@@ -82,7 +82,7 @@
                 <a class="nav-link" id="profile-tab" data-toggle="tab" href="#trial" role="tab" aria-controls="profile" aria-selected="false" onclick="setRequestFormType(1)">Trials/POCs/Pilots Validation </a>
               </li>
               <li class="nav-item" role="presentation">
-                <a class="nav-link" id="attach-tab" data-toggle="tab" href="#cloudAtt" role="tab" aria-controls="attach-tab" aria-selected="false" onclick="setRequestFormType(2)">Attach Form <span class="badge badge-danger">NEW!</span></a>
+                <a class="nav-link" id="attach-tab" data-toggle="tab" href="#cloudAtt" role="tab" aria-controls="attach-tab" aria-selected="false" onclick="setRequestFormType(2)">Attach offer <span class="badge badge-danger">NEW!</span></a>
               </li>
 
             </ul>
@@ -101,7 +101,7 @@
                 </p>
               </div>
               <div class="tab-pane fade" id="attach-welcomeTxt" role="tabpanel" aria-labelledby="profile-tab">
-                <h3 class="text-center mt-4">Welcome to the Attach Form </h3>
+                <h3 class="text-center mt-4">Welcome to the Attach offer <img alt="ATT" src="images/tag-att.svg" style="transform: rotate(10deg); width: 4rem; margin: 0 0 0 10px;" /></h3>
                 <p class="text-center mt-3">
                   <b>Remove the likelihood of customers trying a competitor’s cloud solution.</b>
                   </br>
@@ -214,11 +214,11 @@
             <!-- CX Evolution Segment  -->
             <div id="attach-cx-evolution-segment" class="form-row mr-4 ml-2">
               <div class="form-group col-md-12">
-                <label for="attach-cx-evolution">What is the CX Evolution Segment for this Account?<span class="text-danger font-weight-bold">*</span></label>
+                <label for="attachCXEvolution">What is the CX Evolution Segment for this Account?<span class="text-danger font-weight-bold">*</span></label>
                 <small>
-                  <label for="attach-cx-evolution">&nbsp; &nbsp;(Look at account in SFDC to find the CX Evolution Segment)</label>
+                  <label for="attachCXEvolution">&nbsp; &nbsp;(Look at account in SFDC to find the CX Evolution Segment)</label>
                 </small>
-                <select id="attach-cx-evolution" name="attach-cx-evolution" class="form-control" required>
+                <select id="attachCXEvolution" name="attachCXEvolution" class="form-control" required>
                   <option value="" disabled selected>Select one option</option>
                   <option value="MC Must-Win">MC Must-Win</option>
                   <option value="Must-Win">Must-Win</option>
@@ -663,8 +663,8 @@
                   <!-- Cloud Readiness Category   -->
                   <div class="form-row mr-4 ml-2">
                     <div class="form-group col-md-12">
-                      <label for="attach-readiness-category">What Cloud Readiness Category is your customer in today?<span class="text-danger font-weight-bold">*</span></label>
-                      <select id="attach-readiness-category" name="attach-readiness-category" class="form-control" required>
+                      <label for="attachReadinessCategory">What Cloud Readiness Category is your customer in today?<span class="text-danger font-weight-bold">*</span></label>
+                      <select id="attachReadinessCategory" name="attachReadinessCategory" class="form-control" required>
                         <option value="" disabled selected>Select one option</option>
                         <option value="Category 1">Category 1</option>
                         <option value="Category 2">Category 2</option>
@@ -2048,6 +2048,16 @@
         // Other
         $("#solutionBusinessConsultingRequired").prop('checked', false);
 
+        // Attach Form
+        $('#attachCXEvolution').val('');
+        $('#attachReadinessCategory').val('');
+        $('#attachMaintenanceRenewal').prop('checked', false);
+        $('#attachAwareBill200').prop('checked', false);
+        $('#attachKeySuccessCriteria').val('');
+        $('#attachUseCases').val('');
+        $('#attachPartnerForSetup').val('');
+
+
         localStorage.removeItem('intakeForm_draft');
       }
 
@@ -2115,6 +2125,15 @@
 
             // Other
             solutionBusinessConsultingRequired: $("#solutionBusinessConsultingRequired").is(':checked'),
+
+            // Attach Form
+            attachCXEvolution: $('#attachCXEvolution').val(),
+            attachReadinessCategory: $('#attachReadinessCategory').val(),
+            attachMaintenanceRenewal: $('#attachMaintenanceRenewal').is(':checked'),
+            attachAwareBill200: $('#attachAwareBill200').is(':checked'),
+            attachKeySuccessCriteria: $('#attachKeySuccessCriteria').val(),
+            attachUseCases: $('#attachUseCases').val(),
+            attachPartnerForSetup: $('#attachPartnerForSetup').val(),
 
           };
 
@@ -2256,7 +2275,14 @@
           // Other          
           $("#solutionBusinessConsultingRequired").prop('checked', data.solutionBusinessConsultingRequired);
 
-
+          // Attach Form
+          $('#attachCXEvolution').val(data.attachCXEvolution);
+          $('#attachReadinessCategory').val(data.attachReadinessCategory);
+          $('#attachMaintenanceRenewal').prop('checked', data.attachMaintenanceRenewal);
+          $('#attachAwareBill200').prop('checked', data.attachAwareBill200);
+          $('#attachKeySuccessCriteria').val(data.attachKeySuccessCriteria);
+          $('#attachUseCases').val(data.attachUseCases);
+          $('#attachPartnerForSetup').val(data.attachPartnerForSetup);
 
         } catch (error) {
           console.error(error);

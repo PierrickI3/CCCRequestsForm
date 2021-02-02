@@ -139,6 +139,42 @@ async function postRequests(region, subRegion, segment, product, tasks, requeste
     data.freeTrialCustomerResourceCommitted = $('#customerResourceCommitted').is(':checked');
     data.freeTrialStandardTermsConditions = $('#standardTermsConditions').is(':checked');
     data.freeTrialSolutionBusinessConsultingRequired = $('#solutionBusinessConsultingRequired').is(':checked');
+  } else if (currentRequestType == 2) {
+    // Include Attach Form
+    data.requestType = '2';
+    data.attachCXEvolution = $('#attachCXEvolution').val();
+    data.tasks = [{ taskCategory: 'Attach offer', taskId: 0, taskTime: 0, taskType: $('#attachCXEvolution').val() }];
+    data.attachReadinessCategory = $('#attachReadinessCategory').val();
+    data.attachMaintenanceRenewal = $('#attachMaintenanceRenewal').is(':checked');
+    data.attachAwareBill200 = $('#attachAwareBill200').is(':checked');
+    data.attachKeySuccessCriteria = $('#attachKeySuccessCriteria').val();
+    data.attachUseCases = $('#attachUseCases').val();
+    if ($('#attachPartnerForSetup').val().length > 0) data.attachPartnerForSetup = $('#attachPartnerForSetup').val();
+
+    // General Configuration
+
+    if ($('#numberAgents').val().length > 0) {
+      data.attachNumberAgents = $('#numberAgents').val();
+    }
+    data.attachExistingTelephonyUsage = $('#existingTelephonyUsage').is(':checked');
+    if ($('#existingTelephonyUsageDetails').val().length > 0) {
+      data.attachExistingTelephonyUsageDetails = $('#existingTelephonyUsageDetails').val();
+    }
+
+    if ($('#identificationAndVerificationProcesses').val().length > 0) {
+      data.attachIdentificationAndVerificationProcesses = $('#identificationAndVerificationProcesses').val();
+    }
+
+    if ($('#itInfrastructure').val().length > 0) {
+      data.attachItInfrastructure = $('#itInfrastructure').val();
+    }
+    data.attachEndUserDevicesRequireVPN = $('#endUserDevicesRequireVPN').is(':checked');
+
+    if ($('#virtualDesktopSolution').val().length > 0) {
+      data.attachVirtualDesktopSolution = $('#virtualDesktopSolution').val();
+    }
+
+    data.attachStandardTermsConditions = $('#standardTermsConditions').is(':checked');
   } else data.requestType = '0';
 
   console.log(data);
@@ -324,6 +360,42 @@ async function putRequest(id, region, subRegion, segment, product, tasks, reques
     data.freeTrialCustomerResourceCommitted = $('#customerResourceCommitted').is(':checked');
     data.freeTrialStandardTermsConditions = $('#standardTermsConditions').is(':checked');
     data.freeTrialSolutionBusinessConsultingRequired = $('#solutionBusinessConsultingRequired').is(':checked');
+  } else if (_requestType == 2) {
+    // Include Attach Form
+    data.requestType = '2';
+    data.attachCXEvolution = $('#attachCXEvolution').val();
+    data.tasks = [{ taskCategory: 'Attach offer', taskId: 0, taskTime: 0, taskType: $('#attachCXEvolution').val() }];
+    data.attachReadinessCategory = $('#attachReadinessCategory').val();
+    data.attachMaintenanceRenewal = $('#attachMaintenanceRenewal').is(':checked');
+    data.attachAwareBill200 = $('#attachAwareBill200').is(':checked');
+    data.attachKeySuccessCriteria = $('#attachKeySuccessCriteria').val();
+    data.attachUseCases = $('#attachUseCases').val();
+    if ($('#attachPartnerForSetup').val().length > 0) data.attachPartnerForSetup = $('#attachPartnerForSetup').val();
+
+    // General Configuration
+
+    if ($('#numberAgents').val().length > 0) {
+      data.attachNumberAgents = $('#numberAgents').val();
+    }
+    data.attachExistingTelephonyUsage = $('#existingTelephonyUsage').is(':checked');
+    if ($('#existingTelephonyUsageDetails').val().length > 0) {
+      data.attachExistingTelephonyUsageDetails = $('#existingTelephonyUsageDetails').val();
+    }
+
+    if ($('#identificationAndVerificationProcesses').val().length > 0) {
+      data.attachIdentificationAndVerificationProcesses = $('#identificationAndVerificationProcesses').val();
+    }
+
+    if ($('#itInfrastructure').val().length > 0) {
+      data.attachItInfrastructure = $('#itInfrastructure').val();
+    }
+    data.attachEndUserDevicesRequireVPN = $('#endUserDevicesRequireVPN').is(':checked');
+
+    if ($('#virtualDesktopSolution').val().length > 0) {
+      data.attachVirtualDesktopSolution = $('#virtualDesktopSolution').val();
+    }
+
+    data.attachStandardTermsConditions = $('#standardTermsConditions').is(':checked');
   } else data.requestType = '0';
 
   //#endregion

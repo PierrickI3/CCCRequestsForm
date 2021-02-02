@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   sodipodi:docname="tag-attach.svg"
+   inkscape:version="1.0.1 (c497b03c, 2020-09-10)"
+   id="svg8"
+   version="1.1"
+   viewBox="0 0 18.520833 7.9375002"
+   height="30"
+   width="70">
+  <defs
+     id="defs2" />
+  <sodipodi:namedview
+     inkscape:window-maximized="1"
+     inkscape:window-y="25"
+     inkscape:window-x="0"
+     inkscape:window-height="1088"
+     inkscape:window-width="1920"
+     units="px"
+     showgrid="false"
+     inkscape:document-rotation="0"
+     inkscape:current-layer="layer1"
+     inkscape:document-units="mm"
+     inkscape:cy="-20.828646"
+     inkscape:cx="75.89689"
+     inkscape:zoom="6.6303829"
+     inkscape:pageshadow="2"
+     inkscape:pageopacity="0.0"
+     borderopacity="1.0"
+     bordercolor="#666666"
+     pagecolor="#ffffff"
+     id="base" />
+  <metadata
+     id="metadata5">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     id="layer1"
+     inkscape:groupmode="layer"
+     inkscape:label="Layer 1">
+    <path
+       d="m 17.397408,0.13694254 c 0.54656,10e-9 0.986503,0.44593895 0.986503,0.99993896 v 5.6637369 c 0,0.5539999 -0.439943,0.999939 -0.986503,0.999939 H 4.5010374 C 2.9867085,7.7808406 0.36743962,4.4364216 0.36743962,4.4364216 c 0,0 -0.22767686,-0.20726 -0.23047695,-0.5880777 -0.002781,-0.3808177 0.29352213,-0.649056 0.29352213,-0.649056 0,0 2.8573907,-3.05948536 4.0705526,-3.06234536 z M 2.9858843,2.9145507 a 0.9671945,0.9671945 0 0 0 -0.030489,0 A 0.9671945,0.9671945 0 0 0 1.9880125,3.8814168 0.9671945,0.9671945 0 0 0 2.9553953,4.8487996 0.9671945,0.9671945 0 0 0 3.9227781,3.8814168 0.9671945,0.9671945 0 0 0 2.9858843,2.9145507 Z"
+       style="fill:#afdde9;stroke:#164450;stroke-width:0.274;stroke-miterlimit:4;stroke-dasharray:none"
+       id="rect851"
+       inkscape:connector-curvature="0" />
+    <g
+       style="font-size:5.0635px;line-height:1.25;font-family:Roboto;-inkscape-font-specification:Roboto;fill:#164450;fill-opacity:1;stroke-width:0.264583"
+       id="text847"
+       transform="scale(0.9617678,1.039752)"
+       aria-label="Valid">
+      <text
+         xml:space="preserve"
+         style="font-size:4.7857px;line-height:1.25;font-family:Roboto;-inkscape-font-specification:Roboto;fill:#164450;stroke-width:0.0296768"
+         x="5.3359013"
+         y="5.2420993"
+         id="text848"
+         transform="scale(0.95528375,1.0468094)"><tspan
+           sodipodi:role="line"
+           id="tspan846"
+           x="5.3359013"
+           y="5.2420993"
+           style="fill:#164450;stroke-width:0.0296768">Attach</tspan></text>
+    </g>
+  </g>
+</svg>
