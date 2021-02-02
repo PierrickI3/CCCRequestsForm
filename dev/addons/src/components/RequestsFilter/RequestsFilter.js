@@ -29,7 +29,7 @@ export default function RequestsFilter(props) {
   const requestTypeValueList = [
     { value: '0', label: 'CC Request' },
     { value: '1', label: 'Trial/POC/Pilot Validation' },
-    { value: '2', label: 'Attach Form' },
+    { value: '2', label: 'Attach Offer' },
   ];
 
   const handledValueList = [
