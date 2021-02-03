@@ -700,7 +700,7 @@
                             <input type="url" class="form-control" id="oppUrl" name="oppUrl" placeholder="" disabled />
                         </div>
                         <div class="form-group col-md-6">
-                            <label for="oppDSRUrl">DSR Url</label>
+                            <label id="oppDSRUrl-label" for="oppDSRUrl">DSR Url</label>
                             <input type="url" class="form-control" id="oppDSRUrl" name="oppDSRUrl" placeholder="" disabled />
                         </div>
 
@@ -2090,6 +2090,9 @@
                 $('#free-trial-business-goal').show();
                 $('#free-trial-measure-of-success').show();
 
+                $('#editModal #oppDSRUrl-label').show();
+                $('#editModal #oppDSRUrl').show();
+
                 $('#salesforceAccountOpportunity-label').text('Opportunity');
                 $('#oppUrl-label').text('Opportunity or Account URL');
                 $('#general-configuration-label').text('General Configuration');
@@ -2113,6 +2116,9 @@
                 $('#free-trial-business-goal').hide();
                 $('#free-trial-measure-of-success').hide();
 
+                $('#editModal #oppDSRUrl-label').hide();
+                $('#editModal #oppDSRUrl').hide();
+
                 $('#salesforceAccountOpportunity-label').text('Cloud Attach Opportunity (if created)');
                 $('#oppUrl-label').text('Account URL');
                 $('#general-configuration-label').text('General');
@@ -2127,6 +2133,9 @@
                 $('#attach-cx-evolution-segment').hide();
                 $('#free-trial-other').hide();
                 $('#free-trial-other3').hide();
+
+                $('#editModal #oppDSRUrl-label').show();
+                $('#editModal #oppDSRUrl').show();
 
                 $('#salesforceAccountOpportunity-label').text('Opportunity');
                 $('#oppUrl-label').text('Opportunity or Account URL');
