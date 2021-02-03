@@ -750,8 +750,8 @@ function setRequestFormType(type /* 0 - standard, 1 - free trial  2- cloud attac
       $('#standard')[0].classList.add('active');
       $('#product').prop('disabled', false);
 
-      // $('#oppDSRUrl-label').show();
-      // $('#oppDSRUrl').show();
+      $('#oppDSRUrl-label').show();
+      $('#oppDSRUrl').show();
       $('#free-trial-table').hide();
       $('#attach-cx-evolution-segment').hide();
 
@@ -789,8 +789,8 @@ function setRequestFormType(type /* 0 - standard, 1 - free trial  2- cloud attac
       $('#free-trial-other').show();
       $('#attach-form-questions').hide();
       $('#attach-cx-evolution-segment').hide();
-      // $('#oppDSRUrl-label').show();
-      // $('#oppDSRUrl').show();
+      $('#oppDSRUrl-label').show();
+      $('#oppDSRUrl').show();
 
       // Hide fields related strict to Attach Form
       $('#attach-main-text').hide();
@@ -830,8 +830,8 @@ function setRequestFormType(type /* 0 - standard, 1 - free trial  2- cloud attac
       $('#attach-form-questions').show();
       $('#attach-cx-evolution-segment').show();
 
-      // $('#oppDSRUrl-label').hide();
-      // $('#oppDSRUrl').hide();
+      $('#oppDSRUrl-label').hide();
+      $('#oppDSRUrl').hide();
 
       $('#salesforceAccountOpportunity-label').text('Cloud Attach Opportunity (if created)');
       $('#oppUrl-label').text('Account URL');
