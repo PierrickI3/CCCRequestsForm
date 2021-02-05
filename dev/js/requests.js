@@ -737,6 +737,7 @@ function setRequestFormType(type /* 0 - standard, 1 - free trial  2- cloud attac
 
   switch (type) {
     case 0: // standard
+      $('#attach-cx-evolution-segment').hide();
       $('#task-list').show();
       $('#free-trial-questions').hide();
       $('#home-tab')[0].classList.add('active');
@@ -765,7 +766,7 @@ function setRequestFormType(type /* 0 - standard, 1 - free trial  2- cloud attac
       break;
     case 1: // free trial
       $('#task-list').hide();
-
+      $('#attach-cx-evolution-segment').hide();
       $('#profile-tab')[0].classList.add('active');
       $('#home-tab')[0].classList.remove('active');
       $('#attach-tab')[0].classList.remove('active');
@@ -786,7 +787,6 @@ function setRequestFormType(type /* 0 - standard, 1 - free trial  2- cloud attac
       $('#free-trial-impact-by-design').show();
       $('#free-trial-business-goal').show();
       $('#free-trial-measure-of-success').show();
-      $('#free-trial-other').show();
       $('#attach-form-questions').hide();
       $('#attach-cx-evolution-segment').hide();
       $('#oppDSRUrl-label').show();
@@ -803,6 +803,7 @@ function setRequestFormType(type /* 0 - standard, 1 - free trial  2- cloud attac
 
       break;
     case 2: // attach form
+      $('#attach-cx-evolution-segment').show();
       $('#task-list').hide();
       $('#home-tab')[0].classList.remove('active');
       $('#profile-tab')[0].classList.remove('active');
