@@ -50,7 +50,7 @@ let regions = {
   APAC: ['ANZ', 'Japan', 'SEA', 'Korea', 'India', 'China'],
   EMEA: ['Central', 'North', 'South', '5th Region'],
   LATAM: ['Andean', 'Brazil', 'Mexico', 'Southern-Cone'],
-  NA: ['East', 'Central', 'West', 'Canada', 'Government', 'Velocity', 'Channels'],
+  NA: ['East', 'Central', 'West', 'Canada', 'Government', 'Velocity', 'Channels', '5th Region'],
 };
 
 let requestsType = {
