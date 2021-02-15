@@ -257,3 +257,47 @@
     opacity: 0.6;
   }
 }
+
+/* <maintenance mode> */
+
+.maintenance-outer {
+  z-index: 99999998;
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-color: #ffffff;
+  opacity: 0.9;
+}
+
+.maintenance-inner {
+  width: 800px;
+  z-index: 99999999;
+  position: absolute;
+
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.center {
+  text-align: center;
+}
+
+.maintenance-cog {
+  font-size: 3rem;
+  margin: 20px;
+  animation: spin-icon-anim 8s linear infinite;
+}
+
+@keyframes spin-icon-anim {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* </maintenance mode> */
