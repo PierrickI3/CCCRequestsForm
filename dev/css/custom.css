@@ -301,3 +301,7 @@
 }
 
 /* </maintenance mode> */
+
+#migrationModalBg {
+  background-color: #ffeeba;
+}
