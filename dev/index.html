@@ -21,6 +21,55 @@
 </head>
 
 <body>
+  
+  <!-- 
+    -------------------------
+     Migration to CC Portal:
+    -------------------------
+
+    1. Uncomment the code between remarks <MAINTENANCE MODE>
+      in order to switch-on the maintenance mode.
+
+    2. Uncomment the code in the ready function() between remarks <MODAL - MIGRATION>
+      in order to switch-on the pop-up announcement about migration
+
+    3. Change the content of the warning between remarks <MIGRATION - WARNING>
+      in order to update the message to be displayed to users all the time.
+
+    -------------------------
+   -->
+
+  <!-- <MAINTENANCE MODE> -->
+  <!-- <div class="maintenance-outer"></div>
+  <div class="maintenance-inner">
+    <div class="alert alert-warning center" role="alert">
+      <i class="fa fa-cog maintenance-cog"></i>
+      <h4 class="alert-heading">Maintenance mode</h4>
+      <p>We are sorry, but we are currently in the maintenance mode.</p>
+      <hr>
+      <p class="mb-0">This platform is migrating to CC Portal.<br />Access will be restored on Friday March 1st</p>
+    </div>      
+  </div> -->
+  <!-- </MAINTENANCE MODE> -->
+
+  <!-- <MODAL - MIGRATION> -->
+  <div class="modal fade" id="migrationModal" tabindex="-1" >
+    <div class="modal-dialog">
+      <div class="modal-content" >
+        <div class="modal-header" id="migrationModalBg">
+          <h5 class="modal-title" id="migrationModalLLabel">Announcement</h5>          
+        </div>
+        <div class="modal-body">
+          On Friday March 1st we are going to migrate this platform to CC Portal.<br /><br />The application will be unavailable during the migration process.
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">OK</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- </MODAL - MIGRATION> -->
+
   <div id="video-overlay" class="video-overlay">
     <a class="video-overlay-close">&times;</a>
   </div>
@@ -62,6 +111,7 @@
       <div class="form-group col-sm-12">
         <div>
 
+          <!-- <MIGRATION - WARNING> -->
           <div class="ml-5 mr-5">
             <div class="alert alert-warning alert-dismissible fade show" role="alert">
               Please note that this form will be updated soon with a new layout. You will be able to get to the new version by clicking on the <strong>CC Portal</strong> app.
@@ -70,6 +120,7 @@
               </button>
             </div>
           </div>
+          <!-- <//MIGRATION - WARNING> -->
 
           <!-- <FORM TYPE TAB CONTROL> -->
           <div class="ml-5 mr-5" style="font-size: 1.3rem">
@@ -78,8 +129,12 @@
                 <a class="nav-link active" id="home-tab" data-toggle="tab" href="#standard" role="tab" aria-controls="home" aria-selected="true" onclick="setRequestFormType(0)">CC Requests</a>
               </li>
               <li class="nav-item" role="presentation">
-                <a class="nav-link" id="profile-tab" data-toggle="tab" href="#trial" role="tab" aria-controls="profile" aria-selected="false" onclick="setRequestFormType(1)">Trials/POCs/Pilots Validation <span class="badge badge-danger">NEW!</span></a>
+                <a class="nav-link" id="profile-tab" data-toggle="tab" href="#trial" role="tab" aria-controls="profile" aria-selected="false" onclick="setRequestFormType(1)">Trials/POCs/Pilots Validation </a>
               </li>
+              <li class="nav-item" role="presentation">
+                <a class="nav-link" id="attach-tab" data-toggle="tab" href="#cloudAtt" role="tab" aria-controls="attach-tab" aria-selected="false" onclick="setRequestFormType(2)">Attach Offer <span class="badge badge-danger">NEW!</span></a>
+              </li>
+
             </ul>
             <div class="tab-content" id="myTabContent">
               <div class="tab-pane fade show active" id="standard" role="tabpanel" aria-labelledby="home-tab">
@@ -93,6 +148,15 @@
                 <h3 class="text-center mt-4">Welcome to the Trials/POCs/Pilots Validation Form <img alt="TRIAL" src="images/tag-trial.svg" style="transform: rotate(10deg); width: 4rem; margin: 0 0 0 10px;" /></h3>
                 <p class="text-center mt-3">
                   This form shows the available options for prospects to test Genesys Cloud before placing an order. Select the option from the table below and be sure to complete all fields before pressing Submit. One of the team will be in contact within 24 hours.
+                </p>
+              </div>
+              <div class="tab-pane fade" id="attach-welcomeTxt" role="tabpanel" aria-labelledby="profile-tab">
+                <h3 class="text-center mt-4">Welcome to the Attach Offer <img alt="ATT" src="images/tag-att.svg" style="transform: rotate(10deg); width: 4rem; margin: 0 0 0 10px;" /></h3>
+                <p class="text-center mt-3">
+                  <b>Remove the likelihood of customers trying a competitor’s cloud solution.</b>
+                  </br>
+                  When customers are not ready to move to the cloud, we want to give them the opportunity to try Genesys Cloud for free, so that they get to know it, hopefully like it, and not go to another vendor.
+
                 </p>
               </div>
             </div>
@@ -113,31 +177,31 @@
                 </div>
                 <div class="modal-body">
                   <p>
-                  Success Criteria must be agreed with the customer.  Success Criteria must be measurable, achievable and limited in number.  Examples include:
+                    Success Criteria must be agreed with the customer. Success Criteria must be measurable, achievable and limited in number. Examples include:
                   </p>
-                  <h5>Inbound:</h5>                  
+                  <h5>Inbound:</h5>
                   <ul>
-                  <li>Retrieve data from Salesforce using ANI lookup</li>
-                  <li>Screen pop Salesforce</li>
-                  </ul>                  
-                  <h5>Admin:</h5>                  
+                    <li>Retrieve data from Salesforce using ANI lookup</li>
+                    <li>Screen pop Salesforce</li>
+                  </ul>
+                  <h5>Admin:</h5>
                   <ul>
-                  <li>Ability to change prompts within 2 hours</li>
-                  <li>Give rights to Supervisors to change Queue membership</li>
-                  </ul>                  
-                  <h5>WEM:</h5>                  
+                    <li>Ability to change prompts within 2 hours</li>
+                    <li>Give rights to Supervisors to change Queue membership</li>
+                  </ul>
+                  <h5>WEM:</h5>
                   <ul>
-                  <li>Ability to automatically assign Evaluations</li>
-                  <li>Ability to record 100% of interactions</li>
-                  </ul>                  
-                  <h5>Email:</h5>                  
+                    <li>Ability to automatically assign Evaluations</li>
+                    <li>Ability to record 100% of interactions</li>
+                  </ul>
+                  <h5>Email:</h5>
                   <ul>
-                  <li>Ability configure auto-replies</li>
-                  </ul>                  
+                    <li>Ability configure auto-replies</li>
+                  </ul>
                   <p>Note that Free Trial Success Criteria is limited to the available Use Cases.</p>
                 </div>
                 <div class="modal-footer">
-                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>                  
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                 </div>
               </div>
             </div>
@@ -197,6 +261,26 @@
               </div>
             </div>
 
+            <!-- CX Evolution Segment  -->
+            <div id="attach-cx-evolution-segment" class="form-row mr-4 ml-2" style="display: none;">
+              <div class="form-group col-md-6">
+                <label for="attachCXEvolution">What is the CX Evolution Segment for this Account?<span class="text-danger font-weight-bold">*</span></label>
+                <small>
+                  <label for="attachCXEvolution">(Look at account in SFDC to find the CX Evolution Segment)</label>
+                </small>
+                <select id="attachCXEvolution" name="attachCXEvolution" class="form-control" required>
+                  <option value="" disabled selected>Select one option</option>
+                  <option value="MC Must-Win">MC Must-Win</option>
+                  <option value="Must-Win">Must-Win</option>
+                  <option value="Attack">Attack</option>
+                  <option value="Sweet Spot">Sweet Spot</option>
+                  <option value="Automate">Automate</option>
+                  <option value="C2C">C2C</option>
+                  <option value="Do Not Know">Do Not Know</option>
+                </select>
+              </div>
+            </div>
+
             <!-- Market Segment & Product -->
             <div class="form-row mr-4 ml-2">
               <div class="form-group col-md-6">
@@ -244,71 +328,191 @@
             </div>
             <!-- </TASK LIST> -->
 
+            <!-- < Cloud Attach - Table with Terms and Conditions> -->
+            <div id="attach-main-text" style="display: none;">
+
+              <table class="table table-striped table-bordered ">
+                <br>
+                <thead>
+                  <tr>
+                    <th scope="col" style="width: 25%"></th>
+                    <th scope="col" class="text-center" style="width: 75%">&nbsp;</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <th scope="row" class="text-center" style="vertical-align: middle;">Genesys offer​</th>
+                    <td class="text-left">
+                      <b>Existing PureConnect or Engage on-premises customers can have Genesys Cloud<br>
+                        3 Hourly (PC-170-NV-USR3H) at no cost for up to 12 months:</b><br>
+                      <ul>
+                        <li>
+                          200 hours per month (hours beyond 200 are billed at the standard month-to-month rate)
+                        </li>
+                        <li>
+                          No min/max seat counts.
+                        </li>
+                      </ul>
+                      <b>Unlimited chat and email</b> (pay as you go for SMS, messaging, and telephony)<br>
+                      <b>Up to 5 Beyond virtual learning licenses from these Genesys Cloud courses:</b>
+                      <ul>
+                        <li>
+                          Agent & Supervisor eLearning
+                        </li>
+                        <li>
+                          Contact Center Administration
+                        </li>
+                        <li>
+                          Contact Center Implementation
+                        </li>
+                        <li>
+                          Reporting & Analytics
+                        </li>
+                      </ul>
+                      <b>PureCloud BYOC Cloud Usage (PV-170-NV-PCBYOC)<br>
+                        Virtual Edge Devices $99/month where required<br>
+                        Options (AE to request approval)</b>
+                      <ul>
+                        <li>
+                          FREE usage of Genesys Dialog Engine
+                        </li>
+                        <li>
+                          FREE Salesforce Add-on licenses:
+                        </li>
+                        <li>
+                          PC-170-NV-PCSFAN: PureCloud for Salesforce Add-on, or
+                        </li>
+                        <li>
+                          PC-170-NV-PCSFANC: PureCloud for Salesforce Concurrent Add-on Up to 5 users
+                        </li>
+                        <li>
+                          $15/user/month at list price waived
+                        </li>
+                        <li>
+                          $5/user/month cost to Genesys
+                        </li>
+                      </ul>
+
+                    </td>
+                  </tr>
+                  <tr>
+                    <th scope="row" class="text-center" style="vertical-align: middle;">Terms and conditions</th>
+                    <td class="text-left">
+                      <b>Applicable platforms & minimum term lengths:</b>
+                      <ul>
+                        <li>
+                          Genesys Engage on-premises
+                        </li>
+                        <li>
+                          PureConnect on-premises
+                        </li>
+                      </ul>
+                      <b>Minimum deal size:</b> None<br>
+                      <b>Billing terms:</b> None<br>
+                      <ul>
+                        <li>
+                          Customers must be current on maintenance
+                        </li>
+                        <li>
+                          Variable charges (e.g. telco, messaging, etc.) are not included
+                        </li>
+                      </ul>
+                      <b>"Fair use" up to GC3 (named user levels not concurrent)</b>
+                      <ul>
+                        <li>
+                          Charges beyond named levels for Basic IVR usage, data storage and APIusage
+                        </li>
+                      </ul>
+                      <b>Charges for SMS, BYOT, WhatsApp, Predictive Engagement, Dialog Engine<br>
+                        Customers who do not meet these criteria will not be approved</b>
+                      <ul>
+                        <li>
+                          An existing on-premise customer in good standing (Engage or PureConnect)
+                        </li>
+                        <li>
+                          No existing migration opportunities tied to the account
+                        </li>
+                        <li>
+                          Is a Must-win or Attack account
+                        </li>
+                      </ul>
+                    </td>
+
+                  </tr>
+
+                </tbody>
+              </table>
+
+              <img src="./images/attachFormScreen.jpg" style="display: block; margin-left: auto; margin-right: auto; width:80%" />
+              <br>
+            </div>
+
             <!-- <FREE TRIAL QUESTIONS> -->
             <div id="free-trial-questions" style="display: none;">
               <div class="border border-black p-3">
-                <table class="table table-striped table-bordered ">
-                  <h4 class="text-center">Customer Options</h4>
-                  <br>
-                  <thead>                 
-                    <tr>
-                      <th scope="col" style="width: 25%"></th>
-                      <th scope="col" class="text-center" style="width: 25%">Free Trials</th>
-                      <th scope="col" class="text-center" style="width: 25%">Proof Of Concept (POC)</th>
-                      <th scope="col" class="text-center" style="width: 25%">Pilot</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <th scope="row">Responsible*​</th>
-                      <td class="text-center">Solution Consultant​</td>
-                      <td class="text-center">Competency Center and/or Professional Services</td>
-                      <td class="text-center">Competency Center and/or Professional Services​</td>
-                    </tr>
-                    <tr>
-                      <th scope="row">Scope</th>
-                      <td class="text-center">Digital (Email, Chat & Predictive Engagement) +Voice (BYOC Cloud with Twilio or GCV)<br />Standard SFDC integrations​</td>
-                      <td class="text-center">Free Trial Scope + Customizations, AppFoundry & CC approved scope​ </td>
-                      <td class="text-center">CC and/or PS approved scope</td>
-                    </tr>
-                    <tr>
-                      <th scope="row">Commercial Offer​</th>
-                      <td class="text-center">Free Trial bundle (No AppFoundry)​</td>
-                      <td class="text-center">Free Trials Bundle (no 3rd party integrations) or MTM or Partner Dev Org bundle</td>
-                      <td class="text-center">MTM or Partner Dev Org bundle</td>
-                    </tr>
-                    <tr>
-                      <th scope="row">Approval/Qualification Required</th>
-                      <td class="text-center">Yes – Competency Center</td>
-                      <td class="text-center">Yes – Competency Center​</td>
-                      <td class="text-center">Yes – Sales Leadership & Competency Center</td>
-                    </tr>
-                    <tr>
-                      <th scope="row">Automation Tools</th>
-                      <td class="text-center" colspan="2">Always start with CC Portal (Use Case Automation + Customer Insights) before manual configuration/customization</td>
-                      <td class="text-center">CC Portal tools and/or PS Methodology​</td>
+                <div id="free-trial-table" style="display: none;">
+                  <table class="table table-striped table-bordered ">
+                    <h4 class="text-center">Customer Options</h4>
+                    <br>
+                    <thead>
+                      <tr>
+                        <th scope="col" style="width: 25%"></th>
+                        <th scope="col" class="text-center" style="width: 25%">Free Trials</th>
+                        <th scope="col" class="text-center" style="width: 25%">Proof Of Concept (POC)</th>
+                        <th scope="col" class="text-center" style="width: 25%">Pilot</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <th scope="row">Responsible*​</th>
+                        <td class="text-center">Solution Consultant​</td>
+                        <td class="text-center">Competency Center and/or Professional Services</td>
+                        <td class="text-center">Competency Center and/or Professional Services​</td>
+                      </tr>
+                      <tr>
+                        <th scope="row">Scope</th>
+                        <td class="text-center">Digital (Email, Chat & Predictive Engagement) +Voice (BYOC Cloud with Twilio or GCV)<br />Standard SFDC integrations​</td>
+                        <td class="text-center">Free Trial Scope + Customizations, AppFoundry & CC approved scope​ </td>
+                        <td class="text-center">CC and/or PS approved scope</td>
+                      </tr>
+                      <tr>
+                        <th scope="row">Commercial Offer​</th>
+                        <td class="text-center">Free Trial bundle (No AppFoundry)​</td>
+                        <td class="text-center">Free Trials Bundle (no 3rd party integrations) or MTM or Partner Dev Org bundle</td>
+                        <td class="text-center">MTM or Partner Dev Org bundle</td>
+                      </tr>
+                      <tr>
+                        <th scope="row">Approval/Qualification Required</th>
+                        <td class="text-center">Yes – Competency Center</td>
+                        <td class="text-center">Yes – Competency Center​</td>
+                        <td class="text-center">Yes – Sales Leadership & Competency Center</td>
+                      </tr>
+                      <tr>
+                        <th scope="row">Automation Tools</th>
+                        <td class="text-center" colspan="2">Always start with CC Portal (Use Case Automation + Customer Insights) before manual configuration/customization</td>
+                        <td class="text-center">CC Portal tools and/or PS Methodology​</td>
 
-                    </tr>
-                    <tr>
-                      <th scope="row">Production Use & Care Support​</th>
-                      <td class="text-center">No</td>
-                      <td class="text-center">No</td>
-                      <td class="text-center">Yes</td>
-                    </tr>
-                    <tr>
-                      <th scope="row">Billable?</th>
-                      <td class="text-center">No (free up to 90 days)​</td>
-                      <td class="text-center">Depends on commercial offer​</td>
-                      <td class="text-center">Yes, unless funded by sales​</td>
-                    </tr>
-                  </tbody>
-                </table>
-
-                <div class="alert alert-secondary" role="alert">
+                      </tr>
+                      <tr>
+                        <th scope="row">Production Use & Care Support​</th>
+                        <td class="text-center">No</td>
+                        <td class="text-center">No</td>
+                        <td class="text-center">Yes</td>
+                      </tr>
+                      <tr>
+                        <th scope="row">Billable?</th>
+                        <td class="text-center">No (free up to 90 days)​</td>
+                        <td class="text-center">Depends on commercial offer​</td>
+                        <td class="text-center">Yes, unless funded by sales​</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <div id="free-trial-pod-alert" class="alert alert-secondary" role="alert">
                   *POD resources remain engaged for all opportunity types
                 </div>
 
-                <div class="form-group col-md-6">
+                <div id="free-trial-type" class="alert alert-secondary" class="form-group col-md-6">
                   <label for="trialValidationType">Trial validation Type<span class="text-danger font-weight-bold">*</span></label>
                   <span data-toggle="tooltip" data-html="true" data-placement="bottom" style="float: right" title="Choose from FreeTrial / POC / Pilot. Use Table above for reference.">
                     <i class="fa fa-question-circle-o" aria-hidden="true" style="color: gray"></i>
@@ -324,182 +528,249 @@
 
 
                 <!--#region Deployment Model -->
+                <div id="free-tial-deployment-model" style="display: none;">
 
-                <div class="col-md-12 bg-light shadow-lg">
-                  <hr />
-                  <h3 class="text-center">Deployment Model</h3>
-                  <hr />
-                </div>
-
-                <!-- Countries & Languages -->
-                <div class="form-row mr-4 ml-2">
-                  <div class="form-group col-md-12">
-                    <label for="countriesAgents">In which countries are the customer's agents located? <span class="text-danger font-weight-bold">*</span></label>
-                    <select class="selectpicker" id="countriesAgents" name="countriesAgents" class="form-control" required multiple data-live-search="true">
-                    </select>
+                  <div class="col-md-12 bg-light shadow-lg">
+                    <hr />
+                    <h3 class="text-center">Deployment Model</h3>
+                    <hr />
                   </div>
-                </div>
-                <div class="form-row mr-4 ml-2">
-                  <div class="form-group col-md-12">
-                    <label for="countriesOperation">In which countries does the customer operate and require (or have existing) phone numbers? <span class="text-danger font-weight-bold">*</span></label>
-                    <select class="selectpicker" id="countriesOperation" name="countriesOperation" class="form-control" required multiple data-live-search="true">
-                    </select>
-                  </div>
-                </div>
 
-                <!-- Telephony Model -->
-
-                <div class="text-muted form-group ml-3">
-                  <small>Where a SIP trunk cannot be easily established, it is recommended to use Genesys Cloud Voice and forwarding of calls.</small>
-                  <br>
-                  <small>A new option has been added to select BYOC Cloud and Genesys Cloud Voice together.</small>
-                </div>
-
-                <div class="form-group col-md-12">
-                  <div class="text-muted" id="recommendation">
-                  </div>
-                  <label for="telephonyModel">Telephony Model <span class="text-danger font-weight-bold">*</span></label>
-                  <select id="telephonyModel" name="telephonyModel" class="form-control" required>
-                    <option value="" disabled selected>Select a Telephony Model</option>
-                  </select>
-                </div>
-
-                <!-- GCV Questions -->
-                <div id="GCVQuestions" style="display:none;">
-                  <h3 class="text-center shadow-lg pt-2 pb-2 offset-md-4 col-md-4">Genesys Cloud Voice</h3>
-
-                  <!-- Phone Numbers Deployment -->
+                  <!-- Countries & Languages -->
                   <div class="form-row mr-4 ml-2">
                     <div class="form-group col-md-12">
-                      <label for="phoneNumbersDeployment">Phone Numbers Deployment <span class="text-danger font-weight-bold">*</span></label>
-                      <textarea class="form-control" id="phoneNumbersDeployment" name="phoneNumbersDeployment" placeholder="Will the customer deploy new customer-facing numbers from GCV, re-route non-geographic numbers to GCV or forward calls to GCV numbers?"></textarea>
-                      Genesys Cloud Voice (Resource Center): <a href="https://help.mypurecloud.com/articles/about-purecloud-voice/" target="_blank">https://help.mypurecloud.com/articles/about-purecloud-voice/</a>
+                      <label for="countriesAgents">In which countries are the customer's agents located? <span class="text-danger font-weight-bold">*</span></label>
+                      <select class="selectpicker" id="countriesAgents" name="countriesAgents" class="form-control" required multiple data-live-search="true">
+                      </select>
                     </div>
                   </div>
-
-                  <!-- New Numbers -->
                   <div class="form-row mr-4 ml-2">
                     <div class="form-group col-md-12">
-                      <label for="newNumbers">New Numbers <span class="text-danger font-weight-bold">*</span></label>
-                      <textarea class="form-control" id="newNumbers" name="newNumbers" placeholder="If using new numbers, how many of each number type and which area codes are required?"></textarea>
-                    </div>
-                  </div>
-
-                  <div class="form-row mr-4 ml-2">
-                    <div class="form-group col-md-12">
-                      <label for="genesysCloudRegion">Genesys Cloud Region <span class="text-danger font-weight-bold">*</span></label>
-                      <select class="custom-select" id="genesysCloudRegion" name="genesysCloudRegion" required>
-                        <option selected disabled>Select a Genesys Cloud Region</option>
-                        <optgroup label="North America">
-                          <option value="cac1.pure.cloud">cac1.pure.cloud - Canada</option>
-                          <option value="mypurecloud.com">mypurecloud.com - East</option>
-                          <option value="usw2.pure.cloud">usw2.pure.cloud - West</option>
-                        </optgroup>
-                        <optgroup label="EMEA">
-                          <option value="euw2.pure.cloud">euw2.pure.cloud - UK</option>
-                          <option value="mypurecloud.de">mypurecloud.de - Frankfurt</option>
-                          <option value="mypurecloud.ie">mypurecloud.ie - Ireland</option>
-                        </optgroup>
-                        <optgroup label="APAC">
-                          <option value="apne2.pure.cloud">apne2.pure.cloud - Seoul </option>
-                          <option value="mypurecloud.com.au">mypurecloud.com.au - Australia/New Zealand </option>
-                          <option value="mypurecloud.jp">mypurecloud.jp - Japan </option>
-                        </optgroup>
+                      <label for="countriesOperation">In which countries does the customer operate and require (or have existing) phone numbers? <span class="text-danger font-weight-bold">*</span></label>
+                      <select class="selectpicker" id="countriesOperation" name="countriesOperation" class="form-control" required multiple data-live-search="true">
                       </select>
                     </div>
                   </div>
 
-                  <!-- Estimated Volume of Minutes Per Month -->
-                  <div class="form-row mr-4 ml-2">
-                    <div class="form-group col-md-12">
-                      <label for="estimatedVolumeMinsPerMonth">Estimated Volumes of GCV Minutes per Month <span class="text-danger font-weight-bold">*</span></label>
-                      <textarea class="form-control" id="estimatedVolumeMinsPerMonth" name="estimatedVolumeMinsPerMonth" placeholder="What is the estimated volumes of minutes per month?" required></textarea>
+                  <!-- Telephony Model -->
+
+                  <div class="text-muted form-group ml-3">
+                    <small>Where a SIP trunk cannot be easily established, it is recommended to use Genesys Cloud Voice and forwarding of calls.</small>
+                    <br>
+                    <small>A new option has been added to select BYOC Cloud and Genesys Cloud Voice together.</small>
+                  </div>
+
+                  <div class="form-group col-md-12">
+                    <div class="text-muted" id="recommendation">
                     </div>
+                    <label for="telephonyModel">Telephony Model <span class="text-danger font-weight-bold">*</span></label>
+                    <select id="telephonyModel" name="telephonyModel" class="form-control" required>
+                      <option value="" disabled selected>Select a Telephony Model</option>
+                    </select>
                   </div>
 
-                </div>
+                  <!-- GCV Questions -->
+                  <div id="GCVQuestions" style="display:none;">
+                    <h3 class="text-center shadow-lg pt-2 pb-2 offset-md-4 col-md-4">Genesys Cloud Voice</h3>
 
-                <!-- BYOC Cloud Carriers -->
-                <div class="border border-black mr-3 col-md-12" id="byocCloudCarriersDiv" style="display: none;">
-                  <br>
-                  <h3 class="text-center shadow-lg pt-2 pb-2 offset-md-4 col-md-4">BYOC Cloud Carriers</h3>
-                  <div class="form-row mt-1 mr-4 ml-2">
-                    <div class="form-group col-md-5">Country</div>
-                    <div class="form-group col-md-5">Select one or more Carriers <span class="text-danger font-weight-bold">*</span></div>
+                    <!-- Phone Numbers Deployment -->
+                    <div class="form-row mr-4 ml-2">
+                      <div class="form-group col-md-12">
+                        <label for="phoneNumbersDeployment">Phone Numbers Deployment <span class="text-danger font-weight-bold">*</span></label>
+                        <textarea class="form-control" id="phoneNumbersDeployment" name="phoneNumbersDeployment" placeholder="Will the customer deploy new customer-facing numbers from GCV, re-route non-geographic numbers to GCV or forward calls to GCV numbers?"></textarea>
+                        Genesys Cloud Voice (Resource Center): <a href="https://help.mypurecloud.com/articles/about-purecloud-voice/" target="_blank">https://help.mypurecloud.com/articles/about-purecloud-voice/</a>
+                      </div>
+                    </div>
+
+                    <!-- New Numbers -->
+                    <div class="form-row mr-4 ml-2">
+                      <div class="form-group col-md-12">
+                        <label for="newNumbers">New Numbers <span class="text-danger font-weight-bold">*</span></label>
+                        <textarea class="form-control" id="newNumbers" name="newNumbers" placeholder="If using new numbers, how many of each number type and which area codes are required?"></textarea>
+                      </div>
+                    </div>
+
+                    <div class="form-row mr-4 ml-2">
+                      <div class="form-group col-md-12">
+                        <label for="genesysCloudRegion">Genesys Cloud Region <span class="text-danger font-weight-bold">*</span></label>
+                        <select class="custom-select" id="genesysCloudRegion" name="genesysCloudRegion" required>
+                          <option selected disabled>Select a Genesys Cloud Region</option>
+                          <optgroup label="North America">
+                            <option value="cac1.pure.cloud">cac1.pure.cloud - Canada</option>
+                            <option value="mypurecloud.com">mypurecloud.com - East</option>
+                            <option value="usw2.pure.cloud">usw2.pure.cloud - West</option>
+                          </optgroup>
+                          <optgroup label="EMEA">
+                            <option value="euw2.pure.cloud">euw2.pure.cloud - UK</option>
+                            <option value="mypurecloud.de">mypurecloud.de - Frankfurt</option>
+                            <option value="mypurecloud.ie">mypurecloud.ie - Ireland</option>
+                          </optgroup>
+                          <optgroup label="APAC">
+                            <option value="apne2.pure.cloud">apne2.pure.cloud - Seoul </option>
+                            <option value="mypurecloud.com.au">mypurecloud.com.au - Australia/New Zealand </option>
+                            <option value="mypurecloud.jp">mypurecloud.jp - Japan </option>
+                          </optgroup>
+                        </select>
+                      </div>
+                    </div>
+
+                    <!-- Estimated Volume of Minutes Per Month -->
+                    <div class="form-row mr-4 ml-2">
+                      <div class="form-group col-md-12">
+                        <label for="estimatedVolumeMinsPerMonth">Estimated Volumes of GCV Minutes per Month <span class="text-danger font-weight-bold">*</span></label>
+                        <textarea class="form-control" id="estimatedVolumeMinsPerMonth" name="estimatedVolumeMinsPerMonth" placeholder="What is the estimated volumes of minutes per month?" required></textarea>
+                      </div>
+                    </div>
+
                   </div>
-                  <div class="form-row mt-2 mr-4 ml-2" id="byocCloudCarriers"></div>
-                  <small id="otherNote" class="form-group ml-2">
-                    If you have selected "Other":
+
+                  <!-- BYOC Cloud Carriers -->
+                  <div class="border border-black mr-3 col-md-12" id="byocCloudCarriersDiv" style="display: none;">
+                    <br>
+                    <h3 class="text-center shadow-lg pt-2 pb-2 offset-md-4 col-md-4">BYOC Cloud Carriers</h3>
+                    <div class="form-row mt-1 mr-4 ml-2">
+                      <div class="form-group col-md-5">Country</div>
+                      <div class="form-group col-md-5">Select one or more Carriers <span class="text-danger font-weight-bold">*</span></div>
+                    </div>
+                    <div class="form-row mt-2 mr-4 ml-2" id="byocCloudCarriers"></div>
+                    <small id="otherNote" class="form-group ml-2">
+                      If you have selected "Other":
+                      <ul>
+                        <li>Carrier must meeting standard requirements as per Resource Centre: <a href="https://help.mypurecloud.com/articles/carrier-requirements-byoc-cloud/" target="_blank">https://help.mypurecloud.com/articles/carrier-requirements-byoc-cloud/</a></li>
+                        <li>Expectation that deployment time will be extended, <strong>in most cases significantly</strong></li>
+                      </ul>
+                    </small>
+                    <div class="form-check mr-4">
+                      <div class="form-group col-md-12">
+                        <input class="form-check-input" type="checkbox" value="" id="relationshipWithCarrier">
+                        <label class="form-check-label" for="relationshipWithCarrier">
+                          Does the customer already have a relationship with the carrier and access to technical resources?
+                        </label>
+                      </div>
+                    </div>
+
+                  </div>
+
+                  <!-- BYOC Cloud Questions -->
+                  <div id="BYOCCloudQuestions" style="display:none;">
+                  </div>
+
+                  <!-- BYOC Premise with Virtual Edges -->
+                  <div class="border border-black mr-3 ml-2 bg-warning" id="byocPremiseDiv" style="display: none;">
+                    <p class="form-group ml-2">
+                      If planning to use a virtual edge, very strict guidelines for deployment must be followed:
+                    </p>
                     <ul>
-                      <li>Carrier must meeting standard requirements as per Resource Centre: <a href="https://help.mypurecloud.com/articles/carrier-requirements-byoc-cloud/" target="_blank">https://help.mypurecloud.com/articles/carrier-requirements-byoc-cloud/</a></li>
-                      <li>Expectation that deployment time will be extended, <strong>in most cases significantly</strong></li>
+                      <li>Virtual Edge Hardware/Software Requirements: <a href="https://help.mypurecloud.com/articles/virtual-edge-hardware-software-requirements/" target="_blank">https://help.mypurecloud.com/articles/virtual-edge-hardware-software-requirements/</a></li>
+                      <li>Virtual Edge Warnings: <a href="https://help.mypurecloud.com/articles/virtual-edge-warnings/" target="_blank">https://help.mypurecloud.com/articles/virtual-edge-warnings/</a></li>
                     </ul>
-                  </small>
-                  <div class="form-check mr-4">
-                    <div class="form-group col-md-12">
-                      <input class="form-check-input" type="checkbox" value="" id="relationshipWithCarrier">
-                      <label class="form-check-label" for="relationshipWithCarrier">
-                        Does the customer already have a relationship with the carrier and access to technical resources?
-                      </label>
-                    </div>
+                    <p class="form-group ml-2">
+                      The customer must acknowledge that failing to comply with the requirements and warnings will result in possible audio quality issues.
+                    </p>
                   </div>
 
-                </div>
+                  <!-- BYOC Premise Questions -->
+                  <div id="BYOCPremiseQuestions" class="mt-2" style="display:none;">
 
-                <!-- BYOC Cloud Questions -->
-                <div id="BYOCCloudQuestions" style="display:none;">
-                </div>
-
-                <!-- BYOC Premise with Virtual Edges -->
-                <div class="border border-black mr-3 ml-2 bg-warning" id="byocPremiseDiv" style="display: none;">
-                  <p class="form-group ml-2">
-                    If planning to use a virtual edge, very strict guidelines for deployment must be followed:
-                  </p>
-                  <ul>
-                    <li>Virtual Edge Hardware/Software Requirements: <a href="https://help.mypurecloud.com/articles/virtual-edge-hardware-software-requirements/" target="_blank">https://help.mypurecloud.com/articles/virtual-edge-hardware-software-requirements/</a></li>
-                    <li>Virtual Edge Warnings: <a href="https://help.mypurecloud.com/articles/virtual-edge-warnings/" target="_blank">https://help.mypurecloud.com/articles/virtual-edge-warnings/</a></li>
-                  </ul>                  
-                  <p class="form-group ml-2">
-                    The customer must acknowledge that failing to comply with the requirements and warnings will result in possible audio quality issues.
-                  </p>                  
-                </div>
-
-                <!-- BYOC Premise Questions -->
-                <div id="BYOCPremiseQuestions" class="mt-2" style="display:none;">
-
-                  <!-- Virtual Environment -->
-                  <div class="form-check mr-4">
-                    <div class="form-group col-md-12">
-                      <input class="form-check-input" type="checkbox" value="" id="hyperVEnvironment">
-                      <label class="form-check-label" for="hyperVEnvironment">
-                        Does the customer have a Hyper-V environment available?
-                      </label>
-                      <br>
+                    <!-- Virtual Environment -->
+                    <div class="form-check mr-4">
+                      <div class="form-group col-md-12">
+                        <input class="form-check-input" type="checkbox" value="" id="hyperVEnvironment">
+                        <label class="form-check-label" for="hyperVEnvironment">
+                          Does the customer have a Hyper-V environment available?
+                        </label>
+                        <br>
+                      </div>
                     </div>
+
                   </div>
 
+                  <!-- BYOC Premise with Appliance -->
+                  <div class="border border-black mr-3 ml-2 bg-warning" id="byocPremiseWithApplianceDiv" style="display: none;">
+                    <p class="form-group ml-2">
+                      Choosing BYOC Premise w/ Hardware Appliance assumes the partner or customer already has access to hardware Edges. In most cases this would be from a partner who purchased them in advance.
+                    </p>
+                    <p class="form-group ml-2">
+                      Genesys is not shipping hardware Edges at this time.
+                    </p>
+                  </div>
+
+                  <!--#endregion Telephony -->
+
                 </div>
-
-                <!-- BYOC Premise with Appliance -->
-                <div class="border border-black mr-3 ml-2 bg-warning" id="byocPremiseWithApplianceDiv" style="display: none;">
-                  <p class="form-group ml-2">
-                    Choosing BYOC Premise w/ Hardware Appliance assumes the partner or customer already has access to hardware Edges. In most cases this would be from a partner who purchased them in advance.
-                  </p>
-                  <p class="form-group ml-2">
-                    Genesys is not shipping hardware Edges at this time.
-                  </p>
-                </div>
-
-                <!--#endregion Telephony -->
-
 
                 <!--#region General Configuration -->
 
                 <div class="col-md-12 bg-light shadow-lg">
                   <hr />
-                  <h3 class="text-center">General Configuration</h3>
+                  <h3 id="general-configuration-label" class="text-center">General Configuration</h3>
                   <hr />
                 </div>
+
+                <!-- Attach Form Section (General) -->
+                <div id="attach-form-questions" style="display: none;">
+
+                  <!-- Cloud Readiness Category   -->
+                  <div class="form-row mr-4 ml-2">
+                    <div class="form-group col-md-12">
+                      <label for="attachReadinessCategory">What Cloud Readiness Category is your customer in today?<span class="text-danger font-weight-bold">*</span></label>
+                      <select id="attachReadinessCategory" name="attachReadinessCategory" class="form-control" required>
+                        <option value="" disabled selected>Select one option</option>
+                        <option value="Category 1">Category 1</option>
+                        <option value="Category 2">Category 2</option>
+                        <option value="Category 3">Category 3</option>
+                        <option value="Category 4">Category 4</option>
+                      </select>
+                    </div>
+                  </div>
+                  <!-- Maintenance renewal conversation   -->
+                  <div class="form-check mr-4">
+                    <div class="form-group col-md-12">
+                      <input class="form-check-input" type="checkbox" value="" id="attachMaintenanceRenewal">
+                      <label class="form-check-label" for="attachMaintenanceRenewal">
+                        Is this part of the maintenance renewal conversation with the customer and renewal manager?
+                      </label>
+                    </div>
+                  </div>
+                  <!-- Bill for hour 200   -->
+                  <div class="form-check mr-4">
+                    <div class="form-group col-md-12">
+                      <input class="form-check-input" type="checkbox" value="" id="attachAwareBill200">
+                      <label class="form-check-label" for="attachAwareBill200">
+                        Is the customer aware they will be billed if they use more than the allowed 200 free hours?
+                      </label>
+                    </div>
+                  </div>
+                  <!-- Key Success Criteria   -->
+                  <div class="form-row mr-4 ml-2">
+                    <div class="form-group col-md-12">
+                      <label for="attachKeySuccessCriteria">What are customer's key success criteria for Cloud Attach?</label>
+                      <textarea class="form-control" id="attachKeySuccessCriteria" name="attachKeySuccessCriteria" placeholder="Describe Customer's key success criteria"></textarea>
+                    </div>
+                  </div>
+
+                  <!-- Use Cases   -->
+                  <div class="form-row mr-4 ml-2">
+                    <div class="form-group col-md-12">
+                      <label for="attachUseCases">What are the use case(s) to be deployed for this account?</label>
+                      <textarea class="form-control" id="attachUseCases" name="attachUseCases" placeholder="Planned UseCases"></textarea>
+                    </div>
+                  </div>
+
+                  <!-- Partner for Setup   -->
+                  <div class="form-row mr-4 ml-2">
+                    <div class="form-group col-md-12">
+                      <label for="attachPartnerForSetup">If Indirect, who is the partner responsible for setup and implementation?</label>
+                      <textarea class="form-control" id="attachPartnerForSetup" name="attachPartnerForSetup" placeholder="Partner responsible for setup"></textarea>
+                    </div>
+                  </div>
+
+
+
+                </div>
+
+                <!-- /Attach Form Section (General) -->
+
 
                 <!-- Number of Agents -->
                 <div class="form-row mr-4 ml-2">
@@ -561,7 +832,7 @@
                 </div>
 
                 <!-- Impact By Design -->
-                <div class="form-check mr-4">
+                <div id="free-trial-impact-by-design" style="display: none;" class="form-check mr-4">
                   <div class="form-group col-md-12">
                     <input class="form-check-input" type="checkbox" value="" id="impactByDesign">
                     <label class="form-check-label" for="impactByDesign">
@@ -573,7 +844,7 @@
                 </div>
 
                 <!-- Business Goal -->
-                <div class="form-row mr-4 ml-2">
+                <div id="free-trial-business-goal" style="display: none;" class="form-row mr-4 ml-2">
                   <div class="form-group col-md-12">
                     <label for="businessGoal">What is the customer business goal? <span class="text-danger font-weight-bold">*</span></label>
                     <textarea class="form-control" id="businessGoal" name="businessGoal" placeholder="Describe your business goal here" required></textarea>
@@ -581,7 +852,7 @@
                 </div>
 
                 <!-- Measure of Success -->
-                <div class="form-row mr-4 ml-2">
+                <div id="free-trial-measure-of-success" style="display: none;" class="form-row mr-4 ml-2">
                   <div class="form-group col-md-12">
                     <label for="measureOfSuccess">What is the customer's measure of success? <span class="text-danger font-weight-bold">*</span> <span data-toggle="tooltip" data-html="true" data-placement="top" style="float: right" title="Click here to learn more"> <span class="clickable-icon-wrapper ml-2"> <span class="clickable-icon" data-toggle="modal" data-target="#customer-success-measure-modal"><i class="fa fa-question-circle"></i></span></span></span></label>
                     <textarea class="form-control" id="measureOfSuccess" name="measureOfSuccess" placeholder="Describe customer's measure of success here" required></textarea>
@@ -595,16 +866,17 @@
                   <hr />
                 </div>
 
-                <!-- Commmitted Customer Resource -->
-                <div class="form-check mr-4">
-                  <div class="form-group col-md-12">
-                    <input class="form-check-input" type="checkbox" value="" id="customerResourceCommitted">
-                    <label class="form-check-label" for="customerResourceCommitted">
-                      Have customer resources been committed (e.g. Project Manager, Project Sponsor, Business Champion and/or IT/Operations Manager, etc.)?
-                    </label>
+                <div id="free-trial-other" style="display:none;">
+                  <!-- Commmitted Customer Resource -->
+                  <div class="form-check mr-4">
+                    <div class="form-group col-md-12">
+                      <input class="form-check-input" type="checkbox" value="" id="customerResourceCommitted">
+                      <label class="form-check-label" for="customerResourceCommitted">
+                        Have customer resources been committed (e.g. Project Manager, Project Sponsor, Business Champion and/or IT/Operations Manager, etc.)?
+                      </label>
+                    </div>
                   </div>
                 </div>
-
 
                 <!-- Terms & Conditions -->
                 <div class="form-check mr-4">
@@ -618,14 +890,17 @@
                   </div>
                 </div>
 
-                <div class="form-check mr-4">
-                  <div class="form-group col-md-12">
-                    <input class="form-check-input" type="checkbox" value="" id="solutionBusinessConsultingRequired">
-                    <label class="form-check-label" for="solutionBusinessConsultingRequired">
-                      Is Strategic Business Consulting required for this opportunity?
-                    </label>
+                <div id="free-trial-other3" style="display:none;">
+                  <div class="form-check mr-4">
+                    <div class="form-group col-md-12">
+                      <input class="form-check-input" type="checkbox" value="" id="solutionBusinessConsultingRequired">
+                      <label class="form-check-label" for="solutionBusinessConsultingRequired">
+                        Is Strategic Business Consulting required for this opportunity?
+                      </label>
+                    </div>
                   </div>
                 </div>
+
 
                 <!--#endregion -->
 
@@ -686,7 +961,7 @@
                 <span data-toggle="tooltip" data-html="true" data-placement="bottom" style="float: right" title="Search for Opportunity in Salesforce. If present DSR will also be collected">
                   <i class="fa fa-question-circle-o" aria-hidden="true" style="color: gray"></i>
                 </span>
-                <label for="salesforceAccountOpportunity">Opportunity</label>
+                <label id="salesforceAccountOpportunity-label" for="salesforceAccountOpportunity">Opportunity</label>
                 <select id="sfData" class="form-control js-example-basic-single" name="sfData"></select>
               </div>
               <div class="form-group col-md-6">
@@ -729,14 +1004,14 @@
                 <span data-toggle="tooltip" data-html="true" data-placement="bottom" style="float: right" title="Salesforce Opportunity or Account URL">
                   <i class="fa fa-question-circle-o" aria-hidden="true" style="color: gray"></i>
                 </span>
-                <label for="oppUrl">Opportunity or Account Url</label>
+                <label id="oppUrl-label" for="oppUrl">Opportunity or Account Url</label>
                 <input type="url" class="form-control" id="oppUrl" name="oppUrl" placeholder="" disabled />
               </div>
               <div class="form-group col-md-6">
                 <span data-toggle="tooltip" data-html="true" data-placement="bottom" style="float: right" title="Salesforce latest DSR URL linked to Opportunity">
                   <i class="fa fa-question-circle-o" aria-hidden="true" style="color: gray"></i>
                 </span>
-                <label for="oppDSRUrl">DSR Url</label>
+                <label id="oppDSRUrl-label" for="oppDSRUrl">DSR Url</label>
                 <input type="url" class="form-control" id="oppDSRUrl" name="oppDSRUrl" placeholder="" disabled />
               </div>
             </div>
@@ -1134,6 +1409,14 @@
       $(document).ready(async function () {
 
         //setRequestFormType(0);
+
+        // <MODAL - MIGRATION>
+        // const modalHasBeenDisplayed = localStorage.getItem('modal.migration.displayed');
+        // if (modalHasBeenDisplayed !== '1') {
+        //   localStorage.setItem('modal.migration.displayed', '1');
+        //   $('#migrationModal').modal('show');
+        // }
+        // </MODAL - MIGRATION>
 
         try {
           userInfo = await getMe();
@@ -1823,6 +2106,16 @@
         // Other
         $("#solutionBusinessConsultingRequired").prop('checked', false);
 
+        // Attach Form
+        $('#attachCXEvolution').val('');
+        $('#attachReadinessCategory').val('');
+        $('#attachMaintenanceRenewal').prop('checked', false);
+        $('#attachAwareBill200').prop('checked', false);
+        $('#attachKeySuccessCriteria').val('');
+        $('#attachUseCases').val('');
+        $('#attachPartnerForSetup').val('');
+
+
         localStorage.removeItem('intakeForm_draft');
       }
 
@@ -1890,6 +2183,15 @@
 
             // Other
             solutionBusinessConsultingRequired: $("#solutionBusinessConsultingRequired").is(':checked'),
+
+            // Attach Form
+            attachCXEvolution: $('#attachCXEvolution').val(),
+            attachReadinessCategory: $('#attachReadinessCategory').val(),
+            attachMaintenanceRenewal: $('#attachMaintenanceRenewal').is(':checked'),
+            attachAwareBill200: $('#attachAwareBill200').is(':checked'),
+            attachKeySuccessCriteria: $('#attachKeySuccessCriteria').val(),
+            attachUseCases: $('#attachUseCases').val(),
+            attachPartnerForSetup: $('#attachPartnerForSetup').val(),
 
           };
 
@@ -2031,7 +2333,14 @@
           // Other          
           $("#solutionBusinessConsultingRequired").prop('checked', data.solutionBusinessConsultingRequired);
 
-
+          // Attach Form
+          $('#attachCXEvolution').val(data.attachCXEvolution);
+          $('#attachReadinessCategory').val(data.attachReadinessCategory);
+          $('#attachMaintenanceRenewal').prop('checked', data.attachMaintenanceRenewal);
+          $('#attachAwareBill200').prop('checked', data.attachAwareBill200);
+          $('#attachKeySuccessCriteria').val(data.attachKeySuccessCriteria);
+          $('#attachUseCases').val(data.attachUseCases);
+          $('#attachPartnerForSetup').val(data.attachPartnerForSetup);
 
         } catch (error) {
           console.error(error);

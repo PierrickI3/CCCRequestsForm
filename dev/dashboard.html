@@ -35,6 +35,19 @@
   </head>
 
   <body>
+    <!-- <MAINTENANCE MODE> -->
+    <!-- <div class="maintenance-outer"></div>
+    <div class="maintenance-inner">
+      <div class="alert alert-warning center" role="alert">
+        <i class="fa fa-cog maintenance-cog"></i>
+        <h4 class="alert-heading">Maintenance mode</h4>
+        <p>We are sorry, but we are currently in the maintenance mode.</p>
+        <hr />
+        <p class="mb-0">This platform is migrating to CC Portal.<br />Access will be restored on Friday Mar 1st</p>
+      </div>
+    </div> -->
+    <!-- </MAINTENANCE MODE> -->
+
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jsgrid/1.5.3/jsgrid.min.js"></script>
     <img class="overlay" src="./images/devmode.png" id="devModeImage" hidden />
     <nav class="navbar navbar-dark bg-dark">
@@ -80,6 +93,7 @@
                 <option value="">All requests types</option>
                 <option value="0" selected>Standard Forms</option>
                 <option value="1">Trial Validation</option>
+                <option value="2">Attach Offer</option>
               </select>
             </div>
             <div class="form-group col-md-2">
@@ -313,7 +327,7 @@
         init();
       });
       $('#requestType').on('change', () => {
-        $('#requestCategory').attr('disabled', $('#requestType').val() == '1' ? true : false);
+        $('#requestCategory').attr('disabled', $('#requestType').val() !== '0' ? true : false);
         if ($('#requestType').val() == '1') {
           $('#requestCategory').val('');
         }
@@ -409,158 +423,158 @@
       }
 
       /*
-            function refreshGrid() {
-                $("#basicgrid").jsGrid("loadData")
-            }
-    
-    */
+          function refreshGrid() {
+              $("#basicgrid").jsGrid("loadData")
+          }
+  
+  */
       /*
-            function showRequests() {
-                console.log('Showing requests by TaskType...');
-    
-                try {
-    
-                    jsGrid.setDefaults({ tableClass: "jsgrid-table table table-striped table-hover" });
-                    jsGrid.setDefaults("text", {
-                        _createTextBox: function () {
-                            return $("<input>").attr("type", "text").attr("class", "form-control input-sm")
-                        }
-                    });
-                    jsGrid.setDefaults("number", {
-                        _createTextBox: function () {
-                            return $("<input>").attr("type", "number").attr("class", "form-control input-sm")
-                        }
-                    });
-                    jsGrid.setDefaults("textarea", {
-                        _createTextBox: function () {
-                            return $("<input>").attr("type", "textarea").attr("class", "form-control")
-                        }
-                    });
-                    jsGrid.setDefaults("control", {
-                        _createGridButton: function (cls, tooltip, clickHandler) {
-                            var grid = this._grid;
-                            return $("<button>").addClass(this.buttonClass).addClass(cls).attr({
-                                type: "button",
-                                title: tooltip
-                            }).on("click", function (e) {
-                                clickHandler(grid, e)
-                            })
-                        }
-                    });
-                    jsGrid.setDefaults("select", {
-                        _createSelect: function () {
-                            var $result = $("<select>").attr("class", "form-control input-sm"),
-                                valueField = this.valueField,
-                                textField = this.textField,
-                                selectedIndex = this.selectedIndex;
-                            return $.each(this.items, function (index, item) {
-                                var value = valueField ? item[valueField] : index,
-                                    text = textField ? item[textField] : item,
-                                    $option = $("<option>").attr("value", value).text(text).appendTo($result);
-                                $option.prop("selected", selectedIndex === index)
-                            }), $result
-                        }
-                    });
-    
-                    $("#basicgrid").jsGrid({
-                        height: "40vh",
-                        width: "100%",
-                        filtering: false,
-                        editing: false,
-                        sorting: true,
-                        paging: true,
-                        autoload: true,
-                        pageSize: 25,
-                        pageButtonCount: 5,
-                        loadIndication: true,
-                        loadIndicationDelay: 500,
-                        loadMessage: "Loading...",
-                        loadShading: true,
-                        autoload: true,
-                        rowClick: function (args) {
-    
-                        },
-                        rowClass: function (item, itemIndex) {
-    
-                            if (item.acceptedRejected == "Accepted") {
-                                return "task-accepted"
-                            } else if (item.acceptedRejected == "Rejected")
-                                return "task-rejected"
-                            else
-                                return
-    
-    
-                        },
-                        deleteItem: async function (deletingRequest) {
-    
-                        },
-                        controller: {
-                            loadData: async function () {
-                                console.log('display data for TaskType: ', filter);
-                                return $.grep(data, function (request) {
-                                    return (
-                                         ($('#region').val() === "" || request.region == $('#region').val())
-                                        && ($('#subRegion').val() === "" || request.subRegion == $('#subRegion').val())
-                                        && ($('#product').val() === "" || request.product == $('#product').val())
-                                        && ($('#segment').val() === "" || request.segment == $('#segment').val())
-                                        && (!filter || (request.tasks.find(o => o.taskType === filter)) )
-                                    )
-    
-                                });
-    
-                            }
-                        },
-                        noDataContent: "No Requests",
-                        fields: [
-                            {
-                                name: "id",
-                                title: "Id",
-                                type: "text",
-                                width: "auto",
-                                itemTemplate: function (value, item) {
-                                    return `<small>${value}</small>`;
-                                },
-                                visible: false
-                            }, {
-                                name: "region",
-                                title: "Region",
-                                type: "text",
-                                width: "auto",
-                                visible: region == 'super-user' ? true : false
-                            }, {
-                                name: "subRegion",
-                                title: "Territory",
-                                type: "text",
-                                width: "auto"
-                            }, {
-                                name: "product",
-                                title: "Product",
-                                type: "text",
-                                width: "auto"
-                            },
-                            {
-                                name: "segment",
-                                title: "Market Segment",
-                                type: "text",
-                                width: "auto"
-                            },{
-                                name: "updatedAt",
-                                title: "Last Updated",
-                                type: "text",
-                                itemTemplate: function (value, item) {
-                                    return `${moment(value).fromNow()}`;
-                                },
-                                width: "auto",
-                                filtering: false
-                            }]
-    
-                    });
-    
-                } catch (error) {
-                    console.error(error);
-                }
-            }
-    */
+          function showRequests() {
+              console.log('Showing requests by TaskType...');
+  
+              try {
+  
+                  jsGrid.setDefaults({ tableClass: "jsgrid-table table table-striped table-hover" });
+                  jsGrid.setDefaults("text", {
+                      _createTextBox: function () {
+                          return $("<input>").attr("type", "text").attr("class", "form-control input-sm")
+                      }
+                  });
+                  jsGrid.setDefaults("number", {
+                      _createTextBox: function () {
+                          return $("<input>").attr("type", "number").attr("class", "form-control input-sm")
+                      }
+                  });
+                  jsGrid.setDefaults("textarea", {
+                      _createTextBox: function () {
+                          return $("<input>").attr("type", "textarea").attr("class", "form-control")
+                      }
+                  });
+                  jsGrid.setDefaults("control", {
+                      _createGridButton: function (cls, tooltip, clickHandler) {
+                          var grid = this._grid;
+                          return $("<button>").addClass(this.buttonClass).addClass(cls).attr({
+                              type: "button",
+                              title: tooltip
+                          }).on("click", function (e) {
+                              clickHandler(grid, e)
+                          })
+                      }
+                  });
+                  jsGrid.setDefaults("select", {
+                      _createSelect: function () {
+                          var $result = $("<select>").attr("class", "form-control input-sm"),
+                              valueField = this.valueField,
+                              textField = this.textField,
+                              selectedIndex = this.selectedIndex;
+                          return $.each(this.items, function (index, item) {
+                              var value = valueField ? item[valueField] : index,
+                                  text = textField ? item[textField] : item,
+                                  $option = $("<option>").attr("value", value).text(text).appendTo($result);
+                              $option.prop("selected", selectedIndex === index)
+                          }), $result
+                      }
+                  });
+  
+                  $("#basicgrid").jsGrid({
+                      height: "40vh",
+                      width: "100%",
+                      filtering: false,
+                      editing: false,
+                      sorting: true,
+                      paging: true,
+                      autoload: true,
+                      pageSize: 25,
+                      pageButtonCount: 5,
+                      loadIndication: true,
+                      loadIndicationDelay: 500,
+                      loadMessage: "Loading...",
+                      loadShading: true,
+                      autoload: true,
+                      rowClick: function (args) {
+  
+                      },
+                      rowClass: function (item, itemIndex) {
+  
+                          if (item.acceptedRejected == "Accepted") {
+                              return "task-accepted"
+                          } else if (item.acceptedRejected == "Rejected")
+                              return "task-rejected"
+                          else
+                              return
+  
+  
+                      },
+                      deleteItem: async function (deletingRequest) {
+  
+                      },
+                      controller: {
+                          loadData: async function () {
+                              console.log('display data for TaskType: ', filter);
+                              return $.grep(data, function (request) {
+                                  return (
+                                       ($('#region').val() === "" || request.region == $('#region').val())
+                                      && ($('#subRegion').val() === "" || request.subRegion == $('#subRegion').val())
+                                      && ($('#product').val() === "" || request.product == $('#product').val())
+                                      && ($('#segment').val() === "" || request.segment == $('#segment').val())
+                                      && (!filter || (request.tasks.find(o => o.taskType === filter)) )
+                                  )
+  
+                              });
+  
+                          }
+                      },
+                      noDataContent: "No Requests",
+                      fields: [
+                          {
+                              name: "id",
+                              title: "Id",
+                              type: "text",
+                              width: "auto",
+                              itemTemplate: function (value, item) {
+                                  return `<small>${value}</small>`;
+                              },
+                              visible: false
+                          }, {
+                              name: "region",
+                              title: "Region",
+                              type: "text",
+                              width: "auto",
+                              visible: region == 'super-user' ? true : false
+                          }, {
+                              name: "subRegion",
+                              title: "Territory",
+                              type: "text",
+                              width: "auto"
+                          }, {
+                              name: "product",
+                              title: "Product",
+                              type: "text",
+                              width: "auto"
+                          },
+                          {
+                              name: "segment",
+                              title: "Market Segment",
+                              type: "text",
+                              width: "auto"
+                          },{
+                              name: "updatedAt",
+                              title: "Last Updated",
+                              type: "text",
+                              itemTemplate: function (value, item) {
+                                  return `${moment(value).fromNow()}`;
+                              },
+                              width: "auto",
+                              filtering: false
+                          }]
+  
+                  });
+  
+              } catch (error) {
+                  console.error(error);
+              }
+          }
+  */
 
       function buildFilter(_sql, _isWHERE) {
         var filter = '';
@@ -836,6 +850,21 @@
               if (!aItem.teamMembers) aItem.teamMembers = '';
               if (!aItem.categorySearch) aItem.categorySearch = '';
               if (!aItem.stakeholderEmails) aItem.stakeholderEmails = '';
+
+              if (!aItem.attachNumberAgents) aItem.attachNumberAgents = '';
+              if (!aItem.attachExistingTelephonyUsage) aItem.attachExistingTelephonyUsage = '';
+              if (!aItem.attachExistingTelephonyUsageDetails) aItem.attachExistingTelephonyUsageDetails = '';
+              if (!aItem.attachIdentificationAndVerificationProcesses) aItem.attachIdentificationAndVerificationProcesses = '';
+              if (!aItem.attachItInfrastructure) aItem.attachItInfrastructure = '';
+              if (!aItem.attachEndUserDevicesRequireVPN) aItem.attachEndUserDevicesRequireVPN = '';
+              if (!aItem.attachVirtualDesktopSolution) aItem.attachVirtualDesktopSolution = '';
+              if (!aItem.attachCXEvolution) aItem.attachCXEvolution = '';
+              if (!aItem.attachReadinessCategory) aItem.attachReadinessCategory = '';
+              if (!aItem.attachPartnerForSetup) aItem.attachPartnerForSetup = '';
+              if (!aItem.attachMaintenanceRenewal) aItem.attachMaintenanceRenewal = '';
+              if (!aItem.attachAwareBill200) aItem.attachAwareBill200 = '';
+              if (!aItem.attachKeySuccessCriteria) aItem.attachKeySuccessCriteria = '';
+              if (!aItem.attachUseCases) aItem.attachUseCases = '';
 
               var singleRow = $.extend(true, {}, aItem);
               singleRow.taskCategory = aTask.taskCategory;

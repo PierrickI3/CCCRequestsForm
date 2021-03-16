@@ -139,6 +139,42 @@ async function postRequests(region, subRegion, segment, product, tasks, requeste
     data.freeTrialCustomerResourceCommitted = $('#customerResourceCommitted').is(':checked');
     data.freeTrialStandardTermsConditions = $('#standardTermsConditions').is(':checked');
     data.freeTrialSolutionBusinessConsultingRequired = $('#solutionBusinessConsultingRequired').is(':checked');
+  } else if (currentRequestType == 2) {
+    // Include Attach Form
+    data.requestType = '2';
+    data.attachCXEvolution = $('#attachCXEvolution').val();
+    data.tasks = [{ taskCategory: 'Attach offer', taskId: 0, taskTime: 0, taskType: $('#attachCXEvolution').val() }];
+    data.attachReadinessCategory = $('#attachReadinessCategory').val();
+    data.attachMaintenanceRenewal = $('#attachMaintenanceRenewal').is(':checked');
+    data.attachAwareBill200 = $('#attachAwareBill200').is(':checked');
+    data.attachKeySuccessCriteria = $('#attachKeySuccessCriteria').val();
+    data.attachUseCases = $('#attachUseCases').val();
+    if ($('#attachPartnerForSetup').val().length > 0) data.attachPartnerForSetup = $('#attachPartnerForSetup').val();
+
+    // General Configuration
+
+    if ($('#numberAgents').val().length > 0) {
+      data.attachNumberAgents = $('#numberAgents').val();
+    }
+    data.attachExistingTelephonyUsage = $('#existingTelephonyUsage').is(':checked');
+    if ($('#existingTelephonyUsageDetails').val().length > 0) {
+      data.attachExistingTelephonyUsageDetails = $('#existingTelephonyUsageDetails').val();
+    }
+
+    if ($('#identificationAndVerificationProcesses').val().length > 0) {
+      data.attachIdentificationAndVerificationProcesses = $('#identificationAndVerificationProcesses').val();
+    }
+
+    if ($('#itInfrastructure').val().length > 0) {
+      data.attachItInfrastructure = $('#itInfrastructure').val();
+    }
+    data.attachEndUserDevicesRequireVPN = $('#endUserDevicesRequireVPN').is(':checked');
+
+    if ($('#virtualDesktopSolution').val().length > 0) {
+      data.attachVirtualDesktopSolution = $('#virtualDesktopSolution').val();
+    }
+
+    data.attachStandardTermsConditions = $('#standardTermsConditions').is(':checked');
   } else data.requestType = '0';
 
   console.log(data);
@@ -324,6 +360,42 @@ async function putRequest(id, region, subRegion, segment, product, tasks, reques
     data.freeTrialCustomerResourceCommitted = $('#customerResourceCommitted').is(':checked');
     data.freeTrialStandardTermsConditions = $('#standardTermsConditions').is(':checked');
     data.freeTrialSolutionBusinessConsultingRequired = $('#solutionBusinessConsultingRequired').is(':checked');
+  } else if (_requestType == 2) {
+    // Include Attach Form
+    data.requestType = '2';
+    data.attachCXEvolution = $('#attachCXEvolution').val();
+    data.tasks = [{ taskCategory: 'Attach offer', taskId: 0, taskTime: 0, taskType: $('#attachCXEvolution').val() }];
+    data.attachReadinessCategory = $('#attachReadinessCategory').val();
+    data.attachMaintenanceRenewal = $('#attachMaintenanceRenewal').is(':checked');
+    data.attachAwareBill200 = $('#attachAwareBill200').is(':checked');
+    data.attachKeySuccessCriteria = $('#attachKeySuccessCriteria').val();
+    data.attachUseCases = $('#attachUseCases').val();
+    if ($('#attachPartnerForSetup').val().length > 0) data.attachPartnerForSetup = $('#attachPartnerForSetup').val();
+
+    // General Configuration
+
+    if ($('#numberAgents').val().length > 0) {
+      data.attachNumberAgents = $('#numberAgents').val();
+    }
+    data.attachExistingTelephonyUsage = $('#existingTelephonyUsage').is(':checked');
+    if ($('#existingTelephonyUsageDetails').val().length > 0) {
+      data.attachExistingTelephonyUsageDetails = $('#existingTelephonyUsageDetails').val();
+    }
+
+    if ($('#identificationAndVerificationProcesses').val().length > 0) {
+      data.attachIdentificationAndVerificationProcesses = $('#identificationAndVerificationProcesses').val();
+    }
+
+    if ($('#itInfrastructure').val().length > 0) {
+      data.attachItInfrastructure = $('#itInfrastructure').val();
+    }
+    data.attachEndUserDevicesRequireVPN = $('#endUserDevicesRequireVPN').is(':checked');
+
+    if ($('#virtualDesktopSolution').val().length > 0) {
+      data.attachVirtualDesktopSolution = $('#virtualDesktopSolution').val();
+    }
+
+    data.attachStandardTermsConditions = $('#standardTermsConditions').is(':checked');
   } else data.requestType = '0';
 
   //#endregion
@@ -456,11 +528,9 @@ async function getDashboard(_token, _start, _end) {
 
   if (requestType) sExtendedFilter = `&requestType=${requestType}`;
 
-  if ($('#requestCategory').val() !== '') {   
-    sExtendedFilter += `&requestCategory=${$('#requestCategory').val()}`
+  if ($('#requestCategory').val() !== '') {
+    sExtendedFilter += `&requestCategory=${$('#requestCategory').val()}`;
   }
-   
-
 
   return await $.ajax({
     url: `${apiBasePath}/dashboard?token=${_token}&start=${_start}&end=${_end}${sExtendedFilter}`,
@@ -661,33 +731,116 @@ function processStakeholdersEmails(programManager, teamMembers) {
   console.log('stakeholdersEmails.toBeSaved: ', stakeholdersEmails.toBeSaved);
 }
 
-function setRequestFormType(type /* 0 - standard, 1 - free trial */) {
+function setRequestFormType(type /* 0 - standard, 1 - free trial  2- cloud attach form */) {
   console.log(`setRequestFormType(${type})`);
   currentRequestType = type;
 
   switch (type) {
-    case 0:
+    case 0: // standard
+      $('#attach-cx-evolution-segment').hide();
       $('#task-list').show();
       $('#free-trial-questions').hide();
       $('#home-tab')[0].classList.add('active');
       $('#profile-tab')[0].classList.remove('active');
+      $('#attach-tab')[0].classList.remove('active');
       $('#trial')[0].classList.remove('show');
       $('#trial')[0].classList.remove('active');
+      $('#attach-welcomeTxt')[0].classList.remove('show');
+      $('#attach-welcomeTxt')[0].classList.remove('active');
       $('#standard')[0].classList.add('show');
       $('#standard')[0].classList.add('active');
       $('#product').prop('disabled', false);
+
+      $('#oppDSRUrl-label').show();
+      $('#oppDSRUrl').show();
+      $('#free-trial-table').hide();
+      $('#attach-cx-evolution-segment').hide();
+
+      // Hide fields related strict to Attach Form
+      $('#attach-main-text').hide();
+
+      $('#salesforceAccountOpportunity-label').text('Opportunity');
+      $('#oppUrl-label').text('Opportunity or Account URL');
+      $('#general-configuration-label').text('General Configuration');
+
       break;
-    case 1:
+    case 1: // free trial
       $('#task-list').hide();
-      $('#free-trial-questions').show();
+      $('#attach-cx-evolution-segment').hide();
       $('#profile-tab')[0].classList.add('active');
       $('#home-tab')[0].classList.remove('active');
+      $('#attach-tab')[0].classList.remove('active');
       $('#standard')[0].classList.remove('show');
       $('#standard')[0].classList.remove('active');
+      $('#attach-welcomeTxt')[0].classList.remove('show');
+      $('#attach-welcomeTxt')[0].classList.remove('active');
       $('#trial')[0].classList.add('show');
       $('#trial')[0].classList.add('active');
       $('#product').val('Genesys Cloud');
       $('#product').prop('disabled', true);
+
+      $('#free-trial-questions').show(); // Main Section for All questions
+      $('#free-trial-table').show();
+      $('#free-trial-pod-alert').show();
+      $('#free-trial-type').show();
+      $('#free-tial-deployment-model').show();
+      $('#free-trial-impact-by-design').show();
+      $('#free-trial-business-goal').show();
+      $('#free-trial-measure-of-success').show();
+      $('#attach-form-questions').hide();
+      $('#attach-cx-evolution-segment').hide();
+      $('#oppDSRUrl-label').show();
+      $('#oppDSRUrl').show();
+
+      // Hide fields related strict to Attach Form
+      $('#attach-main-text').hide();
+      $('#free-trial-other').show();
+      $('#free-trial-other3').show();
+
+      $('#salesforceAccountOpportunity-label').text('Opportunity');
+      $('#oppUrl-label').text('Opportunity or Account URL');
+      $('#general-configuration-label').text('General Configuration');
+
+      break;
+    case 2: // attach form
+      $('#attach-cx-evolution-segment').show();
+      $('#task-list').hide();
+      $('#home-tab')[0].classList.remove('active');
+      $('#profile-tab')[0].classList.remove('active');
+      $('#attach-tab')[0].classList.add('active');
+      $('#standard')[0].classList.remove('show');
+      $('#standard')[0].classList.remove('active');
+      $('#trial')[0].classList.remove('show');
+      $('#trial')[0].classList.remove('active');
+      $('#attach-welcomeTxt')[0].classList.add('show');
+      $('#attach-welcomeTxt')[0].classList.add('active');
+
+      // Questions
+      $('#free-trial-questions').show();
+      $('#attach-main-text').show();
+
+      $('#free-trial-table').hide();
+      $('#free-trial-pod-alert').hide();
+      $('#free-trial-type').hide();
+      $('#free-tial-deployment-model').hide();
+      $('#free-trial-impact-by-design').hide();
+      $('#free-trial-business-goal').hide();
+      $('#free-trial-measure-of-success').hide();
+      $('#free-trial-other').hide();
+      $('#free-trial-other3').hide();
+      $('#attach-form-questions').show();
+      $('#attach-cx-evolution-segment').show();
+
+      $('#oppDSRUrl-label').hide();
+      $('#oppDSRUrl').hide();
+
+      $('#salesforceAccountOpportunity-label').text('Cloud Attach Opportunity (if created)');
+      $('#oppUrl-label').text('Account URL');
+      $('#general-configuration-label').text('General');
+
+      $('#product').val('Genesys Cloud');
+      $('#product').prop('disabled', false);
+
       break;
     default: {
       console.error('unhandled request type: ', type);
