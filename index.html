@@ -21,6 +21,55 @@
 </head>
 
 <body>
+  
+  <!-- 
+    -------------------------
+     Migration to CC Portal:
+    -------------------------
+
+    1. Uncomment the code between remarks <MAINTENANCE MODE>
+      in order to switch-on the maintenance mode.
+
+    2. Uncomment the code in the ready function() between remarks <MODAL - MIGRATION>
+      in order to switch-on the pop-up announcement about migration
+
+    3. Change the content of the warning between remarks <MIGRATION - WARNING>
+      in order to update the message to be displayed to users all the time.
+
+    -------------------------
+   -->
+
+  <!-- <MAINTENANCE MODE> -->
+  <div class="maintenance-outer"></div>
+  <div class="maintenance-inner">
+    <div class="alert alert-warning center" role="alert">
+      <i class="fa fa-cog maintenance-cog"></i>
+      <h4 class="alert-heading">Maintenance mode</h4>
+      <p>We are sorry, but we are currently in the maintenance mode.</p>
+      <hr>
+      <p class="mb-0">This platform is migrating to CC Portal.<br />Access will be restored on Friday March 1st</p>
+    </div>      
+  </div>
+  <!-- </MAINTENANCE MODE> -->
+
+  <!-- <MODAL - MIGRATION> -->
+  <div class="modal fade" id="migrationModal" tabindex="-1" >
+    <div class="modal-dialog">
+      <div class="modal-content" >
+        <div class="modal-header" id="migrationModalBg">
+          <h5 class="modal-title" id="migrationModalLLabel">Announcement</h5>          
+        </div>
+        <div class="modal-body">
+          On Friday March 1st we are going to migrate this platform to CC Portal.<br /><br />The application will be unavailable during the migration process.
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">OK</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- </MODAL - MIGRATION> -->
+
   <div id="video-overlay" class="video-overlay">
     <a class="video-overlay-close">&times;</a>
   </div>
@@ -62,15 +111,17 @@
       <div class="form-group col-sm-12">
         <div>
 
+          <!-- <MIGRATION - WARNING> -->
           <div class="ml-5 mr-5">
             <div class="alert alert-warning alert-dismissible fade show" role="alert">
               If your request is for a <strong>Trial, POC or Pilot</strong>, please use the new form titled <strong>“Trials/POCs/Pilots Validation"</strong>.
+              <!-- On Friday March 1st we are going to migrate this platform to CC Portal. The application will be unavailable during the migration process. -->
               <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
               </button>
             </div>
           </div>
-
+          <!-- <//MIGRATION - WARNING> -->
 
           <!-- <FORM TYPE TAB CONTROL> -->
           <div class="ml-5 mr-5" style="font-size: 1.3rem">
@@ -1359,6 +1410,14 @@
       $(document).ready(async function () {
 
         //setRequestFormType(0);
+
+        // <MODAL - MIGRATION>
+        // const modalHasBeenDisplayed = localStorage.getItem('modal.migration.displayed');
+        // if (modalHasBeenDisplayed !== '1') {
+        //   localStorage.setItem('modal.migration.displayed', '1');
+        //   $('#migrationModal').modal('show');
+        // }
+        // </MODAL - MIGRATION>
 
         try {
           userInfo = await getMe();
