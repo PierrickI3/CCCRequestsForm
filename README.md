@@ -1,5 +1,7 @@
 # CCC Requests Form (UI)
 
+**Replaced by [CC Portal](https://github.com/PierrickI3/journey-automation-frontend)**
+
 ## Developer notes
 
 - Root folder is production
